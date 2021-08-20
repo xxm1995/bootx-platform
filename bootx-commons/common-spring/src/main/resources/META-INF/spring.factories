@@ -1,0 +1,6 @@
+## 配置自定义 starter 的自动化配置
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bootx.common.spring.SpringAutoConfiguration,\
+  cn.bootx.common.spring.aop.CountTimeAop,\
+  cn.bootx.common.spring.executor.AsyncExecutorConfiguration,\
+  cn.bootx.common.spring.CorsAutoConfiguration

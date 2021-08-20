@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>cn.bootx.platform</groupId>
+        <artifactId>bootx-platform</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>bootx-start</artifactId>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- web mvc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- undertow  -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+
+        <!-- 商品中心 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-goods</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 支付中心 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-payment</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 销售中心 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-sales</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 订单中心 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-order</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 认证和授权 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-iam</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 基础功能 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-baseapi</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 通知服务 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-notice</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 报表模块 -->
+<!--        <dependency>-->
+<!--            <groupId>cn.bootx.platform</groupId>-->
+<!--            <artifactId>common-starter-report</artifactId>-->
+<!--            <version>${bootx-platform.version}</version>-->
+<!--        </dependency>-->
+
+    </dependencies>
+
+    <build>
+        <finalName>bootx-start</finalName>
+        <plugins>
+            <!-- spring-boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

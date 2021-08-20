@@ -1,0 +1,70 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/bootx-platform?serverTimezone=GMT%2B8&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: root
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        # 重试机制
+        retry:
+          enabled: true
+          max-attempts: 5
+#静态资源加载配置
+  mvc:
+    static-path-pattern: /**
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/public/
+#minidao配置
+minidao :
+  base-package: org.jeecg.modules.jmreport.desreport.dao*
+# 开发时显示debug日志
+logging:
+  level:
+    cn.bootx.**: debug
+# 项目配置
+bootx:
+  common:
+    swagger:
+      enabled: true
+      version: 2.0.0
+      title: bootx-platform平台单体版
+      description: bootx平台单体版
+      # 多模块扫码
+      base-packages:
+        iam: cn.bootx.iam
+        baseapi: cn.bootx.baseapi
+        notice: cn.bootx.notice
+        goods: cn.bootx.goods
+        payment: cn.bootx.payment
+        sales: cn.bootx.sales
+        order: cn.bootx.order
+  starter:
+    auth:
+      captcha-timeout: 300
+      captcha: true
+      default-password: 123456
+      ignore-urls:
+        - '/actuator/**'
+        - '/v2/api-docs'
+        - '/jmreport/**'
+        - '/doc.html'
+        - '/webjars/**'
+        - '/swagger-resources/**'
+        - '/token/**'
+        - '/mobile/**'
+        - '/css/**'
+        - '/**'
+

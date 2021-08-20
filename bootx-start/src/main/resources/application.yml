@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: bootx-platform
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  freemarker:
+    enabled: false
+
+# mp配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*/*Mapper.xml
+  global-config:
+    banner: false
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      id-type: ASSIGN_ID
+# 安全框架配置
+sa-token:
+  is-print: false
+  token-name: AccessToken
+  plugins:
+    redis:
+      # 序列化方式
+      serialization: jackson

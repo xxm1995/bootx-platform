@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>cn.bootx.platform</groupId>
+        <artifactId>bootx-platform</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>bootx-services</artifactId>
+    <packaging>pom</packaging>
+    <description>业务服务父pom</description>
+
+    <modules>
+        <module>service-baseapi</module>
+        <module>service-iam</module>
+        <module>service-payment</module>
+        <module>service-notice</module>
+        <module>service-goods</module>
+        <module>service-sales</module>
+        <module>service-order</module>
+        <module>service-office</module>
+    </modules>
+
+    <properties>
+        <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
+        <swagger.version>1.6.2</swagger.version>
+        <knife4j.version>3.0.3</knife4j.version>
+        <logstash-logback.version>6.6</logstash-logback.version>
+        <fastjson.version>1.2.76</fastjson.version>
+        <kryo.serializers.version>0.41</kryo.serializers.version>
+        <asyncTool.version>V1.4-SNAPSHOT</asyncTool.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
+        <hibernate-types.version>hibernate-types</hibernate-types.version>
+    </properties>
+
+    <dependencies>
+        <!-- 公共包 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>bootx-common-core</artifactId>
+        </dependency>
+
+        <!-- web mvc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- 监控端点 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator</artifactId>
+        </dependency>
+
+        <!-- 监控端点 自动配置 sleuth 会依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-actuator-autoconfigure</artifactId>
+        </dependency>
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- lombok 配合 mapstruct -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>${lombok-mapstruct.version}</version>
+        </dependency>
+
+        <!-- 类型转换处理器 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+
+        <!-- 类型转换 -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
+
+        <!-- TTL容器 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+        </dependency>
+
+        <!-- 日志 -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-logback.version}</version>
+        </dependency>
+
+        <!-- fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+        </dependency>
+
+        <!-- knife4j -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-ui</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+
+        <!-- starter json序列化 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-jackson</artifactId>
+        </dependency>
+
+        <!-- 幂等处理器 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-idempotency</artifactId>
+        </dependency>
+
+        <!-- 日志增强 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-log</artifactId>
+        </dependency>
+
+        <!-- mp增强 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-mybatis-plus</artifactId>
+        </dependency>
+
+        <!-- 缓存 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-cache</artifactId>
+        </dependency>
+
+        <!-- 缓存 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-header-holder</artifactId>
+        </dependency>
+
+        <!-- redis客户端 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-redis-client</artifactId>
+        </dependency>
+
+        <!-- 统一异常处理 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-exception-handler</artifactId>
+        </dependency>
+
+        <!-- 发号器 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-sequence</artifactId>
+        </dependency>
+
+        <!-- swagger封装 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-swagger</artifactId>
+        </dependency>
+
+        <!-- spring 工具类 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-spring</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- mapstruct -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

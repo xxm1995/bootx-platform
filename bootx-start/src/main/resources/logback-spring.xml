@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <!--项目名称-->
+    <property name="appname" value="boot-platform"/>
+    <!--日志位置-->
+    <property name="logdir" value="/data/logs/${appname}"/>
+    <!-- 这个要放下面 -->
+    <include resource="cn/bootx/common/log/logback-bootx-common.xml"/>
+</configuration>

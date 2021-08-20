@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.4</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.bootx.platform</groupId>
+    <artifactId>bootx-platform</artifactId>
+    <packaging>pom</packaging>
+    <version>2.0.0-SNAPSHOT</version>
+
+    <modules>
+        <module>bootx-common-core</module>
+        <module>bootx-common-starters</module>
+        <module>bootx-commons</module>
+        <module>bootx-services</module>
+        <module>bootx-start</module>
+        <module>bootx-demo</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+        <!-- 二方库版本 -->
+        <bootx-platform.version>2.0.0-SNAPSHOT</bootx-platform.version>
+        <!-- 三方库 -->
+        <ttl.version>2.12.1</ttl.version>
+        <logback-classic.version>1.2.3</logback-classic.version>
+        <xxl-job.version>2.3.0</xxl-job.version>
+        <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
+        <springfox-swagger.version>3.0.0</springfox-swagger.version>
+        <swagger.version>1.6.2</swagger.version>
+        <sa-token.version>1.24.0</sa-token.version>
+        <sa-token.plugin.version>v1.24.0-SNAPSHOT</sa-token.plugin.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
+        <freemarker.version>2.3.31</freemarker.version>
+        <wxjava.version>4.1.0</wxjava.version>
+        <jimureport.version>1.3.78</jimureport.version>
+    </properties>
+
+    <!-- 项目依赖版本管理 -->
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- TTL容器 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${ttl.version}</version>
+            </dependency>
+
+            <!-- 日志 -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-classic.version}</version>
+            </dependency>
+
+            <!-- mybatis plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- mp -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-bean-validators</artifactId>
+                <version>${springfox-swagger.version}</version>
+            </dependency>
+
+            <!-- swagger 内部依赖 -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!-- 定时任务 -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
+
+            <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+
+            <!-- Sa-Token 整合 Redis  -->
+            <dependency>
+                <groupId>com.gitee.bootx</groupId>
+                <artifactId>sa-token-plugin-redis</artifactId>
+                <version>${sa-token.plugin.version}</version>
+            </dependency>
+
+            <!-- captcha 验证码生成 -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easy-captcha.version}</version>
+            </dependency>
+
+            <!-- 模板引擎 -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+
+            <!-- weixin-java 微信小程序 -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+            <!-- weixin-java 微信开放平台 -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-open</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+            <!-- weixin-java 公众号（包括订阅号和服务号） -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+            <!-- weixin-java 企业号/企业微信 -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-cp</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+
+            <!-- 积木报表 -->
+            <dependency>
+                <groupId>org.jeecgframework.jimureport</groupId>
+                <artifactId>jimureport-spring-boot-starter</artifactId>
+                <version>${jimureport.version}</version>
+            </dependency>
+
+            <!-- 二方库 -->
+
+            <!-- 基础公共包 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>bootx-common-core</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-swagger</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-spring</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+
+            <!-- 定时任务 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-xxl-job</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-redis-client</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-mybatis-plus</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-header-holder</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-jackson</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-exception-handler</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 发号器 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-sequence</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-idempotency</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-log</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-cache</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshots</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <!-- jitpack镜像库 -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <!-- 指定打包资源路径 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.sql</include>
+                    <include>**/*.flt</include>
+                    <include>**/*.xlsx</include>
+                    <include>**/*.xls</include>
+                    <include>**/*.docx</include>
+                    <include>**/*.doc</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+
+</project>
