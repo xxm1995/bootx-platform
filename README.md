@@ -1,37 +1,39 @@
 # Bootx-Platform 
 
-单体开发脚手架，针对单体式应用进行专门设计，对应分布式项目地址 [Bootx-Cloud](https://gitee.com/bootx/bootx-cloud)
+<p>
+ <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-2.0.0-success.svg" alt="Build Status">
+ <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status">
+ <img src="https://img.shields.io/badge/Spring%20Boot-2.5-blue.svg" alt="Downloads">
+ <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
+</p>
+## 🍈项目介绍
 
-## 模块文档导航
+基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
+致力将开源版打造成超越商业版后台管理框架的项目，**分布式版实现地址 [Bootx-Cloud](https://gitee.com/bootx/bootx-platform)**
 
-- [common核心包](bootx-common-core/README.md)
-- [commons工具配置封装](bootx-commons/README.md)
-  - [缓存配置](bootx-commons/common-cache/README.md)
-  - [异常处理器](bootx-commons/common-exception-handler/README.md)
-  - [请求头工具](bootx-commons/common-header-holder/README.md)
-  - [幂等处理器](bootx-commons/common-idempotency/README.md)
-  - [JackSon配置](bootx-commons/common-jackson/README.md)
-  - [日志扩展](bootx-commons/common-log/README.md)
-  - [mybatis-plus扩展](bootx-commons/common-mybatis-plus/README.md)
-  - [Redis客户端封装](bootx-commons/common-redis-client/README.md)
-  - [sequence序列生成器](bootx-commons/common-sequence/README.md)
-  - [Spring功能扩展](bootx-commons/common-spring/README.md)
-  - [Swagger扩展](bootx-commons/common-swagger/README.md)
-  - [定时任务xxl-job](bootx-commons/common-xxl-job/README.md)
-- [starters功能封装](bootx-common-starters/README.md)
-  - [认证封装模块](bootx-common-starters/common-starter-auth/README.md)
-- [预置服务模块](bootx-services/README.md)
-  - [基础API](bootx-services/service-baseapi/README.md)
-  - [IAM身份识别与访问管理](bootx-services/service-iam/README.md)
-  - [通知中心](bootx-services/service-notice/README.md)
-  - [支付中心](bootx-services/service-payment/README.md)
-  - [商品中心](bootx-services/service-goods/README.md)
-  - [销售中心](bootx-services/service-sales/README.md)
-  - [订单中心](bootx-services/service-order/README.md)
+服务分布：
 
-- [启动模块](bootx-start/README.md)
+1. 基础服务：统一网关、IAM认证、日志分析、消息通知等
+2. 平台服务：平台管理、业务报警平台等
+3. 电商服务：收单支付、营销管理、商品管理、订单管理等
+4. 数据服务：日志分析、数据中心(开发中)等
+5. OA办公服务：工作流服务(开发中)、办公中心(开发中)
 
-## 项目开发结构说明(推荐)
+## 🥥项目体验
+
+- 系统管理平台：[管理平台](http://web.cloud.bootx.cn/)
+- Swagger聚合接口：[API文档](http://gateway.dev.bootx.cn:9000/doc.html)
+- 日志分析：[Kibana管理平台](http://elk.dev.bootx.cn:5601/app/discover#)
+
+## 🍒文档
+
+- 前端项目地址：[前端项目](https://gitee.com/bootx/bootx-cloud-ui)
+- 项目文档：[开发文档](https://www.yuque.com/bootx/bootx-cloud/)
+- 项目启动：[启动文档](https://www.yuque.com/bootx/bootx-cloud/vpi0gn)
+- 开发计划：[开发计划]()
+
+## 🍇项目开发结构说明(推荐)
 
 
 **模块分包设计**
@@ -89,7 +91,7 @@ public class UserInfoService {
     
 }
 ```
-## 快速上手
+## 🍇快速上手
 > 可以参考一下Demo示例模块
 1. 下载后端代码到本地，使用IDEA打开，下载前端代码，使用Webstorm或者VsCode开打，下载依赖
 2. 创建业务模块，并在pom里添加需要到依赖模块，创建一个`xxxApplication`，并添加到`spring.factories`文件中，激活自动扫描。
@@ -124,9 +126,36 @@ bootx:
 ```
 4. 可以在bootx-service中找到用不到的功能模块给删除了，然后在数据库删除对应的表，通过表前缀就可以找到模块对应的表
 
+## 🥞模块文档导航
 
+- [common核心包](bootx-common-core/README.md)
+- [commons工具配置封装](bootx-commons/README.md)
+  - [缓存配置](bootx-commons/common-cache/README.md)
+  - [异常处理器](bootx-commons/common-exception-handler/README.md)
+  - [请求头工具](bootx-commons/common-header-holder/README.md)
+  - [幂等处理器](bootx-commons/common-idempotency/README.md)
+  - [JackSon配置](bootx-commons/common-jackson/README.md)
+  - [日志扩展](bootx-commons/common-log/README.md)
+  - [mybatis-plus扩展](bootx-commons/common-mybatis-plus/README.md)
+  - [Redis客户端封装](bootx-commons/common-redis-client/README.md)
+  - [sequence序列生成器](bootx-commons/common-sequence/README.md)
+  - [Spring功能扩展](bootx-commons/common-spring/README.md)
+  - [Swagger扩展](bootx-commons/common-swagger/README.md)
+  - [定时任务xxl-job](bootx-commons/common-xxl-job/README.md)
+- [starters功能封装](bootx-common-starters/README.md)
+  - [认证封装模块](bootx-common-starters/common-starter-auth/README.md)
+- [预置服务模块](bootx-services/README.md)
+  - [基础API](bootx-services/service-baseapi/README.md)
+  - [IAM身份识别与访问管理](bootx-services/service-iam/README.md)
+  - [通知中心](bootx-services/service-notice/README.md)
+  - [支付中心](bootx-services/service-payment/README.md)
+  - [商品中心](bootx-services/service-goods/README.md)
+  - [销售中心](bootx-services/service-sales/README.md)
+  - [订单中心](bootx-services/service-order/README.md)
 
-## FAQ常见问题
+- [启动模块](bootx-start/README.md)
+
+## 🍇FAQ常见问题
 - 项目不全是UTF-8，导致无法无法启动
 
 - idea启动时显示命令过长，需要在启动配置编辑中设置缩短命令行
@@ -134,3 +163,13 @@ bootx:
 - 打包或者maven构建时丢文件或者Excel表格构建好打开报错
 
 - SQL执行批量插入慢，数据库连接默认不开启批量插入功能，需要手动在MySQL URL连接中开启allowMultiQueries=true批量执行功能
+
+##  🍷License
+
+Apache License Version 2.0
+
+## 🥂其他
+
+- star趋势 
+
+[![Stargazers over time](https://whnb.wang/stars/bootx/bootx-platform)](https://whnb.wang)
