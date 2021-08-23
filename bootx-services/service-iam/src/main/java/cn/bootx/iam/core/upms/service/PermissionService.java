@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.ResultConvertUtils;
 import cn.bootx.iam.code.permission.PermissionCode;
 import cn.bootx.iam.core.upms.dao.PermissionManager;
+import cn.bootx.iam.core.upms.dao.RolePermissionManager;
 import cn.bootx.iam.core.upms.entity.Permission;
 import cn.bootx.iam.dto.upms.PermissionDto;
 import cn.bootx.iam.param.upms.PermissionParam;
@@ -27,6 +28,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PermissionService {
     private final PermissionManager permissionManager;
+    private final RolePermissionManager rolePermissionManager;
 
     /**
      * 添加菜单权限
@@ -112,11 +114,13 @@ public class PermissionService {
     /**
      * 删除
      */
+    @Transactional(rollbackFor = Exception.class)
     public void delete(Long id){
         // 有子菜单不可以删除
         if (permissionManager.existsByParentId(id)){
             throw new BizException("有子权限不可以删除");
         }
+        rolePermissionManager.deleteByPermission(id);
         permissionManager.deleteById(id);
     }
 }

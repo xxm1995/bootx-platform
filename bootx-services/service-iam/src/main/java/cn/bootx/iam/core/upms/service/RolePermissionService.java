@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.upms.service;
 
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.iam.code.permission.PermissionCode;
 import cn.bootx.iam.core.upms.dao.RolePermissionManager;
@@ -7,6 +8,7 @@ import cn.bootx.iam.core.upms.entity.RolePermission;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.upms.PermissionDto;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,7 @@ public class RolePermissionService {
      * 保存角色菜单授权
      */
     @Transactional(rollbackFor = Exception.class)
-    public void add(Long roleId, List<Long> permissionIds){
+    public void save(Long roleId, List<Long> permissionIds){
         // 删旧增新
         roleMenuManager.deleteByRole(roleId);
         List<RolePermission> roleMenus = permissionIds.stream()
@@ -98,13 +100,12 @@ public class RolePermissionService {
     }
 
     /**
-     * 获取按钮权限
+     * 获取权限
      */
     private List<PermissionDto> findPermissions(){
-//        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(() -> new BizException("未登录"));
-//        UserInfo userInfo = userInfoManager.findById(userDetail.getId()).orElseThrow(() -> new BizException("用户不存在"));
-
-        UserInfo userInfo = userInfoManager.findById(1399985191002447872L).orElseThrow(() -> new BizException("用户不存在"));
+        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(() -> new BizException("未登录"));
+        UserInfo userInfo = userInfoManager.findById(userDetail.getId()).orElseThrow(() -> new BizException("用户不存在"));
+//        UserInfo userInfo = userInfoManager.findById(1399985191002447872L).orElseThrow(() -> new BizException("用户不存在"));
         List<PermissionDto> permissions;
 
         //系统管理员，获取全部的菜单

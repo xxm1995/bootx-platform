@@ -25,9 +25,9 @@ public class RolePermissionController {
     private final RolePermissionService rolePermissionService;
 
     @ApiOperation("保存请求权限关系")
-    @PostMapping("/add")
-    public ResResult<Boolean> add(@RequestBody RolePermissionParam param){
-        rolePermissionService.add(param.getRoleId(),param.getPermissionIds());
+    @PostMapping("/save")
+    public ResResult<Boolean> save(@RequestBody RolePermissionParam param){
+        rolePermissionService.save(param.getRoleId(),param.getPermissionIds());
         return Res.ok(true);
     }
 

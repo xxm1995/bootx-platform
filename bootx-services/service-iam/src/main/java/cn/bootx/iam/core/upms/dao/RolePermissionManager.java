@@ -22,6 +22,10 @@ public class RolePermissionManager extends BaseManager<RolePermissionMapper, Rol
         deleteByField(RolePermission::getRoleId,roleId);
     }
 
+    public void deleteByPermission(Long permissionId) {
+        deleteByField(RolePermission::getPermissionId,permissionId);
+    }
+
     public List<RolePermission> findAllByRoles(List<Long> roleIds) {
         return findAllByFields(RolePermission::getRoleId,roleIds);
     }

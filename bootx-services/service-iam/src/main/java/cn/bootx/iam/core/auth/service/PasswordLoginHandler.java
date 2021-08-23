@@ -32,8 +32,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PasswordLoginHandler implements UsernamePasswordAuthentication {
 
-    private String usernameParameter = "username";
+    private String usernameParameter = "account";
     private String passwordParameter = "password";
+    private String clientParameter = "client";
     // 前端传入的验证码
     private String captchaParameter = "captcha";
     // 前端传入的验证码的key
@@ -68,6 +69,7 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         String username = this.obtainUsername(request);
         String password = this.obtainPassword(request);
         UserDetail userDetail = this.loadUserByUsername(username);
+        String client = this.obtainClient(request);
         String saltPassword = passwordEncoder.encode(password);
         // 比对密码未通过
         if (!Objects.equals(saltPassword,userDetail.getPassword())){
@@ -77,7 +79,8 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         validationUserDetails(userDetail,request,response);
         return new AuthInfoResult()
                 .setId(userDetail.getId())
-                .setUserDetail(userDetail);
+                .setUserDetail(userDetail)
+                .setClient(client);
     }
 
     /**
@@ -136,6 +139,10 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     protected String obtainCaptchaKey(HttpServletRequest request) {
         return request.getParameter(this.captchaKeyParameter);
     }
+    @Nullable
+    protected String obtainClient(HttpServletRequest request) {
+        return request.getParameter(this.clientParameter);
+    }
 
 
     public void setUsernameParameter(String usernameParameter) {
@@ -152,9 +159,15 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         Assert.hasText(captchaParameter, "验证码参数不能为空或为空");
         this.captchaParameter = captchaParameter;
     }
+
     public void setCaptchaKeyParameter(String captchaKeyParameter) {
         Assert.hasText(captchaKeyParameter, "验证码key参数不能为空或为空");
         this.captchaKeyParameter = captchaKeyParameter;
+    }
+
+    public void setClientKeyParameter(String clientParameter) {
+        Assert.hasText(clientParameter, "终端类型参数不能为空或为空");
+        this.clientParameter = clientParameter;
     }
 
 }
