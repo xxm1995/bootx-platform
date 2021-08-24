@@ -33,9 +33,6 @@ public class DictionaryItem extends MpBaseEntity implements EntityBaseFunction<D
     /** 名称 */
     private String name;
 
-    /** 内容 */
-    private String value;
-
     /** 备注 */
     private String remark;
 

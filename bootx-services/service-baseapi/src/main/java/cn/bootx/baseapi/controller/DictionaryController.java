@@ -59,8 +59,8 @@ public class DictionaryController {
 
     @ApiOperation("分页")
     @GetMapping("/page")
-    public ResResult<PageResult<DictionaryDto>> page(PageParam pageParam){
-        return Res.ok(dictionaryService.page(pageParam));
+    public ResResult<PageResult<DictionaryDto>> page(PageParam pageParam,DictionaryParam param){
+        return Res.ok(dictionaryService.page(pageParam,param));
     }
 
 }

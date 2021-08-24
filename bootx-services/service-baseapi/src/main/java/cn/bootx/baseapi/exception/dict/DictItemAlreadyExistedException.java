@@ -12,8 +12,8 @@ import static cn.bootx.baseapi.code.BspErrorCodes.DICTIONARY_ITEM_ALREADY_EXISTE
 * @author xxm
 * @date 2020/4/21 11:53
 */
-public class DictionaryItemAlreadyExistedException extends BizException implements Serializable {
-    public DictionaryItemAlreadyExistedException() {
+public class DictItemAlreadyExistedException extends BizException implements Serializable {
+    public DictItemAlreadyExistedException() {
         super(DICTIONARY_ITEM_ALREADY_EXISTED, "字典项目已存在.");
     }
 }

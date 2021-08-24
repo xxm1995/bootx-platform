@@ -33,9 +33,6 @@ public class DictionaryItemParam implements Serializable {
     /** 名称 */
     private String name;
 
-    /** 内容 */
-    private String value;
-
     /** 备注 */
     private String remark;
 }

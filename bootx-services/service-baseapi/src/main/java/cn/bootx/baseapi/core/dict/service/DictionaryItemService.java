@@ -5,8 +5,8 @@ import cn.bootx.baseapi.core.dict.dao.DictionaryManager;
 import cn.bootx.baseapi.core.dict.entity.Dictionary;
 import cn.bootx.baseapi.core.dict.entity.DictionaryItem;
 import cn.bootx.baseapi.dto.dict.DictionaryItemDto;
-import cn.bootx.baseapi.exception.dict.DictionaryItemAlreadyExistedException;
-import cn.bootx.baseapi.exception.dict.DictionaryItemNotExistedException;
+import cn.bootx.baseapi.exception.dict.DictItemAlreadyExistedException;
+import cn.bootx.baseapi.exception.dict.DictItemNotExistedException;
 import cn.bootx.baseapi.param.dict.DictionaryItemParam;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
@@ -41,7 +41,7 @@ public class DictionaryItemService {
 
         // 在同一个Dictionary不允许存在相同名字的DictionaryItem
         if (dictionaryItemManager.existsByName(param.getName(), param.getDictId())) {
-            throw new DictionaryItemAlreadyExistedException();
+            throw new DictItemAlreadyExistedException();
         }
 
         Dictionary dictionary = dictionaryManager.findById(param.getDictId()).orElseThrow(() -> new BizException("字典不存在"));
@@ -59,11 +59,11 @@ public class DictionaryItemService {
 
         // 判断字典item是否存在
         DictionaryItem dictionaryItem = dictionaryItemManager.findById(param.getId())
-                .orElseThrow(DictionaryItemNotExistedException::new);
+                .orElseThrow(DictItemNotExistedException::new);
 
         // 判断是否有重名的Item
         if (dictionaryItemManager.existsByName(param.getName(),param.getDictId(),param.getId())) {
-            throw new DictionaryItemAlreadyExistedException();
+            throw new DictItemAlreadyExistedException();
         }
         BeanUtil.copyProperties(param,dictionaryItem, CopyOptions.create().ignoreNullValue());
         return dictionaryItemManager.updateById(dictionaryItem).toDto();

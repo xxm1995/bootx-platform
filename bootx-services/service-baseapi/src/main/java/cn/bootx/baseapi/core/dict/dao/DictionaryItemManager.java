@@ -26,6 +26,10 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
                 .exists();
     }
 
+    public boolean existsByDictId(Long dictId){
+        return existedByField(DictionaryItem::getDictId,dictId);
+    }
+
     public boolean existsByName(String name, Long dictId, Long itemId){
         return lambdaQuery().eq(DictionaryItem::getName,name)
                 .eq(DictionaryItem::getDictId,dictId)
@@ -51,5 +55,11 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
 
     public List<DictionaryItem> findByDictCode(String dictCode) {
         return findAllByField(DictionaryItem::getDictCode,dictCode);
+    }
+
+    public void updateDictCode(Long dictId, String dictCode) {
+        lambdaUpdate().set(DictionaryItem::getDictCode,dictCode)
+                .eq(DictionaryItem::getDictId,dictId)
+                .update();
     }
 }

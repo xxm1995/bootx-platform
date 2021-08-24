@@ -1,6 +1,7 @@
 package cn.bootx.baseapi.core.dict.dao;
 
 import cn.bootx.baseapi.core.dict.entity.Dictionary;
+import cn.bootx.baseapi.param.dict.DictionaryParam;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
@@ -8,6 +9,8 @@ import cn.bootx.common.mybatisplus.util.MpUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Objects;
 
 /**   
 * 字典
@@ -38,8 +41,11 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
         return lambdaQuery().eq(Dictionary::getId,id).exists();
     }
 
-    public Page<Dictionary> page(PageParam pageParam) {
+    public Page<Dictionary> page(PageParam pageParam, DictionaryParam param) {
         Page<Dictionary> mpPage = MpUtils.getMpPage(pageParam, Dictionary.class);
-        return lambdaQuery().page(mpPage);
+        return lambdaQuery()
+                .like(Objects.nonNull(param.getName()),Dictionary::getName,param.getName())
+                .like(Objects.nonNull(param.getCode()),Dictionary::getCode,param.getCode())
+                .page(mpPage);
     }
 }
