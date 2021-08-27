@@ -20,23 +20,22 @@ import java.util.List;
 @AllArgsConstructor
 public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, DictionaryItem> {
 
-    public boolean existsByName(String name, Long dictId){
-        return lambdaQuery().eq(DictionaryItem::getName,name)
-                .eq(DictionaryItem::getDictId,dictId)
-                .exists();
-    }
-
     public boolean existsByDictId(Long dictId){
         return existedByField(DictionaryItem::getDictId,dictId);
     }
 
-    public boolean existsByName(String name, Long dictId, Long itemId){
-        return lambdaQuery().eq(DictionaryItem::getName,name)
+    public boolean existsByCode(String code, Long dictId){
+        return lambdaQuery().eq(DictionaryItem::getCode,code)
+                .eq(DictionaryItem::getDictId,dictId)
+                .exists();
+    }
+
+    public boolean existsByCode(String code, Long dictId, Long itemId){
+        return lambdaQuery().eq(DictionaryItem::getCode,code)
                 .eq(DictionaryItem::getDictId,dictId)
                 .ne(MpBaseEntity::getId,itemId)
                 .exists();
     }
-
 
     /**
      * 查询指定目录下的所有内容

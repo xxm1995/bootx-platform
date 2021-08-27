@@ -1,5 +1,6 @@
 package cn.bootx.baseapi.param.dict;
 
+import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

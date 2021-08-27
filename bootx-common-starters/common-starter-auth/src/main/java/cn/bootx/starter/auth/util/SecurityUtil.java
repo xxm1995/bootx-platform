@@ -1,8 +1,8 @@
 package cn.bootx.starter.auth.util;
 
 import cn.bootx.common.core.code.CommonCode;
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.entity.UserDetail;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.experimental.UtilityClass;

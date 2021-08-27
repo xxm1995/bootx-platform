@@ -1,8 +1,10 @@
 package cn.bootx.common.mybatisplus.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
@@ -254,6 +256,13 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      */
     public List<T> findAll(){
         return lambdaQuery().list();
+    }
+
+    /**
+     * 分页
+     */
+    public <E extends IPage<T>> E page(E page, Wrapper<T> queryWrapper) {
+        return getBaseMapper().selectPage(page, queryWrapper);
     }
 
     /**

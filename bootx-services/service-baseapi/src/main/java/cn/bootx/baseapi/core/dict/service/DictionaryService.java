@@ -36,7 +36,7 @@ public class DictionaryService {
 	 */
 	@Transactional(rollbackFor = Exception.class)
 	public DictionaryDto add(DictionaryParam param) {
-		if (dictionaryManager.existsByName(param.getName())) {
+		if (dictionaryManager.existsByCode(param.getCode())) {
 			throw new DictAlreadyExistedException();
 		}
 		Dictionary dictionary = Dictionary.init(param);
@@ -68,7 +68,7 @@ public class DictionaryService {
                 .orElseThrow(DictNotExistedException::new);
 
 		// 判断字典是否重名
-		if (dictionaryManager.existsByNameAndIdNot(param.getName(),param.getId())) {
+		if (dictionaryManager.existsByCode(param.getCode(),param.getId())) {
 			throw new DictAlreadyExistedException();
 		}
 		// 更新字典项

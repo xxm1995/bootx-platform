@@ -15,7 +15,6 @@ import java.util.Objects;
  * @date 2021/8/2
  */
 @RequiredArgsConstructor
-@IgnoreAuth
 public class IgnoreSaRouteFunction implements SaFunction {
     private final Object handler;
 

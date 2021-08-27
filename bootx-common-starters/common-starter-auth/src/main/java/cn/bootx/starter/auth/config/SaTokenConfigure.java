@@ -1,6 +1,7 @@
 package cn.bootx.starter.auth.config;
 
 import cn.bootx.starter.auth.handler.IgnoreSaRouteFunction;
+import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
 import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
                         permitAllUrlProperties.getIgnoreUrls(),
                         new IgnoreSaRouteFunction(handler))
         )).addPathPatterns("/**");
+        // 注册注解拦截器
+        registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
+
     }
 
 }

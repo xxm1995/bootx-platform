@@ -6,11 +6,10 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.Objects;
 
 /**   
 * 字典
@@ -22,17 +21,17 @@ import java.util.Objects;
 public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary> {
 
     /**
-     * 根据用户名查询重复
+     * 根据code查询重复
      */
-    public boolean existsByName(String name){
-        return existedByField(Dictionary::getName,name);
+    public boolean existsByCode(String code){
+        return existedByField(Dictionary::getCode,code);
     }
 
     /**
-     * 根据用户名查询重复 排除id
+     * 根据code查询重复 排除id
      */
-    public boolean existsByNameAndIdNot(String name,Long id){
-        return lambdaQuery().eq(Dictionary::getName,name)
+    public boolean existsByCode(String code, Long id){
+        return lambdaQuery().eq(Dictionary::getCode,code)
                 .ne(MpBaseEntity::getId,id)
                 .exists();
     }
@@ -44,8 +43,8 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
     public Page<Dictionary> page(PageParam pageParam, DictionaryParam param) {
         Page<Dictionary> mpPage = MpUtils.getMpPage(pageParam, Dictionary.class);
         return lambdaQuery()
-                .like(Objects.nonNull(param.getName()),Dictionary::getName,param.getName())
-                .like(Objects.nonNull(param.getCode()),Dictionary::getCode,param.getCode())
+                .like(StrUtil.isNotBlank(param.getName()),Dictionary::getName,param.getName())
+                .like(StrUtil.isNotBlank(param.getCode()),Dictionary::getCode,param.getCode())
                 .page(mpPage);
     }
 }

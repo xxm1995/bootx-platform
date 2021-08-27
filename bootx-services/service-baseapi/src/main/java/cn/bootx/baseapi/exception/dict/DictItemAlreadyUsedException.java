@@ -1,7 +1,6 @@
 package cn.bootx.baseapi.exception.dict;
 
 import cn.bootx.common.core.exception.BizException;
-
 import java.io.Serializable;
 
 import static cn.bootx.baseapi.code.BspErrorCodes.DICTIONARY_ITEM_ALREADY_USED;

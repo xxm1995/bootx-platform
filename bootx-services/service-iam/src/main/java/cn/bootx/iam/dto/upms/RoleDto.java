@@ -24,7 +24,6 @@ public class RoleDto extends BaseDto implements Serializable {
     /** 角色名称 */
     private String name;
 
-
     /** 是否系统内置 Y 内置 N 不是  内置 不能修改*/
     private boolean system;
 

@@ -39,8 +39,8 @@ public class DictionaryItemService {
     @Transactional(rollbackFor = Exception.class)
     public DictionaryItemDto add(DictionaryItemParam param){
 
-        // 在同一个Dictionary不允许存在相同名字的DictionaryItem
-        if (dictionaryItemManager.existsByName(param.getName(), param.getDictId())) {
+        // 在同一个Dictionary不允许存在相同code的DictionaryItem
+        if (dictionaryItemManager.existsByCode(param.getCode(), param.getDictId())) {
             throw new DictItemAlreadyExistedException();
         }
 
@@ -61,8 +61,8 @@ public class DictionaryItemService {
         DictionaryItem dictionaryItem = dictionaryItemManager.findById(param.getId())
                 .orElseThrow(DictItemNotExistedException::new);
 
-        // 判断是否有重名的Item
-        if (dictionaryItemManager.existsByName(param.getName(),param.getDictId(),param.getId())) {
+        // 判断是否有重复code的Item
+        if (dictionaryItemManager.existsByCode(param.getCode(),param.getDictId(),param.getId())) {
             throw new DictItemAlreadyExistedException();
         }
         BeanUtil.copyProperties(param,dictionaryItem, CopyOptions.create().ignoreNullValue());

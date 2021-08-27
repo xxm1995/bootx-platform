@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
-* 字典
-* @author xxm
-* @date 2021/8/4
-*/
+ * 字典
+ * @author xxm
+ * @date 2021/8/4
+ */
 @Api(tags = "字典")
 @RestController
 @RequestMapping("/dict")
