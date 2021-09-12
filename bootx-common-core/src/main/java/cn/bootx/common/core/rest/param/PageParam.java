@@ -26,14 +26,16 @@ public class PageParam implements Serializable {
      * 开始条数
      */
     public int start(){
-        return PageUtil.transToStartEnd(current,size)[0];
+        // hutool 的下标从0开始
+        return PageUtil.transToStartEnd(current-1,size)[0];
     }
 
     /**
      * 结束条数
      */
     public int end(){
-        return PageUtil.transToStartEnd(current,size)[1];
+        // hutool 的下标从0开始
+        return PageUtil.transToStartEnd(current-1,size)[1];
     }
 
     public int getCurrent() {

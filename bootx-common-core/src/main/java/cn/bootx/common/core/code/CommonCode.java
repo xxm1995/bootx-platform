@@ -44,6 +44,9 @@ public interface CommonCode {
      */
     int FAIL_CODE = 1;
 
+    /** 追踪Id */
+    String TRACE_ID = "traceId";
+
     String USER = "user";
 
     String ID = "id";

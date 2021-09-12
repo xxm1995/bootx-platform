@@ -69,4 +69,16 @@ public class DictionaryItemController {
         return Res.ok(dictionaryItemService.pageByDictionaryId(dictId,pageParam));
     }
 
+    @ApiOperation(value = "获取全部字典项")
+    @GetMapping("/findAll")
+    public ResResult<List<DictionaryItemDto>> findAll() {
+        return Res.ok(dictionaryItemService.findAll());
+    }
+
+    @ApiOperation("获取字典项")
+    @GetMapping("/getItem")
+    public ResResult<DictionaryItemDto> getItem(String dictCode, String itemCode){
+        return Res.ok(dictionaryItemService.getItem(dictCode,itemCode));
+    }
+
 }

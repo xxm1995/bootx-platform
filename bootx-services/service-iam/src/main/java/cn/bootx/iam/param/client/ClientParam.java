@@ -24,12 +24,16 @@ public class ClientParam {
     /** 名称 */
     private String name;
 
+    /** 是否可用 */
+    private boolean enable;
+
+    /** 是否启用验证码 */
+    private boolean captcha;
+
     /** 在线时长 分钟 */
     private Long timeout;
 
     /** 描述 */
     private String description;
 
-    /** 是否可用 */
-    private boolean enable;
 }

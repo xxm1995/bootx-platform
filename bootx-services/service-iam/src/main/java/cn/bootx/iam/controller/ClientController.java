@@ -1,5 +1,6 @@
 package cn.bootx.iam.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
@@ -36,8 +37,7 @@ public class ClientController {
     @ApiOperation(value = "修改终端（返回终端对象）")
     @PostMapping(value = "/update")
     public ResResult<ClientDto> update(@RequestBody ClientParam param){
-        ClientDto result = clientService.update(param);
-        return Res.ok(result);
+        return Res.ok(clientService.update(param));
     }
     
     @ApiOperation(value = "删除终端")
@@ -51,6 +51,13 @@ public class ClientController {
     @GetMapping(value = "/findById")
     public ResResult<ClientDto> findById(Long id){
         return Res.ok(clientService.findById(id));
+    }
+
+    @IgnoreAuth
+    @ApiOperation(value = "通过code查询终端")
+    @GetMapping(value = "/findByCode")
+    public ResResult<ClientDto> findByCode(String code){
+        return Res.ok(clientService.findByCode(code));
     }
 
     @ApiOperation(value = "查询所有的终端")

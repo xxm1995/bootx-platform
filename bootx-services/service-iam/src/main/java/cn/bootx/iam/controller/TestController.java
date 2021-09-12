@@ -13,15 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.concurrent.Executor;
-
 @Slf4j
 @Api(tags = "测试控制器")
 @RestController
 @RequestMapping("/test")
 @RequiredArgsConstructor
 public class TestController {
-    private final Executor executor;
     private final Sequence sequence;
 
     @Log(title = "测试日志")

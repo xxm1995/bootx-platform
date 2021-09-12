@@ -40,8 +40,8 @@ public class LoginLogService {
     /**
      * 分页
      */
-    public PageResult<LoginLogDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(loginLogManager.page(pageParam));
+    public PageResult<LoginLogDto> page(PageParam pageParam, LoginLogDto loginLogDto){
+        return MpUtils.convert2PageResult(loginLogManager.page(pageParam,loginLogDto));
     }
 
     /**

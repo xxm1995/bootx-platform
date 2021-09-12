@@ -5,8 +5,8 @@ import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
+import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class PhoneLoginHandler implements OpenIdAuthentication {
      * 认证
      */
     @Override
-    public AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
+    public AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient) {
         String phone = request.getParameter(phoneParameter);
         String captcha = request.getParameter(captchaParameter);
 
@@ -54,7 +54,7 @@ public class PhoneLoginHandler implements OpenIdAuthentication {
 
         captchaService.deleteSmsCaptcha(phone);
         return new AuthInfoResult()
-                .setUserDetail(new UserDetail(userInfo.getId(),userInfo.getName(),userInfo.getUsername(),userInfo.getPassword()))
+                .setUserDetail(userInfo.toUserDetail())
                 .setId(userInfo.getId());
     }
 

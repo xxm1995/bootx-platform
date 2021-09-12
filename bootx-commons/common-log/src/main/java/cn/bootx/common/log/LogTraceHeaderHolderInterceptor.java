@@ -1,5 +1,6 @@
 package cn.bootx.common.log;
 
+import cn.bootx.common.core.code.CommonCode;
 import cn.hutool.core.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.MDC;
@@ -20,11 +21,10 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class LogTraceHeaderHolderInterceptor extends GenericFilterBean {
-    private final String traceId = "traceId";
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         try {
-            MDC.put(traceId, RandomUtil.randomString(12));
+            MDC.put(CommonCode.TRACE_ID, RandomUtil.randomString(12));
             chain.doFilter(request,response);
         } finally {
             MDC.clear();

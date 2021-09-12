@@ -24,14 +24,17 @@ public class LoginLogDto extends BaseDto implements Serializable {
     /** 用户账号 */
     private Long userId;
 
-    /** 用户账号 */
-    private String userName;
+    /** 登录账号 */
+    private String account;
 
     /** 登录成功状态*/
     private boolean login;
 
+    /** 登录终端 */
+    private String client;
+
     /** 登录IP地址 */
-    private String ipaddr;
+    private String ip;
 
     /** 登录地点 */
     private String loginLocation;

@@ -1,6 +1,8 @@
 package cn.bootx.iam.dto.user;
 
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.rest.dto.BaseDto;
+import cn.bootx.iam.code.UserStatusCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -37,8 +39,17 @@ public class UserInfoDto extends BaseDto implements Serializable {
     @ApiModelProperty("注册来源")
     private String source;
 
+    @ApiModelProperty("头像")
+    private String avatar;
+
     @ApiModelProperty("是否管理员")
     private boolean admin;
+
+    /**
+     * @see UserStatusCode
+     */
+    @ApiModelProperty("账号状态")
+    private Integer status;
 
     @ApiModelProperty("注册时间")
     private LocalDateTime registerTime;
@@ -46,4 +57,13 @@ public class UserInfoDto extends BaseDto implements Serializable {
     @ApiModelProperty(value = "最后登录时间", accessMode = READ_ONLY)
     private LocalDateTime lastLoginTime;
 
+    public UserDetail toUserDetail(){
+        return new UserDetail()
+                .setId(this.getId())
+                .setPassword(this.password)
+                .setUsername(this.getUsername())
+                .setName(this.name)
+                .setAdmin(this.admin)
+                .setStatus(this.status);
+    }
 }

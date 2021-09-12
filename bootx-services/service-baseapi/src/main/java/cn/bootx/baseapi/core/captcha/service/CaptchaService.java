@@ -60,10 +60,11 @@ public class CaptchaService {
     /**
      * 发送手机验证码
      */
-    public void sendSmsCaptcha(String phone){
+    public int sendSmsCaptcha(String phone,long timeoutSec){
         int captcha = RandomUtil.randomInt(100000, 1000000);
         log.info("短信验证码: {}",captcha);
-        redisClient.setWithTimeout(smsCaptchaPrefix+phone, String.valueOf(captcha),5*60*1000);
+        redisClient.setWithTimeout(smsCaptchaPrefix+phone, String.valueOf(captcha),timeoutSec*1000);
+        return captcha;
     }
 
     /**

@@ -67,6 +67,13 @@ public class ClientService {
     }
 
     /**
+     * 获取单条
+     */
+    public ClientDto findByCode(String code){
+        return clientManager.findByCode(code).map(Client::toDto).orElse(null);
+    }
+
+    /**
      * 获取全部
      */
     public List<ClientDto> findAll(){

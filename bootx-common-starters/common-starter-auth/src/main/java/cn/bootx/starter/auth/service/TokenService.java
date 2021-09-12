@@ -1,14 +1,17 @@
 package cn.bootx.starter.auth.service;
 
 import cn.bootx.common.core.code.CommonCode;
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.authentication.GetAuthClientService;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
 import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
+import cn.bootx.starter.auth.exception.ClientNotEnableException;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.handler.LoginFailureHandler;
 import cn.bootx.starter.auth.handler.LoginSuccessHandler;
 import cn.bootx.starter.auth.handler.OpenIdAuthenticationHandler;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
@@ -40,10 +43,12 @@ public class TokenService {
      * 登录
      */
     public String loginPassword(HttpServletRequest request, HttpServletResponse response){
+
         AuthInfoResult authInfoResult;
+        AuthClient authClient = this.getAuthClient(request);
         try {
-            authInfoResult = usernamePasswordAuthentication.authentication(request, response);
-            this.login(authInfoResult);
+            authInfoResult = usernamePasswordAuthentication.authentication(request, response,authClient);
+            this.login(authInfoResult,authClient);
         } catch (LoginFailureException e) {
             // 登录失败回调
             loginFailureHandler.onLoginFailure(request,response,e);
@@ -59,9 +64,10 @@ public class TokenService {
      */
     public String loginOpenId(HttpServletRequest request, HttpServletResponse response){
         AuthInfoResult authInfoResult;
+        AuthClient authClient = this.getAuthClient(request);
         try {
-            authInfoResult = openIdAuthenticationHandler.authentication(request, response);
-        this.login(authInfoResult);
+            authInfoResult = openIdAuthenticationHandler.authentication(request, response,authClient);
+        this.login(authInfoResult,authClient);
         } catch (LoginFailureException e) {
             // 登录失败回调
             loginFailureHandler.onLoginFailure(request,response,e);
@@ -72,21 +78,31 @@ public class TokenService {
     }
 
     /**
+     * 获取终端
+     */
+    private AuthClient getAuthClient(HttpServletRequest request){
+        // 终端
+        AuthClient authClient = getAuthClientService.getAuthClient(SecurityUtil.obtainClient(request));
+        // 终端处理
+        if (!authClient.isEnable()){
+            throw new ClientNotEnableException();
+        }
+        return authClient;
+    }
+
+    /**
      * 登录
      */
-    private void login(AuthInfoResult authInfoResult){
-        // 终端处理
-        AuthClient authClient = getAuthClientService.getAuthClient(authInfoResult.getClient());
-        if (!authClient.isEnable()){
-            throw new LoginFailureException(authInfoResult.getUserDetail().getUsername(),"该终端方式已禁用");
-        }
+    private void login(AuthInfoResult authInfoResult,AuthClient authClient){
         SaLoginModel saLoginModel = new SaLoginModel()
                 .setDevice(authClient.getCode())
                 .setTimeout(authClient.getTimeout() * 1000 * 60);
 
+        authInfoResult.setClient(authClient.getCode());
         StpUtil.login(authInfoResult.getId(),saLoginModel);
         SaSession session = StpUtil.getSession();
-        session.set(CommonCode.USER, authInfoResult.getUserDetail());
+        UserDetail userDetail = authInfoResult.getUserDetail();
+        session.set(CommonCode.USER, userDetail);
     }
 
     /**

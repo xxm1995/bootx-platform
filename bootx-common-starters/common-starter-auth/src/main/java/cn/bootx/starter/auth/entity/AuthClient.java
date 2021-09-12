@@ -23,4 +23,7 @@ public class AuthClient {
 
     /** 是否可用 */
     private boolean enable;
+
+    /** 是否需要验证码 */
+    private boolean captcha;
 }

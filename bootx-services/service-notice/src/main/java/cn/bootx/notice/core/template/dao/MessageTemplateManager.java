@@ -38,6 +38,8 @@ public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, M
 
     public Page<MessageTemplate> page(PageParam pageParam) {
         Page<MessageTemplate> mpPage = MpUtils.getMpPage(pageParam, MessageTemplate.class);
-        return lambdaQuery().page(mpPage);
+        return lambdaQuery()
+                .orderByDesc(MpBaseEntity::getCreateTime)
+                .page(mpPage);
     }
 }

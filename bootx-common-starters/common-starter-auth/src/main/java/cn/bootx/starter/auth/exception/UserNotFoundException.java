@@ -7,6 +7,6 @@ package cn.bootx.starter.auth.exception;
 */
 public class UserNotFoundException extends LoginFailureException {
     public UserNotFoundException(String username) {
-        super(username,"用户未找到异常");
+        super(username,"用户未找到");
     }
 }

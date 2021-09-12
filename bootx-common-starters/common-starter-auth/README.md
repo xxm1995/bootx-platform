@@ -18,16 +18,10 @@ Shiro的话后期会出一个实现，目前的涉及sa-token相关的依赖都�
 
 ```yaml
 bootx.starter.auth:
-  # 是否开启验证码验证
-  captcha: true
-  # 验证码有效时间
-  captchaTimeout: 60
   # 盐值
   salt: salt
   # 默认密码
   defaultPassword: 123456
-  # openId(第三方登录,如微信)类型的参数名称
-  openIdTypeParameter: openIdType
   # 不进行鉴权的路径
   ignoreUrls:
     - '/actuator/**'

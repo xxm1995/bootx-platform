@@ -25,16 +25,6 @@ public class AuthProperties {
     private List<String> ignoreUrls = new ArrayList<>();
 
     /**
-     * 是否开启验证码验证
-     */
-    private boolean captcha;
-
-    /**
-     * 验证码有效时间(秒)
-     */
-    private int captchaTimeout = 60;
-
-    /**
      * 盐值
      */
     private String salt = "salt";
@@ -48,7 +38,5 @@ public class AuthProperties {
      * openId类型参数名称
      */
     private String openIdTypeParameter = "openIdType";
-
-
 
 }

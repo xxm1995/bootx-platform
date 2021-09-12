@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.wechat.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
@@ -37,6 +38,8 @@ public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, W
 
     public Page<WeChatPayConfig> page(PageParam pageParam) {
         Page<WeChatPayConfig> mpPage = MpUtils.getMpPage(pageParam, WeChatPayConfig.class);
-        return lambdaQuery().page(mpPage);
+        return lambdaQuery()
+                .orderByDesc(MpBaseEntity::getCreateTime)
+                .page(mpPage);
     }
 }

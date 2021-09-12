@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.user.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.core.user.entity.UserSocialLogin;
@@ -27,6 +28,8 @@ public class UserSocialLoginManager extends BaseManager<UserSocialLoginMapper, U
 
     public Page<UserSocialLogin> page(PageParam pageParam) {
         Page<UserSocialLogin> mpPage = MpUtils.getMpPage(pageParam, UserSocialLogin.class);
-        return lambdaQuery().page(mpPage);
+        return lambdaQuery()
+                .orderByDesc(MpBaseEntity::getCreateTime)
+                .page(mpPage);
     }
 }

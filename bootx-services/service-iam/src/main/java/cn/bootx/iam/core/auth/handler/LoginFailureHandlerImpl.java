@@ -4,6 +4,7 @@ import cn.bootx.baseapi.core.log.entity.LoginLog;
 import cn.bootx.baseapi.core.log.service.LoginLogService;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.handler.LoginFailureHandler;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
@@ -32,9 +33,11 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         Browser browser = userAgent.getBrowser();
         String ip = ServletUtil.getClientIP(request);
+        String client = SecurityUtil.obtainClient(request);
         LoginLog loginLog = new LoginLog()
-                .setUserName(e.getUsername())
+                .setAccount(e.getUsername())
                 .setLogin(false)
+                .setClient(client)
                 .setMsg(e.getMessage())
                 .setIp(ip)
                 .setOs(operatingSystem.getName())

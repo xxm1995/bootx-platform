@@ -1,8 +1,11 @@
 package cn.bootx.common.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**   
 * 用户
@@ -11,24 +14,24 @@ import lombok.Setter;
 */
 @Getter
 @Setter
+@ToString
+@Accessors(chain = true)
 @NoArgsConstructor
 public class UserDetail{
     private Long id;
     private String name;
-    private transient String username;
-    private String password;
+    private String username;
+    @JsonIgnore
+    private transient String password;
 
-    public UserDetail(Long id, String name, String username) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-    }
 
-    public UserDetail(Long id, String name,String username, String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.username = username;
-    }
+    /** 是否管理员 */
+    private boolean admin;
+
+    /**
+     * 账号状态
+     * @see UserStatusCode
+     */
+    private Integer status;
 
 }

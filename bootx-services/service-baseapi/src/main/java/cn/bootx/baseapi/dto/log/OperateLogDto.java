@@ -20,8 +20,14 @@ public class OperateLogDto extends BaseDto {
     /** 操作模块 */
     private String title;
 
-    /** 业务类型0=其它,1=新增,2=修改,3=删除,4=授权,5=导出,6=导入,7=强退,8=生成代码,9=清空数据 */
-    private Integer businessType;
+    /** 业务类型 */
+    private String businessType;
+
+    /** 操作人员id */
+    private Long operateId;
+
+    /** 操作人员账号 */
+    private String username;
 
     /** 请求方法 */
     private String method;
@@ -29,19 +35,10 @@ public class OperateLogDto extends BaseDto {
     /** 请求方式 */
     private String requestMethod;
 
-    /** 操作类别（0其它 1后台用户 2手机端用户） */
-    private Integer operateType;
-
-    /** 操作人员 */
-    private String operateName;
-
-    /** 部门名称 */
-    private String deptName;
-
     /** 请求url */
     private String operateUrl;
 
-    /** 操作地址 */
+    /** 操作ip */
     private String operateIp;
 
     /** 操作地点 */
@@ -51,10 +48,10 @@ public class OperateLogDto extends BaseDto {
     private String operateParam;
 
     /** 返回参数 */
-    private String jsonResult;
+    private String operateReturn;
 
     /** 操作状态（0正常 1异常） */
-    private Integer status;
+    private boolean success;
 
     /** 错误消息 */
     private String errorMsg;

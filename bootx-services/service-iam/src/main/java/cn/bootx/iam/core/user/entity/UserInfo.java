@@ -1,8 +1,10 @@
 package cn.bootx.iam.core.user.entity;
 
 
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.convert.UserConvert;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.param.user.UserInfoParam;
@@ -42,8 +44,17 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     /** 注册来源 */
     private String source;
 
+    /** 头像 */
+    private String avatar;
+
     /** 是否管理员 */
     private boolean admin;
+
+    /**
+     * 账号状态
+     * @see UserStatusCode
+     */
+    private Integer status;
 
     /** 注册时间 */
     private LocalDateTime registerTime;
@@ -54,6 +65,16 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     @Override
     public UserInfoDto toDto() {
         return UserConvert.CONVERT.convert(this);
+    }
+
+    public UserDetail toUserDetail(){
+        return new UserDetail()
+                .setId(this.getId())
+                .setPassword(this.password)
+                .setUsername(this.getUsername())
+                .setName(this.name)
+                .setAdmin(this.admin)
+                .setStatus(this.status);
     }
 
     public static UserInfo init(UserInfoDto dto) {

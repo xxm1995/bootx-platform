@@ -26,6 +26,9 @@ public class ClientDto extends BaseDto {
     /** 在线时长 分钟 */
     private Long timeout;
 
+    /** 是否启用验证码 */
+    private boolean captcha;
+
     /** 是否可用 */
     private boolean enable;
 

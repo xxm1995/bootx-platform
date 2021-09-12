@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.iam.code.permission.PermissionCode;
+import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.service.PermissionMenuService;
 import cn.bootx.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.iam.core.upms.entity.RoleMenu;
@@ -49,6 +49,16 @@ public class RoleMenuService {
                 .map(permissionId -> new RoleMenu(roleId, permissionId))
                 .collect(Collectors.toList());
         roleMenuManager.saveAll(roleMenus);
+    }
+
+    /**
+     * 根据角色查询对应的权限id
+     */
+    public List<Long> findIdsByRole(Long roleId){
+        List<RoleMenu> rolePermissions = roleMenuManager.findAllByRole(roleId);
+        return rolePermissions.stream()
+                .map(RoleMenu::getPermissionId)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -148,7 +158,7 @@ public class RoleMenuService {
                 .filter(m -> Objects.equals(m.getParentId(),parentId))
                 .collect(Collectors.toList());
         if (CollectionUtil.isEmpty(children)) {
-            return null;
+            return new ArrayList<>(0);
         }
         for (PermissionMenuDto permission : children) {
             permission.setChildren(recursiveBuildTree(permissions, permission.getId()));

@@ -44,6 +44,12 @@ public class RoleMenuController {
         return Res.ok(rolePermissionService.findButtonPermission());
     }
 
+    @ApiOperation("根据角色id获取关联权限id")
+    @GetMapping("/findIdsByRole")
+    public ResResult<List<Long>> findIdsByRole(Long roleId){
+        return Res.ok(rolePermissionService.findIdsByRole(roleId));
+    }
+
     @ApiOperation("获取菜单和按钮权限")
     @GetMapping("/findMenuAndButtonPermission")
     public ResResult<UserMenuAndButtonDto> findMenuAndButtonPermission(){

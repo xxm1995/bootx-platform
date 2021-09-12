@@ -102,9 +102,22 @@ public class DictionaryItemService {
     }
 
     /**
+     * 获取全部字典项
+     */
+    public List<DictionaryItemDto> findAll(){
+        return ResultConvertUtils.dtoListConvert(dictionaryItemManager.findAll());
+    }
+
+    /**
      * 根据type 查询字典
      */
     public List<DictionaryItemDto> findByDictCode(String dictCode){
-        return ResultConvertUtils.dtoListConvert(dictionaryItemManager.findByDictCode(dictCode));
+        return ResultConvertUtils.dtoListConvert(dictionaryItemManager.findAllByDictCode(dictCode));
+    }
+
+    public DictionaryItemDto getItem(String dictCode, String itemCode) {
+        return dictionaryItemManager.findByDictCodeAndCode(dictCode,itemCode)
+                .map(DictionaryItem::toDto)
+                .orElse(null);
     }
 }

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 字典项
@@ -49,10 +50,13 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
      */
     public Page<DictionaryItem> findAllByDictionaryId(Long dictId, PageParam pageParam) {
         Page<DictionaryItem> mpPage = MpUtils.getMpPage(pageParam, DictionaryItem.class);
-        return lambdaQuery().eq(DictionaryItem::getDictId,dictId).page(mpPage);
+        return lambdaQuery()
+                .eq(DictionaryItem::getDictId,dictId)
+                .orderByDesc(MpBaseEntity::getCreateTime)
+                .page(mpPage);
     }
 
-    public List<DictionaryItem> findByDictCode(String dictCode) {
+    public List<DictionaryItem> findAllByDictCode(String dictCode) {
         return findAllByField(DictionaryItem::getDictCode,dictCode);
     }
 
@@ -60,5 +64,12 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
         lambdaUpdate().set(DictionaryItem::getDictCode,dictCode)
                 .eq(DictionaryItem::getDictId,dictId)
                 .update();
+    }
+
+    public Optional<DictionaryItem> findByDictCodeAndCode(String dictCode, String itemCode) {
+        return lambdaQuery()
+                .eq(DictionaryItem::getDictCode,dictCode)
+                .eq(DictionaryItem::getCode,itemCode)
+                .oneOpt();
     }
 }

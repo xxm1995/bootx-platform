@@ -28,10 +28,13 @@ public class LoginLog implements EntityBaseFunction<LoginLogDto> {
     private Long userId;
 
     /** 用户名称 */
-    private String userName;
+    private String account;
 
     /** 登录成功状态*/
     private boolean login;
+
+    /** 登录终端 */
+    private String client;
 
     /** 登录IP地址 */
     private String ip;

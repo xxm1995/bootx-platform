@@ -61,11 +61,6 @@ public class PermissionMenuParam implements Serializable {
      */
     private Integer menuType;
 
-    /**
-     * 是否叶子节点: 1:是  0:不是
-     */
-    private boolean leaf;
-
     /* meta */
     /**
      * 是否缓存页面

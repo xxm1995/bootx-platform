@@ -32,6 +32,9 @@ public class UserInfoParam implements Serializable {
     @ApiModelProperty("邮箱")
     private String email;
 
+    @ApiModelProperty("头像")
+    private String avatar;
+
     @ApiModelProperty("密码")
     private String password;
 

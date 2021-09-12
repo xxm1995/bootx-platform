@@ -2,6 +2,7 @@ package cn.bootx.iam.core.upms.dao;
 
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.core.upms.entity.Role;
@@ -56,6 +57,8 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
 
     public Page<Role> page(PageParam pageParam) {
         Page<Role> mpPage = MpUtils.getMpPage(pageParam, Role.class);
-        return lambdaQuery().page(mpPage);
+        return lambdaQuery()
+                .orderByDesc(MpBaseEntity::getCreateTime)
+                .page(mpPage);
     }
 }

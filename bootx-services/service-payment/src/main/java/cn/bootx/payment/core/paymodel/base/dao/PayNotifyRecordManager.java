@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.base.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.payment.core.paymodel.base.entity.PayNotifyRecord;
@@ -21,6 +22,8 @@ public class PayNotifyRecordManager extends BaseManager<PayNotifyRecordMapper,Pa
 
     public Page<PayNotifyRecord> page(PageParam pageParam){
         Page<PayNotifyRecord> mpPage = MpUtils.getMpPage(pageParam, PayNotifyRecord.class);
-        return lambdaQuery().page(mpPage);
+        return lambdaQuery()
+                .orderByDesc(MpBaseEntity::getCreateTime)
+                .page(mpPage);
     }
 }

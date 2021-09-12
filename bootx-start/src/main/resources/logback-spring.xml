@@ -2,7 +2,7 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <!--项目名称-->
-    <property name="appname" value="boot-platform"/>
+    <property name="appname" value="bootx-platform"/>
     <!--日志位置-->
     <property name="logdir" value="/data/logs/${appname}"/>
     <!-- 这个要放下面 -->

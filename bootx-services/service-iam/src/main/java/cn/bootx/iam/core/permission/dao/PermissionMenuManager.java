@@ -16,12 +16,6 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class PermissionMenuManager extends BaseManager<PermissionMenuMapper, PermissionMenu> {
 
-    public void setLeaf(Long pid, boolean leaf) {
-        lambdaUpdate().eq(PermissionMenu::getParentId,pid)
-                .set(PermissionMenu::isLeaf,leaf)
-                .update();
-    }
-
     public boolean existsByParentId(Long pid) {
         return existedByField(PermissionMenu::getParentId,pid);
     }

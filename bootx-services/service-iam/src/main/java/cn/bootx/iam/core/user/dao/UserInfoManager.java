@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.user.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.core.user.entity.UserInfo;
@@ -25,12 +26,30 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
         return existedByField(UserInfo::getUsername,username);
     }
 
+    public boolean existsByUsername(String username,Long id) {
+        return lambdaQuery().eq(UserInfo::getUsername, username)
+                .ne(MpBaseEntity::getId,id)
+                .exists();
+    }
+
     public boolean existsByEmail(String email) {
         return existedByField(UserInfo::getEmail,email);
     }
 
+    public boolean existsByEmail(String email,Long id) {
+        return lambdaQuery().eq(UserInfo::getEmail, email)
+                .ne(MpBaseEntity::getId,id)
+                .exists();
+    }
+
     public boolean existsByPhone(String phone) {
         return existedByField(UserInfo::getPhone,phone);
+    }
+
+    public boolean existsByPhone(String phone,Long id) {
+        return lambdaQuery().eq(UserInfo::getPhone, phone)
+                .ne(MpBaseEntity::getId,id)
+                .exists();
     }
 
     public Optional<UserInfo> findByUsername(String username) {

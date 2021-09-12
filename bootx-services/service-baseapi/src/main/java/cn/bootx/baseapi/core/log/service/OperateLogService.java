@@ -40,8 +40,8 @@ public class OperateLogService {
     /**
      * 分页
      */
-    public PageResult<OperateLogDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(operateLogManager.page(pageParam));
+    public PageResult<OperateLogDto> page(PageParam pageParam, OperateLogDto operateLogDto){
+        return MpUtils.convert2PageResult(operateLogManager.page(pageParam,operateLogDto));
     }
 
     /**

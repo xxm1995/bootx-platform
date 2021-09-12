@@ -1,5 +1,6 @@
 package cn.bootx.starter.auth.authentication;
 
+import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,14 +17,14 @@ public interface AbstractAuthentication {
     /**
      * 认证前操作
      */
-    default void authenticationBefore(HttpServletRequest request, HttpServletResponse response) {
+    default void authenticationBefore(HttpServletRequest request, HttpServletResponse response, AuthClient authClient) {
 
     }
 
     /**
      * 尝试认证, 必须重写
      */
-    @NotNull AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response);
+    @NotNull AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient);
 
     /**
      * 认证后处理
@@ -35,9 +36,9 @@ public interface AbstractAuthentication {
     /**
      * 认证流程
      */
-    default AuthInfoResult authentication(HttpServletRequest request, HttpServletResponse response){
-        this.authenticationBefore(request,response);
-        AuthInfoResult authInfoResult = this.attemptAuthentication(request, response);
+    default AuthInfoResult authentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient){
+        this.authenticationBefore(request,response,authClient);
+        AuthInfoResult authInfoResult = this.attemptAuthentication(request, response,authClient);
         authenticationAfter(authInfoResult,request,response);
         return authInfoResult;
     }

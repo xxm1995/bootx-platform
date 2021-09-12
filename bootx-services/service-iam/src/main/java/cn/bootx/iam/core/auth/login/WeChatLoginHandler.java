@@ -2,6 +2,7 @@ package cn.bootx.iam.core.auth.login;
 
 import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
+import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
     }
 
     @Override
-    public AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
+    public AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient) {
         return null;
     }
 }

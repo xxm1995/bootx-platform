@@ -1,12 +1,14 @@
 package cn.bootx.starter.auth.util;
 
 import cn.bootx.common.core.code.CommonCode;
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.common.core.exception.BizException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.experimental.UtilityClass;
+import org.springframework.lang.Nullable;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**
@@ -16,6 +18,7 @@ import java.util.Optional;
 */
 @UtilityClass
 public class SecurityUtil {
+    private final String CLIENT_PARAMETER = "client";
 
     /**
      * 获取当前用户,无异常
@@ -42,5 +45,13 @@ public class SecurityUtil {
      */
     public UserDetail getUser(){
         return getCurrentUser().orElseThrow(() -> new BizException("未登录"));
+    }
+
+    /**
+     * 获取登录方式
+     */
+    @Nullable
+    public String obtainClient(HttpServletRequest request) {
+        return request.getParameter(CLIENT_PARAMETER);
     }
 }

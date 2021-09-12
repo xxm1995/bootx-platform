@@ -31,12 +31,4 @@ public class CaptchaController {
         return Res.ok(captchaService.imgCaptcha());
     }
 
-    @IgnoreAuth
-    @ApiOperation("发送短信验证码")
-    @PostMapping("/sendSmsCaptcha")
-    public ResResult<Void> sendSmsCaptcha(String phone){
-        captchaService.sendSmsCaptcha(phone);
-        return Res.ok();
-    }
-
 }

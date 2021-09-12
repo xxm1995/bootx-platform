@@ -38,6 +38,10 @@ public class Res{
         return new ResResult<T>(code, msg);
     }
 
+    public static <T> ResResult<T> response(int code, String msg,String traceId) {
+        return new ErrorResult<T>(code, msg,traceId);
+    }
+
     public static <T> ResResult<T> response(int code, String msg, T data) {
         return new ResResult<T>(code, data, msg);
     }

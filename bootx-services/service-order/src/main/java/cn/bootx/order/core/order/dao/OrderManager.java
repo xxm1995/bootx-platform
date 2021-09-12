@@ -30,7 +30,9 @@ public class OrderManager extends BaseManager<OrderMapper,Order> {
 
     public Page<Order> page(PageParam pageParam) {
         Page<Order> mpPage = MpUtils.getMpPage(pageParam, Order.class);
-        return lambdaQuery().page(mpPage);
+        return lambdaQuery()
+                .orderByDesc(MpBaseEntity::getCreateTime)
+                .page(mpPage);
     }
 
     /**

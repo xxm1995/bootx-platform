@@ -1,5 +1,6 @@
 package cn.bootx.baseapi.core.log.entity;
 
+import cn.bootx.baseapi.core.log.convert.LogConvert;
 import cn.bootx.baseapi.dto.log.OperateLogDto;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -67,6 +68,6 @@ public class OperateLog implements EntityBaseFunction<OperateLogDto> {
 
     @Override
     public OperateLogDto toDto() {
-        return null;
+        return LogConvert.CONVERT.convert(this);
     }
 }
