@@ -1,4 +1,4 @@
-# Bootx-Platform 
+# Bootx-Platform ([前端项目](https://gitee.com/bootx/bootx-platform-ui))
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
@@ -28,7 +28,7 @@
 
 ## 🍒文档
 
-- 前端项目地址：[前端项目](https://gitee.com/bootx/bootx-cloud-ui)
+- 前端项目地址：[前端项目](https://gitee.com/bootx/bootx-platform-ui)
 - 项目文档：[开发文档](https://www.yuque.com/bootx/bootx-cloud/)
 - 项目启动：[启动文档](https://www.yuque.com/bootx/bootx-cloud/vpi0gn)
 - 开发计划：[开发计划]()
