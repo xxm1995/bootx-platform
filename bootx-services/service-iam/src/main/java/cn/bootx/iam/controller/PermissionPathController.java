@@ -62,4 +62,6 @@ public class PermissionPathController {
         return Res.ok(pathService.findAll());
     }
 
+
+
 }

@@ -38,11 +38,18 @@ public class RoleMenuController {
         return Res.ok(rolePermissionService.findMenuTree());
     }
 
+    @ApiOperation("获取权限菜单id列表,不包含按钮权限")
+    @GetMapping("/findMenuIds")
+    public ResResult<List<Long>> findMenuIds(){
+        return Res.ok(rolePermissionService.findMenuIds());
+    }
+
     @ApiOperation("获取按钮权限, 不包含菜单权限")
     @GetMapping("/findButtonPermission")
     public ResResult<List<String>> findButtonPermission(){
         return Res.ok(rolePermissionService.findButtonPermission());
     }
+
 
     @ApiOperation("根据角色id获取关联权限id")
     @GetMapping("/findIdsByRole")

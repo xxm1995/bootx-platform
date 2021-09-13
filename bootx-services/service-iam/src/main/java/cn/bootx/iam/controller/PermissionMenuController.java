@@ -37,7 +37,7 @@ public class PermissionMenuController {
         return Res.ok(permissionService.update(param));
     }
 
-    @ApiOperation("获取权限树")
+    @ApiOperation("获取权限菜单树")
     @GetMapping("/tree")
     public ResResult<List<PermissionMenuDto>> tree(){
         return Res.ok(rolePermissionService.tree());
@@ -49,7 +49,8 @@ public class PermissionMenuController {
         return Res.ok(permissionService.findById(id));
     }
 
-    @ApiOperation("根据id查询")
+
+    @ApiOperation("删除")
     @DeleteMapping("/delete")
     public ResResult<Void> delete(Long id){
         permissionService.delete(id);

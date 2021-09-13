@@ -80,6 +80,17 @@ public class RoleMenuService {
     }
 
     /**
+     * 获取权限菜单id列表,不包含按钮权限
+     */
+    public List<Long> findMenuIds() {
+        List<PermissionMenuDto> permissions = this.findPermissions();
+        return permissions.stream()
+                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_BUTTON, o.getMenuType()))
+                .map(PermissionMenuDto::getId)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * 获取按钮权限
      */
     public List<String> findButtonPermission(){
@@ -166,4 +177,5 @@ public class RoleMenuService {
         children.sort(Comparator.comparingDouble(PermissionMenuDto::getSortNo));
         return children;
     }
+
 }
