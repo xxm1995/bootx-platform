@@ -52,7 +52,7 @@ public class RolePathService {
      * 添加路径角色
      */
     @Transactional(rollbackFor = Exception.class)
-    public void addPathRole(Long permissionId, List<Long> roleIds){
+    public void save(Long permissionId, List<Long> roleIds){
         // 删旧增新
         rolePathManager.deleteByPermission(permissionId);
 
@@ -72,7 +72,7 @@ public class RolePathService {
     }
 
     /**
-     * 查询用户查询拥有的权限信息
+     * 查询用户查询拥有的路径权限信息
      */
     public List<PermissionPathDto> findPathsByUser(Long userId){
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
@@ -83,7 +83,6 @@ public class RolePathService {
         } else {
             paths = this.findPermissionsByUser(userId);
         }
-
         return paths;
     }
 
@@ -107,5 +106,15 @@ public class RolePathService {
             permissions = pathService.findByIds(permissionIds);
         }
         return permissions;
+    }
+
+    /**
+     * 根据角色id获取关联权限id
+     */
+    public List<Long> findIdsByRole(Long roleId) {
+        List<RolePath> rolePermissions = rolePathManager.findAllByRole(roleId);
+        return rolePermissions.stream()
+                .map(RolePath::getPermissionId)
+                .collect(Collectors.toList());
     }
 }

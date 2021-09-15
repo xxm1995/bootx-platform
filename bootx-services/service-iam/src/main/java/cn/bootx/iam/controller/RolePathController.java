@@ -24,8 +24,8 @@ public class RolePathController {
     private final RolePathService rolePathService;
 
     @ApiOperation("保存角色权限关联关系")
-    @PostMapping("/addRolePath")
-    public ResResult<Boolean> addRolePath(@RequestBody RolePermissionParam param){
+    @PostMapping("/save")
+    public ResResult<Boolean> save(@RequestBody RolePermissionParam param){
         rolePathService.addRolePath(param.getRoleId(),param.getPermissionIds());
         return Res.ok(true);
     }
@@ -34,5 +34,11 @@ public class RolePathController {
     @GetMapping("/findPathsByUser")
     public ResResult<List<PermissionPathDto>> findPathsByUser(){
         return Res.ok(rolePathService.findPathsByUser());
+    }
+
+    @ApiOperation("根据角色id获取关联权限id")
+    @GetMapping("/findIdsByRole")
+    public ResResult<List<Long>> findIdsByRole(Long roleId){
+        return Res.ok(rolePathService.findIdsByRole(roleId));
     }
 }

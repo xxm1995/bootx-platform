@@ -23,43 +23,42 @@ import java.util.List;
 @RequestMapping("/role/menu")
 @RequiredArgsConstructor
 public class RoleMenuController {
-    private final RoleMenuService rolePermissionService;
+    private final RoleMenuService roleMenuService;
 
     @ApiOperation("保存请求权限关系")
     @PostMapping("/save")
     public ResResult<Boolean> save(@RequestBody RolePermissionParam param){
-        rolePermissionService.save(param.getRoleId(),param.getPermissionIds());
+        roleMenuService.save(param.getRoleId(),param.getPermissionIds());
         return Res.ok(true);
     }
 
     @ApiOperation("获取菜单树, 不包含按钮权限")
     @GetMapping("/findMenuTree")
     public ResResult<List<PermissionMenuDto>> findMenuTree(){
-        return Res.ok(rolePermissionService.findMenuTree());
+        return Res.ok(roleMenuService.findMenuTree());
     }
 
     @ApiOperation("获取权限菜单id列表,不包含按钮权限")
     @GetMapping("/findMenuIds")
     public ResResult<List<Long>> findMenuIds(){
-        return Res.ok(rolePermissionService.findMenuIds());
+        return Res.ok(roleMenuService.findMenuIds());
     }
 
     @ApiOperation("获取按钮权限, 不包含菜单权限")
     @GetMapping("/findButtonPermission")
     public ResResult<List<String>> findButtonPermission(){
-        return Res.ok(rolePermissionService.findButtonPermission());
+        return Res.ok(roleMenuService.findButtonPermission());
     }
-
 
     @ApiOperation("根据角色id获取关联权限id")
     @GetMapping("/findIdsByRole")
     public ResResult<List<Long>> findIdsByRole(Long roleId){
-        return Res.ok(rolePermissionService.findIdsByRole(roleId));
+        return Res.ok(roleMenuService.findIdsByRole(roleId));
     }
 
     @ApiOperation("获取菜单和按钮权限")
     @GetMapping("/findMenuAndButtonPermission")
     public ResResult<UserMenuAndButtonDto> findMenuAndButtonPermission(){
-        return Res.ok(rolePermissionService.findMenuAndButtonPermission());
+        return Res.ok(roleMenuService.findMenuAndButtonPermission());
     }
 }
