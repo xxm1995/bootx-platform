@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,6 +90,7 @@ public class DictionaryItemService {
     public List<DictionaryItemDto> findByDictionaryId(Long dictionaryId) {
         return dictionaryItemManager.findByDictId(dictionaryId)
                 .stream()
+                .sorted(Comparator.comparingDouble(DictionaryItem::getSortNo))
                 .map(DictionaryItem::toDto)
                 .collect(Collectors.toList());
     }

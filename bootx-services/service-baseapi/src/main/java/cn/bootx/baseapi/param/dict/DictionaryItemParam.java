@@ -33,6 +33,9 @@ public class DictionaryItemParam implements Serializable {
     /** 名称 */
     private String name;
 
+    /** 字典项排序 */
+    private Double sortNo;
+
     /** 备注 */
     private String remark;
 }

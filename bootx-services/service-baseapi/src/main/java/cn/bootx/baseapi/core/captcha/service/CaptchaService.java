@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.core.captcha.service;
 
-import cn.bootx.common.redis.RedisClient;
 import cn.bootx.baseapi.dto.captcha.CaptchaDataResult;
+import cn.bootx.common.redis.RedisClient;
 import cn.hutool.core.util.RandomUtil;
 import com.wf.captcha.ArithmeticCaptcha;
 import lombok.RequiredArgsConstructor;

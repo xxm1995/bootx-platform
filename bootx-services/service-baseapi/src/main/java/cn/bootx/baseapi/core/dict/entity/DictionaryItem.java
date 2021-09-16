@@ -33,12 +33,12 @@ public class DictionaryItem extends MpBaseEntity implements EntityBaseFunction<D
     /** 名称 */
     private String name;
 
+    /** 字典项排序 */
+    private Double sortNo;
+
     /** 备注 */
     private String remark;
 
-    public static DictionaryItem init(DictionaryItemDto in) {
-        return DictionaryConvert.CONVERT.convert(in);
-    }
     public static DictionaryItem init(DictionaryItemParam in) {
         return DictionaryConvert.CONVERT.convert(in);
     }
