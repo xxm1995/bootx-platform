@@ -56,10 +56,6 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
                 .page(mpPage);
     }
 
-    public List<DictionaryItem> findAllByDictCode(String dictCode) {
-        return findAllByField(DictionaryItem::getDictCode,dictCode);
-    }
-
     public void updateDictCode(Long dictId, String dictCode) {
         lambdaUpdate().set(DictionaryItem::getDictCode,dictCode)
                 .eq(DictionaryItem::getDictId,dictId)

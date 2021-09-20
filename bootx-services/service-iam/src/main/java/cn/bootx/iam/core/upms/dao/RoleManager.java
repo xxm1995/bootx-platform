@@ -39,7 +39,8 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
 
     public boolean existsByName(String name, Long id) {
         return lambdaQuery().eq(Role::getName,name)
-                .ne(Role::getId,id).exists();
+                .ne(Role::getId,id)
+                .exists();
     }
 
     public boolean existsById(Long roleId) {

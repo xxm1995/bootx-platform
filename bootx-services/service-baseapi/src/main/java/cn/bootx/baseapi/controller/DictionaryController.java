@@ -63,4 +63,15 @@ public class DictionaryController {
         return Res.ok(dictionaryService.page(pageParam,param));
     }
 
+    @ApiOperation(value = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code) {
+        return Res.ok(dictionaryService.existsByCode(code));
+    }
+
+    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long id) {
+        return Res.ok(dictionaryService.existsByCode(code,id));
+    }
 }

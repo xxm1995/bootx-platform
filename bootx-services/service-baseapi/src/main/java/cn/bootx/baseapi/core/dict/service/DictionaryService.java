@@ -77,6 +77,20 @@ public class DictionaryService {
         return dictionaryManager.updateById(dictionary).toDto();
 	}
 
+    /**
+     * 判断编码是否存在
+     */
+    public boolean existsByCode(String code){
+        return dictionaryManager.existsByCode(code);
+    }
+
+    /**
+     * 判断编码是否存在
+     */
+    public boolean existsByCode(String code,Long id){
+        return dictionaryManager.existsByCode(code,id);
+    }
+
 	/**
 	 * 查询指定字典
 	 */

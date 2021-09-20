@@ -30,8 +30,7 @@ public class ClientController {
     @ApiOperation(value = "添加终端")
     @PostMapping(value = "/add")
     public ResResult<ClientDto> add(@RequestBody ClientParam param){
-        ClientDto result = clientService.add(param);
-        return Res.ok(result);
+        return Res.ok(clientService.add(param));
     }
 
     @ApiOperation(value = "修改终端（返回终端对象）")
@@ -39,7 +38,7 @@ public class ClientController {
     public ResResult<ClientDto> update(@RequestBody ClientParam param){
         return Res.ok(clientService.update(param));
     }
-    
+
     @ApiOperation(value = "删除终端")
     @DeleteMapping(value = "/delete")
     public ResResult<Void> delete(Long id){
@@ -70,5 +69,17 @@ public class ClientController {
     @GetMapping(value = "/page")
     public ResResult<PageResult<ClientDto>> page(PageParam pageParam, ClientParam clientParam){
         return Res.ok(clientService.page(pageParam,clientParam));
+    }
+
+    @ApiOperation(value = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code) {
+        return Res.ok(clientService.existsByCode(code));
+    }
+
+    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long id) {
+        return Res.ok(clientService.existsByCode(code,id));
     }
 }

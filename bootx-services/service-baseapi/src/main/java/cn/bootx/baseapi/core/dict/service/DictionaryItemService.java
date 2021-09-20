@@ -104,22 +104,24 @@ public class DictionaryItemService {
     }
 
     /**
+     * 判断编码是否存在
+     */
+    public boolean existsByCode(String code, Long dictId){
+        return dictionaryItemManager.existsByCode(code,dictId);
+    }
+
+    /**
+     * 判断编码是否存在
+     */
+    public boolean existsByCode(String code,Long dictId,Long id){
+        return dictionaryItemManager.existsByCode(code,dictId,id);
+    }
+
+    /**
      * 获取全部字典项
      */
     public List<DictionaryItemDto> findAll(){
         return ResultConvertUtils.dtoListConvert(dictionaryItemManager.findAll());
     }
 
-    /**
-     * 根据type 查询字典
-     */
-    public List<DictionaryItemDto> findByDictCode(String dictCode){
-        return ResultConvertUtils.dtoListConvert(dictionaryItemManager.findAllByDictCode(dictCode));
-    }
-
-    public DictionaryItemDto getItem(String dictCode, String itemCode) {
-        return dictionaryItemManager.findByDictCodeAndCode(dictCode,itemCode)
-                .map(DictionaryItem::toDto)
-                .orElse(null);
-    }
 }
