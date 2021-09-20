@@ -31,13 +31,13 @@ public class MailConfig extends MpBaseEntity implements EntityBaseFunction<MailC
     /** 邮箱服务器 host */
     private String host;
 
-    /** 邮箱服务器 port */
+    /** 邮箱服务器 端口 */
     private Integer port;
 
-    /** 邮箱服务器 username */
+    /** 邮箱服务器 账号 */
     private String username;
 
-    /** 邮箱服务器 password */
+    /** 邮箱服务器 密码 */
     private String password;
 
     /** 邮箱服务器 sender */
@@ -53,9 +53,6 @@ public class MailConfig extends MpBaseEntity implements EntityBaseFunction<MailC
     /** 安全方式 */
     private Integer securityType;
 
-    public static MailConfig init(MailConfigDto in) {
-        return MailConvert.CONVERT.convert(in);
-    }
     public static MailConfig init(MailConfigParam in) {
         return MailConvert.CONVERT.convert(in);
     }

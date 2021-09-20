@@ -1,7 +1,9 @@
 package cn.bootx.notice.controller;
 
+import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.notice.core.mail.service.MailConfigService;
 import cn.bootx.notice.dto.mail.MailConfigDto;
@@ -36,6 +38,12 @@ public class MailConfigController {
     public ResResult<MailConfigDto> findById(Long id) {
         MailConfigDto mailConfig = mailConfigService.findById(id);
         return Res.ok(mailConfig);
+    }
+
+    @ApiOperation("分页")
+    @GetMapping("/page")
+    public ResResult<PageResult<MailConfigDto>> page(PageParam pageParam, MailConfigParam param){
+        return Res.ok(mailConfigService.page(pageParam,param));
     }
 
     @ApiOperation(value = "增加新邮箱配置")

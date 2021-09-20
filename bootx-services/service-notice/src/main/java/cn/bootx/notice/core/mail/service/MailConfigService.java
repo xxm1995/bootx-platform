@@ -1,6 +1,9 @@
 package cn.bootx.notice.core.mail.service;
 
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.notice.core.mail.dao.MailConfigManager;
 import cn.bootx.notice.core.mail.entity.MailConfig;
 import cn.bootx.notice.dto.mail.MailConfigDto;
@@ -46,6 +49,13 @@ public class MailConfigService {
      */
     public MailConfigDto getDefaultConfig() {
         return ResultConvertUtils.dtoConvert(mailConfigManager.findByActivity());
+    }
+
+    /**
+     * 分页
+     */
+    public PageResult<MailConfigDto> page(PageParam pageParam,MailConfigParam param){
+        return MpUtils.convert2PageResult(mailConfigManager.page(pageParam,param));
     }
 
     /**

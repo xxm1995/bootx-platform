@@ -1,5 +1,6 @@
 package cn.bootx.notice.core.site.service;
 
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtils;
@@ -7,7 +8,6 @@ import cn.bootx.notice.core.site.dao.SiteMessageManager;
 import cn.bootx.notice.core.site.entity.SiteMessage;
 import cn.bootx.notice.dto.site.SiteMessageDto;
 import cn.bootx.notice.param.site.SendSiteMessageParam;
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

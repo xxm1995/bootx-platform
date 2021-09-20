@@ -26,10 +26,10 @@ public class MailConfigDto extends BaseDto implements Serializable {
     @ApiModelProperty(name = "code", value = "编号")
     private String code;
 
-    @ApiModelProperty(name = "host", value = "邮箱服务器 host")
+    @ApiModelProperty(name = "host", value = "邮箱服务器 地址")
     private String host;
 
-    @ApiModelProperty(name = "port", value = "邮箱服务器 port")
+    @ApiModelProperty(name = "port", value = "邮箱服务器 端口")
     private Integer port;
 
     @ApiModelProperty(name = "username", value = "邮箱服务器 username")
@@ -47,6 +47,9 @@ public class MailConfigDto extends BaseDto implements Serializable {
     @ApiModelProperty(name = "activity", value = "是否默认配置")
     private Boolean activity = false;
 
+    /**
+     * @see cn.bootx.notice.code.MailCode
+     */
     @ApiModelProperty(value = "安全方式")
     private Integer securityType;
 }
