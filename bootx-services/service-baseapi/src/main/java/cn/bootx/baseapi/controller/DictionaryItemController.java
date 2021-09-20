@@ -75,10 +75,15 @@ public class DictionaryItemController {
         return Res.ok(dictionaryItemService.findAll());
     }
 
-    @ApiOperation("获取字典项")
-    @GetMapping("/getItem")
-    public ResResult<DictionaryItemDto> getItem(String dictCode, String itemCode){
-        return Res.ok(dictionaryItemService.getItem(dictCode,itemCode));
-    }
 
+    @ApiOperation(value = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code,Long dictId) {
+        return Res.ok(dictionaryItemService.existsByCode(code,dictId));
+    }
+    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long dictId,Long id) {
+        return Res.ok(dictionaryItemService.existsByCode(code,dictId,id));
+    }
 }

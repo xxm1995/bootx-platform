@@ -74,4 +74,27 @@ public class RoleController {
         return Res.ok(roleService.page(pageParam));
     }
 
+    @ApiOperation(value = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code) {
+        return Res.ok(roleService.existsByCode(code));
+    }
+
+    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long id) {
+        return Res.ok(roleService.existsByCode(code,id));
+    }
+
+    @ApiOperation(value = "名称是否被使用")
+    @GetMapping("/existsByName")
+    public ResResult<Boolean> existsByName(String name) {
+        return Res.ok(roleService.existsByName(name));
+    }
+
+    @ApiOperation(value = "名称是否被使用(不包含自己)")
+    @GetMapping("/existsByNameNotId")
+    public ResResult<Boolean> existsByName(String name,Long id) {
+        return Res.ok(roleService.existsByName(name,id));
+    }
 }

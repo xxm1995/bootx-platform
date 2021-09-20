@@ -7,34 +7,32 @@
  <img src="https://img.shields.io/badge/Spring%20Boot-2.5-blue.svg" alt="Downloads">
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
+
 ## 🍈项目介绍
 
 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
-致力将开源版打造成超越商业版后台管理框架的项目，**分布式版实现地址 [Bootx-Cloud](https://gitee.com/bootx/bootx-platform)**
+致力将开源版打造成超越商业版后台管理框架的项目，**分布式版实现地址 [Bootx-Cloud](https://gitee.com/bootx/bootx-platform) ，暂时先以单体为主**
 
-服务分布：
+功能：
 
-1. 基础服务：统一网关、IAM认证、日志分析、消息通知等
-2. 平台服务：平台管理、业务报警平台等
+1. 基础服务：用户管理、权限认证、终端管理、日志审计等
+2. 通知服务：邮件通知、站内信、消息模板、短信通知等
 3. 电商服务：收单支付、营销管理、商品管理、订单管理等
-4. 数据服务：日志分析、数据中心(开发中)等
-5. OA办公服务：工作流服务(开发中)、办公中心(开发中)
-
-## 🥥项目体验
-
-- 系统管理平台：[管理平台](http://web.cloud.bootx.cn/)
-- Swagger聚合接口：[API文档](http://gateway.dev.bootx.cn:9000/doc.html)
-- 日志分析：[Kibana管理平台](http://elk.dev.bootx.cn:5601/app/discover#)
+4. 数据服务：日志分析、数据中心等
+5. 监控服务：服务监控、缓存监控、错误预警单体
+6. OA办公服务：工单服务、工作流服务
+7. 财务管理：待定
+8. ERP：企业资源计划、待定
 
 ## 🍒文档
 
+- 系统演示地址：[管理平台](http://web.platform.bootx.cn/)
 - 前端项目地址：[前端项目](https://gitee.com/bootx/bootx-platform-ui)
-- 项目文档：[开发文档](https://www.yuque.com/bootx/bootx-cloud/)
-- 项目启动：[启动文档](https://www.yuque.com/bootx/bootx-cloud/vpi0gn)
-- 开发计划：[开发计划]()
+- 项目文档：[开发文档](https://www.yuque.com/bootx/bootx-platform/)
+- 快速启动：[启动文档](https://www.yuque.com/bootx/bootx-platform/vpi0gn), [QuickStart](./_doc/quickstart.md)
+- 开发计划：[开发任务](./_doc/TASK.md)
 
-## 🍇项目开发结构说明(推荐)
-
+## 🍇项目结构说明
 
 **模块分包设计**
 
@@ -60,71 +58,6 @@ service-iam
         ├── entity -- 数据库实体
         ├── service -- 服务类
 ```
-
-**Core包开发设计**
-
-项目使用MyBatis-Plus作为持久层框架，Mapper继承BaseMapper类，这个属于必须创建的，否则MyBatis-Plus无法进行拥有基础CRUD功能
-```java
-@Mapper
-public interface UserInfoMapper extends BaseMapper<UserInfo> {
-
-}
-```
-推荐创建`Manager`对像来隔离对数据库的操作，通过`Manager`继承`BaseManager`对象，来获取操作数据的能力，`BaseManager` 类似mp的`ServiceImpl`对象，针对项目做了优化，Api风格类似Jpa，
-如果不习惯可以继续使用`ServiceImpl`。如果简单快速一次性项目的话，可以省略`Manager`层，直接通过`Service`继承获取操作数据库的能力。
-```java
-@Repository
-@RequiredArgsConstructor
-public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
-    
-}
-```
-Server直接创建出对象并由其它Service引用，不再创建一个一对一的接口（service/impl模式），简化代码结构，开发和Debug时跳转也舒服不少。
-在service类有对应接口时，Spring会对类通过动态代理增强，没有对应接口的时候就会通过CGLIB进行增强，在不使用native编译情况下，我们使用CGLIB没有任何问题，而且我们项目也无法支持native编译，
-
-```java
-@Service
-@RequiredArgsConstructor
-public class UserInfoService {
-    // 推荐使用构造器注入，尽量避免循环依赖，出现循环依赖95%是设计出了问题
-    private final XxxService xxxService;
-    
-}
-```
-## 🍇快速上手
-> 可以参考一下Demo示例模块
-1. 下载后端代码到本地，使用IDEA打开，下载前端代码，使用Webstorm或者VsCode开打，下载依赖
-2. 创建业务模块，并在pom里添加需要到依赖模块，创建一个`xxxApplication`，并添加到`spring.factories`文件中，激活自动扫描。
-    ```java
-    @ComponentScan
-    // 推荐只扫描添加 @Mapper 注解的mapper，防止其他接口被误代理
-    @MapperScan(annotationClass = Mapper.class)
-    public class PaymentCenterApplication {
-    
-    }
-    ```
-   ```properties
-    ## 配置自动化配置
-    org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-    cn.bootx.payment.PaymentApplication
-   ```
-3. 在`application.yml`相关文件中配置Swagger扫描，在多模块扫码中添加新创建的业务模块
-```yaml
-bootx:
-  common:
-    swagger:
-      enabled: true
-      version: 1.1.0
-      title: bootx-platform平台单体版
-      description: bootx平台单体版
-      # 多模块扫码
-      base-packages:
-        payment: cn.bootx.payment
-        iam: cn.bootx.iam
-        baseapi: cn.bootx.baseapi
-        notice: cn.bootx.notice
-```
-4. 可以在bootx-service中找到用不到的功能模块给删除了，然后在数据库删除对应的表，通过表前缀就可以找到模块对应的表
 
 ## 🥞模块文档导航
 

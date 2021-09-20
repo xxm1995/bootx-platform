@@ -58,7 +58,7 @@ public class RoleService {
     public RoleDto update(RoleParam roleParam){
         Long id = roleParam.getId();
 
-        //Name唯一性校验（同一个租户下名称code不能相同）
+        //name和code唯一性校验（同一个租户下名称code不能相同）
         if (roleManager.existsByCode(roleParam.getCode(),id)){
             throw new RoleAlreadyExistedException();
         }
@@ -115,5 +115,32 @@ public class RoleService {
      */
     public RoleDto findById(Long id) {
         return ResultConvertUtils.dtoConvert(roleManager.findById(id));
+    }
+
+    /**
+     * code是否存在
+     */
+    public boolean existsByCode(String code){
+        return roleManager.existsByCode(code);
+    }
+    /**
+     * code是否存在
+     */
+    public boolean existsByCode(String code,Long id){
+        return roleManager.existsByCode(code,id);
+    }
+
+    /**
+     * name是否存在
+     */
+    public boolean existsByName(String name){
+        return roleManager.existsByName(name);
+    }
+
+    /**
+     * name是否存在
+     */
+    public boolean existsByName(String name,Long id){
+        return roleManager.existsByName(name,id);
     }
 }

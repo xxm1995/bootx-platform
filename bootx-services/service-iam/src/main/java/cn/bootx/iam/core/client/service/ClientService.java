@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**   
-* 
-* @author xxm  
-* @date 2021/8/25
-*/
+/**
+ * 终端
+ * @author xxm
+ * @date 2021/8/25
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -80,7 +80,24 @@ public class ClientService {
         return ResultConvertUtils.dtoListConvert(clientManager.findAll());
     }
 
+    /**
+     * 删除
+     */
     public void delete(Long id) {
         clientManager.deleteById(id);
+    }
+
+    /**
+     * 编码是否已经存在
+     */
+    public boolean existsByCode(String code){
+        return clientManager.existsByCode(code);
+    }
+
+    /**
+     * 编码是否已经存在(不包含自身)
+     */
+    public boolean existsByCode(String code,Long id){
+        return clientManager.existsByCode(code,id);
     }
 }
