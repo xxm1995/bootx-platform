@@ -26,11 +26,11 @@ public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, M
         return findByField(MessageTemplate::getCode,code);
     }
 
-    public boolean existedByCode(String code){
+    public boolean existsByCode(String code){
         return existedByField(MessageTemplate::getCode,code);
     }
 
-    public boolean existedByCode(String code,Long id){
+    public boolean existsByCode(String code, Long id){
         return lambdaQuery().eq(MessageTemplate::getCode, code)
                 .ne(MpBaseEntity::getId,id)
                 .exists();

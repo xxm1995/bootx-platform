@@ -66,6 +66,20 @@ public class MailConfigService {
     }
 
     /**
+     * 编码是否已经存在
+     */
+    public boolean existsByCode(String code){
+        return mailConfigManager.existsByCode(code);
+    }
+
+    /**
+     * 编码是否已经存在(不包含自身)
+     */
+    public boolean existsByCode(String code,Long id){
+        return mailConfigManager.existsByCode(code,id);
+    }
+
+    /**
      * 添加新邮箱配置
      */
     @Transactional(rollbackFor = Exception.class)

@@ -44,10 +44,22 @@ public class MessageTemplateController {
         return Res.ok(messageTemplateService.page(pageParam));
     }
 
-    @ApiOperation("单条")
+    @ApiOperation("获取详情")
     @GetMapping("/findById")
     public ResResult<MessageTemplateDto> findById(Long id){
         return Res.ok(messageTemplateService.findById(id));
+    }
+
+    @ApiOperation(value = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code) {
+        return Res.ok(messageTemplateService.existsByCode(code));
+    }
+
+    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long id) {
+        return Res.ok(messageTemplateService.existsByCode(code,id));
     }
 
     @ApiOperation("渲染模板")

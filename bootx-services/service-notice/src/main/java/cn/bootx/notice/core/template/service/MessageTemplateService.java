@@ -36,7 +36,7 @@ public class MessageTemplateService {
     public MessageTemplateDto add(MessageTemplateParam param){
         MessageTemplate messageTemplate = MessageTemplate.init(param);
         // code 不重复
-        if (messageTemplateManager.existedByCode(messageTemplate.getCode())){
+        if (messageTemplateManager.existsByCode(messageTemplate.getCode())){
             throw new BizException("模板编码不可重复");
         }
         return messageTemplateManager.save(messageTemplate).toDto();
@@ -48,7 +48,7 @@ public class MessageTemplateService {
      */
     public MessageTemplateDto update(MessageTemplateParam param){
         // code 不重复
-        if (messageTemplateManager.existedByCode(param.getCode(), param.getId())){
+        if (messageTemplateManager.existsByCode(param.getCode(), param.getId())){
             throw new BizException("模板编码不可重复");
         }
         MessageTemplate messageTemplate = messageTemplateManager.findById(param.getId())
@@ -69,6 +69,20 @@ public class MessageTemplateService {
      */
     public MessageTemplateDto findById(Long id){
         return messageTemplateManager.findById(id).map(MessageTemplate::toDto).orElse(null);
+    }
+
+    /**
+     * 编码是否已经存在
+     */
+    public boolean existsByCode(String code){
+        return messageTemplateManager.existsByCode(code);
+    }
+
+    /**
+     * 编码是否已经存在(不包含自身)
+     */
+    public boolean existsByCode(String code,Long id){
+        return messageTemplateManager.existsByCode(code,id);
     }
 
     /**

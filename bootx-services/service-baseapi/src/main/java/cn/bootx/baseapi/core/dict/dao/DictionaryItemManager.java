@@ -52,6 +52,7 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
         Page<DictionaryItem> mpPage = MpUtils.getMpPage(pageParam, DictionaryItem.class);
         return lambdaQuery()
                 .eq(DictionaryItem::getDictId,dictId)
+                .orderByAsc(DictionaryItem::getSortNo)
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);
     }

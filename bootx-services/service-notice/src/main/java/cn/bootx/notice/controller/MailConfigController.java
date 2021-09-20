@@ -75,4 +75,17 @@ public class MailConfigController {
         mailConfigService.deleteById(id);
         return Res.ok(true);
     }
+
+    @ApiOperation(value = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code) {
+        return Res.ok(mailConfigService.existsByCode(code));
+    }
+
+    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long id) {
+        return Res.ok(mailConfigService.existsByCode(code,id));
+    }
+
 }

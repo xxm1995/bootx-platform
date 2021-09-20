@@ -13,7 +13,7 @@ public interface MessageTemplateCode {
     /** 钉钉机器人 */
     int DING_TALK_ROBOT = 2;
 
-    /** 钉钉机器人 */
+    /** 短信 */
     int SMS = 3;
 
     /** Email */
