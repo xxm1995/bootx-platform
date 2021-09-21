@@ -33,7 +33,7 @@ public class MessageTemplateDto extends BaseDto implements Serializable {
     /**
      * 内容
      */
-    private String date;
+    private String data;
 
     /**
      * 备注

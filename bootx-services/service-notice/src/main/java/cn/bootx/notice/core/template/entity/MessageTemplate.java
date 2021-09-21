@@ -30,7 +30,7 @@ public class MessageTemplate extends MpBaseEntity implements EntityBaseFunction<
     /**
      * 内容
      */
-    private String date;
+    private String data;
 
     /**
      * 备注
@@ -42,10 +42,6 @@ public class MessageTemplate extends MpBaseEntity implements EntityBaseFunction<
      * @see MessageTemplateCode
      */
     private Integer type;
-
-    public static MessageTemplate init(MessageTemplateDto in) {
-        return MessageTemplateConvert.CONVERT.convert(in);
-    }
 
     public static MessageTemplate init(MessageTemplateParam in) {
         return MessageTemplateConvert.CONVERT.convert(in);

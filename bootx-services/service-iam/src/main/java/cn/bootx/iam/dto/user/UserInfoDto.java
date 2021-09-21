@@ -3,6 +3,7 @@ package cn.bootx.iam.dto.user;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.iam.code.UserStatusCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class UserInfoDto extends BaseDto implements Serializable {
     private String username;
 
     @ApiModelProperty("密码")
+    @JsonIgnore
     private String password;
 
     @ApiModelProperty("手机号")

@@ -91,7 +91,7 @@ public class MessageTemplateService {
     public String rendering(String code, Map<String,String> paramMap){
         MessageTemplate messageTemplate = messageTemplateManager.findByCode(code)
                 .orElseThrow(() -> new BizException("消息模板不存在"));
-        String date = messageTemplate.getDate();
+        String date = messageTemplate.getData();
         TemplateEngine engine = TemplateUtil.createEngine();
         Template template = engine.getTemplate(date);
         return template.render(paramMap);
