@@ -116,9 +116,7 @@ public class MailConfigService {
     @Transactional(rollbackFor = Exception.class)
     public void setUpActivity(Long id){
         MailConfig mailConfig = mailConfigManager.findById(id).orElseThrow(MailConfigNotExistException::new);
-        if (Objects.equals(mailConfig.getActivity(),Boolean.TRUE)){
-            return;
-        }
+        mailConfig.setActivity(true);
         mailConfigManager.removeAllActivity();
         mailConfigManager.updateById(mailConfig);
     }

@@ -55,6 +55,8 @@ public class MailConfigManager extends BaseManager<MailConfigMapper, MailConfig>
     }
 
     public void removeAllActivity() {
-        lambdaUpdate().eq(MailConfig::getActivity,Boolean.TRUE).set(MailConfig::getActivity,Boolean.FALSE);
+        lambdaUpdate().eq(MailConfig::getActivity,Boolean.TRUE)
+                .set(MailConfig::getActivity,Boolean.FALSE)
+                .update();
     }
 }
