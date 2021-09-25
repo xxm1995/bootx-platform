@@ -31,6 +31,35 @@ public class MailConfigService {
     private final MailConfigManager mailConfigManager;
 
     /**
+     * 添加新邮箱配置
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public MailConfigDto add(MailConfigParam param) {
+        if (mailConfigManager.existsByCode(param.getCode())) {
+            throw new MailConfigCodeAlreadyExistedException();
+        }
+
+        // 只能有一个配置处于活动状态
+        if(Objects.equals(param.getActivity(),Boolean.TRUE) && mailConfigManager.existsByActivity()) {
+            throw new DefaultMailConfigAlreadyExistedException();
+        }
+
+        MailConfig mailConfig = MailConfig.init(param);
+
+        return mailConfigManager.save(mailConfig).toDto();
+    }
+
+    /**
+     * 更新邮箱配置
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public MailConfigDto update(MailConfigParam param) {
+        MailConfig mailConfig = mailConfigManager.findById(param.getId()).orElseThrow(MailConfigNotExistException::new);
+        BeanUtil.copyProperties(param,mailConfig, CopyOptions.create().ignoreNullValue());
+        return mailConfigManager.updateById(mailConfig).toDto();
+    }
+
+    /**
      * 获取所有邮箱配置
      */
     public List<MailConfigDto> findAll() {
@@ -79,24 +108,7 @@ public class MailConfigService {
         return mailConfigManager.existsByCode(code,id);
     }
 
-    /**
-     * 添加新邮箱配置
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public MailConfigDto add(MailConfigParam param) {
-        if (mailConfigManager.existsByCode(param.getCode())) {
-            throw new MailConfigCodeAlreadyExistedException();
-        }
 
-        // 只能有一个配置处于活动状态
-        if(Objects.equals(param.getActivity(),Boolean.TRUE) && mailConfigManager.existsByActivity()) {
-            throw new DefaultMailConfigAlreadyExistedException();
-        }
-
-        MailConfig mailConfig = MailConfig.init(param);
-
-        return mailConfigManager.save(mailConfig).toDto();
-    }
 
     /**
      * 设置活动邮箱
@@ -112,19 +124,9 @@ public class MailConfigService {
     }
 
     /**
-     * 更新邮箱配置
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public MailConfigDto update(MailConfigParam param) {
-        MailConfig mailConfig = mailConfigManager.findById(param.getId()).orElseThrow(MailConfigNotExistException::new);
-        BeanUtil.copyProperties(param,mailConfig, CopyOptions.create().ignoreNullValue());
-        return mailConfigManager.updateById(mailConfig).toDto();
-    }
-
-    /**
      * 根据 id 删除相应的邮箱配置
      */
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         mailConfigManager.deleteById(id);
     }
 }

@@ -73,14 +73,14 @@ public class DingRobotConfigService {
     /**
      * 根据 id 获取相应的配置
      */
-    public DingRobotConfigDto getById(Long id) {
+    public DingRobotConfigDto findById(Long id) {
         return ResultConvertUtils.dtoConvert(dingRobotConfigManage.findById(id));
     }
 
     /**
      * 根据 code 获取相应的配置
      */
-    public DingRobotConfigDto getByCode(String code) {
+    public DingRobotConfigDto findByCode(String code) {
         return ResultConvertUtils.dtoConvert(dingRobotConfigManage.findByCode(code));
     }
 
@@ -92,5 +92,17 @@ public class DingRobotConfigService {
         dingRobotConfigManage.deleteById(id);
     }
 
+    /**
+     * 编码是否已经存在
+     */
+    public boolean existsByCode(String code){
+        return dingRobotConfigManage.existsByCode(code);
+    }
 
+    /**
+     * 编码是否已经存在(不包含自身)
+     */
+    public boolean existsByCode(String code,Long id){
+        return dingRobotConfigManage.existsByCode(code,id);
+    }
 }

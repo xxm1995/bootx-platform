@@ -85,6 +85,10 @@ public class MessageTemplateService {
         return messageTemplateManager.existsByCode(code,id);
     }
 
+    public void delete(Long id){
+        messageTemplateManager.deleteById(id);
+    }
+
     /**
      * 渲染
      */

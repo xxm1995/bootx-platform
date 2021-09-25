@@ -62,18 +62,18 @@ public class MailConfigController {
         return Res.ok(update);
     }
 
+    @ApiOperation(value = "删除")
+    @DeleteMapping(value = "/delete")
+    public ResResult<Void> delete(Long id){
+        mailConfigService.delete(id);
+        return Res.ok();
+    }
+
     @ApiOperation("设置启用的邮箱配置")
     @PostMapping("/setUpActivity")
     public ResResult<Void> setUpActivity(Long id){
         mailConfigService.setUpActivity(id);
         return Res.ok();
-    }
-
-    @ApiOperation(value = "通过 id 删除邮箱配置")
-    @DeleteMapping(value = "/delete")
-    public ResResult<Boolean> deleteById(Long id) {
-        mailConfigService.deleteById(id);
-        return Res.ok(true);
     }
 
     @ApiOperation(value = "编码是否被使用")

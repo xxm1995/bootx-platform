@@ -24,48 +24,22 @@ import java.util.List;
  * @author xxm
  * @date 2020/11/29
  */
-@Api(tags = "钉钉机器人")
+@Api(tags = "钉钉机器人发送")
 @RestController
-@RequestMapping("/ding/robot")
+@RequestMapping("/ding/robot/send")
 @AllArgsConstructor
-public class DingTalkRobotController {
+public class DingRobotSendController {
     private final DingRobotSendService dingRobotSendService;
-    private final DingRobotConfigService dingRobotConfigService;
-
-    @ApiOperation("新增机器人配置")
-    @PostMapping("/add")
-    public ResResult<DingRobotConfigDto> add(@RequestBody DingRobotConfigParam param){
-        return Res.ok(dingRobotConfigService.add(param));
-    }
-
-    @ApiOperation("修改机器人配置")
-    @PostMapping("/update")
-    public ResResult<DingRobotConfigDto> update(@RequestBody DingRobotConfigParam param){
-        return Res.ok(dingRobotConfigService.update(param));
-    }
-
-    @ApiOperation("分页")
-    @GetMapping("/page")
-    public ResResult<PageResult<DingRobotConfigDto>> page(PageParam pageParam){
-        return Res.ok(dingRobotConfigService.page(pageParam));
-    }
-
-    @ApiOperation("查询全部")
-    @GetMapping("/findAll")
-    public ResResult<List<DingRobotConfigDto>> findAll(){
-        return Res.ok(dingRobotConfigService.findAll());
-    }
-
 
     @ApiOperation("测试发送text")
-    @PostMapping("/send/text")
+    @PostMapping("/text")
     public ResResult<DingTalkResult<?>> sendText(){
         DingTalkTextNotice notice = new DingTalkTextNotice("hello dingTalk!",Collections.singletonList("17051008321"));
         return Res.ok(dingRobotSendService.sendText("bootx",notice));
     }
 
     @ApiOperation("测试发送link")
-    @PostMapping("/send/link")
+    @PostMapping("/link")
     public ResResult<DingTalkResult<?>> sendLink(){
         DingTalkLinkNotice notice = new DingTalkLinkNotice("时代的火车向前开", "这个即将发布的新版本，创始人xx称它为红树林", "https://www.dingtalk.com/s?__biz=MzA4NjMwMTA2Ng==&mid=2650316842&idx=1&sn=60da3ea2b29f1dcc43a7c8e4a7c97a16&scene=2&srcid=09189AnRJEdIiWVaKltFzNTw&from=timeline&isappinstalled=0&key=&ascene=2&uin=&devicetype=android-23&version=26031933&nettype=WIFI");
 
@@ -73,7 +47,7 @@ public class DingTalkRobotController {
     }
 
     @ApiOperation("测试发送Markdown")
-    @PostMapping("/send/markdown")
+    @PostMapping("/markdown")
     public ResResult<DingTalkResult<?>> sendMarkdown(){
         DingTalkMarkdownNotice notice = new DingTalkMarkdownNotice("杭州天气","#### 杭州天气\n > 9度，西北风1级，空气良89，相对温度73%\n > ![screenshot](https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png)\n > ###### 10点20分发布 [天气](https://www.dingtalk.com) \n"
                 ,Collections.singletonList("17051008321"));

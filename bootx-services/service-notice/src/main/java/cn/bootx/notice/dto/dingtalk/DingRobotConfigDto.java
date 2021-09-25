@@ -2,6 +2,7 @@ package cn.bootx.notice.dto.dingtalk;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -29,4 +30,7 @@ public class DingRobotConfigDto extends BaseDto implements Serializable {
 
     /** 验签秘钥 */
     private String signSecret;
+
+    @ApiModelProperty("描述")
+    private String remark;
 }

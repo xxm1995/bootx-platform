@@ -50,6 +50,13 @@ public class MessageTemplateController {
         return Res.ok(messageTemplateService.findById(id));
     }
 
+    @ApiOperation(value = "删除")
+    @DeleteMapping(value = "/delete")
+    public ResResult<Void> delete(Long id){
+        messageTemplateService.delete(id);
+        return Res.ok();
+    }
+
     @ApiOperation(value = "编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
@@ -64,7 +71,7 @@ public class MessageTemplateController {
 
     @ApiOperation("渲染模板")
     @GetMapping("/rendering")
-    public ResResult<String> rendering(String code, @RequestParam Map<String,String> paramMap){
+    public ResResult<String> rendering(@RequestParam String code, @RequestBody Map<String,String> paramMap){
         return Res.ok(messageTemplateService.rendering(code,paramMap));
     }
 }
