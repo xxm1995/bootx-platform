@@ -7,7 +7,6 @@ import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.notice.core.mail.dao.MailConfigManager;
 import cn.bootx.notice.core.mail.entity.MailConfig;
 import cn.bootx.notice.dto.mail.MailConfigDto;
-import cn.bootx.notice.exception.DefaultMailConfigAlreadyExistedException;
 import cn.bootx.notice.exception.MailConfigCodeAlreadyExistedException;
 import cn.bootx.notice.exception.MailConfigNotExistException;
 import cn.bootx.notice.param.mail.MailConfigParam;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 邮件配置
@@ -39,13 +37,7 @@ public class MailConfigService {
             throw new MailConfigCodeAlreadyExistedException();
         }
 
-        // 只能有一个配置处于活动状态
-        if(Objects.equals(param.getActivity(),Boolean.TRUE) && mailConfigManager.existsByActivity()) {
-            throw new DefaultMailConfigAlreadyExistedException();
-        }
-
         MailConfig mailConfig = MailConfig.init(param);
-
         return mailConfigManager.save(mailConfig).toDto();
     }
 
@@ -55,6 +47,11 @@ public class MailConfigService {
     @Transactional(rollbackFor = Exception.class)
     public MailConfigDto update(MailConfigParam param) {
         MailConfig mailConfig = mailConfigManager.findById(param.getId()).orElseThrow(MailConfigNotExistException::new);
+
+        if (mailConfigManager.existsByCode(param.getCode(),param.getId())) {
+            throw new MailConfigCodeAlreadyExistedException();
+        }
+
         BeanUtil.copyProperties(param,mailConfig, CopyOptions.create().ignoreNullValue());
         return mailConfigManager.updateById(mailConfig).toDto();
     }

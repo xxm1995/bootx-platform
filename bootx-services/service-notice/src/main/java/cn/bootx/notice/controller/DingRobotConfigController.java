@@ -6,7 +6,6 @@ import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.notice.core.dingtalk.service.DingRobotConfigService;
 import cn.bootx.notice.dto.dingtalk.DingRobotConfigDto;
-import cn.bootx.notice.dto.template.MessageTemplateDto;
 import cn.bootx.notice.param.dingtalk.DingRobotConfigParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,13 +56,20 @@ public class DingRobotConfigController {
         return Res.ok(dingRobotConfigService.findById(id));
     }
 
-    @ApiOperation(value = "编码是否被使用")
+    @ApiOperation("删除")
+    @DeleteMapping("/delete")
+    public ResResult<Void> delete(Long id){
+        dingRobotConfigService.delete(id);
+        return Res.ok();
+    }
+
+    @ApiOperation("编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
         return Res.ok(dingRobotConfigService.existsByCode(code));
     }
 
-    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @ApiOperation("编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
     public ResResult<Boolean> existsByCode(String code,Long id) {
         return Res.ok(dingRobotConfigService.existsByCode(code,id));

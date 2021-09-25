@@ -77,18 +77,11 @@ public class DingRobotConfigService {
         return ResultConvertUtils.dtoConvert(dingRobotConfigManage.findById(id));
     }
 
-    /**
-     * 根据 code 获取相应的配置
-     */
-    public DingRobotConfigDto findByCode(String code) {
-        return ResultConvertUtils.dtoConvert(dingRobotConfigManage.findByCode(code));
-    }
-
 
     /**
      * 根据 id 删除相应的邮箱配置
      */
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         dingRobotConfigManage.deleteById(id);
     }
 

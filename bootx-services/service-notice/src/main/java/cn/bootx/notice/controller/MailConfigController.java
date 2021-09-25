@@ -26,14 +26,14 @@ import java.util.List;
 public class MailConfigController {
     private final MailConfigService mailConfigService;
 
-    @ApiOperation(value = "获取所有邮箱配置")
-    @GetMapping(value = "/findAll")
+    @ApiOperation("获取所有邮箱配置")
+    @GetMapping("/findAll")
     public ResResult<List<MailConfigDto>> findAll() {
         List<MailConfigDto> all = mailConfigService.findAll();
         return Res.ok(all);
     }
 
-    @ApiOperation(value = "通过 id 获取指定邮箱配置")
+    @ApiOperation("通过 id 获取指定邮箱配置")
     @GetMapping("/findById")
     public ResResult<MailConfigDto> findById(Long id) {
         MailConfigDto mailConfig = mailConfigService.findById(id);
@@ -46,24 +46,24 @@ public class MailConfigController {
         return Res.ok(mailConfigService.page(pageParam,param));
     }
 
-    @ApiOperation(value = "增加新邮箱配置")
-    @PostMapping(value = "/add")
+    @ApiOperation("增加新邮箱配置")
+    @PostMapping("/add")
     public ResResult<MailConfigDto> add(@RequestBody MailConfigParam param) {
         ValidationUtil.validateParam(param);
         MailConfigDto mailConfig = mailConfigService.add(param);
         return Res.ok(mailConfig);
     }
 
-    @ApiOperation(value = "更新邮箱配置")
-    @PostMapping(value = "/update")
+    @ApiOperation("更新邮箱配置")
+    @PostMapping("/update")
     public ResResult<MailConfigDto> updateMailConfig(@RequestBody MailConfigParam param) {
         ValidationUtil.validateParam(param);
         MailConfigDto update = mailConfigService.update(param);
         return Res.ok(update);
     }
 
-    @ApiOperation(value = "删除")
-    @DeleteMapping(value = "/delete")
+    @ApiOperation("删除")
+    @DeleteMapping("/delete")
     public ResResult<Void> delete(Long id){
         mailConfigService.delete(id);
         return Res.ok();
@@ -76,13 +76,13 @@ public class MailConfigController {
         return Res.ok();
     }
 
-    @ApiOperation(value = "编码是否被使用")
+    @ApiOperation("编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
         return Res.ok(mailConfigService.existsByCode(code));
     }
 
-    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @ApiOperation("编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
     public ResResult<Boolean> existsByCode(String code,Long id) {
         return Res.ok(mailConfigService.existsByCode(code,id));

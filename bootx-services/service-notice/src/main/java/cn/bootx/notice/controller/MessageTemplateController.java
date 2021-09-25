@@ -50,20 +50,20 @@ public class MessageTemplateController {
         return Res.ok(messageTemplateService.findById(id));
     }
 
-    @ApiOperation(value = "删除")
-    @DeleteMapping(value = "/delete")
+    @ApiOperation("删除")
+    @DeleteMapping("/delete")
     public ResResult<Void> delete(Long id){
         messageTemplateService.delete(id);
         return Res.ok();
     }
 
-    @ApiOperation(value = "编码是否被使用")
+    @ApiOperation("编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
         return Res.ok(messageTemplateService.existsByCode(code));
     }
 
-    @ApiOperation(value = "编码是否被使用(不包含自己)")
+    @ApiOperation("编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
     public ResResult<Boolean> existsByCode(String code,Long id) {
         return Res.ok(messageTemplateService.existsByCode(code,id));
