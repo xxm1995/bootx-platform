@@ -5,9 +5,13 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.code.UserStatusCode;
+import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
+import cn.bootx.iam.dto.dept.DeptDto;
+import cn.bootx.iam.dto.upms.RoleDto;
 import cn.bootx.iam.dto.user.UserInfoDto;
+import cn.bootx.iam.dto.user.UserInfoWhole;
 import cn.bootx.iam.exception.user.UserInfoNotExistsException;
 import cn.bootx.iam.exception.user.UserNonePhoneAndEmailException;
 import cn.bootx.iam.param.user.UserInfoParam;
@@ -21,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -33,6 +38,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UserAdminService {
     private final UserInfoManager userInfoManager;
+    private final UserRoleService userRoleService;
+    private final UserDeptService userDeptService;
     private final PasswordEncoder passwordEncoder;
     private final UserInfoService userInfoService;
 
@@ -61,6 +68,20 @@ public class UserAdminService {
      */
     public UserInfoDto findByPhone(String phone) {
         return userInfoManager.findByPhone(phone).map(UserInfo::toDto).orElse(null);
+    }
+
+    /**
+     * 锁定用户
+     */
+    public void lock(Long userId){
+        userInfoManager.setUpStatus(userId,UserStatusCode.BAN);
+    }
+
+    /**
+     * 解锁用户
+     */
+    public void unlock(Long userId){
+        userInfoManager.setUpStatus(userId,UserStatusCode.NORMAL);
     }
 
     /**
@@ -122,9 +143,21 @@ public class UserAdminService {
     }
 
     /**
-     * 获取详情
+     * 获取用户详情
      */
-    public UserInfoDto getUserInfo(Long id) {
-        return null;
+    public UserInfoWhole getUserInfoWhole(Long userId) {
+        // 用户信息
+        UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
+
+        // 角色信息
+        List<RoleDto> rolesByUser = userRoleService.findRolesByUser(userId);
+
+        // 部门组织
+        List<DeptDto> deptListByUser = userDeptService.findDeptListByUser(userId);
+
+        return new UserInfoWhole()
+                .setUserInfo(userInfo.toDto())
+                .setRoles(rolesByUser)
+                .setDeptList(deptListByUser);
     }
 }

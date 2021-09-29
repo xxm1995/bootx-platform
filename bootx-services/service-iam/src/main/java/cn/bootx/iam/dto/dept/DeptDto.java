@@ -1,4 +1,4 @@
-package cn.bootx.iam.dto.depart;
+package cn.bootx.iam.dto.dept;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.annotations.ApiModel;
@@ -17,32 +17,20 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @ApiModel("部门")
-public class DepartDto extends BaseDto implements Serializable {
+public class DeptDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -4511914397757014519L;
 
     @ApiModelProperty("父机构ID")
     private Long parentId;
 
-    @ApiModelProperty("机构/部门名称")
-    private String departName;
-
-    @ApiModelProperty("英文名")
-    private String departNameEn;
-
-    @ApiModelProperty("缩写")
-    private String departNameAbbr;
+    @ApiModelProperty("名称")
+    private String deptName;
 
     @ApiModelProperty("排序")
-    private Integer departOrder;
-
-    @ApiModelProperty("描述")
-    private String description;
+    private Double sortNo;
 
     @ApiModelProperty("机构类别 1组织机构，2岗位")
     private String orgCategory;
-
-    @ApiModelProperty("机构类型")
-    private String orgType;
 
     @ApiModelProperty("机构编码")
     private String orgCode;
@@ -57,9 +45,6 @@ public class DepartDto extends BaseDto implements Serializable {
     private String address;
 
     @ApiModelProperty("备注")
-    private String memo;
-
-    @ApiModelProperty("状态（1启用，0不启用）")
-    private String status;
+    private String remark;
 
 }

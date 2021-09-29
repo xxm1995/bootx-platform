@@ -8,6 +8,7 @@ import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.iam.core.user.service.UserAdminService;
 import cn.bootx.iam.dto.user.UserInfoDto;
+import cn.bootx.iam.dto.user.UserInfoWhole;
 import cn.bootx.iam.param.user.UserInfoParam;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,9 +36,9 @@ public class UserAdminController {
     }
 
     @ApiOperation(value = "查询用户详情")
-    @GetMapping("/getUserInfo")
-    public ResResult<UserInfoDto> getUserInfo(Long id){
-        return Res.ok(userAdminService.getUserInfo(id));
+    @GetMapping("/getUserInfoWhole")
+    public ResResult<UserInfoWhole> getUserInfoWhole(Long id){
+        return Res.ok(userAdminService.getUserInfoWhole(id));
     }
 
     @ApiOperation(value = "根据邮箱查询用户")
@@ -69,6 +70,23 @@ public class UserAdminController {
     @PostMapping("/restartPassword")
     public ResResult<Void> restartPassword(Long userId,@NotBlank(message = "新密码不能为空") String newPassword){
         userAdminService.restartPassword(userId,newPassword);
+        return Res.ok();
+    }
+
+
+    @ApiOperation("锁定用户")
+    @Log(title = "锁定用户",businessType= BusinessType.UPDATE,isParam = true)
+    @PostMapping("/lock")
+    public ResResult<Void> lock(Long userId){
+        userAdminService.lock(userId);
+        return Res.ok();
+    }
+
+    @ApiOperation("解锁用户")
+    @Log(title = "解锁用户",businessType= BusinessType.UPDATE,isParam = true)
+    @PostMapping("/unlock")
+    public ResResult<Void> unlock(Long userId){
+        userAdminService.unlock(userId);
         return Res.ok();
     }
 

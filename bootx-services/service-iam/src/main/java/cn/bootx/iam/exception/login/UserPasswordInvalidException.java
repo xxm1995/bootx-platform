@@ -5,7 +5,7 @@ import cn.bootx.common.core.exception.BizException;
 
 import java.io.Serializable;
 
-import static cn.bootx.iam.code.AcErrorCodes.USER_PASSWORD_INVALID;
+import static cn.bootx.iam.code.IamErrorCode.USER_PASSWORD_INVALID;
 
 /**
 * 用户密码不正确异常

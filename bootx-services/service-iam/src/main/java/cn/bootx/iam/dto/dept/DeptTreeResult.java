@@ -1,42 +1,36 @@
-package cn.bootx.iam.param.depart;
+package cn.bootx.iam.dto.dept;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
 * @author xxm
-* @date 2020/5/7 18:29
+* @date 2020/5/10 15:25
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("部门参数")
-public class DepartParam implements Serializable {
-    private static final long serialVersionUID = -3523887187454705868L;
+@ApiModel("部门树")
+@NoArgsConstructor
+public class DeptTreeResult implements Serializable {
+    private static final long serialVersionUID = 9065167687644450513L;
 
-    @ApiModelProperty("主键")
+    @ApiModelProperty("ID")
     private Long id;
 
     @ApiModelProperty("父机构ID")
     private Long parentId;
 
     @ApiModelProperty("机构/部门名称")
-    private String departName;
-
-    @ApiModelProperty("英文名")
-    private String departNameEn;
-
-    @ApiModelProperty("缩写")
-    private String departNameAbbr;
+    private String deptName;
 
     @ApiModelProperty("排序")
-    private Integer departOrder;
-
-    @ApiModelProperty("描述")
-    private String description;
+    private Double sortNo;
 
     @ApiModelProperty("机构类别 1组织机构，2岗位")
     private String orgCategory;
@@ -57,9 +51,9 @@ public class DepartParam implements Serializable {
     private String address;
 
     @ApiModelProperty("备注")
-    private String memo;
+    private String remark;
 
-    @ApiModelProperty("状态（1启用，0不启用）")
-    private String status;
 
+    @ApiModelProperty("部门树")
+    private List<DeptTreeResult> children;
 }

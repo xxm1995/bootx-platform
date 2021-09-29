@@ -5,8 +5,13 @@ package cn.bootx.iam.code;
 * @author xxm
 * @date 2020/4/24 16:01
 */
-public interface UcErrorCodes {
+public interface IamErrorCode {
 
+
+    /**
+     * 密码不正确
+     */
+    int USER_PASSWORD_INVALID = 22016;
 
     /**
      * 用户Email已存在

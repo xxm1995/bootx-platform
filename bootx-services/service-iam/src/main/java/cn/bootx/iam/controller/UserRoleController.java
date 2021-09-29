@@ -19,7 +19,7 @@ import java.util.List;
 */
 @Api(tags = "用户角色管理")
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/user/role")
 @AllArgsConstructor
 public class UserRoleController {
 

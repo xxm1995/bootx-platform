@@ -3,7 +3,7 @@ package cn.bootx.iam.exception.user;
 
 import cn.bootx.common.core.exception.FatalException;
 
-import static cn.bootx.iam.code.UcErrorCodes.USER_INFO_NOT_EXISTS;
+import static cn.bootx.iam.code.IamErrorCode.USER_INFO_NOT_EXISTS;
 
 
 /**   
