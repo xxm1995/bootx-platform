@@ -29,8 +29,11 @@ public class DeptDto extends BaseDto implements Serializable {
     @ApiModelProperty("排序")
     private Double sortNo;
 
-    @ApiModelProperty("机构类别 1组织机构，2岗位")
-    private String orgCategory;
+    /**
+     * @see cn.bootx.iam.code.OrgCategoryCode
+     */
+    @ApiModelProperty("机构类别")
+    private Integer orgCategory;
 
     @ApiModelProperty("机构编码")
     private String orgCode;

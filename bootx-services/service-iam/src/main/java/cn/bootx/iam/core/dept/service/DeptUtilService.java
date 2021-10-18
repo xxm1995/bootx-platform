@@ -34,7 +34,7 @@ public class DeptUtilService {
         if (Objects.isNull(parentId)) {
             Dept dept = deptManager.lambdaQuery()
                     .isNotNull(Dept::getParentId)
-                    .orderByDesc(Dept::getOrgCategory)
+                    .orderByDesc(Dept::getOrgCode)
                     .last("limit 1")
                     .one();
             if (Objects.isNull(dept)) {
@@ -67,7 +67,7 @@ public class DeptUtilService {
      */
     private synchronized String getNextCode(String code) {
         // 获取不到锁直接抛异常
-        if (redisClient.setIfAbsent("lock:getNextCode:"+code,"",10*1000)){
+        if (!redisClient.setIfAbsent("lock:getNextCode:"+code,"",10*1000)){
             throw new BizException("生成组织机构编码冲突，请稍等后重新生成");
         }
 

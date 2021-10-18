@@ -31,8 +31,8 @@ public class DeptController {
     }
 
     @ApiOperation("获取")
-    @GetMapping("/get")
-    ResResult<DeptDto> get(Long id){
+    @GetMapping("/findById")
+    ResResult<DeptDto> findById(Long id){
         return Res.ok(deptService.findById(id));
     }
 
@@ -49,15 +49,15 @@ public class DeptController {
     }
 
     @ApiOperation("普通删除")
-    @DeleteMapping("/remove")
-    public ResResult<Void> remove(Long id){
+    @DeleteMapping("/delete")
+    public ResResult<Void> delete(Long id){
         deptService.delete(id);
         return Res.ok();
     }
 
     @ApiOperation("强制级联删除")
-    @DeleteMapping("/removeAndChildren")
-    public ResResult<Boolean> removeAndChildren(Long id){
+    @DeleteMapping("/deleteAndChildren")
+    public ResResult<Boolean> deleteAndChildren(Long id){
         return Res.ok(deptService.deleteAndChildren(id));
     }
 }

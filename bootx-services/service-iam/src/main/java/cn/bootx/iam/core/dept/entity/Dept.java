@@ -34,8 +34,7 @@ public class Dept extends MpBaseEntity implements EntityBaseFunction<DeptDto> {
      * 机构类别
      * @see cn.bootx.iam.code.OrgCategoryCode
      */
-	private String orgCategory;
-
+	private Integer orgCategory;
 	/**机构编码*/
 	private String orgCode;
 

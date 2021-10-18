@@ -30,7 +30,7 @@ public class DeptParam implements Serializable {
     private Double sortNo;
 
     @ApiModelProperty("机构类别 1组织机构，2岗位")
-    private String orgCategory;
+    private Integer orgCategory;
 
     @ApiModelProperty("手机号")
     private String mobile;
