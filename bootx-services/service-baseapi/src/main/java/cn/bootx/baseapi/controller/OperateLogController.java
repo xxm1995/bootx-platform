@@ -30,4 +30,10 @@ public class OperateLogController {
     public ResResult<PageResult<OperateLogDto>> page(PageParam pageParam, OperateLogDto operateLogDto){
         return Res.ok(operateLogService.page(pageParam,operateLogDto));
     }
+
+    @ApiOperation("获取")
+    @GetMapping("/findById")
+    public ResResult<OperateLogDto> findById(Long id){
+        return Res.ok(operateLogService.findById(id));
+    }
 }

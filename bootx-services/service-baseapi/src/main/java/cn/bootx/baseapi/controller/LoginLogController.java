@@ -30,4 +30,10 @@ public class LoginLogController {
     public ResResult<PageResult<LoginLogDto>> page(PageParam pageParam, LoginLogDto loginLogDto){
         return Res.ok(loginLogService.page(pageParam,loginLogDto));
     }
+
+    @ApiOperation("获取")
+    @GetMapping("/findById")
+    public ResResult<LoginLogDto> findById(Long id){
+        return Res.ok(loginLogService.findById(id));
+    }
 }
