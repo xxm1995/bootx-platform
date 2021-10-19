@@ -1,4 +1,4 @@
-package cn.bootx.iam.core.user.entity;
+package cn.bootx.iam.core.social.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;

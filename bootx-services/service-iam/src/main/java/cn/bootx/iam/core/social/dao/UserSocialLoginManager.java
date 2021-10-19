@@ -1,10 +1,10 @@
-package cn.bootx.iam.core.user.dao;
+package cn.bootx.iam.core.social.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
-import cn.bootx.iam.core.user.entity.UserSocialLogin;
+import cn.bootx.iam.core.social.entity.UserSocialLogin;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

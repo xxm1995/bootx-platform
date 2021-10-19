@@ -1,13 +1,13 @@
-package cn.bootx.iam.core.user.service;
+package cn.bootx.iam.core.social.service;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
-import cn.bootx.iam.core.user.dao.UserSocialLoginManager;
+import cn.bootx.iam.core.social.dao.UserSocialLoginManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
-import cn.bootx.iam.core.user.entity.UserSocialLogin;
+import cn.bootx.iam.core.social.entity.UserSocialLogin;
 import cn.bootx.iam.dto.user.UserSocialLoginDto;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import lombok.RequiredArgsConstructor;
@@ -46,11 +46,17 @@ public class UserSocialLoginService {
 
     /**
      * 分页
-     * @param pageParam
-     * @return
      */
     public PageResult<UserSocialLoginDto> page(PageParam pageParam){
         return MpUtils.convert2PageResult(userSocialLoginManager.page(pageParam));
+    }
+
+    /**
+     * 分页
+     */
+    public UserSocialLoginDto findById(Long id){
+        return userSocialLoginManager.findById(id).map(UserSocialLogin::toDto)
+                .orElse(null);
     }
 
     /**

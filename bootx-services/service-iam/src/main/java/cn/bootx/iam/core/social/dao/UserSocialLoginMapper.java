@@ -1,6 +1,6 @@
-package cn.bootx.iam.core.user.dao;
+package cn.bootx.iam.core.social.dao;
 
-import cn.bootx.iam.core.user.entity.UserSocialLogin;
+import cn.bootx.iam.core.social.entity.UserSocialLogin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

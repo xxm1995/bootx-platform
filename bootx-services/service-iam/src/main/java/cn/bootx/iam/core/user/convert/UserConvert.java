@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.user.convert;
 
 import cn.bootx.iam.core.user.entity.UserInfo;
-import cn.bootx.iam.core.user.entity.UserSocialLogin;
+import cn.bootx.iam.core.social.entity.UserSocialLogin;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.dto.user.UserSocialLoginDto;
 import cn.bootx.iam.param.user.UserInfoParam;
