@@ -48,7 +48,7 @@ public class DeptUtilService {
                     .orElseThrow(() -> new BizException("父机构不存在"));
             //最新的兄弟
             Dept dept = deptManager.lambdaQuery()
-                    .isNotNull(Dept::getParentId)
+                    .eq(Dept::getParentId,parenDept.getId())
                     .orderByDesc(Dept::getOrgCategory)
                     .last("limit 1")
                     .one();
