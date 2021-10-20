@@ -77,4 +77,10 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
     public boolean existsById(Long id) {
         return existedByField(UserInfo::getId,id);
     }
+
+    public void setUpStatus(Long userId, int status) {
+        lambdaUpdate().eq(MpBaseEntity::getId,userId)
+                .set(UserInfo::getStatus,status)
+                .update();
+    }
 }

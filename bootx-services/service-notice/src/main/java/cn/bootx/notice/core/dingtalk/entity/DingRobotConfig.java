@@ -36,9 +36,8 @@ public class DingRobotConfig extends MpBaseEntity implements EntityBaseFunction<
 	/** 验签秘钥 */
 	private String signSecret;
 
-    public static DingRobotConfig init(DingRobotConfigDto in){
-        return DingTalkConvert.CONVERT.convert(in);
-    }
+    /** 备注 */
+    private String remark;
 
     public static DingRobotConfig init(DingRobotConfigParam in){
         return DingTalkConvert.CONVERT.convert(in);

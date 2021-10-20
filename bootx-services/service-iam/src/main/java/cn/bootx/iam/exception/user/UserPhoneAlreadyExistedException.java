@@ -5,7 +5,7 @@ import cn.bootx.common.core.exception.BizException;
 
 import java.io.Serializable;
 
-import static cn.bootx.iam.code.UcErrorCodes.USER_PHONE_ALREADY_EXISTED;
+import static cn.bootx.iam.code.IamErrorCode.USER_PHONE_ALREADY_EXISTED;
 
 
 /**

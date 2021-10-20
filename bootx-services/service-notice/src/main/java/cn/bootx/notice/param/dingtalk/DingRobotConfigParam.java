@@ -1,6 +1,7 @@
 package cn.bootx.notice.param.dingtalk;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -33,4 +34,7 @@ public class DingRobotConfigParam implements Serializable {
 
     /** 验签秘钥 */
     private String signSecret;
+
+    @ApiModelProperty("描述")
+    private String remark;
 }

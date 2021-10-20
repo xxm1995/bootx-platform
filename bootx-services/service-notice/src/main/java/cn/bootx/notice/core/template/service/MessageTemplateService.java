@@ -36,7 +36,7 @@ public class MessageTemplateService {
     public MessageTemplateDto add(MessageTemplateParam param){
         MessageTemplate messageTemplate = MessageTemplate.init(param);
         // code 不重复
-        if (messageTemplateManager.existedByCode(messageTemplate.getCode())){
+        if (messageTemplateManager.existsByCode(messageTemplate.getCode())){
             throw new BizException("模板编码不可重复");
         }
         return messageTemplateManager.save(messageTemplate).toDto();
@@ -48,7 +48,7 @@ public class MessageTemplateService {
      */
     public MessageTemplateDto update(MessageTemplateParam param){
         // code 不重复
-        if (messageTemplateManager.existedByCode(param.getCode(), param.getId())){
+        if (messageTemplateManager.existsByCode(param.getCode(), param.getId())){
             throw new BizException("模板编码不可重复");
         }
         MessageTemplate messageTemplate = messageTemplateManager.findById(param.getId())
@@ -72,12 +72,30 @@ public class MessageTemplateService {
     }
 
     /**
+     * 编码是否已经存在
+     */
+    public boolean existsByCode(String code){
+        return messageTemplateManager.existsByCode(code);
+    }
+
+    /**
+     * 编码是否已经存在(不包含自身)
+     */
+    public boolean existsByCode(String code,Long id){
+        return messageTemplateManager.existsByCode(code,id);
+    }
+
+    public void delete(Long id){
+        messageTemplateManager.deleteById(id);
+    }
+
+    /**
      * 渲染
      */
     public String rendering(String code, Map<String,String> paramMap){
         MessageTemplate messageTemplate = messageTemplateManager.findByCode(code)
                 .orElseThrow(() -> new BizException("消息模板不存在"));
-        String date = messageTemplate.getDate();
+        String date = messageTemplate.getData();
         TemplateEngine engine = TemplateUtil.createEngine();
         Template template = engine.getTemplate(date);
         return template.render(paramMap);

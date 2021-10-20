@@ -4,6 +4,7 @@ import cn.bootx.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.RegexUtil;
+import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.service.UserAdminService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
@@ -78,6 +79,13 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         // 比对密码未通过
         if (!Objects.equals(saltPassword,userDetail.getPassword())){
             throw new LoginFailureException(username,"密码不正确");
+        }
+        // 管理员跳过各种校验
+        if (!userDetail.isAdmin()) {
+            // 账号状态
+            if (!Objects.equals(userDetail.getStatus(), UserStatusCode.NORMAL)) {
+                throw new LoginFailureException(username, "账号不是正常状态,无法登陆");
+            }
         }
         return new AuthInfoResult()
                 .setId(userDetail.getId())

@@ -5,6 +5,7 @@ import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.notice.core.mail.entity.MailConfig;
+import cn.bootx.notice.core.template.entity.MessageTemplate;
 import cn.bootx.notice.param.mail.MailConfigParam;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -43,11 +44,19 @@ public class MailConfigManager extends BaseManager<MailConfigMapper, MailConfig>
         return existedByField(MailConfig::getCode,code);
     }
 
+    public boolean existsByCode(String code, Long id){
+        return lambdaQuery().eq(MailConfig::getCode, code)
+                .ne(MpBaseEntity::getId,id)
+                .exists();
+    }
+
     public boolean existsByActivity() {
         return existedByField(MailConfig::getActivity,Boolean.TRUE);
     }
 
     public void removeAllActivity() {
-        lambdaUpdate().eq(MailConfig::getActivity,Boolean.TRUE).set(MailConfig::getActivity,Boolean.FALSE);
+        lambdaUpdate().eq(MailConfig::getActivity,Boolean.TRUE)
+                .set(MailConfig::getActivity,Boolean.FALSE)
+                .update();
     }
 }

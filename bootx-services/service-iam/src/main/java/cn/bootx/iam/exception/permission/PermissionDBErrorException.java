@@ -5,7 +5,7 @@ import cn.bootx.common.core.exception.BizException;
 
 import java.io.Serializable;
 
-import static cn.bootx.iam.code.UcErrorCodes.PERMISSION_DB_ERROR;
+import static cn.bootx.iam.code.IamErrorCode.PERMISSION_DB_ERROR;
 
 
 /**

@@ -1,6 +1,7 @@
 package cn.bootx.notice.dto.mail;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,6 +37,7 @@ public class MailConfigDto extends BaseDto implements Serializable {
     private String username;
 
     @ApiModelProperty(name = "password", value = "邮箱服务器 password")
+    @JsonIgnore
     private String password;
 
     @ApiModelProperty(name = "sender", value = "邮箱服务器 sender")

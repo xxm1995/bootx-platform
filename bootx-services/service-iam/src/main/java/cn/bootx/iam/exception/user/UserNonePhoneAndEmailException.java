@@ -4,7 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 
 import java.io.Serializable;
 
-import static cn.bootx.iam.code.UcErrorCodes.NONE_PHONE_AND_EMAIL;
+import static cn.bootx.iam.code.IamErrorCode.NONE_PHONE_AND_EMAIL;
 
 
 /**   

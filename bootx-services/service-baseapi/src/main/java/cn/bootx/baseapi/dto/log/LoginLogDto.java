@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class LoginLogDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 2985633896134425505L;
 
-    /** 用户账号 */
+    /** 用户ID */
     private Long userId;
 
     /** 登录账号 */

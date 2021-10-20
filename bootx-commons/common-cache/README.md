@@ -14,7 +14,7 @@ bootx.common.cache:
   defaultTtl: 60
   # 默认超时时间, kv格式, key为缓存, value为过期时间(秒)
   keysTtl:
-    "[depart:tree]" : 5000
+    "[dept:tree]" : 5000
     "[user:tree]" : 6000
 ```
 

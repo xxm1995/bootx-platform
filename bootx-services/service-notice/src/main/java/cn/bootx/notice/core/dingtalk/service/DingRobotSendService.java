@@ -57,7 +57,6 @@ public class DingRobotSendService {
         return this.sendNotice(code,notice);
     }
 
-
     /**
      * 发送钉钉机器人消息
      */

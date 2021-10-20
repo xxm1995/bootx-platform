@@ -5,7 +5,7 @@ import cn.bootx.common.core.exception.BizException;
 
 import java.io.Serializable;
 
-import static cn.bootx.iam.code.UcErrorCodes.ROLE_NOT_EXISTED;
+import static cn.bootx.iam.code.IamErrorCode.ROLE_NOT_EXISTED;
 
 /**
  * 角色不存在

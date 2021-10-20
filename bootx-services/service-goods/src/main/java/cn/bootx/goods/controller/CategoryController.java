@@ -57,7 +57,7 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "通过 id 删除类目")
-    @PostMapping("/delete/id")
+    @DeleteMapping("/delete")
     public ResResult<Void> deleteCategoryById(@RequestBody SingleIdParam param)  {
         categoryService.deleteById(param.getId());
         return Res.ok();

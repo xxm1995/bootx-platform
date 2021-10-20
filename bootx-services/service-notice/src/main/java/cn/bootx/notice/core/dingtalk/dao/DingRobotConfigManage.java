@@ -28,6 +28,12 @@ public class DingRobotConfigManage extends BaseManager<DingRobotConfigMapper, Di
         return existedByField(DingRobotConfig::getCode,code);
     }
 
+    public boolean existsByCode(String code,Long id) {
+        return lambdaQuery().eq(DingRobotConfig::getCode, code)
+                .ne(MpBaseEntity::getId,id)
+                .exists();
+    }
+
     public Page<DingRobotConfig> page(PageParam pageParam) {
         Page<DingRobotConfig> mpPage = MpUtils.getMpPage(pageParam, DingRobotConfig.class);
         return lambdaQuery()

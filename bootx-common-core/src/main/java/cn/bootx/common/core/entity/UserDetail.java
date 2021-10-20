@@ -30,7 +30,7 @@ public class UserDetail{
 
     /**
      * 账号状态
-     * @see UserStatusCode
+     * @see cn.bootx.iam.code.UserStatusCode
      */
     private Integer status;
 

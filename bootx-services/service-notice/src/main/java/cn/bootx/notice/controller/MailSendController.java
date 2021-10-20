@@ -22,15 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class MailSendController {
     private final MailSendService mailSendService;
 
-    @ApiOperation(value = "发送邮件")
-    @PostMapping(value = "/sendMail")
+    @ApiOperation("发送邮件")
+    @PostMapping("/sendMail")
     public ResResult<Boolean> sendMail(SendMailParam mailParam){
         mailSendService.sendHtmlMail(mailParam);
         return Res.ok(true);
     }
 
-    @ApiOperation(value = "发送简单邮件")
-    @PostMapping(value = "/sentSimpleMail")
+    @ApiOperation("发送简单邮件")
+    @PostMapping("/sentSimpleMail")
     public ResResult<Boolean> sentSimpleMail(String email,String subject,String msg){
         mailSendService.sentSimpleMail(email,subject,msg);
         return Res.ok(true);
