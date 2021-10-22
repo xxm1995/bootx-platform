@@ -7,6 +7,13 @@ package cn.bootx.payment.code.paymodel;
  */
 public interface AliPayCode {
 
+    // 认证类型
+    /** 公钥 */
+    int AUTH_TYPE_KEY = 1;
+
+    /** 证书 */
+    int AUTH_TYPE_CART = 2;
+
     // 响应字段
     /** 支付状态 */
     String TRADE_STATUS = "trade_status";
@@ -45,9 +52,8 @@ public interface AliPayCode {
 
 
     // 错误提示
-    /**  */
+    /** 交易不存在 */
     String ACQ_TRADE_NOT_EXIST = "ACQ.TRADE_NOT_EXIST";
-
 
     // 网关返回码
     String SUCCESS = "10000";

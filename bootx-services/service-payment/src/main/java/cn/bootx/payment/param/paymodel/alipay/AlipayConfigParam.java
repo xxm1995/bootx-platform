@@ -21,12 +21,6 @@ public class AlipayConfigParam implements Serializable {
     /** 名称 */
     private String name;
 
-    /** 状态 */
-    private Integer state;
-
-    /** 备注 */
-    private String remark;
-
     /** 支付宝商户appId */
     private String appId;
 
@@ -37,16 +31,28 @@ public class AlipayConfigParam implements Serializable {
     private String returnUrl;
 
     /** 请求网关地址 */
-    private String url;
+    private String serverUrl;
 
-    /** 支付宝公钥 */
-    public String alipayPublicKey;
+    /** 认证类型 证书/公钥 */
+    private Integer authType;
 
     /** 签名类型 */
     public String signType;
 
+    /** 支付宝公钥 */
+    public String alipayPublicKey;
+
     /** 私钥 */
     private String privateKey;
+
+    /** 应用公钥证书路径 */
+    private String appCertPath;
+
+    /** 支付宝公钥证书文件路径 */
+    private String alipayCertPath;
+
+    /** 支付宝CA根证书文件路径 */
+    private String alipayRootCertPath;
 
     /** 超时配置 */
     private String expireTime;
@@ -56,4 +62,10 @@ public class AlipayConfigParam implements Serializable {
 
     /** 是否沙箱环境 */
     private boolean sandbox;
+
+    /** 状态 */
+    private Integer state;
+
+    /** 备注 */
+    private String remark;
 }

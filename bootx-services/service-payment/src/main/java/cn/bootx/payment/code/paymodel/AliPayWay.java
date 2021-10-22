@@ -38,4 +38,11 @@ public class AliPayWay {
                 .orElseThrow(() -> new BizException("不存在的支付方式"));
     }
 
+    /**
+     * 获取支持的支付方式
+     */
+    public List<PayWayEnum> getPayWays(){
+        return PAY_WAYS;
+    }
+
 }

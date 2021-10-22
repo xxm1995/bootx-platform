@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.mapstruct.Mapper;
 
 /**   
 * 支付宝支付配置
@@ -41,14 +42,26 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     /** 请求网关地址 */
     private String serverUrl;
 
+    /** 认证类型 证书/公钥 */
+    private Integer authType;
+
+    /** 签名类型 */
+    public String signType;
+
     /** 支付宝公钥 */
     public String alipayPublicKey;
 
     /** 私钥 */
     private String privateKey;
 
-    /** 签名类型 */
-    public String signType;
+    /** 应用公钥证书路径 */
+    private String appCertPath;
+
+    /** 支付宝公钥证书文件路径 */
+    private String alipayCertPath;
+
+    /** 支付宝CA根证书文件路径 */
+    private String alipayRootCertPath;
 
     /** 是否沙箱环境 */
     private boolean sandbox;
@@ -73,13 +86,6 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
         return convert;
     }
 
-    public static AlipayConfig init(AlipayConfigDto in){
-        AlipayConfig convert = AlipayConvert.CONVERT.convert(in);
-        if (CollUtil.isNotEmpty(in.getPayTypeList())){
-            convert.setPayTypes(String.join(",", in.getPayTypeList()));
-        }
-        return convert;
-    }
     public static AlipayConfig init(AlipayConfigParam in){
         AlipayConfig convert = AlipayConvert.CONVERT.convert(in);
         if (CollUtil.isNotEmpty(in.getPayTypeList())){

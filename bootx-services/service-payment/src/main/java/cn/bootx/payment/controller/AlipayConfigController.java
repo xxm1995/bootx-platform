@@ -3,6 +3,7 @@ package cn.bootx.payment.controller;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.paymodel.alipay.service.AlipayConfigService;
 import cn.bootx.payment.dto.paymodel.alipay.AlipayConfigDto;
@@ -12,6 +13,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
 * @author xxm
@@ -36,6 +39,20 @@ public class AlipayConfigController {
         return Res.ok(alipayConfigService.update(param));
     }
 
+    @ApiOperation("启用指定的支付宝配置")
+    @PostMapping("/setUpActivity")
+    public ResResult<Void> setUpActivity(Long id){
+        alipayConfigService.setUpActivity(id);
+        return Res.ok();
+    }
+
+    @ApiOperation("清除指定的支付宝配置")
+    @PostMapping("/clearActivity")
+    public ResResult<Void> clearActivity(Long id){
+        alipayConfigService.clearActivity(id);
+        return Res.ok();
+    }
+
     @ApiOperation("分页")
     @GetMapping("/page")
     public ResResult<PageResult<AlipayConfigDto>> page(PageParam pageParam, AlipayConfigQuery param){
@@ -46,5 +63,11 @@ public class AlipayConfigController {
     @GetMapping("/findById")
     public ResResult<AlipayConfigDto> findById(Long id){
         return Res.ok(alipayConfigService.findById(id));
+    }
+
+    @ApiOperation("支付宝支持支付方式")
+    @GetMapping("/findPayTypeList")
+    public ResResult<List<KeyValue>> findPayTypeList(){
+        return Res.ok(alipayConfigService.findPayTypeList());
     }
 }

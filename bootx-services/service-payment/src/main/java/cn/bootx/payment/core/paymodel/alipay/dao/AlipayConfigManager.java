@@ -5,6 +5,7 @@ import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigQuery;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -30,12 +31,15 @@ public class AlipayConfigManager extends BaseManager<AlipayConfigMapper,AlipayCo
     public Page<AlipayConfig> page(PageParam pageParam, AlipayConfigQuery param) {
         Page<AlipayConfig> mpPage = MpUtils.getMpPage(pageParam, AlipayConfig.class);
         return lambdaQuery()
+                .like(StrUtil.isNotBlank(param.getName()),AlipayConfig::getName,param.getName())
+                .like(StrUtil.isNotBlank(param.getAppId()),AlipayConfig::getAppId,param.getAppId())
                 .page(mpPage);
     }
 
     public void removeAllActivity() {
         lambdaUpdate().eq(AlipayConfig::getActivity,Boolean.TRUE)
-                .set(AlipayConfig::getActivity,Boolean.FALSE);
+                .set(AlipayConfig::getActivity,Boolean.FALSE)
+                .update();
 
     }
 }
