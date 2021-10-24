@@ -30,6 +30,11 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
     private String appId;
     /** 微信商户号 */
     private String mchId;
+    /**
+     * 认证方式
+     * @see cn.bootx.payment.code.paymodel.WeChatPayCode
+     */
+    private Integer authType;
     /** 微信服务商应用编号 */
     private String slAppId;
     /** 微信服务商商户号 */
@@ -70,7 +75,9 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
     @Override
     public WeChatPayConfigDto toDto() {
         WeChatPayConfigDto convert =  WeChatConvert.CONVERT.convert(this);
-        convert.setPayTypeList(StrUtil.split(this.getPayTypes(),','));
+        if (StrUtil.isNotBlank(this.getPayTypes())){
+            convert.setPayTypeList(StrUtil.split(this.getPayTypes(),','));
+        }
         return convert;
     }
 

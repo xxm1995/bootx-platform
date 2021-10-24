@@ -7,28 +7,12 @@ package cn.bootx.payment.code.paymodel;
 */
 public interface WeChatPayCode {
 
-    // 支付方式
-    /**
-     * web支付
-     */
-    int WAP = 1;
-    /**
-     * 微信APP支付
-     */
-    int APP = 2;
-    /**
-     * 微信公众号支付或者小程序支付
-     */
-    int JSAPI = 3;
-    /**
-     * 微信扫码支付
-     */
-    int QRCODE = 4;
+    // 认证类型
+    /** 公钥 */
+    int AUTH_TYPE_KEY = 1;
 
-    /**
-     * 付款码支付
-     */
-    int BARCODE = 5;
+    /** 证书 */
+    int AUTH_TYPE_CART = 2;
 
     /**
      * 二维码链接

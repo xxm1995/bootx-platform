@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
@@ -91,13 +92,29 @@ public class WeChatPayConfigService {
      * 初始化
      */
     public static void initApiConfig(WeChatPayConfig weChatPayConfig) {
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfig.builder()
-                .appId(weChatPayConfig.getAppId())
-                .mchId(weChatPayConfig.getMchId())
-                .apiKey(weChatPayConfig.getApiKey())
-                .certPath(weChatPayConfig.getCertPath())
-                .domain(weChatPayConfig.getDomain())
-                .build();
+        WxPayApiConfig wxPayApiConfig;
+        // 公钥方式
+        if (Objects.equals(weChatPayConfig.getAuthType(), WeChatPayCode.AUTH_TYPE_KEY)){
+            wxPayApiConfig = WxPayApiConfig.builder()
+                    .appId(weChatPayConfig.getAppId())
+                    .mchId(weChatPayConfig.getMchId())
+                    .apiKey(weChatPayConfig.getApiKey())
+                    .certPath(weChatPayConfig.getCertPath())
+                    .domain(weChatPayConfig.getDomain())
+                    .build();
+        }
+        // 证书
+        else if (Objects.equals(weChatPayConfig.getAuthType(), WeChatPayCode.AUTH_TYPE_CART)){
+            wxPayApiConfig = WxPayApiConfig.builder()
+                    .appId(weChatPayConfig.getAppId())
+                    .mchId(weChatPayConfig.getMchId())
+                    .apiKey(weChatPayConfig.getApiKey())
+                    .certPath(weChatPayConfig.getCertPath())
+                    .keyPemPath(weChatPayConfig.getDomain())
+                    .build();
+        } else {
+            throw new BizException("微信支付认证类型配置不存在");
+        }
         WxPayApiConfigKit.setThreadLocalWxPayApiConfig(wxPayApiConfig);
     }
 
