@@ -1,6 +1,6 @@
 package cn.bootx.iam.controller;
 
-import cn.bootx.common.core.annotation.Log;
+import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.enums.BusinessType;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
@@ -66,7 +66,7 @@ public class UserAdminController {
     }
 
     @ApiOperation("重置密码")
-    @Log(title = "重置密码",businessType= BusinessType.UPDATE,isParam = true)
+    @OperateLog(title = "重置密码",businessType= BusinessType.UPDATE,isParam = true)
     @PostMapping("/restartPassword")
     public ResResult<Void> restartPassword(Long userId,@NotBlank(message = "新密码不能为空") String newPassword){
         userAdminService.restartPassword(userId,newPassword);
@@ -75,7 +75,7 @@ public class UserAdminController {
 
 
     @ApiOperation("锁定用户")
-    @Log(title = "锁定用户",businessType= BusinessType.UPDATE,isParam = true)
+    @OperateLog(title = "锁定用户",businessType= BusinessType.UPDATE,isParam = true)
     @PostMapping("/lock")
     public ResResult<Void> lock(Long userId){
         userAdminService.lock(userId);
@@ -83,7 +83,7 @@ public class UserAdminController {
     }
 
     @ApiOperation("解锁用户")
-    @Log(title = "解锁用户",businessType= BusinessType.UPDATE,isParam = true)
+    @OperateLog(title = "解锁用户",businessType= BusinessType.UPDATE,isParam = true)
     @PostMapping("/unlock")
     public ResResult<Void> unlock(Long userId){
         userAdminService.unlock(userId);

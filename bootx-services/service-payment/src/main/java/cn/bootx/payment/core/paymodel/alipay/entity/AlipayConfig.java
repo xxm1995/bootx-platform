@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.alipay.entity;
 
+import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.payment.core.paymodel.alipay.convert.AlipayConvert;
@@ -11,7 +12,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.mapstruct.Mapper;
 
 /**   
 * 支付宝支付配置
@@ -49,19 +49,24 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     public String signType;
 
     /** 支付宝公钥 */
+    @BigField
     public String alipayPublicKey;
 
     /** 私钥 */
+    @BigField
     private String privateKey;
 
-    /** 应用公钥证书路径 */
-    private String appCertPath;
+    /** 应用公钥证书 */
+    @BigField
+    private String appCert;
 
-    /** 支付宝公钥证书文件路径 */
-    private String alipayCertPath;
+    /** 支付宝公钥证书文件 */
+    @BigField
+    private String alipayCert;
 
-    /** 支付宝CA根证书文件路径 */
-    private String alipayRootCertPath;
+    /** 支付宝CA根证书文件 */
+    @BigField
+    private String alipayRootCert;
 
     /** 是否沙箱环境 */
     private boolean sandbox;
@@ -82,7 +87,9 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     @Override
     public AlipayConfigDto toDto(){
         AlipayConfigDto convert = AlipayConvert.CONVERT.convert(this);
-        convert.setPayTypeList(StrUtil.split(this.getPayTypes(),','));
+        if (StrUtil.isNotBlank(this.getPayTypes())) {
+            convert.setPayTypeList(StrUtil.split(this.getPayTypes(), ','));
+        }
         return convert;
     }
 

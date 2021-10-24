@@ -47,14 +47,14 @@ public class AlipayConfigDto extends BaseDto implements Serializable {
     /** 私钥 */
     private String privateKey;
 
-    /** 应用公钥证书路径 */
-    private String appCertPath;
+    /** 应用公钥证书 */
+    private String appCert;
 
-    /** 支付宝公钥证书文件路径 */
-    private String alipayCertPath;
+    /** 支付宝公钥证书文件 */
+    private String alipayCert;
 
-    /** 支付宝CA根证书文件路径 */
-    private String alipayRootCertPath;
+    /** 支付宝CA根证书文件 */
+    private String alipayRootCert;
 
     /** 超时配置 */
     private String expireTime;

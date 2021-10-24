@@ -1,6 +1,6 @@
 package cn.bootx.iam.controller;
 
-import cn.bootx.common.core.annotation.Log;
+import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.idempotency.annotation.Idempotent;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     private final Sequence sequence;
 
-    @Log(title = "测试日志")
+    @OperateLog(title = "测试日志")
     @Idempotent
     @ApiOperation("测试")
     @GetMapping("/hello")
@@ -29,7 +29,7 @@ public class TestController {
         return Res.ok("hello");
     }
 
-    @Log(title = "测试回声日志",isParam = true,isrReturn = true)
+    @OperateLog(title = "测试回声日志",isParam = true,isrReturn = true)
     @ApiOperation("测试回声")
     @GetMapping("/say")
     public ResResult<String> say(String msg){

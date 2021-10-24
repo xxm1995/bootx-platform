@@ -5,7 +5,6 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtils;
-import cn.bootx.payment.code.pay.PayWayEnum;
 import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.code.paymodel.AliPayWay;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
@@ -20,6 +19,7 @@ import cn.hutool.core.util.CharsetUtil;
 import com.ijpay.alipay.AliPayApiConfig;
 import com.ijpay.alipay.AliPayApiConfigKit;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -122,6 +122,7 @@ public class AlipayConfigService {
     /**
      * 移到工具类中
      */
+    @SneakyThrows
     public static void initApiConfig(AlipayConfig alipayConfig){
 
         AliPayApiConfig aliPayApiConfig;
@@ -130,8 +131,8 @@ public class AlipayConfigService {
             aliPayApiConfig = AliPayApiConfig.builder()
                     .setAppId(alipayConfig.getAppId())
                     .setPrivateKey(alipayConfig.getPrivateKey())
-                    .setCharset(CharsetUtil.UTF_8)
                     .setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
+                    .setCharset(CharsetUtil.UTF_8)
                     .setServiceUrl(alipayConfig.getServerUrl())
                     .setSignType(alipayConfig.getSignType())
                     .build();
@@ -140,10 +141,14 @@ public class AlipayConfigService {
         else if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_CART)){
             aliPayApiConfig = AliPayApiConfig.builder()
                     .setAppId(alipayConfig.getAppId())
+                    .setPrivateKey(alipayConfig.getPrivateKey())
+                    .setAppCertContent(alipayConfig.getAppCert())
+                    .setAliPayCertContent(alipayConfig.getAlipayCert())
+                    .setAliPayRootCertContent(alipayConfig.getAlipayRootCert())
                     .setCharset(CharsetUtil.UTF_8)
-                    .setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
+                    .setServiceUrl(alipayConfig.getServerUrl())
                     .setSignType(alipayConfig.getSignType())
-                    .build();
+                    .buildByCertContent();
         } else {
             throw new BizException("支付宝认证方式不可为空");
         }

@@ -1,8 +1,7 @@
 package cn.bootx.baseapi.handler;
 
-import cn.bootx.baseapi.core.log.entity.OperateLog;
 import cn.bootx.baseapi.core.log.service.OperateLogService;
-import cn.bootx.common.core.annotation.Log;
+import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.jackson.utils.JacksonUtils;
 import cn.bootx.common.spring.util.WebServletUtils;
@@ -41,7 +40,7 @@ public class OperateLogAspectHandler {
     /**
      * 配置织入点
      */
-    @Pointcut("@annotation(cn.bootx.common.core.annotation.Log)")
+    @Pointcut("@annotation(cn.bootx.common.core.annotation.OperateLog)")
     public void logPointCut(){
     }
 
@@ -66,7 +65,7 @@ public class OperateLogAspectHandler {
      * 操作log处理
      */
     protected void handleLog(JoinPoint joinPoint, Exception e, Object o){
-        Log log = getAnnotationLog(joinPoint);
+        OperateLog log = getAnnotationLog(joinPoint);
         if (Objects.isNull(log)){
             return;
         }
@@ -79,7 +78,7 @@ public class OperateLogAspectHandler {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
 
-        OperateLog operateLog = new OperateLog()
+        cn.bootx.baseapi.core.log.entity.OperateLog operateLog = new cn.bootx.baseapi.core.log.entity.OperateLog()
                 .setTitle(log.title())
                 .setOperateId(currentUser.map(UserDetail::getId).orElse(0L))
                 .setUsername(currentUser.map(UserDetail::getUsername).orElse(null))
@@ -114,13 +113,13 @@ public class OperateLogAspectHandler {
     /**
      * 获取注解
      */
-    private Log getAnnotationLog(JoinPoint joinPoint) {
+    private OperateLog getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
 
         if (method != null) {
-            return method.getAnnotation(Log.class);
+            return method.getAnnotation(OperateLog.class);
         }
         return null;
     }

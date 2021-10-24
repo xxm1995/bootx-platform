@@ -1,6 +1,6 @@
 package cn.bootx.iam.core.online;
 
-import cn.bootx.common.core.annotation.Log;
+import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.enums.BusinessType;
@@ -98,7 +98,7 @@ public class OnlineUserService {
     /**
      * 下线
      */
-    @Log(title = "强退用户",businessType = BusinessType.FORCE,isParam = true)
+    @OperateLog(title = "强退用户",businessType = BusinessType.FORCE,isParam = true)
     public void logoutByUserId(Long userId){
         StpUtil.logoutByLoginId(userId);
     }
