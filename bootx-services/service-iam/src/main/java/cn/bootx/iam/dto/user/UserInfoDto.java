@@ -30,13 +30,15 @@ public class UserInfoDto extends BaseDto implements Serializable {
     private String username;
 
     @ApiModelProperty("密码")
-    @SensitiveInfo(SensitiveType.MOBILE_PHONE)
+    @SensitiveInfo(SensitiveType.PASSWORD)
     private String password;
 
     @ApiModelProperty("手机号")
+    @SensitiveInfo(SensitiveType.MOBILE_PHONE)
     private String phone;
 
     @ApiModelProperty("邮箱")
+    @SensitiveInfo(SensitiveType.EMAIL)
     private String email;
 
     @ApiModelProperty("注册来源")
