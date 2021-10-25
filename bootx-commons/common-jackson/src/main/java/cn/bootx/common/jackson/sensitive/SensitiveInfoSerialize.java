@@ -32,6 +32,10 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
                 jsonGenerator.writeString(DesensitizedUtil.chineseName(s));
                 break;
             }
+            case PASSWORD: {
+                jsonGenerator.writeString(DesensitizedUtil.password(s));
+                break;
+            }
             case ID_CARD: {
                 jsonGenerator.writeString(DesensitizedUtil.idCardNum(s,6,2));
                 break;

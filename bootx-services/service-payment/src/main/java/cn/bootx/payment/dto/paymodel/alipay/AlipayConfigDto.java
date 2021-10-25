@@ -45,18 +45,23 @@ public class AlipayConfigDto extends BaseDto implements Serializable {
     private String signType;
 
     /** 支付宝公钥 */
+    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String alipayPublicKey;
 
     /** 私钥 */
+    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String privateKey;
 
     /** 应用公钥证书 */
+    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String appCert;
 
     /** 支付宝公钥证书文件 */
+    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String alipayCert;
 
     /** 支付宝CA根证书文件 */
+    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String alipayRootCert;
 
     /** 超时配置 */
