@@ -1,4 +1,4 @@
-package cn.bootx.common.jackson;
+package cn.bootx.common.jackson.jdk;
 
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.core.json.PackageVersion;

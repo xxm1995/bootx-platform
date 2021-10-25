@@ -1,5 +1,7 @@
 package cn.bootx.common.jackson;
 
+import cn.bootx.common.jackson.jdk.Java8TimeModule;
+import cn.bootx.common.jackson.jdk.JavaLongTypeModule;
 import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

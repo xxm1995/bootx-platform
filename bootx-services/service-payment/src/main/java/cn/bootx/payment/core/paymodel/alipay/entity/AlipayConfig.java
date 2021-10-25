@@ -27,9 +27,6 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     /** 名称 */
     private String name;
 
-    /** 备注 */
-    private String remark;
-
     /** 支付宝商户appId */
     private String appId;
 
@@ -82,6 +79,9 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
 
     /** 状态 */
     private Integer state;
+
+    /** 备注 */
+    private String remark;
 
 
     @Override

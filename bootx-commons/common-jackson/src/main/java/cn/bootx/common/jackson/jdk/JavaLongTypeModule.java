@@ -1,4 +1,4 @@
-package cn.bootx.common.jackson;
+package cn.bootx.common.jackson.jdk;
 
 import com.fasterxml.jackson.core.json.PackageVersion;
 import com.fasterxml.jackson.databind.module.SimpleModule;

@@ -1,6 +1,8 @@
 package cn.bootx.payment.dto.paymodel.alipay;
 
+import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
+import cn.bootx.common.jackson.sensitive.SensitiveInfo;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +26,7 @@ public class AlipayConfigDto extends BaseDto implements Serializable {
     private String name;
 
     /** 支付宝商户appId */
+    @SensitiveInfo(value = SensitiveType.OTHER)
     private String appId;
 
     /** 服务器异步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 */
