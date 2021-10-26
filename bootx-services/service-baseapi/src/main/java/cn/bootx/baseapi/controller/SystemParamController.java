@@ -26,7 +26,7 @@ public class SystemParamController {
 
     @ApiOperation("添加")
     @PostMapping("/add")
-    public ResResult<Void> add(SystemParameterParam param){
+    public ResResult<Void> add(@RequestBody SystemParameterParam param){
         systemParamService.add(param);
         return Res.ok();
     }

@@ -49,7 +49,7 @@ public class DictionaryService {
 	@Transactional(rollbackFor = Exception.class)
 	public void delete(Long id) {
 
-		if(dictionaryManager.existedById(id)) {
+		if(!dictionaryManager.existedById(id)) {
 			throw new DictNotExistedException();
 		}
 		if (dictionaryItemManager.existsByDictId(id)){

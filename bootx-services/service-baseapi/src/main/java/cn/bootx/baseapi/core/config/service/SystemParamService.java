@@ -30,10 +30,10 @@ public class SystemParamService {
      */
     public void add(SystemParameterParam param){
         SystemParameter systemParameter = SystemParameter.init(param);
-        if (systemParamManager.existedByKey(systemParameter.getKey())){
+        if (systemParamManager.existedByKey(systemParameter.getParamKey())){
             throw new BizException("key重复");
         }
-
+        systemParameter.setSystem(false);
         systemParamManager.save(systemParameter);
     }
 
@@ -45,7 +45,7 @@ public class SystemParamService {
         SystemParameter systemParameter = systemParamManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("参数项不存在"));
 
-        if (systemParamManager.existedByKey(param.getKey(),param.getId())) {
+        if (systemParamManager.existedByKey(param.getParamKey(),param.getId())) {
             throw new BizException("key重复");
         }
         systemParamManager.updateById(systemParameter);

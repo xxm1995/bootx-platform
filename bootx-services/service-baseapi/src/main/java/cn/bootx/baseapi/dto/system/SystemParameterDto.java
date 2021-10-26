@@ -21,10 +21,13 @@ public class SystemParameterDto extends BaseDto {
     private String name;
 
     /** 参数键名 */
-    private String key;
+    private String paramKey;
 
     /** 参数值 */
     private String value;
+
+    /** 参数类型 */
+    private Integer type;
 
     /** 是否系统参数 */
     private boolean system;

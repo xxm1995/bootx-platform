@@ -5,6 +5,8 @@ import cn.bootx.baseapi.dto.system.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,12 +27,16 @@ public class SystemParameter extends MpBaseEntity implements EntityBaseFunction<
     private String name;
 
     /** 参数键名 */
-    private String key;
+    private String paramKey;
 
     /** 参数值 */
     private String value;
 
-    /** 系统参数 */
+    /** 参数类型 */
+    private Integer type;
+
+    /** 系统内置参数 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private boolean system;
 
     /** 备注 */

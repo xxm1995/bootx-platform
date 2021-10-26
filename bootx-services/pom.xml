@@ -23,6 +23,7 @@
         <module>service-sales</module>
         <module>service-order</module>
         <module>service-office</module>
+        <module>service-social</module>
     </modules>
 
     <properties>

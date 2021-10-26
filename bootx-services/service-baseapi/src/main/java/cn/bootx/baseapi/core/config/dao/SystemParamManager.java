@@ -25,13 +25,13 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
      * key重复检查
      */
     public boolean existedByKey(String key){
-        return this.existedByField(SystemParameter::getKey,key);
+        return this.existedByField(SystemParameter::getParamKey,key);
     }
     /**
      * key重复检查
      */
     public boolean existedByKey(String key,Long id){
-        return lambdaQuery().eq(SystemParameter::getKey,key)
+        return lambdaQuery().eq(SystemParameter::getParamKey,key)
                 .ne(MpBaseEntity::getId,id)
                 .exists();
     }
