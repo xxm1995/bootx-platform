@@ -1,6 +1,8 @@
 package cn.bootx.notice.dto.dingtalk;
 
+import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
+import cn.bootx.common.jackson.sensitive.SensitiveInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,6 +25,7 @@ public class DingRobotConfigDto extends BaseDto implements Serializable {
     private String name;
 
     /** 钉钉机器人的accessToken */
+    @SensitiveInfo(value = SensitiveType.OTHER)
     private String accessToken;
 
     /** 是否开启验签 */

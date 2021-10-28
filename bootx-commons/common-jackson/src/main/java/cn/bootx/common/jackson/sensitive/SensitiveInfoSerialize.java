@@ -1,6 +1,7 @@
 package cn.bootx.common.jackson.sensitive;
 
 import cn.hutool.core.util.DesensitizedUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -61,11 +62,11 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
                 break;
             }
             case CNAPS_CODE: {
-                jsonGenerator.writeString(DesensitizedUtil.idCardNum(s,4,4));
+                jsonGenerator.writeString(this.hide(s,4,4));
                 break;
             }
             case OTHER: {
-                jsonGenerator.writeString(DesensitizedUtil.idCardNum(s,sensitiveInfo.front(),sensitiveInfo.end()));
+                jsonGenerator.writeString(this.hide(s,sensitiveInfo.front(),sensitiveInfo.end()));
                 break;
             }
             default:{
@@ -92,4 +93,22 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
         return serializerProvider.findNullValueSerializer(null);
     }
 
+    /**
+     * 字段隐藏
+     * @param str 字符串
+     * @param front 前多少位不隐藏
+     * @param end 后多少位不隐藏
+     * @return 处理后的字段
+     */
+    private String hide(String str,int front,int end){
+        //字符串不能为空
+        if (StrUtil.isBlank(str)) {
+            return StrUtil.EMPTY;
+        }
+        //需要截取的不能小于0
+        if (front < 0 || end < 0) {
+            return StrUtil.EMPTY;
+        }
+        return StrUtil.hide(str, front, str.length() - end);
+    }
 }
