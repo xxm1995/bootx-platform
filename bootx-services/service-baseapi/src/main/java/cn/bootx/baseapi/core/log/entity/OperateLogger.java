@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("sys_operate_log")
-public class OperateLog implements EntityBaseFunction<OperateLogDto> {
+public class OperateLogger implements EntityBaseFunction<OperateLogDto> {
 
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;

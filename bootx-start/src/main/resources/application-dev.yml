@@ -21,12 +21,37 @@ spring:
         retry:
           enabled: true
           max-attempts: 5
-#静态资源加载配置
+  #静态资源加载配置
   mvc:
     static-path-pattern: /**
   web:
     resources:
       static-locations: classpath:/static/,classpath:/public/
+  quartz:
+    job-store-type: jdbc
+    #定时任务启动开关，true-开  false-关
+    auto-startup: true
+    #启动时更新己存在的Job
+    overwrite-existing-jobs: true
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: MyScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: qrtz_
+            isClustered: true
+            misfireThreshold: 60000
+            clusterCheckinInterval: 10000
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+
 #minidao配置
 minidao :
   base-package: org.jeecg.modules.jmreport.desreport.dao*
@@ -51,10 +76,9 @@ bootx:
         payment: cn.bootx.payment
         sales: cn.bootx.sales
         order: cn.bootx.order
+        common: cn.bootx.common
   starter:
     auth:
-      captcha-timeout: 300
-      captcha: true
       default-password: 123456
       ignore-urls:
         - '/actuator/**'

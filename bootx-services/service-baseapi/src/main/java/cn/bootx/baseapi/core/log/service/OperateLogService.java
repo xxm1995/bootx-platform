@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.core.log.service;
 
 import cn.bootx.baseapi.core.log.dao.OperateLogManager;
-import cn.bootx.baseapi.core.log.entity.OperateLog;
+import cn.bootx.baseapi.core.log.entity.OperateLogger;
 import cn.bootx.baseapi.dto.log.OperateLogDto;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -26,15 +26,15 @@ public class OperateLogService {
      * 添加
      */
     @Async("asyncExecutor")
-    public void add(OperateLog operateLog){
-        operateLogManager.save(operateLog);
+    public void add(OperateLogger operateLogger){
+        operateLogManager.save(operateLogger);
     }
 
     /**
      * 获取
      */
     public OperateLogDto findById(Long id){
-        return operateLogManager.findById(id).map(OperateLog::toDto).orElse(null);
+        return operateLogManager.findById(id).map(OperateLogger::toDto).orElse(null);
     }
 
     /**

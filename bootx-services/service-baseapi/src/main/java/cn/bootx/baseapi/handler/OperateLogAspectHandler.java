@@ -1,5 +1,6 @@
 package cn.bootx.baseapi.handler;
 
+import cn.bootx.baseapi.core.log.entity.OperateLogger;
 import cn.bootx.baseapi.core.log.service.OperateLogService;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.entity.UserDetail;
@@ -78,7 +79,7 @@ public class OperateLogAspectHandler {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
 
-        cn.bootx.baseapi.core.log.entity.OperateLog operateLog = new cn.bootx.baseapi.core.log.entity.OperateLog()
+        OperateLogger operateLogger = new OperateLogger()
                 .setTitle(log.title())
                 .setOperateId(currentUser.map(UserDetail::getId).orElse(0L))
                 .setUsername(currentUser.map(UserDetail::getUsername).orElse(null))
@@ -92,22 +93,22 @@ public class OperateLogAspectHandler {
 
         // 异常流
         if (Objects.nonNull(e)){
-            operateLog.setSuccess(false)
+            operateLogger.setSuccess(false)
                     .setErrorMsg(e.getMessage());
         }
 
         // 参数
         if (log.isParam()){
             Object[] args = joinPoint.getArgs();
-            operateLog.setOperateParam(JacksonUtils.toJson(args));
+            operateLogger.setOperateParam(JacksonUtils.toJson(args));
         }
 
         // 返回值
         if (log.isrReturn()){
-            operateLog.setOperateReturn(JacksonUtils.toJson(o));
+            operateLogger.setOperateReturn(JacksonUtils.toJson(o));
         }
 
-        operateLogService.add(operateLog);
+        operateLogService.add(operateLogger);
     }
 
     /**

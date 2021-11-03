@@ -79,6 +79,13 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
+        <!-- quartz 定时任务 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-quartz</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
         <!-- 报表模块 -->
 <!--        <dependency>-->
 <!--            <groupId>cn.bootx.platform</groupId>-->

@@ -40,7 +40,9 @@
         <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
         <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <swagger.version>1.6.2</swagger.version>
-        <sa-token.version>1.24.0</sa-token.version>
+        <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
+        <sa-token.version>1.25.0</sa-token.version>
         <sa-token.plugin.version>v1.24.0-SNAPSHOT</sa-token.plugin.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <freemarker.version>2.3.31</freemarker.version>
@@ -105,11 +107,32 @@
                 <version>${swagger.version}</version>
             </dependency>
 
-            <!-- 定时任务 -->
+            <!-- 定时任务(XXL-JOB) -->
             <dependency>
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
+            </dependency>
+
+            <!-- lombok 配合 mapstruct -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-mapstruct-binding</artifactId>
+                <version>${lombok-mapstruct.version}</version>
+            </dependency>
+
+            <!-- 类型转换处理器 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- 类型转换 -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
 
             <!-- Sa-Token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->

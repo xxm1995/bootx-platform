@@ -35,6 +35,21 @@ public class MpUtils {
 	}
 
     /**
+     * page转换为 PageResult
+     */
+    public static <T> PageResult<T> page2PageResult(Page<T> page){
+        if (Objects.isNull(page)){
+            return new PageResult<>();
+        }
+        // 构造 PageResult 对象
+        return new PageResult<T>()
+                .setSize(page.getSize())
+                .setCurrent(page.getCurrent())
+                .setTotal(page.getTotal())
+                .setRecords(page.getRecords());
+    }
+
+    /**
      * 获取分页对象 MyBatis-Plus
      */
     public static <T> Page<T> getMpPage(PageParam page, Class<T> clazz){

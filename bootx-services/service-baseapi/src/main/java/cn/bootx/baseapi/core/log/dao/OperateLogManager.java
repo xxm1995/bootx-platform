@@ -1,6 +1,6 @@
 package cn.bootx.baseapi.core.log.dao;
 
-import cn.bootx.baseapi.core.log.entity.OperateLog;
+import cn.bootx.baseapi.core.log.entity.OperateLogger;
 import cn.bootx.baseapi.dto.log.OperateLogDto;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
@@ -21,15 +21,15 @@ import java.util.Objects;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OperateLogManager extends BaseManager<OperateLogMapper, OperateLog> {
+public class OperateLogManager extends BaseManager<OperateLogMapper, OperateLogger> {
 
-    public Page<OperateLog> page(PageParam pageParam, OperateLogDto operateLogDto) {
-        Page<OperateLog> mpPage = MpUtils.getMpPage(pageParam, OperateLog.class);
+    public Page<OperateLogger> page(PageParam pageParam, OperateLogDto operateLogDto) {
+        Page<OperateLogger> mpPage = MpUtils.getMpPage(pageParam, OperateLogger.class);
         return lambdaQuery()
-                .like(StrUtil.isNotBlank(operateLogDto.getUsername()),OperateLog::getUsername,operateLogDto.getUsername())
-                .like(StrUtil.isNotBlank(operateLogDto.getTitle()),OperateLog::getTitle,operateLogDto.getTitle())
-                .eq(Objects.nonNull(operateLogDto.getBusinessType()),OperateLog::getBusinessType,operateLogDto.getBusinessType())
-                .orderByDesc(OperateLog::getOperateTime)
+                .like(StrUtil.isNotBlank(operateLogDto.getUsername()), OperateLogger::getUsername,operateLogDto.getUsername())
+                .like(StrUtil.isNotBlank(operateLogDto.getTitle()), OperateLogger::getTitle,operateLogDto.getTitle())
+                .eq(Objects.nonNull(operateLogDto.getBusinessType()), OperateLogger::getBusinessType,operateLogDto.getBusinessType())
+                .orderByDesc(OperateLogger::getOperateTime)
                 .page(mpPage);
     }
 }
