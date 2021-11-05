@@ -104,14 +104,14 @@ public class QuartzJobScheduler {
     /**
      * 获取任务对象
      */
-    private static Class<? extends Job> getJobClass(String classname) {
-        Class<?> clazz = null;
+    public Class<? extends Job> getJobClass(String classname) {
+        Class<?> clazz;
         try {
             clazz = Class.forName(classname);
         } catch (ClassNotFoundException e) {
             throw new BizException("后台找不到该定时任务类名");
         }
-        if (clazz.isAssignableFrom(Job.class)){
+        if (Job.class.isAssignableFrom(clazz)){
             //noinspection unchecked
             return (Class<Job>) clazz;
         }

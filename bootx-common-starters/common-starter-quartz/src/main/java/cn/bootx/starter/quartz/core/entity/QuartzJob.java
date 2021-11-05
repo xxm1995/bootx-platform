@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sys_quartz_job")
+@TableName("starter_quartz_job")
 public class QuartzJob extends MpBaseEntity implements EntityBaseFunction<QuartzJobDto> {
 
     /** 任务名称 */

@@ -7,12 +7,16 @@ import cn.bootx.common.core.exception.SystemException;
 import cn.bootx.common.core.rest.CommonErrorCodes;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.core.env.Environment;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Objects;
 
 /**   
 * Web 项目异常处理
@@ -21,7 +25,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 */
 @Slf4j
 @RestControllerAdvice
+@RequiredArgsConstructor
 public class RestExceptionHandler {
+    private final Environment environment;
 
     /**
      * 业务异常
@@ -69,12 +75,26 @@ public class RestExceptionHandler {
     }
 
     /**
+     * 处理 FatalException
+     */
+    @ExceptionHandler(NullPointerException.class)
+    public ResResult<Void> handleNullPointerException(NullPointerException ex) {
+        log.error("空指针 ", ex);
+        return Res.response(CommonErrorCodes.SYSTEM_ERROR, "数据错误",MDC.get(CommonCode.TRACE_ID));
+    }
+
+    /**
      * 处理 RuntimeException
      */
     @ExceptionHandler(RuntimeException.class)
     public ResResult<Void> handleRuntimeException(RuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        return Res.response(CommonErrorCodes.UNKNOWN_ERROR, ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+        String activeProfile = environment.getActiveProfiles()[0];
+        if (Objects.equals(CommonCode.ENV_DEV,activeProfile)){
+            return Res.response(CommonErrorCodes.SYSTEM_ERROR, ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+        } else {
+            return Res.response(CommonErrorCodes.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));
+        }
     }
 
 

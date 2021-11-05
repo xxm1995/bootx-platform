@@ -29,7 +29,10 @@ public class QuartzJobDto extends BaseDto {
     /** 参数 */
     private String parameter;
 
-    /** 状态 */
+    /**
+     * 状态
+     * @see cn.bootx.starter.quartz.code.QuartzJobCode
+     */
     private Integer state;
 
     /** 备注 */

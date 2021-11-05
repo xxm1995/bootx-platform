@@ -36,8 +36,8 @@ public class QuartzJobService {
     @Transactional(rollbackFor = Exception.class)
     public void add(QuartzJobParam param){
         QuartzJob quartzJob = QuartzJob.init(param);
+        quartzJob.setState(QuartzJobCode.STOP);
         quartzJobManager.save(quartzJob);
-        jobScheduler.add(quartzJob.getId(),quartzJob.getJobClassName(),quartzJob.getCron(),quartzJob.getParameter());
     }
 
     /**
@@ -120,6 +120,18 @@ public class QuartzJobService {
     public void delete(Long id){
         quartzJobManager.deleteById(id);
         jobScheduler.delete(id);
+    }
+
+    /**
+     * 判断是否是定时任务类
+     */
+    public String judgeJobClass(String jobClassName){
+        try {
+            jobScheduler.getJobClass(jobClassName);
+        } catch (BizException e) {
+            return e.getMessage();
+        }
+        return "";
     }
 
 }

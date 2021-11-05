@@ -32,6 +32,7 @@ public class DingRobotConfigDto extends BaseDto implements Serializable {
     private boolean enableSignatureCheck;
 
     /** 验签秘钥 */
+    @SensitiveInfo(value = SensitiveType.OTHER)
     private String signSecret;
 
     @ApiModelProperty("描述")
