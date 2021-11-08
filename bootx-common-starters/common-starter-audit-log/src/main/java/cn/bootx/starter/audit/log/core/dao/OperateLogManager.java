@@ -1,10 +1,10 @@
-package cn.bootx.baseapi.core.log.dao;
+package cn.bootx.starter.audit.log.core.dao;
 
-import cn.bootx.baseapi.core.log.entity.OperateLogger;
-import cn.bootx.baseapi.dto.log.OperateLogDto;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.starter.audit.log.core.entity.OperateLogger;
+import cn.bootx.starter.audit.log.dto.OperateLogDto;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;

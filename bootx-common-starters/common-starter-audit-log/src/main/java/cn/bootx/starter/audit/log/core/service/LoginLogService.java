@@ -1,11 +1,11 @@
-package cn.bootx.baseapi.core.log.service;
+package cn.bootx.starter.audit.log.core.service;
 
-import cn.bootx.baseapi.core.log.dao.LoginLogManager;
-import cn.bootx.baseapi.core.log.entity.LoginLog;
-import cn.bootx.baseapi.dto.log.LoginLogDto;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.starter.audit.log.core.dao.LoginLogManager;
+import cn.bootx.starter.audit.log.core.entity.LoginLog;
+import cn.bootx.starter.audit.log.dto.LoginLogDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;

@@ -14,8 +14,8 @@
 
     <modules>
         <module>common-starter-auth</module>
-        <module>common-starter-report</module>
         <module>common-starter-quartz</module>
+        <module>common-starter-audit-log</module>
     </modules>
 
     <dependencies>

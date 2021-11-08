@@ -4,6 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 
+/**   
+* 测试定时任务
+* @author xxm  
+* @date 2021/11/8 
+*/
 @Slf4j
 public class TestTask implements Job {
     @Override

@@ -1,14 +1,12 @@
-package cn.bootx.baseapi.core.log.entity;
+package cn.bootx.starter.audit.log.dto;
 
-import cn.bootx.baseapi.core.log.convert.LogConvert;
-import cn.bootx.baseapi.dto.log.LoginLogDto;
-import cn.bootx.common.core.function.EntityBaseFunction;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.bootx.common.core.rest.dto.BaseDto;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**   
@@ -16,18 +14,17 @@ import java.time.LocalDateTime;
 * @author xxm  
 * @date 2021/8/12 
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sys_login_log")
-public class LoginLog implements EntityBaseFunction<LoginLogDto> {
+@ApiModel("登录日志")
+public class LoginLogDto extends BaseDto implements Serializable {
+    private static final long serialVersionUID = 2985633896134425505L;
 
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
-
-    /** 用户账号id */
+    /** 用户ID */
     private Long userId;
 
-    /** 用户名称 */
+    /** 登录账号 */
     private String account;
 
     /** 登录成功状态*/
@@ -53,9 +50,4 @@ public class LoginLog implements EntityBaseFunction<LoginLogDto> {
 
     /** 访问时间 */
     private LocalDateTime loginTime;
-
-    @Override
-    public LoginLogDto toDto() {
-        return LogConvert.CONVERT.convert(this);
-    }
 }

@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.auth.handler;
 
-import cn.bootx.baseapi.core.log.entity.LoginLog;
-import cn.bootx.baseapi.core.log.service.LoginLogService;
+import cn.bootx.starter.audit.log.core.entity.LoginLog;
+import cn.bootx.starter.audit.log.core.service.LoginLogService;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.handler.LoginFailureHandler;
 import cn.bootx.starter.auth.util.SecurityUtil;

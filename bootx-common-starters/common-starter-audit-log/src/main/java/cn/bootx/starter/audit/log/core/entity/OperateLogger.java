@@ -1,8 +1,8 @@
-package cn.bootx.baseapi.core.log.entity;
+package cn.bootx.starter.audit.log.core.entity;
 
-import cn.bootx.baseapi.core.log.convert.LogConvert;
-import cn.bootx.baseapi.dto.log.OperateLogDto;
 import cn.bootx.common.core.function.EntityBaseFunction;
+import cn.bootx.starter.audit.log.core.convert.LogConvert;
+import cn.bootx.starter.audit.log.dto.OperateLogDto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@TableName("sys_operate_log")
+@TableName("starter_operate_log")
 public class OperateLogger implements EntityBaseFunction<OperateLogDto> {
 
     @TableId(type = IdType.ASSIGN_ID)

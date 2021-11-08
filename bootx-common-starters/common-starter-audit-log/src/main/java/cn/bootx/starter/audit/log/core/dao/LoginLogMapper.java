@@ -1,6 +1,6 @@
-package cn.bootx.baseapi.core.log.dao;
+package cn.bootx.starter.audit.log.core.dao;
 
-import cn.bootx.baseapi.core.log.entity.LoginLog;
+import cn.bootx.starter.audit.log.core.entity.LoginLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

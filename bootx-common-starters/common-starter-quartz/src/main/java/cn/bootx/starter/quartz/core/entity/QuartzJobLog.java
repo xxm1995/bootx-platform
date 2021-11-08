@@ -1,4 +1,4 @@
-package cn.bootx.baseapi.core.log.entity;
+package cn.bootx.starter.quartz.core.entity;
 
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -14,8 +14,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sys_operate_log")
-public class TaskLog extends MpIdEntity {
+@TableName("starter_quartz_job_log")
+public class QuartzJobLog extends MpIdEntity {
 
     private String taskName;
 

@@ -1,4 +1,4 @@
-package cn.bootx.baseapi.dto.log;
+package cn.bootx.starter.audit.log.dto;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import lombok.Data;

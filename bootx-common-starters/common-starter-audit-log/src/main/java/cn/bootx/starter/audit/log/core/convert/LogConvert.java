@@ -1,9 +1,9 @@
-package cn.bootx.baseapi.core.log.convert;
+package cn.bootx.starter.audit.log.core.convert;
 
-import cn.bootx.baseapi.core.log.entity.LoginLog;
-import cn.bootx.baseapi.core.log.entity.OperateLogger;
-import cn.bootx.baseapi.dto.log.LoginLogDto;
-import cn.bootx.baseapi.dto.log.OperateLogDto;
+import cn.bootx.starter.audit.log.core.entity.LoginLog;
+import cn.bootx.starter.audit.log.core.entity.OperateLogger;
+import cn.bootx.starter.audit.log.dto.LoginLogDto;
+import cn.bootx.starter.audit.log.dto.OperateLogDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;

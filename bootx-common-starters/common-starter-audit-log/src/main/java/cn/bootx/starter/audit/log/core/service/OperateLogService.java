@@ -1,18 +1,18 @@
-package cn.bootx.baseapi.core.log.service;
+package cn.bootx.starter.audit.log.core.service;
 
-import cn.bootx.baseapi.core.log.dao.OperateLogManager;
-import cn.bootx.baseapi.core.log.entity.OperateLogger;
-import cn.bootx.baseapi.dto.log.OperateLogDto;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.starter.audit.log.core.dao.OperateLogManager;
+import cn.bootx.starter.audit.log.core.entity.OperateLogger;
+import cn.bootx.starter.audit.log.dto.OperateLogDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**   
-* 
+* 操作日志
 * @author xxm  
 * @date 2021/8/12 
 */

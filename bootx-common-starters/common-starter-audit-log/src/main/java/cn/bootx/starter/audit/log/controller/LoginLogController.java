@@ -1,11 +1,11 @@
-package cn.bootx.baseapi.controller;
+package cn.bootx.starter.audit.log.controller;
 
-import cn.bootx.baseapi.core.log.service.OperateLogService;
-import cn.bootx.baseapi.dto.log.OperateLogDto;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.starter.audit.log.core.service.LoginLogService;
+import cn.bootx.starter.audit.log.dto.LoginLogDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
-* 操作日志
-* @author xxm
-* @date 2021/9/8
+/**   
+*
+* @author xxm  
+* @date 2021/9/7 
 */
-@Api(tags = "操作日志")
+@Api(tags = "登录日志")
 @RestController
-@RequestMapping("/log/operate")
+@RequestMapping("/log/login")
 @RequiredArgsConstructor
-public class OperateLogController {
-    private final OperateLogService operateLogService;
+public class LoginLogController {
+    private final LoginLogService loginLogService;
 
     @ApiOperation("分页")
     @GetMapping("/page")
-    public ResResult<PageResult<OperateLogDto>> page(PageParam pageParam, OperateLogDto operateLogDto){
-        return Res.ok(operateLogService.page(pageParam,operateLogDto));
+    public ResResult<PageResult<LoginLogDto>> page(PageParam pageParam, LoginLogDto loginLogDto){
+        return Res.ok(loginLogService.page(pageParam,loginLogDto));
     }
 
     @ApiOperation("获取")
     @GetMapping("/findById")
-    public ResResult<OperateLogDto> findById(Long id){
-        return Res.ok(operateLogService.findById(id));
+    public ResResult<LoginLogDto> findById(Long id){
+        return Res.ok(loginLogService.findById(id));
     }
 }

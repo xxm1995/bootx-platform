@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.auth.handler;
 
-import cn.bootx.baseapi.core.log.entity.LoginLog;
-import cn.bootx.baseapi.core.log.service.LoginLogService;
+import cn.bootx.starter.audit.log.core.entity.LoginLog;
+import cn.bootx.starter.audit.log.core.service.LoginLogService;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.handler.LoginSuccessHandler;
 import cn.hutool.extra.servlet.ServletUtil;
@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
     private final LoginLogService loginLogService;
+
     @Override
     public void onLoginSuccess(HttpServletRequest request, HttpServletResponse response, AuthInfoResult authInfoResult) {
         UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
