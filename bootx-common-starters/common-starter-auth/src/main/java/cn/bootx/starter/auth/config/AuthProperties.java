@@ -2,7 +2,6 @@ package cn.bootx.starter.auth.config;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.List;
 * @author xxm  
 * @date 2021/7/30 
 */
-@Slf4j
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "bootx.starter.auth")

@@ -86,13 +86,6 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
-        <!-- 报表模块 -->
-<!--        <dependency>-->
-<!--            <groupId>cn.bootx.platform</groupId>-->
-<!--            <artifactId>common-starter-report</artifactId>-->
-<!--            <version>${bootx-platform.version}</version>-->
-<!--        </dependency>-->
-
     </dependencies>
 
     <build>
