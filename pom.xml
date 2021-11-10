@@ -141,13 +141,6 @@
                 <version>${sa-token.version}</version>
             </dependency>
 
-            <!-- Sa-Token 整合 Redis  -->
-            <dependency>
-                <groupId>com.gitee.bootx</groupId>
-                <artifactId>sa-token-plugin-redis</artifactId>
-                <version>${sa-token.plugin.version}</version>
-            </dependency>
-
             <!-- captcha 验证码生成 -->
             <dependency>
                 <groupId>com.github.whvcse</groupId>
