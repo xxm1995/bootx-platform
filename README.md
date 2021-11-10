@@ -76,7 +76,7 @@ service-iam
   - [Swagger扩展](bootx-commons/common-swagger/README.md)
   - [定时任务xxl-job](bootx-commons/common-xxl-job/README.md)
 - [starters功能封装](bootx-common-starters/README.md)
-  - [认证封装模块](bootx-common-starters/common-starter-auth/README.md)
+  - [认证封装模块](bootx-common-starters/common-starter-auth-satoken/README.md)
 - [预置服务模块](bootx-services/README.md)
   - [基础API](bootx-services/service-baseapi/README.md)
   - [IAM身份识别与访问管理](bootx-services/service-iam/README.md)

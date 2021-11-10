@@ -13,9 +13,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>common-starter-auth</module>
+        <module>common-starter-auth-satoken</module>
         <module>common-starter-quartz</module>
         <module>common-starter-audit-log</module>
+        <module>common-starter-auth-shiro</module>
     </modules>
 
     <dependencies>

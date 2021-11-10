@@ -9,19 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common-sequence</artifactId>
+    <artifactId>common-auth</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-redis-client</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-mybatis-plus</artifactId>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
 
 </project>

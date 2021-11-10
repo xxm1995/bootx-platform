@@ -34,7 +34,14 @@
         <!-- 认证模块 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-starter-auth</artifactId>
+            <artifactId>common-starter-auth-shiro</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 审计日志模块 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-audit-log</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
 
@@ -44,11 +51,7 @@
             <artifactId>service-baseapi</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-starter-audit-log</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
+
     </dependencies>
 
 </project>

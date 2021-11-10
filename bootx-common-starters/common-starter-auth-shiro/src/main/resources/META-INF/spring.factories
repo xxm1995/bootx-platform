@@ -1,0 +1,3 @@
+## 配置自动化配置
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bootx.starter.auth.AuthApplication

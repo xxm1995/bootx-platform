@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-starter-auth</artifactId>
+            <artifactId>common-starter-auth-satoken</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
         <dependency>

@@ -42,8 +42,8 @@
         <swagger.version>1.6.2</swagger.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
-        <sa-token.version>1.25.0</sa-token.version>
-        <sa-token.plugin.version>v1.24.0-SNAPSHOT</sa-token.plugin.version>
+        <sa-token.version>1.28.0</sa-token.version>
+        <shiro.version>1.7.1</shiro.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <freemarker.version>2.3.31</freemarker.version>
         <wxjava.version>4.1.0</wxjava.version>
@@ -139,6 +139,13 @@
                 <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-spring-boot-starter</artifactId>
                 <version>${sa-token.version}</version>
+            </dependency>
+
+            <!--shiro-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring-boot-starter</artifactId>
+                <version>${shiro.version}</version>
             </dependency>
 
             <!-- captcha 验证码生成 -->

@@ -2,7 +2,7 @@
 
 ## 介绍
 基于sa-token，为选择Spring Security原因是复杂度较高，而且OAuth2相关项目已经停止，新版还没到生产可用。原生Spring Security想用在前后端分离的情况相对来说也不方便。
-Shiro的话后期会出一个实现，目前的涉及sa-token相关的依赖都未暴露出common-starter-auth模块，方便后期无感替换。
+Shiro的话后期会出一个实现，目前的涉及sa-token相关的依赖都未暴露出common-starter-auth-satoken模块，方便后期无感替换。
 
 引入了 [sa-token-plugin](https://gitee.com/bootx/sa-token-plugin) 中的redis插件，替代官方的实现，配置方式见该项目的README。
 ## 功能
