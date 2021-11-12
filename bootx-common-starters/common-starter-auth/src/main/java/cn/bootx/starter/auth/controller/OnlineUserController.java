@@ -1,11 +1,11 @@
-package cn.bootx.iam.controller;
+package cn.bootx.starter.auth.controller;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.iam.core.online.OnlineUserService;
-import cn.bootx.iam.dto.online.OnlineUserDto;
+import cn.bootx.starter.auth.online.OnlineUserDto;
+import cn.bootx.starter.auth.online.OnlineUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

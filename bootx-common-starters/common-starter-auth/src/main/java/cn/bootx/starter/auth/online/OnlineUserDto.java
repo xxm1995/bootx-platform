@@ -1,4 +1,4 @@
-package cn.bootx.iam.dto.online;
+package cn.bootx.starter.auth.online;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

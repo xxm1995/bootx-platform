@@ -1,4 +1,4 @@
-package cn.bootx.iam.core.online;
+package cn.bootx.starter.auth.online;
 
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.code.CommonCode;
@@ -7,7 +7,6 @@ import cn.bootx.common.core.enums.BusinessType;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.iam.dto.online.OnlineUserDto;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.date.LocalDateTimeUtil;
