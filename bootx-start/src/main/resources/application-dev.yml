@@ -52,9 +52,6 @@ spring:
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
 
-#minidao配置
-minidao :
-  base-package: org.jeecg.modules.jmreport.desreport.dao*
 # 开发时显示debug日志
 logging:
   level:
@@ -76,7 +73,7 @@ bootx:
         payment: cn.bootx.payment
         sales: cn.bootx.sales
         order: cn.bootx.order
-        common: cn.bootx.common
+        starter: cn.bootx.starter
   starter:
     auth:
       default-password: 123456

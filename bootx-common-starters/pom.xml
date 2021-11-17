@@ -16,6 +16,7 @@
         <module>common-starter-auth</module>
         <module>common-starter-quartz</module>
         <module>common-starter-audit-log</module>
+        <module>common-starter-query</module>
     </modules>
 
     <dependencies>

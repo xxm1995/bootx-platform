@@ -18,6 +18,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-query</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
         <!-- mp -->
         <dependency>
             <groupId>com.baomidou</groupId>
