@@ -9,6 +9,7 @@ import cn.bootx.iam.core.client.dao.ClientManager;
 import cn.bootx.iam.core.client.entity.Client;
 import cn.bootx.iam.dto.client.ClientDto;
 import cn.bootx.iam.param.client.ClientParam;
+import cn.bootx.starter.query.entity.QueryParams;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,12 @@ public class ClientService {
         return MpUtils.convert2PageResult(clientManager.page(pageParam,clientParam));
     }
 
+
+    public PageResult<ClientDto> supperPage(PageParam pageParam, QueryParams queryParams) {
+        return MpUtils.convert2PageResult(clientManager.supperPage(pageParam,queryParams));
+
+    }
+
     /**
      * 获取单条
      */
@@ -100,4 +107,5 @@ public class ClientService {
     public boolean existsByCode(String code,Long id){
         return clientManager.existsByCode(code,id);
     }
+
 }

@@ -8,6 +8,7 @@ import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.convert.UserConvert;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.param.user.UserInfoParam;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,6 +28,7 @@ import java.time.LocalDateTime;
 public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInfoDto> {
 
     /** 名称 */
+    @TableField("hello")
     private String name;
 
     /** 账号 */

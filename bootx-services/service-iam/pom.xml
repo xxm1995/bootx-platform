@@ -19,6 +19,11 @@
             <scope>runtime</scope>
         </dependency>
 
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-query</artifactId>
+        </dependency>
+
         <!-- mp -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -47,7 +52,6 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-audit-log</artifactId>
-            <version>${bootx-platform.version}</version>
         </dependency>
     </dependencies>
 

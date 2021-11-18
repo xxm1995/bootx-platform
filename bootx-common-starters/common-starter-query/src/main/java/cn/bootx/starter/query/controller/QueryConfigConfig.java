@@ -31,7 +31,6 @@ public class QueryConfigConfig {
         System.out.println(queryParams);
         QueryWrapper<UserDetail> generator = QueryGenerator.generator(queryParams);
         System.out.println(generator.getExpression().getNormal());
-        System.out.println(generator.getExpression().getOrderBy());
         return Res.ok();
     }
 }

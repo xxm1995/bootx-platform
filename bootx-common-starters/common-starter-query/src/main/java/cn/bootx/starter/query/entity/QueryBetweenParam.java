@@ -6,18 +6,18 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**   
-*
+* Between 类型参数
 * @author xxm  
-* @date 2021/11/17 
+* @date 2021/11/18 
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("查询排序")
-public class QueryOrder {
+@ApiModel("Between 类型参数")
+public class QueryBetweenParam {
 
-    @ApiModelProperty("设置排序字段")
-    private String sortField;
+    @ApiModelProperty("开始参数")
+    private Object start;
 
-    @ApiModelProperty("是否升序")
-    private boolean asc = true;
+    @ApiModelProperty("结束参数")
+    private Object end;
 }

@@ -8,6 +8,7 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.iam.core.client.service.ClientService;
 import cn.bootx.iam.dto.client.ClientDto;
 import cn.bootx.iam.param.client.ClientParam;
+import cn.bootx.starter.query.entity.QueryParams;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -71,6 +72,12 @@ public class ClientController {
         return Res.ok(clientService.page(pageParam,clientParam));
     }
 
+    @ApiOperation("超级分页")
+    @PostMapping("/supperPage")
+    public ResResult<PageResult<ClientDto>> supperPage(PageParam pageParam,@RequestBody QueryParams queryParams){
+        return Res.ok(clientService.supperPage(pageParam,queryParams));
+    }
+    
     @ApiOperation(value = "编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {

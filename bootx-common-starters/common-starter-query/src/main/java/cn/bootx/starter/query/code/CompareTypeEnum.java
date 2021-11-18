@@ -13,6 +13,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CompareTypeEnum {
 
+    AND("and","AND","和"),
+
+    OR("or","OR","或"),
+
     GT( "gt", ">","大于"),
 
     GE( "ge", ">=","大于等于"),
@@ -27,17 +31,29 @@ public enum CompareTypeEnum {
 
     IN( "in", "IN","包含"),
 
-    LIKE( "like", "LIKE","全模糊"),
+    NOT_IN( "not_in", "NOT_IN","不包含"),
 
-    LEFT_LIKE( "left_like", "LEFT_LIKE","左模糊"),
+    BETWEEN( "between", "BETWEEN","在之间"),
 
-    RIGHT_LIKE( "right_like", "RIGHT_LIKE","右模糊");
+    NOT_BETWEEN( "not_between", "NOT_BETWEEN","不在之间"),
+
+    LIKE( "like", "LIKE","全模糊匹配"),
+
+    NOT_LIKE( "not_like", "NOT_LIKE","全模糊不匹配"),
+
+    LIKE_LEFT( "like_left", "LIKE_LEFT","左模糊"),
+
+    LIKE_RIGHT( "like_right", "LIKE_RIGHT","右模糊"),
+
+    IS_NULL( "is_null", "IS_NULL","为空"),
+
+    NOT_NULL( "not_null", "NOT_NULL","不为空");
 
     private final String code;
     private final String value;
     private final String msg;
 
-    public static CompareTypeEnum getByValue(String code) {
+    public static CompareTypeEnum getByCode(String code) {
         if (StrUtil.isEmpty(code)) {
             return null;
         }

@@ -213,6 +213,26 @@
 
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-query</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-quartz</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-audit-log</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>

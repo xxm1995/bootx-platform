@@ -6,7 +6,10 @@ import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.core.client.entity.Client;
 import cn.bootx.iam.param.client.ClientParam;
+import cn.bootx.starter.query.entity.QueryParams;
+import cn.bootx.starter.query.generator.QueryGenerator;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -41,5 +44,14 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
                 .like(StrUtil.isNotBlank(clientParam.getName()),Client::getName,clientParam.getName())
                 .like(StrUtil.isNotBlank(clientParam.getCode()),Client::getCode,clientParam.getCode())
                 .page(mpPage);
+    }
+
+    /**
+     * 超级分页
+     */
+    public Page<Client> supperPage(PageParam pageParam, QueryParams queryParams) {
+        QueryWrapper<Client> generator = QueryGenerator.generator(queryParams);
+        Page<Client> mpPage = MpUtils.getMpPage(pageParam, Client.class);
+        return this.page(mpPage,generator);
     }
 }

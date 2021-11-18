@@ -55,5 +55,4 @@ public class MpUtils {
     public static <T> Page<T> getMpPage(PageParam page, Class<T> clazz){
         return Page.of(page.getCurrent(),page.getSize());
     }
-
 }
