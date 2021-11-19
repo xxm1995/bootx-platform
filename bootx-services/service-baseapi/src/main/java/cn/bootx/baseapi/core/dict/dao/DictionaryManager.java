@@ -31,9 +31,7 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
      * 根据code查询重复 排除id
      */
     public boolean existsByCode(String code, Long id){
-        return lambdaQuery().eq(Dictionary::getCode,code)
-                .ne(MpBaseEntity::getId,id)
-                .exists();
+        return existedByField(Dictionary::getCode,code,id);
     }
 
     public boolean existedById(Long id) {

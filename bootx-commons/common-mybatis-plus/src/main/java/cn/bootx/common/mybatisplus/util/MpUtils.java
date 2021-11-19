@@ -3,9 +3,16 @@ package cn.bootx.common.mybatisplus.util;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import com.baomidou.mybatisplus.core.toolkit.Assert;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
+import com.baomidou.mybatisplus.core.toolkit.support.ColumnCache;
+import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.apache.ibatis.reflection.property.PropertyNamer;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -54,5 +61,19 @@ public class MpUtils {
      */
     public static <T> Page<T> getMpPage(PageParam page, Class<T> clazz){
         return Page.of(page.getCurrent(),page.getSize());
+    }
+
+    /**
+     * 获取行名称
+     * @param function Lambda表达式
+     * @return 字段名
+     */
+    public static String getColumnName(SFunction<?,?> function){
+        LambdaMeta meta = LambdaUtils.extract(function);
+        Map<String, ColumnCache> columnMap = LambdaUtils.getColumnMap(meta.getInstantiatedClass());
+        Assert.notEmpty(columnMap, "错误:无法执行.因为无法获取到实体类的表对应缓存!");
+        String fieldName = PropertyNamer.methodToProperty(meta.getImplMethodName());
+        ColumnCache columnCache = columnMap.get(LambdaUtils.formatKey(fieldName));
+        return columnCache.getColumn();
     }
 }

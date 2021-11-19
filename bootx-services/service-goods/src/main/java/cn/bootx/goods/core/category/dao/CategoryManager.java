@@ -19,4 +19,8 @@ public class CategoryManager extends BaseManager<CategoryMapper, Category> {
     public boolean existsName(String name) {
         return existedByField(Category::getName,name);
     }
+
+    public boolean existsName(String name,Long id) {
+        return existedByField(Category::getName,name,id);
+    }
 }

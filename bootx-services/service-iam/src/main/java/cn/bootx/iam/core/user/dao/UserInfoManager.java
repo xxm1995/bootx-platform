@@ -27,9 +27,7 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
     }
 
     public boolean existsByUsername(String username,Long id) {
-        return lambdaQuery().eq(UserInfo::getUsername, username)
-                .ne(MpBaseEntity::getId,id)
-                .exists();
+        return existedByField(UserInfo::getUsername,username,id);
     }
 
     public boolean existsByEmail(String email) {
@@ -37,9 +35,7 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
     }
 
     public boolean existsByEmail(String email,Long id) {
-        return lambdaQuery().eq(UserInfo::getEmail, email)
-                .ne(MpBaseEntity::getId,id)
-                .exists();
+        return existedByField(UserInfo::getEmail,email,id);
     }
 
     public boolean existsByPhone(String phone) {
@@ -47,9 +43,7 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
     }
 
     public boolean existsByPhone(String phone,Long id) {
-        return lambdaQuery().eq(UserInfo::getPhone, phone)
-                .ne(MpBaseEntity::getId,id)
-                .exists();
+        return existedByField(UserInfo::getPhone,phone,id);
     }
 
     public Optional<UserInfo> findByUsername(String username) {
@@ -61,7 +55,7 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
     }
 
     public Optional<UserInfo> findByPhone(String phone) {
-        return findByField(UserInfo::getPhone,phone );
+        return findByField(UserInfo::getPhone,phone);
     }
 
     public Page<UserInfo> page(PageParam pageParam, UserInfoParam param) {
@@ -72,10 +66,6 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
                 .like(StrUtil.isNotBlank(param.getName()),UserInfo::getName,param.getName())
                 .page(mpPage);
         return mpPage;
-    }
-
-    public boolean existsById(Long id) {
-        return existedByField(UserInfo::getId,id);
     }
 
     public void setUpStatus(Long userId, int status) {

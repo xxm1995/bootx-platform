@@ -1,7 +1,6 @@
 package cn.bootx.iam.core.client.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.core.client.entity.Client;
@@ -33,9 +32,7 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
     }
 
     public boolean existsByCode(String code,Long id) {
-        return lambdaQuery().eq(Client::getCode,code)
-                .ne(MpBaseEntity::getId,id)
-                .exists();
+        return existedByField(Client::getCode,code,id);
     }
 
     public Page<Client> page(PageParam pageParam, ClientParam clientParam) {

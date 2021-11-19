@@ -1,5 +1,6 @@
 package cn.bootx.common.mybatisplus.impl;
 
+import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
@@ -326,6 +327,23 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      */
     public boolean existedByField(SFunction<T, ?> field, Object fieldValue){
         return lambdaQuery().eq(field,fieldValue).exists();
+    }
+
+    /**
+     * 根据指定字段查询是否存在数据
+     * @param field 字段
+     * @param fieldValue 字段数据
+     * @param id 主键值
+     * @return 是否存在
+     */
+    public boolean existedByField(SFunction<T, ?> field, Object fieldValue,Serializable id){
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
+        Assert.notNull(tableInfo, "错误:无法执行.因为找不到实体的 TableInfo 缓存!");
+        String keyProperty = tableInfo.getKeyProperty();
+        Assert.notEmpty(keyProperty, "错误:无法执行.因为无法从实体中找到主键的列!");
+        return query().eq(MpUtils.getColumnName(field),fieldValue)
+                .ne(keyProperty,id)
+                .exists();
     }
 
     /**

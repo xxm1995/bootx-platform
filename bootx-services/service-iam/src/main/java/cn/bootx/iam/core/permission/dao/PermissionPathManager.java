@@ -1,7 +1,6 @@
 package cn.bootx.iam.core.permission.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtils;
 import cn.bootx.iam.core.permission.entity.PermissionPath;
@@ -25,9 +24,7 @@ public class PermissionPathManager extends BaseManager<PermissionPathMapper,Perm
     }
 
     public boolean existedByCode(String code,Long id){
-        return lambdaQuery().eq(PermissionPath::getCode, code)
-                .ne(MpBaseEntity::getId,id)
-                .exists();
+        return existedByField(PermissionPath::getCode,code,id);
     }
 
     public Page<PermissionPath> page(PageParam pageParam, PermissionPathParam param) {

@@ -28,19 +28,17 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
         return existedByField(Role::getCode,code);
     }
 
+    public boolean existsByCode(String code, Long id) {
+        return existedByField(Role::getCode,code,id);
+
+    }
+
     public boolean existsByName(String name) {
         return existedByField(Role::getName,name);
     }
 
-    public boolean existsByCode(String code, Long id) {
-        return lambdaQuery().eq(Role::getCode,code)
-                .ne(Role::getId,id).exists();
-    }
-
     public boolean existsByName(String name, Long id) {
-        return lambdaQuery().eq(Role::getName,name)
-                .ne(Role::getId,id)
-                .exists();
+        return existedByField(Role::getName,name,id);
     }
 
     public boolean existsById(Long roleId) {

@@ -23,9 +23,7 @@ public class StrategyManager extends BaseManager<StrategyMapper,Strategy> {
     }
 
     public boolean existsByCode(String code,Long id){
-        return lambdaQuery().eq(Strategy::getCode,code)
-                .ne(Strategy::getId,id)
-                .exists();
+        return existedByField(Strategy::getCode,code,id);
     }
 
     public boolean existsById(Long id) {
