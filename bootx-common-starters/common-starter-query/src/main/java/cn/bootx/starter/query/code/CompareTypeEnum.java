@@ -13,10 +13,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CompareTypeEnum {
 
-    AND("and","AND","和"),
-
-    OR("or","OR","或"),
-
     GT( "gt", ">","大于"),
 
     GE( "ge", ">=","大于等于"),
