@@ -1,8 +1,8 @@
-# Bootx-Platform ([前端项目](https://gitee.com/bootx/bootx-platform-ui))
+# Bootx-Platform (v1.1.0-alpha-3)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-2.0.0-success.svg" alt="Build Status">
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.alpha3-success.svg" alt="Build Status">
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status">
  <img src="https://img.shields.io/badge/Spring%20Boot-2.5-blue.svg" alt="Downloads">
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
@@ -11,18 +11,7 @@
 ## 🍈项目介绍
 
 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
-致力将开源版打造成超越商业版后台管理框架的项目，**分布式版实现地址 [Bootx-Cloud](https://gitee.com/bootx/bootx-platform) ，暂时先以单体为主**
-
-功能：
-
-1. 基础服务：用户管理、权限认证、终端管理、日志审计等
-2. 通知服务：邮件通知、站内信、消息模板、短信通知等
-3. 电商服务：收单支付、营销管理、商品管理、订单管理等
-4. 数据服务：日志分析、数据中心等
-5. 监控服务：服务监控、缓存监控、错误预警单体
-6. OA办公服务：工单服务、工作流服务
-7. 财务管理：待定
-8. ERP：企业资源计划、待定
+致力将开源版打造成超越商业版后台管理框架的项目。
 
 ## 🍒文档
 
@@ -31,6 +20,13 @@
 - 项目文档：[开发文档](https://www.yuque.com/bootx/bootx-platform/)
 - 快速启动：[启动文档](https://www.yuque.com/bootx/bootx-platform/vpi0gn), [QuickStart](./_doc/quickstart.md)
 - 开发计划：[开发任务](./_doc/TASK.md)
+- 更新日志：[更新日志](./_doc/ChangeLog.md)
+
+特色功能
+- 针对敏感信息返回返回时自动脱敏
+- 支持嵌套查询的超级查询构造器，自动生成对应条件SQL语句
+- 异常时返回链路追踪id，方便错误日志追踪
+- 定制Mybatis Plus组件，更方便开发
 
 ## 🍇项目结构说明
 

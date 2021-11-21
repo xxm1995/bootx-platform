@@ -16,6 +16,9 @@ import java.util.List;
 @ApiModel("查询项")
 public class QueryParam {
 
+    @ApiModelProperty("拼接条件是否为或")
+    private boolean or;
+
     @ApiModelProperty("参数名称")
     private String paramName;
 
@@ -39,8 +42,4 @@ public class QueryParam {
 
     @ApiModelProperty("嵌套查询")
     private List<QueryParam> nestedParams;
-
-    @ApiModelProperty("拼接条件是否为或")
-    private boolean or;
-
 }
