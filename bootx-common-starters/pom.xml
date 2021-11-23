@@ -17,6 +17,7 @@
         <module>common-starter-quartz</module>
         <module>common-starter-audit-log</module>
         <module>common-starter-query</module>
+        <module>common-starter-data-perm</module>
     </modules>
 
     <dependencies>

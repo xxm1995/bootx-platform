@@ -1,4 +1,4 @@
-package cn.bootx.common.mybatisplus;
+package cn.bootx.common.mybatisplus.config;
 
 import cn.bootx.common.mybatisplus.handler.SnowflakeIdentifierGenerator;
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -8,8 +8,6 @@ import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerIntercep
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +17,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2021/7/27
  */
 @Configuration
-@ConditionalOnClass(CacheManager.class)
 @RequiredArgsConstructor
 public class MpConfiguration {
 
@@ -40,7 +37,8 @@ public class MpConfiguration {
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         // 防止全表更新与删除
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-
+        // 字段加密组件
+//        interceptor.addInnerInterceptor(new DecryptInterceptor());
         return interceptor;
     }
 

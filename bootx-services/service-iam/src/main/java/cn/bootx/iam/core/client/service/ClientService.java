@@ -61,7 +61,7 @@ public class ClientService {
     }
 
 
-    public PageResult<ClientDto> supperPage(PageParam pageParam, QueryParams queryParams) {
+    public PageResult<ClientDto> superPage(PageParam pageParam, QueryParams queryParams) {
         return MpUtils.convert2PageResult(clientManager.supperPage(pageParam,queryParams));
 
     }

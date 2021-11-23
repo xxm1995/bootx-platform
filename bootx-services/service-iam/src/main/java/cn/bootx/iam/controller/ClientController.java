@@ -73,9 +73,9 @@ public class ClientController {
     }
 
     @ApiOperation("超级分页")
-    @PostMapping("/supperPage")
-    public ResResult<PageResult<ClientDto>> supperPage(PageParam pageParam,@RequestBody QueryParams queryParams){
-        return Res.ok(clientService.supperPage(pageParam,queryParams));
+    @PostMapping("/superPage")
+    public ResResult<PageResult<ClientDto>> superPage(PageParam pageParam,@RequestBody QueryParams queryParams){
+        return Res.ok(clientService.superPage(pageParam,queryParams));
     }
     
     @ApiOperation(value = "编码是否被使用")

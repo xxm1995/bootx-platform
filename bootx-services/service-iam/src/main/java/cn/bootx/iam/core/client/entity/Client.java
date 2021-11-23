@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.client.entity;
 
+import cn.bootx.common.core.annotation.EncryptionField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.iam.core.client.convert.ClientConvert;
@@ -25,6 +26,7 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     private String code;
 
     /** 名称 */
+    @EncryptionField
     private String name;
 
     /** 在线时长 分钟 */

@@ -2,14 +2,14 @@ package cn.bootx.common.core.annotation;
 
 import java.lang.annotation.*;
 
-/**
-* 大字段注解
+/**   
+* 加密字段注解
 * @author xxm  
-* @date 2021/10/24 
+* @date 2021/11/23 
 */
 @Target({ ElementType.PARAMETER, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-public @interface BigField {
+public @interface EncryptionField {
 }
