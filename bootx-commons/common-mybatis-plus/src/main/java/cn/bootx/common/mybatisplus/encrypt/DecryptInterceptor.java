@@ -32,7 +32,6 @@ public class DecryptInterceptor implements Interceptor {
      */
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-
         Object result = invocation.proceed();
         return this.decrypt(result);
     }
