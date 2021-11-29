@@ -42,18 +42,12 @@ public class ParamValueTypeConvert {
             // 原样返回
             case NUMBER:
             case STRING:
-            case DOUBLE:
             case BOOLEAN:
             case DATE:
             case TIME:
             case DATE_TIME:
                 return convertBaseType(paramValue,paramTypeEnum);
-            case LIST_NUMBER:
-            case LIST_STRING:
-            case LIST_DOUBLE:
-            case LIST_DATE:
-            case LIST_TIME:
-            case LIST_DATE_TIME:{
+            case LIST:{
                 Collection<?> collection = (Collection<?>) paramValue;
                 return collection.stream()
                         .map(o -> convertBaseType(o,paramTypeEnum))
@@ -61,7 +55,6 @@ public class ParamValueTypeConvert {
             }
             case BETWEEN_NUMBER:
             case BETWEEN_STRING:
-            case BETWEEN_DOUBLE:
             case BETWEEN_DATE:
             case BETWEEN_TIME:
             case BETWEEN_DATE_TIME:{
@@ -90,7 +83,6 @@ public class ParamValueTypeConvert {
             // 原样返回
             case NUMBER:
             case STRING:
-            case DOUBLE:
             case BOOLEAN:
                 return paramValue;
             case DATE:
