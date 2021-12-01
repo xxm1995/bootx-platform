@@ -12,18 +12,10 @@
     <artifactId>common-swagger</artifactId>
     <packaging>jar</packaging>
 
-    <properties>
-        <springfox.version>3.0.0</springfox.version>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
         </dependency>
     </dependencies>
 

@@ -1,7 +1,7 @@
 package cn.bootx.iam.param.client;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,10 +12,10 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("认证终端")
+@Schema(title = "认证终端")
 public class ClientParam {
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
     /** 编码 */

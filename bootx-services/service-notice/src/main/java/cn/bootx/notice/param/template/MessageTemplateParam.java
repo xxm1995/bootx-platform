@@ -1,7 +1,7 @@
 package cn.bootx.notice.param.template;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,11 +13,11 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("消息模板")
+@Schema(title = "消息模板")
 public class MessageTemplateParam implements Serializable {
 
     private static final long serialVersionUID = 593034193370220643L;
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
     /**

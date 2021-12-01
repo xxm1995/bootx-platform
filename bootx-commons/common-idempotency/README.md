@@ -5,7 +5,7 @@
 通过AOP机制实现
 ```java
 @Slf4j
-@Api(tags = "测试控制器")
+@Tag(name ="测试控制器")
 @RestController
 @RequestMapping("/test")
 @RequiredArgsConstructor
@@ -14,7 +14,7 @@ public class TestController {
 
     // 添加幂等拦截注解
     @Idempotent
-    @ApiOperation("测试")
+    @Operation(summary = "测试")
     @GetMapping("/hello")
     public ResResult<String> hello(){
         return Res.ok("hello");

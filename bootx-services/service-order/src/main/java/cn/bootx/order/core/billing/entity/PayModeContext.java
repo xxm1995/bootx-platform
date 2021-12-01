@@ -1,6 +1,6 @@
 package cn.bootx.order.core.billing.entity;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("支付信息的上下文")
+@Schema(title = "支付信息的上下文")
 public class PayModeContext {
 
     /**

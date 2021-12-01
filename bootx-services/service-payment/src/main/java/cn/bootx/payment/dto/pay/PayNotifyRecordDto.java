@@ -1,7 +1,7 @@
 package cn.bootx.payment.dto.pay;
 
 import cn.bootx.payment.code.pay.PayStatusCode;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("支付回调记录")
+@Schema(title = "支付回调记录")
 public class PayNotifyRecordDto implements Serializable {
     private static final long serialVersionUID = -1241346974397068912L;
 

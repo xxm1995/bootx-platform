@@ -1,6 +1,6 @@
 package cn.bootx.starter.quartz.param;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("定时任务")
+@Schema(title = "定时任务")
 public class QuartzJobParam {
 
     /** 主键 */

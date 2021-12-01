@@ -1,8 +1,8 @@
 package cn.bootx.notice.dto.dingtalk;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,19 +15,19 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("钉钉发送响应类")
+@Schema(title = "钉钉发送响应类")
 public class DingTalkResult<T> implements Serializable {
     private static final long serialVersionUID = 4298060961428118100L;
 
     @JsonProperty("errcode")
-    @ApiModelProperty("错误码")
+    @Schema(name = "错误码")
     private Integer code;
 
-    @ApiModelProperty("返回数据")
+    @Schema(name = "返回数据")
     private T result;
 
     @JsonProperty("errmsg")
-    @ApiModelProperty("内容")
+    @Schema(name = "内容")
     private String msg;
 
 }

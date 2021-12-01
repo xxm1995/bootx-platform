@@ -1,7 +1,6 @@
 package cn.bootx.starter.query.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,13 +13,13 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("查询参数")
+@Schema(title = "查询参数")
 public class QueryParams {
 
-    @ApiModelProperty("参数集合")
+    @Schema(name = "参数集合")
     private List<QueryParam> queryParams;
 
-    @ApiModelProperty("排序集合")
+    @Schema(name = "排序集合")
     private List<QueryOrder> queryOrders;
 
 }

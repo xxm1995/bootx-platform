@@ -23,7 +23,7 @@
        private final MessageTemplateService messageTemplateService;
        private final MailSendService mailSendService;
    
-       @ApiOperation("消息发送测试")
+       @Operation(summary = "消息发送测试")
        @GetMapping("/sendMsg")
        public ResResult<Void> sendMsg(){
            // 传入模板code和参数

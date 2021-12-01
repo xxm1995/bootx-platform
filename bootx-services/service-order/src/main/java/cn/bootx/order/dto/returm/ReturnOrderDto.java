@@ -1,7 +1,7 @@
 package cn.bootx.order.dto.returm;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,7 +15,7 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("退货单dto")
+@Schema(title = "退货单dto")
 public class ReturnOrderDto implements Serializable {
     private static final long serialVersionUID = 3654344763212531452L;
 
@@ -35,25 +35,25 @@ public class ReturnOrderDto implements Serializable {
     public static final int STATE_REFUND_FAILURE = 2;
 
 
-    @ApiModelProperty("主键ID")
+    @Schema(name = "主键ID")
     private Long id;
 
-    @ApiModelProperty("租户ID")
+    @Schema(name = "租户ID")
     private Long tenantId;
 
-    @ApiModelProperty("渠道ID")
+    @Schema(name = "渠道ID")
     private Long channelId;
 
-    @ApiModelProperty("支付金额")
+    @Schema(name = "支付金额")
     private BigDecimal payAmount;
 
-    @ApiModelProperty("原订单ID")
+    @Schema(name = "原订单ID")
     private Long originOrderId;
 
-    @ApiModelProperty("退货单状态")
+    @Schema(name = "退货单状态")
     private Integer state;
 
-    @ApiModelProperty("业务主键")
+    @Schema(name = "业务主键")
     private Long businessId;
 
     private List<ReturnOrderDetailDto> detailDtos;

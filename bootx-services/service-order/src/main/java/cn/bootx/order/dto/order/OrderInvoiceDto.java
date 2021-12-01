@@ -1,6 +1,6 @@
 package cn.bootx.order.dto.order;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("订单发票信息")
+@Schema(title = "订单发票信息")
 public class OrderInvoiceDto {
 
     /** 发票id */

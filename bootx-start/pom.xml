@@ -65,6 +65,13 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
+        <!-- 通知服务 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-notice</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
         <!-- 基础功能 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
@@ -72,12 +79,6 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
-        <!-- 通知服务 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-notice</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
 
         <!-- quartz 定时任务 -->
         <dependency>

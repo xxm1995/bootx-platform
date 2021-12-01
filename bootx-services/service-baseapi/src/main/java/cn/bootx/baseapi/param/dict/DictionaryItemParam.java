@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.param.dict;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,11 +14,11 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("字典项参数")
+@Schema(title = "字典项参数")
 public class DictionaryItemParam implements Serializable {
     private static final long serialVersionUID = -6847496213782805488L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
     /** 字典ID */

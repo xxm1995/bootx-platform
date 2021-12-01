@@ -1,7 +1,7 @@
 package cn.bootx.iam.param.user;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,11 +13,11 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("用户")
+@Schema(title = "用户")
 public class UserDeptParam {
-    @ApiModelProperty("用户id")
+    @Schema(name = "用户id")
     private Long userId;
 
-    @ApiModelProperty("部门ids")
+    @Schema(name = "部门ids")
     private List<Long> deptIds;
 }

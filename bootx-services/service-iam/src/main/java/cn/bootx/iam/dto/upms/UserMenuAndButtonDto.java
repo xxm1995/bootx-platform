@@ -1,8 +1,8 @@
 package cn.bootx.iam.dto.upms;
 
 import cn.bootx.iam.dto.permission.PermissionMenuDto;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,12 +15,12 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("用户菜单及按钮权限数据类")
+@Schema(title = "用户菜单及按钮权限数据类")
 public class UserMenuAndButtonDto {
 
-    @ApiModelProperty("按钮权限集合")
+    @Schema(name = "按钮权限集合")
     private List<String> buttonPermissions;
 
-    @ApiModelProperty("菜单")
+    @Schema(name = "菜单")
     private List<PermissionMenuDto> menus;
 }

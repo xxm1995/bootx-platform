@@ -1,7 +1,7 @@
 package cn.bootx.goods.dto.inventory;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,16 +13,16 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("库存锁定")
+@Schema(title = "库存锁定")
 public class LockInventoryDto implements Serializable {
     private static final long serialVersionUID = 7373301471799658911L;
-    @ApiModelProperty("锁库存token")
+    @Schema(name = "锁库存token")
     private String token;
 
-    @ApiModelProperty("锁定库存的起始顺序号")
+    @Schema(name = "锁定库存的起始顺序号")
     private Integer startIndex;
 
-    @ApiModelProperty("锁定总数")
+    @Schema(name = "锁定总数")
     private Integer count;
 
 }

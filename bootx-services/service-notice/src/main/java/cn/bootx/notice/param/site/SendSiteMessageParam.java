@@ -1,6 +1,6 @@
 package cn.bootx.notice.param.site;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("站内信发送参数")
+@Schema(title = "站内信发送参数")
 public class SendSiteMessageParam {
 
     /**消息标题*/
@@ -27,7 +27,7 @@ public class SendSiteMessageParam {
 
     @Data
     @Accessors(chain = true)
-    @ApiModel("接收用户信息")
+    @Schema(title = "接收用户信息")
     public static class User{
         /**接收者id*/
         private Long receiveId;

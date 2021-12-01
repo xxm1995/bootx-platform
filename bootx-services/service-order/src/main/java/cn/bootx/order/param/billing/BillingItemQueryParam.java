@@ -1,6 +1,6 @@
 package cn.bootx.order.param.billing;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-@ApiModel("")
+@Schema(title = "")
 public class BillingItemQueryParam implements Serializable {
 
     private static final long serialVersionUID = -1207002879020383711L;

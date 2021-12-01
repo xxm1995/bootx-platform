@@ -1,6 +1,6 @@
 package cn.bootx.payment.param.paymodel.alipay;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("支付宝配置参数")
+@Schema(title = "支付宝配置参数")
 public class AlipayConfigParam implements Serializable {
 
     private Long id;

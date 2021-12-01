@@ -1,7 +1,7 @@
 package cn.bootx.order.param.order;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,25 +14,25 @@ import java.util.Date;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "订单更新参数")
+@Schema(title = "订单更新参数")
 public class OrderUpdateParam implements Serializable {
 
     private static final long serialVersionUID = 4460069559043995466L;
     private Long id;
 
-    @ApiModelProperty(value = "姓名")
+    @Schema(name = "姓名")
     private String contactName;
 
-    @ApiModelProperty(value = "手机")
+    @Schema(name = "手机")
     private String contactPhone;
 
-    @ApiModelProperty(value = "邮箱")
+    @Schema(name = "邮箱")
     private String contactEmail;
 
-    @ApiModelProperty(value = "支付时间")
+    @Schema(name = "支付时间")
     private Date payTime;
 
-    @ApiModelProperty(value = "状态")
+    @Schema(name = "状态")
     private Integer state;
 
     private Long buyerId;

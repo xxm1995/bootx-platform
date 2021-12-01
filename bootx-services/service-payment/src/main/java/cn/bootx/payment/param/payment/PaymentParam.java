@@ -1,7 +1,7 @@
 package cn.bootx.payment.param.payment;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,29 +14,29 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("支付记录")
+@Schema(title = "支付记录")
 public class PaymentParam implements Serializable {
     private static final long serialVersionUID = 1082022943904710448L;
 
-    @ApiModelProperty("用户ID")
+    @Schema(name = "用户ID")
     private Long userId;
 
-    @ApiModelProperty(value = "关联的业务id")
+    @Schema(name = "关联的业务id")
     private String businessId;
 
-    @ApiModelProperty("商户应用appId")
+    @Schema(name = "商户应用appId")
     private String appId;
 
-    @ApiModelProperty("是否是异步支付")
+    @Schema(name = "是否是异步支付")
     private boolean syncPayMode;
 
-    @ApiModelProperty("异步支付方式")
+    @Schema(name = "异步支付方式")
     private Integer syncPayTypeCode;
 
-    @ApiModelProperty("支付状态")
+    @Schema(name = "支付状态")
     private int payStatus;
 
-    @ApiModelProperty("错误码")
+    @Schema(name = "错误码")
     private String errorCode;
 
 }

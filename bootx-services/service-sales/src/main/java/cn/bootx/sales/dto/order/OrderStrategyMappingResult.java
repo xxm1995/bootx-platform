@@ -1,8 +1,7 @@
 package cn.bootx.sales.dto.order;
 
 import cn.bootx.sales.code.StrategyCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,29 +14,29 @@ import java.math.BigDecimal;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("订单策略映射DTO")
+@Schema(title = "订单策略映射DTO")
 public class OrderStrategyMappingResult implements Serializable {
 
     private static final long serialVersionUID = -2719923793104400815L;
 
-    @ApiModelProperty("优惠券ID")
+    @Schema(name = "优惠券ID")
     private Long couponId;
 
-    @ApiModelProperty("策略ID")
+    @Schema(name = "策略ID")
     private Long strategyId;
 
-    @ApiModelProperty("策略注册ID")
+    @Schema(name = "策略注册ID")
     private Long strategyRegisterId;
 
     /**
      * @see StrategyCode
      */
-    @ApiModelProperty("策略类型")
+    @Schema(name = "策略类型")
     private int strategyType;
 
-    @ApiModelProperty("价格变动")
+    @Schema(name = "价格变动")
     private BigDecimal priceChange;
 
-    @ApiModelProperty("描述")
+    @Schema(name = "描述")
     private String description;
 }

@@ -2,7 +2,7 @@ package cn.bootx.order.param.order;
 
 
 import cn.bootx.order.dto.order.OrderPriceDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("订单价格信息参数")
+@Schema(title = "订单价格信息参数")
 public class OrderPriceInfoParam implements Serializable {
 
 

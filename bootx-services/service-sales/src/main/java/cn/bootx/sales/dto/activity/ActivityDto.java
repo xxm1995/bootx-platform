@@ -1,7 +1,7 @@
 package cn.bootx.sales.dto.activity;
 
 import cn.bootx.sales.dto.strategy.StrategyRegisterDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ApiModel("活动")
+@Schema(title = "活动")
 public class ActivityDto extends StrategyRegisterDto {
 
     /** 有效开始时间 */

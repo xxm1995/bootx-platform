@@ -3,8 +3,8 @@ package cn.bootx.starter.auth.endpoint;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.starter.auth.service.TokenService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,26 +18,26 @@ import javax.servlet.http.HttpServletResponse;
 * @author xxm  
 * @date 2021/7/30 
 */
-@Api(tags = "认证相关")
+@Tag(name = "认证相关")
 @RestController
 @RequestMapping("/token")
 @AllArgsConstructor
 public class TokenEndpoint {
     private final TokenService tokenService;
 
-    @ApiOperation("普通登录")
+    @Operation(summary = "普通登录")
     @PostMapping("/login")
     public ResResult<String> login(HttpServletRequest request, HttpServletResponse response){
         return Res.ok(tokenService.loginPassword(request,response));
     }
 
-    @ApiOperation("三方登录登录")
+    @Operation(summary = "三方登录登录")
     @PostMapping("/loginOpenId")
     public ResResult<String> loginOpenId(HttpServletRequest request, HttpServletResponse response){
         return Res.ok(tokenService.loginOpenId(request,response));
     }
 
-    @ApiOperation("退出")
+    @Operation(summary = "退出")
     @PostMapping("/logout")
     public ResResult<String> logout(){
         tokenService.logout();

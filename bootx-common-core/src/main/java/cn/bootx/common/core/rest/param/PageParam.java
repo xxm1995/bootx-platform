@@ -1,14 +1,14 @@
 package cn.bootx.common.core.rest.param;
 
 import cn.hutool.core.util.PageUtil;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
 /**
  * 分页查询参数
  */
-@ApiModel("分页查询参数")
+@Schema(title = "分页查询参数")
 public class PageParam implements Serializable {
 
     private static final long serialVersionUID = 7489222986629492487L;

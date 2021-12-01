@@ -1,7 +1,7 @@
 package cn.bootx.iam.param.upms;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,18 +11,18 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("角色")
+@Schema(title = "角色")
 public class RoleParam {
 
-    @ApiModelProperty("角色id")
+    @Schema(name = "角色id")
     private Long id;
 
-    @ApiModelProperty("角色code")
+    @Schema(name = "角色code")
     private String code;
 
-    @ApiModelProperty("角色名称")
+    @Schema(name = "角色名称")
     private String name;
 
-    @ApiModelProperty("描述")
+    @Schema(name = "描述")
     private String description;
 }

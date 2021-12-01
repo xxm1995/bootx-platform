@@ -1,6 +1,6 @@
 package cn.bootx.order.dto.order;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("订单收货地址")
+@Schema(title = "订单收货地址")
 public class OrderAddressDto {
 
     /** 收货人 */

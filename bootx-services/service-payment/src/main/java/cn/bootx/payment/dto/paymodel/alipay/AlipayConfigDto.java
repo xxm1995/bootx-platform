@@ -3,7 +3,7 @@ package cn.bootx.payment.dto.paymodel.alipay;
 import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.common.jackson.sensitive.SensitiveInfo;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,7 +18,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("支付宝配置")
+@Schema(title = "支付宝配置")
 public class AlipayConfigDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 6641158663606363171L;
 

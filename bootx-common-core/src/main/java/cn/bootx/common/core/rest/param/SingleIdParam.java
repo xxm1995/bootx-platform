@@ -1,7 +1,6 @@
 package cn.bootx.common.core.rest.param;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -10,11 +9,11 @@ import java.io.Serializable;
  * 单 id 参数
  * @author xxm
  */
-@ApiModel("单 id 参数")
+@Schema(title = "单 id 参数")
 public class SingleIdParam implements Serializable {
 
     private static final long serialVersionUID = -9014016316890783082L;
-    @ApiModelProperty(name = "id", value = "id", required = true)
+    @Schema(name = "id", required = true)
     @NotNull(message = "id cannot be null")
     private Long id;
 

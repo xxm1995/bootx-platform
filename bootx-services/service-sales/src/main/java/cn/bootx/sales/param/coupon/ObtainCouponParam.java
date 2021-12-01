@@ -1,7 +1,7 @@
 package cn.bootx.sales.param.coupon;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,23 +13,23 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("优惠券领取参数")
+@Schema(title = "优惠券领取参数")
 public class ObtainCouponParam implements Serializable {
 
     private static final long serialVersionUID = -2819314899657082887L;
 
-    @ApiModelProperty("优惠券模板Id")
+    @Schema(name = "优惠券模板Id")
     private Long templateId;
 
-    @ApiModelProperty("用户Id")
+    @Schema(name = "用户Id")
     private Long userId;
 
-    @ApiModelProperty("设备id")
+    @Schema(name = "设备id")
     private Long deviceId;
 
-    @ApiModelProperty("ip")
+    @Schema(name = "ip")
     private String ip;
 
-    @ApiModelProperty("渠道Id")
+    @Schema(name = "渠道Id")
     private Long channelId;
 }

@@ -1,7 +1,7 @@
 package cn.bootx.iam.param.dept;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,35 +13,35 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("部门参数")
+@Schema(title = "部门参数")
 public class DeptParam implements Serializable {
     private static final long serialVersionUID = -3523887187454705868L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("父机构ID")
+    @Schema(name = "父机构ID")
     private Long parentId;
 
-    @ApiModelProperty("名称")
+    @Schema(name = "名称")
     private String deptName;
 
-    @ApiModelProperty("排序")
+    @Schema(name = "排序")
     private Double sortNo;
 
-    @ApiModelProperty("机构类别 1组织机构，2岗位")
+    @Schema(name = "机构类别 1组织机构，2岗位")
     private Integer orgCategory;
 
-    @ApiModelProperty("手机号")
+    @Schema(name = "手机号")
     private String mobile;
 
-    @ApiModelProperty("传真")
+    @Schema(name = "传真")
     private String fax;
 
-    @ApiModelProperty("地址")
+    @Schema(name = "地址")
     private String address;
 
-    @ApiModelProperty("备注")
+    @Schema(name = "备注")
     private String remark;
 
 }

@@ -1,6 +1,6 @@
 package cn.bootx.iam.param.permission;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,7 +12,7 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("菜单权限")
+@Schema(title = "菜单权限")
 public class PermissionMenuParam implements Serializable {
     private static final long serialVersionUID = 3017200753543614579L;
 

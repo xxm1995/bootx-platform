@@ -2,7 +2,7 @@ package cn.bootx.order.param.order;
 
 import cn.bootx.order.dto.order.OrderAddressDto;
 import cn.bootx.order.dto.order.OrderInvoiceDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("下单参数")
+@Schema(title = "下单参数")
 public class OrderWholeParam implements Serializable {
     private static final long serialVersionUID = 7661069240452921149L;
 

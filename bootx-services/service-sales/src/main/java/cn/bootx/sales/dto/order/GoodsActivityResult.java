@@ -1,8 +1,7 @@
 package cn.bootx.sales.dto.order;
 
 import cn.bootx.sales.dto.activity.SimpleActivity;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,13 +14,13 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("商品适用活动")
+@Schema(title = "商品适用活动")
 public class GoodsActivityResult implements Serializable {
     private static final long serialVersionUID = 7331502272797651564L;
 
-    @ApiModelProperty("skuId")
+    @Schema(name = "skuId")
     private Long skuId;
 
-    @ApiModelProperty("活动集合")
+    @Schema(name = "活动集合")
     private List<SimpleActivity> activities;
 }

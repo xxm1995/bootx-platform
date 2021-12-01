@@ -2,8 +2,7 @@ package cn.bootx.payment.dto.payment;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.payment.code.pay.PayStatusCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,27 +17,27 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("具体支付日志基类")
+@Schema(title = "具体支付日志基类")
 public class BasePaymentDto extends BaseDto {
 
-    @ApiModelProperty("支付id")
+    @Schema(name = "支付id")
     private Long paymentId;
 
-    @ApiModelProperty(value = "用户id")
+    @Schema(name = "用户id")
     private Long userId;
 
-    @ApiModelProperty(value = "关联的业务id")
+    @Schema(name = "关联的业务id")
     private String businessId;
 
-    @ApiModelProperty(value = "金额")
+    @Schema(name = "金额")
     private BigDecimal amount;
 
     /**
      * @see PayStatusCode
      */
-    @ApiModelProperty("支付状态")
+    @Schema(name = "支付状态")
     private int payStatus;
 
-    @ApiModelProperty(value = "支付时间")
+    @Schema(name = "支付时间")
     private LocalDateTime payTime;
 }

@@ -1,6 +1,6 @@
 package cn.bootx.common.core.rest.dto;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -18,16 +18,16 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class BaseDto implements Serializable {
     private static final long serialVersionUID = 2985535678913619503L;
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty("最后修改时间")
+    @Schema(name = "最后修改时间")
     private LocalDateTime lastModifiedTime;
 
-    @ApiModelProperty("版本号")
+    @Schema(name = "版本号")
     private Integer version;
 
 }

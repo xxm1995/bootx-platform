@@ -1,7 +1,7 @@
 package cn.bootx.iam.param.upms;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,13 +14,13 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("角色权限")
+@Schema(title = "角色权限")
 public class RolePermissionParam implements Serializable {
     private static final long serialVersionUID = 4344723093613370279L;
 
-    @ApiModelProperty("角色的ID")
+    @Schema(name = "角色的ID")
     private Long roleId;
 
-    @ApiModelProperty("权限id")
+    @Schema(name = "权限id")
     private List<Long> permissionIds;
 }

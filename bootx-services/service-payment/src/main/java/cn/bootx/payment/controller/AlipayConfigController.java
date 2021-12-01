@@ -9,8 +9,8 @@ import cn.bootx.payment.core.paymodel.alipay.service.AlipayConfigService;
 import cn.bootx.payment.dto.paymodel.alipay.AlipayConfigDto;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigParam;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,52 +20,52 @@ import java.util.List;
 * @author xxm
 * @date 2021/2/26
 */
-@Api(tags = "支付宝配置")
+@Tag(name ="支付宝配置")
 @RestController
 @RequestMapping("/alipay")
 @AllArgsConstructor
 public class AlipayConfigController {
     private final AlipayConfigService alipayConfigService;
 
-    @ApiOperation("添加")
+    @Operation(summary = "添加")
     @PostMapping("/add")
     public ResResult<AlipayConfigDto> add(@RequestBody AlipayConfigParam param){
         return Res.ok(alipayConfigService.add(param));
     }
 
-    @ApiOperation("更新")
+    @Operation(summary = "更新")
     @PostMapping("/update")
     public ResResult<AlipayConfigDto> update(@RequestBody AlipayConfigParam param){
         return Res.ok(alipayConfigService.update(param));
     }
 
-    @ApiOperation("启用指定的支付宝配置")
+    @Operation(summary = "启用指定的支付宝配置")
     @PostMapping("/setUpActivity")
     public ResResult<Void> setUpActivity(Long id){
         alipayConfigService.setUpActivity(id);
         return Res.ok();
     }
 
-    @ApiOperation("清除指定的支付宝配置")
+    @Operation(summary = "清除指定的支付宝配置")
     @PostMapping("/clearActivity")
     public ResResult<Void> clearActivity(Long id){
         alipayConfigService.clearActivity(id);
         return Res.ok();
     }
 
-    @ApiOperation("分页")
+    @Operation(summary = "分页")
     @GetMapping("/page")
     public ResResult<PageResult<AlipayConfigDto>> page(PageParam pageParam, AlipayConfigQuery param){
         return Res.ok(alipayConfigService.page(pageParam,param));
     }
 
-    @ApiOperation("根据Id查询")
+    @Operation(summary = "根据Id查询")
     @GetMapping("/findById")
     public ResResult<AlipayConfigDto> findById(Long id){
         return Res.ok(alipayConfigService.findById(id));
     }
 
-    @ApiOperation("支付宝支持支付方式")
+    @Operation(summary = "支付宝支持支付方式")
     @GetMapping("/findPayTypeList")
     public ResResult<List<KeyValue>> findPayTypeList(){
         return Res.ok(alipayConfigService.findPayTypeList());

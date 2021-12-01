@@ -1,7 +1,7 @@
 package cn.bootx.payment.param.paymodel.wallet;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,23 +15,23 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("钱包日志查询参数")
+@Schema(title = "钱包日志查询参数")
 public class WalletLogQueryParam implements Serializable {
 
     private static final long serialVersionUID = -4046664021959786637L;
-    @ApiModelProperty("钱包ID (与userId至少存在一个)")
+    @Schema(name = "钱包ID (与userId至少存在一个)")
     private Long walletId;
 
-    @ApiModelProperty("用户ID (钱包至少存在一个)")
+    @Schema(name = "用户ID (钱包至少存在一个)")
     private Long userId;
 
-    @ApiModelProperty("开始日期")
+    @Schema(name = "开始日期")
     private LocalDateTime startDate;
 
-    @ApiModelProperty("结束日期")
+    @Schema(name = "结束日期")
     private LocalDateTime endDate;
 
-    @ApiModelProperty("日志类型，不传则查询全部")
+    @Schema(name = "日志类型，不传则查询全部")
     private List<Integer> type;
 
 }

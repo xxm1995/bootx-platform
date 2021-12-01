@@ -1,6 +1,6 @@
 package cn.bootx.starter.auth.entity;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("认证终端")
+@Schema(title = "认证终端")
 public class AuthClient {
     /** 编码 */
     private String code;

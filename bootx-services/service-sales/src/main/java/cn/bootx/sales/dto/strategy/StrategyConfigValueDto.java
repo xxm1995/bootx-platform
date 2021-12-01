@@ -1,7 +1,6 @@
 package cn.bootx.sales.dto.strategy;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,21 +13,21 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "策略脚本配置项值")
+@Schema(title = "策略脚本配置项值")
 public class StrategyConfigValueDto implements Serializable {
 
     private static final long serialVersionUID = -7481890055777714856L;
 
-    @ApiModelProperty(value = "主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty(value = "策略配置主键", required = true)
+    @Schema(name = "策略配置主键", required = true)
     private Long strategyConfigId;
 
-    @ApiModelProperty(value = "值", required = true)
+    @Schema(name = "值", required = true)
     private String value;
 
-    @ApiModelProperty(value = "创建时间")
+    @Schema(name = "创建时间")
     private LocalDateTime createTime;
 
     //只用于展示

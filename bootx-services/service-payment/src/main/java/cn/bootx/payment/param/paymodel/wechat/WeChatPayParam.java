@@ -1,7 +1,7 @@
 package cn.bootx.payment.param.paymodel.wechat;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,12 +12,12 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("微信支付参数")
+@Schema(title = "微信支付参数")
 public class WeChatPayParam {
 
-    @ApiModelProperty("微信openId")
+    @Schema(name = "微信openId")
     private String openId;
 
-    @ApiModelProperty("授权码(主动扫描用户的付款码)")
+    @Schema(name = "授权码(主动扫描用户的付款码)")
     private String authCode;
 }

@@ -5,8 +5,7 @@ import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.common.jackson.sensitive.SensitiveInfo;
 import cn.bootx.iam.code.UserStatusCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,52 +13,53 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import static io.swagger.annotations.ApiModelProperty.AccessMode.READ_ONLY;
+;
+
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("用户信息")
+@Schema(title = "用户信息")
 public class UserInfoDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 5881350477107722635L;
 
-    @ApiModelProperty("名称")
+    @Schema(name = "名称")
     private String name;
 
-    @ApiModelProperty("账号")
+    @Schema(name = "账号")
     private String username;
 
-    @ApiModelProperty("密码")
+    @Schema(name = "密码")
     @SensitiveInfo(SensitiveType.PASSWORD)
     private String password;
 
-    @ApiModelProperty("手机号")
+    @Schema(name = "手机号")
     @SensitiveInfo(SensitiveType.MOBILE_PHONE)
     private String phone;
 
-    @ApiModelProperty("邮箱")
+    @Schema(name = "邮箱")
     @SensitiveInfo(SensitiveType.EMAIL)
     private String email;
 
-    @ApiModelProperty("注册来源")
+    @Schema(name = "注册来源")
     private String source;
 
-    @ApiModelProperty("头像")
+    @Schema(name = "头像")
     private String avatar;
 
-    @ApiModelProperty("是否管理员")
+    @Schema(name = "是否管理员")
     private boolean admin;
 
     /**
      * @see UserStatusCode
      */
-    @ApiModelProperty("账号状态")
+    @Schema(name = "账号状态")
     private Integer status;
 
-    @ApiModelProperty("注册时间")
+    @Schema(name = "注册时间")
     private LocalDateTime registerTime;
 
-    @ApiModelProperty(value = "最后登录时间", accessMode = READ_ONLY)
+    @Schema(name = "最后登录时间", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime lastLoginTime;
 
     public UserDetail toUserDetail(){

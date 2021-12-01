@@ -1,7 +1,6 @@
 package cn.bootx.starter.query.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,33 +12,33 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("查询项")
+@Schema(title = "查询项")
 public class QueryParam {
 
-    @ApiModelProperty("拼接条件是否为或")
+    @Schema(name = "拼接条件是否为或")
     private boolean or;
 
-    @ApiModelProperty("参数名称")
+    @Schema(name = "参数名称")
     private String paramName;
 
     /**
      * @see cn.bootx.starter.query.code.CompareTypeEnum
      */
-    @ApiModelProperty("比较类型")
+    @Schema(name = "比较类型")
     private String compareType;
 
     /**
      * @see cn.bootx.starter.query.code.ParamTypeEnum
      */
-    @ApiModelProperty("参数类型")
+    @Schema(name = "参数类型")
     private String paramType;
 
-    @ApiModelProperty("参数值")
+    @Schema(name = "参数值")
     private Object paramValue;
 
-    @ApiModelProperty("参数名称是否需要转换成下划线命名")
+    @Schema(name = "参数名称是否需要转换成下划线命名")
     private boolean underLine = true;
 
-    @ApiModelProperty("嵌套查询")
+    @Schema(name = "嵌套查询")
     private List<QueryParam> nestedParams;
 }

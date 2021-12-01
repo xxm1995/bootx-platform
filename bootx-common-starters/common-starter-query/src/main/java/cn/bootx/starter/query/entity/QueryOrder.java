@@ -1,7 +1,6 @@
 package cn.bootx.starter.query.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,12 +11,12 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("查询排序")
+@Schema(title = "查询排序")
 public class QueryOrder {
 
-    @ApiModelProperty("设置排序字段")
+    @Schema(name = "设置排序字段")
     private String sortField;
 
-    @ApiModelProperty("是否升序")
+    @Schema(name = "是否升序")
     private boolean asc = true;
 }

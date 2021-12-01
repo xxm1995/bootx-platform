@@ -1,7 +1,6 @@
 package cn.bootx.starter.auth.online;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,32 +14,32 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("在线用户")
+@Schema(title = "在线用户")
 public class OnlineUserDto {
-    @ApiModelProperty("用户id")
+    @Schema(name = "用户id")
     private Long userId;
-    @ApiModelProperty("会话id")
+    @Schema(name = "会话id")
     private String sessionId;
-    @ApiModelProperty("用户名称")
+    @Schema(name = "用户名称")
     private String name;
-    @ApiModelProperty("用户账号")
+    @Schema(name = "用户账号")
     private String userName;
-    @ApiModelProperty("创建时间")
+    @Schema(name = "创建时间")
     private LocalDateTime creationTime;
-    @ApiModelProperty("剩余有效时间(秒)")
+    @Schema(name = "剩余有效时间(秒)")
     private Long timeout;
-    @ApiModelProperty("Token列表")
+    @Schema(name = "Token列表")
     private List<TokenSign> tokenSigns;
 
     @Data
     @Accessors(chain = true)
-    @ApiModel("Token签名")
+    @Schema(title = "Token签名")
     public static class TokenSign{
 
-        @ApiModelProperty("token值")
+        @Schema(name = "token值")
         private String value;
 
-        @ApiModelProperty("所在设备标识")
+        @Schema(name = "所在设备标识")
         private String device;
     }
 }

@@ -1,6 +1,6 @@
 package cn.bootx.order.dto.order;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("订单价格")
+@Schema(title = "订单价格")
 public class OrderPriceDto implements Serializable {
 
     private static final long serialVersionUID = 7509707540439019092L;

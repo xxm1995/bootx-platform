@@ -41,8 +41,6 @@ spring:
             instanceName: MyScheduler
             instanceId: AUTO
           jobStore:
-            class: org.quartz.impl.jdbcjobstore.JobStoreTX
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
             tablePrefix: qrtz_
             isClustered: true
             misfireThreshold: 60000

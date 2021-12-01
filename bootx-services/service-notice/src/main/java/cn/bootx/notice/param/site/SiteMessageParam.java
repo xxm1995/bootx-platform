@@ -1,7 +1,7 @@
 package cn.bootx.notice.param.site;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("站内信")
+@Schema(title = "站内信")
 public class SiteMessageParam {
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
     /**消息标题*/

@@ -1,7 +1,7 @@
 package cn.bootx.iam.param.user;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,29 +13,29 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("用户信息参数")
+@Schema(title = "用户信息参数")
 public class UserInfoParam implements Serializable {
     private static final long serialVersionUID = -1263052439212534900L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("名称")
+    @Schema(name = "名称")
     private String name;
 
-    @ApiModelProperty("登录账号")
+    @Schema(name = "登录账号")
     private String username;
 
-    @ApiModelProperty("手机号")
+    @Schema(name = "手机号")
     private String phone;
 
-    @ApiModelProperty("邮箱")
+    @Schema(name = "邮箱")
     private String email;
 
-    @ApiModelProperty("头像")
+    @Schema(name = "头像")
     private String avatar;
 
-    @ApiModelProperty("密码")
+    @Schema(name = "密码")
     private String password;
 
 }

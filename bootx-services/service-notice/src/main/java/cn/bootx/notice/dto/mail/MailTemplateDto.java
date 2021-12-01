@@ -1,8 +1,8 @@
 package cn.bootx.notice.dto.mail;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -10,22 +10,22 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("邮件模板")
+@Schema(title = "邮件模板")
 public class MailTemplateDto extends BaseDto {
 
-    @ApiModelProperty("编码")
+    @Schema(name = "编码")
     private String code;
 
-    @ApiModelProperty("名称")
+    @Schema(name = "名称")
     private String name;
 
-    @ApiModelProperty("内容")
+    @Schema(name = "内容")
     private String date;
 
-    @ApiModelProperty("路径")
+    @Schema(name = "路径")
     private String path;
 
-    @ApiModelProperty("类型")
+    @Schema(name = "类型")
     private Integer type;
 
 }

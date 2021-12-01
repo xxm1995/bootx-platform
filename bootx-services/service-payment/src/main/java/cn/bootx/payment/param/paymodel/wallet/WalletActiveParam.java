@@ -1,12 +1,13 @@
 package cn.bootx.payment.param.paymodel.wallet;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+;
 
 /**
 * @author xxm
@@ -14,14 +15,14 @@ import java.math.BigDecimal;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("开通钱包参数")
+@Schema(title = "开通钱包参数")
 public class WalletActiveParam implements Serializable {
 
     private static final long serialVersionUID = 1642791492198634387L;
-    @ApiModelProperty("用户ID")
+    @Schema(name = "用户ID")
     private Long userId;
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private BigDecimal presentBalance;
 
 }

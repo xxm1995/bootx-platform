@@ -1,7 +1,7 @@
 package cn.bootx.goods.param.inventory;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -11,15 +11,15 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("释放SKU库存参数")
+@Schema(title = "释放SKU库存参数")
 public class UnlockInventoryParam {
 
-    @ApiModelProperty("skuID")
+    @Schema(name = "skuID")
     private Long skuId;
 
-    @ApiModelProperty("数量")
+    @Schema(name = "数量")
     private int count;
 
-    @ApiModelProperty("token")
+    @Schema(name = "token")
     private String token;
 }

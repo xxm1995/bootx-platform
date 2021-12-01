@@ -1,7 +1,7 @@
 package cn.bootx.iam.dto.client;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("认证终端")
+@Schema(title = "认证终端")
 public class ClientDto extends BaseDto {
 
     /** 编码 */

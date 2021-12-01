@@ -1,7 +1,7 @@
 package cn.bootx.notice.param.dingtalk;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("钉钉机器人配置参数")
+@Schema(title = "钉钉机器人配置参数")
 public class DingRobotConfigParam implements Serializable {
 
     private static final long serialVersionUID = -3979174622716815670L;
@@ -35,6 +35,6 @@ public class DingRobotConfigParam implements Serializable {
     /** 验签秘钥 */
     private String signSecret;
 
-    @ApiModelProperty("描述")
+    @Schema(name = "描述")
     private String remark;
 }

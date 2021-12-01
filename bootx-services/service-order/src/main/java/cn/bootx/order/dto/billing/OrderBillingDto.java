@@ -1,8 +1,8 @@
 package cn.bootx.order.dto.billing;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -18,30 +18,30 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "订单账单")
+@Schema(title = "订单账单")
 public class OrderBillingDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 6684557809868264317L;
 
-    @ApiModelProperty(value = "账户")
+    @Schema(name = "账户")
     private Long userId;
 
-    @ApiModelProperty(value = "订单id")
+    @Schema(name = "订单id")
     private Long orderId;
 
-    @ApiModelProperty(value = "支付通道")
+    @Schema(name = "支付通道")
     private Integer payType;
 
-    @ApiModelProperty(value = "支付类型名称")
+    @Schema(name = "支付类型名称")
     private String payTypeName;
 
-    @ApiModelProperty(value = "支付金额")
+    @Schema(name = "支付金额")
     private BigDecimal amount;
 
-    @ApiModelProperty(value = "使用数量")
+    @Schema(name = "使用数量")
     private int count;
 
-    @ApiModelProperty(value = "业务主键")
+    @Schema(name = "业务主键")
     private String businessId;
 
     private List<OrderItemBillingDto> orderItemBillings;

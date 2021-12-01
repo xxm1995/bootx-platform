@@ -1,8 +1,8 @@
 package cn.bootx.notice.dto.dingtalk.notice;
 
 import cn.bootx.notice.code.DingTalkCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -19,11 +19,11 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-@ApiModel("钉钉文本消息")
+@Schema(title = "钉钉文本消息")
 public class DingTalkTextNotice extends DingTalkNotice implements Serializable {
 
     private static final long serialVersionUID = 8237431306046852539L;
-    @ApiModelProperty("文本消息体")
+    @Schema(name = "文本消息体")
     private DingTalkText text;
 
     public DingTalkTextNotice(String msg, List<String> phones) {

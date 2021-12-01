@@ -1,8 +1,8 @@
 package cn.bootx.order.dto.order;
 
 import cn.bootx.order.code.OrderStatusCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -19,59 +19,59 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("订单")
+@Schema(title = "订单")
 public class OrderDto implements Serializable {
     private static final long serialVersionUID = -7600415200619006458L;
 
-    @ApiModelProperty("主键ID")
+    @Schema(name = "主键ID")
     private Long id;
 
-    @ApiModelProperty("code")
+    @Schema(name = "code")
     private String code;
 
-    @ApiModelProperty("支付时间")
+    @Schema(name = "支付时间")
     private LocalDateTime payTime;
 
-    @ApiModelProperty("订单描述")
+    @Schema(name = "订单描述")
     private String description;
 
-    @ApiModelProperty("创建时间")
+    @Schema(name = "创建时间")
     private LocalDateTime createTime;
 
-    @ApiModelProperty("购买人ID")
+    @Schema(name = "购买人ID")
     private Long userId;
 
     /**
      * @see OrderStatusCode
      */
-    @ApiModelProperty("状态")
+    @Schema(name = "状态")
     private Integer status;
 
-    @ApiModelProperty("类型")
+    @Schema(name = "类型")
     private Integer type;
 
-    @ApiModelProperty("总金额")
+    @Schema(name = "总金额")
     private BigDecimal totalAmount;
 
-    @ApiModelProperty("实付金额")
+    @Schema(name = "实付金额")
     private BigDecimal payAmount;
 
-    @ApiModelProperty("渠道ID")
+    @Schema(name = "渠道ID")
     private Long channelId;
 
-    @ApiModelProperty("所用优惠券")
+    @Schema(name = "所用优惠券")
     private String couponIds;
 
-    @ApiModelProperty("订单明细")
+    @Schema(name = "订单明细")
     private List<OrderDetailDto> details;
 
-    @ApiModelProperty("优惠金额")
+    @Schema(name = "优惠金额")
     private List<OrderStrategyMappingDto> mappings = new ArrayList<>();
 
-    @ApiModelProperty("收货地址")
+    @Schema(name = "收货地址")
     private OrderAddressDto orderAddressInfo;
 
-    @ApiModelProperty("发票信息")
+    @Schema(name = "发票信息")
     private OrderInvoiceDto orderInvoiceInfo;
 
 }

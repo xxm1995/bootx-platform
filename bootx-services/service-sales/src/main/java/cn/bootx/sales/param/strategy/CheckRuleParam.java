@@ -2,8 +2,8 @@ package cn.bootx.sales.param.strategy;
 
 import cn.bootx.sales.code.CheckRuleCode;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,17 +15,17 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("检查规则参数")
+@Schema(title = "检查规则参数")
 public class CheckRuleParam implements Serializable {
     private static final long serialVersionUID = 689686610474750635L;
 
-    @ApiModelProperty("优先级")
+    @Schema(name = "优先级")
     private int priority;
 
-    @ApiModelProperty("规则名称")
+    @Schema(name = "规则名称")
     private String name;
 
-    @ApiModelProperty("规则code")
+    @Schema(name = "规则code")
     private String code;
 
     /**
@@ -36,9 +36,9 @@ public class CheckRuleParam implements Serializable {
     @JsonIgnore
     private int ruleType;
 
-    @ApiModelProperty("策略id")
+    @Schema(name = "策略id")
     private Long strategyId;
 
-    @ApiModelProperty("附加对象 json")
+    @Schema(name = "附加对象 json")
     private String addition;
 }

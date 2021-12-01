@@ -1,7 +1,7 @@
 package cn.bootx.notice.dto.template;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("消息模板")
+@Schema(title = "消息模板")
 public class MessageTemplateDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -1377790220501836009L;
 

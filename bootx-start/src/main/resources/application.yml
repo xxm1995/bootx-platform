@@ -3,6 +3,8 @@ spring:
     name: bootx-platform
   profiles:
     active: dev
+  config:
+    use-legacy-processing: true
   servlet:
     multipart:
       max-file-size: 100MB
@@ -10,7 +12,6 @@ spring:
       enabled: true
   freemarker:
     enabled: false
-
 # mp配置
 mybatis-plus:
   mapper-locations: classpath*:mapper/*/*Mapper.xml
@@ -24,7 +25,3 @@ mybatis-plus:
 sa-token:
   is-print: false
   token-name: AccessToken
-  plugins:
-    redis:
-      # 序列化方式
-      serialization: jackson

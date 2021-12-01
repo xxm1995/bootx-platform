@@ -25,17 +25,7 @@ public class BootxSaTokenListener extends SaTokenListenerDefaultImpl {
         // ...
     }
 
-    /** 每次被踢下线时触发 */
-    @Override
-    public void doLogoutByLoginId(String loginType, Object loginId, String tokenValue, String device) {
-        // ...
-    }
 
-    /** 每次被顶下线时触发 */
-    @Override
-    public void doReplaced(String loginType, Object loginId, String tokenValue, String device) {
-        // ...
-    }
 
     /** 每次被封禁时触发 */
     @Override

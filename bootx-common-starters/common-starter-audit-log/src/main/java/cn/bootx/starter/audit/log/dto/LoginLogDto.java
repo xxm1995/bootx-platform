@@ -1,7 +1,7 @@
 package cn.bootx.starter.audit.log.dto;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("登录日志")
+@Schema(title = "登录日志")
 public class LoginLogDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 2985633896134425505L;
 

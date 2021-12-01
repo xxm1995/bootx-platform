@@ -1,7 +1,7 @@
 package cn.bootx.iam.dto.dept;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -15,45 +15,45 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("部门树")
+@Schema(title = "部门树")
 @NoArgsConstructor
 public class DeptTreeResult implements Serializable {
     private static final long serialVersionUID = 9065167687644450513L;
 
-    @ApiModelProperty("ID")
+    @Schema(name = "ID")
     private Long id;
 
-    @ApiModelProperty("父机构ID")
+    @Schema(name = "父机构ID")
     private Long parentId;
 
-    @ApiModelProperty("机构/部门名称")
+    @Schema(name = "机构/部门名称")
     private String deptName;
 
-    @ApiModelProperty("排序")
+    @Schema(name = "排序")
     private Double sortNo;
 
-    @ApiModelProperty("机构类别 1组织机构，2岗位")
+    @Schema(name = "机构类别 1组织机构，2岗位")
     private String orgCategory;
 
-    @ApiModelProperty("机构类型")
+    @Schema(name = "机构类型")
     private String orgType;
 
-    @ApiModelProperty("机构编码")
+    @Schema(name = "机构编码")
     private String orgCode;
 
-    @ApiModelProperty("手机号")
+    @Schema(name = "手机号")
     private String mobile;
 
-    @ApiModelProperty("传真")
+    @Schema(name = "传真")
     private String fax;
 
-    @ApiModelProperty("地址")
+    @Schema(name = "地址")
     private String address;
 
-    @ApiModelProperty("备注")
+    @Schema(name = "备注")
     private String remark;
 
 
-    @ApiModelProperty("部门树")
+    @Schema(name = "部门树")
     private List<DeptTreeResult> children;
 }

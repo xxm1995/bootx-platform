@@ -1,9 +1,10 @@
 package cn.bootx.baseapi.param.system;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+;
 
 /**   
 * 系统参数
@@ -12,9 +13,9 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("系统参数")
+@Schema(title = "系统参数")
 public class SystemParameterParam {
-    @ApiModelProperty("系统参数")
+    @Schema(name = "系统参数")
     private Long id;
 
     /** 参数名称 */

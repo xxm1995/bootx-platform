@@ -1,6 +1,6 @@
 package cn.bootx.payment.core.pay.exception;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("异常信息")
+@Schema(title = "异常信息")
 public class ExceptionInfo {
     /** 错误码 */
     private int errorCode;

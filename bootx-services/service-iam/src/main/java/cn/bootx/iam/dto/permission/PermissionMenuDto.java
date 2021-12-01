@@ -1,6 +1,6 @@
 package cn.bootx.iam.dto.permission;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -13,7 +13,7 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("菜单权限")
+@Schema(title = "菜单权限")
 public class PermissionMenuDto implements Serializable {
     private static final long serialVersionUID = 1935403328634321841L;
 

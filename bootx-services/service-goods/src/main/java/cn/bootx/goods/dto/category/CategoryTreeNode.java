@@ -1,13 +1,14 @@
 package cn.bootx.goods.dto.category;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
+
+;
 
 /**
 * 类目树节点
@@ -16,14 +17,15 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "类目树节点")
+@Schema(title = "类目树节点")
 @NoArgsConstructor
 public class CategoryTreeNode implements Serializable {
 
     private static final long serialVersionUID = -1587023420309803676L;
-    @ApiModelProperty("是否叶节点")
+    @Schema(name = "是否叶节点")
     private CategoryDto data;
-    @ApiModelProperty(name = "children", value = "子节点列表")
+
+    @Schema(name ="子节点列表")
     private List<CategoryTreeNode> children;
 
     public CategoryTreeNode(CategoryDto dto) {

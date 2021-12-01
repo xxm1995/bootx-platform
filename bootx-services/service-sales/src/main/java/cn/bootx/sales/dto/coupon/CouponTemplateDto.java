@@ -1,7 +1,7 @@
 package cn.bootx.sales.dto.coupon;
 
 import cn.bootx.sales.dto.strategy.StrategyRegisterDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("优惠券模板")
+@Schema(title = "优惠券模板")
 public class CouponTemplateDto implements Serializable {
     private static final long serialVersionUID = 1529981112623712342L;
 

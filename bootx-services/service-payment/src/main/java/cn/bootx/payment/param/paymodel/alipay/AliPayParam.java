@@ -1,7 +1,7 @@
 package cn.bootx.payment.param.paymodel.alipay;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,10 +14,10 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@ApiModel("支付宝支付参数")
+@Schema(title = "支付宝支付参数")
 public class AliPayParam implements Serializable {
     private static final long serialVersionUID = 7467373358780663978L;
 
-    @ApiModelProperty("授权码(主动扫描用户的付款码)")
+    @Schema(name = "授权码(主动扫描用户的付款码)")
     private String authCode;
 }

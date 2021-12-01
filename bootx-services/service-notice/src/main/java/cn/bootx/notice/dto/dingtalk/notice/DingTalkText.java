@@ -1,7 +1,7 @@
 package cn.bootx.notice.dto.dingtalk.notice;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -16,11 +16,11 @@ import java.io.Serializable;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-@ApiModel("钉钉文本")
+@Schema(title = "钉钉文本")
 public class DingTalkText implements Serializable {
 
     private static final long serialVersionUID = 3582073816491238620L;
-    @ApiModelProperty("文本")
+    @Schema(name = "文本")
     private String content;
 
     public DingTalkText(String content){

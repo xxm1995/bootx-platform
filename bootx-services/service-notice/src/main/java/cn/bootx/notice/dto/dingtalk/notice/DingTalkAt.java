@@ -2,8 +2,8 @@ package cn.bootx.notice.dto.dingtalk.notice;
 
 import cn.hutool.core.collection.CollUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -19,16 +19,16 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
-@ApiModel("钉钉@指定用户")
+@Schema(title = "钉钉@指定用户")
 public class DingTalkAt implements Serializable {
 
     private static final long serialVersionUID = -8677524557109058147L;
 
-    @ApiModelProperty("@的用户手机号")
+    @Schema(name = "@的用户手机号")
     private List<String> atMobiles;
 
     @JsonProperty("isAtAll")
-    @ApiModelProperty("是否@全体")
+    @Schema(name = "是否@全体")
     private boolean isAtAll = false;
 
     public DingTalkAt(List<String> atMobiles){

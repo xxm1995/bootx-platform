@@ -1,7 +1,7 @@
 package cn.bootx.notice.param.mail;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,25 +12,25 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("邮件模板")
+@Schema(title = "邮件模板")
 public class MailTemplateParam {
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty("编码")
+    @Schema(name = "编码")
     private String code;
 
-    @ApiModelProperty("名称")
+    @Schema(name = "名称")
     private String name;
 
-    @ApiModelProperty("内容")
+    @Schema(name = "内容")
     private String date;
 
-    @ApiModelProperty("路径")
+    @Schema(name = "路径")
     private String path;
 
-    @ApiModelProperty("类型")
+    @Schema(name = "类型")
     private Integer type;
 
 }

@@ -1,6 +1,6 @@
 package cn.bootx.iam.dto.auth;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("认证返回消息")
+@Schema(title = "认证返回消息")
 public class AuthInfoResult {
 
     /** 用户id */

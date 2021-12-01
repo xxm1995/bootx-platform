@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.dto.dict;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel(value = "数据字典项Dto")
+@Schema(title = "数据字典项Dto")
 public class DictionaryItemDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 7403674221398097611L;
 

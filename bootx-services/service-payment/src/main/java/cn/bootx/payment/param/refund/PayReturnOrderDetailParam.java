@@ -1,6 +1,6 @@
 package cn.bootx.payment.param.refund;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,7 +14,7 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("退货单详细参数")
+@Schema(title = "退货单详细参数")
 public class PayReturnOrderDetailParam implements Serializable {
 
     private static final long serialVersionUID = 4473413805342579320L;

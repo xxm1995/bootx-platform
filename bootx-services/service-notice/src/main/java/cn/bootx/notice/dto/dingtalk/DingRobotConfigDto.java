@@ -3,8 +3,8 @@ package cn.bootx.notice.dto.dingtalk;
 import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.common.jackson.sensitive.SensitiveInfo;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("钉钉机器人配置")
+@Schema(title = "钉钉机器人配置")
 public class DingRobotConfigDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -5642207413191556792L;
 
@@ -35,6 +35,6 @@ public class DingRobotConfigDto extends BaseDto implements Serializable {
     @SensitiveInfo(value = SensitiveType.OTHER)
     private String signSecret;
 
-    @ApiModelProperty("描述")
+    @Schema(name = "描述")
     private String remark;
 }

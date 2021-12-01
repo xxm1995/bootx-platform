@@ -2,7 +2,7 @@ package cn.bootx.payment.dto.pay;
 
 
 import cn.bootx.payment.dto.payment.PaymentDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,7 +15,7 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("支付返回信息")
+@Schema(title = "支付返回信息")
 public class PayResult implements Serializable {
 
     private static final long serialVersionUID = 7729669194741851195L;

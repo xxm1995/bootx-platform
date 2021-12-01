@@ -88,7 +88,7 @@ public class SaTokenRedisConfiguration {
                 // 连接池中的最小空闲连接
                 poolConfig.setMinIdle(pool.getMinIdle());
                 // 连接池最大阻塞等待时间（使用负值表示没有限制）
-                poolConfig.setMaxWaitMillis(pool.getMaxWait().toMillis());
+                poolConfig. setMaxWait(pool.getMaxWait());
             }
             LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
             // timeout

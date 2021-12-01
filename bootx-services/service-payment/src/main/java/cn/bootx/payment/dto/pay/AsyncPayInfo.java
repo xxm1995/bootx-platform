@@ -1,6 +1,6 @@
 package cn.bootx.payment.dto.pay;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,7 +12,7 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("异步支付")
+@Schema(title = "异步支付")
 public class AsyncPayInfo implements Serializable {
 
     /** 支付参数体 */

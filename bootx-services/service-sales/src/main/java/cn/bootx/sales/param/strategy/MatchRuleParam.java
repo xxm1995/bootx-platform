@@ -1,8 +1,8 @@
 package cn.bootx.sales.param.strategy;
 
 import cn.bootx.sales.code.MatchTypeCode;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,19 +14,19 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("匹配配置参数")
+@Schema(title = "匹配配置参数")
 public class MatchRuleParam implements Serializable {
     private static final long serialVersionUID = -4122307649683307643L;
 
-    @ApiModelProperty("特征类型")
+    @Schema(name = "特征类型")
     private String featureType;
 
-    @ApiModelProperty("特征值")
+    @Schema(name = "特征值")
     private String featurePoint;
 
     /**
      * @see MatchTypeCode
      */
-    @ApiModelProperty("匹配类型")
+    @Schema(name = "匹配类型")
     private String matchType;
 }

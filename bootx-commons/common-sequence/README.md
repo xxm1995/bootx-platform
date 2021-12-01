@@ -20,7 +20,7 @@
     public class TestController {
         private final Sequence sequence;
     
-        @ApiOperation("发号器")
+        @Operation(summary = "发号器")
         @GetMapping("/sequence")
         public ResResult<Void> sequence(){
             // 通过传入业务键获取long 类型的号码,

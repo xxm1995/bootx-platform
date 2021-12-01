@@ -1,7 +1,7 @@
 package cn.bootx.notice.dto.dingtalk.notice;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -14,21 +14,21 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("钉钉link")
+@Schema(title = "钉钉link")
 @NoArgsConstructor
 public class DingTalkLink implements Serializable {
     private static final long serialVersionUID = 8191181631664337904L;
 
-    @ApiModelProperty("标题")
+    @Schema(name = "标题")
     private String title;
 
-    @ApiModelProperty("内容")
+    @Schema(name = "内容")
     private String text;
 
-    @ApiModelProperty("点击消息跳转的URL")
+    @Schema(name = "点击消息跳转的URL")
     private String messageUrl;
 
-    @ApiModelProperty("图片URL")
+    @Schema(name = "图片URL")
     private String picUrl;
 
     public DingTalkLink(String title, String text, String messageUrl) {

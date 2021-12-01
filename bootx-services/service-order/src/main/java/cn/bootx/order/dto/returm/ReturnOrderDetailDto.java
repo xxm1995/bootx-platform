@@ -1,7 +1,7 @@
 package cn.bootx.order.dto.returm;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,24 +15,24 @@ import java.math.BigDecimal;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("退货单明细dto")
+@Schema(title = "退货单明细dto")
 public class ReturnOrderDetailDto implements Serializable {
 
     private static final long serialVersionUID = 3467727603218965746L;
 
-    @ApiModelProperty("主键ID")
+    @Schema(name = "主键ID")
     private Long id;
 
-    @ApiModelProperty("订单ID")
+    @Schema(name = "订单ID")
     private Long orderId;
 
-    @ApiModelProperty("skuId")
+    @Schema(name = "skuId")
     private Long skuId;
 
-    @ApiModelProperty("支付金额")
+    @Schema(name = "支付金额")
     private BigDecimal payAmount;
 
-    @ApiModelProperty("原订单明细ID")
+    @Schema(name = "原订单明细ID")
     private Long originDetailId;
 
 }

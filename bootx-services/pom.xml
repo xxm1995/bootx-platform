@@ -28,7 +28,6 @@
 
     <properties>
         <mybatis-plus.version>3.4.3.1</mybatis-plus.version>
-        <swagger.version>1.6.2</swagger.version>
         <knife4j.version>3.0.3</knife4j.version>
         <logstash-logback.version>6.6</logstash-logback.version>
         <fastjson.version>1.2.78</fastjson.version>
@@ -112,36 +111,10 @@
             <version>${fastjson.version}</version>
         </dependency>
 
-        <!-- swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-annotations</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-        </dependency>
-
         <!-- knife4j -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-ui</artifactId>
+            <artifactId>knife4j-springdoc-ui</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
 

@@ -1,7 +1,7 @@
 package cn.bootx.iam.dto.user;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +16,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("用户三方登录关系")
+@Schema(title = "用户三方登录关系")
 public class UserSocialLoginDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -7537453271488369310L;
 

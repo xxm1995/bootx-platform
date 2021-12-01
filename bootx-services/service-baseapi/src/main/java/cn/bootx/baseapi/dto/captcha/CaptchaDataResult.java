@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.dto.captcha;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,11 +12,11 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("验证码数据")
+@Schema(title = "验证码数据")
 public class CaptchaDataResult {
-    @ApiModelProperty("验证码标示")
+    @Schema(name = "验证码标示")
     private String captchaKey;
 
-    @ApiModelProperty("验证码base64数据")
+    @Schema(name = "验证码base64数据")
     private String captchaData;
 }

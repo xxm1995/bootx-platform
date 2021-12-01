@@ -1,7 +1,7 @@
 package cn.bootx.notice.dto.site;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@ApiModel("站内信")
+@Schema(title = "站内信")
 public class SiteMessageDto extends BaseDto {
 
     /**消息标题*/

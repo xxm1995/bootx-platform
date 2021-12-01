@@ -1,7 +1,7 @@
 package cn.bootx.notice.param.wechat;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -14,10 +14,10 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@ApiModel("微信通知配置")
+@Schema(title = "微信通知配置")
 public class WeChatNoticeConfigParam implements Serializable {
     private static final long serialVersionUID = -8060241311764523678L;
 
-    @ApiModelProperty("主键")
+    @Schema(name = "主键")
     private Long id;
 }
