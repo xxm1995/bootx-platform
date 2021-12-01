@@ -15,22 +15,22 @@ import lombok.experimental.Accessors;
 @Schema(title = "邮件模板")
 public class MailTemplateParam {
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
-    @Schema(name = "编码")
+    @Schema(description= "编码")
     private String code;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "内容")
+    @Schema(description= "内容")
     private String date;
 
-    @Schema(name = "路径")
+    @Schema(description= "路径")
     private String path;
 
-    @Schema(name = "类型")
+    @Schema(description= "类型")
     private Integer type;
 
 }

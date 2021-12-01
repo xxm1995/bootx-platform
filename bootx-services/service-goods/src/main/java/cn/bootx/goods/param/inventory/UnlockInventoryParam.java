@@ -14,12 +14,12 @@ import lombok.experimental.Accessors;
 @Schema(title = "释放SKU库存参数")
 public class UnlockInventoryParam {
 
-    @Schema(name = "skuID")
+    @Schema(description= "skuID")
     private Long skuId;
 
-    @Schema(name = "数量")
+    @Schema(description= "数量")
     private int count;
 
-    @Schema(name = "token")
+    @Schema(description= "token")
     private String token;
 }

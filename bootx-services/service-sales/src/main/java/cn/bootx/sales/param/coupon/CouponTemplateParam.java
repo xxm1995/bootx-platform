@@ -25,32 +25,32 @@ import java.util.List;
 public class CouponTemplateParam extends StrategyRegisterParam implements Serializable {
     private static final long serialVersionUID = 7480182214926404754L;
 
-    @Schema(name = "数量")
+    @Schema(description= "数量")
     private Integer num;
 
-    @Schema(name = "优惠券互斥(模板id)")
+    @Schema(description= "优惠券互斥(模板id)")
     private List<String> couponMutual;
 
-    @Schema(name = "活动互斥(活动id)")
+    @Schema(description= "活动互斥(活动id)")
     private List<String> activityMutual;
 
-    @Schema(name = "领取检查规则")
+    @Schema(description= "领取检查规则")
     private List<CheckRuleParam> obtainRules;
 
-    @Schema(name = "有效类型 固定时间段/几天内有效")
+    @Schema(description= "有效类型 固定时间段/几天内有效")
     private int effectiveType;
 
-    @Schema(name = "时间类型 小时/整天/多少天后")
+    @Schema(description= "时间类型 小时/整天/多少天后")
     private int timeType;
 
-    @Schema(name = "有效时间")
+    @Schema(description= "有效时间")
     private Long effectiveTime;
 
-    @Schema(name = "有效开始时间")
+    @Schema(description= "有效开始时间")
     @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private LocalDateTime startTime;
 
-    @Schema(name = "有效结束时间")
+    @Schema(description= "有效结束时间")
     @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private LocalDateTime endTime;
 

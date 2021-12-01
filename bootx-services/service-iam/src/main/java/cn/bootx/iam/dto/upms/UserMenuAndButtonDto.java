@@ -18,9 +18,9 @@ import java.util.List;
 @Schema(title = "用户菜单及按钮权限数据类")
 public class UserMenuAndButtonDto {
 
-    @Schema(name = "按钮权限集合")
+    @Schema(description= "按钮权限集合")
     private List<String> buttonPermissions;
 
-    @Schema(name = "菜单")
+    @Schema(description= "菜单")
     private List<PermissionMenuDto> menus;
 }

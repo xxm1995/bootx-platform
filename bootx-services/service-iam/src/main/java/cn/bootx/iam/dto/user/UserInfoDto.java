@@ -23,43 +23,43 @@ import java.time.LocalDateTime;
 public class UserInfoDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 5881350477107722635L;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "账号")
+    @Schema(description= "账号")
     private String username;
 
-    @Schema(name = "密码")
+    @Schema(description= "密码")
     @SensitiveInfo(SensitiveType.PASSWORD)
     private String password;
 
-    @Schema(name = "手机号")
+    @Schema(description= "手机号")
     @SensitiveInfo(SensitiveType.MOBILE_PHONE)
     private String phone;
 
-    @Schema(name = "邮箱")
+    @Schema(description= "邮箱")
     @SensitiveInfo(SensitiveType.EMAIL)
     private String email;
 
-    @Schema(name = "注册来源")
+    @Schema(description= "注册来源")
     private String source;
 
-    @Schema(name = "头像")
+    @Schema(description= "头像")
     private String avatar;
 
-    @Schema(name = "是否管理员")
+    @Schema(description= "是否管理员")
     private boolean admin;
 
     /**
      * @see UserStatusCode
      */
-    @Schema(name = "账号状态")
+    @Schema(description= "账号状态")
     private Integer status;
 
-    @Schema(name = "注册时间")
+    @Schema(description= "注册时间")
     private LocalDateTime registerTime;
 
-    @Schema(name = "最后登录时间", accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(description= "最后登录时间", accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDateTime lastLoginTime;
 
     public UserDetail toUserDetail(){

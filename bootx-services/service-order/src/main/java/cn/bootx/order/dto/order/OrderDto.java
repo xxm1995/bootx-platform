@@ -23,55 +23,55 @@ import java.util.List;
 public class OrderDto implements Serializable {
     private static final long serialVersionUID = -7600415200619006458L;
 
-    @Schema(name = "主键ID")
+    @Schema(description= "主键ID")
     private Long id;
 
-    @Schema(name = "code")
+    @Schema(description= "code")
     private String code;
 
-    @Schema(name = "支付时间")
+    @Schema(description= "支付时间")
     private LocalDateTime payTime;
 
-    @Schema(name = "订单描述")
+    @Schema(description= "订单描述")
     private String description;
 
-    @Schema(name = "创建时间")
+    @Schema(description= "创建时间")
     private LocalDateTime createTime;
 
-    @Schema(name = "购买人ID")
+    @Schema(description= "购买人ID")
     private Long userId;
 
     /**
      * @see OrderStatusCode
      */
-    @Schema(name = "状态")
+    @Schema(description= "状态")
     private Integer status;
 
-    @Schema(name = "类型")
+    @Schema(description= "类型")
     private Integer type;
 
-    @Schema(name = "总金额")
+    @Schema(description= "总金额")
     private BigDecimal totalAmount;
 
-    @Schema(name = "实付金额")
+    @Schema(description= "实付金额")
     private BigDecimal payAmount;
 
-    @Schema(name = "渠道ID")
+    @Schema(description= "渠道ID")
     private Long channelId;
 
-    @Schema(name = "所用优惠券")
+    @Schema(description= "所用优惠券")
     private String couponIds;
 
-    @Schema(name = "订单明细")
+    @Schema(description= "订单明细")
     private List<OrderDetailDto> details;
 
-    @Schema(name = "优惠金额")
+    @Schema(description= "优惠金额")
     private List<OrderStrategyMappingDto> mappings = new ArrayList<>();
 
-    @Schema(name = "收货地址")
+    @Schema(description= "收货地址")
     private OrderAddressDto orderAddressInfo;
 
-    @Schema(name = "发票信息")
+    @Schema(description= "发票信息")
     private OrderInvoiceDto orderInvoiceInfo;
 
 }

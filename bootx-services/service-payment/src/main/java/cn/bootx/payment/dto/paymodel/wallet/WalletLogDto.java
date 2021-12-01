@@ -20,40 +20,40 @@ import java.time.LocalDateTime;
 public class WalletLogDto implements Serializable {
 
     private static final long serialVersionUID = -2553004953931903738L;
-    @Schema(name = "ID")
+    @Schema(description= "ID")
     private Long id;
 
-    @Schema(name = "钱包ID")
+    @Schema(description= "钱包ID")
     private Long walletId;
 
-    @Schema(name = "用户ID")
+    @Schema(description= "用户ID")
     private Long userId;
 
     /**
      * @see WalletCode
      */
-    @Schema(name = "类型 1开通钱包 2用户主动充值 3系统充值 4admin充值 5支付 6修改安全模式")
+    @Schema(description= "类型 1开通钱包 2用户主动充值 3系统充值 4admin充值 5支付 6修改安全模式")
     private Integer type;
 
-    @Schema(name = "交易记录ID")
+    @Schema(description= "交易记录ID")
     private Long paymentId;
 
-    @Schema(name = "备注")
+    @Schema(description= "备注")
     private String remark;
 
-    @Schema(name = "业务ID")
+    @Schema(description= "业务ID")
     private String businessId;
 
     /**
      * @see WalletCode
      */
-    @Schema(name = " 1 系统操作  2管理员操作 3用户操作")
+    @Schema(description= " 1 系统操作  2管理员操作 3用户操作")
     private Integer operationSource;
 
-    @Schema(name = "金额")
+    @Schema(description= "金额")
     private BigDecimal amount;
 
-    @Schema(name = "创建时间")
+    @Schema(description= "创建时间")
     private LocalDateTime createTime;
 
 }

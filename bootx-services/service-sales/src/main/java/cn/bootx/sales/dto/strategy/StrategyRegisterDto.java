@@ -23,21 +23,21 @@ import java.util.List;
 public class StrategyRegisterDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -7198577385245322049L;
 
-    @Schema(name = "策略主键")
+    @Schema(description= "策略主键")
     private Long strategyId;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String description;
 
-    @Schema(name = "检测规则")
+    @Schema(description= "检测规则")
     private List<CheckRuleDto> checkRules;
 
-   @Schema(name = "匹配内容规则")
+   @Schema(description= "匹配内容规则")
     private List<MatchRuleDto> matchRules;
 
-    @Schema(name = "策略脚本配置项值")
+    @Schema(description= "策略脚本配置项值")
     private List<StrategyConfigValueDto> configValues;
 }

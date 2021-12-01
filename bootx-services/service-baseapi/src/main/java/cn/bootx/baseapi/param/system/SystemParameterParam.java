@@ -15,24 +15,25 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(title = "系统参数")
 public class SystemParameterParam {
-    @Schema(name = "系统参数")
+
+    @Schema(description= "系统参数")
     private Long id;
 
-    /** 参数名称 */
+    @Schema(description= "参数名称")
     private String name;
 
-    /** 参数键名 */
+    @Schema(description = "参数键名")
     private String paramKey;
 
-    /** 参数值 */
+    @Schema(description = "参数值")
     private String value;
 
-    /** 参数类型 */
+    @Schema(description = "参数键名")
     private Integer type;
 
-    /** 系统参数 */
+    @Schema(description = "是否是系统参数")
     private boolean system;
 
-    /** 备注 */
+    @Schema(description = "备注")
     private String mark;
 }

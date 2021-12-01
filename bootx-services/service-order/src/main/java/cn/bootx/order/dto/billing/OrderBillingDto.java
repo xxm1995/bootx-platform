@@ -23,25 +23,25 @@ public class OrderBillingDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 6684557809868264317L;
 
-    @Schema(name = "账户")
+    @Schema(description= "账户")
     private Long userId;
 
-    @Schema(name = "订单id")
+    @Schema(description= "订单id")
     private Long orderId;
 
-    @Schema(name = "支付通道")
+    @Schema(description= "支付通道")
     private Integer payType;
 
-    @Schema(name = "支付类型名称")
+    @Schema(description= "支付类型名称")
     private String payTypeName;
 
-    @Schema(name = "支付金额")
+    @Schema(description= "支付金额")
     private BigDecimal amount;
 
-    @Schema(name = "使用数量")
+    @Schema(description= "使用数量")
     private int count;
 
-    @Schema(name = "业务主键")
+    @Schema(description= "业务主键")
     private String businessId;
 
     private List<OrderItemBillingDto> orderItemBillings;

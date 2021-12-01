@@ -15,11 +15,13 @@ public class PageParam implements Serializable {
     /**
      * 当前页
      */
+    @Schema(description = "当前页",defaultValue = "1")
     private int current = 1;
 
     /**
      * 每页显示条数，默认 10
      */
+    @Schema(description = "每页显示条数，默认 10",defaultValue = "10")
     private int size = 10;
 
     /**

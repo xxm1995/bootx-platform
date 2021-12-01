@@ -17,25 +17,25 @@ import java.io.Serializable;
 public class UserInfoParam implements Serializable {
     private static final long serialVersionUID = -1263052439212534900L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "登录账号")
+    @Schema(description= "登录账号")
     private String username;
 
-    @Schema(name = "手机号")
+    @Schema(description= "手机号")
     private String phone;
 
-    @Schema(name = "邮箱")
+    @Schema(description= "邮箱")
     private String email;
 
-    @Schema(name = "头像")
+    @Schema(description= "头像")
     private String avatar;
 
-    @Schema(name = "密码")
+    @Schema(description= "密码")
     private String password;
 
 }

@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 public class WalletActiveParam implements Serializable {
 
     private static final long serialVersionUID = 1642791492198634387L;
-    @Schema(name = "用户ID")
+    @Schema(description= "用户ID")
     private Long userId;
 
     @Schema(hidden = true)

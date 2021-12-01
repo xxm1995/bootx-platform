@@ -14,11 +14,11 @@ import lombok.experimental.Accessors;
 public class AccessTokenResult<T> extends DingTalkResult<T> {
 
     @JsonProperty("access_token")
-    @Schema(name = "AccessToken")
+    @Schema(description= "AccessToken")
     private String accessToken;
 
     @JsonProperty("expires_in")
-    @Schema(name = "ExpiresIn")
+    @Schema(description= "ExpiresIn")
     private Integer expiresIn;
 
 

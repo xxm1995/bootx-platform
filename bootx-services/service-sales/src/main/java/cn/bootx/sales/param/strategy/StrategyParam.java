@@ -20,37 +20,37 @@ public class StrategyParam implements Serializable {
 
     private static final long serialVersionUID = -4666152410169234985L;
 
-    @Schema(name = "策略主键")
+    @Schema(description= "策略主键")
     private Long id;
 
-    @Schema(name = "编码")
+    @Schema(description= "编码")
     private String code;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String description;
 
     /**
      * @see StrategyCode TARGET_TYPE_*
      */
-    @Schema(name = "目标类型")
+    @Schema(description= "目标类型")
     private int targetType;
 
     /**
      * @see StrategyCode
      */
-    @Schema(name = "引擎类型")
+    @Schema(description= "引擎类型")
     private int engineType;
 
-    @Schema(name = "策略计算脚本")
+    @Schema(description= "策略计算脚本")
     private String ruleScript;
 
-    @Schema(name = "可用状态")
+    @Schema(description= "可用状态")
     private Integer state;
 
-    @Schema(name = "配置项")
+    @Schema(description= "配置项")
     private List<StrategyConfigParam> configParams;
 
 }

@@ -6,7 +6,7 @@ import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.dto.upms.RoleDto;
 import cn.bootx.iam.param.upms.UserRoleParam;
-import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class UserRoleController {
 
     private final UserRoleService userRoleService;
 
-    @Parameter(name = "给用户分配角色")
+    @Operation( summary = "给用户分配角色")
     @PostMapping(value = "/saveAndUpdate")
     public ResResult<Boolean> saveAndUpdate(@RequestBody UserRoleParam param) {
         ValidationUtil.validateParam(param);
@@ -33,13 +33,13 @@ public class UserRoleController {
         return Res.ok(true);
     }
 
-    @Parameter(name = "根据用户ID获取到角色集合")
+    @Operation( summary = "根据用户ID获取到角色集合")
     @GetMapping(value = "/findRolesByUser")
     public ResResult<List<RoleDto>> findRolesByUser(Long id) {
         return Res.ok(userRoleService.findRolesByUser(id));
     }
 
-    @Parameter(name = "根据用户ID获取到角色id集合")
+    @Operation( summary = "根据用户ID获取到角色id集合")
     @GetMapping(value = "/findRoleIdsByUser")
     public ResResult<List<Long>> findRoleIdsByUser(Long id) {
         return Res.ok(userRoleService.findRoleIdsByUser(id));

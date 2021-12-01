@@ -19,10 +19,10 @@ import java.io.Serializable;
 @Schema(title = "钉钉文本消息")
 public class DingTalkMarkdown implements Serializable {
     private static final long serialVersionUID = 2353543901449818541L;
-    @Schema(name = "标题")
+    @Schema(description= "标题")
     private String title;
 
-    @Schema(name = "内容")
+    @Schema(description= "内容")
     private String text;
 
     public DingTalkMarkdown(String title, String text) {

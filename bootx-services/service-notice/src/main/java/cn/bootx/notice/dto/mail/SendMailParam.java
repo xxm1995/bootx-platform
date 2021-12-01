@@ -21,33 +21,33 @@ public class SendMailParam implements Serializable {
 
     private static final long serialVersionUID = 7472189938984313186L;
 
-    @Schema(name = "配置编号")
+    @Schema(description= "配置编号")
     private String configCode;
 
-    @Schema(name = "标题")
+    @Schema(description= "标题")
     @NotNull(message = "主题不能为空")
     private String subject;
 
-    @Schema(name = "消息")
+    @Schema(description= "消息")
     @NotNull(message = "消息不能为空")
     private String message;
 
-    @Schema(name = "接收人")
+    @Schema(description= "接收人")
     @NotNull(message = "to 不能为空")
     private List<String> to;
 
-    @Schema(name = "抄送")
+    @Schema(description= "抄送")
     private List<String> ccList;
 
-    @Schema(name = "密送")
+    @Schema(description= "密送")
     private List<String> bccList;
 
-    @Schema(name = "是否单条发送(拆分收件人)  默认true")
+    @Schema(description= "是否单条发送(拆分收件人)  默认true")
     private Boolean singleSend = true;
 
-    @Schema(name = "是否包含附件")
+    @Schema(description= "是否包含附件")
     private boolean sendAttachment;
 
-    @Schema(name = "附件列表")
+    @Schema(description= "附件列表")
     private List<MailFileParam> fileList;
 }

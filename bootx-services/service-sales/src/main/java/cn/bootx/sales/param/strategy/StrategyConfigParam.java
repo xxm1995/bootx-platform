@@ -17,18 +17,18 @@ import java.io.Serializable;
 public class StrategyConfigParam implements Serializable {
     private static final long serialVersionUID = -3690333270256315691L;
 
-    @Schema(name = "主键ID")
+    @Schema(description= "主键ID")
     private Long id;
 
-    @Schema(name = "参数key")
+    @Schema(description= "参数key")
     private String key;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "字段类型")
+    @Schema(description= "字段类型")
     private String type;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String description;
 }

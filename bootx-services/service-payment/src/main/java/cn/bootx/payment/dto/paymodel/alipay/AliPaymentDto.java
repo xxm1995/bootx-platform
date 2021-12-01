@@ -20,6 +20,6 @@ import java.io.Serializable;
 public class AliPaymentDto extends BasePaymentDto implements Serializable {
     private static final long serialVersionUID = 6883103229754466130L;
 
-    @Schema(name = "支付宝交易号")
+    @Schema(description= "支付宝交易号")
     private String tradeNo;
 }

@@ -29,45 +29,45 @@ import java.util.List;
 public class ClientController {
     private final ClientService clientService;
 
-    @Parameter(name = "添加终端")
+    @Operation( summary = "添加终端")
     @PostMapping(value = "/add")
     public ResResult<ClientDto> add(@RequestBody ClientParam param){
         return Res.ok(clientService.add(param));
     }
 
-    @Parameter(name = "修改终端（返回终端对象）")
+    @Operation( summary = "修改终端（返回终端对象）")
     @PostMapping(value = "/update")
     public ResResult<ClientDto> update(@RequestBody ClientParam param){
         return Res.ok(clientService.update(param));
     }
 
-    @Parameter(name = "删除终端")
+    @Operation( summary = "删除终端")
     @DeleteMapping(value = "/delete")
     public ResResult<Void> delete(Long id){
         clientService.delete(id);
         return Res.ok();
     }
 
-    @Parameter(name = "通过ID查询终端")
+    @Operation( summary = "通过ID查询终端")
     @GetMapping(value = "/findById")
     public ResResult<ClientDto> findById(Long id){
         return Res.ok(clientService.findById(id));
     }
 
     @IgnoreAuth
-    @Parameter(name = "通过code查询终端")
+    @Operation( summary = "通过code查询终端")
     @GetMapping(value = "/findByCode")
     public ResResult<ClientDto> findByCode(String code){
         return Res.ok(clientService.findByCode(code));
     }
 
-    @Parameter(name = "查询所有的终端")
+    @Operation( summary = "查询所有的终端")
     @GetMapping(value = "/findAll")
     public ResResult<List<ClientDto>> findAll(){
         return Res.ok(clientService.findAll());
     }
 
-    @Parameter(name = "分页查询终端")
+    @Operation( summary = "分页查询终端")
     @GetMapping(value = "/page")
     public ResResult<PageResult<ClientDto>> page(PageParam pageParam, ClientParam clientParam){
         return Res.ok(clientService.page(pageParam,clientParam));
@@ -79,13 +79,13 @@ public class ClientController {
         return Res.ok(clientService.superPage(pageParam,queryParams));
     }
     
-    @Parameter(name = "编码是否被使用")
+    @Operation( summary = "编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
         return Res.ok(clientService.existsByCode(code));
     }
 
-    @Parameter(name = "编码是否被使用(不包含自己)")
+    @Operation( summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
     public ResResult<Boolean> existsByCode(String code,Long id) {
         return Res.ok(clientService.existsByCode(code,id));

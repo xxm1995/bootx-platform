@@ -18,9 +18,9 @@ import java.util.List;
 public class GoodsActivityResult implements Serializable {
     private static final long serialVersionUID = 7331502272797651564L;
 
-    @Schema(name = "skuId")
+    @Schema(description= "skuId")
     private Long skuId;
 
-    @Schema(name = "活动集合")
+    @Schema(description= "活动集合")
     private List<SimpleActivity> activities;
 }

@@ -16,19 +16,19 @@ import java.util.List;
 @Accessors(chain = true)
 @Schema(title = "在线用户")
 public class OnlineUserDto {
-    @Schema(name = "用户id")
+    @Schema(description= "用户id")
     private Long userId;
-    @Schema(name = "会话id")
+    @Schema(description= "会话id")
     private String sessionId;
-    @Schema(name = "用户名称")
+    @Schema(description= "用户名称")
     private String name;
-    @Schema(name = "用户账号")
+    @Schema(description= "用户账号")
     private String userName;
-    @Schema(name = "创建时间")
+    @Schema(description= "创建时间")
     private LocalDateTime creationTime;
-    @Schema(name = "剩余有效时间(秒)")
+    @Schema(description= "剩余有效时间(秒)")
     private Long timeout;
-    @Schema(name = "Token列表")
+    @Schema(description= "Token列表")
     private List<TokenSign> tokenSigns;
 
     @Data
@@ -36,10 +36,10 @@ public class OnlineUserDto {
     @Schema(title = "Token签名")
     public static class TokenSign{
 
-        @Schema(name = "token值")
+        @Schema(description= "token值")
         private String value;
 
-        @Schema(name = "所在设备标识")
+        @Schema(description= "所在设备标识")
         private String device;
     }
 }

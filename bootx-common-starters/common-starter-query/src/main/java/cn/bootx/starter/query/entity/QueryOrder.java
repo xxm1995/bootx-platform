@@ -14,9 +14,9 @@ import lombok.experimental.Accessors;
 @Schema(title = "查询排序")
 public class QueryOrder {
 
-    @Schema(name = "设置排序字段")
+    @Schema(description= "设置排序字段")
     private String sortField;
 
-    @Schema(name = "是否升序")
+    @Schema(description= "是否升序")
     private boolean asc = true;
 }

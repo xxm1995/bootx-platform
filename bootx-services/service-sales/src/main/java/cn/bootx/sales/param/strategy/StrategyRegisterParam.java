@@ -25,29 +25,29 @@ public class StrategyRegisterParam implements Serializable {
 
     private static final long serialVersionUID = -6901032367671927153L;
 
-    @Schema(name = "策略主键")
+    @Schema(description= "策略主键")
     @NotNull(groups = {add.class, edit.class})
     private Long strategyId;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String description;
 
     /**
      * @see StrategyRegisterCode
      */
-    @Schema(name = "策略类型")
+    @Schema(description= "策略类型")
     @JsonIgnore
     private Integer strategyType;
 
-    @Schema(name = "匹配配置")
+    @Schema(description= "匹配配置")
     private List<MatchRuleParam> matchRules;
 
-    @Schema(name = "选择与使用检查规则")
+    @Schema(description= "选择与使用检查规则")
     private List<CheckRuleParam> checkRules;
 
-    @Schema(name = "策略参数值")
+    @Schema(description= "策略参数值")
     private List<StrategyConfigValueParam> configValues;
 }

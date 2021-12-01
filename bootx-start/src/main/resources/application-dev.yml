@@ -59,19 +59,20 @@ bootx:
   common:
     swagger:
       enabled: true
+      author: xxm
       version: 1.1.0-alpha-3
-      title: bootx-platform平台单体版
-      description: bootx平台单体版
+      title: bootx开发平台单体版
+      description: bootx-platform开发平台单体版
       # 多模块扫码
       base-packages:
-        iam: cn.bootx.iam
-        baseapi: cn.bootx.baseapi
-        notice: cn.bootx.notice
-        goods: cn.bootx.goods
-        payment: cn.bootx.payment
-        sales: cn.bootx.sales
-        order: cn.bootx.order
-        starter: cn.bootx.starter
+        "[基础API]": cn.bootx.baseapi
+        "[身份识别和管理]": cn.bootx.iam
+        "[消息服务]": cn.bootx.notice
+        "[商品服务]": cn.bootx.goods
+        "[支付服务]": cn.bootx.payment
+        "[销售服务]": cn.bootx.sales
+        "[订单服务]": cn.bootx.order
+        "[子定义starter组件]": cn.bootx.starter
   starter:
     auth:
       default-password: 123456

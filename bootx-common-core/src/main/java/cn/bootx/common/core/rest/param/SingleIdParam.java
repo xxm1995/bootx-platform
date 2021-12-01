@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class SingleIdParam implements Serializable {
 
     private static final long serialVersionUID = -9014016316890783082L;
-    @Schema(name = "id", required = true)
+    @Schema(description= "id", required = true)
     @NotNull(message = "id cannot be null")
     private Long id;
 

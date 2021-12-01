@@ -20,18 +20,18 @@ import java.util.List;
 public class BillingOrderParam implements Serializable {
 
     private static final long serialVersionUID = 157222599179861801L;
-    @Schema(name = "订单ID", required = true)
+    @Schema(description= "订单ID", required = true)
     private Long id;
 
-    @Schema(name = "订单号")
+    @Schema(description= "订单号")
     private String code;
 
-    @Schema(name = "订单描述")
+    @Schema(description= "订单描述")
     private String description;
 
-    @Schema(name = "支付金额")
+    @Schema(description= "支付金额")
     private BigDecimal payAmount;
 
-    @Schema(name = "订单详情列表",required = true)
+    @Schema(description= "订单详情列表",required = true)
     private List<BillingOrderDetailParam> orderDetailParams = new ArrayList<>();
 }

@@ -19,13 +19,13 @@ import java.io.Serializable;
 public class CheckRuleParam implements Serializable {
     private static final long serialVersionUID = 689686610474750635L;
 
-    @Schema(name = "优先级")
+    @Schema(description= "优先级")
     private int priority;
 
-    @Schema(name = "规则名称")
+    @Schema(description= "规则名称")
     private String name;
 
-    @Schema(name = "规则code")
+    @Schema(description= "规则code")
     private String code;
 
     /**
@@ -36,9 +36,9 @@ public class CheckRuleParam implements Serializable {
     @JsonIgnore
     private int ruleType;
 
-    @Schema(name = "策略id")
+    @Schema(description= "策略id")
     private Long strategyId;
 
-    @Schema(name = "附加对象 json")
+    @Schema(description= "附加对象 json")
     private String addition;
 }

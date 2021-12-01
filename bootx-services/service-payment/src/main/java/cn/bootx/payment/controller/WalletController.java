@@ -28,26 +28,26 @@ public class WalletController {
 
     @Operation(summary = "开通操作")
     @PostMapping("active")
-    public ResResult<WalletDto> activeWallet(@Parameter(name = "开通钱包参数") @RequestBody WalletActiveParam param) {
+    public ResResult<WalletDto> activeWallet(@Parameter(description = "开通钱包参数") @RequestBody WalletActiveParam param) {
         return Res.ok(walletService.activeWallet(param));
     }
 
     @Operation(summary = "充值操作")
     @PostMapping("recharge")
-    public ResResult<Void> recharge(@Parameter(name = "充值参数") @RequestBody WalletRechargeParam param) {
+    public ResResult<Void> recharge(@RequestBody WalletRechargeParam param) {
         walletService.recharge(param);
         return Res.ok();
     }
 
     @Operation(summary = "根据钱包ID查询钱包")
     @GetMapping("/getById")
-    public ResResult<WalletDto> getWallet(@Parameter(name = "钱包ID", required = true) @NotNull(message = "wallet id cannot be null") @RequestParam("walletId") Long walletId) {
+    public ResResult<WalletDto> getWallet(@Parameter(description = "钱包ID", required = true) @NotNull(message = "wallet id cannot be null") @RequestParam("walletId") Long walletId) {
         return Res.ok(walletService.getById(walletId));
     }
 
     @Operation(summary = "根据用户ID查询钱包")
     @GetMapping("/getByUserId")
-    public ResResult<WalletDto> getWalletByUserId(@Parameter(name = "用户ID", required = true) @NotNull(message = "user id cannot be null") @RequestParam("userId") Long userId) {
+    public ResResult<WalletDto> getWalletByUserId(@Parameter(description = "用户ID", required = true) @NotNull(message = "user id cannot be null") @RequestParam("userId") Long userId) {
         return Res.ok(walletService.getByUserId(userId));
     }
 

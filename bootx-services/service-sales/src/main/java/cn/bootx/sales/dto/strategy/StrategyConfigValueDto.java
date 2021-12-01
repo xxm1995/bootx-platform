@@ -18,16 +18,16 @@ public class StrategyConfigValueDto implements Serializable {
 
     private static final long serialVersionUID = -7481890055777714856L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
-    @Schema(name = "策略配置主键", required = true)
+    @Schema(description= "策略配置主键", required = true)
     private Long strategyConfigId;
 
-    @Schema(name = "值", required = true)
+    @Schema(description= "值", required = true)
     private String value;
 
-    @Schema(name = "创建时间")
+    @Schema(description= "创建时间")
     private LocalDateTime createTime;
 
     //只用于展示

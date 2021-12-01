@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class DictionaryItemParam implements Serializable {
     private static final long serialVersionUID = -6847496213782805488L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
     /** 字典ID */

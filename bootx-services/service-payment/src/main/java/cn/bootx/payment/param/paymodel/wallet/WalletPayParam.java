@@ -20,16 +20,16 @@ public class WalletPayParam implements Serializable {
 
     private static final long serialVersionUID = 3255160458016870367L;
 
-    @Schema(name = "用户ID")
+    @Schema(description= "用户ID")
     private Long userId;
 
-    @Schema(name = "操作人")
+    @Schema(description= "操作人")
     private Long operatorId;
 
     /**
      * @see WalletCode
      */
-    @Schema(name = "操作源 1系统 2管理员 3用户")
+    @Schema(description= "操作源 1系统 2管理员 3用户")
     private Integer operationSource;
 
 }

@@ -19,24 +19,24 @@ public class OrderStrategyMappingResult implements Serializable {
 
     private static final long serialVersionUID = -2719923793104400815L;
 
-    @Schema(name = "优惠券ID")
+    @Schema(description= "优惠券ID")
     private Long couponId;
 
-    @Schema(name = "策略ID")
+    @Schema(description= "策略ID")
     private Long strategyId;
 
-    @Schema(name = "策略注册ID")
+    @Schema(description= "策略注册ID")
     private Long strategyRegisterId;
 
     /**
      * @see StrategyCode
      */
-    @Schema(name = "策略类型")
+    @Schema(description= "策略类型")
     private int strategyType;
 
-    @Schema(name = "价格变动")
+    @Schema(description= "价格变动")
     private BigDecimal priceChange;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String description;
 }

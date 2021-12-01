@@ -17,25 +17,25 @@ import java.io.Serializable;
 public class GoodsParam implements Serializable {
     private static final long serialVersionUID = -8666559882709167480L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
-    @Schema(name = "所属类目id", required = true)
+    @Schema(description= "所属类目id", required = true)
     private Long cid;
 
-    @Schema(name = "所属类目名称（前端展示使用）")
+    @Schema(description= "所属类目名称（前端展示使用）")
     private String cname;
 
-    @Schema(name = "商品名称", required = true)
+    @Schema(description= "商品名称", required = true)
     private String name;
 
-    @Schema(name = "商品描述")
+    @Schema(description= "商品描述")
     private String description;
 
-    @Schema(name = "附加信息")
+    @Schema(description= "附加信息")
     private String addition;
 
-    @Schema(name = "价格表类型id")
+    @Schema(description= "价格表类型id")
     private Long priceTypeId;
 
 }

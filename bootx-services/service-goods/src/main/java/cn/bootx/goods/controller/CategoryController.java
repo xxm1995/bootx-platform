@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2020/11/19
-*/
+ * @author xxm
+ * @date 2020/11/19
+ */
 @Tag(name ="类目管理")
 @RestController
 @RequestMapping("/category")
@@ -37,26 +37,26 @@ public class CategoryController {
         return Res.ok(categoryService.update(categoryDto));
     }
 
-    @Parameter(name = "获取所有类目")
+    @Operation( summary = "获取所有类目")
     @GetMapping("/all")
     public ResResult<List<CategoryDto>> findAll() {
         return Res.ok(categoryService.findAll());
     }
 
-    @Parameter(name = "获取类目树")
+    @Operation( summary = "获取类目树")
     @GetMapping("/tree")
     public ResResult<List<CategoryTreeNode>> findTree() {
         return Res.ok(categoryService.findTree());
     }
 
-    @Parameter(name = "通过 id 获取指定类目")
+    @Operation( summary = "通过 id 获取指定类目")
     @GetMapping("/id")
-    public ResResult<CategoryDto> getCategory(@Parameter(name = "类目 id", required = true)
-                                               @RequestParam(value = "id") Long id) {
+    public ResResult<CategoryDto> getCategory(@Parameter(description = "类目 id", required = true)
+                                              @RequestParam(value = "id") Long id) {
         return Res.ok(categoryService.getById(id));
     }
 
-    @Parameter(name = "通过 id 删除类目")
+    @Operation( summary = "通过 id 删除类目")
     @DeleteMapping("/delete")
     public ResResult<Void> deleteCategoryById(@RequestBody SingleIdParam param)  {
         categoryService.deleteById(param.getId());

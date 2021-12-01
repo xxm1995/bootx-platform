@@ -21,11 +21,11 @@ import java.io.Serializable;
 public class DingTalkNotice implements Serializable {
 
     private static final long serialVersionUID = -8548175773944126488L;
-    @Schema(name = "@谁")
+    @Schema(description= "@谁")
     private DingTalkAt at;
 
     @JsonProperty("msgtype")
-    @Schema(name = "消息类型")
+    @Schema(description= "消息类型")
     private String msgType;
 
     public DingTalkNotice(DingTalkAt at, String msgType) {

@@ -20,19 +20,19 @@ public class ReturnOrderDetailDto implements Serializable {
 
     private static final long serialVersionUID = 3467727603218965746L;
 
-    @Schema(name = "主键ID")
+    @Schema(description= "主键ID")
     private Long id;
 
-    @Schema(name = "订单ID")
+    @Schema(description= "订单ID")
     private Long orderId;
 
-    @Schema(name = "skuId")
+    @Schema(description= "skuId")
     private Long skuId;
 
-    @Schema(name = "支付金额")
+    @Schema(description= "支付金额")
     private BigDecimal payAmount;
 
-    @Schema(name = "原订单明细ID")
+    @Schema(description= "原订单明细ID")
     private Long originDetailId;
 
 }

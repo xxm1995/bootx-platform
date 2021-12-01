@@ -25,67 +25,67 @@ public class OrderDetailCache implements Serializable {
 
     private static final long serialVersionUID = 7528634567769864592L;
 
-    @Schema(name = "主键ID")
+    @Schema(description= "主键ID")
     private Long id;
 
-    @Schema(name = "店铺ID")
+    @Schema(description= "店铺ID")
     private Long shopId;
 
-    @Schema(name = "订单ID")
+    @Schema(description= "订单ID")
     private Long orderId;
 
-    @Schema(name = "类目ID")
+    @Schema(description= "类目ID")
     private Long categoryId;
 
-    @Schema(name = "商品ID")
+    @Schema(description= "商品ID")
     private Long goodsId;
 
-    @Schema(name = "skuId")
+    @Schema(description= "skuId")
     private Long skuId;
 
-    @Schema(name = "商品名")
+    @Schema(description= "商品名")
     private String goodsTitle;
 
-    @Schema(name = "商品价格")
+    @Schema(description= "商品价格")
     private BigDecimal goodsPrice;
 
-    @Schema(name = "商品数量")
+    @Schema(description= "商品数量")
     private int num;
 
-    @Schema(name = "总金额(原始)")
+    @Schema(description= "总金额(原始)")
     private BigDecimal totalAmount;
 
-    @Schema(name = "优惠差价")
+    @Schema(description= "优惠差价")
     private BigDecimal payChange;
 
-    @Schema(name = "总金额(优惠后)")
+    @Schema(description= "总金额(优惠后)")
     private BigDecimal payAmount;
 
-    @Schema(name = "状态")
+    @Schema(description= "状态")
     private int state = 0;
 
-    @Schema(name = "是否虚拟商品")
+    @Schema(description= "是否虚拟商品")
     private Boolean isVirtual = false;
 
-    @Schema(name = "是否允许分摊")
+    @Schema(description= "是否允许分摊")
     private Boolean isShare = true;
 
-    @Schema(name = "附加参数")
+    @Schema(description= "附加参数")
     private String addition;
 
-    @Schema(name = "活动集合")
+    @Schema(description= "活动集合")
     private List<Activity> activities;
 
-    @Schema(name = "活动id集合")
+    @Schema(description= "活动id集合")
     private List<Long> activityIds;
 
-    @Schema(name = "活动对应的策略注册集合")
+    @Schema(description= "活动对应的策略注册集合")
     private List<StrategyRegister> strategyRegisters;
 
-    @Schema(name = "活动对应的策略注册id集合")
+    @Schema(description= "活动对应的策略注册id集合")
     private List<Long> strategyRegisterIds = new ArrayList<>();
 
-    @Schema(name = "应用策略后价格变动记录")
+    @Schema(description= "应用策略后价格变动记录")
     private List<OrderStrategyMappingResult> mappings = new ArrayList<>();
 
     public OrderDetailPreviewResult toPreview(){

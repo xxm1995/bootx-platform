@@ -18,9 +18,9 @@ import java.util.List;
 public class RolePermissionParam implements Serializable {
     private static final long serialVersionUID = 4344723093613370279L;
 
-    @Schema(name = "角色的ID")
+    @Schema(description= "角色的ID")
     private Long roleId;
 
-    @Schema(name = "权限id")
+    @Schema(description= "权限id")
     private List<Long> permissionIds;
 }

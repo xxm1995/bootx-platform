@@ -17,19 +17,19 @@ import java.math.BigDecimal;
 public class PayChannelInfo implements Serializable {
 
     private static final long serialVersionUID = -7757908686367215682L;
-    @Schema(name = "类型")
+    @Schema(description= "类型")
     private int payChannel;
 
-    @Schema(name = "支付类型")
+    @Schema(description= "支付类型")
     private int payWay;
 
-    @Schema(name = "金额")
+    @Schema(description= "金额")
     private BigDecimal amount;
 
-    @Schema(name = "数量")
+    @Schema(description= "数量")
     private int count;
 
-    @Schema(name = "扩展参数的json字符串",hidden = true)
+    @Schema(description= "扩展参数的json字符串",hidden = true)
     private String extraParamsJson;
 
 }

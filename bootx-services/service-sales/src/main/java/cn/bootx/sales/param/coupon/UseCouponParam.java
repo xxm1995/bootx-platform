@@ -18,10 +18,10 @@ import java.util.List;
 public class UseCouponParam implements Serializable {
     private static final long serialVersionUID = 7400322396295360022L;
 
-    @Schema(name = "订单Id")
+    @Schema(description= "订单Id")
     private Long orderId;
 
-    @Schema(name = "优惠券Id")
+    @Schema(description= "优惠券Id")
     private List<Long> couponIds;
 
 }

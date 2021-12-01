@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class MessageTemplateParam implements Serializable {
 
     private static final long serialVersionUID = 593034193370220643L;
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
     /**

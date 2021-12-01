@@ -19,13 +19,13 @@ import java.util.List;
 @Schema(title = "用户完整信息")
 public class UserInfoWhole {
 
-    @Schema(name = "用户信息")
+    @Schema(description= "用户信息")
     private UserInfoDto userInfo;
 
-    @Schema(name = "角色信息")
+    @Schema(description= "角色信息")
     private List<RoleDto> roles;
 
-    @Schema(name = "部门信息")
+    @Schema(description= "部门信息")
     private List<DeptDto> deptList;
 
 }

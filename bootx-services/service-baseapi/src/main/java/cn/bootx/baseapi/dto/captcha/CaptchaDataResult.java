@@ -14,9 +14,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(title = "验证码数据")
 public class CaptchaDataResult {
-    @Schema(name = "验证码标示")
+    @Schema(description= "验证码标示")
     private String captchaKey;
 
-    @Schema(name = "验证码base64数据")
+    @Schema(description= "验证码base64数据")
     private String captchaData;
 }

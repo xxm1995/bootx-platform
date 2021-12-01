@@ -9,6 +9,7 @@ import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.rest.param.SingleIdParam;
 import cn.bootx.common.core.util.ValidationUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -28,14 +29,14 @@ import java.util.List;
 public class DictionaryItemController {
     private final DictionaryItemService dictionaryItemService;
 
-    @Parameter(name = "添加字典项（返回字典项对象）")
+    @Operation( summary = "添加字典项（返回字典项对象）")
     @PostMapping("/add")
     public ResResult<DictionaryItemDto> add(@RequestBody DictionaryItemParam param) {
         ValidationUtil.validateParam(param);
         return Res.ok(dictionaryItemService.add(param));
     }
 
-    @Parameter(name = "删除字典项")
+    @Operation( summary = "删除字典项")
     @DeleteMapping(value = "/delete")
     public ResResult<Void> delete(@RequestBody SingleIdParam param) {
         ValidationUtil.validateParam(param);
@@ -43,44 +44,44 @@ public class DictionaryItemController {
         return Res.ok();
     }
 
-    @Parameter(name = "修改字典项（返回字典项对象）")
+    @Operation( summary = "修改字典项（返回字典项对象）")
     @PostMapping(value = "/update")
     public ResResult<DictionaryItemDto> update(@RequestBody DictionaryItemParam param) {
         ValidationUtil.validateParam(param);
         return Res.ok( dictionaryItemService.update(param));
     }
 
-    @Parameter(name = "根据字典项ID查询")
+    @Operation( summary = "根据字典项ID查询")
     @GetMapping("/findById")
-    public ResResult<DictionaryItemDto> findById(@Parameter(name = "字典项ID")Long id) {
+    public ResResult<DictionaryItemDto> findById(@Parameter(description = "字典项ID")Long id) {
         return Res.ok( dictionaryItemService.findById(id));
     }
 
-    @Parameter(name = "查询指定字典ID下的所有字典项")
+    @Operation( summary = "查询指定字典ID下的所有字典项")
     @GetMapping("/findByDictionaryId")
-    public ResResult<List<DictionaryItemDto>> findByDictionaryId(@Parameter(name = "字典ID") Long dictionaryId) {
+    public ResResult<List<DictionaryItemDto>> findByDictionaryId(@Parameter(description = "字典ID") Long dictionaryId) {
         return Res.ok(dictionaryItemService.findByDictionaryId(dictionaryId));
     }
 
-    @Parameter(name = "分页查询指定字典下的字典项")
+    @Operation( summary = "分页查询指定字典下的字典项")
     @GetMapping("/pageByDictionaryId")
     public ResResult<PageResult<DictionaryItemDto>> pageByDictionaryId(PageParam pageParam, Long dictId) {
         return Res.ok(dictionaryItemService.pageByDictionaryId(dictId,pageParam));
     }
 
-    @Parameter(name = "获取全部字典项")
+    @Operation( summary = "获取全部字典项")
     @GetMapping("/findAll")
     public ResResult<List<DictionaryItemDto>> findAll() {
         return Res.ok(dictionaryItemService.findAll());
     }
 
 
-    @Parameter(name = "编码是否被使用")
+    @Operation( summary = "编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code,Long dictId) {
         return Res.ok(dictionaryItemService.existsByCode(code,dictId));
     }
-    @Parameter(name = "编码是否被使用(不包含自己)")
+    @Operation( summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
     public ResResult<Boolean> existsByCode(String code,Long dictId,Long id) {
         return Res.ok(dictionaryItemService.existsByCode(code,dictId,id));

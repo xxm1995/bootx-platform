@@ -15,9 +15,9 @@ import lombok.experimental.Accessors;
 @Schema(title = "微信支付参数")
 public class WeChatPayParam {
 
-    @Schema(name = "微信openId")
+    @Schema(description= "微信openId")
     private String openId;
 
-    @Schema(name = "授权码(主动扫描用户的付款码)")
+    @Schema(description= "授权码(主动扫描用户的付款码)")
     private String authCode;
 }

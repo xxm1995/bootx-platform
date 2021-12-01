@@ -14,9 +14,9 @@ import lombok.experimental.Accessors;
 @Schema(title = "Between 类型参数")
 public class QueryBetweenParam {
 
-    @Schema(name = "开始参数")
+    @Schema(description= "开始参数")
     private Object start;
 
-    @Schema(name = "结束参数")
+    @Schema(description= "结束参数")
     private Object end;
 }

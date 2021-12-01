@@ -20,10 +20,10 @@ import java.util.List;
 @AllArgsConstructor
 public class MatchQuery {
 
-    @Schema(name = "匹配类型")
+    @Schema(description= "匹配类型")
     private Integer matchType;
 
-    @Schema(name = "id集合")
+    @Schema(description= "id集合")
     private List<Long> ids;
 
 }

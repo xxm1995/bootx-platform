@@ -31,13 +31,13 @@ public class UserDeptController {
         return Res.ok();
     }
 
-    @Parameter(name = "根据用户ID获取到部门集合")
+    @Operation( summary = "根据用户ID获取到部门集合")
     @GetMapping(value = "/findDeptListByUser")
     public ResResult<List<DeptDto>> findDeptListByUser(Long id) {
         return Res.ok(userDeptService.findDeptListByUser(id));
     }
 
-    @Parameter(name = "根据用户ID获取到部门id集合")
+    @Operation( summary = "根据用户ID获取到部门id集合")
     @GetMapping(value = "/findDeptIdsByUser")
     public ResResult<List<Long>> findDeptIdsByUser(Long id) {
         return Res.ok(userDeptService.findDeptIdsByUser(id));

@@ -14,12 +14,12 @@ import lombok.experimental.Accessors;
 @Schema(title = "减少SKU库存参数")
 public class ReduceInventoryParam {
 
-    @Schema(name = "skuID")
+    @Schema(description= "skuID")
     private Long skuId;
 
-    @Schema(name = "数量")
+    @Schema(description= "数量")
     private int count;
 
-    @Schema(name = "token")
+    @Schema(description= "token")
     private String token;
 }

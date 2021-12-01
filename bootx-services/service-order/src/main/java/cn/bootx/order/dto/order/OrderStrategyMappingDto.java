@@ -19,27 +19,27 @@ import java.math.BigDecimal;
 public class OrderStrategyMappingDto implements Serializable {
     private static final long serialVersionUID = 5845910774643018583L;
 
-    @Schema(name = "主键ID")
+    @Schema(description= "主键ID")
     private Long id;
 
-    @Schema(name = "订单id")
+    @Schema(description= "订单id")
     private Long orderId;
 
-    @Schema(name = "明细id")
+    @Schema(description= "明细id")
     private Long orderDetailId;
 
-    @Schema(name = "优惠券ID")
+    @Schema(description= "优惠券ID")
     private Long couponId;
 
-    @Schema(name = "策略ID")
+    @Schema(description= "策略ID")
     private Long strategyId;
 
-    @Schema(name = "策略注册ID")
+    @Schema(description= "策略注册ID")
     private Long strategyRegisterId;
 
-    @Schema(name = "价格变动")
+    @Schema(description= "价格变动")
     private BigDecimal priceChange;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String desc;
 }

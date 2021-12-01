@@ -19,19 +19,19 @@ import java.util.List;
 public class WalletLogQueryParam implements Serializable {
 
     private static final long serialVersionUID = -4046664021959786637L;
-    @Schema(name = "钱包ID (与userId至少存在一个)")
+    @Schema(description= "钱包ID (与userId至少存在一个)")
     private Long walletId;
 
-    @Schema(name = "用户ID (钱包至少存在一个)")
+    @Schema(description= "用户ID (钱包至少存在一个)")
     private Long userId;
 
-    @Schema(name = "开始日期")
+    @Schema(description= "开始日期")
     private LocalDateTime startDate;
 
-    @Schema(name = "结束日期")
+    @Schema(description= "结束日期")
     private LocalDateTime endDate;
 
-    @Schema(name = "日志类型，不传则查询全部")
+    @Schema(description= "日志类型，不传则查询全部")
     private List<Integer> type;
 
 }

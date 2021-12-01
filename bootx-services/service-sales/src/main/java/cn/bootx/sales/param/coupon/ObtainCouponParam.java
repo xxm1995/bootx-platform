@@ -18,18 +18,18 @@ public class ObtainCouponParam implements Serializable {
 
     private static final long serialVersionUID = -2819314899657082887L;
 
-    @Schema(name = "优惠券模板Id")
+    @Schema(description= "优惠券模板Id")
     private Long templateId;
 
-    @Schema(name = "用户Id")
+    @Schema(description= "用户Id")
     private Long userId;
 
-    @Schema(name = "设备id")
+    @Schema(description= "设备id")
     private Long deviceId;
 
-    @Schema(name = "ip")
+    @Schema(description= "ip")
     private String ip;
 
-    @Schema(name = "渠道Id")
+    @Schema(description= "渠道Id")
     private Long channelId;
 }

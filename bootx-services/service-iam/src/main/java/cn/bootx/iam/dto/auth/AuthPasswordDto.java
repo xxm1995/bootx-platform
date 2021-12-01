@@ -22,12 +22,12 @@ public class AuthPasswordDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = -131891945146840339L;
 
-    @Schema(name = "用户主键", required = true)
+    @Schema(description= "用户主键", required = true)
     private Long uid;
 
-    @Schema(name = "用户密码", required = true)
+    @Schema(description= "用户密码", required = true)
     private String password;
 
-    @Schema(name = "最后登录时间", readOnly = true)
+    @Schema(description= "最后登录时间", readOnly = true)
     private LocalDateTime lastLoginTime;
 }

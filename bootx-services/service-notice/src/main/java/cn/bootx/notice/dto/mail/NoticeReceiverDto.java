@@ -28,11 +28,11 @@ public class NoticeReceiverDto extends BaseDto {
     public static final int NOTICE_TYPE_EMAIL = 2;
     public static final int NOTICE_TYPE_WECHAT = 3;
 
-    @Schema(name = "联系方式类型，（1：电话，2：邮件，3：微信）")
+    @Schema(description= "联系方式类型，（1：电话，2：邮件，3：微信）")
     @NotNull
     private Integer type;
 
-    @Schema(name = "联系方式")
+    @Schema(description= "联系方式")
     @NotNull
     @Size(max = 255, message = "value max length is 255")
     private String value;

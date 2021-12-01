@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class DingTalkText implements Serializable {
 
     private static final long serialVersionUID = 3582073816491238620L;
-    @Schema(name = "文本")
+    @Schema(description= "文本")
     private String content;
 
     public DingTalkText(String content){

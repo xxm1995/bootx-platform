@@ -23,7 +23,7 @@ import java.util.List;
 public class DingTalkTextNotice extends DingTalkNotice implements Serializable {
 
     private static final long serialVersionUID = 8237431306046852539L;
-    @Schema(name = "文本消息体")
+    @Schema(description= "文本消息体")
     private DingTalkText text;
 
     public DingTalkTextNotice(String msg, List<String> phones) {

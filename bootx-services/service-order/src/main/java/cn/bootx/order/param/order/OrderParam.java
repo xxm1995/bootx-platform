@@ -20,43 +20,43 @@ public class OrderParam implements Serializable {
 
     private static final long serialVersionUID = 546385575171313726L;
 
-    @Schema(name = "code")
+    @Schema(description= "code")
     private String code;
 
-    @Schema(name = "购者id")
+    @Schema(description= "购者id")
     private Long userId;
 
-    @Schema(name = "订单描述")
+    @Schema(description= "订单描述")
     private String description;
 
-    @Schema(name = "来源")
+    @Schema(description= "来源")
     private String source;
 
-    @Schema(name = "渠道id")
+    @Schema(description= "渠道id")
     private Long channelId;
 
-    @Schema(name = "订单类型")
+    @Schema(description= "订单类型")
     private Integer type;
 
-    @Schema(name = "总金额")
+    @Schema(description= "总金额")
     private BigDecimal totalAmount;
 
-    @Schema(name = "附加参数 json")
+    @Schema(description= "附加参数 json")
     private String addition;
 
-    @Schema(name = "设备id")
+    @Schema(description= "设备id")
     private String deviceId;
 
-    @Schema(name = "业务 ID")
+    @Schema(description= "业务 ID")
     private Long businessId;
 
-    @Schema(name = "订单明细")
+    @Schema(description= "订单明细")
     private List<OrderDetailParam> details;
 
-    @Schema(name = "选择的优惠券")
+    @Schema(description= "选择的优惠券")
     private List<Long> couponIds;
 
-    @Schema(name = "全部待选优惠券",hidden = true)
+    @Schema(description= "全部待选优惠券",hidden = true)
     private List<Long> allCouponIds;
 
 }

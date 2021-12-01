@@ -35,25 +35,25 @@ public class ReturnOrderDto implements Serializable {
     public static final int STATE_REFUND_FAILURE = 2;
 
 
-    @Schema(name = "主键ID")
+    @Schema(description= "主键ID")
     private Long id;
 
-    @Schema(name = "租户ID")
+    @Schema(description= "租户ID")
     private Long tenantId;
 
-    @Schema(name = "渠道ID")
+    @Schema(description= "渠道ID")
     private Long channelId;
 
-    @Schema(name = "支付金额")
+    @Schema(description= "支付金额")
     private BigDecimal payAmount;
 
-    @Schema(name = "原订单ID")
+    @Schema(description= "原订单ID")
     private Long originOrderId;
 
-    @Schema(name = "退货单状态")
+    @Schema(description= "退货单状态")
     private Integer state;
 
-    @Schema(name = "业务主键")
+    @Schema(description= "业务主键")
     private Long businessId;
 
     private List<ReturnOrderDetailDto> detailDtos;

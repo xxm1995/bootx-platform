@@ -35,6 +35,6 @@ public class DingRobotConfigDto extends BaseDto implements Serializable {
     @SensitiveInfo(value = SensitiveType.OTHER)
     private String signSecret;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String remark;
 }

@@ -18,37 +18,37 @@ import java.math.BigDecimal;
 public class SkuParam implements Serializable {
     private static final long serialVersionUID = -8038996282288514501L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
-    @Schema(name = "所属类目id")
+    @Schema(description= "所属类目id")
     private Long cid;
 
-    @Schema(name = "外部编码")
+    @Schema(description= "外部编码")
     private String outNo;
 
-    @Schema(name = "所属商品id")
+    @Schema(description= "所属商品id")
     private Long goodsId;
 
-    @Schema(name = "SKU名称")
+    @Schema(description= "SKU名称")
     private String name;
 
-    @Schema(name = "SKU描述")
+    @Schema(description= "SKU描述")
     private String description;
 
-    @Schema(name = "附加信息")
+    @Schema(description= "附加信息")
     private String addition;
 
-    @Schema(name = "是否打包品")
+    @Schema(description= "是否打包品")
     private boolean packing;
 
-    @Schema(name = "是否无限库存")
+    @Schema(description= "是否无限库存")
     private boolean unlimited;
 
-    @Schema(name = "初始库存")
+    @Schema(description= "初始库存")
     private Integer capacity;
 
-    @Schema(name = "售价")
+    @Schema(description= "售价")
     private BigDecimal price;
 
 }

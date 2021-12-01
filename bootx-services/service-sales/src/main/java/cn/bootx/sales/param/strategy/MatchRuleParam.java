@@ -18,15 +18,15 @@ import java.io.Serializable;
 public class MatchRuleParam implements Serializable {
     private static final long serialVersionUID = -4122307649683307643L;
 
-    @Schema(name = "特征类型")
+    @Schema(description= "特征类型")
     private String featureType;
 
-    @Schema(name = "特征值")
+    @Schema(description= "特征值")
     private String featurePoint;
 
     /**
      * @see MatchTypeCode
      */
-    @Schema(name = "匹配类型")
+    @Schema(description= "匹配类型")
     private String matchType;
 }

@@ -16,10 +16,10 @@ import java.util.List;
 @Schema(title = "查询参数")
 public class QueryParams {
 
-    @Schema(name = "参数集合")
+    @Schema(description= "参数集合")
     private List<QueryParam> queryParams;
 
-    @Schema(name = "排序集合")
+    @Schema(description= "排序集合")
     private List<QueryOrder> queryOrders;
 
 }

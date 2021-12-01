@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Schema(title = "认证终端")
 public class ClientParam {
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
     /** 编码 */

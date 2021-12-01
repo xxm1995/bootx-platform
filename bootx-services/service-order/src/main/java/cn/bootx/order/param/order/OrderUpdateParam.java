@@ -20,19 +20,19 @@ public class OrderUpdateParam implements Serializable {
     private static final long serialVersionUID = 4460069559043995466L;
     private Long id;
 
-    @Schema(name = "姓名")
+    @Schema(description= "姓名")
     private String contactName;
 
-    @Schema(name = "手机")
+    @Schema(description= "手机")
     private String contactPhone;
 
-    @Schema(name = "邮箱")
+    @Schema(description= "邮箱")
     private String contactEmail;
 
-    @Schema(name = "支付时间")
+    @Schema(description= "支付时间")
     private Date payTime;
 
-    @Schema(name = "状态")
+    @Schema(description= "状态")
     private Integer state;
 
     private Long buyerId;

@@ -22,16 +22,16 @@ import java.util.List;
 public class GoodsDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 9191023721658520976L;
 
-    @Schema(name = "所属类目id", required = true)
+    @Schema(description= "所属类目id", required = true)
     private Long cid;
 
-    @Schema(name = "所属类目名称（前端展示使用）")
+    @Schema(description= "所属类目名称（前端展示使用）")
     private String cname;
 
-    @Schema(name = "商品名称", required = true)
+    @Schema(description= "商品名称", required = true)
     private String name;
 
-    @Schema(name = "商品描述")
+    @Schema(description= "商品描述")
     private String description;
 
     /** banner图片 多个图片逗号分隔 */
@@ -40,13 +40,13 @@ public class GoodsDto extends BaseDto implements Serializable {
     /** 商品介绍主图 多个图片逗号分隔 */
     private String mainUri;
 
-    @Schema(name = "附加信息")
+    @Schema(description= "附加信息")
     private String addition;
 
-    @Schema(name = "状态(1:可用，0:不可用)")
+    @Schema(description= "状态(1:可用，0:不可用)")
     private int state;
 
-    @Schema(name = "关联sku")
+    @Schema(description= "关联sku")
     private List<GoodsSkuDto> skus;
 
 }

@@ -22,13 +22,18 @@ public class SwaggerProperties {
      */
     private boolean enabled;
     /**
-     * 扫描路径, key 模块名, value 扫描路径
+     * 业务模块模块
      */
     private Map<String, String> basePackages = new LinkedHashMap<>();
     /**
      * 标题
      */
     private String title;
+    /**
+     * 作者
+     */
+    private String author;
+
     /**
      * 描述
      */
@@ -41,5 +46,15 @@ public class SwaggerProperties {
      * 版本号
      */
     private String version;
+
+    /**
+     * 开源协议
+     */
+    private String licenseName = "Apache 2.0";
+
+    /**
+     * 开源协议地址
+     */
+    private String licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0";
 
 }

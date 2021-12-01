@@ -18,22 +18,22 @@ import java.math.BigDecimal;
 public class PayRefundDetailParam implements Serializable {
 
     private static final long serialVersionUID = -2598585064286442045L;
-    @Schema(name = "支付ID", required = true)
+    @Schema(description= "支付ID", required = true)
     private Long paymentId;
 
-    @Schema(name = "哪个订单", required = true)
+    @Schema(description= "哪个订单", required = true)
     private Long orderId;
 
-    @Schema(name = "支付类型", required = true)
+    @Schema(description= "支付类型", required = true)
     private int payType;
 
-    @Schema(name = "交易ID(现金没有)")
+    @Schema(description= "交易ID(现金没有)")
     private String transactionId;
 
-    @Schema(name = "支付卡号")
+    @Schema(description= "支付卡号")
     private String account;
 
-    @Schema(name = "退款费用(正值)", required = true)
+    @Schema(description= "退款费用(正值)", required = true)
     private BigDecimal refundAmount;
 
 }

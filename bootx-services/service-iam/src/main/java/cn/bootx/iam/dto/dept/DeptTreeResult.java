@@ -20,40 +20,40 @@ import java.util.List;
 public class DeptTreeResult implements Serializable {
     private static final long serialVersionUID = 9065167687644450513L;
 
-    @Schema(name = "ID")
+    @Schema(description= "ID")
     private Long id;
 
-    @Schema(name = "父机构ID")
+    @Schema(description= "父机构ID")
     private Long parentId;
 
-    @Schema(name = "机构/部门名称")
+    @Schema(description= "机构/部门名称")
     private String deptName;
 
-    @Schema(name = "排序")
+    @Schema(description= "排序")
     private Double sortNo;
 
-    @Schema(name = "机构类别 1组织机构，2岗位")
+    @Schema(description= "机构类别 1组织机构，2岗位")
     private String orgCategory;
 
-    @Schema(name = "机构类型")
+    @Schema(description= "机构类型")
     private String orgType;
 
-    @Schema(name = "机构编码")
+    @Schema(description= "机构编码")
     private String orgCode;
 
-    @Schema(name = "手机号")
+    @Schema(description= "手机号")
     private String mobile;
 
-    @Schema(name = "传真")
+    @Schema(description= "传真")
     private String fax;
 
-    @Schema(name = "地址")
+    @Schema(description= "地址")
     private String address;
 
-    @Schema(name = "备注")
+    @Schema(description= "备注")
     private String remark;
 
 
-    @Schema(name = "部门树")
+    @Schema(description= "部门树")
     private List<DeptTreeResult> children;
 }

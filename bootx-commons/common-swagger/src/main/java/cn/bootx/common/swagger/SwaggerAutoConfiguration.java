@@ -2,6 +2,7 @@ package cn.bootx.common.swagger;
 
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Binder;
@@ -20,6 +22,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import javax.validation.constraints.NotNull;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * swagger 自动配置
@@ -31,38 +35,47 @@ import javax.validation.constraints.NotNull;
 @EnableConfigurationProperties(SwaggerProperties.class)
 @RequiredArgsConstructor
 public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProcessor, EnvironmentAware {
-	private final String swaggerPropertiesPrefix = "bootx.common.swagger";
+    private final String swaggerPropertiesPrefix = "bootx.common.swagger";
 
     private SwaggerProperties swaggerProperties;
 
-	public GroupedOpenApi createApi(String key, String basePackage) {
+    /**
+     * 创建swagger文档模块
+     * @param name 模块名称
+     * @param basePackage 扫描路径
+     */
+    private GroupedOpenApi createApi(String name, String basePackage) {
         return GroupedOpenApi.builder()
-                .group(key)
+                .group(name)
                 .packagesToScan(basePackage)
                 .build();
-	}
-
-    @Bean
-    public GroupedOpenApi iamApi(){
-        return this.createApi("认证","cn.bootx.iam");
     }
 
-
     @Bean
-    public GroupedOpenApi baseApiApi(){
-        return this.createApi("基础接口","cn.bootx.baseapi");
+    public GroupedOpenApi blankApi2(){
+        return this.createApi("空白页2","null.null");
+    }
+    @Bean
+    public GroupedOpenApi blankApi(){
+        return this.createApi(" 空白页","null.null");
     }
 
     @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title(swaggerProperties.getTitle())
+                .info(new Info()
+                        .title(swaggerProperties.getTitle())
                         .description(swaggerProperties.getDescription())
                         .version(swaggerProperties.getVersion())
-                        .license(new License().name("Apache 2.0").url("https://www.apache.org/licenses/LICENSE-2.0")))
+                        .contact(new Contact().name(swaggerProperties.getAuthor()))
+                        .license(
+                                new License()
+                                        .name(swaggerProperties.getLicenseName())
+                                        .url(swaggerProperties.getLicenseUrl()))
+                )
                 .externalDocs(new ExternalDocumentation()
-                        .description(swaggerProperties.getDescription())
-                        .url(swaggerProperties.getTermsOfServiceUrl()));
+                        .url(swaggerProperties.getTermsOfServiceUrl())
+                );
     }
 
     /**
@@ -70,11 +83,12 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
      */
     @Override
     public void postProcessBeanDefinitionRegistry(@NotNull BeanDefinitionRegistry registry) throws BeansException {
-//        Map<String, String> basePackages = this.swaggerProperties.getBasePackages();
-//        basePackages.forEach((key, value) ->{
-//            RootBeanDefinition bean = new RootBeanDefinition(GroupedOpenApi.class,()->this.createApi(key,value));
-//            registry.registerBeanDefinition(key, bean);
-//        } );
+        Map<String, String> basePackages = this.swaggerProperties.getBasePackages();
+        AtomicInteger atomicInteger = new AtomicInteger(96);
+        basePackages.forEach((name, basePackage) -> {
+            RootBeanDefinition bean = new RootBeanDefinition(GroupedOpenApi.class,()->this.createApi(name,basePackage));
+            registry.registerBeanDefinition((char)atomicInteger.incrementAndGet()+"ModelAPi", bean);
+        });
     }
 
     @Override

@@ -18,6 +18,6 @@ import java.io.Serializable;
 public class AliPayParam implements Serializable {
     private static final long serialVersionUID = 7467373358780663978L;
 
-    @Schema(name = "授权码(主动扫描用户的付款码)")
+    @Schema(description= "授权码(主动扫描用户的付款码)")
     private String authCode;
 }

@@ -20,14 +20,14 @@ public class DingTalkResult<T> implements Serializable {
     private static final long serialVersionUID = 4298060961428118100L;
 
     @JsonProperty("errcode")
-    @Schema(name = "错误码")
+    @Schema(description= "错误码")
     private Integer code;
 
-    @Schema(name = "返回数据")
+    @Schema(description= "返回数据")
     private T result;
 
     @JsonProperty("errmsg")
-    @Schema(name = "内容")
+    @Schema(description= "内容")
     private String msg;
 
 }

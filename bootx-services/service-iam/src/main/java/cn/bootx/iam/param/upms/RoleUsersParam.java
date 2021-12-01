@@ -16,11 +16,11 @@ import java.util.List;
 @Schema(title = "角色用户参数")
 public class RoleUsersParam {
 
-    @Schema(name = "用户的ID集合", required = true)
+    @Schema(description= "用户的ID集合", required = true)
     @NotNull(message = "用户 ID 不能为空")
     private List<Long> userIds;
 
-    @Schema(name = "角色的ID", required = true)
+    @Schema(description= "角色的ID", required = true)
     @NotNull(message = "roleId 不能为空")
     private Long roleId;
 

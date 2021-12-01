@@ -22,32 +22,32 @@ import java.math.BigDecimal;
 public class GoodsSkuDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 9214661437061650242L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
-    @Schema(name = "所属类目id")
+    @Schema(description= "所属类目id")
     private Long cid;
-    @Schema(name = "所属商品id")
+    @Schema(description= "所属商品id")
     private Long goodsId;
-    @Schema(name = "SKU名称", required = true)
+    @Schema(description= "SKU名称", required = true)
     private String name;
-    @Schema(name = "SKU描述")
+    @Schema(description= "SKU描述")
     private String description;
-    @Schema(name = "附加信息")
+    @Schema(description= "附加信息")
     private String addition;
 
-    @Schema(name = "无限库存")
+    @Schema(description= "无限库存")
     private boolean unlimited;
-    @Schema(name = "库存总量")
+    @Schema(description= "库存总量")
     private Integer capacity;
-    @Schema(name = "预占库存")
+    @Schema(description= "预占库存")
     private int locked;
-    @Schema(name = "已用库存")
+    @Schema(description= "已用库存")
     private int sold;
-    @Schema(name = "可用库存")
+    @Schema(description= "可用库存")
     private Integer available;
 
-    @Schema(name = "售价")
+    @Schema(description= "售价")
     private BigDecimal price;
-    @Schema(name = "状态")
+    @Schema(description= "状态")
     private int state;
 }

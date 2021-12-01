@@ -18,16 +18,16 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class BaseDto implements Serializable {
     private static final long serialVersionUID = 2985535678913619503L;
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
-    @Schema(name = "创建时间")
+    @Schema(description= "创建时间")
     private LocalDateTime createTime;
 
-    @Schema(name = "最后修改时间")
+    @Schema(description= "最后修改时间")
     private LocalDateTime lastModifiedTime;
 
-    @Schema(name = "版本号")
+    @Schema(description= "版本号")
     private Integer version;
 
 }

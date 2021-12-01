@@ -20,21 +20,21 @@ import java.math.BigDecimal;
 public class WalletDto implements Serializable {
 
     private static final long serialVersionUID = -1563719305334334625L;
-    @Schema(name = "ID,钱包的唯一标识")
+    @Schema(description= "ID,钱包的唯一标识")
     private Long id;
 
-    @Schema(name = "钱包关联的账号ID")
+    @Schema(description= "钱包关联的账号ID")
     private Long userId;
 
-    @Schema(name = "钱包余额")
+    @Schema(description= "钱包余额")
     private BigDecimal balance;
 
-    @Schema(name = "状态 1启用 2禁用")
+    @Schema(description= "状态 1启用 2禁用")
     private Integer status;
 
     /**
      * @see WalletCode
      */
-    @Schema(name = "保护模式 0:禁用 1:PIN Code 2:Finger/FaceID")
+    @Schema(description= "保护模式 0:禁用 1:PIN Code 2:Finger/FaceID")
     private Integer protectionMode;
 }

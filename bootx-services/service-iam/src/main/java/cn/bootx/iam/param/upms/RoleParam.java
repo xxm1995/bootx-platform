@@ -14,15 +14,15 @@ import lombok.experimental.Accessors;
 @Schema(title = "角色")
 public class RoleParam {
 
-    @Schema(name = "角色id")
+    @Schema(description= "角色id")
     private Long id;
 
-    @Schema(name = "角色code")
+    @Schema(description= "角色code")
     private String code;
 
-    @Schema(name = "角色名称")
+    @Schema(description= "角色名称")
     private String name;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String description;
 }

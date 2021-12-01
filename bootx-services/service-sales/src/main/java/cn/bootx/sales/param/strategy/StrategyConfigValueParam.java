@@ -20,15 +20,15 @@ import java.io.Serializable;
 public class StrategyConfigValueParam implements Serializable {
     private static final long serialVersionUID = -7024845343648657278L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     @NotNull(groups = edit.class)
     private Long id;
 
-    @Schema(name = "策略配置主键")
+    @Schema(description= "策略配置主键")
     @NotNull(groups = {add.class,edit.class})
     private Long strategyConfigId;
 
-    @Schema(name = "值")
+    @Schema(description= "值")
     @NotNull(groups = {add.class, edit.class})
     private String value;
 

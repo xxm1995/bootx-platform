@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Schema(title = "站内信")
 public class SiteMessageParam {
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
     /**消息标题*/

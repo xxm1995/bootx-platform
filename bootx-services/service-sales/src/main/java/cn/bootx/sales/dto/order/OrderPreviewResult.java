@@ -22,28 +22,28 @@ public class OrderPreviewResult implements Serializable {
 
     private static final long serialVersionUID = 4645952272491229258L;
 
-    @Schema(name = "code")
+    @Schema(description= "code")
     private String code;
 
-    @Schema(name = "购买人ID")
+    @Schema(description= "购买人ID")
     private Long userId;
 
-    @Schema(name = "类型")
+    @Schema(description= "类型")
     private Integer type;
 
-    @Schema(name = "渠道ID")
+    @Schema(description= "渠道ID")
     private Long channelId;
 
-    @Schema(name = "总金额")
+    @Schema(description= "总金额")
     private BigDecimal totalAmount;
 
-    @Schema(name = "待支付总金额")
+    @Schema(description= "待支付总金额")
     private BigDecimal payAmount;
 
-    @Schema(name = "优惠券明细")
+    @Schema(description= "优惠券明细")
     private List<CouponDto> coupons;
 
-    @Schema(name = "明细预览")
+    @Schema(description= "明细预览")
     List<OrderDetailPreviewResult> orderDetails;
 
 }

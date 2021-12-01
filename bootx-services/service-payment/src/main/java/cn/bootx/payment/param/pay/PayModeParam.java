@@ -27,23 +27,23 @@ public class PayModeParam implements Serializable {
     /**
      * @see PayChannelCode
      */
-    @Schema(name = "支付通道", required = true)
+    @Schema(description= "支付通道", required = true)
     private int payChannel;
 
     /**
      * @see PayWayCode
      */
-    @Schema(name = "支付通道下属支付方式", required = true)
+    @Schema(description= "支付通道下属支付方式", required = true)
     private int payWay;
 
-    @Schema(name = "支付金额", required = true)
+    @Schema(description= "支付金额", required = true)
     private BigDecimal amount;
 
     /**
      * @see AliPayParam
      * @see WeChatPayParam
      */
-    @Schema(name = "扩展参数的json字符串")
+    @Schema(description= "扩展参数的json字符串")
     private String extraParamsJson;
 
 

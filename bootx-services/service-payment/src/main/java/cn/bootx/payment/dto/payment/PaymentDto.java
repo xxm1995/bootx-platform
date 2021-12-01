@@ -23,37 +23,37 @@ public class PaymentDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 3269223993950227228L;
 
-    @Schema(name = "用户ID")
+    @Schema(description= "用户ID")
     private Long userId;
 
-    @Schema(name = "关联的业务id")
+    @Schema(description= "关联的业务id")
     private String businessId;
 
-    @Schema(name = "是否是异步支付")
+    @Schema(description= "是否是异步支付")
     private boolean syncPayMode;
 
-    @Schema(name = "异步支付方式")
+    @Schema(description= "异步支付方式")
     private Integer syncPayTypeCode;
 
-    @Schema(name = "支付时间")
+    @Schema(description= "支付时间")
     private LocalDateTime payTime;
 
-    @Schema(name = "过期时间")
+    @Schema(description= "过期时间")
     private LocalDateTime expiredTime;
 
-    @Schema(name = "支付状态")
+    @Schema(description= "支付状态")
     private int payStatus;
 
-    @Schema(name = "金额")
+    @Schema(description= "金额")
     private BigDecimal amount;
 
-    @Schema(name = "错误码")
+    @Schema(description= "错误码")
     private String errorCode;
 
     /**
      * @see PayChannelInfo
      */
-    @Schema(name = "支付类型信息")
+    @Schema(description= "支付类型信息")
     private String payTypeInfo;
 
 }

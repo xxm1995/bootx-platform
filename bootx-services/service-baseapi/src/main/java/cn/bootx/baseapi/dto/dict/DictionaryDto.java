@@ -21,12 +21,12 @@ public class DictionaryDto extends BaseDto implements Serializable {
 
 	private static final long serialVersionUID = 8185789462442511856L;
 
-	@Schema(name = "编码")
+	@Schema(description= "编码")
 	private String code;
 
-	@Schema(name = "名称")
+	@Schema(description= "名称")
 	private String name;
 
-	@Schema(name = "描述")
+	@Schema(description= "描述")
 	private String remark;
 }

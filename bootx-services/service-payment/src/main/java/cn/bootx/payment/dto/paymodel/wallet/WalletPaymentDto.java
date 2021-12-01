@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class WalletPaymentDto extends BasePaymentDto implements Serializable {
     private static final long serialVersionUID = 8238920331255597223L;
 
-    @Schema(name = "钱包ID")
+    @Schema(description= "钱包ID")
     private Long walletId;
 
 }

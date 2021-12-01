@@ -14,15 +14,15 @@ import lombok.experimental.Accessors;
 @Schema(title = "活动简单展示")
 public class SimpleActivity {
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 
-    @Schema(name = "名称")
+    @Schema(description= "名称")
     private String name;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String description;
 
-    @Schema(name = "活动互斥")
+    @Schema(description= "活动互斥")
     private String activityMutual;
 }

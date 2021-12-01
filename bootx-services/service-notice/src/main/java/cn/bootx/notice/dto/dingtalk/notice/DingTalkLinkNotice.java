@@ -22,7 +22,7 @@ import java.io.Serializable;
 public class DingTalkLinkNotice extends DingTalkNotice implements Serializable {
     private static final long serialVersionUID = -3094638065840434973L;
 
-    @Schema(name = "钉钉link消息体")
+    @Schema(description= "钉钉link消息体")
     private DingTalkLink link;
 
     public DingTalkLinkNotice(String title,String msg,String messageUrl) {

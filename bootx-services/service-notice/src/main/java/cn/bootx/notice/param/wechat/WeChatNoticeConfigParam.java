@@ -18,6 +18,6 @@ import java.io.Serializable;
 public class WeChatNoticeConfigParam implements Serializable {
     private static final long serialVersionUID = -8060241311764523678L;
 
-    @Schema(name = "主键")
+    @Schema(description= "主键")
     private Long id;
 }

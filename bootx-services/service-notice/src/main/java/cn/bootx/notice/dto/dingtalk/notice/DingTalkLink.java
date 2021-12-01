@@ -19,16 +19,16 @@ import java.io.Serializable;
 public class DingTalkLink implements Serializable {
     private static final long serialVersionUID = 8191181631664337904L;
 
-    @Schema(name = "标题")
+    @Schema(description= "标题")
     private String title;
 
-    @Schema(name = "内容")
+    @Schema(description= "内容")
     private String text;
 
-    @Schema(name = "点击消息跳转的URL")
+    @Schema(description= "点击消息跳转的URL")
     private String messageUrl;
 
-    @Schema(name = "图片URL")
+    @Schema(description= "图片URL")
     private String picUrl;
 
     public DingTalkLink(String title, String text, String messageUrl) {

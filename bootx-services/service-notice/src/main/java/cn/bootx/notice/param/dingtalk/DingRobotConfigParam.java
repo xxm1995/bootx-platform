@@ -35,6 +35,6 @@ public class DingRobotConfigParam implements Serializable {
     /** 验签秘钥 */
     private String signSecret;
 
-    @Schema(name = "描述")
+    @Schema(description= "描述")
     private String remark;
 }

@@ -18,31 +18,31 @@ public class CheckRuleDto implements Serializable {
 
     private Long id;
 
-    @Schema(name = "策略注册ID")
+    @Schema(description= "策略注册ID")
     private Long registerId;
 
-    @Schema(name = "关联策略注册类型 活动/优惠券")
+    @Schema(description= "关联策略注册类型 活动/优惠券")
     private int registerType;
 
-    @Schema(name = "优先级")
+    @Schema(description= "优先级")
     private int priority;
 
-    @Schema(name = "规则名称")
+    @Schema(description= "规则名称")
     private String name;
 
-    @Schema(name = "规则code")
+    @Schema(description= "规则code")
     private String code;
 
-    @Schema(name = "类型(引擎)")
+    @Schema(description= "类型(引擎)")
     private int engineType;
 
-    @Schema(name = "策略id")
+    @Schema(description= "策略id")
     private Long strategyId;
 
-    @Schema(name = "策略脚本")
+    @Schema(description= "策略脚本")
     private String ruleScript;
 
-    @Schema(name = "附加对象 json")
+    @Schema(description= "附加对象 json")
     private String addition;
 
 }

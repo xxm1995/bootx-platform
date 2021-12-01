@@ -18,18 +18,18 @@ import java.util.List;
 public class PayParam implements Serializable {
     private static final long serialVersionUID = 3895679513150533566L;
 
-    @Schema(name = "用户ID")
+    @Schema(description= "用户ID")
     private Long userId;
 
-    @Schema(name = "业务ID")
+    @Schema(description= "业务ID")
     private String businessId;
 
-    @Schema(name = "支付标题")
+    @Schema(description= "支付标题")
     private String title;
 
-    @Schema(name = "支付描述")
+    @Schema(description= "支付描述")
     private String description;
 
-    @Schema(name = "支付信息",required = true)
+    @Schema(description= "支付信息",required = true)
     private List<PayModeParam> payModeList;
 }

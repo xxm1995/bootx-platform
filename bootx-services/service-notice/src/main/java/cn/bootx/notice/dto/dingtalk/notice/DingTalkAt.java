@@ -24,11 +24,11 @@ public class DingTalkAt implements Serializable {
 
     private static final long serialVersionUID = -8677524557109058147L;
 
-    @Schema(name = "@的用户手机号")
+    @Schema(description= "@的用户手机号")
     private List<String> atMobiles;
 
     @JsonProperty("isAtAll")
-    @Schema(name = "是否@全体")
+    @Schema(description= "是否@全体")
     private boolean isAtAll = false;
 
     public DingTalkAt(List<String> atMobiles){

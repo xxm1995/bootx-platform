@@ -7,9 +7,11 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
 /**   
@@ -39,13 +41,14 @@ public class SystemParamController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<SystemParameterDto>> page(PageParam pageParam, SystemParameterParam param){
+    public ResResult<PageResult<SystemParameterDto>> page(@ParameterObject PageParam pageParam,
+                                                          @ParameterObject SystemParameterParam param){
         return Res.ok(systemParamService.page(pageParam,param));
     }
 
     @Operation(summary = "获取单条")
     @GetMapping("/findById")
-    public ResResult<SystemParameterDto> findById(Long id){
+    public ResResult<SystemParameterDto> findById(@Parameter(description = "主键") Long id){
         return Res.ok(systemParamService.findById(id));
     }
 

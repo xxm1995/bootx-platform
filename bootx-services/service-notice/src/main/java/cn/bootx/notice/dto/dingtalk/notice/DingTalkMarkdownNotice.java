@@ -24,7 +24,7 @@ import java.util.List;
 public class DingTalkMarkdownNotice extends DingTalkNotice implements Serializable {
 
     private static final long serialVersionUID = -2724590259000709240L;
-    @Schema(name = "markdown消息体")
+    @Schema(description= "markdown消息体")
     private DingTalkMarkdown markdown;
 
     /**

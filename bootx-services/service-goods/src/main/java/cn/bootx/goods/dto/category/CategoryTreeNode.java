@@ -22,10 +22,10 @@ import java.util.List;
 public class CategoryTreeNode implements Serializable {
 
     private static final long serialVersionUID = -1587023420309803676L;
-    @Schema(name = "是否叶节点")
+    @Schema(description= "是否叶节点")
     private CategoryDto data;
 
-    @Schema(name ="子节点列表")
+    @Schema(description="子节点列表")
     private List<CategoryTreeNode> children;
 
     public CategoryTreeNode(CategoryDto dto) {

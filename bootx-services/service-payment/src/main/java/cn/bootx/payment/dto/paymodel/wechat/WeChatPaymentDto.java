@@ -19,6 +19,6 @@ import java.io.Serializable;
 public class WeChatPaymentDto extends BasePaymentDto implements Serializable {
     private static final long serialVersionUID = -2400358210732595795L;
 
-    @Schema(name = "微信交易号")
+    @Schema(description= "微信交易号")
     private String tradeNo;
 }

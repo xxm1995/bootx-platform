@@ -64,13 +64,13 @@ public class DictionaryController {
         return Res.ok(dictionaryService.page(pageParam,param));
     }
 
-    @Parameter(name = "编码是否被使用")
+    @Operation( summary = "编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
         return Res.ok(dictionaryService.existsByCode(code));
     }
 
-    @Parameter(name = "编码是否被使用(不包含自己)")
+    @Operation( summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
     public ResResult<Boolean> existsByCode(String code,Long id) {
         return Res.ok(dictionaryService.existsByCode(code,id));

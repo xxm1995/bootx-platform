@@ -15,34 +15,34 @@ import java.util.List;
 public class OrderDetailCheckParam implements Serializable {
 
     private static final long serialVersionUID = 2984639517325652160L;
-    @Schema(name = "类目id")
+    @Schema(description= "类目id")
     private Long categoryId;
 
-    @Schema(name = "店铺id")
+    @Schema(description= "店铺id")
     private Long shopId;
 
-    @Schema(name = "商品id")
+    @Schema(description= "商品id")
     private Long goodsId;
 
-    @Schema(name = "sku id")
+    @Schema(description= "sku id")
     private Long skuId;
 
-    @Schema(name = "商品名")
+    @Schema(description= "商品名")
     private String goodsTitle;
 
-    @Schema(name = "商品价格")
+    @Schema(description= "商品价格")
     private BigDecimal goodsPrice;
 
-    @Schema(name = "是否虚拟商品")
+    @Schema(description= "是否虚拟商品")
     private Boolean isVirtual = false;
 
-    @Schema(name = "是否允许分摊")
+    @Schema(description= "是否允许分摊")
     private Boolean isShare = true;
 
-    @Schema(name = "数量")
+    @Schema(description= "数量")
     private int num;
 
-    @Schema(name = "使用的活动策略id集合")
+    @Schema(description= "使用的活动策略id集合")
     private List<Long> activityIds;
 
 }

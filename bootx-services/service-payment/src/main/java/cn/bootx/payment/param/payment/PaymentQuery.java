@@ -17,18 +17,18 @@ import java.io.Serializable;
 public class PaymentQuery implements Serializable {
     private static final long serialVersionUID = 7071042101962400106L;
 
-    @Schema(name = "关联的业务id")
+    @Schema(description= "关联的业务id")
     private String businessId;
 
-    @Schema(name = "是否是异步支付")
+    @Schema(description= "是否是异步支付")
     private Boolean syncPayMode;
 
-    @Schema(name = "异步支付方式")
+    @Schema(description= "异步支付方式")
     private Integer syncPayTypeCode;
 
-    @Schema(name = "支付状态")
+    @Schema(description= "支付状态")
     private Integer payStatus;
 
-    @Schema(name = "错误码")
+    @Schema(description= "错误码")
     private String errorCode;
 }

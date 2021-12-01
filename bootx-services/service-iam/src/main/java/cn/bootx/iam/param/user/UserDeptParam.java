@@ -15,9 +15,9 @@ import java.util.List;
 @Accessors(chain = true)
 @Schema(title = "用户")
 public class UserDeptParam {
-    @Schema(name = "用户id")
+    @Schema(description= "用户id")
     private Long userId;
 
-    @Schema(name = "部门ids")
+    @Schema(description= "部门ids")
     private List<Long> deptIds;
 }

@@ -11,7 +11,6 @@ import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.dto.user.UserInfoWhole;
 import cn.bootx.iam.param.user.UserInfoParam;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,25 +29,25 @@ public class UserAdminController {
 
     private final UserAdminService userAdminService;
 
-    @Parameter(name = "根据用户id查询用户")
+    @Operation( summary = "根据用户id查询用户")
     @GetMapping("/findById")
     public ResResult<UserInfoDto> findById(Long id) {
         return Res.ok(userAdminService.findById(id));
     }
 
-    @Parameter(name = "查询用户详情")
+    @Operation( summary = "查询用户详情")
     @GetMapping("/getUserInfoWhole")
     public ResResult<UserInfoWhole> getUserInfoWhole(Long id){
         return Res.ok(userAdminService.getUserInfoWhole(id));
     }
 
-    @Parameter(name = "根据邮箱查询用户")
+    @Operation( summary = "根据邮箱查询用户")
     @GetMapping("/getByEmail")
     public ResResult<UserInfoDto> getByEmail(String email) {
         return Res.ok(userAdminService.findByEmail(email));
     }
 
-    @Parameter(name = "根据手机号查询用户")
+    @Operation( summary = "根据手机号查询用户")
     @GetMapping("/getByPhone")
     public ResResult<UserInfoDto> getByPhone(String phone) {
         return Res.ok(userAdminService.findByPhone(phone));
