@@ -18,20 +18,20 @@ import java.io.Serializable;
 public class DingRobotConfigDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -5642207413191556792L;
 
-    /** 编号 */
+    @Schema(description= "编号")
     private String code;
 
-    /** 配置名称 */
+    @Schema(description= "配置名称")
     private String name;
 
-    /** 钉钉机器人的accessToken */
+    @Schema(description= "钉钉机器人的accessToken")
     @SensitiveInfo(value = SensitiveType.OTHER)
     private String accessToken;
 
-    /** 是否开启验签 */
+    @Schema(description= "是否开启验签")
     private boolean enableSignatureCheck;
 
-    /** 验签秘钥 */
+    @Schema(description= "验签秘钥")
     @SensitiveInfo(value = SensitiveType.OTHER)
     private String signSecret;
 

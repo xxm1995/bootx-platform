@@ -4,11 +4,12 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.starter.audit.log.core.service.OperateLogService;
 import cn.bootx.starter.audit.log.dto.OperateLogDto;
+import cn.bootx.starter.audit.log.service.OperateLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class OperateLogController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<OperateLogDto>> page(PageParam pageParam, OperateLogDto operateLogDto){
+    public ResResult<PageResult<OperateLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject OperateLogDto operateLogDto){
         return Res.ok(operateLogService.page(pageParam,operateLogDto));
     }
 

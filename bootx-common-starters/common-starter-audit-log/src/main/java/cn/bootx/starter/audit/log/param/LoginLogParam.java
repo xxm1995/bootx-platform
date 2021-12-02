@@ -1,11 +1,5 @@
-package cn.bootx.starter.audit.log.core.entity;
+package cn.bootx.starter.audit.log.param;
 
-import cn.bootx.common.core.function.EntityBaseFunction;
-import cn.bootx.starter.audit.log.core.convert.LogConvert;
-import cn.bootx.starter.audit.log.dto.LoginLogDto;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,11 +12,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@TableName("starter_login_log")
-public class LoginLog implements EntityBaseFunction<LoginLogDto> {
-
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+public class LoginLogParam {
 
     /** 用户账号id */
     private Long userId;
@@ -54,8 +44,4 @@ public class LoginLog implements EntityBaseFunction<LoginLogDto> {
     /** 访问时间 */
     private LocalDateTime loginTime;
 
-    @Override
-    public LoginLogDto toDto() {
-        return LogConvert.CONVERT.convert(this);
-    }
 }

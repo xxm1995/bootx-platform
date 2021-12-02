@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.auth.handler;
 
-import cn.bootx.starter.audit.log.core.entity.LoginLog;
-import cn.bootx.starter.audit.log.core.service.LoginLogService;
+import cn.bootx.starter.audit.log.param.LoginLogParam;
+import cn.bootx.starter.audit.log.service.LoginLogService;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.handler.LoginFailureHandler;
 import cn.bootx.starter.auth.util.SecurityUtil;
@@ -34,7 +34,7 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
         Browser browser = userAgent.getBrowser();
         String ip = ServletUtil.getClientIP(request);
         String client = SecurityUtil.obtainClient(request);
-        LoginLog loginLog = new LoginLog()
+        LoginLogParam loginLog = new LoginLogParam()
                 .setAccount(e.getUsername())
                 .setLogin(false)
                 .setClient(client)

@@ -2,6 +2,7 @@ package cn.bootx.starter.quartz;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 * @date 2021/11/2 
 */
 @ComponentScan
+@ConfigurationPropertiesScan
 @MapperScan(annotationClass = Mapper.class)
 public class QuartzJobApplication {
 }

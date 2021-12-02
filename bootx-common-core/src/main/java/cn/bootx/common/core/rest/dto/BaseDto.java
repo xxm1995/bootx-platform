@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class BaseDto implements Serializable {
     private static final long serialVersionUID = 2985535678913619503L;
+
     @Schema(description= "主键")
     private Long id;
 

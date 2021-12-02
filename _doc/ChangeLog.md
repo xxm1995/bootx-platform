@@ -1,16 +1,19 @@
 # CHANGELOG
 ## [v1.1.0-alpha-3] 一号线-工研院.预览版3
 - 升级Spring boot 2.6.x
+- 升级swagger3,使用springdoc实现
 - 新增敏感信息脱敏功能
 - 新增高级查询器功能(支持嵌套查询)
 - 新增数据库字段加密功能
+- 新增审计日志MongoDB存储实现
 - 新增多标签支持
 - 新增quartz方式的定时任务
 - 新增系统参数配置功能
-- MyBatis Plus 通用 BaseManager 增加 根据指定字段查询是否存在数据(不包含自身)
+- 新增MyBatisPlus 通用 BaseManager 增加 根据指定字段查询是否存在数据(不包含自身)
 - 重构: Sa-Token Redis持久化插件进行内联
 - 重构: 审计日志拆出
 - fix: quartz在Spring boot 2.5.7+ 启动报错问题 
+- fix: jackson自定义序列化类调用错误构造方法,导致多个自定义序列化类只生效一个
 ## [v1.1.0-alpha-2] 一号线-工研院.预览版2
 - 增加发号器功能
 - 增加消息模板功能

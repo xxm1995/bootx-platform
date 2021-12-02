@@ -40,9 +40,9 @@ public class SiteMessageDto extends BaseDto {
     /**发送时间*/
     private LocalDateTime senderTime;
 
-    /** 已读 */
+    @Schema(description= "已读")
     private Boolean haveRead;
 
-    /** 已读时间 */
+    @Schema(description= "已读时间")
     private LocalDateTime readTime;
 }

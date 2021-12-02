@@ -4,8 +4,8 @@ import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.jackson.utils.JacksonUtils;
 import cn.bootx.common.spring.util.WebServletUtils;
-import cn.bootx.starter.audit.log.core.entity.OperateLogger;
-import cn.bootx.starter.audit.log.core.service.OperateLogService;
+import cn.bootx.starter.audit.log.param.OperateLogParam;
+import cn.bootx.starter.audit.log.service.OperateLogService;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import lombok.RequiredArgsConstructor;
@@ -79,7 +79,7 @@ public class OperateLogAspectHandler {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
 
-        OperateLogger operateLogger = new OperateLogger()
+        OperateLogParam operateLog = new OperateLogParam()
                 .setTitle(log.title())
                 .setOperateId(currentUser.map(UserDetail::getId).orElse(0L))
                 .setUsername(currentUser.map(UserDetail::getUsername).orElse(null))
@@ -93,22 +93,22 @@ public class OperateLogAspectHandler {
 
         // 异常流
         if (Objects.nonNull(e)){
-            operateLogger.setSuccess(false)
+            operateLog.setSuccess(false)
                     .setErrorMsg(e.getMessage());
         }
 
         // 参数
         if (log.isParam()){
             Object[] args = joinPoint.getArgs();
-            operateLogger.setOperateParam(JacksonUtils.toJson(args));
+            operateLog.setOperateParam(JacksonUtils.toJson(args));
         }
 
         // 返回值
         if (log.isrReturn()){
-            operateLogger.setOperateReturn(JacksonUtils.toJson(o));
+            operateLog.setOperateReturn(JacksonUtils.toJson(o));
         }
 
-        operateLogService.add(operateLogger);
+        operateLogService.add(operateLog);
     }
 
     /**

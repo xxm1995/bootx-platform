@@ -17,21 +17,21 @@ import lombok.experimental.Accessors;
 @Schema(title = "系统参数")
 public class SystemParameterDto extends BaseDto {
 
-    /** 参数名称 */
+    @Schema(description= "参数名称")
     private String name;
 
-    /** 参数键名 */
+    @Schema(description= "参数键名")
     private String paramKey;
 
-    /** 参数值 */
+    @Schema(description= "参数值")
     private String value;
 
-    /** 参数类型 */
+    @Schema(description= "参数类型")
     private Integer type;
 
-    /** 是否系统参数 */
+    @Schema(description= "是否系统参数")
     private boolean system;
 
-    /** 备注 */
+    @Schema(description= "备注")
     private String mark;
 }

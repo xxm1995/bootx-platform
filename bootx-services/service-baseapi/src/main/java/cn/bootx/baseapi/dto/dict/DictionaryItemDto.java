@@ -20,22 +20,22 @@ import java.io.Serializable;
 public class DictionaryItemDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 7403674221398097611L;
 
-    /** 字典ID */
+    @Schema(description= "字典ID")
     private Long dictId;
 
-    /** 字典编码 */
+    @Schema(description= "字典编码")
     private String dictCode;
 
-    /** 字典项编码 */
+    @Schema(description= "字典项编码")
     private String code;
 
-    /** 名称 */
+    @Schema(description= "名称")
     private String name;
 
-    /** 字典项排序 */
+    @Schema(description= "字典项排序")
     private Double sortNo;
 
-    /** 备注 */
+    @Schema(description= "备注")
     private String remark;
 
 }

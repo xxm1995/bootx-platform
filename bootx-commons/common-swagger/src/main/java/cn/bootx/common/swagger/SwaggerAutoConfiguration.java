@@ -51,10 +51,9 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
                 .build();
     }
 
-    @Bean
-    public GroupedOpenApi blankApi2(){
-        return this.createApi("空白页2","null.null");
-    }
+    /**
+     * 空白分组(防止knife4j报错)
+     */
     @Bean
     public GroupedOpenApi blankApi(){
         return this.createApi(" 空白页","null.null");

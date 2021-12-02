@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.auth.handler;
 
-import cn.bootx.starter.audit.log.core.entity.LoginLog;
-import cn.bootx.starter.audit.log.core.service.LoginLogService;
+import cn.bootx.starter.audit.log.param.LoginLogParam;
+import cn.bootx.starter.audit.log.service.LoginLogService;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.handler.LoginSuccessHandler;
 import cn.hutool.extra.servlet.ServletUtil;
@@ -31,7 +31,7 @@ public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         Browser browser = userAgent.getBrowser();
         String ip = ServletUtil.getClientIP(request);
-        LoginLog loginLog = new LoginLog()
+        LoginLogParam loginLog = new LoginLogParam()
                 .setLogin(true)
                 .setUserId(authInfoResult.getUserDetail().getId())
                 .setClient(authInfoResult.getClient())

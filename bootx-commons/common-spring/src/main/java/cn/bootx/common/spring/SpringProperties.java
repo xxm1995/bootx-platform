@@ -36,7 +36,7 @@ public class SpringProperties {
         /**
          * 缓存队列
          */
-        private int queueCapacity = 500;
+        private int queueCapacity = 5000;
 
         /**
          * 保持活动秒数

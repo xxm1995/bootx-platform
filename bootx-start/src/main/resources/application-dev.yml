@@ -21,6 +21,13 @@ spring:
         retry:
           enabled: true
           max-attempts: 5
+  data:
+    mongodb:
+      host: 127.0.0.1
+      database: platform
+      port: 27017
+      username: admin
+      password: '123456'
   #静态资源加载配置
   mvc:
     static-path-pattern: /**
@@ -40,13 +47,7 @@ spring:
           scheduler:
             instanceName: quartzScheduler
             instanceId: AUTO
-          jobStore:
-            tablePrefix: qrtz_
-            isClustered: true
-            misfireThreshold: 60000
-            clusterCheckinInterval: 10000
           threadPool:
-            class: org.quartz.simpl.SimpleThreadPool
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
@@ -72,19 +73,21 @@ bootx:
         "[支付服务]": cn.bootx.payment
         "[销售服务]": cn.bootx.sales
         "[订单服务]": cn.bootx.order
-        "[子定义starter组件]": cn.bootx.starter
+        "[自定义starter组件]": cn.bootx.starter
   starter:
     auth:
       default-password: 123456
       ignore-urls:
         - '/actuator/**'
         - '/v2/api-docs'
-        - '/jmreport/**'
+        - '/v3/api-docs/**'
         - '/doc.html'
-        - '/webjars/**'
         - '/swagger-resources/**'
         - '/token/**'
         - '/mobile/**'
+        - '/webjars/**'
         - '/css/**'
         - '/**'
+    audit-log:
+      store: mongo
 

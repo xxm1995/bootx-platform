@@ -1,11 +1,5 @@
-package cn.bootx.starter.audit.log.core.entity;
+package cn.bootx.starter.audit.log.param;
 
-import cn.bootx.common.core.function.EntityBaseFunction;
-import cn.bootx.starter.audit.log.core.convert.LogConvert;
-import cn.bootx.starter.audit.log.dto.OperateLogDto;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,11 +12,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@TableName("starter_operate_log")
-public class OperateLogger implements EntityBaseFunction<OperateLogDto> {
-
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+public class OperateLogParam {
 
     /** 操作模块 */
     private String title;
@@ -66,8 +56,4 @@ public class OperateLogger implements EntityBaseFunction<OperateLogDto> {
     /** 操作时间 */
     private LocalDateTime operateTime;
 
-    @Override
-    public OperateLogDto toDto() {
-        return LogConvert.CONVERT.convert(this);
-    }
 }

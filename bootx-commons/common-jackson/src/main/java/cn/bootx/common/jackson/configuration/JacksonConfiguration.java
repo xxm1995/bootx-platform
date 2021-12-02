@@ -1,4 +1,4 @@
-package cn.bootx.common.jackson;
+package cn.bootx.common.jackson.configuration;
 
 import cn.bootx.common.jackson.jdk.Java8TimeModule;
 import cn.bootx.common.jackson.jdk.JavaLongTypeModule;

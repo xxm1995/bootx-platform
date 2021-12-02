@@ -21,16 +21,16 @@ public class DictionaryItemParam implements Serializable {
     @Schema(description= "主键")
     private Long id;
 
-    /** 字典ID */
+    @Schema(description= "字典ID")
     private Long dictId;
 
-    /** 字典编码 */
+    @Schema(description= "字典编码")
     private String dictCode;
 
-    /** 字典项编码 */
+    @Schema(description= "字典项编码")
     private String code;
 
-    /** 名称 */
+    @Schema(description= "名称")
     private String name;
 
     /** 字典项排序 */
