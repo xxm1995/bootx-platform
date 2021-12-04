@@ -13,4 +13,4 @@ EXPOSE 8080
 
 ADD bootx-start/target/bootx-start.jar bootx-start.jar
 
-CMD java $JAVA_OPTS -jar bootx-start.jar --spring.profiles.active=demo
+CMD java $JAVA_OPTS -jar bootx-start.jar
