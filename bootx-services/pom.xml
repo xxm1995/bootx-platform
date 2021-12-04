@@ -148,7 +148,7 @@
             <artifactId>common-cache</artifactId>
         </dependency>
 
-        <!-- 缓存 -->
+        <!-- 请求头工具 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-header-holder</artifactId>
@@ -182,6 +182,12 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-spring</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-data-perm</artifactId>
+            <version>${bootx-platform.version}</version>
         </dependency>
 
     </dependencies>

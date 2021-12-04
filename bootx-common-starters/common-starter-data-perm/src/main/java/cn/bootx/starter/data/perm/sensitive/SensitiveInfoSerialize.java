@@ -1,4 +1,4 @@
-package cn.bootx.common.jackson.sensitive;
+package cn.bootx.starter.data.perm.sensitive;
 
 import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.StrUtil;

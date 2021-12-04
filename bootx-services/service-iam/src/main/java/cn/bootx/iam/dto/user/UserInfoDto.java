@@ -3,7 +3,7 @@ package cn.bootx.iam.dto.user;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
-import cn.bootx.common.jackson.sensitive.SensitiveInfo;
+import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import cn.bootx.iam.code.UserStatusCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

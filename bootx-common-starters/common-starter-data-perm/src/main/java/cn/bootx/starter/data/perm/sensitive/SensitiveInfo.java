@@ -1,4 +1,4 @@
-package cn.bootx.common.jackson.sensitive;
+package cn.bootx.starter.data.perm.sensitive;
 
 import cn.bootx.common.core.enums.SensitiveType;
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;

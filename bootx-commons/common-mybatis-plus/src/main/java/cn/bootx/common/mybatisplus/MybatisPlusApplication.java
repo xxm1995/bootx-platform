@@ -1,5 +1,6 @@
 package cn.bootx.common.mybatisplus;
 
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -8,5 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @date 2021/7/27
  */
 @ComponentScan
+@ConfigurationPropertiesScan
 public class MybatisPlusApplication {
 }

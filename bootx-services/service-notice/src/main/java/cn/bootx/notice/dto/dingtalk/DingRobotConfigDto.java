@@ -2,9 +2,9 @@ package cn.bootx.notice.dto.dingtalk;
 
 import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
-import cn.bootx.common.jackson.sensitive.SensitiveInfo;
+import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -1,4 +1,4 @@
-package cn.bootx.common.mybatisplus.config;
+package cn.bootx.common.mybatisplus.configuration;
 
 import cn.bootx.common.mybatisplus.handler.SnowflakeIdentifierGenerator;
 import com.baomidou.mybatisplus.annotation.DbType;
@@ -31,14 +31,14 @@ public class MpConfiguration {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 数据权限插件
+
         // 分页
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         // 乐观锁
         interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         // 防止全表更新与删除
         interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-        // 字段加密组件
-//        interceptor.addInnerInterceptor(new DecryptInterceptor());
         return interceptor;
     }
 

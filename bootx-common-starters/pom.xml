@@ -22,16 +22,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>bootx-common-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-redis-client</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
@@ -63,6 +53,30 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
+        </dependency>
+
+        <!-- 核心依赖 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>bootx-common-core</artifactId>
+        </dependency>
+
+        <!-- redis 客户端 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-redis-client</artifactId>
+        </dependency>
+
+        <!-- spring 工具包 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-spring</artifactId>
+        </dependency>
+
+        <!-- jackson 工具包 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-jackson</artifactId>
         </dependency>
     </dependencies>
 </project>

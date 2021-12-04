@@ -10,7 +10,6 @@ import cn.bootx.iam.dto.client.ClientDto;
 import cn.bootx.iam.param.client.ClientParam;
 import cn.bootx.starter.query.entity.QueryParams;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

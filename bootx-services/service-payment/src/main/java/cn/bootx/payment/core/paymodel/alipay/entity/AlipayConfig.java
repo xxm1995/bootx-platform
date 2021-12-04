@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.alipay.entity;
 
 import cn.bootx.common.core.annotation.BigField;
+import cn.bootx.common.core.annotation.EncryptionField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.payment.core.paymodel.alipay.convert.AlipayConvert;
@@ -51,18 +52,22 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
 
     /** 私钥 */
     @BigField
+    @EncryptionField
     private String privateKey;
 
     /** 应用公钥证书 */
     @BigField
+    @EncryptionField
     private String appCert;
 
-    /** 支付宝公钥证书文件 */
+    /** 支付宝公钥证书 */
     @BigField
+    @EncryptionField
     private String alipayCert;
 
-    /** 支付宝CA根证书文件 */
+    /** 支付宝CA根证书 */
     @BigField
+    @EncryptionField
     private String alipayRootCert;
 
     /** 是否沙箱环境 */

@@ -35,14 +35,6 @@
             <artifactId>common-mybatis-plus</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-spring</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-jackson</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
