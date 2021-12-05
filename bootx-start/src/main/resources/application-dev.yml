@@ -90,4 +90,3 @@ bootx:
         - '/**'
     audit-log:
       store: mongo
-

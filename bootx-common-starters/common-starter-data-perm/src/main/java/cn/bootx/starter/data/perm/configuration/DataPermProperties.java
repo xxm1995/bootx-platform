@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 */
 @Getter
 @Setter
-@ConfigurationProperties("cn.bootx.common.mybatis-plus")
+@ConfigurationProperties("cn.bootx.starter.data-perm")
 public class DataPermProperties {
 
     /** 字段加密 key */
