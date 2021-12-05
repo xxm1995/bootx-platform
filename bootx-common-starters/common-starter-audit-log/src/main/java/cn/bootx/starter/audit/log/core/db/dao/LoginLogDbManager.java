@@ -2,9 +2,9 @@ package cn.bootx.starter.audit.log.core.db.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.audit.log.core.db.entity.LoginLogDb;
-import cn.bootx.starter.audit.log.dto.LoginLogDto;
+import cn.bootx.starter.audit.log.param.LoginLogParam;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class LoginLogDbManager extends BaseManager<LoginLogDbMapper, LoginLogDb> {
 
-    public Page<LoginLogDb> page(PageParam pageParam, LoginLogDto loginLogDto) {
-        Page<LoginLogDb> mpPage = MpUtils.getMpPage(pageParam, LoginLogDb.class);
+    public Page<LoginLogDb> page(PageParam pageParam, LoginLogParam loginLogParam) {
+        Page<LoginLogDb> mpPage = MpUtil.getMpPage(pageParam, LoginLogDb.class);
         return lambdaQuery()
                 .orderByDesc(LoginLogDb::getLoginTime)
-                .like(StrUtil.isNotBlank(loginLogDto.getAccount()), LoginLogDb::getAccount,loginLogDto.getAccount())
-                .like(StrUtil.isNotBlank(loginLogDto.getClient()), LoginLogDb::getClient,loginLogDto.getClient())
+                .like(StrUtil.isNotBlank(loginLogParam.getAccount()), LoginLogDb::getAccount,loginLogParam.getAccount())
+                .like(StrUtil.isNotBlank(loginLogParam.getClient()), LoginLogDb::getClient,loginLogParam.getClient())
                 .page(mpPage);
     }
 }

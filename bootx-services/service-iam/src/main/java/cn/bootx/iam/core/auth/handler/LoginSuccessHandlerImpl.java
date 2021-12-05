@@ -5,9 +5,8 @@ import cn.bootx.starter.audit.log.service.LoginLogService;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.handler.LoginSuccessHandler;
 import cn.hutool.extra.servlet.ServletUtil;
-import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.OperatingSystem;
-import eu.bitwalker.useragentutils.UserAgent;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -24,12 +23,9 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
     private final LoginLogService loginLogService;
-
     @Override
     public void onLoginSuccess(HttpServletRequest request, HttpServletResponse response, AuthInfoResult authInfoResult) {
-        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-        OperatingSystem operatingSystem = userAgent.getOperatingSystem();
-        Browser browser = userAgent.getBrowser();
+        UserAgent userAgent = UserAgentUtil.parse(request.getHeader("User-Agent"));
         String ip = ServletUtil.getClientIP(request);
         LoginLogParam loginLog = new LoginLogParam()
                 .setLogin(true)
@@ -37,8 +33,8 @@ public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
                 .setClient(authInfoResult.getClient())
                 .setAccount(authInfoResult.getUserDetail().getUsername())
                 .setIp(ip)
-                .setOs(operatingSystem.getName())
-                .setBrowser(browser.getName())
+                .setOs(userAgent.getOs().getName())
+                .setBrowser(userAgent.getBrowser().getName()+" "+userAgent.getVersion())
                 .setLoginTime(LocalDateTime.now());
         loginLogService.add(loginLog);
     }

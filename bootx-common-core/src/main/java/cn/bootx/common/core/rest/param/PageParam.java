@@ -2,12 +2,16 @@ package cn.bootx.common.core.rest.param;
 
 import cn.hutool.core.util.PageUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 /**
  * 分页查询参数
  */
+@Getter
+@Setter
 @Schema(title = "分页查询参数")
 public class PageParam implements Serializable {
 
@@ -40,21 +44,4 @@ public class PageParam implements Serializable {
         return PageUtil.transToStartEnd(current-1,size)[1];
     }
 
-    public int getCurrent() {
-        return current;
-    }
-
-    public PageParam setCurrent(int current) {
-        this.current = current;
-        return this;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public PageParam setSize(int size) {
-        this.size = size;
-        return this;
-    }
 }

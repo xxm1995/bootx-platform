@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author xxm
  * @date 2020/4/21 10:00
  */
-public class MpUtils {
+public class MpUtil {
 	/**
 	 * mp page转换为 PageResult 同时进行dto转换
 	 */

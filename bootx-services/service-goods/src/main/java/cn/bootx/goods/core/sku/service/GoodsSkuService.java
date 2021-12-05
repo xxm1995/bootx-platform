@@ -1,6 +1,6 @@
 package cn.bootx.goods.core.sku.service;
 
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.goods.core.sku.dao.GoodsSkuManager;
 import cn.bootx.goods.core.sku.entity.GoodsSku;
 import cn.bootx.goods.dto.sku.GoodsSkuDto;
@@ -51,14 +51,14 @@ public class GoodsSkuService {
      * 根据goodsId查询
      */
     public List<GoodsSkuDto> findByGoodsId(Long goodsId){
-        return ResultConvertUtils.dtoListConvert(skuManager.findByGoodsId(goodsId));
+        return ResultConvertUtil.dtoListConvert(skuManager.findByGoodsId(goodsId));
     }
 
     /**
      * 批量查询sku
      */
     public List<GoodsSkuDto> findBySkuIds(List<Long> skuIds){
-        return ResultConvertUtils.dtoListConvert(skuManager.findAllByIds(skuIds));
+        return ResultConvertUtil.dtoListConvert(skuManager.findAllByIds(skuIds));
     }
 
 }

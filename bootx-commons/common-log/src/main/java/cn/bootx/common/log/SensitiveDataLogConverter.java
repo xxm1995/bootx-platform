@@ -2,7 +2,7 @@ package cn.bootx.common.log;
 
 import ch.qos.logback.classic.pattern.MessageConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.springframework.util.StringUtils;
+import cn.hutool.core.util.StrUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +13,10 @@ import java.util.Map;
 * @date 2021/1/4 
 */
 public class SensitiveDataLogConverter extends MessageConverter {
-
+    // 过滤规则
     private static final Map<String, String> REPLACE_RULES = new HashMap<>();
 
+    // 敏感信息配置
     static {
         REPLACE_RULES.put("(\"cardNum[\\\\]*\"[\\s+]*:[\\s+]*[\\\\]*\")(.*?)(\\w{4})([\\\\]*\")","$1**** **** **** $3$4");
         REPLACE_RULES.put("(\"cardNumber[\\\\]*\"[\\s+]*:[\\s+]*[\\\\]*\")(.*?)(\\w{4})([\\\\]*\")","$1**** **** **** $3$4");
@@ -29,8 +30,11 @@ public class SensitiveDataLogConverter extends MessageConverter {
         return convert(event.getFormattedMessage());
     }
 
+    /**
+     * 过滤敏感信息
+     */
     private static String convert(String msg) {
-        if (StringUtils.isEmpty(msg)){
+        if (StrUtil.isNotBlank(msg)){
             return msg;
         }
         for (Map.Entry<String, String> entry : REPLACE_RULES.entrySet()) {

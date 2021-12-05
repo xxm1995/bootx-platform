@@ -3,8 +3,8 @@ package cn.bootx.iam.core.permission.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtils;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.permission.dao.PermissionPathManager;
 import cn.bootx.iam.core.permission.entity.PermissionPath;
 import cn.bootx.iam.core.upms.dao.RolePathManager;
@@ -76,20 +76,20 @@ public class PermissionPathService {
      * 根据ids查询权限信息
      */
     public List<PermissionPathDto> findByIds(List<Long> ids){
-        return ResultConvertUtils.dtoListConvert(permissionPathManager.findAllByIds(ids));
+        return ResultConvertUtil.dtoListConvert(permissionPathManager.findAllByIds(ids));
     }
 
     /**
      * 列表
      */
     public List<PermissionPathDto> findAll() {
-        return ResultConvertUtils.dtoListConvert(permissionPathManager.findAll());
+        return ResultConvertUtil.dtoListConvert(permissionPathManager.findAll());
     }
 
     /**
      * 权限分页
      */
     public PageResult<PermissionPathDto> page(PageParam pageParam,PermissionPathParam param){
-        return MpUtils.convert2PageResult(permissionPathManager.page(pageParam,param));
+        return MpUtil.convert2PageResult(permissionPathManager.page(pageParam,param));
     }
 }

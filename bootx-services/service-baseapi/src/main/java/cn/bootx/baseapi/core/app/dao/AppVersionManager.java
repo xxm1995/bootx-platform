@@ -4,7 +4,7 @@ import cn.bootx.baseapi.core.app.entity.AppVersion;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import java.util.Optional;
 public class AppVersionManager extends BaseManager<AppVersionMapper, AppVersion> {
 
     public Page<AppVersion> page(PageParam pageParam) {
-        Page<AppVersion> mpPage = MpUtils.getMpPage(pageParam, AppVersion.class);
+        Page<AppVersion> mpPage = MpUtil.getMpPage(pageParam, AppVersion.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

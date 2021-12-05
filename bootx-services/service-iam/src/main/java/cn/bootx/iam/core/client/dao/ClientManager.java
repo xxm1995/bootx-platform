@@ -2,7 +2,7 @@ package cn.bootx.iam.core.client.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.client.entity.Client;
 import cn.bootx.iam.param.client.ClientParam;
 import cn.bootx.starter.query.entity.QueryParams;
@@ -36,7 +36,7 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
     }
 
     public Page<Client> page(PageParam pageParam, ClientParam clientParam) {
-        Page<Client> mpPage = MpUtils.getMpPage(pageParam, Client.class);
+        Page<Client> mpPage = MpUtil.getMpPage(pageParam, Client.class);
         return lambdaQuery()
                 .like(StrUtil.isNotBlank(clientParam.getName()),Client::getName,clientParam.getName())
                 .like(StrUtil.isNotBlank(clientParam.getCode()),Client::getCode,clientParam.getCode())
@@ -44,11 +44,11 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
     }
 
     /**
-     * 超级分页
+     * 超级查询
      */
     public Page<Client> supperPage(PageParam pageParam, QueryParams queryParams) {
         QueryWrapper<Client> generator = QueryGenerator.generator(queryParams);
-        Page<Client> mpPage = MpUtils.getMpPage(pageParam, Client.class);
+        Page<Client> mpPage = MpUtil.getMpPage(pageParam, Client.class);
         return this.page(mpPage,generator);
     }
 }

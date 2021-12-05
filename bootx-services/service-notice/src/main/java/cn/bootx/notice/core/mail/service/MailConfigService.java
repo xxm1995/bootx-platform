@@ -2,8 +2,8 @@ package cn.bootx.notice.core.mail.service;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtils;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.mail.dao.MailConfigManager;
 import cn.bootx.notice.core.mail.entity.MailConfig;
 import cn.bootx.notice.dto.mail.MailConfigDto;
@@ -60,35 +60,35 @@ public class MailConfigService {
      * 获取所有邮箱配置
      */
     public List<MailConfigDto> findAll() {
-        return ResultConvertUtils.dtoListConvert(mailConfigManager.findAll());
+        return ResultConvertUtil.dtoListConvert(mailConfigManager.findAll());
     }
 
     /**
      * 根据 id 获取相应的邮箱配置
      */
     public MailConfigDto findById(Long id) {
-        return ResultConvertUtils.dtoConvert(mailConfigManager.findById(id));
+        return ResultConvertUtil.dtoConvert(mailConfigManager.findById(id));
     }
 
     /**
      * 获取 默认邮箱配置
      */
     public MailConfigDto getDefaultConfig() {
-        return ResultConvertUtils.dtoConvert(mailConfigManager.findByActivity());
+        return ResultConvertUtil.dtoConvert(mailConfigManager.findByActivity());
     }
 
     /**
      * 分页
      */
     public PageResult<MailConfigDto> page(PageParam pageParam,MailConfigParam param){
-        return MpUtils.convert2PageResult(mailConfigManager.page(pageParam,param));
+        return MpUtil.convert2PageResult(mailConfigManager.page(pageParam,param));
     }
 
     /**
      * 根据 code 获取相应的邮箱配置
      */
     public MailConfigDto getByCode(String code) {
-        return ResultConvertUtils.dtoConvert(mailConfigManager.findByCode(code));
+        return ResultConvertUtil.dtoConvert(mailConfigManager.findByCode(code));
     }
 
     /**

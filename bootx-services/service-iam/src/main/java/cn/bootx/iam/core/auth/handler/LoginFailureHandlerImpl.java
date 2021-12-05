@@ -6,9 +6,9 @@ import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.handler.LoginFailureHandler;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import eu.bitwalker.useragentutils.Browser;
-import eu.bitwalker.useragentutils.OperatingSystem;
-import eu.bitwalker.useragentutils.UserAgent;
+import cn.hutool.http.useragent.Browser;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -29,8 +29,7 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
     @Override
     public void onLoginFailure(HttpServletRequest request, HttpServletResponse response, LoginFailureException e) {
 
-        UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-        OperatingSystem operatingSystem = userAgent.getOperatingSystem();
+        UserAgent userAgent = UserAgentUtil.parse(request.getHeader("User-Agent"));
         Browser browser = userAgent.getBrowser();
         String ip = ServletUtil.getClientIP(request);
         String client = SecurityUtil.obtainClient(request);
@@ -40,8 +39,8 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
                 .setClient(client)
                 .setMsg(e.getMessage())
                 .setIp(ip)
-                .setOs(operatingSystem.getName())
-                .setBrowser(browser.getName())
+                .setOs(userAgent.getOs().getName())
+                .setBrowser(userAgent.getBrowser().getName()+" "+userAgent.getVersion())
                 .setLoginTime(LocalDateTime.now());
         loginLogService.add(loginLog);
     }

@@ -8,7 +8,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**   
-* 用户
+* 用户类
 * @author xxm  
 * @date 2021/7/30 
 */
@@ -19,7 +19,9 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class UserDetail{
     private Long id;
+    /** 名称 */
     private String name;
+    /** 用户 */
     private String username;
     @JsonIgnore
     private transient String password;

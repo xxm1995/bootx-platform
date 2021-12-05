@@ -2,9 +2,9 @@ package cn.bootx.order.core.order.service;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.order.core.order.dao.OrderDetailManager;
 import cn.bootx.order.core.order.dao.OrderManager;
 import cn.bootx.order.core.order.dao.OrderStrategyMappingManager;
@@ -41,14 +41,14 @@ public class OrderFindService {
      * 根据用户获取订单
      */
     public List<OrderDto> findByUser(Long id){
-        return ResultConvertUtils.dtoListConvert(orderManager.findByUser(id));
+        return ResultConvertUtil.dtoListConvert(orderManager.findByUser(id));
     }
 
     /**
      * 订单列表 分页
      */
     public PageResult<OrderDto> page(PageParam page){
-        return MpUtils.convert2PageResult(orderManager.page(page));
+        return MpUtil.convert2PageResult(orderManager.page(page));
     }
 
     /**

@@ -5,7 +5,7 @@ import cn.bootx.baseapi.param.dict.DictionaryParam;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
@@ -39,7 +39,7 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
     }
 
     public Page<Dictionary> page(PageParam pageParam, DictionaryParam param) {
-        Page<Dictionary> mpPage = MpUtils.getMpPage(pageParam, Dictionary.class);
+        Page<Dictionary> mpPage = MpUtil.getMpPage(pageParam, Dictionary.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .like(StrUtil.isNotBlank(param.getName()),Dictionary::getName,param.getName())

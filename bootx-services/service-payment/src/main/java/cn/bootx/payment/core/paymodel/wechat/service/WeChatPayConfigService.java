@@ -3,7 +3,7 @@ package cn.bootx.payment.core.paymodel.wechat.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
@@ -62,7 +62,7 @@ public class WeChatPayConfigService {
      * 分页
      */
     public PageResult<WeChatPayConfigDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(weChatPayConfigManager.page(pageParam));
+        return MpUtil.convert2PageResult(weChatPayConfigManager.page(pageParam));
     }
 
     /**

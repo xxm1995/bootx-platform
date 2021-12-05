@@ -3,8 +3,8 @@ package cn.bootx.iam.core.upms.service;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtils;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.upms.dao.RoleManager;
 import cn.bootx.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.iam.core.upms.entity.Role;
@@ -92,14 +92,14 @@ public class RoleService {
      * 角色列表
      */
     public List<RoleDto> findAll(){
-        return ResultConvertUtils.dtoListConvert(roleManager.findAll());
+        return ResultConvertUtil.dtoListConvert(roleManager.findAll());
     }
 
     /**
      * 角色分页
      */
     public PageResult<RoleDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(roleManager.page(pageParam));
+        return MpUtil.convert2PageResult(roleManager.page(pageParam));
     }
 
 
@@ -114,7 +114,7 @@ public class RoleService {
      * 详情
      */
     public RoleDto findById(Long id) {
-        return ResultConvertUtils.dtoConvert(roleManager.findById(id));
+        return ResultConvertUtil.dtoConvert(roleManager.findById(id));
     }
 
     /**

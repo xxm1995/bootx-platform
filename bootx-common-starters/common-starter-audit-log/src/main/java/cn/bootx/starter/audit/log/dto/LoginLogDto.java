@@ -28,7 +28,7 @@ public class LoginLogDto implements Serializable {
     private String account;
 
     /** 登录成功状态*/
-    private boolean login;
+    private Boolean login;
 
     /** 登录终端 */
     private String client;

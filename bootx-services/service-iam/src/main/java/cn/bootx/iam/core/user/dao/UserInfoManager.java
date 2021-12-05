@@ -3,7 +3,7 @@ package cn.bootx.iam.core.user.dao;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.param.user.UserInfoParam;
 import cn.hutool.core.util.StrUtil;
@@ -60,7 +60,7 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
 
     public Page<UserInfo> page(PageParam pageParam, UserInfoParam param) {
 
-        Page<UserInfo> mpPage = MpUtils.getMpPage(pageParam, UserInfo.class);
+        Page<UserInfo> mpPage = MpUtil.getMpPage(pageParam, UserInfo.class);
         lambdaQuery()
                 .like(StrUtil.isNotBlank(param.getUsername()),UserInfo::getUsername,param.getUsername())
                 .like(StrUtil.isNotBlank(param.getName()),UserInfo::getName,param.getName())

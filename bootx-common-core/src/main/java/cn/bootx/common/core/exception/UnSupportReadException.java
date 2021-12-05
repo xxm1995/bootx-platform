@@ -3,7 +3,7 @@ package cn.bootx.common.core.exception;
 
 import java.io.Serializable;
 
-import static cn.bootx.common.core.rest.CommonErrorCodes.UN_SUPPORTED_READ;
+import static cn.bootx.common.core.code.CommonErrorCode.UN_SUPPORTED_READ;
 
 /**   
 * 不支持的读取操作

@@ -3,7 +3,7 @@ package cn.bootx.starter.quartz.core.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.quartz.code.QuartzJobCode;
 import cn.bootx.starter.quartz.core.dao.QuartzJobManager;
 import cn.bootx.starter.quartz.core.entity.QuartzJob;
@@ -101,7 +101,7 @@ public class QuartzJobService {
      * 分页
      */
     public PageResult<QuartzJobDto> page(PageParam pageParam, QuartzJobParam param){
-        return MpUtils.convert2PageResult(quartzJobManager.page(pageParam,param));
+        return MpUtil.convert2PageResult(quartzJobManager.page(pageParam,param));
     }
 
     /**

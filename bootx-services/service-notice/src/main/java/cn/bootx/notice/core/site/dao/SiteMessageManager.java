@@ -3,7 +3,7 @@ package cn.bootx.notice.core.site.dao;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.site.entity.SiteMessage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -36,21 +36,21 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
     }
 
     public Page<SiteMessage> pageByReceive(PageParam pageParam, Long userId, Boolean haveRead) {
-        Page<SiteMessage> mpPage = MpUtils.getMpPage(pageParam, SiteMessage.class);
+        Page<SiteMessage> mpPage = MpUtil.getMpPage(pageParam, SiteMessage.class);
         return lambdaQuery().eq(SiteMessage::getReceiveId,userId)
                 .eq(Objects.nonNull(haveRead),SiteMessage::getHaveRead,haveRead)
                 .page(mpPage);
     }
 
     public Page<SiteMessage> pageBySender(PageParam pageParam, Long userId, Boolean haveRead) {
-        Page<SiteMessage> mpPage = MpUtils.getMpPage(pageParam, SiteMessage.class);
+        Page<SiteMessage> mpPage = MpUtil.getMpPage(pageParam, SiteMessage.class);
         return lambdaQuery().eq(SiteMessage::getSenderId,userId)
                 .eq(Objects.nonNull(haveRead),SiteMessage::getHaveRead,haveRead)
                 .page(mpPage);
     }
 
     public Page<SiteMessage> page(PageParam pageParam, Long userId) {
-        Page<SiteMessage> mpPage = MpUtils.getMpPage(pageParam, SiteMessage.class);
+        Page<SiteMessage> mpPage = MpUtil.getMpPage(pageParam, SiteMessage.class);
         return lambdaQuery().eq(SiteMessage::getSenderId,userId)
                 .page(mpPage);
     }

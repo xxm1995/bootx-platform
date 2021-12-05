@@ -1,7 +1,7 @@
 package cn.bootx.sales.core.check.service.coupon;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.util.LocalDateTimeUtils;
+import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.sales.code.CheckRuleCode;
 import cn.bootx.sales.code.CouponStatusCode;
 import cn.bootx.sales.core.calculate.cache.CalculateCache;
@@ -67,7 +67,7 @@ public class CouponCalculateCheckService {
 
         // 是否在可用的时间段
         boolean dateTimeFlag = coupons.stream()
-                .anyMatch(coupon -> !LocalDateTimeUtils.between(LocalDateTime.now(), coupon.getStartTime(), coupon.getEndTime()));
+                .anyMatch(coupon -> !LocalDateTimeUtil.between(LocalDateTime.now(), coupon.getStartTime(), coupon.getEndTime()));
         if (dateTimeFlag){
             throw new BizException("优惠券时间不符合");
         }

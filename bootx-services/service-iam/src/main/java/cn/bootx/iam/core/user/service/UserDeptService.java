@@ -1,6 +1,6 @@
 package cn.bootx.iam.core.user.service;
 
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.user.dao.UserDeptManager;
 import cn.bootx.iam.core.user.entity.UserDept;
@@ -54,7 +54,7 @@ public class UserDeptService {
      * 查询用户所对应的部门
      */
     public List<DeptDto> findDeptListByUser(Long userId){
-        return ResultConvertUtils.dtoListConvert(deptManager.findAllByIds(this.findDeptIdsByUser(userId)));
+        return ResultConvertUtil.dtoListConvert(deptManager.findAllByIds(this.findDeptIdsByUser(userId)));
     }
 
 }

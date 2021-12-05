@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**   
-*
+* 请求头TTL存储类
 * @author xxm  
 * @date 2021/4/20 
 */

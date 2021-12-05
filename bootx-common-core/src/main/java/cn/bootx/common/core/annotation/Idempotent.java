@@ -1,9 +1,9 @@
-package cn.bootx.common.idempotency.annotation;
+package cn.bootx.common.core.annotation;
 
 import java.lang.annotation.*;
 
 /**   
-* 幂等性接口
+* 幂等性拦截注解
 * @author xxm  
 * @date 2021/1/2 
 */
@@ -18,7 +18,7 @@ public @interface Idempotent {
     boolean enable() default true;
 
     /**
-     * 超时时间
+     * 超时时间(毫秒)
      */
     long timeout() default 1000*10;
 }

@@ -1,6 +1,6 @@
 package cn.bootx.goods.core.goods.service;
 
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.goods.core.goods.dao.GoodsManager;
 import cn.bootx.goods.core.goods.entity.Goods;
 import cn.bootx.goods.core.sku.dao.GoodsSkuManager;
@@ -39,7 +39,7 @@ public class GoodsService {
      * 查询全部
      */
     public List<GoodsDto> findAll(){
-        return ResultConvertUtils.dtoListConvert(goodsManager.findAll());
+        return ResultConvertUtil.dtoListConvert(goodsManager.findAll());
     }
 
 
@@ -50,7 +50,7 @@ public class GoodsService {
         GoodsDto goodsDto = goodsManager.findById(goodsId).map(Goods::toDto).orElse(null);
         if (Objects.nonNull(goodsDto)){
             // 查询sku
-            List<GoodsSkuDto> goodsSkus = ResultConvertUtils.dtoListConvert(goodsSkuManager.findByGoodsId(goodsId));
+            List<GoodsSkuDto> goodsSkus = ResultConvertUtil.dtoListConvert(goodsSkuManager.findByGoodsId(goodsId));
             goodsDto.setSkus(goodsSkus);
         }
         return goodsDto;
@@ -68,6 +68,6 @@ public class GoodsService {
      * 按照类目查询商品
      */
     public List<GoodsDto> findByCategory(Long cid){
-        return ResultConvertUtils.dtoListConvert(goodsManager.findByCid(cid));
+        return ResultConvertUtil.dtoListConvert(goodsManager.findByCid(cid));
     }
 }

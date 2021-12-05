@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**   
-* TTL MDC 适配器
+* TTL MDC 适配器 覆盖原始类
 * @author xxm  
 * @date 2021/8/4 
 */

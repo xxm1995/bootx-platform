@@ -1,7 +1,7 @@
 package cn.bootx.common.core.validation;
 
 /**   
-* 校验
+* 校验分组
 * @author xxm  
 * @date 2021/5/7 
 */

@@ -12,11 +12,7 @@ import cn.hutool.core.util.IdUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +31,6 @@ public class OperateLogMongoService implements OperateLogService {
     private final OperateLogMongoRepository repository;
 
     @Override
-    @Async("asyncExecutor")
     public void add(OperateLogParam operateLog) {
         OperateLogMongo operateLogMongo = LogConvert.CONVERT.convert(operateLog);
         operateLogMongo.setId(IdUtil.getSnowflake().nextId());
@@ -48,13 +43,17 @@ public class OperateLogMongoService implements OperateLogService {
     }
 
     @Override
-    public PageResult<OperateLogDto> page(PageParam pageParam, OperateLogDto operateLogDto) {
+    public PageResult<OperateLogDto> page(PageParam pageParam, OperateLogParam operateLogParam) {
 
-        Sort sort = Sort.by(Sort.Order.desc("id"));
+        // 查询条件
+        ExampleMatcher matching = ExampleMatcher.matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<OperateLogMongo> example = Example.of(LogConvert.CONVERT.convert(operateLogParam), matching);
 
         //设置分页条件 (第几页，每页大小，排序)
+        Sort sort = Sort.by(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(pageParam.getCurrent()-1, pageParam.getSize(), sort);
-        Page<OperateLogMongo> page = repository.findAll(pageable);
+        Page<OperateLogMongo> page = repository.findAll(example,pageable);
         List<OperateLogDto> records = page.getContent().stream()
                 .map(OperateLogMongo::toDto)
                 .collect(Collectors.toList());

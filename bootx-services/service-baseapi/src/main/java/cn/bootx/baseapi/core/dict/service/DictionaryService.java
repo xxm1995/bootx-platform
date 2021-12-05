@@ -10,7 +10,7 @@ import cn.bootx.baseapi.exception.dict.DictNotExistedException;
 import cn.bootx.baseapi.param.dict.DictionaryParam;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.AllArgsConstructor;
@@ -112,6 +112,6 @@ public class DictionaryService {
      * 查询所有字典
      */
     public PageResult<DictionaryDto> page(PageParam pageParam, DictionaryParam param) {
-        return MpUtils.convert2PageResult(dictionaryManager.page(pageParam,param));
+        return MpUtil.convert2PageResult(dictionaryManager.page(pageParam,param));
     }
 }

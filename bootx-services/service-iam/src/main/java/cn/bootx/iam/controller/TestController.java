@@ -29,7 +29,7 @@ public class TestController {
         return Res.ok("hello");
     }
 
-    @OperateLog(title = "测试回声日志",isParam = true,isrReturn = true)
+    @OperateLog(title = "测试回声日志", saveParam = true, saverReturn = true)
     @Operation(summary = "测试回声")
     @GetMapping("/say")
     public ResResult<String> say(String msg){

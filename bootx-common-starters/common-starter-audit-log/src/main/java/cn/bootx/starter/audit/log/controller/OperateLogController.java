@@ -5,6 +5,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.audit.log.dto.OperateLogDto;
+import cn.bootx.starter.audit.log.param.OperateLogParam;
 import cn.bootx.starter.audit.log.service.OperateLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +29,8 @@ public class OperateLogController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<OperateLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject OperateLogDto operateLogDto){
-        return Res.ok(operateLogService.page(pageParam,operateLogDto));
+    public ResResult<PageResult<OperateLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject OperateLogParam operateLogParam){
+        return Res.ok(operateLogService.page(pageParam,operateLogParam));
     }
 
     @Operation(summary = "获取")

@@ -1,10 +1,12 @@
 package cn.bootx.starter.audit.log.controller;
 
+import cn.bootx.common.core.annotation.Idempotent;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.audit.log.dto.LoginLogDto;
+import cn.bootx.starter.audit.log.param.LoginLogParam;
 import cn.bootx.starter.audit.log.service.LoginLogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +30,8 @@ public class LoginLogController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<LoginLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject LoginLogDto loginLogDto){
-        return Res.ok(loginLogService.page(pageParam,loginLogDto));
+    public ResResult<PageResult<LoginLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject LoginLogParam loginLogParam){
+        return Res.ok(loginLogService.page(pageParam,loginLogParam));
     }
 
     @Operation(summary = "获取")

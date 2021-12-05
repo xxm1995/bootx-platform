@@ -66,7 +66,7 @@ public class UserAdminController {
     }
 
     @Operation(summary = "重置密码")
-    @OperateLog(title = "重置密码",businessType= BusinessType.UPDATE,isParam = true)
+    @OperateLog(title = "重置密码",businessType= BusinessType.UPDATE, saveParam = true)
     @PostMapping("/restartPassword")
     public ResResult<Void> restartPassword(Long userId,@NotBlank(message = "新密码不能为空") String newPassword){
         userAdminService.restartPassword(userId,newPassword);
@@ -75,7 +75,7 @@ public class UserAdminController {
 
 
     @Operation(summary = "锁定用户")
-    @OperateLog(title = "锁定用户",businessType= BusinessType.UPDATE,isParam = true)
+    @OperateLog(title = "锁定用户",businessType= BusinessType.UPDATE, saveParam = true)
     @PostMapping("/lock")
     public ResResult<Void> lock(Long userId){
         userAdminService.lock(userId);
@@ -83,7 +83,7 @@ public class UserAdminController {
     }
 
     @Operation(summary = "解锁用户")
-    @OperateLog(title = "解锁用户",businessType= BusinessType.UPDATE,isParam = true)
+    @OperateLog(title = "解锁用户",businessType= BusinessType.UPDATE, saveParam = true)
     @PostMapping("/unlock")
     public ResResult<Void> unlock(Long userId){
         userAdminService.unlock(userId);

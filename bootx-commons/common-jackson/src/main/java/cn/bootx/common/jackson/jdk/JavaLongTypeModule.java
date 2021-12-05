@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 /**
-* Long 培训序列化为String
+* Long 类型序列化为String
 * @author xxm  
 * @date 2020/4/14 13:35
 */

@@ -3,7 +3,7 @@ package cn.bootx.notice.core.template.dao;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.template.entity.MessageTemplate;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, M
     }
 
     public Page<MessageTemplate> page(PageParam pageParam) {
-        Page<MessageTemplate> mpPage = MpUtils.getMpPage(pageParam, MessageTemplate.class);
+        Page<MessageTemplate> mpPage = MpUtil.getMpPage(pageParam, MessageTemplate.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

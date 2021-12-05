@@ -2,7 +2,7 @@ package cn.bootx.common.core.exception;
 
 import java.io.Serializable;
 
-import static cn.bootx.common.core.rest.CommonErrorCodes.DATA_OUT_OF_DATE;
+import static cn.bootx.common.core.code.CommonErrorCode.DATA_OUT_OF_DATE;
 
 /**
  * 乐观锁异常

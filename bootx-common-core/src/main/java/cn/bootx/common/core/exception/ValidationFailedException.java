@@ -2,12 +2,12 @@ package cn.bootx.common.core.exception;
 
 import java.io.Serializable;
 
-import static cn.bootx.common.core.rest.CommonErrorCodes.VALIDATE_PARAMETERS_ERROR;
+import static cn.bootx.common.core.code.CommonErrorCode.VALIDATE_PARAMETERS_ERROR;
 
 /**
  * 验证失败异常
  */
-public class ValidationFailedException extends SystemException implements Serializable {
+public class ValidationFailedException extends BizException implements Serializable {
 
     private static final long serialVersionUID = -3973809880035275189L;
 

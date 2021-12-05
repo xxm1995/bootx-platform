@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
-* 分页工具类
+* 分页包装类
 * @author xxm
 * @date 2020/4/21 14:37
 */

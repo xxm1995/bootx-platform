@@ -55,9 +55,12 @@ spring:
 logging:
   level:
     cn.bootx.**: debug
+    org.springframework.data.mongodb.core: debug
 # 项目配置
 bootx:
   common:
+    cache:
+      keys-ttl:
     swagger:
       enabled: true
       author: xxm

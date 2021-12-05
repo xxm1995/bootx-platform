@@ -3,8 +3,8 @@ package cn.bootx.notice.core.dingtalk.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtils;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.dingtalk.dao.DingRobotConfigManage;
 import cn.bootx.notice.core.dingtalk.entity.DingRobotConfig;
 import cn.bootx.notice.dto.dingtalk.DingRobotConfigDto;
@@ -59,7 +59,7 @@ public class DingRobotConfigService {
      * 获取所有配置
      */
     public List<DingRobotConfigDto> findAll(){
-        return ResultConvertUtils.dtoListConvert(dingRobotConfigManage.findAll());
+        return ResultConvertUtil.dtoListConvert(dingRobotConfigManage.findAll());
     }
 
 
@@ -67,14 +67,14 @@ public class DingRobotConfigService {
      * 获取所有配置
      */
     public PageResult<DingRobotConfigDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(dingRobotConfigManage.page(pageParam));
+        return MpUtil.convert2PageResult(dingRobotConfigManage.page(pageParam));
     }
 
     /**
      * 根据 id 获取相应的配置
      */
     public DingRobotConfigDto findById(Long id) {
-        return ResultConvertUtils.dtoConvert(dingRobotConfigManage.findById(id));
+        return ResultConvertUtil.dtoConvert(dingRobotConfigManage.findById(id));
     }
 
 

@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.permission.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.dao.PermissionMenuManager;
 import cn.bootx.iam.core.permission.entity.PermissionMenu;
@@ -72,7 +72,7 @@ public class PermissionMenuService {
      * 列表
      */
     public List<PermissionMenuDto> findAll() {
-        return ResultConvertUtils.dtoListConvert(permissionMenuManager.findAll());
+        return ResultConvertUtil.dtoListConvert(permissionMenuManager.findAll());
     }
 
     /**
@@ -80,7 +80,7 @@ public class PermissionMenuService {
      */
     @ConditionalOnProperty
     public List<PermissionMenuDto> findByIds(List<Long> permissionIds) {
-        return ResultConvertUtils.dtoListConvert(permissionMenuManager.findAllByIds(permissionIds));
+        return ResultConvertUtil.dtoListConvert(permissionMenuManager.findAllByIds(permissionIds));
     }
 
     /**

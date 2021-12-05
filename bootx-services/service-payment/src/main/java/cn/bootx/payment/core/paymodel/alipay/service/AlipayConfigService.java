@@ -4,7 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.code.paymodel.AliPayWay;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
@@ -107,7 +107,7 @@ public class AlipayConfigService {
      * 分页
      */
     public PageResult<AlipayConfigDto> page(PageParam pageParam, AlipayConfigQuery param) {
-        return MpUtils.convert2PageResult(alipayConfigManager.page(pageParam,param));
+        return MpUtil.convert2PageResult(alipayConfigManager.page(pageParam,param));
     }
 
     /**

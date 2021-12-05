@@ -13,20 +13,17 @@ import cn.hutool.core.util.IdUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**   
-*
-* @author xxm  
-* @date 2021/12/2 
-*/
+/**
+ *
+ * @author xxm
+ * @date 2021/12/2
+ */
 @Slf4j
 @Service
 @ConditionalOnProperty(prefix = "bootx.starter.audit-log", value = "store", havingValue = "mongo")
@@ -48,12 +45,15 @@ public class LoginLogMongoService implements LoginLogService {
     }
 
     @Override
-    public PageResult<LoginLogDto> page(PageParam pageParam, LoginLogDto loginLogDto) {
-        Sort sort = Sort.by(Sort.Order.desc("id"));
-
+    public PageResult<LoginLogDto> page(PageParam pageParam, LoginLogParam loginLogParam) {
+        // 查询条件
+        ExampleMatcher matching = ExampleMatcher.matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Example<LoginLogMongo> example = Example.of(LogConvert.CONVERT.convert(loginLogParam), matching);
         //设置分页条件 (第几页，每页大小，排序)
+        Sort sort = Sort.by(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(pageParam.getCurrent()-1, pageParam.getSize(), sort);
-        Page<LoginLogMongo> page = repository.findAll(pageable);
+        Page<LoginLogMongo> page = repository.findAll(example,pageable);
         List<LoginLogDto> records = page.getContent().stream()
                 .map(LoginLogMongo::toDto)
                 .collect(Collectors.toList());

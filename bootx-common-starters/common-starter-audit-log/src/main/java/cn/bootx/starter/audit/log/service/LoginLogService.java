@@ -27,7 +27,7 @@ public interface LoginLogService {
     /**
      * 分页
      */
-    PageResult<LoginLogDto> page(PageParam pageParam, LoginLogDto loginLogDto);
+    PageResult<LoginLogDto> page(PageParam pageParam, LoginLogParam loginLogParam);
 
     /**
      * 删除

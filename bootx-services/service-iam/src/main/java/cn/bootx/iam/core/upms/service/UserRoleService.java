@@ -1,6 +1,6 @@
 package cn.bootx.iam.core.upms.service;
 
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.iam.core.upms.dao.RoleManager;
 import cn.bootx.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.iam.core.upms.entity.UserRole;
@@ -55,7 +55,7 @@ public class UserRoleService {
      * 查询用户所对应的角色
      */
     public List<RoleDto> findRolesByUser(Long userId){
-        return ResultConvertUtils.dtoListConvert(roleManager.findAllByIds(this.findRoleIdsByUser(userId)));
+        return ResultConvertUtil.dtoListConvert(roleManager.findAllByIds(this.findRoleIdsByUser(userId)));
     }
 
 }

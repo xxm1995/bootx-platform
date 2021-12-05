@@ -1,7 +1,7 @@
 package cn.bootx.notice.core.dingtalk.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.jackson.utils.JacksonUtils;
+import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.notice.code.DingTalkCode;
 import cn.bootx.notice.core.dingtalk.dao.DingRobotConfigManage;
 import cn.bootx.notice.core.dingtalk.entity.DingRobotConfig;
@@ -78,10 +78,10 @@ public class DingRobotSendService {
 
         // 请求消息
         String responseBody = HttpUtil.createPost(StrUtil.format(url, map))
-                .body(JacksonUtils.toJson(body))
+                .body(JacksonUtil.toJson(body))
                 .execute()
                 .body();
-        DingTalkResult<?> dingTalkResult = JacksonUtils.toBean(responseBody, DingTalkResult.class);
+        DingTalkResult<?> dingTalkResult = JacksonUtil.toBean(responseBody, DingTalkResult.class);
         if (!Objects.equals(0,dingTalkResult.getCode())){
             log.error("钉钉机器人发送消息失败: {}",dingTalkResult.getMsg());
         }

@@ -14,7 +14,7 @@ import java.util.List;
 * @date 2021/4/21 
 */
 @UtilityClass
-public class PayModelUtils {
+public class PayModelUtil {
 
     /**
      * 判断是否有异步支付

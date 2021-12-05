@@ -7,7 +7,7 @@ import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -55,7 +55,7 @@ public class SystemParamService {
      * 分页
      */
     public PageResult<SystemParameterDto> page(PageParam pageParam, SystemParameterParam param) {
-        return MpUtils.convert2PageResult(systemParamManager.page(pageParam,param));
+        return MpUtil.convert2PageResult(systemParamManager.page(pageParam,param));
     }
 
     /**

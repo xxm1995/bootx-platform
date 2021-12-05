@@ -21,7 +21,7 @@ public class LoginLogParam {
     private String account;
 
     /** 登录成功状态*/
-    private boolean login;
+    private Boolean login;
 
     /** 登录终端 */
     private String client;

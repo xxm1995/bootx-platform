@@ -3,7 +3,7 @@ package cn.bootx.payment.core.pay.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PaySyncStatus;
-import cn.bootx.payment.core.pay.PayModelUtils;
+import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
@@ -66,7 +66,7 @@ public class PaySyncService {
         }
 
         // 3 拿到异步支付方法, 与支付网关进行同步
-        PayModeParam syncPayModel = PayModelUtils.getSyncPayModel(payParam);
+        PayModeParam syncPayModel = PayModelUtil.getSyncPayModel(payParam);
         AbsPayStrategy syncPayStrategy = PayStrategyFactory.create(syncPayModel);
         syncPayStrategy.initPayParam(payment,payParam);
         PaySyncResult paySyncResult = syncPayStrategy.doSyncPayStatusHandler();

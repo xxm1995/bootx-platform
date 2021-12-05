@@ -2,7 +2,7 @@ package cn.bootx.iam.core.permission.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.permission.entity.PermissionPath;
 import cn.bootx.iam.param.permission.PermissionPathParam;
 import cn.hutool.core.util.StrUtil;
@@ -28,7 +28,7 @@ public class PermissionPathManager extends BaseManager<PermissionPathMapper,Perm
     }
 
     public Page<PermissionPath> page(PageParam pageParam, PermissionPathParam param) {
-        Page<PermissionPath> mpPage = MpUtils.getMpPage(pageParam, PermissionPath.class);
+        Page<PermissionPath> mpPage = MpUtil.getMpPage(pageParam, PermissionPath.class);
         return lambdaQuery()
                 .like(StrUtil.isNotBlank(param.getName()),PermissionPath::getName,param.getName())
                 .like(StrUtil.isNotBlank(param.getCode()),PermissionPath::getCode,param.getCode())

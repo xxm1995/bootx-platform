@@ -5,7 +5,7 @@ import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
      * 分页
      */
     public Page<SystemParameter> page(PageParam pageParam, SystemParameterParam param){
-        Page<SystemParameter> mpPage = MpUtils.getMpPage(pageParam, SystemParameter.class);
+        Page<SystemParameter> mpPage = MpUtil.getMpPage(pageParam, SystemParameter.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

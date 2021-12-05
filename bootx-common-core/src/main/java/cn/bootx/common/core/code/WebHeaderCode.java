@@ -4,7 +4,7 @@ package cn.bootx.common.core.code;
  * web常量
  * @author network
  */
-public interface WebHeaderConst {
+public interface WebHeaderCode {
 
     /** ip */
     String X_FORWARDED_FOR = "X-Forwarded-For";
@@ -24,8 +24,8 @@ public interface WebHeaderConst {
     /** 请求头中 Authorization 的参数名 */
     String AUTH = "Authorization";
 
-    /** 请求头中 opToken 的参数名 */
-    String OP_TOKEN = "OpToken";
+    /** 幂等请求token */
+    String IDEMPOTENT_TOKEN = "IdempotentToken";
 
     /** 请求头 tid 的参数名 */
     String TID = "Tid";

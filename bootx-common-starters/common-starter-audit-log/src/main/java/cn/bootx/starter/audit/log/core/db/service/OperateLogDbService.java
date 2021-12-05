@@ -2,7 +2,7 @@ package cn.bootx.starter.audit.log.core.db.service;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.audit.log.core.db.convert.LogConvert;
 import cn.bootx.starter.audit.log.core.db.dao.OperateLogDbManager;
 import cn.bootx.starter.audit.log.core.db.entity.OperateLogDb;
@@ -48,8 +48,8 @@ public class OperateLogDbService implements OperateLogService {
      * 分页
      */
     @Override
-    public PageResult<OperateLogDto> page(PageParam pageParam, OperateLogDto operateLogDto){
-        return MpUtils.convert2PageResult(operateLogManager.page(pageParam,operateLogDto));
+    public PageResult<OperateLogDto> page(PageParam pageParam, OperateLogParam operateLogParam){
+        return MpUtil.convert2PageResult(operateLogManager.page(pageParam,operateLogParam));
     }
 
     /**

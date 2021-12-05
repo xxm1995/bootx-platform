@@ -1,7 +1,7 @@
 package cn.bootx.sales.core.coupon.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.sales.code.CheckRuleCode;
 import cn.bootx.sales.code.CouponStatusCode;
 import cn.bootx.sales.core.check.config.entity.CheckRuleConfig;
@@ -125,7 +125,7 @@ public class CouponService {
      * 查询批量
      */
     public List<CouponDto> findByIds(List<Long> couponIds){
-        return ResultConvertUtils.dtoListConvert(couponManager.findAllByIds(couponIds));
+        return ResultConvertUtil.dtoListConvert(couponManager.findAllByIds(couponIds));
     }
 
     /**

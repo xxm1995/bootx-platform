@@ -2,7 +2,7 @@ package cn.bootx.starter.audit.log.handler;
 
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.common.jackson.utils.JacksonUtils;
+import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.common.spring.util.WebServletUtils;
 import cn.bootx.starter.audit.log.param.OperateLogParam;
 import cn.bootx.starter.audit.log.service.OperateLogService;
@@ -98,14 +98,14 @@ public class OperateLogAspectHandler {
         }
 
         // 参数
-        if (log.isParam()){
+        if (log.saveParam()){
             Object[] args = joinPoint.getArgs();
-            operateLog.setOperateParam(JacksonUtils.toJson(args));
+            operateLog.setOperateParam(JacksonUtil.toJson(args));
         }
 
         // 返回值
-        if (log.isrReturn()){
-            operateLog.setOperateReturn(JacksonUtils.toJson(o));
+        if (log.saverReturn()){
+            operateLog.setOperateReturn(JacksonUtil.toJson(o));
         }
 
         operateLogService.add(operateLog);

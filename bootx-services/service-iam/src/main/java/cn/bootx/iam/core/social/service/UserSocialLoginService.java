@@ -3,7 +3,7 @@ package cn.bootx.iam.core.social.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.social.dao.UserSocialLoginManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
@@ -48,7 +48,7 @@ public class UserSocialLoginService {
      * 分页
      */
     public PageResult<UserSocialLoginDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(userSocialLoginManager.page(pageParam));
+        return MpUtil.convert2PageResult(userSocialLoginManager.page(pageParam));
     }
 
     /**

@@ -3,7 +3,7 @@ package cn.bootx.order.core.order.dao;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.order.code.OrderStatusCode;
 import cn.bootx.order.core.order.entity.Order;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -29,7 +29,7 @@ public class OrderManager extends BaseManager<OrderMapper,Order> {
     }
 
     public Page<Order> page(PageParam pageParam) {
-        Page<Order> mpPage = MpUtils.getMpPage(pageParam, Order.class);
+        Page<Order> mpPage = MpUtil.getMpPage(pageParam, Order.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

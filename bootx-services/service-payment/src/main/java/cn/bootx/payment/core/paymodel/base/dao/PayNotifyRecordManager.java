@@ -3,7 +3,7 @@ package cn.bootx.payment.core.paymodel.base.dao;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.core.paymodel.base.entity.PayNotifyRecord;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
 public class PayNotifyRecordManager extends BaseManager<PayNotifyRecordMapper,PayNotifyRecord> {
 
     public Page<PayNotifyRecord> page(PageParam pageParam){
-        Page<PayNotifyRecord> mpPage = MpUtils.getMpPage(pageParam, PayNotifyRecord.class);
+        Page<PayNotifyRecord> mpPage = MpUtil.getMpPage(pageParam, PayNotifyRecord.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

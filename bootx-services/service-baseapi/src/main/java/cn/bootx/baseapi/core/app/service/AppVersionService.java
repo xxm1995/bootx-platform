@@ -6,7 +6,7 @@ import cn.bootx.baseapi.dto.app.AppVersionDto;
 import cn.bootx.baseapi.param.app.AppVersionParam;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,7 +51,7 @@ public class AppVersionService {
      * 分页
      */
     public PageResult<AppVersionDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(appVersionManager.page(pageParam));
+        return MpUtil.convert2PageResult(appVersionManager.page(pageParam));
     }
 
     /**

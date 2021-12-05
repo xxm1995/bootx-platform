@@ -1,10 +1,10 @@
-package cn.bootx.common.core.rest;
+package cn.bootx.common.core.code;
 
 /**
- * 公用错误码定义类
+ * 公用错误码常量
  * 10001-10100
  */
-public interface CommonErrorCodes {
+public interface CommonErrorCode {
 
     // 系统错误
     int SYSTEM_ERROR = 10001;

@@ -3,7 +3,7 @@ package org.slf4j.impl;
 import org.slf4j.spi.MDCAdapter;
 
 /**   
-* 静态 MDC 粘合剂
+* 静态 MDC 粘合剂 覆盖原始类
 * @author xxm  
 * @date 2021/8/4 
 */

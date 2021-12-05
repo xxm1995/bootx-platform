@@ -2,7 +2,7 @@ package cn.bootx.starter.audit.log.core.db.service;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.audit.log.core.db.convert.LogConvert;
 import cn.bootx.starter.audit.log.core.db.dao.LoginLogDbManager;
 import cn.bootx.starter.audit.log.core.db.entity.LoginLogDb;
@@ -46,8 +46,8 @@ public class LoginLogDbService implements LoginLogService {
      * 分页
      */
     @Override
-    public PageResult<LoginLogDto> page(PageParam pageParam, LoginLogDto loginLogDto){
-        return MpUtils.convert2PageResult(loginLogManager.page(pageParam,loginLogDto));
+    public PageResult<LoginLogDto> page(PageParam pageParam, LoginLogParam loginLogParam){
+        return MpUtil.convert2PageResult(loginLogManager.page(pageParam,loginLogParam));
     }
 
     /**

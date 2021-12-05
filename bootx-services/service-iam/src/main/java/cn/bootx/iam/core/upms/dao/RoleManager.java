@@ -4,7 +4,7 @@ import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.upms.entity.Role;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +55,7 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
     }
 
     public Page<Role> page(PageParam pageParam) {
-        Page<Role> mpPage = MpUtils.getMpPage(pageParam, Role.class);
+        Page<Role> mpPage = MpUtil.getMpPage(pageParam, Role.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

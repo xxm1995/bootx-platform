@@ -58,7 +58,7 @@ public class OperateLogDb implements EntityBaseFunction<OperateLogDto> {
     private String operateReturn;
 
     /** 操作状态（0正常 1异常） */
-    private boolean success;
+    private Boolean success;
 
     /** 错误消息 */
     private String errorMsg;

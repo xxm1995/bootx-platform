@@ -1,7 +1,7 @@
 package cn.bootx.sales.core.strategy.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.util.ResultConvertUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.sales.core.strategy.dao.StrategyConfigManager;
 import cn.bootx.sales.core.strategy.dao.StrategyConfigValueManager;
 import cn.bootx.sales.core.strategy.dao.StrategyManager;
@@ -165,6 +165,6 @@ public class StrategyService {
      * 根据类型查询
      */
     public List<StrategyConfigDto> findByType(Integer type) {
-        return ResultConvertUtils.dtoListConvert(strategyConfigManager.findByType(type));
+        return ResultConvertUtil.dtoListConvert(strategyConfigManager.findByType(type));
     }
 }

@@ -97,7 +97,7 @@ public class OnlineUserService {
     /**
      * 下线
      */
-    @OperateLog(title = "强退用户",businessType = BusinessType.FORCE,isParam = true)
+    @OperateLog(title = "强退用户",businessType = BusinessType.FORCE, saveParam = true)
     public void logoutByUserId(Long userId){
         StpUtil.logoutByLoginId(userId);
     }

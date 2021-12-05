@@ -3,8 +3,8 @@ package cn.bootx.iam.core.client.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtils;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.client.dao.ClientManager;
 import cn.bootx.iam.core.client.entity.Client;
 import cn.bootx.iam.dto.client.ClientDto;
@@ -57,12 +57,12 @@ public class ClientService {
      * 分页
      */
     public PageResult<ClientDto> page(PageParam pageParam,ClientParam clientParam){
-        return MpUtils.convert2PageResult(clientManager.page(pageParam,clientParam));
+        return MpUtil.convert2PageResult(clientManager.page(pageParam,clientParam));
     }
 
 
     public PageResult<ClientDto> superPage(PageParam pageParam, QueryParams queryParams) {
-        return MpUtils.convert2PageResult(clientManager.supperPage(pageParam,queryParams));
+        return MpUtil.convert2PageResult(clientManager.supperPage(pageParam,queryParams));
 
     }
 
@@ -84,7 +84,7 @@ public class ClientService {
      * 获取全部
      */
     public List<ClientDto> findAll(){
-        return ResultConvertUtils.dtoListConvert(clientManager.findAll());
+        return ResultConvertUtil.dtoListConvert(clientManager.findAll());
     }
 
     /**

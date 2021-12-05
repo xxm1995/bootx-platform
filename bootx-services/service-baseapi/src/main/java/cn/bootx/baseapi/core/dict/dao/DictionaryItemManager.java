@@ -4,7 +4,7 @@ import cn.bootx.baseapi.core.dict.entity.DictionaryItem;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -49,7 +49,7 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
      * 分页查询,根据字典Id
      */
     public Page<DictionaryItem> findAllByDictionaryId(Long dictId, PageParam pageParam) {
-        Page<DictionaryItem> mpPage = MpUtils.getMpPage(pageParam, DictionaryItem.class);
+        Page<DictionaryItem> mpPage = MpUtil.getMpPage(pageParam, DictionaryItem.class);
         return lambdaQuery()
                 .eq(DictionaryItem::getDictId,dictId)
                 .orderByAsc(DictionaryItem::getSortNo)

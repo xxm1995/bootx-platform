@@ -3,7 +3,7 @@ package cn.bootx.notice.core.site.service;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.site.dao.SiteMessageManager;
 import cn.bootx.notice.core.site.entity.SiteMessage;
 import cn.bootx.notice.dto.site.SiteMessageDto;
@@ -70,14 +70,14 @@ public class SiteMessageService {
      */
     public PageResult<SiteMessageDto> pageByReceive(PageParam pageParam,Boolean haveRead){
         Long userId = SecurityUtil.getUserId();
-        return MpUtils.convert2PageResult(siteMessageManager.pageByReceive(pageParam,userId,haveRead));
+        return MpUtil.convert2PageResult(siteMessageManager.pageByReceive(pageParam,userId,haveRead));
     }
     /**
      * 发送消息分页
      */
     public PageResult<SiteMessageDto> pageBySender(PageParam pageParam,Boolean haveRead){
         Long userId = SecurityUtil.getUserId();
-        return MpUtils.convert2PageResult(siteMessageManager.pageBySender(pageParam,userId,haveRead));
+        return MpUtil.convert2PageResult(siteMessageManager.pageBySender(pageParam,userId,haveRead));
     }
 
     /**
@@ -85,7 +85,7 @@ public class SiteMessageService {
      */
     public PageResult<SiteMessageDto> page(PageParam pageParam){
         Long userId = SecurityUtil.getUserId();
-        return MpUtils.convert2PageResult(siteMessageManager.page(pageParam,userId));
+        return MpUtil.convert2PageResult(siteMessageManager.page(pageParam,userId));
 
     }
 

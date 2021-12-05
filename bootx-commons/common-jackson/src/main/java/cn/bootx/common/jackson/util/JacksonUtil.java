@@ -1,4 +1,4 @@
-package cn.bootx.common.jackson.utils;
+package cn.bootx.common.jackson.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,11 +8,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 * @author xxm  
 * @date 2020/11/29 
 */
-public class JacksonUtils {
+public class JacksonUtil {
     private static ObjectMapper objectMapper;
 
     static void setObjectMapper(ObjectMapper objectMapper){
-        JacksonUtils.objectMapper = objectMapper;
+        JacksonUtil.objectMapper = objectMapper;
     }
 
     /**

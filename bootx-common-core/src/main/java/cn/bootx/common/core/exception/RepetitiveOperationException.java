@@ -2,7 +2,7 @@ package cn.bootx.common.core.exception;
 
 import java.io.Serializable;
 
-import static cn.bootx.common.core.rest.CommonErrorCodes.REPETITIVE_OPERATION_ERROR;
+import static cn.bootx.common.core.code.CommonErrorCode.REPETITIVE_OPERATION_ERROR;
 
 /**   
 * 重复操作异常

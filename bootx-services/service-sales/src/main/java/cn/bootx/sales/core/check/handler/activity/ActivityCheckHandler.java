@@ -1,7 +1,7 @@
 package cn.bootx.sales.core.check.handler.activity;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.util.LocalDateTimeUtils;
+import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.sales.core.activity.entity.Activity;
 import cn.bootx.sales.core.calculate.cache.CalculateCache;
 import cn.bootx.sales.core.calculate.cache.OrderDetailCache;
@@ -54,7 +54,7 @@ public class ActivityCheckHandler {
      */
     public void checkTime(List<Activity> activities){
         for (Activity activity : activities) {
-            if (!LocalDateTimeUtils.between(LocalDateTime.now(), activity.getStartTime(), activity.getEndTime())) {
+            if (!LocalDateTimeUtil.between(LocalDateTime.now(), activity.getStartTime(), activity.getEndTime())) {
                 throw new BizException("活动时间不符合");
             }
         }

@@ -1,6 +1,6 @@
 package cn.bootx.common.mybatisplus.impl;
 
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.enums.SqlMethod;
@@ -8,10 +8,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
-import com.baomidou.mybatisplus.core.toolkit.Assert;
-import com.baomidou.mybatisplus.core.toolkit.Constants;
-import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.*;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.conditions.query.QueryChainWrapper;
@@ -33,7 +30,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
- * 自定义的基础数据库Repository操作类
+ * 自定义的基础数据库Manager操作类 类似自带的ServiceImpl类
  * @author xxm
  * @date 2020/4/15 14:26
  */
@@ -67,6 +64,17 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     @SuppressWarnings("unchecked")
     protected Class<T> currentModelClass() {
         return (Class<T>) ReflectionKit.getSuperClassGenericType(this.getClass(), BaseManager.class, 1);
+    }
+
+    /**
+     * 获取主键明
+     */
+    protected String getKeyProperty(){
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
+        Assert.notNull(tableInfo, "错误:无法执行.因为找不到实体的 TableInfo 缓存!");
+        String keyProperty = tableInfo.getKeyProperty();
+        Assert.notEmpty(keyProperty, "错误:无法执行.因为无法从实体中找到主键的列!");
+        return keyProperty;
     }
 
     /*
@@ -220,11 +228,8 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     @Transactional(rollbackFor = Exception.class)
     public T saveOrUpdate(T entity) {
         if (null != entity) {
-            TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
-            Assert.notNull(tableInfo, "错误:无法执行.因为找不到实体的 TableInfo 缓存!");
-            String keyProperty = tableInfo.getKeyProperty();
-            Assert.notEmpty(keyProperty, "错误:无法执行.因为无法从实体中找到主键的列!");
-            Object idVal = ReflectionKit.getFieldValue(entity, tableInfo.getKeyProperty());
+            String keyProperty = this.getKeyProperty();
+            Object idVal = ReflectionKit.getFieldValue(entity,keyProperty);
             if (StringUtils.checkValNull(idVal) || Objects.isNull(findById((Serializable) idVal))){
                 save(entity);
             } else{
@@ -257,6 +262,13 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      */
     public List<T> findAll(){
         return lambdaQuery().list();
+    }
+
+    /**
+     * 分页
+     */
+    public <E extends IPage<T>> E page(E page) {
+        return page(page, Wrappers.emptyWrapper());
     }
 
     /**
@@ -320,6 +332,15 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     }
 
     /**
+     * 判断指定id对象是否存在
+     */
+    public boolean existedById(Serializable id){
+        String keyProperty = this.getKeyProperty();
+        return query().eq(keyProperty,id).exists();
+    }
+
+
+    /**
      * 根据指定字段查询是否存在数据
      * @param field 字段
      * @param fieldValue 字段数据
@@ -330,18 +351,15 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     }
 
     /**
-     * 根据指定字段查询是否存在数据
+     * 根据指定字段查询是否存在数据 不包括传入指定ID的对象
      * @param field 字段
      * @param fieldValue 字段数据
      * @param id 主键值
      * @return 是否存在
      */
     public boolean existedByField(SFunction<T, ?> field, Object fieldValue,Serializable id){
-        TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
-        Assert.notNull(tableInfo, "错误:无法执行.因为找不到实体的 TableInfo 缓存!");
-        String keyProperty = tableInfo.getKeyProperty();
-        Assert.notEmpty(keyProperty, "错误:无法执行.因为无法从实体中找到主键的列!");
-        return query().eq(MpUtils.getColumnName(field),fieldValue)
+        String keyProperty = this.getKeyProperty();
+        return query().eq(MpUtil.getColumnName(field),fieldValue)
                 .ne(keyProperty,id)
                 .exists();
     }
@@ -359,17 +377,18 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     /**
      * 根据主键进行删除
      */
-    public void deleteById(Serializable id){
-        baseMapper.deleteById(id);
+    public boolean deleteById(Serializable id){
+        return SqlHelper.retBool(baseMapper.deleteById(id));
     }
 
     /**
-     * 根据主键进行删除
+     * 根据主键集合进行删除
      */
-    public void deleteByIds(Collection<? extends Serializable> idList){
+    public boolean deleteByIds(Collection<? extends Serializable> idList){
         if (CollUtil.isNotEmpty(idList)) {
-            baseMapper.deleteBatchIds(idList);
+            return  SqlHelper.retBool(baseMapper.deleteBatchIds(idList));
         }
+        return false;
     }
 
     /**

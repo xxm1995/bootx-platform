@@ -6,7 +6,6 @@
 3. 提供大字段排除便捷方式
 4. 提供`MpUtils`工具类，包含获取分页方法和分页对象转换方法
 5. 配置必备的插件，见`MpConfiguration`
-6. 查询构造器
 
 ## 使用
 
@@ -26,8 +25,3 @@ public List<AlipayConfig> page() {
             .list();
 }
 ```
-
-
-### 查询构造器使用
-
-1. 在Controller请求接收方法上的参数栏添加 `查询` 和 ``

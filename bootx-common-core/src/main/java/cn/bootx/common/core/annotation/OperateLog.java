@@ -21,18 +21,18 @@ public @interface OperateLog {
     String title() default "";
 
     /**
-     * 功能
+     * 业务操作类型
      */
     BusinessType businessType() default BusinessType.OTHER;
 
     /**
      * 是否保存请求参数
      */
-    boolean isParam() default false;
+    boolean saveParam() default false;
 
     /**
      * 是否保存返回参数
      */
-    boolean isrReturn() default false;
+    boolean saverReturn() default false;
 
 }

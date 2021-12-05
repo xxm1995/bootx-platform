@@ -1,8 +1,8 @@
 package cn.bootx.sales.core.check.handler.coupon;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.util.CollUtils;
-import cn.bootx.common.core.util.LocalDateTimeUtils;
+import cn.bootx.common.core.util.CollUtil;
+import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.sales.code.CouponStatusCode;
 import cn.bootx.sales.core.calculate.cache.OrderCache;
 import cn.bootx.sales.core.calculate.cache.OrderDetailCache;
@@ -46,7 +46,7 @@ public class CouponCheckHandler {
         }
 
         // 是否在可用的时间段
-        if (!LocalDateTimeUtils.between(LocalDateTime.now(), coupon.getStartTime(), coupon.getEndTime())) {
+        if (!LocalDateTimeUtil.between(LocalDateTime.now(), coupon.getStartTime(), coupon.getEndTime())) {
             throw new BizException("优惠券时间不符合");
         }
 
@@ -56,7 +56,7 @@ public class CouponCheckHandler {
      * 优惠券是否可用
      */
     public boolean canUseCoupon(Coupon coupon) {
-        if (!LocalDateTimeUtils.between(LocalDateTime.now(), coupon.getStartTime(), coupon.getEndTime())) {
+        if (!LocalDateTimeUtil.between(LocalDateTime.now(), coupon.getStartTime(), coupon.getEndTime())) {
             return false;
         }
         if (!Objects.equals(coupon.getStatus(), CouponStatusCode.STATUS_NORMAL)) {
@@ -114,6 +114,6 @@ public class CouponCheckHandler {
                 .map(Long::parseLong)
                 .collect(Collectors.toList());
         // 有互斥返回false
-        return !CollUtils.contains(contrastIds, mutual1Ids);
+        return !CollUtil.contains(contrastIds, mutual1Ids);
     }
 }

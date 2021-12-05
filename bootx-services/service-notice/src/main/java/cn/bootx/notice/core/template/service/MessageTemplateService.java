@@ -3,7 +3,7 @@ package cn.bootx.notice.core.template.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.template.dao.MessageTemplateManager;
 import cn.bootx.notice.core.template.entity.MessageTemplate;
 import cn.bootx.notice.dto.template.MessageTemplateDto;
@@ -61,7 +61,7 @@ public class MessageTemplateService {
      * 分页
      */
     public PageResult<MessageTemplateDto> page(PageParam pageParam){
-        return MpUtils.convert2PageResult(messageTemplateManager.page(pageParam));
+        return MpUtil.convert2PageResult(messageTemplateManager.page(pageParam));
     }
 
     /**

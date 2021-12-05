@@ -3,7 +3,7 @@ package cn.bootx.payment.core.payment.dao;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.param.payment.PaymentQuery;
@@ -49,7 +49,7 @@ public class PaymentManager extends BaseManager<PaymentMapper, Payment> {
     }
 
     public Page<Payment> page(PageParam pageParam, PaymentQuery param) {
-        Page<Payment> mpPage = MpUtils.getMpPage(pageParam, Payment.class);
+        Page<Payment> mpPage = MpUtil.getMpPage(pageParam, Payment.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

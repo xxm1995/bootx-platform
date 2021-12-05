@@ -2,7 +2,7 @@ package cn.bootx.payment.core.paymodel.alipay.dao;
 
 import cn.bootx.common.mybatisplus.handler.MpBigFieldHandler;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigQuery;
@@ -30,7 +30,7 @@ public class AlipayConfigManager extends BaseManager<AlipayConfigMapper,AlipayCo
     }
 
     public Page<AlipayConfig> page(PageParam pageParam, AlipayConfigQuery param) {
-        Page<AlipayConfig> mpPage = MpUtils.getMpPage(pageParam, AlipayConfig.class);
+        Page<AlipayConfig> mpPage = MpUtil.getMpPage(pageParam, AlipayConfig.class);
         return lambdaQuery()
                 .select(AlipayConfig.class, MpBigFieldHandler::excludeBigField)
                 .like(StrUtil.isNotBlank(param.getName()),AlipayConfig::getName,param.getName())

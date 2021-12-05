@@ -3,7 +3,7 @@ package cn.bootx.notice.core.dingtalk.dao;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.dingtalk.entity.DingRobotConfig;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class DingRobotConfigManage extends BaseManager<DingRobotConfigMapper, Di
     }
 
     public Page<DingRobotConfig> page(PageParam pageParam) {
-        Page<DingRobotConfig> mpPage = MpUtils.getMpPage(pageParam, DingRobotConfig.class);
+        Page<DingRobotConfig> mpPage = MpUtil.getMpPage(pageParam, DingRobotConfig.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getCreateTime)
                 .page(mpPage);

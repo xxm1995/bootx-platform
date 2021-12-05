@@ -3,7 +3,7 @@ package cn.bootx.iam.core.user.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
@@ -117,7 +117,7 @@ public class UserAdminService {
      * 分页查询
      */
     public PageResult<UserInfoDto> page(PageParam pageParam, UserInfoParam userInfoParam){
-        return MpUtils.convert2PageResult(userInfoManager.page(pageParam,userInfoParam));
+        return MpUtil.convert2PageResult(userInfoManager.page(pageParam,userInfoParam));
     }
 
     /**

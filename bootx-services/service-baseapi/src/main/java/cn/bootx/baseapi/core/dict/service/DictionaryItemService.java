@@ -11,8 +11,8 @@ import cn.bootx.baseapi.param.dict.DictionaryItemParam;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtils;
-import cn.bootx.common.mybatisplus.util.MpUtils;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -100,7 +100,7 @@ public class DictionaryItemService {
      */
     public PageResult<DictionaryItemDto> pageByDictionaryId(Long dictionaryId, PageParam pageParam) {
         Page<DictionaryItem> dictionaryItems = dictionaryItemManager.findAllByDictionaryId(dictionaryId, pageParam);
-        return MpUtils.convert2PageResult(dictionaryItems);
+        return MpUtil.convert2PageResult(dictionaryItems);
     }
 
     /**
@@ -121,7 +121,7 @@ public class DictionaryItemService {
      * 获取全部字典项
      */
     public List<DictionaryItemDto> findAll(){
-        return ResultConvertUtils.dtoListConvert(dictionaryItemManager.findAll());
+        return ResultConvertUtil.dtoListConvert(dictionaryItemManager.findAll());
     }
 
 }

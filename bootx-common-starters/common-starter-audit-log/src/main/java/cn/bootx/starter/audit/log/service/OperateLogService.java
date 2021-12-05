@@ -27,7 +27,7 @@ public interface OperateLogService {
     /**
      * 分页
      */
-    PageResult<OperateLogDto> page(PageParam pageParam, OperateLogDto operateLogDto);
+    PageResult<OperateLogDto> page(PageParam pageParam, OperateLogParam operateLogParam);
 
     /**
      * 删除

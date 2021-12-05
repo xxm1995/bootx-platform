@@ -72,7 +72,7 @@ public class ClientController {
         return Res.ok(clientService.page(pageParam,clientParam));
     }
 
-    @Operation(summary = "超级分页")
+    @Operation(summary = "超级查询")
     @PostMapping("/superPage")
     public ResResult<PageResult<ClientDto>> superPage(PageParam pageParam,@RequestBody QueryParams queryParams){
         return Res.ok(clientService.superPage(pageParam,queryParams));

@@ -3,7 +3,7 @@ package cn.bootx.payment.core.pay.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
-import cn.bootx.payment.core.pay.PayModelUtils;
+import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
@@ -153,7 +153,7 @@ public class PayService {
             // 发起支付成功进行的执行方法
             strategyList.forEach(AbsPayStrategy::doSuccessHandler);
             // 所有支付方式都是同步时进行Payment处理
-            if (PayModelUtils.isNotSync(payParam.getPayModeList())){
+            if (PayModelUtil.isNotSync(payParam.getPayModeList())){
                 // 修改payment支付状态为成功
                 paymentObj.setPayStatus(PayStatusCode.TRADE_SUCCESS);
                 paymentObj.setPayTime(LocalDateTime.now());

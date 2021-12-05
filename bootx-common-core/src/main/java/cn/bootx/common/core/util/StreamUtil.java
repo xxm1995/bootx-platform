@@ -1,18 +1,28 @@
-package cn.bootx.common.core.net;
+package cn.bootx.common.core.util;
+
+import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+/**   
+* 流工具类
+* @author xxm  
+* @date 2021/12/5 
+*/
+@UtilityClass
 public class StreamUtil {
-
-    private StreamUtil() {
-    }
 
     public static final int BUFFER_SIZE = 4096;
 
-    public static String copyToString(InputStream in, Charset charset) throws IOException {
+    /**
+     * 复制流到字符串
+     * @param in 输入流
+     * @param charset 字符集
+     */
+    public String copyToString(InputStream in, Charset charset) throws IOException {
         if (in == null) {
             return "";
         }

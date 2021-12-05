@@ -47,6 +47,10 @@ public class BootxRedisCacheManager extends RedisCacheManager {
         this.cacheWriter = cacheWriter;
     }
 
+    /**
+     * 创建Redis缓存
+     * @return
+     */
     @Override
     @SuppressWarnings({"ConstantConditions", "NullableProblems"})
     protected RedisCache createRedisCache(@Nullable String name, @Nullable RedisCacheConfiguration cacheConfig) {

@@ -42,6 +42,9 @@ public class JacksonConfiguration {
         };
     }
 
+    /**
+     * 对象映射
+     */
     @Bean
     @Primary
     public ObjectMapper objectMapper() {
