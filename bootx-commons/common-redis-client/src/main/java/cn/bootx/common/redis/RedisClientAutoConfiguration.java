@@ -1,7 +1,6 @@
 package cn.bootx.common.redis;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
@@ -51,10 +51,10 @@ public class RedisClientAutoConfiguration {
 
         // 对象映射器
         ObjectMapper copy = objectMapper.copy();
-        copy.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        // 序列化是记录被序列化的类型信息
         copy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
 
-        // 序列化方式
+        // 配置key和value的序列化方式
         StringRedisSerializer keySerializer = new StringRedisSerializer();
         RedisSerializer<Object> valueSerializer = new GenericJackson2JsonRedisSerializer(copy);
 
@@ -80,11 +80,13 @@ public class RedisClientAutoConfiguration {
     }
 
     /**
-     * 默认redis配置
+     * 默认redis配置(单机配置)
+     * 后期需要支持集群配置
      */
     @Bean
     @Primary
-    public RedisStandaloneConfiguration redisStandaloneConfiguration(RedisProperties redisProperties){
+    public RedisConfiguration redisStandaloneConfiguration(RedisProperties redisProperties){
+        // 单机模式
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(redisProperties.getHost());
         redisStandaloneConfiguration.setDatabase(redisProperties.getDatabase());
@@ -93,15 +95,19 @@ public class RedisClientAutoConfiguration {
         return redisStandaloneConfiguration;
     }
 
+
+    /**
+     * 连接工厂
+     */
     @Bean
     @Primary
     public LettuceConnectionFactory factory(GenericObjectPoolConfig<LettucePoolingClientConfiguration> config,
-                                            RedisStandaloneConfiguration redisStandaloneConfiguration ) {
+                                            RedisConfiguration redisConfiguration ) {
         LettuceClientConfiguration clientConfiguration = LettucePoolingClientConfiguration
                 .builder()
                 .poolConfig(config)
                 .build();
-        return new LettuceConnectionFactory(redisStandaloneConfiguration, clientConfiguration);
+        return new LettuceConnectionFactory(redisConfiguration, clientConfiguration);
     }
 
 }

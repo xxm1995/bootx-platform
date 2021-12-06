@@ -3,7 +3,6 @@ package cn.bootx.starter.auth.config;
 import cn.bootx.starter.auth.redis.SaTokenRedisConfiguration;
 import cn.bootx.starter.auth.redis.SaTokenRedisProperties;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +26,6 @@ public class MySaTokenDaoRedisConfiguration extends SaTokenRedisConfiguration {
     @Override
     protected ObjectMapper objectMapper() {
         ObjectMapper copy = objectMapper.copy();
-        copy.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         copy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
         return copy;
     }
