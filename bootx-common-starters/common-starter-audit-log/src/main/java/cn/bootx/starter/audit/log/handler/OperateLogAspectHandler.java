@@ -82,7 +82,7 @@ public class OperateLogAspectHandler {
         OperateLogParam operateLog = new OperateLogParam()
                 .setTitle(log.title())
                 .setOperateId(currentUser.map(UserDetail::getId).orElse(0L))
-                .setUsername(currentUser.map(UserDetail::getUsername).orElse(null))
+                .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
                 .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
                 .setOperateUrl(request.getRequestURI())
                 .setMethod(className + "#" + methodName)
