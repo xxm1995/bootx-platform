@@ -59,8 +59,6 @@ logging:
 # 项目配置
 bootx:
   common:
-    cache:
-      keys-ttl:
     swagger:
       enabled: true
       author: xxm

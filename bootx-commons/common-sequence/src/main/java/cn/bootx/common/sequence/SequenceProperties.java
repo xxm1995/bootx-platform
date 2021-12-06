@@ -30,7 +30,7 @@ public class SequenceProperties {
     private int rangeStep = 1000;
 
     /**
-     * 区间起始位置，真实从stepStart+1开始
+     * 区间起始位置
      */
     private long rangeStart = 0;
 }

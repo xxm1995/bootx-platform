@@ -24,9 +24,10 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
-* @author xxm
-* @date 2020/4/9 15:40
-*/
+ * Redis配置
+ * @author xxm
+ * @date 2020/4/9 15:40
+ */
 @Configuration
 @ConditionalOnClass(StringRedisTemplate.class)
 @RequiredArgsConstructor
@@ -36,11 +37,11 @@ public class RedisClientAutoConfiguration {
     /**
      * 默认 RedisClient
      */
-	@Bean
+    @Bean
     @Primary
-	public RedisClient redisClient(StringRedisTemplate stringRedisTemplate) {
-		return new RedisClient(stringRedisTemplate);
-	}
+    public RedisClient redisClient(StringRedisTemplate stringRedisTemplate) {
+        return new RedisClient(stringRedisTemplate);
+    }
 
     /**
      * 默认 RedisTemplate

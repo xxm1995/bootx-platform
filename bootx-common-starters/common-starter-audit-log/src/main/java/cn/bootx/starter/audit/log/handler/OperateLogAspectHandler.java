@@ -3,7 +3,7 @@ package cn.bootx.starter.audit.log.handler;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.jackson.util.JacksonUtil;
-import cn.bootx.common.spring.util.WebServletUtils;
+import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.starter.audit.log.param.OperateLogParam;
 import cn.bootx.starter.audit.log.service.OperateLogService;
 import cn.bootx.starter.auth.util.SecurityUtil;
@@ -72,7 +72,7 @@ public class OperateLogAspectHandler {
         }
 
         // 基础信息
-        HttpServletRequest request = WebServletUtils.getRequest();
+        HttpServletRequest request = WebServletUtil.getRequest();
         String ip = ServletUtil.getClientIP(request);
         Optional<UserDetail> currentUser = SecurityUtil.getCurrentUser();
         // 设置方法名称

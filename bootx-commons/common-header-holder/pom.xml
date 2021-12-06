@@ -13,14 +13,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- TTL 安全容器-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>transmittable-thread-local</artifactId>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-spring</artifactId>
         </dependency>
     </dependencies>
 </project>

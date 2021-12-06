@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**   
-* 
+* MongoDB存储实现
 * @author xxm  
 * @date 2021/12/2 
 */
@@ -48,7 +48,7 @@ public class OperateLogMongoService implements OperateLogService {
         // 查询条件
         ExampleMatcher matching = ExampleMatcher.matching()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
-        Example<OperateLogMongo> example = Example.of(LogConvert.CONVERT.convert(operateLogParam), matching);
+        Example<OperateLogMongo> example = Example.of(new OperateLogMongo(), matching);
 
         //设置分页条件 (第几页，每页大小，排序)
         Sort sort = Sort.by(Sort.Order.desc("id"));

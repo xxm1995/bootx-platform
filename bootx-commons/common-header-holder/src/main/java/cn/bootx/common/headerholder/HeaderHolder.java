@@ -2,6 +2,7 @@ package cn.bootx.common.headerholder;
 
 import cn.bootx.common.core.code.WebHeaderCode;
 import cn.bootx.common.headerholder.local.HolderContextHolder;
+import cn.bootx.common.spring.util.WebServletUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;

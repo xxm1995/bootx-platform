@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties("bootx.common.exception")
-public class ExceptionHandlerParameter {
+public class ExceptionHandlerProperties {
 
     /** 是否显示详细异常信息 */
     private boolean showFullMessage;

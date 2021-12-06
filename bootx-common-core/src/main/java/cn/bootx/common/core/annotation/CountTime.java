@@ -1,4 +1,4 @@
-package cn.bootx.common.spring.annotation;
+package cn.bootx.common.core.annotation;
 
 import java.lang.annotation.*;
 

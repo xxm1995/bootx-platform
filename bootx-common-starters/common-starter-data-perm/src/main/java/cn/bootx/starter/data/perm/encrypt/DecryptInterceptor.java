@@ -1,7 +1,6 @@
 package cn.bootx.starter.data.perm.encrypt;
 
 import cn.bootx.common.core.annotation.EncryptionField;
-import cn.bootx.common.spring.annotation.CountTime;
 import cn.bootx.starter.data.perm.configuration.DataPermProperties;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ReflectUtil;
@@ -38,7 +37,6 @@ public class DecryptInterceptor implements Interceptor {
      * 拦截返回的结果
      */
     @Override
-    @CountTime
     public Object intercept(Invocation invocation) throws Throwable {
         Object result = invocation.proceed();
         return this.decrypt(result);

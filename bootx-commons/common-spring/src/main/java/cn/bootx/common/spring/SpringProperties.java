@@ -13,7 +13,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Accessors(chain = true)
 public class SpringProperties {
 
+    /** 开启cors跨域处理 */
+    private boolean cors = true;
+
+    /** 线程池配置 */
     private Executor executor = new Executor();
+
 	/**
 	* @author xxm
 	* @date 2021/6/11
@@ -21,8 +26,6 @@ public class SpringProperties {
 	@Data
 	@Accessors(chain = true)
 	public static class Executor {
-        private boolean enabled = true;
-
         /**
          * 线程池维护线程的最少数量
          */
@@ -34,7 +37,7 @@ public class SpringProperties {
         private int maxPoolSize = 50;
 
         /**
-         * 缓存队列
+         * 缓存队列容量
          */
         private int queueCapacity = 5000;
 

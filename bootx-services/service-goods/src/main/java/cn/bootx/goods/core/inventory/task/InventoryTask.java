@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 public class InventoryTask {
     private final InventoryTaskService inventoryTaskService;
     private final RedisClient redisClient;
+
     // 分布式锁, 保证同一时间只会有一个在执行
     private final String REDIS_LOCK_KEY = "lock:expireInventory";
     /**

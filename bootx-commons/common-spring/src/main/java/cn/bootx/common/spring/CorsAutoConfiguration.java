@@ -1,6 +1,7 @@
 package cn.bootx.common.spring;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +23,7 @@ import org.springframework.web.filter.CorsFilter;
 public class CorsAutoConfiguration {
 
     @Bean
+    @ConditionalOnProperty(prefix = "bootx.common.spring", value = "cors", havingValue = "true",matchIfMissing = true)
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
     public FilterRegistrationBean<CorsFilter> corsWebFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();

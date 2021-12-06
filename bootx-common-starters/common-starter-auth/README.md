@@ -1,25 +1,23 @@
-# 鉴权框架封装
+# 鉴权框架封装模块
 
 ## 介绍
-基于sa-token，为选择Spring Security原因是复杂度较高，而且OAuth2相关项目已经停止，新版还没到生产可用。原生Spring Security想用在前后端分离的情况相对来说也不方便。
-Shiro的话后期会出一个实现，目前的涉及sa-token相关的依赖都未暴露出common-starter-auth模块，方便后期无感替换。
+基于sa-token，为选择Spring Security原因是复杂度较高，而且OAuth2相关项目已经停止，新版还没到生产可用。原生Spring Security想用在前后端分离的情况相对来说也不方便，所以选择了Sa-Token做为安全鉴权框架。
 
 引入了 [sa-token-plugin](https://gitee.com/bootx/sa-token-plugin) 中的redis插件，替代官方的实现，配置方式见该项目的README。
+> sa-token-plugin 插件为发布到中央仓库,所以进行了内联
 ## 功能
-1. 提供账号密码登陆功能
-2. 提供第三方登录扩展
-3. 支持配置多端登录
-4. 支持忽略鉴权注解`@IgnoreAuth`的功能支持
-5. 提供`PasswordEncoder`密码工具类和`SecurityUtil`安全工具类
+- 提供账号密码登陆功能
+- 提供第三方登录扩展
+- 支持配置多端登录
+- 支持忽略鉴权注解`@IgnoreAuth`的功能支持
+- 提供`PasswordEncoder`密码工具类和`SecurityUtil`安全工具类
 
 ## 使用
 
-### 相关配置
+### 配置
 
 ```yaml
 bootx.starter.auth:
-  # 盐值
-  salt: salt
   # 默认密码
   defaultPassword: 123456
   # 不进行鉴权的路径

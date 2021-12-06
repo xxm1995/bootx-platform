@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 * @date 2021/8/13 
 */
 @UtilityClass
-public class WebServletUtils {
+public class WebServletUtil {
 
     /**
      * 获取http请求
@@ -24,13 +24,22 @@ public class WebServletUtils {
     }
 
     /**
+     * 获取请求类型
+     */
+    public String getMethod(){
+        return getRequestAttributes().getRequest().getMethod();
+    }
+
+    /**
      * 获取http响应
      */
     public HttpServletResponse getResponse(){
         return getRequestAttributes().getResponse();
     }
 
-
+    /**
+     * 获取RequestAttributes
+     */
     public ServletRequestAttributes getRequestAttributes(){
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return (ServletRequestAttributes) attributes;

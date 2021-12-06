@@ -9,6 +9,9 @@ public interface WebHeaderCode {
     /** ip */
     String X_FORWARDED_FOR = "X-Forwarded-For";
 
+    /** 用户代理 */
+    String USER_AGENT = "User-Agent";
+
     /** 请求头中 operatorId 的参数名 */
     String OPERATOR_ID = "OperatorId";
 

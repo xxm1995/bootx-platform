@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.auth.handler;
 
+import cn.bootx.common.core.code.WebHeaderCode;
 import cn.bootx.starter.audit.log.param.LoginLogParam;
 import cn.bootx.starter.audit.log.service.LoginLogService;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
@@ -25,7 +26,7 @@ public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
     private final LoginLogService loginLogService;
     @Override
     public void onLoginSuccess(HttpServletRequest request, HttpServletResponse response, AuthInfoResult authInfoResult) {
-        UserAgent userAgent = UserAgentUtil.parse(request.getHeader("User-Agent"));
+        UserAgent userAgent = UserAgentUtil.parse(request.getHeader(WebHeaderCode.USER_AGENT));
         String ip = ServletUtil.getClientIP(request);
         LoginLogParam loginLog = new LoginLogParam()
                 .setLogin(true)

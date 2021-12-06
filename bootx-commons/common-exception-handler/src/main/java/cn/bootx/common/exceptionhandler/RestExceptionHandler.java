@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 */
 @Slf4j
 @RestControllerAdvice
-@EnableConfigurationProperties(ExceptionHandlerParameter.class)
+@EnableConfigurationProperties(ExceptionHandlerProperties.class)
 @RequiredArgsConstructor
 public class RestExceptionHandler {
-    private final ExceptionHandlerParameter parameter;
+    private final ExceptionHandlerProperties properties;
 
     /**
      * 业务异常
@@ -88,7 +88,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResResult<Void> handleRuntimeException(RuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        if (parameter.isShowFullMessage()){
+        if (properties.isShowFullMessage()){
             return Res.response(CommonErrorCode.SYSTEM_ERROR, ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
         } else {
             return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));

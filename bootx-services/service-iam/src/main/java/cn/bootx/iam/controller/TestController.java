@@ -1,12 +1,12 @@
 package cn.bootx.iam.controller;
 
+import cn.bootx.common.core.annotation.Idempotent;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.common.idempotency.annotation.Idempotent;
 import cn.bootx.common.sequence.func.Sequence;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

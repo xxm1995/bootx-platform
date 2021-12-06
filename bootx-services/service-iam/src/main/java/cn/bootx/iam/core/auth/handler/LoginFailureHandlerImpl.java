@@ -1,12 +1,12 @@
 package cn.bootx.iam.core.auth.handler;
 
+import cn.bootx.common.core.code.WebHeaderCode;
 import cn.bootx.starter.audit.log.param.LoginLogParam;
 import cn.bootx.starter.audit.log.service.LoginLogService;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.handler.LoginFailureHandler;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import cn.hutool.http.useragent.Browser;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,7 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
     @Override
     public void onLoginFailure(HttpServletRequest request, HttpServletResponse response, LoginFailureException e) {
 
-        UserAgent userAgent = UserAgentUtil.parse(request.getHeader("User-Agent"));
-        Browser browser = userAgent.getBrowser();
+        UserAgent userAgent = UserAgentUtil.parse(request.getHeader(WebHeaderCode.USER_AGENT));
         String ip = ServletUtil.getClientIP(request);
         String client = SecurityUtil.obtainClient(request);
         LoginLogParam loginLog = new LoginLogParam()

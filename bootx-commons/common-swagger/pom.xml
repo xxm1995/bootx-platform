@@ -18,14 +18,14 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <exclusions>
                 <!-- 排除自带的swagger-ui组件 -->
-<!--                <exclusion>-->
-<!--                    <groupId>org.webjars</groupId>-->
-<!--                    <artifactId>swagger-ui</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.webjars</groupId>-->
-<!--                    <artifactId>webjars-locator-core</artifactId>-->
-<!--                </exclusion>-->
+                <exclusion>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>swagger-ui</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>webjars-locator-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>

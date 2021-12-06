@@ -1,5 +1,6 @@
 package cn.bootx.starter.audit.log.core.mongo.service;
 
+import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.audit.log.core.mongo.convert.LogConvert;
@@ -8,7 +9,6 @@ import cn.bootx.starter.audit.log.core.mongo.entity.LoginLogMongo;
 import cn.bootx.starter.audit.log.dto.LoginLogDto;
 import cn.bootx.starter.audit.log.param.LoginLogParam;
 import cn.bootx.starter.audit.log.service.LoginLogService;
-import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.IdUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
+ * MongoDB存储实现
  * @author xxm
  * @date 2021/12/2
  */
@@ -32,9 +32,9 @@ public class LoginLogMongoService implements LoginLogService {
     private final LoginLogMongoRepository repository;
 
     @Override
+    @CountTime
     public void add(LoginLogParam loginLog) {
         LoginLogMongo loginLogMongo = LogConvert.CONVERT.convert(loginLog);
-        ThreadUtil.safeSleep(10000);
         loginLogMongo.setId(IdUtil.getSnowflake().nextId());
         repository.save(loginLogMongo);
     }

@@ -2,6 +2,7 @@
 
 ## 注解
 - `BigField` 数据库大字段标识注解，详细使用见`common-mybatis-plus` 模块
+- `CountTime` 获取程序执行时间，
 - `EncryptionField` 数据库加密字段注解，详细使用见`common-starter-data-perm` 模块
 - `Idempotent` 幂等性拦截注解，用于拦截前端重复提交的请求，详细见 `common-idempotency`模块
   - `enable` 是否开启幂等控制
