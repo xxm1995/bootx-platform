@@ -50,7 +50,11 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
                 break;
             }
             case ADDRESS: {
-                jsonGenerator.writeString(DesensitizedUtil.address(s, 4));
+                jsonGenerator.writeString(DesensitizedUtil.address(s, 6));
+                break;
+            }
+            case CAR_LICENSE:{
+                jsonGenerator.writeString(DesensitizedUtil.carLicense(s));
                 break;
             }
             case EMAIL: {

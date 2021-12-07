@@ -36,6 +36,10 @@ public enum SensitiveType {
      */
     EMAIL,
     /**
+     * 车牌号
+     */
+    CAR_LICENSE,
+    /**
      * 银行卡
      */
     BANK_CARD,
