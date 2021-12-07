@@ -197,7 +197,7 @@ export default {
           // 进行更新时，使用监视的加密数据来替换表单中的数据，（数据为null时，后端不进行修改）
           await update({
             ...this.form,
-            ...this.rawForm
+            ...this.diff
           })
         } else {
           return false
