@@ -1,5 +1,6 @@
 package cn.bootx.starter.audit.log.param;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -12,36 +13,37 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
+@Schema(description= "登录日志")
 public class LoginLogParam {
 
-    /** 用户账号id */
+    @Schema(description= "用户账号id")
     private Long userId;
 
-    /** 用户名称 */
+    @Schema(description= "用户名称")
     private String account;
 
-    /** 登录成功状态*/
+    @Schema(description= "登录成功状态")
     private Boolean login;
 
-    /** 登录终端 */
+    @Schema(description= "登录终端")
     private String client;
 
-    /** 登录IP地址 */
+    @Schema(description= "登录IP地址")
     private String ip;
 
-    /** 登录地点 */
+    @Schema(description= "登录地点")
     private String loginLocation;
 
-    /** 浏览器类型 */
+    @Schema(description= "浏览器类型")
     private String browser;
 
-    /** 操作系统 */
+    @Schema(description= "操作系统")
     private String os;
 
-    /** 提示消息 */
+    @Schema(description= "提示消息")
     private String msg;
 
-    /** 访问时间 */
+    @Schema(description= "访问时间")
     private LocalDateTime loginTime;
 
 }

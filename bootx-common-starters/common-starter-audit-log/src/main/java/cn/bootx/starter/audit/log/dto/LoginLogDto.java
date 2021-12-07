@@ -21,33 +21,33 @@ public class LoginLogDto implements Serializable {
     @Schema(description= "主键")
     private Long id;
 
-    /** 用户ID */
+    @Schema(description= "用户ID")
     private Long userId;
 
-    /** 登录账号 */
+    @Schema(description= "登录账号")
     private String account;
 
-    /** 登录成功状态*/
+    @Schema(description= "登录成功状态")
     private Boolean login;
 
-    /** 登录终端 */
+    @Schema(description= "登录终端")
     private String client;
 
-    /** 登录IP地址 */
+    @Schema(description= "登录IP地址")
     private String ip;
 
-    /** 登录地点 */
+    @Schema(description= "登录地点")
     private String loginLocation;
 
-    /** 浏览器类型 */
+    @Schema(description= "浏览器类型")
     private String browser;
 
-    /** 操作系统 */
+    @Schema(description= "操作系统")
     private String os;
 
-    /** 提示消息 */
+    @Schema(description= "提示消息")
     private String msg;
 
-    /** 访问时间 */
+    @Schema(description= "访问时间")
     private LocalDateTime loginTime;
 }
