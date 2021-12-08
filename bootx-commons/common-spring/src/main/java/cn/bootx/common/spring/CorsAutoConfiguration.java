@@ -12,6 +12,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.time.Duration;
+
 /**   
 * 跨域处理
 * @author xxm  
@@ -26,15 +28,21 @@ public class CorsAutoConfiguration {
     @ConditionalOnProperty(prefix = "bootx.common.spring", value = "cors", havingValue = "true",matchIfMissing = true)
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
     public FilterRegistrationBean<CorsFilter> corsWebFilter() {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedHeader("*");
-        corsConfiguration.addAllowedMethod("*");
-        corsConfiguration.addAllowedOriginPattern("*");
-        corsConfiguration.addExposedHeader(HttpHeaders.SET_COOKIE);
+        CorsConfiguration config = new CorsConfiguration();
+        // 允许跨域发送身份凭证
+        config.setAllowCredentials(true);
+        // 预检请求有效期
+        config.setMaxAge(Duration.ofDays(1));
+        // 允许所有请求头
+        config.addAllowedHeader("*");
+        // 允许所有请求方法
+        config.addAllowedMethod("*");
+        // 允许跨域的源为所有，注意与origin:*进行区分
+        config.addAllowedOriginPattern("*");
+        config.addExposedHeader(HttpHeaders.SET_COOKIE);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration);
+        source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
