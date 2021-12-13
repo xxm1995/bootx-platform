@@ -10,7 +10,7 @@
     ```yaml
     bootx.common.sequence:
       # redis前缀
-      key_prefix: x_sequence_
+      key_prefix: 'Sequence:'
       # 步长,每次增加的步数
       step: 1
       # 区间步长

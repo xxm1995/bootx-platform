@@ -17,7 +17,7 @@ public class SequenceProperties {
     /**
      * 前缀防止key重复
      */
-    private String keyPrefix = "x_sequence:";
+    private String keyPrefix = "Sequence:";
 
     /**
      * 步长

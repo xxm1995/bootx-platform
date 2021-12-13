@@ -1,4 +1,4 @@
-package cn.bootx.common.spring;
+package cn.bootx.common.spring.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,23 +22,25 @@ import java.time.Duration;
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @RequiredArgsConstructor
-public class CorsAutoConfiguration {
+public class SpringCorsConfiguration {
+    private final SpringProperties springProperties;
 
     @Bean
-    @ConditionalOnProperty(prefix = "bootx.common.spring", value = "cors", havingValue = "true",matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "bootx.common.spring.cors", value = "enable", havingValue = "true",matchIfMissing = true)
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
     public FilterRegistrationBean<CorsFilter> corsWebFilter() {
+        SpringProperties.Cors cors = springProperties.getCors();
         CorsConfiguration config = new CorsConfiguration();
         // 允许跨域发送身份凭证
         config.setAllowCredentials(true);
         // 预检请求有效期
-        config.setMaxAge(Duration.ofDays(1));
-        // 允许所有请求头
-        config.addAllowedHeader("*");
-        // 允许所有请求方法
-        config.addAllowedMethod("*");
-        // 允许跨域的源为所有，注意与origin:*进行区分
-        config.addAllowedOriginPattern("*");
+        config.setMaxAge(Duration.ofMillis(cors.getMaxAge()));
+        // 允许请求头
+        config.addAllowedHeader(cors.getAllowedHeaders());
+        // 允许请求方法
+        config.addAllowedMethod(cors.getAllowedMethods());
+        // 允许跨域的源为，注意与origin:*进行区分
+        config.addAllowedOriginPattern(cors.getAllowedOriginPatterns());
         config.addExposedHeader(HttpHeaders.SET_COOKIE);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -21,4 +21,9 @@ public @interface Idempotent {
      * 超时时间(毫秒)
      */
     long timeout() default 1000*10;
+
+    /**
+     * 名称
+     */
+    String name() default "";
 }

@@ -74,6 +74,7 @@ bootx:
         "[支付服务]": cn.bootx.payment
         "[销售服务]": cn.bootx.sales
         "[订单服务]": cn.bootx.order
+        "[演示模块]": cn.bootx.demo
         "[自定义starter组件]": cn.bootx.starter
   starter:
     auth:

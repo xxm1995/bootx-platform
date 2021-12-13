@@ -27,7 +27,14 @@ public class WebServletUtil {
      * 获取请求类型
      */
     public String getMethod(){
-        return getRequestAttributes().getRequest().getMethod();
+        return getRequest().getMethod();
+    }
+
+    /**
+     * 获取参数
+     */
+    public String getParameter(String name){
+        return getRequest().getParameter(name);
     }
 
     /**

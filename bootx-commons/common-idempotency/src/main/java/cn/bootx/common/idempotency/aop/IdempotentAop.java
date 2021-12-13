@@ -42,9 +42,19 @@ public class IdempotentAop {
             String method = WebServletUtil.getMethod();
             // 只处理四种经典的情况
             if (METHODS.contains(method.toUpperCase(Locale.ROOT))){
+                // 从请求头或者请求参数中获取幂等Token
                 String idempotentToken = HeaderHolder.getIdempotentToken();
+                if (StrUtil.isBlank(idempotentToken)){
+                    idempotentToken = WebServletUtil.getParameter((WebHeaderCode.IDEMPOTENT_TOKEN));
+                }
+                // 进行判断拦截
                 if (StrUtil.isNotBlank(idempotentToken)){
-                    Boolean flag = redisClient.setIfAbsent(WebHeaderCode.IDEMPOTENT_TOKEN + idempotentToken, "", idempotent.timeout());
+                    String key = WebHeaderCode.IDEMPOTENT_TOKEN;
+                    // 是否有自定义的命名空间
+                    if (StrUtil.isNotBlank(idempotent.name())){
+                        key = key + ":" + idempotent.name();
+                    }
+                    Boolean flag = redisClient.setIfAbsent(key + ":" + idempotentToken, "", idempotent.timeout());
                     if (Boolean.FALSE.equals(flag)){
                         throw new RepetitiveOperationException();
                     }

@@ -1,4 +1,4 @@
-package cn.bootx.common.spring;
+package cn.bootx.common.spring.configuration;
 
 import cn.hutool.extra.spring.EnableSpringUtil;
 import com.alibaba.ttl.threadpool.TtlExecutors;
@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 /**
- * spring配置
+ * spring 线程池 配置
  * @author xxm
  * @date 2021/6/11
  */
@@ -24,12 +24,12 @@ import java.util.concurrent.ExecutorService;
 @ConditionalOnClass(ApplicationContext.class)
 @EnableSpringUtil
 @RequiredArgsConstructor
-public class SpringAutoConfiguration {
+public class SpringExecutorConfiguration {
 
     private final SpringProperties springProperties;
 
     /**
-     * 原始线程池
+     * 原始线程池 不要直接使用
      */
     @Bean
     public ThreadPoolTaskExecutor springRawExecutor() {

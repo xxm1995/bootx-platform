@@ -84,6 +84,12 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
+        <!-- 演示模块 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>bootx-demo</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
 
         <!-- quartz 定时任务 -->
         <dependency>

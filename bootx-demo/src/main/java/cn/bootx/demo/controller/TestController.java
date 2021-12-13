@@ -1,4 +1,4 @@
-package cn.bootx.iam.controller;
+package cn.bootx.demo.controller;
 
 import cn.bootx.common.core.annotation.Idempotent;
 import cn.bootx.common.core.annotation.OperateLog;
@@ -42,5 +42,12 @@ public class TestController {
     public ResResult<String> sequence(){
         long cs = sequence.next("cs");
         return Res.ok(String.valueOf(cs));
+    }
+
+    @Idempotent(name = "idempotent",timeout = 1000*60)
+    @Operation(summary = "幂等演示")
+    @GetMapping("/idempotent")
+    public ResResult<String> Idempotent(){
+        return Res.ok("幂等演示");
     }
 }
