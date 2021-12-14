@@ -36,9 +36,11 @@ public class DefaultRangeSequence implements Sequence {
      */
     private volatile SeqRange currentRange;
 
+    /**
+     * 获取下一个值
+     */
     @Override
     public long next(String name) throws SeqException {
-
         //当前区间不存在，重新获取一个区间
         if (null == currentRange) {
             lock.lock();
@@ -56,27 +58,23 @@ public class DefaultRangeSequence implements Sequence {
         if (value == -1) {
             lock.lock();
             try {
-                for (; ; ) {
+                while (true){
                     if (currentRange.isOver()) {
                         currentRange = seqRangeManager.nextRange(name);
                     }
-
                     value = currentRange.getAndIncrement();
                     if (value == -1) {
                         continue;
                     }
-
                     break;
                 }
             } finally {
                 lock.unlock();
             }
         }
-
         if (value < 0) {
             throw new SeqException("序列值溢出, value = " + value);
         }
-
         return value;
     }
 

@@ -1,17 +1,19 @@
-package cn.bootx.common.sequence.range;
+package cn.bootx.common.sequence.range.redis;
 
 import cn.bootx.common.redis.RedisClient;
-import cn.bootx.common.sequence.SequenceProperties;
+import cn.bootx.common.sequence.configuration.SequenceProperties;
 import cn.bootx.common.sequence.exception.SeqException;
+import cn.bootx.common.sequence.range.SeqRange;
+import cn.bootx.common.sequence.range.SeqRangeManager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-/**   
-* Redis区间管理器
-* @author xxm  
-* @date 2021/8/6 
-*/
+/**
+ * Redis区间管理器
+ * @author xxm
+ * @date 2021/8/6
+ */
 @Getter
 @Setter
 @RequiredArgsConstructor
@@ -26,15 +28,18 @@ public class RedisSeqRangeManager implements SeqRangeManager {
      */
     private volatile boolean keyAlreadyExist;
 
+    /**
+     * 获取指定区间名的下一个区间
+     *
+     * @param name 区间名
+     * @return 返回区间
+     * @throws SeqException 异常
+     */
     @Override
     public SeqRange nextRange(String name) throws SeqException {
+        //第一次不存在，进行初始化,不存在就set，存在就忽略
         if (!keyAlreadyExist) {
-            boolean exists = redisClient.exists(getRealKey(name));
-
-            if (!exists) {
-                //第一次不存在，进行初始化,不存在就set，存在就忽略
-                redisClient.setIfAbsent(getRealKey(name), String.valueOf(sequenceProperties.getRangeStart()));
-            }
+            redisClient.setIfAbsent(getRealKey(name), String.valueOf(sequenceProperties.getRangeStart()));
             keyAlreadyExist = true;
         }
         int step = sequenceProperties.getRangeStep();

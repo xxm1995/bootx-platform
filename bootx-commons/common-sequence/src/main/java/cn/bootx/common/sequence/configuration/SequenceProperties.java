@@ -1,4 +1,4 @@
-package cn.bootx.common.sequence;
+package cn.bootx.common.sequence.configuration;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +13,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties("bootx.common.sequence")
 public class SequenceProperties {
+
+    /**
+     * 存储类型
+     */
+    private Type type = Type.REDIS;
 
     /**
      * 前缀防止key重复
@@ -33,4 +38,14 @@ public class SequenceProperties {
      * 区间起始位置
      */
     private long rangeStart = 0;
+
+    /**
+     * 存储类型
+     */
+    public enum Type{
+        /** 数据库 */
+        REDIS,
+        /** 数据库存储 */
+        JDBC
+    }
 }

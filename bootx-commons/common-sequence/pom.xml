@@ -15,10 +15,12 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-redis-client</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-mybatis-plus</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 

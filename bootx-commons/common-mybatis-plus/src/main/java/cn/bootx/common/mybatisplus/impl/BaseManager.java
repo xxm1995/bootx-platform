@@ -1,5 +1,6 @@
 package cn.bootx.common.mybatisplus.impl;
 
+import cn.bootx.common.core.exception.OptimisticLockException;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -183,17 +184,26 @@ public class BaseManager<M extends BaseMapper<T>, T>{
         return list;
     }
 
+    /**
+     * 批量保存
+     */
     @Transactional(rollbackFor = Exception.class)
     public boolean saveBatch(Collection<T> entityList, int batchSize) {
         String sqlStatement = getSqlStatement(SqlMethod.INSERT_ONE);
         return executeBatch(entityList, batchSize, (sqlSession, entity) -> sqlSession.insert(sqlStatement, entity));
     }
 
+    /**
+     * 批量更新
+     */
     @Transactional(rollbackFor = Exception.class)
     public boolean updateAllById(Collection<T> entityList) {
         return updateBatchById(entityList, DEFAULT_BATCH_SIZE);
     }
 
+    /**
+     * 批量更新
+     */
     @Transactional(rollbackFor = Exception.class)
     public boolean updateBatchById(Collection<T> entityList, int batchSize) {
         String sqlStatement = getSqlStatement(SqlMethod.UPDATE_BY_ID);
@@ -243,18 +253,19 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * 根据id进行更新
      */
     public T updateById(T t){
-        baseMapper.updateById(t);
+        if (SqlHelper.retBool(baseMapper.updateById(t))) {
+            throw new OptimisticLockException();
+        }
         return t;
     }
 
     /**
      * 根据指定字段进行更新
      */
-    public T updateByField(T t,SFunction<T, ?> field, Object fieldValue){
-        lambdaUpdate()
+    public boolean updateByField(T t,SFunction<T, ?> field, Object fieldValue){
+        return lambdaUpdate()
                 .eq(field,fieldValue)
                 .update(t);
-        return t;
     }
 
     /**

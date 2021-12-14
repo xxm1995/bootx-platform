@@ -23,7 +23,7 @@ public @interface Idempotent {
     long timeout() default 1000*10;
 
     /**
-     * 名称
+     * 名称, 用来区分需要不同控制的方法
      */
     String name() default "";
 }
