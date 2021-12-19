@@ -1,6 +1,6 @@
 package cn.bootx.iam.core.permission.dao;
 
-import cn.bootx.iam.core.permission.entity.PermissionMenu;
+import cn.bootx.iam.core.permission.entity.PermMenu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
 * @date 2021/8/3 
 */
 @Mapper
-public interface PermissionMenuMapper extends BaseMapper<PermissionMenu> {
+public interface PermMenuMapper extends BaseMapper<PermMenu> {
 }

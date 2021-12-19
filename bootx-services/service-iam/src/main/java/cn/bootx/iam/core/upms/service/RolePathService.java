@@ -1,12 +1,12 @@
 package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.iam.core.permission.service.PermissionPathService;
+import cn.bootx.iam.core.permission.service.PermPathService;
 import cn.bootx.iam.core.upms.dao.RolePathManager;
 import cn.bootx.iam.core.upms.entity.RolePath;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
-import cn.bootx.iam.dto.permission.PermissionPathDto;
+import cn.bootx.iam.dto.permission.PermPathDto;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RolePathService {
     private final RolePathManager rolePathManager;
-    private final PermissionPathService pathService;
+    private final PermPathService pathService;
     private final UserInfoManager userInfoManager;
 
     private final UserRoleService userRoleService;
@@ -66,7 +66,7 @@ public class RolePathService {
     /**
      * 查询用户查询拥有的权限信息
      */
-    public List<PermissionPathDto> findPathsByUser(){
+    public List<PermPathDto> findPathsByUser(){
         Long userId = SecurityUtil.getUserId();
         return this.findPathsByUser(userId);
     }
@@ -74,10 +74,10 @@ public class RolePathService {
     /**
      * 查询用户查询拥有的路径权限信息
      */
-    public List<PermissionPathDto> findPathsByUser(Long userId){
+    public List<PermPathDto> findPathsByUser(Long userId){
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
 
-        List<PermissionPathDto> paths;
+        List<PermPathDto> paths;
         if (userInfo.isAdmin()){
             paths = pathService.findAll();
         } else {
@@ -90,8 +90,8 @@ public class RolePathService {
     /**
      * 查询用户查询拥有的权限信息
      */
-    public List<PermissionPathDto> findPermissionsByUser(Long userId){
-        List<PermissionPathDto> permissions = new ArrayList<>(0);
+    public List<PermPathDto> findPermissionsByUser(Long userId){
+        List<PermPathDto> permissions = new ArrayList<>(0);
 
         List<Long> roleIds = userRoleService.findRoleIdsByUser(userId);
         if (CollUtil.isEmpty(roleIds)){

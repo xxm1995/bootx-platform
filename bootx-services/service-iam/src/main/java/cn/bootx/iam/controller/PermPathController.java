@@ -4,9 +4,9 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.iam.core.permission.service.PermissionPathService;
-import cn.bootx.iam.dto.permission.PermissionPathDto;
-import cn.bootx.iam.param.permission.PermissionPathParam;
+import cn.bootx.iam.core.permission.service.PermPathService;
+import cn.bootx.iam.dto.permission.PermPathDto;
+import cn.bootx.iam.param.permission.PermPathParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -20,20 +20,20 @@ import java.util.List;
 */
 @Tag(name ="请求权限资源")
 @RestController
-@RequestMapping("/permission/path")
+@RequestMapping("/perm/path")
 @RequiredArgsConstructor
-public class PermissionPathController {
-    private final PermissionPathService pathService;
+public class PermPathController {
+    private final PermPathService pathService;
 
     @Operation(summary = "添加权限")
     @PostMapping("/add")
-    public ResResult<PermissionPathDto> add(@RequestBody PermissionPathParam param){
+    public ResResult<PermPathDto> add(@RequestBody PermPathParam param){
         return Res.ok(pathService.add(param));
     }
 
     @Operation(summary = "更新权限")
     @PostMapping("/update")
-    public ResResult<PermissionPathDto> update(@RequestBody PermissionPathParam param){
+    public ResResult<PermPathDto> update(@RequestBody PermPathParam param){
         return Res.ok(pathService.update(param));
     }
 
@@ -46,22 +46,27 @@ public class PermissionPathController {
 
     @Operation(summary = "获取详情")
     @GetMapping("/findById")
-    public ResResult<PermissionPathDto> findById(Long id){
+    public ResResult<PermPathDto> findById(Long id){
         return Res.ok(pathService.findById(id));
     }
 
     @Operation(summary = "权限分页")
     @GetMapping("/page")
-    public ResResult<PageResult<PermissionPathDto>> page(PageParam pageParam,PermissionPathParam param){
+    public ResResult<PageResult<PermPathDto>> page(PageParam pageParam, PermPathParam param){
         return Res.ok(pathService.page(pageParam,param));
     }
 
     @Operation(summary = "权限列表")
     @GetMapping("/findAll")
-    public ResResult<List<PermissionPathDto>> findAll(){
+    public ResResult<List<PermPathDto>> findAll(){
         return Res.ok(pathService.findAll());
     }
 
-
+    @Operation(summary = "同步系统请求资源")
+    @PostMapping("/syncSystem")
+    public ResResult<Void> syncSystem(){
+        pathService.syncSystem();
+        return Res.ok();
+    }
 
 }

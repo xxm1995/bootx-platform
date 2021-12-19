@@ -14,7 +14,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hutool.version>5.7.16</hutool.version>
+        <hutool.version>5.7.17</hutool.version>
         <jackson.version>2.12.3</jackson.version>
         <lang3.version>3.11</lang3.version>
         <collections4.version>4.4</collections4.version>

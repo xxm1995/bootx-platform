@@ -18,13 +18,13 @@ import java.io.Serializable;
 public class RoleDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 5532196699667233754L;
 
-    /** 角色code */
+    @Schema(description = "角色code")
     private String code;
 
-    /** 角色名称 */
+    @Schema(description = "角色名称")
     private String name;
 
-    /** 是否系统内置 Y 内置 N 不是  内置 不能修改*/
+    @Schema(description = "是否系统内置 Y 内置 N 不是  内置 不能修改")
     private boolean system;
 
     /**
@@ -37,7 +37,7 @@ public class RoleDto extends BaseDto implements Serializable {
      */
     private String dsScope;
 
-    /** 描述 */
+    @Schema(description = "描述")
     private String description;
 
 }

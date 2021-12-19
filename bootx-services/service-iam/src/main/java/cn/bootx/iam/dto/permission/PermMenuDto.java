@@ -1,49 +1,50 @@
-package cn.bootx.iam.param.permission;
+package cn.bootx.iam.dto.permission;
 
+import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
 * @author xxm
 * @date 2021/7/12
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "菜单权限")
-public class PermissionMenuParam implements Serializable {
-    private static final long serialVersionUID = 3017200753543614579L;
+public class PermMenuDto extends BaseDto implements Serializable {
+    private static final long serialVersionUID = 1935403328634321841L;
 
-    /** 主键 */
-    private Long id;
-
-    /** 父id */
+    @Schema(description = "父id")
     private Long parentId;
 
-    /** 菜单标题 */
+    @Schema(description = "菜单标题")
     private String title;
 
-    /** 路由名称，建议唯一 */
+    @Schema(description = "路由名称，建议唯一")
     private String name;
 
-    /** 菜单权限编码 */
+    @Schema(description = "菜单权限编码")
     private String perms;
 
-    /** 菜单图标 */
+    @Schema(description = "图标")
     private String icon;
 
-    /** 是否隐藏 */
+    @Schema(description = "是否隐藏")
     private boolean hidden;
 
-    /** 是否隐藏子菜单 */
+    @Schema(description = "是否隐藏子菜单")
     private boolean hideChildrenInMenu;
 
-    /** 组件 */
+    @Schema(description = "组件")
     private String component;
 
-    /** 路径 */
+    @Schema(description = "路径")
     private String path;
 
     /**
@@ -61,24 +62,28 @@ public class PermissionMenuParam implements Serializable {
      */
     private Integer menuType;
 
-    /* meta */
+    @Schema(description = "meta")
     /**
      * 是否缓存页面
      */
     private boolean keepAlive;
 
-    /** 打开方式是否为外部打开 */
+    @Schema(description = "打开方式是否为外部打开")
     private boolean targetOutside;
 
-    /** 隐藏的标题内容 */
+    @Schema(description = "隐藏的标题内容")
     private boolean hiddenHeaderContent;
-
-    /** 系统菜单 */
-    private boolean admin;
 
     /**
      * 描述
      */
     private String description;
 
+    @Schema(description = "系统菜单")
+    private boolean admin;
+
+    /**
+     * 子节点
+     */
+    private List<PermMenuDto> children;
 }

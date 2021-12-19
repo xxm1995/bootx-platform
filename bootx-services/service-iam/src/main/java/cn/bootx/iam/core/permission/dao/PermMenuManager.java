@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.permission.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.iam.core.permission.entity.PermissionMenu;
+import cn.bootx.iam.core.permission.entity.PermMenu;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class PermissionMenuManager extends BaseManager<PermissionMenuMapper, PermissionMenu> {
+public class PermMenuManager extends BaseManager<PermMenuMapper, PermMenu> {
 
     public boolean existsByParentId(Long pid) {
-        return existedByField(PermissionMenu::getParentId,pid);
+        return existedByField(PermMenu::getParentId,pid);
     }
 }

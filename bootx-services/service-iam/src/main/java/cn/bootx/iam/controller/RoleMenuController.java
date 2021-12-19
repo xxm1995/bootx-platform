@@ -3,7 +3,7 @@ package cn.bootx.iam.controller;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.upms.service.RoleMenuService;
-import cn.bootx.iam.dto.permission.PermissionMenuDto;
+import cn.bootx.iam.dto.permission.PermMenuDto;
 import cn.bootx.iam.dto.upms.UserMenuAndButtonDto;
 import cn.bootx.iam.param.upms.RolePermissionParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,7 +34,7 @@ public class RoleMenuController {
 
     @Operation(summary = "获取菜单树, 不包含按钮权限")
     @GetMapping("/findMenuTree")
-    public ResResult<List<PermissionMenuDto>> findMenuTree(){
+    public ResResult<List<PermMenuDto>> findMenuTree(){
         return Res.ok(roleMenuService.findMenuTree());
     }
 

@@ -1,8 +1,8 @@
 package cn.bootx.iam.dto.upms;
 
-import cn.bootx.iam.dto.permission.PermissionMenuDto;
+import cn.bootx.iam.dto.permission.PermMenuDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -22,5 +22,5 @@ public class UserMenuAndButtonDto {
     private List<String> buttonPermissions;
 
     @Schema(description= "菜单")
-    private List<PermissionMenuDto> menus;
+    private List<PermMenuDto> menus;
 }

@@ -3,7 +3,7 @@ package cn.bootx.iam.controller;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.upms.service.RolePathService;
-import cn.bootx.iam.dto.permission.PermissionPathDto;
+import cn.bootx.iam.dto.permission.PermPathDto;
 import cn.bootx.iam.param.upms.RolePermissionParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +32,7 @@ public class RolePathController {
 
     @Operation(summary = "根据用户id获取角色授权(权限列表)")
     @GetMapping("/findPathsByUser")
-    public ResResult<List<PermissionPathDto>> findPathsByUser(){
+    public ResResult<List<PermPathDto>> findPathsByUser(){
         return Res.ok(rolePathService.findPathsByUser());
     }
 

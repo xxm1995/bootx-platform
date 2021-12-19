@@ -5,6 +5,7 @@ import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.sequence.func.Sequence;
+import cn.bootx.demo.core.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TestController {
     private final Sequence sequence;
+    private final TestService testService;
 
     @OperateLog(title = "测试日志")
     @Idempotent
@@ -49,5 +51,12 @@ public class TestController {
     @GetMapping("/idempotent")
     public ResResult<String> Idempotent(){
         return Res.ok("幂等演示");
+    }
+
+    @Operation(summary = "获取所有接口请求")
+    @GetMapping("/xx")
+    public ResResult<Void> xx(){
+        testService.xx();
+        return Res.ok();
     }
 }

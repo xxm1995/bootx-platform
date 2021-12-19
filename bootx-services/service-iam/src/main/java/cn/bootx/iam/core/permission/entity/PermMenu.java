@@ -2,9 +2,9 @@ package cn.bootx.iam.core.permission.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.iam.core.permission.convert.PermissionConvert;
-import cn.bootx.iam.dto.permission.PermissionMenuDto;
-import cn.bootx.iam.param.permission.PermissionMenuParam;
+import cn.bootx.iam.core.permission.convert.PermConvert;
+import cn.bootx.iam.dto.permission.PermMenuDto;
+import cn.bootx.iam.param.permission.PermMenuParam;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,8 +18,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("iam_permission_menu")
-public class PermissionMenu extends MpBaseEntity implements EntityBaseFunction<PermissionMenuDto> {
+@TableName("iam_perm_menu")
+public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMenuDto> {
 
     /** 父id */
     private Long parentId;
@@ -83,12 +83,12 @@ public class PermissionMenu extends MpBaseEntity implements EntityBaseFunction<P
      */
     private String description;
 
-    public static PermissionMenu init(PermissionMenuParam in){
-        return PermissionConvert.CONVERT.convert(in);
+    public static PermMenu init(PermMenuParam in){
+        return PermConvert.CONVERT.convert(in);
     }
 
     @Override
-    public PermissionMenuDto toDto() {
-        return PermissionConvert.CONVERT.convert(this);
+    public PermMenuDto toDto() {
+        return PermConvert.CONVERT.convert(this);
     }
 }
