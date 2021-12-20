@@ -30,7 +30,7 @@ public class RolePathController {
         return Res.ok(true);
     }
 
-    @Operation(summary = "根据用户id获取角色授权(权限列表)")
+    @Operation(summary = "根据用户id获取角色授权(请求权限列表)")
     @GetMapping("/findPathsByUser")
     public ResResult<List<PermPathDto>> findPathsByUser(){
         return Res.ok(rolePathService.findPathsByUser());

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * 角色路径权限关系
+ * 角色请求权限关系
  * @author xxm
  * @date 2021/6/9
  */
@@ -49,22 +49,7 @@ public class RolePathService {
     }
 
     /**
-     * 添加路径角色
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void save(Long permissionId, List<Long> roleIds){
-        // 删旧增新
-        rolePathManager.deleteByPermission(permissionId);
-
-        List<RolePath> rolePermissions = roleIds.stream()
-                .map(roleId -> new RolePath(roleId, permissionId))
-                .collect(Collectors.toList());
-        rolePathManager.saveAll(rolePermissions);
-    }
-
-
-    /**
-     * 查询用户查询拥有的权限信息
+     * 查询用户查询拥有的请求权限信息
      */
     public List<PermPathDto> findPathsByUser(){
         Long userId = SecurityUtil.getUserId();

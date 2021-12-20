@@ -74,7 +74,7 @@ public class SaTokenRedisConfiguration {
             redisConfig.setPassword(RedisPassword.of(aloneRedis.getPassword()));
 
             // 2. 连接池配置
-            GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
+            GenericObjectPoolConfig<?> poolConfig = new GenericObjectPoolConfig<>();
             // pool配置
             RedisProperties.Lettuce lettuce = aloneRedis.getLettuce();
             if(lettuce.getPool() != null) {

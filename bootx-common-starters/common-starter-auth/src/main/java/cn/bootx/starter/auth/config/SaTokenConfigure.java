@@ -7,12 +7,10 @@ import cn.dev33.satoken.router.SaRouter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Collections;
-import java.util.List;
 
 /**
  * sa-token
@@ -33,16 +31,12 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册路由拦截器，自定义验证规则
         registry.addInterceptor(new SaRouteInterceptor((req, res, handler)->
-                SaRouter.match(Collections.singletonList("/**"),
-                        permitAllUrlProperties.getIgnoreUrls(),
-                        new IgnoreSaRouteFunction(handler))
+                SaRouter.match(Collections.singletonList("/**"))
+                        .notMatch(permitAllUrlProperties.getIgnoreUrls())
+                        .check(new IgnoreSaRouteFunction(handler))
         )).addPathPatterns("/**");
         // 注册注解拦截器
         registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
 
-    }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
     }
 }
