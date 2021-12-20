@@ -25,6 +25,9 @@ public class PermPathParam implements Serializable {
     @Schema(description = "权限名称")
     private String name;
 
+    @Schema(description = "分组名称")
+    private String groupName;
+
     @Schema(description = "请求类型")
     private String requestType;
 
@@ -34,19 +37,10 @@ public class PermPathParam implements Serializable {
     @Schema(description = "启用")
     private boolean enable;
 
+    @Schema(description = "是否通过系统生成的权限")
+    private boolean system;
+
     @Schema(description = "描述")
     private String remark;
-
-    @Schema(description = "请求方法名")
-    private String methodName;
-
-    @Schema(description = "请求方法描述")
-    private String methodRemark;
-
-    @Schema(description = "请求类名")
-    private String className;
-
-    @Schema(description = "请求类描述")
-    private String classRemark;
 
 }

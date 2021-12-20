@@ -3,6 +3,7 @@ package cn.bootx.baseapi.handler;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
@@ -34,6 +35,6 @@ public class MpMetaObjectHandler implements MetaObjectHandler {
     public Long getUserid(){
         return SecurityUtil.getCurrentUser()
                 .map(UserDetail::getId)
-                .orElse(0L);
+                .orElse(DesensitizedUtil.userId());
     }
 }

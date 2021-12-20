@@ -28,6 +28,9 @@ public class PermPath extends MpBaseEntity implements EntityBaseFunction<PermPat
     /** 权限名称 */
     private String name;
 
+    /** 分组名称 */
+    private String groupName;
+
     /** 请求类型 */
     private String requestType;
 
@@ -42,18 +45,6 @@ public class PermPath extends MpBaseEntity implements EntityBaseFunction<PermPat
 
     /** 描述 */
     private String remark;
-
-    /** 请求方法名 */
-    private String methodName;
-
-    /** 请求方法描述 */
-    private String methodRemark;
-
-    /** 请求类名 */
-    private String className;
-
-    /** 请求类描述 */
-    private String classRemark;
 
     public static PermPath init(PermPathParam param){
         return PermConvert.CONVERT.convert(param);

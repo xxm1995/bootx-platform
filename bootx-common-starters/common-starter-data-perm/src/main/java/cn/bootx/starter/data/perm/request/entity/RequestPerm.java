@@ -27,6 +27,9 @@ public class RequestPerm {
     /** 请求类名 */
     private String className;
 
+    /** 请求类名 */
+    private String classFullName;
+
     /** 请求类描述 */
     private String classRemark;
 

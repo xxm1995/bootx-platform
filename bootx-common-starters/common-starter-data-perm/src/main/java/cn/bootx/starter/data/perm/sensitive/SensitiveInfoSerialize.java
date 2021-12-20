@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 /**   
@@ -33,6 +34,10 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
                 jsonGenerator.writeString(DesensitizedUtil.chineseName(s));
                 break;
             }
+            case USER_ID: {
+                jsonGenerator.writeString(String.valueOf(DesensitizedUtil.userId()));
+                break;
+            }
             case PASSWORD: {
                 jsonGenerator.writeString(DesensitizedUtil.password(s));
                 break;
@@ -47,6 +52,10 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
             }
             case MOBILE_PHONE: {
                 jsonGenerator.writeString(DesensitizedUtil.mobilePhone(s));
+                break;
+            }
+            case IP: {
+                jsonGenerator.writeString(this.ip(s));
                 break;
             }
             case ADDRESS: {
@@ -95,6 +104,18 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
             return serializerProvider.findValueSerializer(beanProperty.getType(), beanProperty);
         }
         return serializerProvider.findNullValueSerializer(null);
+    }
+
+    /**
+     * ip脱敏
+     */
+    private String ip(String ip){
+        System.out.println(123);
+        List<String> ipList = StrUtil.split(ip, '.');
+        if (ipList.size()< 2){
+            return "*.*.*.*";
+        }
+        return ipList.get(0)+"."+ipList.get(1)+".*.*";
     }
 
     /**

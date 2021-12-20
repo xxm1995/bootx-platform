@@ -253,7 +253,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * 根据id进行更新
      */
     public T updateById(T t){
-        if (SqlHelper.retBool(baseMapper.updateById(t))) {
+        if (!SqlHelper.retBool(baseMapper.updateById(t))) {
             throw new OptimisticLockException();
         }
         return t;

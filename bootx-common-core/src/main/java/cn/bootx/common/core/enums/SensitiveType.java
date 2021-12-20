@@ -12,6 +12,10 @@ public enum SensitiveType {
      */
     CHINESE_NAME,
     /**
+     * 用户id
+     */
+    USER_ID,
+    /**
      * 密码
      */
     PASSWORD,
@@ -27,6 +31,10 @@ public enum SensitiveType {
      * 手机号
      */
     MOBILE_PHONE,
+    /**
+     * ip地址
+     */
+    IP,
     /**
      * 地址
      */

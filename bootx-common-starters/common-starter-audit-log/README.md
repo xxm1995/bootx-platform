@@ -76,7 +76,7 @@ public enum BusinessType {
     /** 其它 */
     OTHER,
     /** 新增 */
-    INSERT,
+    ADD,
     /** 修改 */
     UPDATE,
     /** 删除 */

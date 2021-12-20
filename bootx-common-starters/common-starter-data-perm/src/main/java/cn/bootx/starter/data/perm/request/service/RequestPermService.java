@@ -54,9 +54,11 @@ public class RequestPermService {
             String summary = this.getSummary(method);
             // beanClass 名称 / 描述
             String className = beanClass.getSimpleName();
+            String classFullName = beanClass.getName();
             String classRemark = this.getTagName(beanClass);
             for (RequestPerm requestPerm : requestPerms) {
                 requestPerm.setClassName(className)
+                        .setClassFullName(classFullName)
                         .setClassRemark(classRemark)
                         .setMethodName(methodName)
                         .setMethodRemark(summary);

@@ -104,21 +104,38 @@ public class PermPathService {
         List<PermPath> permPaths = systemRequests.stream()
                 .map(requestPerm -> {
                     PermPath permPath = PermConvert.CONVERT.convert(requestPerm);
+                    // 请求权限码
                     String code = null;
                     if (StrUtil.isNotBlank(requestPerm.getClassName()) && StrUtil.isNotBlank(requestPerm.getMethodName())){
                         code = requestPerm.getClassName()+ "#" +requestPerm.getMethodName();
                     }
-                    String name = null;
-                    if (StrUtil.isNotBlank(requestPerm.getClassName()) && StrUtil.isNotBlank(requestPerm.getMethodName())){
-                        name = requestPerm.getClassRemark()+ " " +requestPerm.getMethodRemark();
+                    // 请求备注
+                    String remark = null;
+                    if (StrUtil.isNotBlank(requestPerm.getClassRemark()) && StrUtil.isNotBlank(requestPerm.getMethodRemark())){
+                        remark = requestPerm.getClassRemark()+ " " +requestPerm.getMethodRemark();
                     }
                     return permPath.setCode(code)
-                            .setName(name)
-                            .setRemark(name)
+                            .setName(requestPerm.getMethodRemark())
+                            .setRemark(remark)
+                            .setGroupName(requestPerm.getClassRemark())
                             .setSystem(true)
                             .setEnable(true);
                 }).collect(Collectors.toList());
+        // 增量更新
+        this.incrementAdd(permPaths);
+    }
 
-        permPathManager.saveAll(permPaths);
+    /**
+     * 增量添加，对不存在的进行添加
+     */
+    private void incrementAdd(List<PermPath> permPaths){
+        List<String> paths = permPathManager.findAll().stream()
+                .map(PermPath::getPath)
+                .collect(Collectors.toList());
+        // 过滤掉已经存在的
+        List<PermPath> permPathList = permPaths.stream()
+                .filter(permPath -> !paths.contains(permPath.getPath()))
+                .collect(Collectors.toList());
+        permPathManager.saveAll(permPathList);
     }
 }

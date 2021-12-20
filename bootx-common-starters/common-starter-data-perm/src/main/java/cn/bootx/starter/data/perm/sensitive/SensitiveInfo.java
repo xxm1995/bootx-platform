@@ -20,7 +20,7 @@ public @interface SensitiveInfo {
     /**
      * 敏感信息类型
      */
-    SensitiveType value();
+    SensitiveType value() default SensitiveType.OTHER;
 
     /**
      * 敏感类型为其他可用
