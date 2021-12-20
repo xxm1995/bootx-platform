@@ -24,6 +24,7 @@ public class TestController {
     private final TestService testService;
 
     @OperateLog(title = "测试日志")
+    @OperateLog(title = "测试重复日志")
     @Idempotent
     @Operation(summary = "测试")
     @GetMapping("/hello")

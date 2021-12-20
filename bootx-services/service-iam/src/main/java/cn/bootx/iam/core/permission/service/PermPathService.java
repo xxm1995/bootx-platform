@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.permission.service;
 
+import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -97,6 +98,7 @@ public class PermPathService {
      * 同步系统请求资源
      */
     @Transactional(rollbackFor = Exception.class)
+    @OperateLog
     public void syncSystem() {
         List<RequestPerm> systemRequests = requestPermService.getSystemRequests();
         List<PermPath> permPaths = systemRequests.stream()

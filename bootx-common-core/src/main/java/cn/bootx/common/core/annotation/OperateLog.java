@@ -12,6 +12,7 @@ import java.lang.annotation.*;
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Repeatable(value = OperateLogs.class)
 @Inherited
 public @interface OperateLog {
 

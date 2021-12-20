@@ -1,12 +1,15 @@
 package cn.bootx.starter.audit.log.handler;
 
 import cn.bootx.common.core.annotation.OperateLog;
+import cn.bootx.common.core.annotation.OperateLogs;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.starter.audit.log.param.OperateLogParam;
 import cn.bootx.starter.audit.log.service.OperateLogService;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +25,16 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
 /**
-* 操作日志切面处理
-* @author xxm
-* @date 2021/8/13
-*/
+ * 操作日志切面处理
+ * @author xxm
+ * @date 2021/8/13
+ */
 @Slf4j
 @Aspect
 @Component
@@ -41,7 +45,7 @@ public class OperateLogAspectHandler {
     /**
      * 配置织入点
      */
-    @Pointcut("@annotation(cn.bootx.common.core.annotation.OperateLog)")
+    @Pointcut("@annotation(cn.bootx.common.core.annotation.OperateLog) || @annotation(cn.bootx.common.core.annotation.OperateLogs)")
     public void logPointCut(){
     }
 
@@ -66,8 +70,8 @@ public class OperateLogAspectHandler {
      * 操作log处理
      */
     protected void handleLog(JoinPoint joinPoint, Exception e, Object o){
-        OperateLog log = getAnnotationLog(joinPoint);
-        if (Objects.isNull(log)){
+        List<OperateLog> logs = getAnnotationLog(joinPoint);
+        if (CollUtil.isEmpty(logs)){
             return;
         }
 
@@ -79,48 +83,57 @@ public class OperateLogAspectHandler {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
 
-        OperateLogParam operateLog = new OperateLogParam()
-                .setTitle(log.title())
-                .setOperateId(currentUser.map(UserDetail::getId).orElse(0L))
-                .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
-                .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
-                .setOperateUrl(request.getRequestURI())
-                .setMethod(className + "#" + methodName)
-                .setRequestMethod(request.getMethod())
-                .setSuccess(true)
-                .setOperateIp(ip)
-                .setOperateTime(LocalDateTime.now());
+        for (OperateLog log : logs) {
+            OperateLogParam operateLog = new OperateLogParam()
+                    .setTitle(log.title())
+                    .setOperateId(currentUser.map(UserDetail::getId).orElse(0L))
+                    .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
+                    .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
+                    .setOperateUrl(request.getRequestURI())
+                    .setMethod(className + "#" + methodName)
+                    .setRequestMethod(request.getMethod())
+                    .setSuccess(true)
+                    .setOperateIp(ip)
+                    .setOperateTime(LocalDateTime.now());
 
-        // 异常流
-        if (Objects.nonNull(e)){
-            operateLog.setSuccess(false)
-                    .setErrorMsg(e.getMessage());
+            // 异常流
+            if (Objects.nonNull(e)){
+                operateLog.setSuccess(false)
+                        .setErrorMsg(e.getMessage());
+            }
+
+            // 参数
+            if (log.saveParam()){
+                Object[] args = joinPoint.getArgs();
+                operateLog.setOperateParam(JacksonUtil.toJson(args));
+            }
+
+            // 返回值
+            if (log.saverReturn()){
+                operateLog.setOperateReturn(JacksonUtil.toJson(o));
+            }
+
+            operateLogService.add(operateLog);
         }
-
-        // 参数
-        if (log.saveParam()){
-            Object[] args = joinPoint.getArgs();
-            operateLog.setOperateParam(JacksonUtil.toJson(args));
-        }
-
-        // 返回值
-        if (log.saverReturn()){
-            operateLog.setOperateReturn(JacksonUtil.toJson(o));
-        }
-
-        operateLogService.add(operateLog);
     }
 
     /**
      * 获取注解
      */
-    private OperateLog getAnnotationLog(JoinPoint joinPoint) {
+    private List<OperateLog> getAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
 
         if (method != null) {
-            return method.getAnnotation(OperateLog.class);
+            List<OperateLog> operateLogs = Optional.ofNullable(method.getAnnotation(OperateLogs.class))
+                    .map(OperateLogs::value)
+                    .map(ListUtil::of)
+                    .orElse(null);
+            if (CollUtil.isEmpty(operateLogs)){
+                operateLogs = ListUtil.of(method.getAnnotation(OperateLog.class));
+            }
+            return operateLogs;
         }
         return null;
     }
