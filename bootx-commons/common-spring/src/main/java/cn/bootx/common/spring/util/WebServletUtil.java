@@ -29,6 +29,12 @@ public class WebServletUtil {
     public String getMethod(){
         return getRequest().getMethod();
     }
+    /**
+     * 获取请求路径
+     */
+    public String getPath(){
+        return getRequest().getRequestURI();
+    }
 
     /**
      * 获取参数

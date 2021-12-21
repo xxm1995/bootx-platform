@@ -1,25 +1,22 @@
-package cn.bootx.starter.auth.handler;
+package cn.bootx.starter.auth.impl;
 
 import cn.bootx.common.core.annotation.IgnoreAuth;
-import cn.dev33.satoken.fun.SaFunction;
-import cn.dev33.satoken.router.SaRouter;
-import cn.dev33.satoken.stp.StpUtil;
-import lombok.RequiredArgsConstructor;
+import cn.bootx.starter.auth.authentication.RouterCheck;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 
 import java.util.Objects;
 
-/**
- * 鉴权路由配置类
- * @author xxm
- * @date 2021/8/2
- */
-@RequiredArgsConstructor
-public class IgnoreSaRouteFunction implements SaFunction {
-    private final Object handler;
+/**   
+* 注解方式过滤
+* @author xxm  
+* @date 2021/12/21 
+*/
+@Component
+public class IgnoreAuthRouterCheck implements RouterCheck {
 
     @Override
-    public void run() {
+    public boolean check(Object handler) {
         if (handler instanceof HandlerMethod){
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             // controller上是否加了跳过鉴权注解
@@ -31,17 +28,11 @@ public class IgnoreSaRouteFunction implements SaFunction {
                 // controller和方法上都加了跳过鉴权注解,以方法上为准
                 IgnoreAuth annotation = handlerMethod.getMethodAnnotation(IgnoreAuth.class);
                 if (Objects.nonNull(annotation) ){
-                    if (ignoreAuth.ignore()) {
-                        SaRouter.stop();
-                    } else {
-                        StpUtil.checkLogin();
-                    }
+                    return !ignoreAuth.ignore();
                 }
             }
-            if (Objects.nonNull(ignoreAuth) && ignoreAuth.ignore()){
-                SaRouter.stop();
-            }
+            return Objects.nonNull(ignoreAuth) && ignoreAuth.ignore();
         }
-        StpUtil.checkLogin();
+        return false;
     }
 }

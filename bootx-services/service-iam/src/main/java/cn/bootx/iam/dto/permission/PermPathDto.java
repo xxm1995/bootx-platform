@@ -14,7 +14,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@Schema(title = "权限资源")
+@Schema(title = "请求权限资源")
 public class PermPathDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -8909568804160122987L;
 

@@ -7,11 +7,14 @@ import cn.bootx.iam.core.upms.entity.UserRole;
 import cn.bootx.iam.dto.upms.RoleDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static cn.bootx.iam.code.CachingCode.USER_PATH;
 
 /**
  * 用户角色关系
@@ -30,6 +33,7 @@ public class UserRoleService {
      * 给用户分配角色
      */
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {USER_PATH},allEntries = true)
     public void saveAndUpdate(Long userId, List<Long> roleIds){
         // 先删除用户拥有的角色
         userRoleManager.deleteByUser(userId);

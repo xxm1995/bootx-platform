@@ -1,13 +1,14 @@
 package cn.bootx.iam.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.upms.service.RoleMenuService;
 import cn.bootx.iam.dto.permission.PermMenuDto;
 import cn.bootx.iam.dto.upms.UserMenuAndButtonDto;
 import cn.bootx.iam.param.upms.RolePermissionParam;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,18 +33,21 @@ public class RoleMenuController {
         return Res.ok(true);
     }
 
+    @IgnoreAuth
     @Operation(summary = "获取菜单树, 不包含按钮权限")
     @GetMapping("/findMenuTree")
     public ResResult<List<PermMenuDto>> findMenuTree(){
         return Res.ok(roleMenuService.findMenuTree());
     }
 
+    @IgnoreAuth
     @Operation(summary = "获取权限菜单id列表,不包含按钮权限")
     @GetMapping("/findMenuIds")
     public ResResult<List<Long>> findMenuIds(){
         return Res.ok(roleMenuService.findMenuIds());
     }
 
+    @IgnoreAuth
     @Operation(summary = "获取按钮权限, 不包含菜单权限")
     @GetMapping("/findButtonPermission")
     public ResResult<List<String>> findButtonPermission(){
@@ -56,6 +60,7 @@ public class RoleMenuController {
         return Res.ok(roleMenuService.findIdsByRole(roleId));
     }
 
+    @IgnoreAuth
     @Operation(summary = "获取菜单和按钮权限")
     @GetMapping("/findMenuAndButtonPermission")
     public ResResult<UserMenuAndButtonDto> findMenuAndButtonPermission(){

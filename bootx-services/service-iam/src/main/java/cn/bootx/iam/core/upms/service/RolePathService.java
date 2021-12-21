@@ -11,12 +11,17 @@ import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static cn.bootx.iam.code.CachingCode.USER_PATH;
 
 
 /**
@@ -38,6 +43,7 @@ public class RolePathService {
      * 保存角色路径授权
      */
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {USER_PATH},allEntries = true)
     public void addRolePath(Long roleId, List<Long> permissionIds) {
         // 删旧增新
         rolePathManager.deleteByRole(roleId);
@@ -57,7 +63,18 @@ public class RolePathService {
     }
 
     /**
-     * 查询用户查询拥有的路径权限信息
+     * 查询用户拥有的路径权限信息
+     */
+    @Cacheable(value = USER_PATH,key = "#method+':'+#userId")
+    public List<String> findSimplePathsByUser(String method,Long userId){
+        return this.findPathsByUser(userId).stream()
+                .filter(permPathDto -> Objects.equals(method,permPathDto.getRequestType()))
+                .map(PermPathDto::getPath)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 查询用户拥有的路径权限信息
      */
     public List<PermPathDto> findPathsByUser(Long userId){
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
@@ -71,11 +88,10 @@ public class RolePathService {
         return paths;
     }
 
-
     /**
      * 查询用户查询拥有的权限信息
      */
-    public List<PermPathDto> findPermissionsByUser(Long userId){
+    private List<PermPathDto> findPermissionsByUser(Long userId){
         List<PermPathDto> permissions = new ArrayList<>(0);
 
         List<Long> roleIds = userRoleService.findRoleIdsByUser(userId);

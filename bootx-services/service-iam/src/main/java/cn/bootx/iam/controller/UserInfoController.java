@@ -1,5 +1,6 @@
 package cn.bootx.iam.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.user.service.UserInfoService;
@@ -69,6 +70,7 @@ public class UserInfoController {
         return Res.ok();
     }
 
+    @IgnoreAuth
     @Operation(summary = "获取用户信息")
     @GetMapping("/getUserInfo")
     public ResResult<UserInfoDto> getUserInfo(){

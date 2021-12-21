@@ -176,7 +176,7 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		// 判断是否想要设置为永久
 		if(timeout == SaTokenDao.NEVER_EXPIRE) {
 			long expire = getObjectTimeout(key);
-			if(expire == SaTokenDao.NEVER_EXPIRE) {
+			if (expire == SaTokenDao.NEVER_EXPIRE) {
 				// 如果其已经被设置为永久，则不作任何处理 
 			} else {
 				// 如果尚未被设置为永久，那么再次set一次
@@ -187,8 +187,6 @@ public class SaTokenDaoRedis implements SaTokenDao {
 		objectRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
 	}
 
-
-	
 	/**
 	 * 搜索数据 
 	 */

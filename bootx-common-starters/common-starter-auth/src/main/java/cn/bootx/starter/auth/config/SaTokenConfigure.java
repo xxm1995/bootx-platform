@@ -1,6 +1,6 @@
 package cn.bootx.starter.auth.config;
 
-import cn.bootx.starter.auth.handler.IgnoreSaRouteFunction;
+import cn.bootx.starter.auth.handler.SaRouteHandler;
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
 import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import cn.dev33.satoken.router.SaRouter;
@@ -23,6 +23,7 @@ import java.util.Collections;
 public class SaTokenConfigure implements WebMvcConfigurer {
 
     private final AuthProperties permitAllUrlProperties;
+    private final SaRouteHandler saRouteHandler;
 
     /**
      * 注册拦截器
@@ -33,10 +34,9 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         registry.addInterceptor(new SaRouteInterceptor((req, res, handler)->
                 SaRouter.match(Collections.singletonList("/**"))
                         .notMatch(permitAllUrlProperties.getIgnoreUrls())
-                        .check(new IgnoreSaRouteFunction(handler))
+                        .check(saRouteHandler.check(handler))
         )).addPathPatterns("/**");
         // 注册注解拦截器
         registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
-
     }
 }

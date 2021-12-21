@@ -14,11 +14,11 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 * @date 2021/7/30
 */
 @Configuration
-public class MySaTokenDaoRedisConfiguration extends SaTokenRedisConfiguration {
+public class BootxSaTokenRedisConfiguration extends SaTokenRedisConfiguration {
 
     private final ObjectMapper objectMapper;
 
-    public MySaTokenDaoRedisConfiguration(SaTokenRedisProperties saTokenDaoRedisProperties, RedisConnectionFactory connectionFactory, ObjectMapper objectMapper) {
+    public BootxSaTokenRedisConfiguration(SaTokenRedisProperties saTokenDaoRedisProperties, RedisConnectionFactory connectionFactory, ObjectMapper objectMapper) {
         super(saTokenDaoRedisProperties, connectionFactory);
         this.objectMapper = objectMapper;
     }
