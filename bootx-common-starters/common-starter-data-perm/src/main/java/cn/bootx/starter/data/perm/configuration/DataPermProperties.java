@@ -14,6 +14,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("bootx.starter.data-perm")
 public class DataPermProperties {
 
+    /** 开启字段加密 */
+
+    /** 开启请求拦截 */
+
     /** 字段加密 key */
     private String fieldDecryptKey = "UCrtxSCwYZNCIlav";
 

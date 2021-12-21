@@ -71,7 +71,7 @@ public class RoleController {
     @Operation( summary = "分页查询角色")
     @GetMapping(value = "/page")
     public ResResult<PageResult<RoleDto>> page(PageParam pageParam, RoleParam roleParam){
-        return Res.ok(roleService.page(pageParam));
+        return Res.ok(roleService.page(pageParam,roleParam));
     }
 
     @Operation( summary = "编码是否被使用")

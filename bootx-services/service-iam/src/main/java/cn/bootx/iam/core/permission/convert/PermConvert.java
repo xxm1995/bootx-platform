@@ -2,11 +2,11 @@ package cn.bootx.iam.core.permission.convert;
 
 import cn.bootx.iam.core.permission.entity.PermMenu;
 import cn.bootx.iam.core.permission.entity.PermPath;
+import cn.bootx.iam.core.permission.entity.RequestPath;
 import cn.bootx.iam.dto.permission.PermMenuDto;
 import cn.bootx.iam.dto.permission.PermPathDto;
 import cn.bootx.iam.param.permission.PermMenuParam;
 import cn.bootx.iam.param.permission.PermPathParam;
-import cn.bootx.starter.data.perm.request.entity.RequestPerm;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
@@ -30,7 +30,7 @@ public interface PermConvert {
     PermPath convert(PermPathDto in);
 
     @Mappings({})
-    PermPath convert(RequestPerm in);
+    PermPath convert(RequestPath in);
 
     @Mappings({})
     PermMenu convert(PermMenuParam in);

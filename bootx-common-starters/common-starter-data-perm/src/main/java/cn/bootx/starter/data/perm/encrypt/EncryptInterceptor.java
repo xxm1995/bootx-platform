@@ -35,6 +35,9 @@ public class EncryptInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object[] args = invocation.getArgs();
+        if (args.length < 2){
+            return invocation.proceed();
+        }
         // 获取第二个参数
         Object arg = args[1];
         if (arg instanceof Map){

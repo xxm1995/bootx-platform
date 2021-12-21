@@ -9,11 +9,10 @@ import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.permission.convert.PermConvert;
 import cn.bootx.iam.core.permission.dao.PermPathManager;
 import cn.bootx.iam.core.permission.entity.PermPath;
+import cn.bootx.iam.core.permission.entity.RequestPath;
 import cn.bootx.iam.core.upms.dao.RolePathManager;
 import cn.bootx.iam.dto.permission.PermPathDto;
 import cn.bootx.iam.param.permission.PermPathParam;
-import cn.bootx.starter.data.perm.request.entity.RequestPerm;
-import cn.bootx.starter.data.perm.request.service.RequestPermService;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.StrUtil;
@@ -36,7 +35,7 @@ public class PermPathService {
     private final PermPathManager permPathManager;
     private final RolePathManager rolePathManager;
 
-    private final RequestPermService requestPermService;
+    private final RequestPathService requestPathService;
 
     /**
      * 添加权限信息
@@ -100,24 +99,24 @@ public class PermPathService {
     @Transactional(rollbackFor = Exception.class)
     @OperateLog
     public void syncSystem() {
-        List<RequestPerm> systemRequests = requestPermService.getSystemRequests();
-        List<PermPath> permPaths = systemRequests.stream()
-                .map(requestPerm -> {
-                    PermPath permPath = PermConvert.CONVERT.convert(requestPerm);
+        List<RequestPath> requestPaths = requestPathService.getRequestPaths();
+        List<PermPath> permPaths = requestPaths.stream()
+                .map(requestPath -> {
+                    PermPath permPath = PermConvert.CONVERT.convert(requestPath);
                     // 请求权限码
                     String code = null;
-                    if (StrUtil.isNotBlank(requestPerm.getClassName()) && StrUtil.isNotBlank(requestPerm.getMethodName())){
-                        code = requestPerm.getClassName()+ "#" +requestPerm.getMethodName();
+                    if (StrUtil.isNotBlank(requestPath.getClassName()) && StrUtil.isNotBlank(requestPath.getMethodName())){
+                        code = requestPath.getClassName()+ "#" + requestPath.getMethodName();
                     }
                     // 请求备注
                     String remark = null;
-                    if (StrUtil.isNotBlank(requestPerm.getClassRemark()) && StrUtil.isNotBlank(requestPerm.getMethodRemark())){
-                        remark = requestPerm.getClassRemark()+ " " +requestPerm.getMethodRemark();
+                    if (StrUtil.isNotBlank(requestPath.getClassRemark()) && StrUtil.isNotBlank(requestPath.getMethodRemark())){
+                        remark = requestPath.getClassRemark()+ " " + requestPath.getMethodRemark();
                     }
                     return permPath.setCode(code)
-                            .setName(requestPerm.getMethodRemark())
+                            .setName(requestPath.getMethodRemark())
                             .setRemark(remark)
-                            .setGroupName(requestPerm.getClassRemark())
+                            .setGroupName(requestPath.getClassRemark())
                             .setSystem(true)
                             .setEnable(true);
                 }).collect(Collectors.toList());

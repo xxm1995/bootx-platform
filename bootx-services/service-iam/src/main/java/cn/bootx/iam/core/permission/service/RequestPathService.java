@@ -1,6 +1,6 @@
-package cn.bootx.starter.data.perm.request.service;
+package cn.bootx.iam.core.permission.service;
 
-import cn.bootx.starter.data.perm.request.entity.RequestPerm;
+import cn.bootx.iam.core.permission.entity.RequestPath;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.collection.CollUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,22 +26,22 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RequestPermService {
+public class RequestPathService {
 
     private final WebApplicationContext applicationContext;
 
     /**
      * 获取系统请求列表
      */
-    public List<RequestPerm> getSystemRequests() {
+    public List<RequestPath> getRequestPaths() {
         RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
-        List<RequestPerm> RequestPerms = new ArrayList<>(map.size());
+        List<RequestPath> requestPathList = new ArrayList<>(map.size());
         for (RequestMappingInfo requestMappingInfo : map.keySet()) {
             // 根据请求方式和路径构建请求权限对象
-            List<RequestPerm> requestPerms = this.builderRequestPerm(requestMappingInfo);
-            if (CollUtil.isEmpty(requestPerms)){
+            List<RequestPath> requestPaths = this.builderRequestPaths(requestMappingInfo);
+            if (CollUtil.isEmpty(requestPaths)){
                 continue;
             }
 
@@ -56,22 +56,22 @@ public class RequestPermService {
             String className = beanClass.getSimpleName();
             String classFullName = beanClass.getName();
             String classRemark = this.getTagName(beanClass);
-            for (RequestPerm requestPerm : requestPerms) {
-                requestPerm.setClassName(className)
+            for (RequestPath requestPath : requestPaths) {
+                requestPath.setClassName(className)
                         .setClassFullName(classFullName)
                         .setClassRemark(classRemark)
                         .setMethodName(methodName)
                         .setMethodRemark(summary);
             }
-            RequestPerms.addAll(requestPerms);
+            requestPathList.addAll(requestPaths);
         }
-        return RequestPerms;
+        return requestPathList;
     }
 
     /**
      * 获取请求类型
      */
-    private List<RequestPerm> builderRequestPerm(RequestMappingInfo requestMappingInfo){
+    private List<RequestPath> builderRequestPaths(RequestMappingInfo requestMappingInfo){
         // 请求路径
         List<String> paths = Optional.ofNullable(requestMappingInfo.getPathPatternsCondition())
                 .map(PathPatternsRequestCondition::getPatternValues)
@@ -86,7 +86,7 @@ public class RequestPermService {
                 .map(Enum::name)
                 .collect(Collectors.toList());
         return paths.stream()
-                .map(path->this.builderRequestPerm(path,requestMethods))
+                .map(path->this.builderRequestPaths(path,requestMethods))
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
@@ -94,9 +94,9 @@ public class RequestPermService {
     /**
      * 获取请求路径
      */
-    private List<RequestPerm> builderRequestPerm(String path,List<String> requestMethods){
+    private List<RequestPath> builderRequestPaths(String path, List<String> requestMethods){
         return requestMethods.stream()
-                .map(requestMethod -> new RequestPerm()
+                .map(requestMethod -> new RequestPath()
                         .setPath(path)
                         .setRequestType(requestMethod))
                 .collect(Collectors.toList());

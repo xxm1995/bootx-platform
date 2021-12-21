@@ -1,4 +1,4 @@
-package cn.bootx.starter.data.perm.request.entity;
+package cn.bootx.iam.core.permission.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-public class RequestPerm {
+public class RequestPath {
 
     /** 请求类型 */
     private String requestType;

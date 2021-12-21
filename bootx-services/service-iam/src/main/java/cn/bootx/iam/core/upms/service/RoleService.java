@@ -98,8 +98,8 @@ public class RoleService {
     /**
      * 角色分页
      */
-    public PageResult<RoleDto> page(PageParam pageParam){
-        return MpUtil.convert2PageResult(roleManager.page(pageParam));
+    public PageResult<RoleDto> page(PageParam pageParam, RoleParam roleParam){
+        return MpUtil.convert2PageResult(roleManager.page(pageParam,roleParam));
     }
 
 
