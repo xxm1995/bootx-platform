@@ -78,6 +78,7 @@ public class ClientService {
     /**
      * 获取单条
      */
+    @Permission(dataScope = false,selectField = false)
     public ClientDto findByCode(String code){
         return clientManager.findByCode(code).map(Client::toDto).orElse(null);
     }

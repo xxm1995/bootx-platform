@@ -1,7 +1,7 @@
 package cn.bootx.starter.data.perm.configuration;
 
 import cn.bootx.common.mybatisplus.interceptor.MpInterceptor;
-import cn.bootx.starter.data.perm.data.DataPermInterceptor;
+import cn.bootx.starter.data.perm.scope.DataScopeInterceptor;
 import cn.bootx.starter.data.perm.select.SelectFieldPermInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,8 +22,8 @@ public class DatePermConfiguration {
      */
     @Bean
     @ConditionalOnProperty(prefix = "bootx.starter.data-perm", value = "enableDataPerm", havingValue = "true",matchIfMissing = true)
-    public MpInterceptor dataPermInterceptorMp(DataPermInterceptor dataPermInterceptor) {
-        return new MpInterceptor(dataPermInterceptor);
+    public MpInterceptor dataPermInterceptorMp(DataScopeInterceptor dataScopeInterceptor) {
+        return new MpInterceptor(dataScopeInterceptor);
     }
     /**
      * 查询字段权限插件

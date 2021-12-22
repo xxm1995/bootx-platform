@@ -33,7 +33,7 @@ public class SystemParamService {
         if (systemParamManager.existedByKey(systemParameter.getParamKey())){
             throw new BizException("key重复");
         }
-        systemParameter.setSystem(false);
+        systemParameter.setInternal(false);
         systemParamManager.save(systemParameter);
     }
 
@@ -72,8 +72,8 @@ public class SystemParamService {
     public void delete(Long id) {
         SystemParameter systemParameter = systemParamManager.findById(id).orElseThrow(() -> new BizException("系统参数不存在"));
 
-        if (systemParameter.isSystem()){
-            throw new BizException("系统参数不可以被删除");
+        if (systemParameter.isInternal()){
+            throw new BizException("内置参数不可以被删除");
         }
     }
 

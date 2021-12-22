@@ -38,7 +38,7 @@ public class PermPathParam implements Serializable {
     private boolean enable;
 
     @Schema(description = "是否通过系统生成的权限")
-    private boolean system;
+    private boolean generate;
 
     @Schema(description = "描述")
     private String remark;

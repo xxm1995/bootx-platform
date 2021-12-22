@@ -4,6 +4,7 @@ import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.annotation.OperateLogs;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.jackson.util.JacksonUtil;
+import cn.bootx.common.spring.util.AopUtil;
 import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.starter.audit.log.param.OperateLogParam;
 import cn.bootx.starter.audit.log.service.OperateLogService;
@@ -14,16 +15,13 @@ import cn.hutool.extra.servlet.ServletUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -70,7 +68,7 @@ public class OperateLogAspectHandler {
      * 操作log处理
      */
     protected void handleLog(JoinPoint joinPoint, Exception e, Object o){
-        List<OperateLog> logs = getAnnotationLog(joinPoint);
+        List<OperateLog> logs = getMethodAnnotation(joinPoint);
         if (CollUtil.isEmpty(logs)){
             return;
         }
@@ -120,22 +118,15 @@ public class OperateLogAspectHandler {
     /**
      * 获取注解
      */
-    private List<OperateLog> getAnnotationLog(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-
-        if (method != null) {
-            List<OperateLog> operateLogs = Optional.ofNullable(method.getAnnotation(OperateLogs.class))
-                    .map(OperateLogs::value)
-                    .map(ListUtil::of)
-                    .orElse(null);
-            if (CollUtil.isEmpty(operateLogs)){
-                operateLogs = ListUtil.of(method.getAnnotation(OperateLog.class));
-            }
-            return operateLogs;
+    private List<OperateLog> getMethodAnnotation(JoinPoint joinPoint) {
+        List<OperateLog> operateLogs = Optional.ofNullable(AopUtil.getMethodAnnotation(joinPoint,OperateLogs.class))
+                .map(OperateLogs::value)
+                .map(ListUtil::of)
+                .orElse(null);
+        if (CollUtil.isEmpty(operateLogs)){
+            operateLogs = ListUtil.of(AopUtil.getMethodAnnotation(joinPoint,OperateLog.class));
         }
-        return null;
+        return operateLogs;
     }
 
 }

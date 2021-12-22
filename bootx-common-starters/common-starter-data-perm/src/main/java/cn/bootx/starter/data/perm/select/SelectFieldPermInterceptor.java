@@ -41,7 +41,7 @@ public class SelectFieldPermInterceptor  extends JsqlParserSupport implements In
         }
         // 是否添加了对应的注解来开启数据权限控制
         Permission permission = DataPermContextHolder.getPermission();
-        if (Objects.isNull(permission) || !permission.selectFieldPerm()){
+        if (Objects.isNull(permission) || !permission.selectField()){
             return;
         }
         // 检查是否已经登录和是否是超级管理员

@@ -30,8 +30,8 @@ public class SystemParameterDto extends BaseDto {
     private Integer type;
 
     @Schema(description= "是否系统参数")
-    private boolean system;
+    private boolean internal;
 
     @Schema(description= "备注")
-    private String mark;
+    private String remark;
 }

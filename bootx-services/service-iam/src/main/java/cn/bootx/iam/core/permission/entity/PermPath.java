@@ -41,7 +41,7 @@ public class PermPath extends MpBaseEntity implements EntityBaseFunction<PermPat
     private boolean enable;
 
     /** 是否通过系统生成的权限 */
-    private boolean system;
+    private boolean generate;
 
     /** 描述 */
     private String remark;

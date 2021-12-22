@@ -25,7 +25,7 @@ public class RoleDto extends BaseDto implements Serializable {
     private String name;
 
     @Schema(description = "是否系统内置 Y 内置 N 不是  内置 不能修改")
-    private boolean system;
+    private boolean internal;
 
     /**
      * 数据权限类型

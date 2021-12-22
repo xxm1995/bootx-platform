@@ -28,7 +28,7 @@ public class Role extends MpBaseEntity implements EntityBaseFunction<RoleDto> {
     private String name;
 
     /** 是否系统内置 Y 内置 N 不是  内置 不能修改*/
-    private boolean system;
+    private boolean internal;
 
     /**
      * 数据权限类型

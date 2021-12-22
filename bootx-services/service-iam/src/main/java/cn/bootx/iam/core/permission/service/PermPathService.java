@@ -117,7 +117,7 @@ public class PermPathService {
                             .setName(requestPath.getMethodRemark())
                             .setRemark(remark)
                             .setGroupName(requestPath.getClassRemark())
-                            .setSystem(true)
+                            .setGenerate(true)
                             .setEnable(true);
                 }).collect(Collectors.toList());
         // 增量更新

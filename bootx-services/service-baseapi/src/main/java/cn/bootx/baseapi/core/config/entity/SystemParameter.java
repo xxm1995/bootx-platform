@@ -37,10 +37,10 @@ public class SystemParameter extends MpBaseEntity implements EntityBaseFunction<
 
     /** 系统内置参数 */
     @TableField(updateStrategy = FieldStrategy.IGNORED)
-    private boolean system;
+    private boolean internal;
 
     /** 备注 */
-    private String mark;
+    private String remark;
 
     @Override
     public SystemParameterDto toDto() {

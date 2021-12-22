@@ -14,13 +14,13 @@ import java.lang.annotation.*;
 public @interface Permission {
 
     /**
-     * 数据权限
+     * 数据范围权限
      */
-    boolean dataPerm() default true;
+    boolean dataScope() default true;
 
     /**
      * 查询字段权限
      */
-    boolean selectFieldPerm() default true;
+    boolean selectField() default true;
 
 }

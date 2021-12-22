@@ -381,7 +381,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValue 字段数据
      * @return 数量
      */
-    public Integer countByField(SFunction<T, ?> field, Object fieldValue){
+    public Long countByField(SFunction<T, ?> field, Object fieldValue){
         return lambdaQuery().eq(field,fieldValue).count();
     }
 

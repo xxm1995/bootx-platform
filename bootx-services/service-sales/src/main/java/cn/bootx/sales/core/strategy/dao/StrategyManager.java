@@ -30,7 +30,7 @@ public class StrategyManager extends BaseManager<StrategyMapper,Strategy> {
         return existedByField(MpBaseEntity::getId,id);
     }
 
-    public int countByStrategyId(Long id) {
+    public Long countByStrategyId(Long id) {
         return countByField(MpBaseEntity::getId,id);
     }
 }
