@@ -17,7 +17,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "bootx.common.cache")
 public class CachingProperties {
 
-    /** 默认超时时间 */
+    /** 默认超时时间 30分钟 */
     private Integer defaultTtl = 60*30;
 
     /** 自定义过期时间 秒 */

@@ -4,7 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import lombok.Getter;
 
 /**
-*
+* 登录错误异常
 * @author xxm
 * @date 2021/8/13
 */

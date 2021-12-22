@@ -6,8 +6,8 @@ import cn.bootx.iam.core.permission.service.PermMenuService;
 import cn.bootx.iam.core.upms.service.RoleMenuService;
 import cn.bootx.iam.dto.permission.PermMenuDto;
 import cn.bootx.iam.param.permission.PermMenuParam;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

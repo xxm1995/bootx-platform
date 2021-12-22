@@ -35,7 +35,7 @@ public class EncryptInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object[] args = invocation.getArgs();
-        if (args.length < 2){
+        if (dataPermProperties.isEnableFieldDecrypt() && args.length < 2){
             return invocation.proceed();
         }
         // 获取第二个参数

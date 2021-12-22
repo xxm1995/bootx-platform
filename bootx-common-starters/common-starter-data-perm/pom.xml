@@ -18,6 +18,11 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-auth</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
             <artifactId>common-mybatis-plus</artifactId>
         </dependency>
     </dependencies>

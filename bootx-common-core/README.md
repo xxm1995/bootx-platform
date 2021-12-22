@@ -4,10 +4,13 @@
 - `BigField` 数据库大字段标识注解，详细使用见`common-mybatis-plus` 模块
 - `CountTime` 获取程序执行时间，
 - `EncryptionField` 数据库加密字段注解，详细使用见`common-starter-data-perm` 模块
-- `Idempotent` 幂等性拦截注解，用于拦截前端重复提交的请求，详细见 `common-idempotency`模块
+- `Idempotent` 幂等性拦截注解，用于拦截前端重复提交的请求，详细见`common-idempotency`模块
   - `enable` 是否开启幂等控制
   - `timeout` 超时时间配置，单位为毫秒，默认为10秒
 - `IgnoreAuth` 忽略鉴权注解，可以加在`Controller`的方法或类上，访问时不在进行鉴权，加在非`Controller`的地方无效，见 `common-starter-auth` 模块
+- `Permission` 权限控制注解，可以添加到方法和类上，添加后所执行的SQL会进行数据权限相关的控制，见`common-starter-data-perm`模块
+  - `dataPerm` 启用数据权限控制
+  - `selectFieldPerm` 启用查询字段权限控制
 - `OperateLog` 操作日志记录注解，`AOP`处理类自动拦截，记录对应的操作行为，见 `common-starter-audit-log`模块
   - `title`：模块名称
   - `businessType`：业务操作类型，默认为OTHER

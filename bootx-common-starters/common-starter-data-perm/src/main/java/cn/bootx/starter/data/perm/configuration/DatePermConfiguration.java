@@ -1,10 +1,10 @@
 package cn.bootx.starter.data.perm.configuration;
 
 import cn.bootx.common.mybatisplus.interceptor.MpInterceptor;
-import cn.bootx.starter.data.perm.record.BootxDataPermissionHandler;
+import cn.bootx.starter.data.perm.data.DataPermInterceptor;
 import cn.bootx.starter.data.perm.select.SelectFieldPermInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,13 +21,15 @@ public class DatePermConfiguration {
      * 数据权限插件
      */
     @Bean
-    public MpInterceptor dataPermissionInterceptor(BootxDataPermissionHandler bootxDataPermissionHandler) {
-        return new MpInterceptor(new DataPermissionInterceptor(bootxDataPermissionHandler));
+    @ConditionalOnProperty(prefix = "bootx.starter.data-perm", value = "enableDataPerm", havingValue = "true",matchIfMissing = true)
+    public MpInterceptor dataPermInterceptorMp(DataPermInterceptor dataPermInterceptor) {
+        return new MpInterceptor(dataPermInterceptor);
     }
     /**
      * 查询字段权限插件
      */
     @Bean
+    @ConditionalOnProperty(prefix = "bootx.starter.data-perm", value = "enableSelectFieldPerm", havingValue = "true",matchIfMissing = true)
     public MpInterceptor selectFieldPermInterceptorMp(SelectFieldPermInterceptor bootxDataPermissionHandler) {
         return new MpInterceptor(bootxDataPermissionHandler);
     }

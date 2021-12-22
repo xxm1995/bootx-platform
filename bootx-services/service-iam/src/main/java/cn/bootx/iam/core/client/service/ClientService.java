@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.client.service;
 
+import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -23,6 +24,7 @@ import java.util.List;
  * @author xxm
  * @date 2021/8/25
  */
+@Permission
 @Slf4j
 @Service
 @RequiredArgsConstructor

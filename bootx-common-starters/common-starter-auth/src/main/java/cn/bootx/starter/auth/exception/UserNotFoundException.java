@@ -1,7 +1,7 @@
 package cn.bootx.starter.auth.exception;
 
 /**
-* 异常
+* 用户未找到异常
 * @author xxm  
 * @date 2021/7/30 
 */

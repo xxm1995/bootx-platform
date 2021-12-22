@@ -76,6 +76,9 @@ bootx:
         "[订单服务]": cn.bootx.order
         "[演示模块]": cn.bootx.demo
         "[自定义starter组件]": cn.bootx.starter
+    cache:
+      keys-ttl:
+        "[iam:user:path]" : 5200
   starter:
     auth:
       default-password: 123456
