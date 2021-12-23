@@ -1,10 +1,10 @@
 package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.util.ResultConvertUtil;
-import cn.bootx.iam.core.upms.dao.RoleManager;
+import cn.bootx.iam.core.role.dao.RoleManager;
 import cn.bootx.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.iam.core.upms.entity.UserRole;
-import cn.bootx.iam.dto.upms.RoleDto;
+import cn.bootx.iam.dto.role.RoleDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;

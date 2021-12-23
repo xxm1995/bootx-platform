@@ -4,7 +4,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.iam.core.upms.service.UserRoleService;
-import cn.bootx.iam.dto.upms.RoleDto;
+import cn.bootx.iam.dto.role.RoleDto;
 import cn.bootx.iam.param.upms.UserRoleParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

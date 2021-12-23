@@ -1,18 +1,18 @@
-package cn.bootx.iam.core.upms.service;
+package cn.bootx.iam.core.role.service;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.iam.core.upms.dao.RoleManager;
+import cn.bootx.iam.core.role.dao.RoleManager;
 import cn.bootx.iam.core.upms.dao.UserRoleManager;
-import cn.bootx.iam.core.upms.entity.Role;
-import cn.bootx.iam.dto.upms.RoleDto;
+import cn.bootx.iam.core.role.entity.Role;
+import cn.bootx.iam.dto.role.RoleDto;
 import cn.bootx.iam.exception.role.RoleAlreadyExistedException;
 import cn.bootx.iam.exception.role.RoleAlreadyUsedException;
 import cn.bootx.iam.exception.role.RoleNotExistedException;
-import cn.bootx.iam.param.upms.RoleParam;
+import cn.bootx.iam.param.role.RoleParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;

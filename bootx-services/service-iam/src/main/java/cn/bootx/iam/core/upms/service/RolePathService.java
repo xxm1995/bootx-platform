@@ -76,7 +76,7 @@ public class RolePathService {
     /**
      * 查询用户拥有的路径权限信息
      */
-    public List<PermPathDto> findPathsByUser(Long userId){
+    private List<PermPathDto> findPathsByUser(Long userId){
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
 
         List<PermPathDto> paths;

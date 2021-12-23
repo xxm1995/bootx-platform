@@ -6,7 +6,6 @@ import cn.bootx.iam.core.user.service.UserDeptService;
 import cn.bootx.iam.dto.dept.DeptDto;
 import cn.bootx.iam.param.user.UserDeptParam;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

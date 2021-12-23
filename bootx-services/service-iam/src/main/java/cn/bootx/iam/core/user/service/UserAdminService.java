@@ -9,7 +9,7 @@ import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.dept.DeptDto;
-import cn.bootx.iam.dto.upms.RoleDto;
+import cn.bootx.iam.dto.role.RoleDto;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.dto.user.UserInfoWhole;
 import cn.bootx.iam.exception.user.UserInfoNotExistsException;

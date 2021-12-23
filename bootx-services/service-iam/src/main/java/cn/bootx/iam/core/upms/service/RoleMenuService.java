@@ -139,7 +139,7 @@ public class RoleMenuService {
     /**
      * 查询用户查询拥有的权限信息
      */
-    public List<PermMenuDto> findPermissionsByUser(Long userId){
+    private List<PermMenuDto> findPermissionsByUser(Long userId){
         List<PermMenuDto> permissions = new ArrayList<>(0);
 
         List<Long> roleIds = userRoleService.findRoleIdsByUser(userId);

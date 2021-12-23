@@ -1,12 +1,12 @@
-package cn.bootx.iam.core.upms.dao;
+package cn.bootx.iam.core.role.dao;
 
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.iam.core.upms.entity.Role;
-import cn.bootx.iam.param.upms.RoleParam;
+import cn.bootx.iam.core.role.entity.Role;
+import cn.bootx.iam.param.role.RoleParam;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;

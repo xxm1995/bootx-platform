@@ -1,8 +1,8 @@
-package cn.bootx.iam.core.upms.convert;
+package cn.bootx.iam.core.role.convert;
 
-import cn.bootx.iam.core.upms.entity.Role;
-import cn.bootx.iam.dto.upms.RoleDto;
-import cn.bootx.iam.param.upms.RoleParam;
+import cn.bootx.iam.core.role.entity.Role;
+import cn.bootx.iam.dto.role.RoleDto;
+import cn.bootx.iam.param.role.RoleParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
@@ -16,7 +16,4 @@ public interface RoleConvert {
 
     @Mappings({})
     Role convert(RoleParam in);
-
-    @Mappings({})
-    Role convert(RoleDto in);
 }

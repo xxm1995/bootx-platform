@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DataScopeInterceptor extends JsqlParserSupport implements InnerInterceptor {
     private final DataPermProperties dataPermProperties;
-    private final DataScopeHandler dataScopeHandler;
+    private final DataPermScopeHandler dataPermScopeHandler;
 
     @Override
     public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
@@ -101,26 +101,26 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
      * @return 新的表达式
      */
     protected Expression dataScope(Expression where) {
-        DataScope dataScope = dataScopeHandler.getDataScope();
+        DataPermScope dataPermScope = dataPermScopeHandler.getDataPermScope();
         Expression queryExpression;
-        DataScopeType scopeType = dataScope.getScopeType();
+        DataScopeType scopeType = dataPermScope.getScopeType();
         switch (scopeType){
             case SELF:{
                 queryExpression = this.selfScope();
                 break;
             }
             case DEPT_SCOPE:{
-                Expression deptScopeExpression = this.deptScope(dataScope.getDeptScopeIds());
+                Expression deptScopeExpression = this.deptScope(dataPermScope.getDeptScopeIds());
                 // 追加查询自身的数据
                 queryExpression = new OrExpression(deptScopeExpression,this.selfScope());
                 break;
             }
             case USER_SCOPE:{
-                queryExpression = this.userScope(dataScope.getUserScopeIds());
+                queryExpression = this.userScope(dataPermScope.getUserScopeIds());
                 break;
             }
             case DEPT_AND_USER_SCOPE:{
-                queryExpression = this.deptAndUserScope(dataScope.getDeptScopeIds(),dataScope.getUserScopeIds());
+                queryExpression = this.deptAndUserScope(dataPermScope.getDeptScopeIds(), dataPermScope.getUserScopeIds());
                 break;
             }
             case ALL_SCOPE:

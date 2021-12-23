@@ -1,4 +1,4 @@
-package cn.bootx.iam.dto.upms;
+package cn.bootx.iam.dto.role;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,17 +27,7 @@ public class RoleDto extends BaseDto implements Serializable {
     @Schema(description = "是否系统内置 Y 内置 N 不是  内置 不能修改")
     private boolean internal;
 
-    /**
-     * 数据权限类型
-     */
-    private String dsType;
-
-    /**
-     * 数据权限范围
-     */
-    private String dsScope;
-
     @Schema(description = "描述")
-    private String description;
+    private String remark;
 
 }

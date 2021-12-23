@@ -17,18 +17,33 @@
 
 - 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) 、[管理平台(vue3)](http://web.platform.bootx.cn/)
 - 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) 、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vben)
-- 项目文档：[开发文档](https://www.yuque.com/bootx/bootx-platform/)
-- 快速启动：[启动文档](https://www.yuque.com/bootx/bootx-platform/vpi0gn), [QuickStart](./_doc/quickstart.md)
+- 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
+- 快速启动：[启动说明](https://www.yuque.com/bootx/bootx-platform/vpi0gn)
 - 开发计划：[开发任务](./_doc/TASK.md)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 
-特色功能
-- 针对敏感信息返回返回时自动脱敏
+## 🍎特色功能
+- 针对敏感信息，可以通过注解配置实现返回时自动脱敏
+- 针对重要信息，可以通过添加注解，实现在数据库中保密存储，配合数据脱敏使用可以更好的保护系统数据的安全
+- 支持多种范围的数据权限控制，如只能查看自己、只能查询指定部门、用户、可以查询全部的数据等等
 - 支持嵌套查询的超级查询构造器，自动生成对应条件SQL语句
 - 异常时返回链路追踪id，方便错误日志追踪
 - 定制Mybatis Plus组件，更方便开发
 
-## 🍇项目结构说明
+## 🥞项目整体结构
+```lua
+bootx-platform 
+    ├── _config -- 项目相关配置
+    ├── _doc -- 项目文档
+    ├── _license -- 使用外部项目对应开源协议
+    ├── bootx-common-core -- 核心包
+    ├── bootx-common-starters -- starter通用功能组件
+    ├── bootx-commons -- commons工具配置封装
+    ├── bootx-demo -- demo实例模块
+    ├── bootx-services -- 业务服务模块
+    ├── bootx-start -- 启动模块
+```
+## 🍇模块结构说明
 
 **模块分包设计**
 
@@ -44,7 +59,7 @@ service-iam
     ├── param -- 请求参数包
     ├── IamApplication -- 启动类
 ```
-**core核心包分包**
+**core核心包业务代码分包**
 
 ```lua
 ├───code 
@@ -55,36 +70,7 @@ service-iam
         ├── service -- 服务类
 ```
 
-## 🥞模块文档导航
-
-- [common核心包](bootx-common-core/README.md)
-- [commons工具配置封装](bootx-commons/README.md)
-  - [缓存配置](bootx-commons/common-cache/README.md)
-  - [异常处理器](bootx-commons/common-exception-handler/README.md)
-  - [请求头工具](bootx-commons/common-header-holder/README.md)
-  - [幂等处理器](bootx-commons/common-idempotency/README.md)
-  - [JackSon配置](bootx-commons/common-jackson/README.md)
-  - [日志扩展](bootx-commons/common-log/README.md)
-  - [mybatis-plus扩展](bootx-commons/common-mybatis-plus/README.md)
-  - [Redis客户端封装](bootx-commons/common-redis-client/README.md)
-  - [sequence序列生成器](bootx-commons/common-sequence/README.md)
-  - [Spring功能扩展](bootx-commons/common-spring/README.md)
-  - [Swagger扩展](bootx-commons/common-swagger/README.md)
-  - [定时任务xxl-job](bootx-commons/common-xxl-job/README.md)
-- [starters功能封装](bootx-common-starters/README.md)
-  - [认证封装模块](bootx-common-starters/common-starter-auth/README.md)
-- [预置服务模块](bootx-services/README.md)
-  - [基础API](bootx-services/service-baseapi/README.md)
-  - [IAM身份识别与访问管理](bootx-services/service-iam/README.md)
-  - [通知中心](bootx-services/service-notice/README.md)
-  - [支付中心](bootx-services/service-payment/README.md)
-  - [商品中心](bootx-services/service-goods/README.md)
-  - [销售中心](bootx-services/service-sales/README.md)
-  - [订单中心](bootx-services/service-order/README.md)
-
-- [启动模块](bootx-start/README.md)
-
-## 🍇FAQ常见问题
+## 💡FAQ常见问题
 - 项目不全是UTF-8，导致无法无法启动
 
 - idea启动时显示命令过长，需要在启动配置编辑中设置缩短命令行
@@ -93,7 +79,7 @@ service-iam
 
 - SQL执行批量插入慢，数据库连接默认不开启批量插入功能，需要手动在MySQL URL连接中开启allowMultiQueries=true批量执行功能
 
-##  🍷License
+## 🍷License
 
 Apache License Version 2.0
 

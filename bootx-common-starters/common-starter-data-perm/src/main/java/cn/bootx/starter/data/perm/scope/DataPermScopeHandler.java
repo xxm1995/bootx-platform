@@ -5,10 +5,10 @@ package cn.bootx.starter.data.perm.scope;
 * @author xxm
 * @date 2021/12/22
 */
-public interface DataScopeHandler {
+public interface DataPermScopeHandler {
 
     /**
      * 返回数据权限查询条件的集合
      */
-    DataScope getDataScope();
+    DataPermScope getDataPermScope();
 }

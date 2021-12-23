@@ -13,7 +13,7 @@ import java.util.Set;
 */
 @Data
 @Accessors(chain = true)
-public class DataScope {
+public class DataPermScope {
 
     /**
      * 范围类型 自身,部门,人员,部门和人员

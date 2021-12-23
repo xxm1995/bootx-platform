@@ -1,7 +1,6 @@
-package cn.bootx.iam.param.upms;
+package cn.bootx.iam.param.role;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -24,5 +23,5 @@ public class RoleParam {
     private String name;
 
     @Schema(description= "描述")
-    private String description;
+    private String remark;
 }

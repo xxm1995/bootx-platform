@@ -14,44 +14,30 @@ import lombok.Getter;
 public enum ParamTypeEnum {
 
     /** 数字 */
-    NUMBER("number","数字","number"),
+    NUMBER("number","数字"),
 
     /** 字符串 */
-    STRING("string","字符串","string"),
+    STRING("string","字符串"),
 
     /** 布尔 */
-    BOOLEAN("boolean","布尔","boolean"),
+    BOOLEAN("boolean","布尔"),
 
     /** 日期 */
-    DATE("date","日期","date"),
+    DATE("date","日期"),
 
     /** 时间 */
-    TIME("time","时间","time"),
+    TIME("time","时间"),
 
     /** 日期时间 */
-    DATE_TIME("date_time","日期时间","date_time"),
+    DATE_TIME("date_time","日期时间"),
 
     /** 列表 */
-    LIST("list","列表","string"),
+    LIST("list","列表");
 
-    /** 数字之间 */
-    BETWEEN_NUMBER("between_number","数字之间","number"),
-
-    /** 字符串之间 */
-    BETWEEN_STRING("between_string","字符串之间","string"),
-
-    /** 日期之间 */
-    BETWEEN_DATE("between_date","日期之间","date"),
-
-    /** 时间之间 */
-    BETWEEN_TIME("between_time","时间之间","time"),
-
-    /** 日期时间之间 */
-    BETWEEN_DATE_TIME("between_date_time","日期时间之间","date_time");
-
+    /** 类型编码 */
     private final String code;
+    /** 类型名称 */
     private final String name;
-    private final String baseType;
 
 
     public static ParamTypeEnum getByCode(String code) {

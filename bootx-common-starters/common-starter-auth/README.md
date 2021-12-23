@@ -20,7 +20,11 @@
 ```yaml
 bootx.starter.auth:
   # 默认密码
-  defaultPassword: 123456
+  defaultPassword: salt
+  # 盐值
+  salt: 55521545
+  # openId类型参数名称(第三方登录传入的参数名)
+  openIdTypeParameter: openIdType
   # 不进行鉴权的路径
   ignoreUrls:
     - '/actuator/**'
@@ -35,5 +39,8 @@ bootx.starter.auth:
 ### 第三方登录实现
 通过实现 `OpenIdAuthentication` 接口并注入到Spring容器中即可，见IAM模块中的`PhoneLoginHandler`和`WeChatLoginHandler`等实现
 
-### 调用登录
+### 登录流程
 `TokenEndpoint` 接收登录相关请求，通过分发到具体登录实现类进行登录，登录成功后保存Token到Redis中
+
+### 请求接口权限控制
+
