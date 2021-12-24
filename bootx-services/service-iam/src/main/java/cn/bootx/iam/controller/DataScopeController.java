@@ -1,5 +1,6 @@
 package cn.bootx.iam.controller;
 
+import cn.bootx.iam.core.scope.service.DataScopeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,4 +16,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/data/scope")
 @RequiredArgsConstructor
 public class DataScopeController {
+    private final DataScopeService dataScopeService;
 }

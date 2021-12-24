@@ -2,8 +2,10 @@ package cn.bootx.iam.core.scope.entity;
 
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**   
@@ -13,6 +15,8 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
 @TableName("iam_data_scope_user")
 public class DataScopeUser extends MpIdEntity {

@@ -5,7 +5,6 @@ import cn.bootx.iam.core.upms.entity.UserDataScope;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 /**   
 *
@@ -16,4 +15,8 @@ import org.springframework.stereotype.Service;
 @Repository
 @RequiredArgsConstructor
 public class UserDataScopeManager extends BaseManager<UserDataScopeMapper, UserDataScope> {
+
+    public boolean existedByDataScopeIdd(Long dataScopeId){
+        return this.existedByField(UserDataScope::getDeptId,dataScopeId);
+    }
 }

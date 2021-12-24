@@ -15,4 +15,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class DataScopeUserManager extends BaseManager<DataScopeUserMapper, DataScopeUser> {
+
+    public boolean existedByDataScopeId(Long dataScopeId){
+        return this.existedByField(DataScopeUser::getDataScopeId,dataScopeId);
+    }
+
+    public void deleteByDataScopeId(Long dataScopeId){
+        this.deleteByField(DataScopeUser::getDataScopeId,dataScopeId);
+    }
 }

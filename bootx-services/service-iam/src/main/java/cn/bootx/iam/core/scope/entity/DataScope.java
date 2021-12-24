@@ -1,6 +1,10 @@
 package cn.bootx.iam.core.scope.entity;
 
+import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.iam.core.scope.convert.DataScopeConvert;
+import cn.bootx.iam.dto.scope.DataScopeDto;
+import cn.bootx.iam.param.scope.DataScopeParam;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +19,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @TableName("iam_data_scope")
-public class DataScope extends MpBaseEntity {
+public class DataScope extends MpBaseEntity implements EntityBaseFunction<DataScopeDto> {
 
     /** 编码 */
     private String code;
@@ -24,9 +28,17 @@ public class DataScope extends MpBaseEntity {
     private String name;
 
     /** 类型 */
-    private String type;
+    private Integer type;
 
     /** 备注 */
     private String remark;
 
+    public static DataScope init(DataScopeParam in){
+        return DataScopeConvert.CONVERT.convert(in);
+    }
+
+    @Override
+    public DataScopeDto toDto() {
+        return DataScopeConvert.CONVERT.convert(this);
+    }
 }
