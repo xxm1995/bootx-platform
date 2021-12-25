@@ -22,7 +22,7 @@ public class SecurityUtil {
 
     /**
      * 获取当前用户,无异常
-     * @return 当前登录用户名
+     * @return 当前登录用户
      */
     public Optional<UserDetail> getCurrentUser() {
         try {

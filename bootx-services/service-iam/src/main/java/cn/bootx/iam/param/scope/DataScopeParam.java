@@ -1,20 +1,17 @@
 package cn.bootx.iam.param.scope;
 
-import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
 * @author xxm
 * @date 2021/12/24
 */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "数据范围权限")
-public class DataScopeParam extends BaseDto {
+public class DataScopeParam{
 
     @Schema(description = "主键")
     private Long id;

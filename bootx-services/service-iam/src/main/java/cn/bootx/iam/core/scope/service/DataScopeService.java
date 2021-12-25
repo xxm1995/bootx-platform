@@ -118,6 +118,42 @@ public class DataScopeService {
     }
 
     /**
+     * 判断权限编码是否存在
+     */
+    public boolean existsByCode(String code){
+        return dataScopeManager.existsByCode(code);
+    }
+
+    /**
+     * 判断权限编码是否存在
+     */
+    public boolean existsByCode(String code,Long id){
+        return dataScopeManager.existsByCode(code,id);
+    }
+
+    /**
+     * name是否存在
+     */
+    public boolean existsByName(String name){
+        return dataScopeManager.existsByName(name);
+    }
+
+    /**
+     * name是否存在
+     */
+    public boolean existsByName(String name,Long id){
+        return dataScopeManager.existsByName(name,id);
+    }
+
+    /**
+     * 获取单条
+     */
+    public DataScopeDto findById(Long id){
+       return dataScopeManager.findById(id).map(DataScope::toDto)
+               .orElseThrow(() -> new BizException("数据不存在"));
+    }
+
+    /**
      * 分页
      */
     public PageResult<DataScopeDto> page(PageParam pageParam, DataScopeParam param){
@@ -127,7 +163,7 @@ public class DataScopeService {
     /**
      * 列表查询
      */
-    public List<DataScopeDto> list(){
+    public List<DataScopeDto> findAll(){
         return ResultConvertUtil.dtoListConvert(dataScopeManager.findAll());
     }
 

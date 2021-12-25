@@ -34,11 +34,16 @@ public class PathRouterCheck implements RouterCheck {
             String method = WebServletUtil.getMethod();
             String path = WebServletUtil.getPath();
 
-            Optional<Long> userId = SecurityUtil.getCurrentUser().map(UserDetail::getId);
-            if (!userId.isPresent()){
+            Optional<UserDetail> UserDetailOpt = SecurityUtil.getCurrentUser();
+            if (!UserDetailOpt.isPresent()){
                 return false;
             }
-            List<String> paths = rolePathService.findSimplePathsByUser(method,userId.get());
+            UserDetail userDetail = UserDetailOpt.get();
+            // 管理员有所有的权限
+            if (userDetail.isAdmin()){
+                return true;
+            }
+            List<String> paths = rolePathService.findSimplePathsByUser(method,userDetail.getId());
             return paths.stream()
                     .anyMatch(pattern->matcher.match(pattern, path));
         }

@@ -49,7 +49,6 @@ public class PermMenuController {
         return Res.ok(permissionService.findById(id));
     }
 
-
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
     public ResResult<Void> delete(Long id){
