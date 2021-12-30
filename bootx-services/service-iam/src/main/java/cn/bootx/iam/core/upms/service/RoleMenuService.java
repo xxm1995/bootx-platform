@@ -1,14 +1,13 @@
 package cn.bootx.iam.core.upms.service;
 
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.service.PermMenuService;
 import cn.bootx.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.iam.core.upms.entity.RoleMenu;
-import cn.bootx.iam.core.user.dao.UserInfoManager;
-import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.permission.PermMenuDto;
-import cn.bootx.iam.dto.upms.UserMenuAndButtonDto;
+import cn.bootx.iam.dto.upms.MenuAndResourceDto;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
@@ -33,7 +32,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RoleMenuService {
     private final RoleMenuManager roleMenuManager;
-    private final UserInfoManager userInfoManager;
 
     private final UserRoleService userRoleService;
     private final PermMenuService permMenuService;
@@ -54,7 +52,7 @@ public class RoleMenuService {
     /**
      * 根据角色查询对应的权限id
      */
-    public List<Long> findIdsByRole(Long roleId){
+    public List<Long> findPermissionIdsByRole(Long roleId){
         List<RoleMenu> rolePermissions = roleMenuManager.findAllByRole(roleId);
         return rolePermissions.stream()
                 .map(RoleMenu::getPermissionId)
@@ -62,76 +60,57 @@ public class RoleMenuService {
     }
 
     /**
-     * 获取权限树
-     */
-    public List<PermMenuDto> tree(){
-        return recursiveBuildTree(this.findPermissions(), null);
-    }
-
-    /**
-     * 获取菜单权限树, 不包含按钮权限
+     * 获取菜单权限树, 不包含资源权限
      */
     public List<PermMenuDto> findMenuTree(){
         List<PermMenuDto> permissions = this.findPermissions();
         List<PermMenuDto> permissionsByNotButton = permissions.stream()
-                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_BUTTON, o.getMenuType()))
+                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
                 .collect(Collectors.toList());
         return this.recursiveBuildTree(permissionsByNotButton, null);
     }
 
     /**
-     * 获取权限菜单id列表,不包含按钮权限
+     * 获取权限菜单id列表,不包含资源权限
      */
     public List<Long> findMenuIds() {
         List<PermMenuDto> permissions = this.findPermissions();
         return permissions.stream()
-                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_BUTTON, o.getMenuType()))
+                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
                 .map(PermMenuDto::getId)
                 .collect(Collectors.toList());
     }
 
     /**
-     * 获取按钮权限
+     * 获取菜单和资源权限
      */
-    public List<String> findButtonPermission(){
+    public MenuAndResourceDto getPermissions(){
         List<PermMenuDto> permissions = this.findPermissions();
-        return permissions.stream()
-                .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_BUTTON, o.getMenuType()))
-                .map(PermMenuDto::getPerms)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * 获取菜单和按钮权限
-     */
-    public UserMenuAndButtonDto findMenuAndButtonPermission(){
-        List<PermMenuDto> permissions = this.findPermissions();
-        List<String> buttonPermissions = permissions.stream()
-                .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_BUTTON, o.getMenuType()))
-                .map(PermMenuDto::getPerms)
+        List<String> resourcePerms = permissions.stream()
+                .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+                .map(PermMenuDto::getPermCode)
                 .collect(Collectors.toList());
         List<PermMenuDto> menus = permissions.stream()
-                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_BUTTON, o.getMenuType()))
+                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
                 .collect(Collectors.toList());
-        return new UserMenuAndButtonDto()
-                .setButtonPermissions(buttonPermissions)
+        return new MenuAndResourceDto()
+                .setResourcePerms(resourcePerms)
                 .setMenus(this.recursiveBuildTree(menus, null));
     }
 
     /**
-     * 获取权限
+     * 获取权限信息列表
      */
     private List<PermMenuDto> findPermissions(){
-        Long userId = SecurityUtil.getUserId();
-        UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
+        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(() -> new BizException("当前未登录"));
         List<PermMenuDto> permissions;
 
         //系统管理员，获取全部的菜单
-        if (userInfo.isAdmin()) {
+        if (userDetail.isAdmin()) {
             permissions = permMenuService.findAll();
         } else {
-            // 非管理员获取自身拥有权限的菜单
-            permissions = this.findPermissionsByUser(userInfo.getId());
+            // 非管理员获取自身拥有的权限
+            permissions = this.findPermissionsByUser(userDetail.getId());
         }
         return permissions;
     }

@@ -16,21 +16,24 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@Schema(title = "菜单权限")
+@Schema(title = "菜单和资源权限")
 public class PermMenuDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 1935403328634321841L;
 
     @Schema(description = "父id")
     private Long parentId;
 
-    @Schema(description = "菜单标题")
+    @Schema(description = "菜单标题/资源名称")
     private String title;
 
     @Schema(description = "路由名称，建议唯一")
     private String name;
 
-    @Schema(description = "菜单权限编码")
-    private String perms;
+    @Schema(description = "资源权限编码")
+    private String permCode;
+
+    @Schema(description = "是否有效")
+    private boolean effect;
 
     @Schema(description = "图标")
     private String icon;
@@ -47,25 +50,19 @@ public class PermMenuDto extends BaseDto implements Serializable {
     @Schema(description = "路径")
     private String path;
 
-    /**
-     * 菜单跳转地址(重定向)
-     */
+    @Schema(description = "菜单跳转地址(重定向)")
     private String redirect;
 
-    /**
-     * 菜单排序
-     */
+    @Schema(description = "菜单排序")
     private Double sortNo;
 
-    /**
-     * 类型（0：一级菜单；1：子菜单 ；2：按钮权限）
-     */
+    @Schema(description = "类型（0：一级菜单；1：子菜单 ；2：资源）")
     private Integer menuType;
 
-    @Schema(description = "meta")
     /**
-     * 是否缓存页面
+     * meta
      */
+    @Schema(description = "是否缓存页面")
     private boolean keepAlive;
 
     @Schema(description = "打开方式是否为外部打开")
@@ -74,16 +71,12 @@ public class PermMenuDto extends BaseDto implements Serializable {
     @Schema(description = "隐藏的标题内容")
     private boolean hiddenHeaderContent;
 
-    /**
-     * 描述
-     */
-    private String description;
+    @Schema(description = "描述")
+    private String remark;
 
-    @Schema(description = "系统菜单")
+    @Schema(description = "系统内置")
     private boolean admin;
 
-    /**
-     * 子节点
-     */
+    @Schema(description = "子节点")
     private List<PermMenuDto> children;
 }

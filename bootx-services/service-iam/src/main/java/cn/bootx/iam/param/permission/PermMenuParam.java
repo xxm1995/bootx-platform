@@ -29,7 +29,10 @@ public class PermMenuParam implements Serializable {
     private String name;
 
     @Schema(description = "菜单权限编码")
-    private String perms;
+    private String permCode;
+
+    @Schema(description = "是否有效")
+    private boolean effect;
 
     @Schema(description = "菜单图标")
     private String icon;
@@ -46,25 +49,19 @@ public class PermMenuParam implements Serializable {
     @Schema(description = "路径")
     private String path;
 
-    /**
-     * 菜单跳转地址(重定向)
-     */
+    @Schema(description = "菜单跳转地址(重定向)")
     private String redirect;
 
-    /**
-     * 菜单排序
-     */
+    @Schema(description = "菜单排序")
     private Double sortNo;
 
-    /**
-     * 类型（0：一级菜单；1：子菜单 ；2：按钮权限）
-     */
+    @Schema(description = "类型（0：一级菜单；1：子菜单 ；2：资源）")
     private Integer menuType;
 
-    @Schema(description = "meta")
     /**
-     * 是否缓存页面
+     * meta
      */
+    @Schema(description = "是否缓存页面")
     private boolean keepAlive;
 
     @Schema(description = "打开方式是否为外部打开")
@@ -76,9 +73,7 @@ public class PermMenuParam implements Serializable {
     @Schema(description = "系统菜单")
     private boolean admin;
 
-    /**
-     * 描述
-     */
-    private String description;
+    @Schema(description = "描述")
+    private String remark;
 
 }

@@ -63,7 +63,17 @@ public class RolePathService {
     }
 
     /**
-     * 查询用户拥有的路径权限信息
+     * 根据角色id获取关联权限id
+     */
+    public List<Long> findIdsByRole(Long roleId) {
+        List<RolePath> rolePermissions = rolePathManager.findAllByRole(roleId);
+        return rolePermissions.stream()
+                .map(RolePath::getPermissionId)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 查询用户拥有的路径权限信息( 路径路由拦截使用 )
      */
     @Cacheable(value = USER_PATH,key = "#method+':'+#userId")
     public List<String> findSimplePathsByUser(String method,Long userId){
@@ -109,13 +119,4 @@ public class RolePathService {
         return permissions;
     }
 
-    /**
-     * 根据角色id获取关联权限id
-     */
-    public List<Long> findIdsByRole(Long roleId) {
-        List<RolePath> rolePermissions = rolePathManager.findAllByRole(roleId);
-        return rolePermissions.stream()
-                .map(RolePath::getPermissionId)
-                .collect(Collectors.toList());
-    }
 }

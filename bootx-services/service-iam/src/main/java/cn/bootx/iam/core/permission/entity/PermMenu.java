@@ -31,7 +31,10 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     private String name;
 
     /** 菜单权限编码 */
-    private String perms;
+    private String permCode;
+
+    /** 是否有效 */
+    private boolean effect;
 
     /** 菜单图标 */
     private String icon;
@@ -59,7 +62,8 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     private Double sortNo;
 
     /**
-     * 类型（0：一级菜单；1：子菜单 ；2：按钮权限）
+     * 类型（0：一级菜单；1：子菜单 ；2：资源）
+     * @see cn.bootx.iam.code.PermissionCode
      */
     private Integer menuType;
 
@@ -78,10 +82,8 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     /** 系统菜单 */
     private boolean admin;
 
-    /**
-     * 描述
-     */
-    private String description;
+    /** 描述 */
+    private String remark;
 
     public static PermMenu init(PermMenuParam in){
         return PermConvert.CONVERT.convert(in);

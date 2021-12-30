@@ -15,7 +15,7 @@ public interface PermissionCode {
      */
     Integer MENU_TYPE_SUB = 1;
     /**
-     *  2：按钮权限
+     *  2：资源权限
      */
-    Integer MENU_TYPE_BUTTON  = 2;
+    Integer MENU_TYPE_RESOURCE = 2;
 }

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
 * 权限配置
 * @author xxm
@@ -18,5 +20,17 @@ public class PermMenuManager extends BaseManager<PermMenuMapper, PermMenu> {
 
     public boolean existsByParentId(Long pid) {
         return existedByField(PermMenu::getParentId,pid);
+    }
+
+    public boolean existsByPermCode(String permCode) {
+        return existedByField(PermMenu::getPermCode,permCode);
+    }
+
+    public boolean existsByPermCode(String permCode,Long id) {
+        return existedByField(PermMenu::getPermCode,permCode,id);
+    }
+
+    public List<PermMenu> findAllByParentId(Long parentId) {
+        return findAllByField(PermMenu::getParentId,parentId);
     }
 }

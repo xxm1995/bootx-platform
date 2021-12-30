@@ -37,10 +37,16 @@ public class PermMenuController {
         return Res.ok(permissionService.update(param));
     }
 
-    @Operation(summary = "获取权限菜单树")
+    @Operation(summary = "获取菜单树")
     @GetMapping("/tree")
-    public ResResult<List<PermMenuDto>> tree(){
-        return Res.ok(rolePermissionService.tree());
+    public ResResult<List<PermMenuDto>> menuTree(){
+        return Res.ok(rolePermissionService.findMenuTree());
+    }
+
+    @Operation(summary = "资源列表")
+    @GetMapping("/resourceList")
+    public ResResult<List<PermMenuDto>> resourceList(Long menuId){
+        return Res.ok(permissionService.findResourceByMenuId(menuId));
     }
 
     @Operation(summary = "根据id查询")
@@ -54,5 +60,17 @@ public class PermMenuController {
     public ResResult<Void> delete(Long id){
         permissionService.delete(id);
         return Res.ok();
+    }
+
+    @Operation(summary = "编码是否被使用")
+    @GetMapping("/existsByPermCode")
+    public ResResult<Boolean> existsByPermCode(String permCode){
+        return Res.ok(permissionService.existsByPermCode(permCode));
+    }
+
+    @Operation(summary = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByPermCodeNotId")
+    public ResResult<Boolean> existsByPermCode(String permCode,Long id){
+        return Res.ok(permissionService.existsByPermCode(permCode,id));
     }
 }

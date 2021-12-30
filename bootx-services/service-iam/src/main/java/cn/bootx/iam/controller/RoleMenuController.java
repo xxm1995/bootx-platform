@@ -1,11 +1,9 @@
 package cn.bootx.iam.controller;
 
-import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.upms.service.RoleMenuService;
-import cn.bootx.iam.dto.permission.PermMenuDto;
-import cn.bootx.iam.dto.upms.UserMenuAndButtonDto;
+import cn.bootx.iam.dto.upms.MenuAndResourceDto;
 import cn.bootx.iam.param.upms.RolePermissionParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,37 +31,21 @@ public class RoleMenuController {
         return Res.ok(true);
     }
 
-    @IgnoreAuth
-    @Operation(summary = "获取菜单树, 不包含按钮权限")
-    @GetMapping("/findMenuTree")
-    public ResResult<List<PermMenuDto>> findMenuTree(){
-        return Res.ok(roleMenuService.findMenuTree());
-    }
-
-    @IgnoreAuth
-    @Operation(summary = "获取权限菜单id列表,不包含按钮权限")
+    @Operation(summary = "获取权限菜单id列表,不包含资源权限")
     @GetMapping("/findMenuIds")
     public ResResult<List<Long>> findMenuIds(){
         return Res.ok(roleMenuService.findMenuIds());
     }
 
-    @IgnoreAuth
-    @Operation(summary = "获取按钮权限, 不包含菜单权限")
-    @GetMapping("/findButtonPermission")
-    public ResResult<List<String>> findButtonPermission(){
-        return Res.ok(roleMenuService.findButtonPermission());
+    @Operation(summary = "根据角色id获取关联权限id集合(包含资源和菜单)")
+    @GetMapping("/findPermissionIdsByRole")
+    public ResResult<List<Long>> findPermissionIdsByRole(Long roleId){
+        return Res.ok(roleMenuService.findPermissionIdsByRole(roleId));
     }
 
-    @Operation(summary = "根据角色id获取关联权限id")
-    @GetMapping("/findIdsByRole")
-    public ResResult<List<Long>> findIdsByRole(Long roleId){
-        return Res.ok(roleMenuService.findIdsByRole(roleId));
-    }
-
-    @IgnoreAuth
-    @Operation(summary = "获取菜单和按钮权限")
-    @GetMapping("/findMenuAndButtonPermission")
-    public ResResult<UserMenuAndButtonDto> findMenuAndButtonPermission(){
-        return Res.ok(roleMenuService.findMenuAndButtonPermission());
+    @Operation(summary = "获取菜单和资源权限")
+    @GetMapping("/getPermissions")
+    public ResResult<MenuAndResourceDto> getPermissions(){
+        return Res.ok(roleMenuService.getPermissions());
     }
 }

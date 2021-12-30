@@ -1,6 +1,5 @@
 package cn.bootx.iam.controller;
 
-import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.upms.service.RolePathService;
@@ -31,14 +30,12 @@ public class RolePathController {
         return Res.ok();
     }
 
-    @IgnoreAuth
     @Operation(summary = "根据用户id获取角色授权(请求权限列表)")
     @GetMapping("/findPathsByUser")
     public ResResult<List<PermPathDto>> findPathsByUser(){
         return Res.ok(rolePathService.findPathsByUser());
     }
 
-    @IgnoreAuth
     @Operation(summary = "根据角色id获取关联权限id")
     @GetMapping("/findIdsByRole")
     public ResResult<List<Long>> findIdsByRole(Long roleId){

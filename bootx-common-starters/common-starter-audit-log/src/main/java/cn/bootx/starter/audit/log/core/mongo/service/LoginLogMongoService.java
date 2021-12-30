@@ -1,6 +1,5 @@
 package cn.bootx.starter.audit.log.core.mongo.service;
 
-import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.audit.log.core.mongo.convert.LogConvert;
@@ -32,7 +31,6 @@ public class LoginLogMongoService implements LoginLogService {
     private final LoginLogMongoRepository repository;
 
     @Override
-    @CountTime
     public void add(LoginLogParam loginLog) {
         LoginLogMongo loginLogMongo = LogConvert.CONVERT.convert(loginLog);
         loginLogMongo.setId(IdUtil.getSnowflake().nextId());
