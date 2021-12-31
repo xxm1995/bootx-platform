@@ -138,6 +138,7 @@ public class UserAdminService {
      */
     public UserInfoDto update(UserInfoParam userInfoParam){
         UserInfo userInfo = userInfoManager.findById(userInfoParam.getId()).orElseThrow(UserInfoNotExistsException::new);
+        userInfoParam.setPassword(null);
         BeanUtil.copyProperties(userInfoParam,userInfo, CopyOptions.create().ignoreNullValue());
         return userInfoManager.updateById(userInfo).toDto();
     }

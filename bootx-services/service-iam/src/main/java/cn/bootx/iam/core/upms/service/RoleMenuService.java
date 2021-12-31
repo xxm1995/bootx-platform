@@ -71,12 +71,29 @@ public class RoleMenuService {
     }
 
     /**
+     * 获取权限树, 包含菜单和资源权限
+     */
+    public List<PermMenuDto> findAllTree(){
+        return this.recursiveBuildTree(this.findPermissions(), null);
+    }
+
+    /**
      * 获取权限菜单id列表,不包含资源权限
      */
     public List<Long> findMenuIds() {
         List<PermMenuDto> permissions = this.findPermissions();
         return permissions.stream()
                 .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+                .map(PermMenuDto::getId)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 获取权限id列表,包含菜单和资源权限
+     */
+    public List<Long> findPermissionIds() {
+        List<PermMenuDto> permissions = this.findPermissions();
+        return permissions.stream()
                 .map(PermMenuDto::getId)
                 .collect(Collectors.toList());
     }
@@ -105,7 +122,7 @@ public class RoleMenuService {
         UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(() -> new BizException("当前未登录"));
         List<PermMenuDto> permissions;
 
-        //系统管理员，获取全部的菜单
+        //系统管理员，获取全部的权限
         if (userDetail.isAdmin()) {
             permissions = permMenuService.findAll();
         } else {

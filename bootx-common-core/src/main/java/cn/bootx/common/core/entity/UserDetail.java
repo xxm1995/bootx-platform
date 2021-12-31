@@ -23,9 +23,9 @@ public class UserDetail{
     private String name;
     /** 用户 */
     private String username;
+
     @JsonIgnore
     private transient String password;
-
 
     /** 是否管理员 */
     private boolean admin;
