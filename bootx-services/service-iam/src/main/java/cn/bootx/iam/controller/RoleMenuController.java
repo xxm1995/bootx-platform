@@ -37,12 +37,6 @@ public class RoleMenuController {
         return Res.ok(roleMenuService.findMenuIds());
     }
 
-    @Operation(summary = "获取权限id列表,包含资源权限")
-    @GetMapping("/findPermissionIds")
-    public ResResult<List<Long>> findPermissionIds(){
-        return Res.ok(roleMenuService.findPermissionIds());
-    }
-
     @Operation(summary = "根据角色id获取关联权限id集合(包含资源和菜单)")
     @GetMapping("/findPermissionIdsByRole")
     public ResResult<List<Long>> findPermissionIdsByRole(Long roleId){
