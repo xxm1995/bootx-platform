@@ -2,8 +2,10 @@ package cn.bootx.iam.core.upms.entity;
 
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**   
@@ -14,12 +16,14 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("iam_user_data_scope")
 public class UserDataScope extends MpIdEntity {
 
     /** 用户id */
     private Long userId;
 
-    /** 部门id */
-    private Long deptId;
+    /** 数据权限id */
+    private Long dataScopeId;
 }

@@ -11,6 +11,7 @@ import cn.bootx.iam.core.upms.entity.RoleMenu;
 import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.dto.permission.PermMenuDto;
 import cn.bootx.iam.param.permission.PermMenuParam;
+import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -108,7 +109,7 @@ public class PermMenuService {
      * 根据菜单id获取资源列表
      */
     public List<PermMenuDto> findResourceByMenuId(Long menuId) {
-        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(() -> new BizException("当前未登录"));
+        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
         List<PermMenu> resources = permMenuManager.findAllByParentId(menuId).stream()
                 .filter(permMenu -> Objects.equals(permMenu.getMenuType(),PermissionCode.MENU_TYPE_RESOURCE))
                 .collect(Collectors.toList());

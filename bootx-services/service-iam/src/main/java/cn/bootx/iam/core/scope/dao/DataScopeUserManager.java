@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**   
 * 
 * @author xxm  
@@ -22,5 +24,9 @@ public class DataScopeUserManager extends BaseManager<DataScopeUserMapper, DataS
 
     public void deleteByDataScopeId(Long dataScopeId){
         this.deleteByField(DataScopeUser::getDataScopeId,dataScopeId);
+    }
+
+    public List<DataScopeUser> findByDateScopeId(Long dataScopeId){
+        return this.findAllByField(DataScopeUser::getDataScopeId,dataScopeId);
     }
 }

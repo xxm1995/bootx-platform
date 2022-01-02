@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**   
 *
 * @author xxm  
@@ -15,8 +17,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class UserDataScopeManager extends BaseManager<UserDataScopeMapper, UserDataScope> {
+    private final UserDataScopeMapper userDataScopeMapper;
+    public boolean existedByDataScopeId(Long dataScopeId){
+        return this.existedByField(UserDataScope::getDataScopeId,dataScopeId);
+    }
 
-    public boolean existedByDataScopeIdd(Long dataScopeId){
-        return this.existedByField(UserDataScope::getDeptId,dataScopeId);
+    public void deleteByUser(Long userId) {
+        this.deleteByField(UserDataScope::getUserId,userId);
+    }
+
+    public List<UserDataScope> findByUserId(Long userId){
+        return this.findAllByField(UserDataScope::getUserId,userId);
     }
 }

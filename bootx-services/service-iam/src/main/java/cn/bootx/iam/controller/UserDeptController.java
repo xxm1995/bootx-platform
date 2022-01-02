@@ -31,14 +31,14 @@ public class UserDeptController {
     }
 
     @Operation( summary = "根据用户ID获取到部门集合")
-    @GetMapping(value = "/findDeptListByUser")
-    public ResResult<List<DeptDto>> findDeptListByUser(Long id) {
+    @GetMapping(value = "/findAllByUser")
+    public ResResult<List<DeptDto>> findAllByUser(Long id) {
         return Res.ok(userDeptService.findDeptListByUser(id));
     }
 
     @Operation( summary = "根据用户ID获取到部门id集合")
-    @GetMapping(value = "/findDeptIdsByUser")
-    public ResResult<List<Long>> findDeptIdsByUser(Long id) {
+    @GetMapping(value = "/findIdsByUser")
+    public ResResult<List<Long>> findIdsByUser(Long id) {
         return Res.ok(userDeptService.findDeptIdsByUser(id));
     }
 

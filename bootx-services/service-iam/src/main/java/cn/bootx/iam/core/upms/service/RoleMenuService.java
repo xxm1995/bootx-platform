@@ -1,13 +1,13 @@
 package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.service.PermMenuService;
 import cn.bootx.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.iam.core.upms.entity.RoleMenu;
 import cn.bootx.iam.dto.permission.PermMenuDto;
 import cn.bootx.iam.dto.upms.MenuAndResourceDto;
+import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
@@ -119,7 +119,7 @@ public class RoleMenuService {
      * 获取权限信息列表
      */
     private List<PermMenuDto> findPermissions(){
-        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(() -> new BizException("当前未登录"));
+        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
         List<PermMenuDto> permissions;
 
         //系统管理员，获取全部的权限

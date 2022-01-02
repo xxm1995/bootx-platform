@@ -9,6 +9,7 @@ import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.permission.PermPathDto;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -75,9 +76,8 @@ public class RolePathService {
     /**
      * 查询用户拥有的路径权限信息( 路径路由拦截使用 )
      */
-    @Cacheable(value = USER_PATH,key = "#method+':'+#userId")
     public List<String> findSimplePathsByUser(String method,Long userId){
-        return this.findPathsByUser(userId).stream()
+        return SpringUtil.getBean(this.getClass()).findPathsByUser(userId).stream()
                 .filter(permPathDto -> Objects.equals(method,permPathDto.getRequestType()))
                 .map(PermPathDto::getPath)
                 .collect(Collectors.toList());
@@ -86,7 +86,8 @@ public class RolePathService {
     /**
      * 查询用户拥有的路径权限信息
      */
-    private List<PermPathDto> findPathsByUser(Long userId){
+    @Cacheable(value = USER_PATH,key = "#userId")
+    public List<PermPathDto> findPathsByUser(Long userId){
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
 
         List<PermPathDto> paths;

@@ -3,6 +3,7 @@ package cn.bootx.starter.auth.util;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.experimental.UtilityClass;
@@ -44,7 +45,7 @@ public class SecurityUtil {
      * 获取用户
      */
     public UserDetail getUser(){
-        return getCurrentUser().orElseThrow(() -> new BizException("未登录"));
+        return getCurrentUser().orElseThrow(NotLoginException::new);
     }
 
     /**

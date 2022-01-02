@@ -1,5 +1,6 @@
 package cn.bootx.starter.data.perm.handler;
 
+import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.spring.util.AopUtil;
 import cn.bootx.starter.auth.util.SecurityUtil;
@@ -24,6 +25,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class DataPermAspectHandler {
 
+    /**
+     * 数据权限注解切面
+     */
     @Around("@annotation(permission)||@within(permission)")
     public Object doAround(ProceedingJoinPoint pjp, Permission permission){
         Object obj = null;
@@ -40,9 +44,29 @@ public class DataPermAspectHandler {
         } catch (Throwable e) {
             e.printStackTrace();
         } finally {
-            DataPermContextHolder.clear();
+            DataPermContextHolder.clearUserAndPermission();
         }
         return obj;
     }
 
+    @Around("@annotation(nestedPermission)||@within(nestedPermission)")
+    public Object doAround(ProceedingJoinPoint pjp, NestedPermission nestedPermission){
+        Object obj = null;
+        // 如果方法和类同时存在, 以方法上的注解为准
+        NestedPermission methodAnnotation = AopUtil.getMethodAnnotation(pjp, NestedPermission.class);
+        if (Objects.nonNull(methodAnnotation)){
+            DataPermContextHolder.putNestedPermission(methodAnnotation);
+        } else {
+            DataPermContextHolder.putNestedPermission(nestedPermission);
+        }
+        DataPermContextHolder.putUserDetail(SecurityUtil.getCurrentUser().orElse(null));
+        try {
+            obj = pjp.proceed();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        } finally {
+            DataPermContextHolder.clearNestedPermission();
+        }
+        return obj;
+    }
 }

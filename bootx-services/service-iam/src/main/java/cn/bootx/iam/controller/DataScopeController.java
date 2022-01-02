@@ -6,6 +6,7 @@ import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.iam.core.scope.service.DataScopeService;
 import cn.bootx.iam.dto.scope.DataScopeDto;
+import cn.bootx.iam.param.scope.DataScopeDeptParam;
 import cn.bootx.iam.param.scope.DataScopeParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,6 +47,19 @@ public class DataScopeController {
     public ResResult<Void> delete(Long id){
         dataScopeService.delete(id);
         return Res.ok();
+    }
+
+    @Operation(summary = "保存关联部门")
+    @PostMapping("/saveDeptAssign")
+    public ResResult<Void> saveDeptAssign(@RequestBody DataScopeDeptParam param){
+        dataScopeService.saveDeptAssign(param);
+        return Res.ok();
+    }
+
+    @Operation(summary = "获取关联部门id")
+    @GetMapping("/getDeptIds")
+    public ResResult<List<Long>> getDeptIds(Long id){
+        return Res.ok(dataScopeService.findDeptIds(id));
     }
 
     @Operation( summary = "编码是否被使用")

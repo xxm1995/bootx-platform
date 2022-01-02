@@ -22,12 +22,15 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static cn.bootx.iam.code.CachingCode.USER_DATA_SCOPE;
 
 /**   
 * 数据范围权限
@@ -72,7 +75,7 @@ public class DataScopeService {
         if (!dataScopeManager.existedById(id)){
             throw new BizException("数据不存在");
         }
-        if (userDataScopeManager.existedByDataScopeIdd(id)){
+        if (userDataScopeManager.existedByDataScopeId(id)){
             throw new BizException("该权限已经有用户在使用，无法删除");
         }
         dataScopeManager.deleteById(id);
@@ -84,7 +87,8 @@ public class DataScopeService {
      * 添加用户范围权限关联关系
      */
     @Transactional(rollbackFor = Exception.class)
-    public void editDataScopeUser(DataScopeUserParam param){
+    @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
+    public void addUserAssign(DataScopeUserParam param){
         DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(() -> new BizException("数据不存在"));
         if (!Objects.equals(dataScope.getType(), DataScopeCode.DEPT_AND_USER_SCOPE) &&  Objects.equals(dataScope.getType(), DataScopeCode.DEPT_AND_USER_SCOPE)){
             throw new BizException("非法操作");
@@ -104,17 +108,26 @@ public class DataScopeService {
      * 添加部门关联范围权限关系
      */
     @Transactional(rollbackFor = Exception.class)
-    public void addDataScopeUser(DataScopeDeptParam param){
+    @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
+    public void saveDeptAssign(DataScopeDeptParam param){
         DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(() -> new BizException("数据不存在"));
         if (!Objects.equals(dataScope.getType(), DataScopeCode.DEPT_SCOPE) &&  Objects.equals(dataScope.getType(), DataScopeCode.DEPT_AND_USER_SCOPE)){
             throw new BizException("非法操作");
         }
-
         dataScopeDeptManager.deleteByDataScopeId(param.getDataScopeId());
-        List<DataScopeDept> dataScopeDepths = param.getUserIds().stream()
-                .map(userId -> new DataScopeDept(param.getDataScopeId(), userId))
+        List<DataScopeDept> dataScopeDepths = param.getDeptIds().stream()
+                .map(deptId -> new DataScopeDept(param.getDataScopeId(), deptId))
                 .collect(Collectors.toList());
         dataScopeDeptManager.saveAll(dataScopeDepths);
+    }
+
+    /**
+     * 获取关联的部门id集合
+     */
+    public List<Long> findDeptIds(Long id){
+        return dataScopeDeptManager.findByDateScopeId(id).stream()
+                .map(DataScopeDept::getDeptId)
+                .collect(Collectors.toList());
     }
 
     /**

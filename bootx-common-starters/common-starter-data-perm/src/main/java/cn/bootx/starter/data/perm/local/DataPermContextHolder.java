@@ -1,5 +1,6 @@
 package cn.bootx.starter.data.perm.local;
 
+import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.core.entity.UserDetail;
 import com.alibaba.ttl.TransmittableThreadLocal;
@@ -13,6 +14,7 @@ import java.util.Optional;
 */
 public class DataPermContextHolder {
     private static final ThreadLocal<Permission> PERMISSION_LOCAL = new TransmittableThreadLocal<>();
+    private static final ThreadLocal<NestedPermission> NESTED_PERMISSION_LOCAL = new TransmittableThreadLocal<>();
     private static final ThreadLocal<UserDetail> USER_DETAIL_LOCAL = new TransmittableThreadLocal<>();
     /**
      * 设置 数据权限控制注解
@@ -26,6 +28,20 @@ public class DataPermContextHolder {
      */
     public static Permission getPermission() {
         return PERMISSION_LOCAL.get();
+    }
+
+    /**
+     * 设置 数据权限控制注解
+     */
+    public static void putNestedPermission(NestedPermission nestedPermission) {
+        NESTED_PERMISSION_LOCAL.set(nestedPermission);
+    }
+
+    /**
+     * 获取 数据权限控制注解
+     */
+    public static NestedPermission getNestedPermission() {
+        return NESTED_PERMISSION_LOCAL.get();
     }
 
     /**
@@ -43,10 +59,17 @@ public class DataPermContextHolder {
     }
 
     /**
-     * 清除线程变量
+     * 清除线程变量(数据权限控制和用户信息)
      */
-    public static void clear() {
+    public static void clearUserAndPermission() {
         USER_DETAIL_LOCAL.remove();
         PERMISSION_LOCAL.remove();
+    }
+
+    /**
+     * 清除线程变量(嵌套权限注解)
+     */
+    public static void clearNestedPermission() {
+        NESTED_PERMISSION_LOCAL.remove();
     }
 }

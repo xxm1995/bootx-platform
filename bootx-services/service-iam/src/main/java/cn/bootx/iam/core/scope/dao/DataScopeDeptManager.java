@@ -2,10 +2,11 @@ package cn.bootx.iam.core.scope.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.iam.core.scope.entity.DataScopeDept;
-import cn.bootx.iam.core.scope.entity.DataScopeUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
 *
@@ -24,4 +25,9 @@ public class DataScopeDeptManager extends BaseManager<DataScopeDeptMapper, DataS
     public void deleteByDataScopeId(Long dataScopeId){
         this.deleteByField(DataScopeDept::getDataScopeId,dataScopeId);
     }
+
+    public List<DataScopeDept> findByDateScopeId(Long dataScopeId){
+        return this.findAllByField(DataScopeDept::getDataScopeId,dataScopeId);
+    }
+
 }

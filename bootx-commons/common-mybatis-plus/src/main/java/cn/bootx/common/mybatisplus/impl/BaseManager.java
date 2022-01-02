@@ -180,7 +180,9 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      */
     @Transactional(rollbackFor = Exception.class)
     public List<T> saveAll(List<T> list){
-        saveBatch(list, DEFAULT_BATCH_SIZE);
+        if (CollUtil.isNotEmpty(list)){
+            saveBatch(list, DEFAULT_BATCH_SIZE);
+        }
         return list;
     }
 

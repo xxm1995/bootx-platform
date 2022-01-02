@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class DataScopeManager extends BaseManager<DataScopeMapper, DataScope> {
 
-
     public boolean existsByCode(String code){
         return this.existedByField(DataScope::getCode,code);
     }

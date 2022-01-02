@@ -17,11 +17,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static cn.bootx.iam.code.CachingCode.USER_PATH;
 
 
 /**
@@ -48,6 +51,7 @@ public class PermPathService {
     /**
      * 更新权限信息
      */
+    @CacheEvict(value = {USER_PATH},allEntries = true)
     public PermPathDto update(PermPathParam param){
         PermPath permPath = permPathManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("信息不存在"));
@@ -58,6 +62,7 @@ public class PermPathService {
     /**
      * 删除
      */
+    @CacheEvict(value = {USER_PATH},allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id){
         rolePathManager.deleteByPermission(id);

@@ -1,6 +1,6 @@
 package cn.bootx.starter.data.perm.scope;
 
-import cn.bootx.starter.data.perm.code.DataScopeType;
+import cn.bootx.starter.data.perm.code.DataScopeEnum;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,7 +18,7 @@ public class DataPermScope {
     /**
      * 范围类型 自身,部门,人员,部门和人员
      */
-    private DataScopeType scopeType;
+    private DataScopeEnum scopeType;
 
     /** 对应部门ID集合 */
     private Set<Long> deptScopeIds;

@@ -1,5 +1,6 @@
 package cn.bootx.iam.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.upms.service.RoleMenuService;
@@ -43,6 +44,7 @@ public class RoleMenuController {
         return Res.ok(roleMenuService.findPermissionIdsByRole(roleId));
     }
 
+    @IgnoreAuth
     @Operation(summary = "获取菜单和资源权限")
     @GetMapping("/getPermissions")
     public ResResult<MenuAndResourceDto> getPermissions(){

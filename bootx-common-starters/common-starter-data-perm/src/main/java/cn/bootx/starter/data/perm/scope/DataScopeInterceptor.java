@@ -1,11 +1,12 @@
 package cn.bootx.starter.data.perm.scope;
 
+import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.auth.exception.NotLoginException;
-import cn.bootx.starter.data.perm.code.DataScopeType;
+import cn.bootx.starter.data.perm.code.DataScopeEnum;
 import cn.bootx.starter.data.perm.configuration.DataPermProperties;
 import cn.bootx.starter.data.perm.local.DataPermContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
@@ -49,6 +50,11 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
         // 配置是否开启了权限控制
         if (!dataPermProperties.isEnableDataPerm()){
+            return;
+        }
+        // 判断是否在嵌套执行环境中
+        NestedPermission nestedPermission = DataPermContextHolder.getNestedPermission();
+        if (Objects.nonNull(nestedPermission) && !nestedPermission.dataScope()){
             return;
         }
         // 是否添加了对应的注解来开启数据权限控制
@@ -103,7 +109,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     protected Expression dataScope(Expression where) {
         DataPermScope dataPermScope = dataPermScopeHandler.getDataPermScope();
         Expression queryExpression;
-        DataScopeType scopeType = dataPermScope.getScopeType();
+        DataScopeEnum scopeType = dataPermScope.getScopeType();
         switch (scopeType){
             case SELF:{
                 queryExpression = this.selfScope();
