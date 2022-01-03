@@ -33,7 +33,7 @@ public class UserRoleService {
      * 给用户分配角色
      */
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {USER_PATH},key = "#userId")
+    @CacheEvict(value = {USER_PATH},allEntries = true)
     public void saveAndUpdate(Long userId, List<Long> roleIds){
         // 先删除用户拥有的角色
         userRoleManager.deleteByUser(userId);

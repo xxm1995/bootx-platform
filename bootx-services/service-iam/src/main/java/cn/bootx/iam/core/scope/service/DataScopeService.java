@@ -5,7 +5,7 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.iam.code.DataScopeCode;
+import cn.bootx.iam.core.dept.event.DeptDeleteEvent;
 import cn.bootx.iam.core.scope.dao.DataScopeDeptManager;
 import cn.bootx.iam.core.scope.dao.DataScopeManager;
 import cn.bootx.iam.core.scope.dao.DataScopeUserManager;
@@ -17,12 +17,14 @@ import cn.bootx.iam.dto.scope.DataScopeDto;
 import cn.bootx.iam.param.scope.DataScopeDeptParam;
 import cn.bootx.iam.param.scope.DataScopeParam;
 import cn.bootx.iam.param.scope.DataScopeUserParam;
+import cn.bootx.starter.data.perm.code.DataScopeEnum;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,7 +92,8 @@ public class DataScopeService {
     @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
     public void addUserAssign(DataScopeUserParam param){
         DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(() -> new BizException("数据不存在"));
-        if (!Objects.equals(dataScope.getType(), DataScopeCode.DEPT_AND_USER_SCOPE) &&  Objects.equals(dataScope.getType(), DataScopeCode.DEPT_AND_USER_SCOPE)){
+        if (!Objects.equals(dataScope.getType(), DataScopeEnum.USER_SCOPE.getCode())
+                &&  Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())){
             throw new BizException("非法操作");
         }
         // 删除
@@ -111,7 +114,8 @@ public class DataScopeService {
     @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
     public void saveDeptAssign(DataScopeDeptParam param){
         DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(() -> new BizException("数据不存在"));
-        if (!Objects.equals(dataScope.getType(), DataScopeCode.DEPT_SCOPE) &&  Objects.equals(dataScope.getType(), DataScopeCode.DEPT_AND_USER_SCOPE)){
+        if (!Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_SCOPE.getCode())
+                &&  Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())){
             throw new BizException("非法操作");
         }
         dataScopeDeptManager.deleteByDataScopeId(param.getDataScopeId());
@@ -119,6 +123,14 @@ public class DataScopeService {
                 .map(deptId -> new DataScopeDept(param.getDataScopeId(), deptId))
                 .collect(Collectors.toList());
         dataScopeDeptManager.saveAll(dataScopeDepths);
+    }
+
+    /**
+     * 处理部门被删除的情况
+     */
+    @EventListener
+    public void DeptDeleteEventListener(DeptDeleteEvent event){
+        dataScopeDeptManager.deleteByDeptIds(event.getDeptIds());
     }
 
     /**

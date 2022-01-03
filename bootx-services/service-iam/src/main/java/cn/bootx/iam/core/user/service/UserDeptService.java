@@ -2,11 +2,13 @@ package cn.bootx.iam.core.user.service;
 
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.iam.core.dept.dao.DeptManager;
+import cn.bootx.iam.core.dept.event.DeptDeleteEvent;
 import cn.bootx.iam.core.user.dao.UserDeptManager;
 import cn.bootx.iam.core.user.entity.UserDept;
 import cn.bootx.iam.dto.dept.DeptDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +57,14 @@ public class UserDeptService {
      */
     public List<DeptDto> findDeptListByUser(Long userId){
         return ResultConvertUtil.dtoListConvert(deptManager.findAllByIds(this.findDeptIdsByUser(userId)));
+    }
+
+    /**
+     * 处理部门被删除的情况
+     */
+    @EventListener
+    public void DeptDeleteEventListener(DeptDeleteEvent event){
+        userDeptManager.deleteByDeptIds(event.getDeptIds());
     }
 
 }

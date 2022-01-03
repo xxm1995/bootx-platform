@@ -23,7 +23,11 @@ public enum DataScopeEnum {
     /** 指定部门与用户级别 */
     DEPT_AND_USER_SCOPE(4),
     /** 全部数据 */
-    ALL_SCOPE(5);
+    ALL_SCOPE(5),
+    /** 所在部门 */
+    BELONG_DEPT(6),
+    /** 所在及下级部门 */
+    BELONG_DEPT_AND_SUB(7);
     private final int code;
     /**
      * 根据数字编号获取

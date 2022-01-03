@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.upms.service;
 
+import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.iam.core.permission.service.PermPathService;
 import cn.bootx.iam.core.upms.dao.RolePathManager;
@@ -45,6 +46,7 @@ public class RolePathService {
      */
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = {USER_PATH},allEntries = true)
+    @CountTime
     public void addRolePath(Long roleId, List<Long> permissionIds) {
         // 删旧增新
         rolePathManager.deleteByRole(roleId);
@@ -76,6 +78,7 @@ public class RolePathService {
     /**
      * 查询用户拥有的路径权限信息( 路径路由拦截使用 )
      */
+    @Cacheable(value = USER_PATH,key = "#method+':'+#userId")
     public List<String> findSimplePathsByUser(String method,Long userId){
         return SpringUtil.getBean(this.getClass()).findPathsByUser(userId).stream()
                 .filter(permPathDto -> Objects.equals(method,permPathDto.getRequestType()))
@@ -86,7 +89,6 @@ public class RolePathService {
     /**
      * 查询用户拥有的路径权限信息
      */
-    @Cacheable(value = USER_PATH,key = "#userId")
     public List<PermPathDto> findPathsByUser(Long userId){
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
 

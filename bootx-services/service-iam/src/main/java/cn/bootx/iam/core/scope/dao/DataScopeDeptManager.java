@@ -26,6 +26,13 @@ public class DataScopeDeptManager extends BaseManager<DataScopeDeptMapper, DataS
         this.deleteByField(DataScopeDept::getDataScopeId,dataScopeId);
     }
 
+    /**
+     * 根据部门进行删除
+     */
+    public void deleteByDeptIds(List<Long> deptIds){
+        this.deleteByFields(DataScopeDept::getDeptId,deptIds);
+    }
+
     public List<DataScopeDept> findByDateScopeId(Long dataScopeId){
         return this.findAllByField(DataScopeDept::getDataScopeId,dataScopeId);
     }

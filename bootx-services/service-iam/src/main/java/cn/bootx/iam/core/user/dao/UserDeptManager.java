@@ -21,8 +21,14 @@ public class UserDeptManager extends BaseManager<UserDeptMapper, UserDept> {
      * 根据用户id删除关联关系
      */
     public void deleteByUser(Long userId) {
-        lambdaUpdate().eq(UserDept::getUserId,userId)
-                .remove();
+        this.deleteByField(UserDept::getUserId,userId);
+    }
+
+    /**
+     * 根据部门id集合删除
+     */
+    public void deleteByDeptIds(List<Long> deptIds) {
+        this.deleteByFields(UserDept::getDeptId,deptIds);
     }
 
     /**

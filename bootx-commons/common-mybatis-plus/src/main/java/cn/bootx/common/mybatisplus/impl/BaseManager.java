@@ -413,4 +413,17 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     public boolean deleteByField(SFunction<T, ?> field, Object fieldValue){
         return lambdaUpdate().eq(field,fieldValue).remove();
     }
+
+    /**
+     * 根据指定字段值集合进行删除
+     * @param field 字段
+     * @param fieldValues 字段数据集合
+     * @return boolean
+     */
+    public boolean deleteByFields(SFunction<T, ?> field, Collection<?> fieldValues){
+        if (CollUtil.isEmpty(fieldValues)){
+            return false;
+        }
+        return lambdaUpdate().in(field,fieldValues).remove();
+    }
 }

@@ -129,6 +129,11 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
                 queryExpression = this.deptAndUserScope(dataPermScope.getDeptScopeIds(), dataPermScope.getUserScopeIds());
                 break;
             }
+            case BELONG_DEPT:
+            case BELONG_DEPT_AND_SUB: {
+                queryExpression = this.deptScope(dataPermScope.getDeptScopeIds());
+                break;
+            }
             case ALL_SCOPE:
                 return where;
             default:{

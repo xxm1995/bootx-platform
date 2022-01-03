@@ -5,6 +5,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.permission.convert.PermConvert;
 import cn.bootx.iam.core.permission.dao.PermPathManager;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static cn.bootx.iam.code.CachingCode.USER_PATH;
@@ -99,10 +101,10 @@ public class PermPathService {
     }
 
     /**
-     * 同步系统请求资源
+     * 同步系统请求资源, 添加没有的资源, 删掉已经存在的资源
      */
     @Transactional(rollbackFor = Exception.class)
-    @OperateLog
+    @OperateLog(title = "同步系统请求资源")
     public void syncSystem() {
         List<RequestPath> requestPaths = requestPathService.getRequestPaths();
         List<PermPath> permPaths = requestPaths.stream()
@@ -126,20 +128,36 @@ public class PermPathService {
                             .setEnable(true);
                 }).collect(Collectors.toList());
         // 增量更新
-        this.incrementAdd(permPaths);
+        this.incrementUpdate(permPaths);
     }
 
     /**
-     * 增量添加，对不存在的进行添加
+     * 增量更新，对数据库不存在的进行添加, 对系统请求不存在的进行删除
      */
-    private void incrementAdd(List<PermPath> permPaths){
-        List<String> paths = permPathManager.findAll().stream()
+    private void incrementUpdate(List<PermPath> permPaths){
+        List<PermPath> pathList = permPathManager.findAll();
+        List<String> paths = pathList.stream()
                 .map(PermPath::getPath)
                 .collect(Collectors.toList());
-        // 过滤掉已经存在的
+        // 过滤掉数据库已经存在的
         List<PermPath> permPathList = permPaths.stream()
                 .filter(permPath -> !paths.contains(permPath.getPath()))
                 .collect(Collectors.toList());
+
+        // 过滤出不存在的系统请求资源, 进行删除
+        // 数据库已存在的路径集合
+        Set<String> permPathSet = permPaths.stream().map(PermPath::getPath).collect(Collectors.toSet());
+        // 挑出被删除的路径
+        List<String> removePaths = paths.stream()
+                .filter(path -> !permPathSet.contains(path))
+                .collect(Collectors.toList());
+        // 找到对应的数据条目(限定根据系统生成的条目)
+        List<Long> removeIds = pathList.stream()
+                .filter(PermPath::isGenerate)
+                .filter(permPath -> removePaths.contains(permPath.getPath()))
+                .map(MpBaseEntity::getId)
+                .collect(Collectors.toList());
         permPathManager.saveAll(permPathList);
+        permPathManager.deleteByIds(removeIds);
     }
 }

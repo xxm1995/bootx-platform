@@ -29,7 +29,7 @@ public class DataScope extends MpBaseEntity implements EntityBaseFunction<DataSc
 
     /**
      * 类型
-     * @see cn.bootx.iam.code.DataScopeCode
+     * @see cn.bootx.starter.data.perm.code.DataScopeEnum
      */
     private Integer type;
 

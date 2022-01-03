@@ -33,7 +33,7 @@ public class DeptUtilService {
         // 顶级机构
         if (Objects.isNull(parentId)) {
             Dept dept = deptManager.lambdaQuery()
-                    .isNotNull(Dept::getParentId)
+                    .isNull(Dept::getParentId)
                     .orderByDesc(Dept::getOrgCode)
                     .last("limit 1")
                     .one();

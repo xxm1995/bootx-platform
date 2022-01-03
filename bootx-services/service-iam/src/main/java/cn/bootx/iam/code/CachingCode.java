@@ -20,5 +20,5 @@ public interface CachingCode {
     String USER_MENU = "iam:user:menu";
 
     /** 用户数据权限关系缓存 */
-    String USER_DATA_SCOPE = "user:data:scope";
+    String USER_DATA_SCOPE = "iam:user:data:scope";
 }

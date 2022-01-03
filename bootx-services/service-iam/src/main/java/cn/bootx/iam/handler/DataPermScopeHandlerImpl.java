@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class DataPermScopeHandlerImpl implements DataPermScopeHandler {
+    /**
+     * 需要进行懒加载方式的注入, 因为 DataPermScopeHandler bean创建时机比UserDataScopeService早
+     */
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     @Lazy
     @Autowired
