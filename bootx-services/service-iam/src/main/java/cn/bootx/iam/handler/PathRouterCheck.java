@@ -8,16 +8,15 @@ import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.web.method.HandlerMethod;
 
 import java.util.List;
 import java.util.Optional;
 
-/**   
-* 路径路由拦截
-* @author xxm  
-* @date 2021/12/21 
-*/
+/**
+ * 路径路由拦截
+ * @author xxm
+ * @date 2021/12/21
+ */
 @Component
 @RequiredArgsConstructor
 public class PathRouterCheck implements RouterCheck {
@@ -30,23 +29,20 @@ public class PathRouterCheck implements RouterCheck {
 
     @Override
     public boolean check(Object handler) {
-        if (handler instanceof HandlerMethod) {
-            String method = WebServletUtil.getMethod();
-            String path = WebServletUtil.getPath();
+        String method = WebServletUtil.getMethod();
+        String path = WebServletUtil.getPath();
 
-            Optional<UserDetail> UserDetailOpt = SecurityUtil.getCurrentUser();
-            if (!UserDetailOpt.isPresent()){
-                return false;
-            }
-            UserDetail userDetail = UserDetailOpt.get();
-            // 管理员有所有的权限
-            if (userDetail.isAdmin()){
-                return true;
-            }
-            List<String> paths = rolePathService.findSimplePathsByUser(method,userDetail.getId());
-            return paths.stream()
-                    .anyMatch(pattern->matcher.match(pattern, path));
+        Optional<UserDetail> UserDetailOpt = SecurityUtil.getCurrentUser();
+        if (!UserDetailOpt.isPresent()){
+            return false;
         }
-        return false;
+        UserDetail userDetail = UserDetailOpt.get();
+        // 管理员有所有的权限
+        if (userDetail.isAdmin()){
+            return true;
+        }
+        List<String> paths = rolePathService.findSimplePathsByUser(method,userDetail.getId());
+        return paths.stream()
+                .anyMatch(pattern->matcher.match(pattern, path));
     }
 }
