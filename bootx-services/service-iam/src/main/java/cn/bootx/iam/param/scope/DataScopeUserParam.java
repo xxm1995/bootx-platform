@@ -18,9 +18,6 @@ public class DataScopeUserParam {
     @Schema(description = "数据权限id")
     private Long dataScopeId;
 
-    @Schema(description = "要添加的用户")
-    private List<Long> addUserIds;
-
-    @Schema(description = "要删除的用户关联关系")
-    private List<Long> deleteIds;
+    @Schema(description = "用户id")
+    private List<Long> userIds;
 }

@@ -17,9 +17,6 @@ public interface UserConvert {
     UserInfo convert(UserInfoParam in);
 
     @Mappings({})
-    UserInfo convert(UserInfoDto in);
-
-    @Mappings({})
     UserInfoDto convert(UserInfo in);
 
     @Mappings({})

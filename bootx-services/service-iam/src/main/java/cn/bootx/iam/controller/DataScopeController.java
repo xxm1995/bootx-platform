@@ -5,9 +5,12 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.iam.core.scope.service.DataScopeService;
+import cn.bootx.iam.core.scope.service.DataScopeUserService;
 import cn.bootx.iam.dto.scope.DataScopeDto;
+import cn.bootx.iam.dto.scope.DataScopeUserInfoDto;
 import cn.bootx.iam.param.scope.DataScopeDeptParam;
 import cn.bootx.iam.param.scope.DataScopeParam;
+import cn.bootx.iam.param.scope.DataScopeUserParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +30,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataScopeController {
     private final DataScopeService dataScopeService;
-    
+    private final DataScopeUserService dataScopeUserService;
+
     @Operation(summary = "添加")
     @PostMapping("/add")
     public ResResult<Void> add(@RequestBody DataScopeParam param){
@@ -102,6 +106,26 @@ public class DataScopeController {
     @GetMapping("/findAll")
     public ResResult<List<DataScopeDto>> findAll() {
         return Res.ok(dataScopeService.findAll());
+    }
+
+    @Operation(summary = "获取关联的用户列表")
+    @GetMapping("/findUsersByDataScopeId")
+    public ResResult<List<DataScopeUserInfoDto>> findUsersByDataScopeId(Long id){
+        return Res.ok(dataScopeUserService.findUsersByDataScopeId(id));
+    }
+
+    @Operation(summary = "保存关联用户权限")
+    @PostMapping("/saveUserAssign")
+    public ResResult<Void> saveUserAssign(@RequestBody DataScopeUserParam param){
+        dataScopeUserService.saveUserAssign(param.getDataScopeId(),param.getUserIds());
+        return Res.ok();
+    }
+
+    @Operation(summary = "批量删除关联用户")
+    @DeleteMapping("/deleteUserAssigns")
+    public ResResult<Void> deleteUserAssigns(@RequestBody List<Long> ids){
+        dataScopeUserService.deleteBatch(ids);
+        return Res.ok();
     }
 
 }

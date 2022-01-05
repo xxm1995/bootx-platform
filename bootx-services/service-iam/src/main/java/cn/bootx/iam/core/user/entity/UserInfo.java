@@ -77,10 +77,6 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
                 .setStatus(this.status);
     }
 
-    public static UserInfo init(UserInfoDto dto) {
-        return UserConvert.CONVERT.convert(dto);
-    }
-
     public static UserInfo init(UserInfoParam param) {
         return UserConvert.CONVERT.convert(param);
     }

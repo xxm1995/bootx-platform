@@ -11,16 +11,13 @@ import cn.bootx.iam.core.scope.dao.DataScopeManager;
 import cn.bootx.iam.core.scope.dao.DataScopeUserManager;
 import cn.bootx.iam.core.scope.entity.DataScope;
 import cn.bootx.iam.core.scope.entity.DataScopeDept;
-import cn.bootx.iam.core.scope.entity.DataScopeUser;
 import cn.bootx.iam.core.upms.dao.UserDataScopeManager;
 import cn.bootx.iam.dto.scope.DataScopeDto;
 import cn.bootx.iam.param.scope.DataScopeDeptParam;
 import cn.bootx.iam.param.scope.DataScopeParam;
-import cn.bootx.iam.param.scope.DataScopeUserParam;
 import cn.bootx.starter.data.perm.code.DataScopeEnum;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -83,28 +80,6 @@ public class DataScopeService {
         dataScopeManager.deleteById(id);
         dataScopeUserManager.deleteByDataScopeId(id);
         dataScopeDeptManager.deleteByDataScopeId(id);
-    }
-
-    /**
-     * 添加用户范围权限关联关系
-     */
-    @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
-    public void addUserAssign(DataScopeUserParam param){
-        DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(() -> new BizException("数据不存在"));
-        if (!Objects.equals(dataScope.getType(), DataScopeEnum.USER_SCOPE.getCode())
-                &&  Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())){
-            throw new BizException("非法操作");
-        }
-        // 删除
-        dataScopeUserManager.deleteByIds(param.getDeleteIds());
-        // 添加
-        if (CollUtil.isEmpty(param.getAddUserIds())){
-            List<DataScopeUser> dataScopeUsers = param.getAddUserIds().stream()
-                    .map(userId -> new DataScopeUser(param.getDataScopeId(), userId))
-                    .collect(Collectors.toList());
-            dataScopeUserManager.saveAll(dataScopeUsers);
-        }
     }
 
     /**

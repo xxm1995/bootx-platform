@@ -22,6 +22,12 @@ public class DataScopeUserManager extends BaseManager<DataScopeUserMapper, DataS
         return this.existedByField(DataScopeUser::getDataScopeId,dataScopeId);
     }
 
+    public boolean existedByDataScopeIdAndUserId(Long dataScopeId,Long userId){
+        return this.lambdaQuery().eq(DataScopeUser::getDataScopeId,dataScopeId)
+                .eq(DataScopeUser::getUserId,userId)
+                .exists();
+    }
+
     public void deleteByDataScopeId(Long dataScopeId){
         this.deleteByField(DataScopeUser::getDataScopeId,dataScopeId);
     }
