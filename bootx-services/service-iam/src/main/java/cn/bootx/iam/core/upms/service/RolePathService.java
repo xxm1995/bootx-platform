@@ -2,6 +2,7 @@ package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.core.permission.service.PermPathService;
 import cn.bootx.iam.core.upms.dao.RolePathManager;
 import cn.bootx.iam.core.upms.entity.RolePath;
@@ -48,12 +49,20 @@ public class RolePathService {
     @CacheEvict(value = {USER_PATH},allEntries = true)
     @CountTime
     public void addRolePath(Long roleId, List<Long> permissionIds) {
-        // 删旧增新
-        rolePathManager.deleteByRole(roleId);
+        // 先删后增
+        List<RolePath> rolePaths = rolePathManager.findAllByRole(roleId);
+        List<Long> rolePathIds = rolePaths.stream().map(RolePath::getPermissionId).collect(Collectors.toList());
+        // 需要删除的
+        List<Long> deleteIds = rolePaths.stream()
+                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
+                .map(MpIdEntity::getId)
+                .collect(Collectors.toList());
 
         List<RolePath> rolePermissions = permissionIds.stream()
+                .filter(id->!rolePathIds.contains(id))
                 .map(permissionId -> new RolePath(roleId, permissionId))
                 .collect(Collectors.toList());
+        rolePathManager.deleteByIds(deleteIds);
         rolePathManager.saveAll(rolePermissions);
     }
 

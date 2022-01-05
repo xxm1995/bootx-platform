@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.dept.event.DeptDeleteEvent;
 import cn.bootx.iam.core.scope.dao.DataScopeDeptManager;
@@ -93,10 +94,23 @@ public class DataScopeService {
                 &&  Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())){
             throw new BizException("非法操作");
         }
-        dataScopeDeptManager.deleteByDataScopeId(param.getDataScopeId());
-        List<DataScopeDept> dataScopeDepths = param.getDeptIds().stream()
+
+        // 先删后增
+        List<DataScopeDept> dateScopedDeptList = dataScopeDeptManager.findByDateScopeId(param.getDataScopeId());
+        List<Long> deptIdsByDb = dateScopedDeptList.stream().map(DataScopeDept::getDeptId).collect(Collectors.toList());
+
+        // 要删除的
+        List<Long> deptIds = param.getDeptIds();
+        List<Long> deleteIds = dateScopedDeptList.stream()
+                .filter(dataScopeDept -> !deptIds.contains(dataScopeDept.getDeptId()))
+                .map(MpIdEntity::getId)
+                .collect(Collectors.toList());
+        // 要增加的
+        List<DataScopeDept> dataScopeDepths = deptIds.stream()
+                .filter(id -> !deptIdsByDb.contains(id))
                 .map(deptId -> new DataScopeDept(param.getDataScopeId(), deptId))
                 .collect(Collectors.toList());
+        dataScopeDeptManager.deleteByIds(deleteIds);
         dataScopeDeptManager.saveAll(dataScopeDepths);
     }
 

@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.service.PermMenuService;
 import cn.bootx.iam.core.upms.dao.RoleMenuManager;
@@ -41,12 +42,22 @@ public class RoleMenuService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(Long roleId, List<Long> permissionIds){
-        // 删旧增新
-        roleMenuManager.deleteByRole(roleId);
+        // 先删后增
+        List<RoleMenu> RoleMenus = roleMenuManager.findAllByRole(roleId);
+        List<Long> roleMenuIds = RoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
+        // 需要删除的
+        List<Long> deleteIds = RoleMenus.stream()
+                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
+                .map(MpIdEntity::getId)
+                .collect(Collectors.toList());
+
         List<RoleMenu> roleMenus = permissionIds.stream()
+                .filter(id->!roleMenuIds.contains(id))
                 .map(permissionId -> new RoleMenu(roleId, permissionId))
                 .collect(Collectors.toList());
+        roleMenuManager.deleteByIds(deleteIds);
         roleMenuManager.saveAll(roleMenus);
+
     }
 
     /**
