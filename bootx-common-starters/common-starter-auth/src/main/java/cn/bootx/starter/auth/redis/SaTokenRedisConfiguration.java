@@ -34,6 +34,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class SaTokenRedisConfiguration {
     private final SaTokenRedisProperties saTokenDaoRedisProperties;
     private final RedisConnectionFactory connectionFactory;
+    private final ObjectMapper objectMapper;
 
     /**
      * 配置信息的前缀
@@ -51,9 +52,9 @@ public class SaTokenRedisConfiguration {
      *  ObjectMapper对象,使用jackson序列化情况下, 可以重写这个方法进行自定义ObjectMapper
      */
     protected ObjectMapper objectMapper(){
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
-        return objectMapper;
+        ObjectMapper copy = objectMapper.copy();
+        copy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
+        return copy;
     }
 
 
