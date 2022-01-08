@@ -8,7 +8,6 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.rest.param.SingleIdParam;
 import cn.bootx.common.core.util.ValidationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,9 +38,8 @@ public class DictionaryItemController {
 
     @Operation( summary = "删除字典项")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(@RequestBody SingleIdParam param) {
-        ValidationUtil.validateParam(param);
-        dictionaryItemService.delete(param.getId());
+    public ResResult<Void> delete(Long id) {
+        dictionaryItemService.delete(id);
         return Res.ok();
     }
 

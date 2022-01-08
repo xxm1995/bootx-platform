@@ -55,14 +55,16 @@ public class UserAdminController {
 
     @Operation(summary = "添加用户")
     @PostMapping("/add")
-    public ResResult<UserInfoDto> add(@RequestBody UserInfoParam userInfoParam){
-        return Res.ok(userAdminService.add(userInfoParam));
+    public ResResult<Void> add(@RequestBody UserInfoParam userInfoParam){
+        userAdminService.add(userInfoParam);
+        return Res.ok();
     }
 
     @Operation(summary = "修改用户")
     @PostMapping("/update")
-    public ResResult<UserInfoDto> update(@RequestBody UserInfoParam userInfoParam){
-        return Res.ok(userAdminService.update(userInfoParam));
+    public ResResult<Void> update(@RequestBody UserInfoParam userInfoParam){
+        userAdminService.update(userInfoParam);
+        return Res.ok();
     }
 
     @Operation(summary = "重置密码")

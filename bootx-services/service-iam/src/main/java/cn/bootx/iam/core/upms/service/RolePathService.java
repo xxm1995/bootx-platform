@@ -1,7 +1,6 @@
 package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.annotation.CountTime;
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.core.permission.service.PermPathService;
 import cn.bootx.iam.core.upms.dao.RolePathManager;
@@ -9,6 +8,7 @@ import cn.bootx.iam.core.upms.entity.RolePath;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.permission.PermPathDto;
+import cn.bootx.iam.exception.user.UserInfoNotExistsException;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -99,7 +99,7 @@ public class RolePathService {
      * 查询用户拥有的路径权限信息
      */
     public List<PermPathDto> findPathsByUser(Long userId){
-        UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(() -> new BizException("用户不存在"));
+        UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
 
         List<PermPathDto> paths;
         if (userInfo.isAdmin()){

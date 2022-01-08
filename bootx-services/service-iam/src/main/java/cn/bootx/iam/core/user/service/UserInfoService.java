@@ -1,14 +1,24 @@
 package cn.bootx.iam.core.user.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
+import cn.bootx.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.iam.core.user.entity.UserInfo;
-import cn.bootx.iam.dto.user.UserInfoDto;
+import cn.bootx.iam.dto.user.LoginAfterUserInfo;
+import cn.bootx.iam.dto.user.UserBaseInfoDto;
+import cn.bootx.iam.exception.user.UserInfoNotExistsException;
+import cn.bootx.iam.param.user.UserBaseInfoParam;
 import cn.bootx.starter.auth.util.PasswordEncoder;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * 用户
@@ -20,6 +30,7 @@ import org.springframework.stereotype.Service;
 public class UserInfoService {
 
     private final UserInfoManager userInfoManager;
+    private final UserExpandInfoManager userExpandInfoManager;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -27,10 +38,12 @@ public class UserInfoService {
      * @param password      原密码
      * @param newPassword   新密码
      */
+    @Transactional(rollbackFor = Exception.class)
     public void updatePassword(String password, String newPassword) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(() -> new BizException("用户不存在"));
-
+                .orElseThrow(UserInfoNotExistsException::new);
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
         // 新密码进行加密
         newPassword = passwordEncoder.encode(newPassword);
 
@@ -40,15 +53,53 @@ public class UserInfoService {
         }
         userInfo.setPassword(newPassword);
         userInfoManager.updateById(userInfo);
+        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now());
+        userExpandInfoManager.updateById(userExpandInfo);
     }
 
     /**
-     * 获取用户信息
+     * 登录后获取用户信息
      */
-    public UserInfoDto getUserInfo(){
-        return userInfoManager.findById(SecurityUtil.getUserId())
-                .map(UserInfo::toDto)
-                .orElseThrow(() -> new BizException("用户不存在"));
+    public LoginAfterUserInfo getLoginAfterUserInfo(){
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        return new LoginAfterUserInfo().setAvatar(userExpandInfo.getAvatar())
+                .setUsername(userInfo.getUsername())
+                .setName(userInfo.getName());
+    }
+
+    /**
+     * 获取用户基本信息
+     */
+    public UserBaseInfoDto getUserBaseInfo(){
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        return new UserBaseInfoDto()
+                .setId(userInfo.getId())
+                .setSex(userExpandInfo.getSex())
+                .setName(userInfo.getName())
+                .setBirthday(userExpandInfo.getBirthday())
+                .setAvatar(userExpandInfo.getAvatar());
+    }
+
+    /**
+     * 修改基本信息
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void updateUserBaseInfo(UserBaseInfoParam param) {
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        param.setId(null);
+        BeanUtil.copyProperties(param,userExpandInfo, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param,userInfo, CopyOptions.create().ignoreNullValue());
+        userExpandInfoManager.updateById(userExpandInfo);
+        userInfoManager.updateById(userInfo);
     }
 
     /**

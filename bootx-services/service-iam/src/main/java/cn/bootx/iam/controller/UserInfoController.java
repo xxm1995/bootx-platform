@@ -3,15 +3,15 @@ package cn.bootx.iam.controller;
 import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.iam.core.user.service.UserExpandInfoService;
 import cn.bootx.iam.core.user.service.UserInfoService;
-import cn.bootx.iam.dto.user.UserInfoDto;
+import cn.bootx.iam.dto.user.LoginAfterUserInfo;
+import cn.bootx.iam.dto.user.UserBaseInfoDto;
+import cn.bootx.iam.param.user.UserBaseInfoParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
 
@@ -25,6 +25,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class UserInfoController {
 	private final UserInfoService userInfoService;
+	private final UserExpandInfoService userExpandInfoService;
 
     @Operation( summary = "账号是否被使用")
     @GetMapping("/existsUsername")
@@ -70,12 +71,24 @@ public class UserInfoController {
         return Res.ok();
     }
 
-    @IgnoreAuth
-    @Operation(summary = "获取用户信息")
-    @GetMapping("/getUserInfo")
-    public ResResult<UserInfoDto> getUserInfo(){
-        return Res.ok(userInfoService.getUserInfo());
+    @Operation(summary = "查询用户基础信息")
+    @GetMapping("/getUserBaseInfo")
+    public ResResult<UserBaseInfoDto> getUserBaseInfo(){
+        return Res.ok(userInfoService.getUserBaseInfo());
     }
 
+    @Operation(summary = "修改用户基础信息")
+    @PostMapping("/updateBaseInfo")
+    public ResResult<Void> updateBaseInfo(@RequestBody UserBaseInfoParam param){
+        userInfoService.updateUserBaseInfo(param);
+        return Res.ok();
+    }
+
+    @IgnoreAuth
+    @Operation(summary = "登录后获取用户信息")
+    @GetMapping("/getLoginAfterUserInfo")
+    public ResResult<LoginAfterUserInfo> getLoginAfterUserInfo(){
+        return Res.ok(userInfoService.getLoginAfterUserInfo());
+    }
 
 }

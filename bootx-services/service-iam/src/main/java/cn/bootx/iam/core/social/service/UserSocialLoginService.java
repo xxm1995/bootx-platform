@@ -1,14 +1,14 @@
 package cn.bootx.iam.core.social.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.social.dao.UserSocialLoginManager;
-import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.core.social.entity.UserSocialLogin;
+import cn.bootx.iam.core.user.dao.UserInfoManager;
+import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.user.UserSocialLoginDto;
+import cn.bootx.iam.exception.user.UserInfoNotExistsException;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +75,7 @@ public class UserSocialLoginService {
                 .orElse(null);
         if (Objects.isNull(userSocialLogin)){
             UserInfo userInfo = userInfoManager.findById(userId)
-                    .orElseThrow(() -> new BizException("用户不存在"));
+                    .orElseThrow(UserInfoNotExistsException::new);
             userSocialLogin = new UserSocialLogin();
             userSocialLogin.setUserId(userInfo.getId());
             function.accept(userSocialLogin,openId);

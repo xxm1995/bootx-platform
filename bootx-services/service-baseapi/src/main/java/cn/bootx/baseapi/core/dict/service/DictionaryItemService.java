@@ -11,7 +11,7 @@ import cn.bootx.baseapi.param.dict.DictionaryItemParam;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -121,7 +121,13 @@ public class DictionaryItemService {
      * 获取全部字典项
      */
     public List<DictionaryItemDto> findAll(){
-        return ResultConvertUtil.dtoListConvert(dictionaryItemManager.findAll());
+        return dictionaryItemManager.findAll().stream()
+                .sorted(Comparator.comparing(DictionaryItem::getDictId)
+                        .thenComparing(DictionaryItem::getSortNo)
+                        .thenComparing(MpBaseEntity::getId).reversed()
+                )
+                .map(DictionaryItem::toDto)
+                .collect(Collectors.toList());
     }
 
 }

@@ -22,6 +22,9 @@ public class UserInfoWhole {
     @Schema(description= "用户信息")
     private UserInfoDto userInfo;
 
+    @Schema(description = "扩展信息")
+    private UserExpandInfoDto userExpandInfo;
+
     @Schema(description= "角色信息")
     private List<RoleDto> roles;
 

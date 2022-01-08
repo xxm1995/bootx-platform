@@ -6,7 +6,9 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.upms.service.UserRoleService;
+import cn.bootx.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
+import cn.bootx.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.dept.DeptDto;
 import cn.bootx.iam.dto.role.RoleDto;
@@ -29,15 +31,16 @@ import java.util.List;
 import java.util.Objects;
 
 /**
-* 超级管理员操作类
-* @author xxm
-* @date 2021/9/6
-*/
+ * 超级管理员操作类
+ * @author xxm
+ * @date 2021/9/6
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserAdminService {
     private final UserInfoManager userInfoManager;
+    private final UserExpandInfoManager userExpandInfoManager;
     private final UserRoleService userRoleService;
     private final UserDeptService userDeptService;
     private final PasswordEncoder passwordEncoder;
@@ -88,7 +91,7 @@ public class UserAdminService {
      * 注册新用户 返回添加后用户信息, 已经存在则直接返回
      */
     @Transactional(rollbackFor = Exception.class)
-    public UserInfoDto add(UserInfoParam userInfoParam){
+    public void add(UserInfoParam userInfoParam){
 
         // 如果用户的手机号和邮箱都不存在则抛出异常, 第三方登录除外
         if (Objects.isNull(userInfoParam.getPhone()) && Objects.isNull(userInfoParam.getEmail())) {
@@ -109,8 +112,12 @@ public class UserAdminService {
         userInfo.setAdmin(false)
                 .setStatus(UserStatusCode.NORMAL)
                 .setPassword(passwordEncoder.encode(userInfo.getPassword()))
-        .setRegisterTime(LocalDateTime.now());
-        return userInfoManager.save(userInfo).toDto();
+                .setRegisterTime(LocalDateTime.now());
+        userInfoManager.save(userInfo);
+        // 扩展信息
+        UserExpandInfo userExpandInfo = new UserExpandInfo();
+        userExpandInfo.setId(userInfo.getId());
+        userExpandInfoManager.save(userExpandInfo);
     }
 
     /**
@@ -126,7 +133,7 @@ public class UserAdminService {
     public void restartPassword(Long userId,@NotBlank(message = "新密码不能为空") String newPassword){
 
         UserInfo userInfo = userInfoManager.findById(userId)
-                .orElseThrow(() -> new BizException("用户不存在"));
+                .orElseThrow(UserInfoNotExistsException::new);
         // 新密码进行加密
         newPassword = passwordEncoder.encode(newPassword);
         userInfo.setPassword(newPassword);
@@ -149,15 +156,14 @@ public class UserAdminService {
     public UserInfoWhole getUserInfoWhole(Long userId) {
         // 用户信息
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
-
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
         // 角色信息
         List<RoleDto> rolesByUser = userRoleService.findRolesByUser(userId);
-
         // 部门组织
         List<DeptDto> deptListByUser = userDeptService.findDeptListByUser(userId);
-
         return new UserInfoWhole()
                 .setUserInfo(userInfo.toDto())
+                .setUserExpandInfo(userExpandInfo.toDto())
                 .setRoles(rolesByUser)
                 .setDeptList(deptListByUser);
     }

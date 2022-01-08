@@ -13,15 +13,19 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-;
-
-
+/**
+ * @author xxm
+ * @date 2020/4/24
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户信息")
 public class UserInfoDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 5881350477107722635L;
+
+    @Schema(description= "主键")
+    private Long id;
 
     @Schema(description= "名称")
     private String name;
@@ -44,9 +48,6 @@ public class UserInfoDto extends BaseDto implements Serializable {
     @Schema(description= "注册来源")
     private String source;
 
-    @Schema(description= "头像")
-    private String avatar;
-
     @Schema(description= "是否管理员")
     private boolean admin;
 
@@ -58,9 +59,6 @@ public class UserInfoDto extends BaseDto implements Serializable {
 
     @Schema(description= "注册时间")
     private LocalDateTime registerTime;
-
-    @Schema(description= "最后登录时间", accessMode = Schema.AccessMode.READ_ONLY)
-    private LocalDateTime lastLoginTime;
 
     public UserDetail toUserDetail(){
         return new UserDetail()

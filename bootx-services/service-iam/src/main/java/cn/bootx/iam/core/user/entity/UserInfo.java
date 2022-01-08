@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 
 /**
-* 用户的基本信息
+* 用户的核心信息
 * @author xxm
 * @date 2020/4/24 15:21
 */
@@ -44,9 +44,6 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     /** 注册来源 */
     private String source;
 
-    /** 头像 */
-    private String avatar;
-
     /** 是否管理员 */
     private boolean admin;
 
@@ -58,9 +55,6 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
 
     /** 注册时间 */
     private LocalDateTime registerTime;
-
-    /** 用户类型 1.注册用户 2.游客 */
-    private Integer type;
 
     @Override
     public UserInfoDto toDto() {

@@ -10,8 +10,8 @@ public interface UserStatusCode {
     /** 正常 */
     int NORMAL = 1;
 
-    /** 未激活 */
-    int INACTIVATED = 2;
+    /** 多次登录失败被锁定 */
+    int LOCK = 2;
 
     /** 封禁 */
     int BAN = 3;

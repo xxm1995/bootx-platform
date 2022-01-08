@@ -1,7 +1,9 @@
 package cn.bootx.iam.core.user.convert;
 
+import cn.bootx.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.core.social.entity.UserSocialLogin;
+import cn.bootx.iam.dto.user.UserExpandInfoDto;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.dto.user.UserSocialLoginDto;
 import cn.bootx.iam.param.user.UserInfoParam;
@@ -21,4 +23,7 @@ public interface UserConvert {
 
     @Mappings({})
     UserSocialLoginDto convert(UserSocialLogin in);
+
+    UserExpandInfoDto convert(UserExpandInfo in);
+
 }
