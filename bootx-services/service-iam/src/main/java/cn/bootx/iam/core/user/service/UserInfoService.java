@@ -7,6 +7,7 @@ import cn.bootx.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.user.LoginAfterUserInfo;
 import cn.bootx.iam.dto.user.UserBaseInfoDto;
+import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.exception.user.UserInfoNotExistsException;
 import cn.bootx.iam.param.user.UserBaseInfoParam;
 import cn.bootx.starter.auth.util.PasswordEncoder;
@@ -68,6 +69,15 @@ public class UserInfoService {
         return new LoginAfterUserInfo().setAvatar(userExpandInfo.getAvatar())
                 .setUsername(userInfo.getUsername())
                 .setName(userInfo.getName());
+    }
+
+    /**
+     * 获取用户安全信息
+     */
+    public UserInfoDto getUserSecurityInfo() {
+        return userInfoManager.findById(SecurityUtil.getUserId())
+                .map(UserInfo::toDto)
+                .orElseThrow(UserInfoNotExistsException::new);
     }
 
     /**

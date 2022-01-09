@@ -3,10 +3,10 @@ package cn.bootx.iam.controller;
 import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.iam.core.user.service.UserExpandInfoService;
 import cn.bootx.iam.core.user.service.UserInfoService;
 import cn.bootx.iam.dto.user.LoginAfterUserInfo;
 import cn.bootx.iam.dto.user.UserBaseInfoDto;
+import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.param.user.UserBaseInfoParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,7 +25,6 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class UserInfoController {
 	private final UserInfoService userInfoService;
-	private final UserExpandInfoService userExpandInfoService;
 
     @Operation( summary = "账号是否被使用")
     @GetMapping("/existsUsername")
@@ -69,6 +68,12 @@ public class UserInfoController {
                                               @NotBlank(message = "新密码不能为空") String newPassword){
         userInfoService.updatePassword(password,newPassword);
         return Res.ok();
+    }
+
+    @Operation(summary = "查询用户安全信息")
+    @GetMapping("/getUserSecurityInfo")
+    public ResResult<UserInfoDto> getUserSecurityInfo(){
+        return Res.ok(userInfoService.getUserSecurityInfo());
     }
 
     @Operation(summary = "查询用户基础信息")
