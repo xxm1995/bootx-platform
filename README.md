@@ -79,6 +79,22 @@ service-iam
 
 - SQL执行批量插入慢，数据库连接默认不开启批量插入功能，需要手动在MySQL URL连接中开启allowMultiQueries=true批量执行功能
 
+## 🍌项目展示
+菜单管理
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-19866964c4d12e197daf9f33d51f0f30564.png)
+
+数据权限配置
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-1dbbb058d0d00b0a8d36998ccf26208fc7e.png)
+
+支付报配置
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-5ea6c04fe29c2dfd05f386526d8ad96a08d.png)
+
+登录方式管理
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-6cf4a123e2c26a3db5786b2cd264d52c4d8.png)
+
+审计日志
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-7ac60f7ab581abdd60c8ae2184e001361a1.png)
+
 ## 🍷License
 
 Apache License Version 2.0
