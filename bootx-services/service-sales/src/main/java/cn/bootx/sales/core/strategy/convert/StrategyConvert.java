@@ -22,30 +22,21 @@ import org.mapstruct.factory.Mappers;
 public interface StrategyConvert {
     StrategyConvert CONVERT = Mappers.getMapper(StrategyConvert.class);
 
-    @Mappings({})
     StrategyDto convert(Strategy in);
 
-    @Mappings({})
     Strategy convert(StrategyParam in);
 
-    @Mappings({})
     Strategy convert(StrategyDto in);
 
-    @Mappings({})
     StrategyConfig convert(StrategyConfigDto in);
 
-    @Mappings({})
     StrategyConfig convert(StrategyConfigParam in);
 
-    @Mappings({})
     StrategyConfigDto convert(StrategyConfig in);
 
-    @Mappings({})
     StrategyRegister convert(StrategyRegisterParam in);
 
-    @Mappings({})
     StrategyRegister convert(StrategyRegisterDto in);
 
-    @Mappings({})
     StrategyRegisterDto convert(StrategyRegister in);
 }

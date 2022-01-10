@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.permission.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.iam.core.permission.entity.RequestPath;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.collection.CollUtil;
@@ -115,6 +116,6 @@ public class RequestPathService {
      */
     private String getTagName(Class<?> beanClass){
         Tag annotation = AnnotationUtil.getAnnotation(beanClass, Tag.class);
-        return Optional.ofNullable(annotation).map(Tag::name).orElse(null);
+        return Optional.ofNullable(annotation).map(Tag::name).orElseThrow(DataNotExistException::new);
     }
 }

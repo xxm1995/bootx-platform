@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface GoodsConvert {
     GoodsConvert CONVERT = Mappers.getMapper(GoodsConvert.class);
 
-    @Mappings({})
     Goods convert(GoodsParam in);
 
-    @Mappings({})
     Goods convert(GoodsDto in);
 
-    @Mappings({})
     GoodsDto convert(Goods in);
 }

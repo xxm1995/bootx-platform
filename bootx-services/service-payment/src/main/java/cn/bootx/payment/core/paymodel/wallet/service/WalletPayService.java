@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.wallet.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.paymodel.WalletCode;
@@ -79,7 +80,7 @@ public class WalletPayService {
     public void deductedBalanceByPaymentId(Long paymentId, Long orderId, String remark, Boolean isThrowError) {
 
         // 根据支付记录ID查询交易的金额和交易的钱包ID
-        WalletLog walletLog =  walletLogManager.findFirstByPayment(paymentId).orElse(null);
+        WalletLog walletLog =  walletLogManager.findFirstByPayment(paymentId).orElseThrow(DataNotExistException::new);
         if (walletLog == null) {
             return;
         }

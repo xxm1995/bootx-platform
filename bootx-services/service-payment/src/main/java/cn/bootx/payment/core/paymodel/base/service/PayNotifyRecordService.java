@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.base.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -43,6 +44,6 @@ public class PayNotifyRecordService {
     public PayNotifyRecordDto findById(Long id){
         return payNotifyRecordManager.findById(id)
                 .map(PayNotifyRecord::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 }

@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.wallet.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletPaymentManager;
@@ -73,7 +74,7 @@ public class WalletPaymentService {
     public WalletPaymentDto getByPaymentId(Long paymentId){
         return walletPaymentManager.findByPaymentId(paymentId)
                 .map(WalletPayment::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

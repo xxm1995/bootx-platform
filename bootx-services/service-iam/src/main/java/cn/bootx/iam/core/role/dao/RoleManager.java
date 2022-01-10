@@ -61,7 +61,7 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
         return lambdaQuery()
                 .like(StrUtil.isNotBlank(roleParam.getCode()), Role::getCode,roleParam.getCode())
                 .like(StrUtil.isNotBlank(roleParam.getName()), Role::getName,roleParam.getName())
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 }

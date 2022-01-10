@@ -110,7 +110,6 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
      * ip脱敏
      */
     private String ip(String ip){
-        System.out.println(123);
         List<String> ipList = StrUtil.split(ip, '.');
         if (ipList.size()< 2){
             return "*.*.*.*";

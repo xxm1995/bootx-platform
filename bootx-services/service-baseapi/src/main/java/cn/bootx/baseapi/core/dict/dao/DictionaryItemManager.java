@@ -53,7 +53,7 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
         return lambdaQuery()
                 .eq(DictionaryItem::getDictId,dictId)
                 .orderByAsc(DictionaryItem::getSortNo)
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 

@@ -4,6 +4,7 @@ import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +43,7 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
      * @return 剩余条数
      */
     public int reduceBalance(Long walletId, BigDecimal amount) {
-        Long userId = SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(0L);
+        Long userId = SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId());
         return walletMapper.reduceBalance(walletId, amount, userId, LocalDateTime.now());
     }
 
@@ -54,7 +55,7 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
      * @return 剩余条数
      */
     public int reduceBalanceUnlimited(Long walletId, BigDecimal amount) {
-        Long userId = SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(0L);
+        Long userId = SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId());
         return walletMapper.reduceBalanceUnlimited(walletId, amount, userId, LocalDateTime.now());
     }
 

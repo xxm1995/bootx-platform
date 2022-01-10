@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.user.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -50,27 +51,27 @@ public class UserAdminService {
      * 根据用户id 获取 UserInfo
      */
     public UserInfoDto findById(Long id){
-        return userInfoManager.findById(id).map(UserInfo::toDto).orElse(null);
+        return userInfoManager.findById(id).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 根据账号查询用户
      */
     public UserInfoDto findByAccount(String account) {
-        return userInfoManager.findByUsername(account).map(UserInfo::toDto).orElse(null);
+        return userInfoManager.findByUsername(account).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
     }
     /**
      * 根据邮箱查询用户
      */
     public UserInfoDto findByEmail(String email) {
-        return userInfoManager.findByEmail(email).map(UserInfo::toDto).orElse(null);
+        return userInfoManager.findByEmail(email).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 根据手机号查询用户
      */
     public UserInfoDto findByPhone(String phone) {
-        return userInfoManager.findByPhone(phone).map(UserInfo::toDto).orElse(null);
+        return userInfoManager.findByPhone(phone).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

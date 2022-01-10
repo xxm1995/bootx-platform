@@ -16,13 +16,10 @@ import org.mapstruct.factory.Mappers;
 public interface DingTalkConvert {
     DingTalkConvert CONVERT = Mappers.getMapper(DingTalkConvert.class);
 
-    @Mappings({})
     DingRobotConfig convert(DingRobotConfigDto in);
 
-    @Mappings({})
     DingRobotConfig convert(DingRobotConfigParam in);
 
-    @Mappings({})
     DingRobotConfigDto convert(DingRobotConfig in);
 
 }

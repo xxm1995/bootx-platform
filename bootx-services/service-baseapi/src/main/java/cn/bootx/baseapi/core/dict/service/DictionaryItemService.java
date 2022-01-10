@@ -9,6 +9,7 @@ import cn.bootx.baseapi.exception.dict.DictItemAlreadyExistedException;
 import cn.bootx.baseapi.exception.dict.DictItemNotExistedException;
 import cn.bootx.baseapi.param.dict.DictionaryItemParam;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
@@ -81,7 +82,7 @@ public class DictionaryItemService {
      * 根据ID查询指定内容
      */
     public DictionaryItemDto findById(Long id) {
-        return dictionaryItemManager.findById(id).map(DictionaryItem::toDto).orElse(null);
+        return dictionaryItemManager.findById(id).map(DictionaryItem::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

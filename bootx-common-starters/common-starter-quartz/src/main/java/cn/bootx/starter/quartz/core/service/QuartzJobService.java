@@ -1,6 +1,7 @@
 package cn.bootx.starter.quartz.core.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -110,7 +111,7 @@ public class QuartzJobService {
     public QuartzJobDto findById(Long id){
         return quartzJobManager.findById(id)
                 .map(QuartzJob::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

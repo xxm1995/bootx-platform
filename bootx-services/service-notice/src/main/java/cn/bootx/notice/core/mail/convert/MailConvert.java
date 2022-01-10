@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface MailConvert {
     MailConvert CONVERT = Mappers.getMapper(MailConvert.class);
 
-    @Mappings({})
     MailConfig convert(MailConfigDto in);
 
-    @Mappings({})
     MailConfig convert(MailConfigParam in);
 
-    @Mappings({})
     MailConfigDto convert(MailConfig in);
 }

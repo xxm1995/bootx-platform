@@ -2,6 +2,7 @@ package cn.bootx.iam.core.client.service;
 
 import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
@@ -72,7 +73,7 @@ public class ClientService {
      * 获取单条
      */
     public ClientDto findById(Long id){
-        return clientManager.findById(id).map(Client::toDto).orElse(null);
+        return clientManager.findById(id).map(Client::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -80,7 +81,7 @@ public class ClientService {
      */
     @Permission(dataScope = false,selectField = false)
     public ClientDto findByCode(String code){
-        return clientManager.findByCode(code).map(Client::toDto).orElse(null);
+        return clientManager.findByCode(code).map(Client::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

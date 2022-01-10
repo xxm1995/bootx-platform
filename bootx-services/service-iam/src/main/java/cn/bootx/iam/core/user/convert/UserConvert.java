@@ -15,13 +15,10 @@ import org.mapstruct.factory.Mappers;
 public interface UserConvert {
     UserConvert CONVERT = Mappers.getMapper(UserConvert.class);
 
-    @Mappings({})
     UserInfo convert(UserInfoParam in);
 
-    @Mappings({})
     UserInfoDto convert(UserInfo in);
 
-    @Mappings({})
     UserSocialLoginDto convert(UserSocialLogin in);
 
     UserExpandInfoDto convert(UserExpandInfo in);

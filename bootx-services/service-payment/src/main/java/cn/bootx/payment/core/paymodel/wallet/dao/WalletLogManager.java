@@ -22,7 +22,7 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
      */
     public Optional<WalletLog> findFirstByPayment(Long paymentId) {
         return lambdaQuery().eq(WalletLog::getPaymentId,paymentId)
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .last("limit 1")
                 .oneOpt();
     }

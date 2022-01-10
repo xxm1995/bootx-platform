@@ -1,5 +1,7 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
@@ -8,7 +10,6 @@ import cn.bootx.payment.core.pay.service.PayCallbackService;
 import cn.bootx.payment.core.paymodel.base.service.PayNotifyRecordService;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
-import cn.bootx.common.redis.RedisClient;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.ijpay.core.enums.SignType;
@@ -76,7 +77,7 @@ public class WeChatPayCallbackService extends AbsPayCallbackStrategy {
             return false;
         }
 
-        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findByAppId(appId).orElse(null);
+        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findByAppId(appId).orElseThrow(DataNotExistException::new);
         if (weChatPayConfig == null) {
             log.warn("微信回调报文 appId 不合法 {}", callReq);
             return false;

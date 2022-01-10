@@ -1,12 +1,12 @@
 package cn.bootx.starter.audit.log.core.db.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.starter.audit.log.core.db.convert.LogConvert;
 import cn.bootx.starter.audit.log.dto.OperateLogDto;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
@@ -16,13 +16,11 @@ import java.time.LocalDateTime;
 * @author xxm  
 * @date 2021/8/12 
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("starter_operate_log")
-public class OperateLogDb implements EntityBaseFunction<OperateLogDto> {
-
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+public class OperateLogDb extends MpIdEntity implements EntityBaseFunction<OperateLogDto> {
 
     /** 操作模块 */
     private String title;

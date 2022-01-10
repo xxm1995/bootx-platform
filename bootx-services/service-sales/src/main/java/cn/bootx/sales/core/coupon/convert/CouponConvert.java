@@ -25,15 +25,11 @@ public interface CouponConvert {
     })
     CouponTemplate convert(CouponTemplateParam in);
 
-    @Mappings({})
     CouponTemplate convert(CouponTemplateDto in);
 
-    @Mappings({})
     CouponTemplateDto convert(CouponTemplate in);
 
-    @Mappings({})
     Coupon convert(CouponDto in);
 
-    @Mappings({})
     CouponDto convert(Coupon in);
 }

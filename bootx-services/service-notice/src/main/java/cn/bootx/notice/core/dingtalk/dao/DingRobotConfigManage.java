@@ -37,7 +37,7 @@ public class DingRobotConfigManage extends BaseManager<DingRobotConfigMapper, Di
     public Page<DingRobotConfig> page(PageParam pageParam) {
         Page<DingRobotConfig> mpPage = MpUtil.getMpPage(pageParam, DingRobotConfig.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 }

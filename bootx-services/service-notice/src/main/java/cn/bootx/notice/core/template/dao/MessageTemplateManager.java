@@ -37,7 +37,7 @@ public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, M
     public Page<MessageTemplate> page(PageParam pageParam) {
         Page<MessageTemplate> mpPage = MpUtil.getMpPage(pageParam, MessageTemplate.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 }

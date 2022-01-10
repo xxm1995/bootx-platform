@@ -16,10 +16,8 @@ import org.mapstruct.factory.Mappers;
 public interface SystemConvert {
     SystemConvert CONVERT = Mappers.getMapper(SystemConvert.class);
 
-    @Mappings({})
     SystemParameterDto convert(SystemParameter in);
 
-    @Mappings({})
     SystemParameter convert(SystemParameterParam in);
 
 }

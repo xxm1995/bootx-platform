@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -85,7 +86,7 @@ public class WeChatPayConfigService {
     public WeChatPayConfigDto findById(Long id){
         return weChatPayConfigManager.findById(id)
                 .map(WeChatPayConfig::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

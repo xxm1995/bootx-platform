@@ -29,7 +29,7 @@ public class UserSocialLoginManager extends BaseManager<UserSocialLoginMapper, U
     public Page<UserSocialLogin> page(PageParam pageParam) {
         Page<UserSocialLogin> mpPage = MpUtil.getMpPage(pageParam, UserSocialLogin.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 }

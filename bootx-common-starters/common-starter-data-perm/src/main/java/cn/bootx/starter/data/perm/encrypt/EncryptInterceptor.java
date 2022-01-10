@@ -43,7 +43,7 @@ public class EncryptInterceptor implements Interceptor {
         if (arg instanceof Map){
             Map<String, ?> map = (Map<String, Object>) arg;
             if (map.containsKey("et")){
-                Object object = map.containsKey("et");
+                Object object = map.get("et");
                 this.encrypt(object);
             }
         } else {

@@ -10,6 +10,5 @@ import org.mapstruct.factory.Mappers;
 public interface UserSocialConvert {
     UserSocialConvert CONVERT = Mappers.getMapper(UserSocialConvert.class);
 
-    @Mappings({})
     UserSocialLoginDto convert(UserSocialLogin in);
 }

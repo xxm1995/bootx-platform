@@ -26,7 +26,7 @@ public class QuartzJobManager extends BaseManager<QuartzJobMapper, QuartzJob> {
     public Page<QuartzJob> page(PageParam pageParam, QuartzJobParam param){
         Page<QuartzJob> mpPage = MpUtil.getMpPage(pageParam, QuartzJob.class);
         return lambdaQuery()
-                .orderByDesc(QuartzJob::getCreateTime)
+                .orderByDesc(QuartzJob::getId)
                 .page(mpPage);
     }
 }

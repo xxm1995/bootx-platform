@@ -17,18 +17,13 @@ import org.mapstruct.factory.Mappers;
 public interface ActivityConvert {
     ActivityConvert CONVERT = Mappers.getMapper(ActivityConvert.class);
 
-    @Mappings({})
     Activity convert(ActivityParam in);
 
-    @Mappings({})
     Activity convert(ActivityDto in);
 
-    @Mappings({})
     ActivityDto convert(Activity in);
 
-    @Mappings({})
     SimpleActivity simple(ActivityDto in);
 
-    @Mappings({})
     SimpleActivity simple(Activity in);
 }

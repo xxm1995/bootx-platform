@@ -1,5 +1,6 @@
 package cn.bootx.starter.audit.log.core.db.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -41,7 +42,7 @@ public class OperateLogDbService implements OperateLogService {
      */
     @Override
     public OperateLogDto findById(Long id){
-        return operateLogManager.findById(id).map(OperateLogDb::toDto).orElse(null);
+        return operateLogManager.findById(id).map(OperateLogDb::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

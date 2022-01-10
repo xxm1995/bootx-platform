@@ -1,8 +1,9 @@
 package cn.bootx.payment.core.payment.service;
 
-import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.pay.PayChannelInfo;
@@ -33,7 +34,7 @@ public class PaymentQueryService {
     public PaymentDto findById(Long id){
         return paymentManager.findById(id)
                 .map(Payment::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

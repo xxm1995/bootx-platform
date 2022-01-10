@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface SiteMessageConvert {
     SiteMessageConvert CONVERT = Mappers.getMapper(SiteMessageConvert.class);
 
-    @Mappings({})
     SiteMessageDto convert(SiteMessage in);
 
-    @Mappings({})
     SiteMessage convert(SiteMessageDto in);
 
-    @Mappings({})
     SiteMessage convert(SiteMessageParam in);
 }

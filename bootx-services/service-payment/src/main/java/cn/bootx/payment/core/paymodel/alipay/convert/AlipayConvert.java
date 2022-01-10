@@ -15,12 +15,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface AlipayConvert {
     AlipayConvert CONVERT = Mappers.getMapper(AlipayConvert.class);
-    @Mappings({})
     AlipayConfig convert(AlipayConfigDto in);
 
-    @Mappings({})
     AlipayConfig convert(AlipayConfigParam in);
 
-    @Mappings({})
     AlipayConfigDto convert(AlipayConfig in);
 }

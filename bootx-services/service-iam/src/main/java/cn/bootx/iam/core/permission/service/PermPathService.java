@@ -2,6 +2,7 @@ package cn.bootx.iam.core.permission.service;
 
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
@@ -76,7 +77,7 @@ public class PermPathService {
      */
     public PermPathDto findById(Long id){
         return permPathManager.findById(id).map(PermPath::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

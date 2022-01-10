@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
@@ -60,7 +61,7 @@ public class AliPayCallbackService extends AbsPayCallbackStrategy {
             log.warn("支付宝回调报文 appId 为空 {}", callReq);
             return false;
         }
-        AlipayConfig alipayConfig = alipayConfigManager.findActivity().orElse(null);
+        AlipayConfig alipayConfig = alipayConfigManager.findActivity().orElseThrow(DataNotExistException::new);
         if (alipayConfig == null) {
             log.warn("支付宝回调报文 appId 不合法 {}", callReq);
             return false;

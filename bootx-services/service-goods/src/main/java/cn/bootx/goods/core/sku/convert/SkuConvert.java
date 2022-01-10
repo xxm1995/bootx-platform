@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface SkuConvert {
     SkuConvert CONVERT = Mappers.getMapper(SkuConvert.class);
 
-    @Mappings({})
     GoodsSku convert(SkuParam in);
 
-    @Mappings({})
     GoodsSku convert(GoodsSkuDto in);
 
-    @Mappings({})
     GoodsSkuDto convert(GoodsSku in);
 }

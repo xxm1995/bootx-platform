@@ -2,6 +2,7 @@ package cn.bootx.iam.core.permission.service;
 
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.dao.PermMenuManager;
@@ -74,7 +75,7 @@ public class PermMenuService {
     public PermMenuDto findById(Long id){
         return permMenuManager.findById(id)
                 .map(PermMenu::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

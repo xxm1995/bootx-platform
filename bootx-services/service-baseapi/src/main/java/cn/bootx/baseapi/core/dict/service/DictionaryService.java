@@ -8,6 +8,7 @@ import cn.bootx.baseapi.exception.dict.DictAlreadyExistedException;
 import cn.bootx.baseapi.exception.dict.DictItemAlreadyUsedException;
 import cn.bootx.baseapi.exception.dict.DictNotExistedException;
 import cn.bootx.baseapi.param.dict.DictionaryParam;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -95,7 +96,7 @@ public class DictionaryService {
 	 * 查询指定字典
 	 */
 	public DictionaryDto findById(Long id) {
-		return dictionaryManager.findById(id).map(Dictionary::toDto).orElse(null);
+		return dictionaryManager.findById(id).map(Dictionary::toDto).orElseThrow(DataNotExistException::new);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.social.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -56,7 +57,7 @@ public class UserSocialLoginService {
      */
     public UserSocialLoginDto findById(Long id){
         return userSocialLoginManager.findById(id).map(UserSocialLogin::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -64,7 +65,7 @@ public class UserSocialLoginService {
      */
     private UserSocialLogin findByOpenid(String openId, SFunction<UserSocialLogin, String> function){
         return userSocialLoginManager.findByField(function,openId)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -72,7 +73,7 @@ public class UserSocialLoginService {
      */
     private void bindOpenId(Long userId,String openId,BiConsumer<UserSocialLogin, String> function){
         UserSocialLogin userSocialLogin = userSocialLoginManager.findByUserId(userId)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
         if (Objects.isNull(userSocialLogin)){
             UserInfo userInfo = userInfoManager.findById(userId)
                     .orElseThrow(UserInfoNotExistsException::new);

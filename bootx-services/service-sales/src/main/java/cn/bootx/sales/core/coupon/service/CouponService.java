@@ -1,6 +1,7 @@
 package cn.bootx.sales.core.coupon.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.sales.code.CheckRuleCode;
 import cn.bootx.sales.code.CouponStatusCode;
@@ -118,7 +119,7 @@ public class CouponService {
      */
     public CouponDto getById(Long couponId){
         return couponManager.findById(couponId).map(Coupon::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

@@ -1,5 +1,6 @@
 package cn.bootx.goods.core.goods.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.goods.core.goods.dao.GoodsManager;
 import cn.bootx.goods.core.goods.entity.Goods;
@@ -47,7 +48,7 @@ public class GoodsService {
      * 查询商品详情
      */
     public GoodsDto getDetails(Long goodsId){
-        GoodsDto goodsDto = goodsManager.findById(goodsId).map(Goods::toDto).orElse(null);
+        GoodsDto goodsDto = goodsManager.findById(goodsId).map(Goods::toDto).orElseThrow(DataNotExistException::new);
         if (Objects.nonNull(goodsDto)){
             // 查询sku
             List<GoodsSkuDto> goodsSkus = ResultConvertUtil.dtoListConvert(goodsSkuManager.findByGoodsId(goodsId));
@@ -61,7 +62,7 @@ public class GoodsService {
      * 获取商品信息
      */
     public GoodsDto findById(Long goodsId){
-        return goodsManager.findById(goodsId).map(Goods::toDto).orElse(null);
+        return goodsManager.findById(goodsId).map(Goods::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

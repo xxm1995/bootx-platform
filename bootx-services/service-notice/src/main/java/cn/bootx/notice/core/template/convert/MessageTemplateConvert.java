@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface MessageTemplateConvert {
     MessageTemplateConvert CONVERT = Mappers.getMapper(MessageTemplateConvert.class);
 
-    @Mappings({})
     MessageTemplateDto convert(MessageTemplate in);
 
-    @Mappings({})
     MessageTemplate convert(MessageTemplateDto in);
 
-    @Mappings({})
     MessageTemplate convert(MessageTemplateParam in);
 }

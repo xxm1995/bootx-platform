@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.dept.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.dept.entity.Dept;
 import cn.bootx.iam.core.dept.event.DeptDeleteEvent;
@@ -63,7 +64,7 @@ public class DeptService {
      * 根据id查询
      */
     public DeptDto findById(Long id){
-        return deptManager.findById(id).map(Dept::toDto).orElse(null);
+        return deptManager.findById(id).map(Dept::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -99,7 +100,7 @@ public class DeptService {
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
     public boolean deleteAndChildren(Long id){
-        Dept dept = deptManager.findById(id).orElse(null);
+        Dept dept = deptManager.findById(id).orElseThrow(DataNotExistException::new);
         if (Objects.isNull(dept)){
             return false;
         }

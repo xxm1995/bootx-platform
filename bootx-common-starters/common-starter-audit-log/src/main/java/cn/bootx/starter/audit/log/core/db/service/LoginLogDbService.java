@@ -1,5 +1,6 @@
 package cn.bootx.starter.audit.log.core.db.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -39,7 +40,7 @@ public class LoginLogDbService implements LoginLogService {
      */
     @Override
     public LoginLogDto findById(Long id){
-        return loginLogManager.findById(id).map(LoginLogDb::toDto).orElse(null);
+        return loginLogManager.findById(id).map(LoginLogDb::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

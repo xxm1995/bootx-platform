@@ -15,9 +15,7 @@ import org.mapstruct.factory.Mappers;
 public interface PayConvert {
     PayConvert CONVERT = Mappers.getMapper(PayConvert.class);
 
-    @Mappings({})
     PayNotifyRecord convert(PayNotifyRecordDto in);
 
-    @Mappings({})
     PayNotifyRecordDto convert(PayNotifyRecord in);
 }

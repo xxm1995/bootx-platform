@@ -19,25 +19,18 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface OrderConvert {
     OrderConvert CONVERT = Mappers.getMapper(OrderConvert.class);
-    @Mappings({})
     OrderDto convert(Order in);
 
-    @Mappings({})
     Order convert(OrderDto in);
 
-    @Mappings({})
     OrderDetailDto convert(OrderDetail in);
 
-    @Mappings({})
     OrderDetail convert(OrderDetailDto in);
 
-    @Mappings({})
     OrderDetail convert(OrderDetailParam in);
 
-    @Mappings({})
     OrderStrategyMappingDto convert(OrderStrategyMapping in);
 
-    @Mappings({})
     OrderStrategyMapping convert(OrderStrategyMappingDto in);
 
 }

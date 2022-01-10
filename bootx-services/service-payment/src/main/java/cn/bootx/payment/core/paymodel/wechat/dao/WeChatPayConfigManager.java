@@ -39,7 +39,7 @@ public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, W
     public Page<WeChatPayConfig> page(PageParam pageParam) {
         Page<WeChatPayConfig> mpPage = MpUtil.getMpPage(pageParam, WeChatPayConfig.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 }

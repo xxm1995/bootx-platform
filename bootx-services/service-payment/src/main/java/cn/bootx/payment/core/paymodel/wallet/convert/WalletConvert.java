@@ -19,10 +19,8 @@ import org.mapstruct.factory.Mappers;
 public interface WalletConvert {
     WalletConvert CONVERT = Mappers.getMapper(WalletConvert.class);
 
-    @Mappings({})
     WalletDto convert(Wallet in);
     
-    @Mappings({})
     WalletPaymentDto convert(WalletPayment in);
 
     WalletLogDto convert(WalletLog walletLog);

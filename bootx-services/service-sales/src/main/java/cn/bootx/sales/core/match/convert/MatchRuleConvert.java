@@ -4,7 +4,6 @@ import cn.bootx.sales.core.match.entity.MatchRuleConfig;
 import cn.bootx.sales.dto.match.MatchRuleDto;
 import cn.bootx.sales.param.strategy.MatchRuleParam;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -16,12 +15,9 @@ import org.mapstruct.factory.Mappers;
 public interface MatchRuleConvert {
     MatchRuleConvert INSTANCE = Mappers.getMapper(MatchRuleConvert.class);
 
-    @Mappings({})
     MatchRuleConfig convert(MatchRuleDto in);
 
-    @Mappings({})
     MatchRuleConfig convert(MatchRuleParam in);
 
-    @Mappings({})
     MatchRuleDto convert(MatchRuleConfig in);
 }

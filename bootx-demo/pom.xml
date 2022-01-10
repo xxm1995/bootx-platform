@@ -17,10 +17,10 @@
             <artifactId>service-baseapi</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>cn.bootx.platform</groupId>-->
-<!--            <artifactId>service-iam</artifactId>-->
-<!--            <version>${bootx-platform.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-iam</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
     </dependencies>
 </project>

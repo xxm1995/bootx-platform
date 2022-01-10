@@ -41,7 +41,7 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
     public Page<Dictionary> page(PageParam pageParam, DictionaryParam param) {
         Page<Dictionary> mpPage = MpUtil.getMpPage(pageParam, Dictionary.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .like(StrUtil.isNotBlank(param.getName()),Dictionary::getName,param.getName())
                 .like(StrUtil.isNotBlank(param.getCode()),Dictionary::getCode,param.getCode())
                 .page(mpPage);

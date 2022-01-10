@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface DeptConvert {
     DeptConvert CONVERT = Mappers.getMapper(DeptConvert.class);
 
-    @Mappings({})
     Dept convert(DeptDto in);
 
-    @Mappings({})
     Dept convert(DeptParam in);
 
-    @Mappings({})
     DeptDto convert(Dept in);
 }

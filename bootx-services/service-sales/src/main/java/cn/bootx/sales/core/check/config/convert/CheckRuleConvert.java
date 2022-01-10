@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface CheckRuleConvert {
     CheckRuleConvert INSTANCE = Mappers.getMapper(CheckRuleConvert.class);
 
-    @Mappings({})
     CheckRuleConfig convert(CheckRuleDto in);
 
-    @Mappings({})
     CheckRuleConfig convert(CheckRuleParam in);
 
-    @Mappings({})
     CheckRuleDto convert(CheckRuleConfig in);
 }

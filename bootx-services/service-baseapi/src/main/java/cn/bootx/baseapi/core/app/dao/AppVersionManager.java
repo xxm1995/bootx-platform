@@ -25,7 +25,7 @@ public class AppVersionManager extends BaseManager<AppVersionMapper, AppVersion>
     public Page<AppVersion> page(PageParam pageParam) {
         Page<AppVersion> mpPage = MpUtil.getMpPage(pageParam, AppVersion.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 

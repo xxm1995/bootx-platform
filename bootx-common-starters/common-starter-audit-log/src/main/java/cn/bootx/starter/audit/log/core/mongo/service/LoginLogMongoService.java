@@ -1,5 +1,7 @@
 package cn.bootx.starter.audit.log.core.mongo.service;
 
+import cn.bootx.common.core.code.CommonCode;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.audit.log.core.mongo.convert.LogConvert;
@@ -39,7 +41,7 @@ public class LoginLogMongoService implements LoginLogService {
 
     @Override
     public LoginLogDto findById(Long id) {
-        return repository.findById(id).map(LoginLogMongo::toDto).orElse(null);
+        return repository.findById(id).map(LoginLogMongo::toDto).orElseThrow(DataNotExistException::new);
     }
 
     @Override
@@ -49,8 +51,9 @@ public class LoginLogMongoService implements LoginLogService {
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example<LoginLogMongo> example = Example.of(LogConvert.CONVERT.convert(loginLogParam), matching);
         //设置分页条件 (第几页，每页大小，排序)
-        Sort sort = Sort.by(Sort.Order.desc("id"));
+        Sort sort = Sort.by(Sort.Order.desc(CommonCode.ID));
         Pageable pageable = PageRequest.of(pageParam.getCurrent()-1, pageParam.getSize(), sort);
+
         Page<LoginLogMongo> page = repository.findAll(example,pageable);
         List<LoginLogDto> records = page.getContent().stream()
                 .map(LoginLogMongo::toDto)

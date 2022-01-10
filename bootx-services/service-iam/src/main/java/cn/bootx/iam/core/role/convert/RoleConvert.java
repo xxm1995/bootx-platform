@@ -11,9 +11,7 @@ import org.mapstruct.factory.Mappers;
 public interface RoleConvert {
     RoleConvert CONVERT = Mappers.getMapper(RoleConvert.class);
 
-    @Mappings({})
     RoleDto convert(Role in);
 
-    @Mappings({})
     Role convert(RoleParam in);
 }

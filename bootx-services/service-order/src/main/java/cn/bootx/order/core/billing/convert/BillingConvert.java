@@ -17,10 +17,8 @@ import org.mapstruct.factory.Mappers;
 public interface BillingConvert {
     BillingConvert CONVERT = Mappers.getMapper(BillingConvert.class);
 
-    @Mappings({})
     OrderBillingDto convert(OrderBilling in);
 
-    @Mappings({})
     OrderItemBillingDto convert(OrderItemBilling in);
 
 

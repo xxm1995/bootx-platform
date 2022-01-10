@@ -5,6 +5,7 @@ import cn.bootx.baseapi.core.config.entity.SystemParameter;
 import cn.bootx.baseapi.dto.system.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -63,7 +64,7 @@ public class SystemParamService {
      */
     public SystemParameterDto findById(Long id){
        return systemParamManager.findById(id).map(SystemParameter::toDto)
-               .orElse(null);
+               .orElseThrow(DataNotExistException::new);
     }
 
     /**

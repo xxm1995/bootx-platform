@@ -1,5 +1,6 @@
 package cn.bootx.goods.core.category.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.goods.core.category.convert.CategoryConvert;
 import cn.bootx.goods.core.category.dao.CategoryManager;
 import cn.bootx.goods.core.category.entity.Category;
@@ -66,7 +67,7 @@ public class CategoryService {
      * 根据 id 获取相应的类目
      */
     public CategoryDto getById(Long id){
-        return categoryManager.findById(id).map(Category::toDto).orElse(null);
+        return categoryManager.findById(id).map(Category::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

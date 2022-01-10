@@ -23,7 +23,7 @@ public class PayNotifyRecordManager extends BaseManager<PayNotifyRecordMapper,Pa
     public Page<PayNotifyRecord> page(PageParam pageParam){
         Page<PayNotifyRecord> mpPage = MpUtil.getMpPage(pageParam, PayNotifyRecord.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 }

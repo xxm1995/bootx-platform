@@ -4,6 +4,7 @@ import cn.bootx.baseapi.core.app.dao.AppVersionManager;
 import cn.bootx.baseapi.core.app.entity.AppVersion;
 import cn.bootx.baseapi.dto.app.AppVersionDto;
 import cn.bootx.baseapi.param.app.AppVersionParam;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -44,7 +45,7 @@ public class AppVersionService {
      */
     public AppVersionDto check(){
         Optional<AppVersion> appVersion = appVersionManager.findLatest();
-        return appVersion.map(AppVersion::toDto).orElse(null);
+        return appVersion.map(AppVersion::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -58,7 +59,7 @@ public class AppVersionService {
      * 获取详情
      */
     public AppVersionDto findById(Long id){
-        return appVersionManager.findById(id).map(AppVersion::toDto).orElse(null);
+        return appVersionManager.findById(id).map(AppVersion::toDto).orElseThrow(DataNotExistException::new);
     }
 
 }

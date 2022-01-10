@@ -17,9 +17,7 @@ import org.mapstruct.factory.Mappers;
 public interface OrderConvert {
     OrderConvert INSTANCE = Mappers.getMapper(OrderConvert.class);
 
-    @Mappings({})
     OrderDetailCheckParam convert(OrderDetailCache in);
 
-    @Mappings({})
     OrderCheckParam convert(OrderCache in);
 }

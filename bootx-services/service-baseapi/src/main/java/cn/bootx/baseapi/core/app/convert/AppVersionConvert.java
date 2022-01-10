@@ -16,12 +16,9 @@ import org.mapstruct.factory.Mappers;
 public interface AppVersionConvert {
     AppVersionConvert CONVERT = Mappers.getMapper(AppVersionConvert.class);
 
-    @Mappings({})
     AppVersion convert(AppVersionParam in);
 
-    @Mappings({})
     AppVersion convert(AppVersionDto in);
 
-    @Mappings({})
     AppVersionDto convert(AppVersion in);
 }

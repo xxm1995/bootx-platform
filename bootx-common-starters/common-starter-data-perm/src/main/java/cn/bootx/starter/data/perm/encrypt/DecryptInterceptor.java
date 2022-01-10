@@ -52,6 +52,10 @@ public class DecryptInterceptor implements Interceptor {
         if (result instanceof List<?>) {
             List<?> list = (ArrayList<?>) result;
             for (Object o : list) {
+                // 值为空的情况
+                if (Objects.isNull(o)){
+                    continue;
+                }
                 Field[] fields = ReflectUtil.getFields(o.getClass(), field -> Objects.nonNull(field.getAnnotation(EncryptionField.class)));
                 for (Field field : fields) {
                     Object fieldValue = this.decryptValue(ReflectUtil.getFieldValue(o, field));

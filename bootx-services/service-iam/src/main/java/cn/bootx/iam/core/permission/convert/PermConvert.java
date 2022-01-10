@@ -20,22 +20,16 @@ import org.mapstruct.factory.Mappers;
 public interface PermConvert {
     PermConvert CONVERT = Mappers.getMapper(PermConvert.class);
 
-    @Mappings({})
     PermPathDto convert(PermPath in);
 
-    @Mappings({})
     PermPath convert(PermPathParam in);
 
-    @Mappings({})
     PermPath convert(PermPathDto in);
 
-    @Mappings({})
     PermPath convert(RequestPath in);
 
-    @Mappings({})
     PermMenu convert(PermMenuParam in);
 
-    @Mappings({})
     PermMenuDto convert(PermMenu in);
 
 }

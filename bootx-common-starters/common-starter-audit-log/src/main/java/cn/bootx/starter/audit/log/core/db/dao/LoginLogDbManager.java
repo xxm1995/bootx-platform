@@ -24,7 +24,7 @@ public class LoginLogDbManager extends BaseManager<LoginLogDbMapper, LoginLogDb>
     public Page<LoginLogDb> page(PageParam pageParam, LoginLogParam loginLogParam) {
         Page<LoginLogDb> mpPage = MpUtil.getMpPage(pageParam, LoginLogDb.class);
         return lambdaQuery()
-                .orderByDesc(LoginLogDb::getLoginTime)
+                .orderByDesc(LoginLogDb::getId)
                 .like(StrUtil.isNotBlank(loginLogParam.getAccount()), LoginLogDb::getAccount,loginLogParam.getAccount())
                 .like(StrUtil.isNotBlank(loginLogParam.getClient()), LoginLogDb::getClient,loginLogParam.getClient())
                 .page(mpPage);

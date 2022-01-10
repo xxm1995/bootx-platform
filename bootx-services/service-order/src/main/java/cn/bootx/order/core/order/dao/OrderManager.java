@@ -31,7 +31,7 @@ public class OrderManager extends BaseManager<OrderMapper,Order> {
     public Page<Order> page(PageParam pageParam) {
         Page<Order> mpPage = MpUtil.getMpPage(pageParam, Order.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 
@@ -41,7 +41,7 @@ public class OrderManager extends BaseManager<OrderMapper,Order> {
     public List<Order> findPayTimeoutOrderIdsByType(LocalDateTime date, Integer type) {
         // select id from Order where state = ?1 and createTime < ?2 and businessId = ?3
         return lambdaQuery().eq(Order::getStatus,OrderStatusCode.STATUS_NORMAL)
-                .le(MpBaseEntity::getCreateTime,date)
+                .le(MpBaseEntity::getId,date)
                 .eq(Order::getType,type)
                 .list();
     }

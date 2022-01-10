@@ -16,9 +16,7 @@ import org.mapstruct.factory.Mappers;
 public interface QuartzJobConvert {
     QuartzJobConvert CONVERT = Mappers.getMapper(QuartzJobConvert.class);
 
-    @Mappings({})
     QuartzJobDto convert(QuartzJob in);
 
-    @Mappings({})
     QuartzJob convert(QuartzJobParam in);
 }

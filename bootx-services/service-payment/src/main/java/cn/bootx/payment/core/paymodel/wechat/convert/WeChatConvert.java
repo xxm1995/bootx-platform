@@ -17,15 +17,11 @@ import org.mapstruct.factory.Mappers;
 public interface WeChatConvert {
     WeChatConvert CONVERT = Mappers.getMapper(WeChatConvert.class);
 
-    @Mappings({})
     WeChatPayConfig convert(WeChatPayConfigDto in);
 
-    @Mappings({})
     WeChatPayConfigDto convert(WeChatPayConfig in);
 
-    @Mappings({})
     WeChatPaymentDto convert(WeChatPayment in);
 
-    @Mappings({})
     WeChatPayment convert(WeChatPaymentDto in);
 }

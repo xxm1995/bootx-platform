@@ -1,6 +1,7 @@
 package cn.bootx.notice.core.site.service;
 
 import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -94,7 +95,7 @@ public class SiteMessageService {
      */
     public SiteMessageDto findById(Long id){
         return siteMessageManager.findById(id).map(SiteMessage::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

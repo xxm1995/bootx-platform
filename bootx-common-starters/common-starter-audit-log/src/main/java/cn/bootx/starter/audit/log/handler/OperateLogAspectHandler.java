@@ -11,6 +11,7 @@ import cn.bootx.starter.audit.log.service.OperateLogService;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,7 +85,7 @@ public class OperateLogAspectHandler {
         for (OperateLog log : logs) {
             OperateLogParam operateLog = new OperateLogParam()
                     .setTitle(log.title())
-                    .setOperateId(currentUser.map(UserDetail::getId).orElse(0L))
+                    .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                     .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
                     .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
                     .setOperateUrl(request.getRequestURI())

@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.wallet.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.paymodel.WalletCode;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletLogManager;
@@ -97,14 +98,14 @@ public class WalletService{
      * 根据ID查询Wallet
      */
     public WalletDto getById(Long walletId) {
-        return walletManager.findById(walletId).map(Wallet::toDto).orElse(null);
+        return walletManager.findById(walletId).map(Wallet::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 根据用户ID查询钱包
      */
     public WalletDto getByUserId(Long userId) {
-        return walletManager.findByUser(userId).map(Wallet::toDto).orElse(null);
+        return walletManager.findByUser(userId).map(Wallet::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

@@ -1,6 +1,7 @@
 package cn.bootx.notice.core.template.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -68,7 +69,7 @@ public class MessageTemplateService {
      * 获取详情
      */
     public MessageTemplateDto findById(Long id){
-        return messageTemplateManager.findById(id).map(MessageTemplate::toDto).orElse(null);
+        return messageTemplateManager.findById(id).map(MessageTemplate::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**

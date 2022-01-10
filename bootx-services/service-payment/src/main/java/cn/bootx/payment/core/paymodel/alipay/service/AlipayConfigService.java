@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -100,7 +101,7 @@ public class AlipayConfigService {
     public AlipayConfigDto findById(Long id){
         return alipayConfigManager.findById(id)
                 .map(AlipayConfig::toDto)
-                .orElse(null);
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**

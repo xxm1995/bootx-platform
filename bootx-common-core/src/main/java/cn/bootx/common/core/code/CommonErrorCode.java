@@ -21,7 +21,9 @@ public interface CommonErrorCode {
     // 数据过期
     int DATA_OUT_OF_DATE = 10008;
     // 不支持的下载
-    int UN_SUPPORTED_READ = 1009;
+    int UN_SUPPORTED_READ = 10009;
+    // 数据不存在
+    int DATA_NOT_EXIST = 10010;
 
     // 未知异常
     int UNKNOWN_ERROR = -1;

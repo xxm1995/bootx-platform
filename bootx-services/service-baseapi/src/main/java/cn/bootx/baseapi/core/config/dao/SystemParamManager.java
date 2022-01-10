@@ -40,7 +40,7 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
     public Page<SystemParameter> page(PageParam pageParam, SystemParameterParam param){
         Page<SystemParameter> mpPage = MpUtil.getMpPage(pageParam, SystemParameter.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getCreateTime)
+                .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
 }
