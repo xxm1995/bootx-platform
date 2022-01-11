@@ -16,7 +16,7 @@ public class DataVersionLogParam {
     @Schema(description = "数据名称")
     private String dataName;
 
-    @Schema(description = "主键")
+    @Schema(description = "数据主键")
     private String dataId;
 
     @Schema(description = "数据内容对象")
