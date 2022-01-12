@@ -18,6 +18,7 @@
         <module>common-starter-audit-log</module>
         <module>common-starter-query</module>
         <module>common-starter-data-perm</module>
+        <module>common-starter-file</module>
     </modules>
 
     <dependencies>

@@ -3,29 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>bootx-platform</artifactId>
+        <artifactId>bootx-common-starters</artifactId>
         <groupId>cn.bootx.platform</groupId>
         <version>1.1.0-alpha-4-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bootx-demo</artifactId>
+    <artifactId>common-starter-file</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-baseapi</artifactId>
-            <version>${bootx-platform.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-iam</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-starter-file</artifactId>
-            <version>${bootx-platform.version}</version>
+            <artifactId>common-mybatis-plus</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
