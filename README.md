@@ -94,6 +94,19 @@ service-iam
 
 审计日志
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-7ac60f7ab581abdd60c8ae2184e001361a1.png)
+##  🥪 关于我们
+
+微信扫码加入交流群，或添加微信号：`xxxx` 邀请进群
+
+
+钉钉扫码加入钉钉交流群
+
+
+QQ扫码加入QQ交流群
+<p>
+
+<img src="https://oscimg.oschina.net/oscnet/up-ac1a8f8221203de2b5cbc6a461a26199b95.jpg" width = "330" height = "500"/>
+</p>
 
 ## 🍷License
 
