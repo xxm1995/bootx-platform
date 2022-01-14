@@ -2,7 +2,7 @@ package cn.bootx.starter.file.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
-import cn.bootx.starter.file.FileConvert;
+import cn.bootx.starter.file.convert.FileConvert;
 import cn.bootx.starter.file.dto.UpdateFileDto;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -24,20 +24,20 @@ import java.time.LocalDateTime;
 @TableName("starter_upload_file")
 public class UpdateFileInfo extends MpIdEntity implements EntityBaseFunction<UpdateFileDto> {
 
-    /** 文件唯一标识 */
-    private String fileId;
-
     /** 存储位置 */
-    private Integer location;
+    private String filePath;
 
     /** 文件名称 */
-    private Integer fileName;
+    private String fileName;
+
+    /** 文件类型 */
+    private String fileType;
 
     /** 文件后缀 */
-    private Integer fileSuffix;
+    private String fileSuffix;
 
     /** 文件大小 */
-    private Integer fileSize;
+    private Double fileSize;
 
     /** 创建者ID */
     @TableField(fill = FieldFill.INSERT)

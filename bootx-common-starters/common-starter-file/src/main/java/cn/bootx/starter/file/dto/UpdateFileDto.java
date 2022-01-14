@@ -20,16 +20,19 @@ public class UpdateFileDto {
     private Long id;
 
     /** 存储位置 */
-    private Integer location;
+    private String filePath;
 
     /** 文件名称 */
-    private Integer fileName;
+    private String fileName;
 
     /** 文件后缀 */
-    private Integer fileSuffix;
+    private String fileSuffix;
+
+    /** 文件类型 */
+    private String fileType;
 
     /** 文件大小 */
-    private Integer fileSize;
+    private Double fileSize;
 
     /** 创建者ID */
     @TableField(fill = FieldFill.INSERT)

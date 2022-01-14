@@ -1,4 +1,4 @@
-package cn.bootx.starter.file;
+package cn.bootx.starter.file.convert;
 
 import cn.bootx.starter.file.dto.UpdateFileDto;
 import cn.bootx.starter.file.entity.UpdateFileInfo;

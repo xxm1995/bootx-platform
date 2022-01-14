@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 public class DatePermConfiguration {
 
     /**
-     * 数据权限插件
+     * 数据范围权限插件
      */
     @Bean
     @ConditionalOnProperty(prefix = "bootx.starter.data-perm", value = "enableDataPerm", havingValue = "true",matchIfMissing = true)
