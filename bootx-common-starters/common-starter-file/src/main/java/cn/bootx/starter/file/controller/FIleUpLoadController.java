@@ -26,10 +26,22 @@ import java.io.IOException;
 public class FIleUpLoadController {
     private final FileUploadService uploadService;
 
-    @Operation(summary = "存储")
+    @Operation(summary = "上传")
     @PostMapping("/upload")
     public ResResult<UpdateFileDto> local(MultipartFile file, String fileName)  throws IOException {
         return Res.ok(uploadService.upload(file,fileName));
+    }
+
+    @Operation(summary = "获取文件地址")
+    @GetMapping("getFileUrl")
+    public ResResult<String> getFileUrl(Long id){
+        return Res.ok(uploadService.getFileUrl(id));
+    }
+
+    @Operation(summary = "获取文件地址前缀")
+    @GetMapping("getFileUrlPrefix")
+    public ResResult<String> getFileUrlPrefix(){
+        return Res.ok(uploadService.getFileUrlPrefix());
     }
 
     @Operation(summary = "预览文件")

@@ -34,8 +34,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FileUploadService {
     private final List<UploadService> uploadServices;
-    private final FileUploadProperties fileUploadProperties;
     private final UpdateFileManager updateFileManager;
+    private final FileUploadProperties fileUploadProperties;
 
     /**
      * 文件上传
@@ -102,5 +102,19 @@ public class FileUploadService {
         headers.setContentDispositionFormData("attachment",
                 new String(updateFileInfo.getFileName().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
         return new ResponseEntity<>(IoUtil.readBytes(inputStream),headers, HttpStatus.OK);
+    }
+
+    /**
+     * 获取文件地址
+     */
+    public String getFileUrl(Long id){
+        return fileUploadProperties.getServerUrl()+"/file/preview/"+id;
+    }
+
+    /**
+     * 获取文件地址前缀
+     */
+    public String getFileUrlPrefix(){
+        return fileUploadProperties.getServerUrl()+"/file/preview/";
     }
 }

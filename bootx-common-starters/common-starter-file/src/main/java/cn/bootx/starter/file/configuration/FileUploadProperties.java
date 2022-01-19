@@ -16,6 +16,9 @@ public class FileUploadProperties {
     /** 上传文件类型 */
     private int uploadType = 1;
 
+    /** 图片服务器地址 */
+    private String serverUrl;
+
     /** 本地存储路径 */
     private String localPath = "/data/file/";
 }
