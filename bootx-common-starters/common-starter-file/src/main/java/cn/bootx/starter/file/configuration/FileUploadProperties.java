@@ -13,7 +13,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "bootx.starter.file-upload")
 public class FileUploadProperties {
-    /** 上传文件类型 */
+
+    /**
+     * 上传文件类型
+     * @see cn.bootx.starter.file.code.FileUploadTypeCode
+     */
     private int uploadType = 1;
 
     /** 图片服务器地址 */
