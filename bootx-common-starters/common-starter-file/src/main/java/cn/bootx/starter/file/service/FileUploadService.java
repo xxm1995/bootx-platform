@@ -5,8 +5,10 @@ import cn.bootx.starter.file.configuration.FileUploadProperties;
 import cn.bootx.starter.file.dao.UpdateFileManager;
 import cn.bootx.starter.file.dto.UpdateFileDto;
 import cn.bootx.starter.file.entity.UpdateFileInfo;
+import cn.bootx.starter.file.entity.UploadFileContext;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,11 +65,16 @@ public class FileUploadService {
         if (StrUtil.isBlank(fileSuffix)){
             fileSuffix = StrUtil.subAfter(fileName, ".", true);
         }
+        UploadFileContext context = new UploadFileContext()
+                .setFileId(IdUtil.getSnowflake().nextId())
+                .setFileName(fileName)
+                .setFileSuffix(fileSuffix);
 
-        UpdateFileInfo uploadInfo = uploadService.upload(file, fileSuffix);
+        UpdateFileInfo uploadInfo = uploadService.upload(file, context);
         uploadInfo.setFileSuffix(fileSuffix)
                 .setFileType(fileType)
                 .setFileName(fileName);
+        uploadInfo.setId(context.getFileId());
         updateFileManager.save(uploadInfo);
         return uploadInfo.toDto();
     }

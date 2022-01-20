@@ -39,6 +39,9 @@ public class UpdateFileInfo extends MpIdEntity implements EntityBaseFunction<Upd
     /** 文件大小 */
     private Double fileSize;
 
+    /** 外部存储id */
+    private String externalStorageId;
+
     /** 创建者ID */
     @TableField(fill = FieldFill.INSERT)
     private Long creator;

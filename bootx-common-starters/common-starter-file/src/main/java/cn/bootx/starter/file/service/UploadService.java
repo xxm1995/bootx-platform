@@ -1,6 +1,7 @@
 package cn.bootx.starter.file.service;
 
 import cn.bootx.starter.file.entity.UpdateFileInfo;
+import cn.bootx.starter.file.entity.UploadFileContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ public interface UploadService {
     /**
      * 上传文件
      */
-    UpdateFileInfo upload(MultipartFile file, String fileSuffix);
+    UpdateFileInfo upload(MultipartFile file, UploadFileContext context);
     /**
      * 预览文件
      */

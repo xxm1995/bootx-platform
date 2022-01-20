@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.file.code.FileUploadTypeCode;
 import cn.bootx.starter.file.configuration.FileUploadProperties;
 import cn.bootx.starter.file.entity.UpdateFileInfo;
+import cn.bootx.starter.file.entity.UploadFileContext;
 import cn.bootx.starter.file.service.UploadService;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
@@ -43,8 +44,9 @@ public class LocalUploadService implements UploadService {
      * 文件上传
      */
     @SneakyThrows
-    public UpdateFileInfo upload(MultipartFile file, String fileSuffix){
-        fileSuffix = Optional.ofNullable(fileSuffix).map(s -> "." + s).orElse("");
+    @Override
+    public UpdateFileInfo upload(MultipartFile file, UploadFileContext context){
+        String fileSuffix = Optional.ofNullable(context.getFileSuffix()).map(s -> "." + s).orElse("");
         String filePath = DateUtil.today() + "/" + IdUtil.getSnowflake().nextIdStr() + fileSuffix;
         String storePath = fileUploadProperties.getLocalPath()+filePath;
         FileUtil.writeFromStream(file.getInputStream(),storePath);

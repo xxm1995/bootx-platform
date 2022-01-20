@@ -3,15 +3,17 @@ package cn.bootx.starter.file.service.impl;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.starter.file.code.FileUploadTypeCode;
 import cn.bootx.starter.file.entity.UpdateFileInfo;
-import cn.bootx.starter.file.entity.mongo.MongoUploadFile;
+import cn.bootx.starter.file.entity.UploadFileContext;
 import cn.bootx.starter.file.service.UploadService;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.util.IdUtil;
+import com.mongodb.client.gridfs.model.GridFSFile;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.types.Binary;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsResource;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MongoUploadService implements UploadService {
     private final GridFsTemplate gridFsTemplate;
-    private final MongoTemplate mongoTemplate;
+
     @Override
     public boolean enable(int type) {
         return type == FileUploadTypeCode.MONGO;
@@ -41,45 +42,44 @@ public class MongoUploadService implements UploadService {
 
     /**
      * 上传
-     * @return
      */
     @SneakyThrows
     @Override
-    public UpdateFileInfo upload(MultipartFile file, String fileSuffix) {
-        byte[] bytes = file.getBytes();
-        MongoUploadFile mongoUploadFile = new MongoUploadFile().setId(IdUtil.getSnowflake().nextId())
-                .setContent(new Binary(bytes));
-
-        mongoTemplate.save(mongoUploadFile);
-        UpdateFileInfo updateFileInfo = new UpdateFileInfo()
+    public UpdateFileInfo upload(MultipartFile file,  UploadFileContext context) {
+        ObjectId store = gridFsTemplate.store(file.getInputStream(), context.getFileName(), file.getContentType());
+        return new UpdateFileInfo()
+                .setExternalStorageId(store.toString())
                 .setFileSize(file.getSize() / 1024.0);
-        updateFileInfo.setId(mongoUploadFile.getId());
-        return updateFileInfo;
     }
 
     @SneakyThrows
     @Override
     public void preview(UpdateFileInfo updateFileInfo, HttpServletResponse response) {
-        MongoUploadFile mongoUploadFile = Optional.ofNullable(mongoTemplate.findById(updateFileInfo.getId(), MongoUploadFile.class))
+        Criteria criteria = Criteria.where("_id").is(updateFileInfo.getExternalStorageId());
+        Query query = new Query(criteria);
+
+        GridFSFile gridFSFile = Optional.ofNullable(gridFsTemplate.findOne(query))
                 .orElseThrow(DataNotExistException::new);
-        Binary content = mongoUploadFile.getContent();
-        byte[] bytes = content.getData();
-        InputStream is = new ByteArrayInputStream(bytes);
+        GridFsResource resource = gridFsTemplate.getResource(gridFSFile);
+        InputStream inputStream = resource.getInputStream();
+
         //获取响应输出流
         ServletOutputStream os = response.getOutputStream();
-        IoUtil.copy(is, os);
+        IoUtil.copy(inputStream, os);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, updateFileInfo.getFileType());
-        IoUtil.close(is);
+        IoUtil.close(inputStream);
         IoUtil.close(os);
     }
 
     @SneakyThrows
     @Override
     public InputStream download(UpdateFileInfo updateFileInfo, HttpServletResponse response) {
-        MongoUploadFile mongoUploadFile = Optional.ofNullable(mongoTemplate.findById(updateFileInfo.getId(), MongoUploadFile.class))
+        Criteria criteria = Criteria.where("_id").is(new ObjectId(updateFileInfo.getExternalStorageId()));
+        Query query = new Query(criteria);
+
+        GridFSFile gridFSFile = Optional.ofNullable(gridFsTemplate.findOne(query))
                 .orElseThrow(DataNotExistException::new);
-        Binary content = mongoUploadFile.getContent();
-        byte[] bytes = content.getData();
-        return new ByteArrayInputStream(bytes);
+        GridFsResource resource = gridFsTemplate.getResource(gridFSFile);
+        return  resource.getInputStream();
     }
 }
