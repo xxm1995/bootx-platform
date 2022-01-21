@@ -2,6 +2,7 @@ package cn.bootx.common.sequence.impl;
 
 import cn.bootx.common.sequence.exception.SeqException;
 import cn.bootx.common.sequence.func.Sequence;
+import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRange;
 import cn.bootx.common.sequence.range.SeqRangeManager;
 import lombok.Getter;
@@ -37,6 +38,11 @@ public class DefaultRangeSequence implements Sequence {
     private volatile SeqRange currentRange;
 
     /**
+     * 序列号区间配置
+     */
+    private final SeqRangeConfig seqRangeConfig;
+
+    /**
      * 获取下一个值
      */
     @Override
@@ -46,7 +52,7 @@ public class DefaultRangeSequence implements Sequence {
             lock.lock();
             try {
                 if (null == currentRange) {
-                    currentRange = seqRangeManager.nextRange(name);
+                    currentRange = seqRangeManager.nextRange(name, seqRangeConfig);
                 }
             } finally {
                 lock.unlock();
@@ -60,7 +66,7 @@ public class DefaultRangeSequence implements Sequence {
             try {
                 while (true){
                     if (currentRange.isOver()) {
-                        currentRange = seqRangeManager.nextRange(name);
+                        currentRange = seqRangeManager.nextRange(name, seqRangeConfig);
                     }
                     value = currentRange.getAndIncrement();
                     if (value == -1) {
@@ -83,6 +89,6 @@ public class DefaultRangeSequence implements Sequence {
      */
     @Override
     public String nextValue(String name) throws SeqException {
-        return String.valueOf(next(name));
+        return String.valueOf(this.next(name));
     }
 }

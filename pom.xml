@@ -231,6 +231,11 @@
             </dependency>
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-mongo</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-cache</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>

@@ -25,14 +25,19 @@ public class SeqRange {
 	 * 区间的序列号当前值
 	 */
 	private final AtomicLong value;
+    /**
+     * 区间的序列号步长
+     */
+    private final int step;
 	/**
 	 * 区间的序列号是否分配完毕，每次分配完毕就会去重新获取一个新的区间
 	 */
 	private volatile boolean over = false;
 
-	public SeqRange(long min, long max) {
+	public SeqRange(long min, long max,int step) {
 		this.min = min;
 		this.max = max;
+		this.step = step;
 		this.value = new AtomicLong(min);
 	}
 

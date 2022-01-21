@@ -20,22 +20,22 @@ public class SequenceProperties {
     private Type type = Type.REDIS;
 
     /**
-     * 前缀防止key重复
+     * 序列生成器默认前缀
      */
     private String keyPrefix = "Sequence:";
 
     /**
-     * 步长
+     * 序列生成器默认步长
      */
     private int step = 1;
 
     /**
-     * 区间步长
+     * 序列生成器默认区间步长
      */
     private int rangeStep = 1000;
 
     /**
-     * 区间起始位置
+     * 序列生成器默认区间起始位置
      */
     private long rangeStart = 0;
 
@@ -43,9 +43,11 @@ public class SequenceProperties {
      * 存储类型
      */
     public enum Type{
-        /** 数据库 */
+        /** redis */
         REDIS,
-        /** 数据库存储 */
-        JDBC
+        /** 数据库 */
+        JDBC,
+        /** MongoDB */
+        MONGO;
     }
 }

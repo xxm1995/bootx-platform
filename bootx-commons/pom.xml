@@ -26,6 +26,7 @@
         <module>common-exception-handler</module>
         <module>common-sequence</module>
         <module>common-xxl-job</module>
+        <module>common-mongo</module>
     </modules>
 
     <dependencies>

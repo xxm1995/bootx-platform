@@ -33,11 +33,11 @@ public class JdbcRangeHandler {
      * 增加区间范围
      */
     @Transactional(rollbackFor = Exception.class)
-    public Long incrementRange(String key, int step) {
+    public Long incrementRange(String key, int rangeStep) {
         SequenceRange range = manager.findByField(SequenceRange::getRangeKey, key)
                 .orElseThrow(() -> new SeqException("区间不存在"));
         // 新区间开始值
-        long stepValue = range.getRangeValue() + step;
+        long stepValue = range.getRangeValue() + rangeStep;
         range.setRangeValue(stepValue);
         manager.updateById(range);
         return stepValue;

@@ -13,8 +13,9 @@ public interface SeqRangeManager {
      * 获取指定区间名的下一个区间
      *
      * @param name 区间名
+     * @param seqRangeConfig 序列号区间配置
      * @return 返回区间
      * @throws SeqException 异常
      */
-    SeqRange nextRange(String name) throws SeqException;
+    SeqRange nextRange(String name, SeqRangeConfig seqRangeConfig) throws SeqException;
 }

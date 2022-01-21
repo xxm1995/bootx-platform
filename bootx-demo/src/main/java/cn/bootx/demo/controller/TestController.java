@@ -5,6 +5,9 @@ import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.sequence.func.Sequence;
+import cn.bootx.common.sequence.impl.DefaultRangeSequence;
+import cn.bootx.common.sequence.range.SeqRangeConfig;
+import cn.bootx.common.sequence.range.SeqRangeManager;
 import cn.bootx.demo.core.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     private final Sequence sequence;
     private final TestService testService;
+    private final SeqRangeManager seqRangeManager;
 
     @OperateLog(title = "测试日志")
     @OperateLog(title = "测试重复日志")
@@ -45,6 +49,17 @@ public class TestController {
     public ResResult<String> sequence(){
         long cs = sequence.next("cs");
         return Res.ok(String.valueOf(cs));
+    }
+
+    @Operation(summary = "发号器自定义")
+    @GetMapping("/sequenceZdy")
+    public ResResult<Long> sequenceZdy(){
+        SeqRangeConfig seqRangeConfig = new SeqRangeConfig()
+                .setStep(5)
+                .setRangeStart(0)
+                .setRangeStep(5);
+        DefaultRangeSequence defaultRangeSequence = new DefaultRangeSequence(seqRangeManager, seqRangeConfig);
+        return Res.ok(defaultRangeSequence.next("aa"));
     }
 
     @Idempotent(name = "idempotent",timeout = 1000*60)
