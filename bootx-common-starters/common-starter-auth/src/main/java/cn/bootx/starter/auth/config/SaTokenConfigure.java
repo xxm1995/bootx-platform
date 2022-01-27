@@ -6,7 +6,6 @@ import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,7 +17,6 @@ import java.util.Collections;
  * @date 2021/7/30
  */
 @EnableConfigurationProperties(AuthProperties.class)
-@Configuration
 @RequiredArgsConstructor
 public class SaTokenConfigure implements WebMvcConfigurer {
 
@@ -34,6 +32,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
         registry.addInterceptor(new SaRouteInterceptor((req, res, handler)->
                 SaRouter.match(Collections.singletonList("/**"))
                         .notMatch(permitAllUrlProperties.getIgnoreUrls())
+                        // 注册自定义鉴权路由配置
                         .check(saRouteHandler.check(handler))
         )).addPathPatterns("/**");
         // 注册注解拦截器

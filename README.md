@@ -2,11 +2,13 @@
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.alpha4-success.svg" alt="Build Status">
- <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status">
- <img src="https://img.shields.io/badge/Spring%20Boot-2.5-blue.svg" alt="Downloads">
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.alpha4-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Spring%20Boot-2.5-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
+
+## 🙏🙏🙏 求star呀，走过路过留个star吧，非常非常感谢 🙏🙏🙏
 
 ## 🍈项目介绍
 
@@ -15,7 +17,7 @@
 
 ## 🍒文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) 、[管理平台(vue3)](http://web.platform.bootx.cn/)
+- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) 、[管理平台(vue3)](http://vben.platform.bootx.cn/)
 - 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) 、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vben)
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
 - 快速启动：[启动说明](https://www.yuque.com/bootx/bootx-platform/vpi0gn)
@@ -38,9 +40,36 @@ bootx-platform
     ├── _license -- 使用外部项目对应开源协议
     ├── bootx-common-core -- 核心包
     ├── bootx-common-starters -- starter通用功能组件
+       ├── common-starter-audit-log -- 审计日志模块
+       ├── common-starter-auth -- 认证模块
+       ├── common-starter-code-gen -- 代码生成模块
+       ├── common-starter-data-perm -- 数据权限模块
+       ├── common-starter-file -- 文件管理模块
+       ├── common-starter-quartz -- Quartz定时任务模块
+       ├── common-starter-query -- 超级查询器
     ├── bootx-commons -- commons工具配置封装
-    ├── bootx-demo -- demo实例模块
+       ├── common-cache -- 缓存配置
+       ├── common-exception-handler -- 异常处理器
+       ├── common-header-holder -- 请求头获取工具
+       ├── common-jackson -- Json序列化配置
+       ├── common-mongo -- MongoDB配置
+       ├── common-mybatis-plus -- Mybatis Plus扩展
+       ├── common-redis-client -- Redis客户端封装和配置
+       ├── common-sequence -- 发号器（序列号生成器）
+       ├── common-spring -- Spring相关配置
+       ├── common-swagger -- swagger3配置（Spring Doc）
+       ├── common-xxl-job -- XXL-JOB定时任务
+    ├── bootx-demo -- demo示例模块
     ├── bootx-services -- 业务服务模块
+       ├── service-baseapi -- 基础api功能服务
+       ├── service-goods -- 商品中心服务(未完成)
+       ├── service-iam -- 身份识别与访问管理
+       ├── service-notice -- 消息通知服务(未完成)
+       ├── service-office -- 办公服务(未开始)
+       ├── service-order -- 订单服务(未完成)
+       ├── service-payment -- 支付服务(部分完成)
+       ├── service-sales -- 销售中心(未完成)
+       ├── service-social -- 三方系统管理(未开始)
     ├── bootx-start -- 启动模块
 ```
 ## 🍇模块结构说明
@@ -53,10 +82,12 @@ service-iam
     ├── code -- 常量包
     ├── controller -- 控制器
     ├── core -- 功能核心
+    ├── exception -- 异常
     ├── dto -- 业务对象
     ├── mq -- 消息通知处理
     ├── task -- 定时任务
     ├── param -- 请求参数包
+    ├── util -- 内部工具包
     ├── IamApplication -- 启动类
 ```
 **core核心包业务代码分包**

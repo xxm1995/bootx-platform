@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(prefix = "bootx.common.sequence", value = "type", havingValue = "jdbc")
+@ConditionalOnProperty(prefix = "bootx.common.sequence", value = "type", havingValue = "jdbc",matchIfMissing = true)
 public class JdbcSeqRangeManager implements SeqRangeManager {
     private final JdbcRangeHandler jdbcRangeHandler;
 

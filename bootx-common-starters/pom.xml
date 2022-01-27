@@ -19,6 +19,7 @@
         <module>common-starter-query</module>
         <module>common-starter-data-perm</module>
         <module>common-starter-file</module>
+        <module>common-starter-code-gen</module>
     </modules>
 
     <dependencies>

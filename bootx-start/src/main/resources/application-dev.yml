@@ -79,6 +79,8 @@ bootx:
     cache:
       keys-ttl:
         "[iam:user:path]" : 5200
+    sequence:
+      type: jdbc
   starter:
     auth:
       default-password: 123456

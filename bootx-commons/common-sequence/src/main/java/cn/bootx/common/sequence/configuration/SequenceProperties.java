@@ -17,7 +17,7 @@ public class SequenceProperties {
     /**
      * 存储类型
      */
-    private Type type = Type.REDIS;
+    private Type type = Type.JDBC;
 
     /**
      * 序列生成器默认前缀
