@@ -5,7 +5,6 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.file.dto.UpdateFileDto;
-import cn.bootx.starter.file.entity.UpdateFileInfo;
 import cn.bootx.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,7 +30,7 @@ public class FIleUpLoadController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<UpdateFileInfo>> page(PageParam  pageParam){
+    public ResResult<PageResult<UpdateFileDto>> page(PageParam  pageParam){
         return Res.ok(uploadService.page(pageParam));
     }
 
