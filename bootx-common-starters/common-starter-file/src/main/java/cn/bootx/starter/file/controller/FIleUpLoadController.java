@@ -1,8 +1,11 @@
 package cn.bootx.starter.file.controller;
 
+import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.file.dto.UpdateFileDto;
+import cn.bootx.starter.file.entity.UpdateFileInfo;
 import cn.bootx.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,6 +28,12 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class FIleUpLoadController {
     private final FileUploadService uploadService;
+
+    @Operation(summary = "分页")
+    @GetMapping("/page")
+    public ResResult<PageResult<UpdateFileInfo>> page(PageParam  pageParam){
+        return Res.ok(uploadService.page(pageParam));
+    }
 
     @Operation(summary = "上传")
     @PostMapping("/upload")

@@ -1,6 +1,9 @@
 package cn.bootx.starter.file.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.file.configuration.FileUploadProperties;
 import cn.bootx.starter.file.dao.UpdateFileManager;
 import cn.bootx.starter.file.dto.UpdateFileDto;
@@ -112,6 +115,13 @@ public class FileUploadService {
     }
 
     /**
+     * 分页
+     */
+    public PageResult<UpdateFileInfo> page(PageParam pageParam) {
+        return MpUtil.page2PageResult(updateFileManager.page(pageParam));
+    }
+
+    /**
      * 获取文件地址
      */
     public String getFileUrl(Long id){
@@ -124,4 +134,5 @@ public class FileUploadService {
     public String getFileUrlPrefix(){
         return fileUploadProperties.getServerUrl()+"/file/preview/";
     }
+
 }
