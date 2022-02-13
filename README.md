@@ -8,7 +8,7 @@
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
 
-## 🙏🙏🙏 求star呀，走过路过留个star吧，非常非常感谢 🙏🙏🙏
+## 🙏🙏🙏 求star呀，走过路过留个star吧，非常非常感谢。最近更新频率会慢很多，不是停止更新了， 等过了这段时间更新进度会恢复🙏🙏🙏
 
 ## 🍈项目介绍
 
