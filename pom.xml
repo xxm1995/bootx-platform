@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.2</version>
+        <version>2.6.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -42,7 +42,7 @@
         <springdoc.version>1.5.13</springdoc.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
-        <sa-token.version>1.28.0</sa-token.version>
+        <sa-token.version>1.29.0</sa-token.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <freemarker.version>2.3.31</freemarker.version>
         <wxjava.version>4.1.0</wxjava.version>

@@ -125,14 +125,14 @@ public class FileUploadService {
      * 获取文件地址
      */
     public String getFileUrl(Long id){
-        return fileUploadProperties.getServerUrl()+"/file/preview/"+id;
+        return fileUploadProperties.getLocal().getServerUrl()+"/file/preview/"+id;
     }
 
     /**
      * 获取文件地址前缀
      */
     public String getFileUrlPrefix(){
-        return fileUploadProperties.getServerUrl()+"/file/preview/";
+        return fileUploadProperties.getLocal().getServerUrl()+"/file/preview/";
     }
 
 }

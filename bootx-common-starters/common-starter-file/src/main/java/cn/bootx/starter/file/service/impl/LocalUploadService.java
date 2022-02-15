@@ -48,7 +48,7 @@ public class LocalUploadService implements UploadService {
     public UpdateFileInfo upload(MultipartFile file, UploadFileContext context){
         String fileSuffix = Optional.ofNullable(context.getFileSuffix()).map(s -> "." + s).orElse("");
         String filePath = DateUtil.today() + "/" + IdUtil.getSnowflake().nextIdStr() + fileSuffix;
-        String storePath = fileUploadProperties.getLocalPath()+filePath;
+        String storePath = fileUploadProperties.getLocal().getLocalPath()+filePath;
         FileUtil.writeFromStream(file.getInputStream(),storePath);
         return new UpdateFileInfo()
                 .setFilePath(filePath)
@@ -61,7 +61,7 @@ public class LocalUploadService implements UploadService {
     @SneakyThrows
     @Override
     public void preview(UpdateFileInfo updateFileInfo, HttpServletResponse response){
-        String storePath = fileUploadProperties.getLocalPath() + updateFileInfo.getFilePath();
+        String storePath = fileUploadProperties.getLocal().getLocalPath() + updateFileInfo.getFilePath();
         File file = new File(storePath);
         if (!file.exists()){
             throw new BizException("文件不存在");
@@ -81,7 +81,7 @@ public class LocalUploadService implements UploadService {
     @SneakyThrows
     @Override
     public InputStream download(UpdateFileInfo updateFileInfo, HttpServletResponse response){
-        String storePath = fileUploadProperties.getLocalPath() + updateFileInfo.getFilePath();
+        String storePath = fileUploadProperties.getLocal().getLocalPath() + updateFileInfo.getFilePath();
         File file = new File(storePath);
         if (!file.exists()){
             throw new BizException("文件不存在");

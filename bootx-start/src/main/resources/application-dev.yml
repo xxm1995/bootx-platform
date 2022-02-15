@@ -98,5 +98,8 @@ bootx:
     audit-log:
       store: mongo
     file-upload:
-      server-url: http://127.0.0.1:8080
       upload-type: 2
+      local:
+        server-url: http://127.0.0.1:8080
+      mongo:
+        bucket: fs
