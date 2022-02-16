@@ -99,7 +99,4 @@ bootx:
       store: mongo
     file-upload:
       upload-type: 2
-      local:
-        server-url: http://127.0.0.1:8080
-      mongo:
-        bucket: fs
+      server-url: http://127.0.0.1:8080

@@ -122,17 +122,23 @@ public class FileUploadService {
     }
 
     /**
-     * 获取文件地址
+     * 获取文件预览地址
      */
-    public String getFileUrl(Long id){
-        return fileUploadProperties.getLocal().getServerUrl()+"/file/preview/"+id;
+    public String getFilePreviewUrl(Long id){
+        return fileUploadProperties.getServerUrl()+"/file/preview/"+id;
     }
 
     /**
-     * 获取文件地址前缀
+     * 获取文件预览地址前缀
      */
-    public String getFileUrlPrefix(){
-        return fileUploadProperties.getLocal().getServerUrl()+"/file/preview/";
+    public String getFilePreviewUrlPrefix(){
+        return fileUploadProperties.getServerUrl()+"/file/preview/";
     }
 
+    /**
+     * 获取文件地址
+     */
+    public String getFileDownloadUrl(Long id){
+        return fileUploadProperties.getServerUrl()+"/file/download/"+id;
+    }
 }

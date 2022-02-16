@@ -40,16 +40,22 @@ public class FIleUpLoadController {
         return Res.ok(uploadService.upload(file,fileName));
     }
 
-    @Operation(summary = "获取文件地址")
-    @GetMapping("getFileUrl")
-    public ResResult<String> getFileUrl(Long id){
-        return Res.ok(uploadService.getFileUrl(id));
+    @Operation(summary = "获取文件预览地址")
+    @GetMapping("getFilePreviewUrl")
+    public ResResult<String> getFilePreviewUrl(Long id){
+        return Res.ok(uploadService.getFilePreviewUrl(id));
     }
 
-    @Operation(summary = "获取文件地址前缀")
-    @GetMapping("getFileUrlPrefix")
-    public ResResult<String> getFileUrlPrefix(){
-        return Res.ok(uploadService.getFileUrlPrefix());
+    @Operation(summary = "获取文件预览地址前缀")
+    @GetMapping("getFilePreviewUrlPrefix")
+    public ResResult<String> getFilePreviewUrlPrefix(){
+        return Res.ok(uploadService.getFilePreviewUrlPrefix());
+    }
+
+    @Operation(summary = "获取文件下载地址")
+    @GetMapping("getFileDownloadUrl")
+    public ResResult<String> getFileDownloadUrl(Long id){
+        return Res.ok(uploadService.getFileDownloadUrl(id));
     }
 
     @Operation(summary = "预览文件")

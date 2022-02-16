@@ -22,6 +22,9 @@ public class FileUploadProperties {
      */
     private int uploadType = 1;
 
+    /** 服务器地址 */
+    private String serverUrl;
+
     /** 本地存储 */
     private Local local = new Local();
 
@@ -34,9 +37,6 @@ public class FileUploadProperties {
     @Getter
     @Setter
     public static class Local{
-        /** 服务器地址 */
-        private String serverUrl;
-
         /** 本地存储路径 */
         private String localPath = "/data/file/";
     }
