@@ -3,7 +3,6 @@ package cn.bootx.start;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
@@ -16,9 +15,7 @@ import java.net.UnknownHostException;
 * @date 2021/7/27 
 */
 @Slf4j
-@SpringBootApplication(exclude = {
-        FreeMarkerAutoConfiguration.class
-})
+@SpringBootApplication
 public class BootxApplication {
 
     public static void main(String[] args) throws UnknownHostException {

@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DatabaseTableController {
     private final DatabaseTableService databaseTableService;
-    
+
     @Operation(summary = "表列表")
     @GetMapping("/findAll")
     public ResResult<List<DatabaseTable>> findAll(){
@@ -51,4 +51,5 @@ public class DatabaseTableController {
     public ResResult<List<DatabaseColumn>> findColumnByTableName(String tableName){
         return Res.ok(databaseTableService.findColumnByTableName(tableName));
     }
+
 }

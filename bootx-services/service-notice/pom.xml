@@ -39,8 +39,8 @@
 
         <!-- 模板引擎 -->
         <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
         </dependency>
 
         <!-- 认证模块 -->

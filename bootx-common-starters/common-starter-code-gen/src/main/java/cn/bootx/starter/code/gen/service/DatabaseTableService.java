@@ -1,5 +1,6 @@
 package cn.bootx.starter.code.gen.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.code.gen.dao.DatabaseTableMapper;
@@ -43,7 +44,7 @@ public class DatabaseTableService {
      * 获取表信息
      */
     public DatabaseTable findByTableName(String tableName){
-        return databaseTableMapper.findByTableName(tableName);
+        return databaseTableMapper.findByTableName(tableName).orElseThrow(DataNotExistException::new);
     }
     /**
      * 获取数据表列信息

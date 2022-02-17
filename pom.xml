@@ -44,7 +44,7 @@
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <sa-token.version>1.29.0</sa-token.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <freemarker.version>2.3.31</freemarker.version>
+        <velocity.version>2.3</velocity.version>
         <wxjava.version>4.1.0</wxjava.version>
     </properties>
 
@@ -130,9 +130,9 @@
 
             <!-- 模板引擎 -->
             <dependency>
-                <groupId>org.freemarker</groupId>
-                <artifactId>freemarker</artifactId>
-                <version>${freemarker.version}</version>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.version}</version>
             </dependency>
 
             <!-- weixin-java 微信小程序 -->

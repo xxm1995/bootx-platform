@@ -67,5 +67,5 @@ public interface CommonCode {
 
     String VERSION = "version";
 
-    String DEL_FLAG = "delFlag";
+    String DELETED = "deleted";
 }
