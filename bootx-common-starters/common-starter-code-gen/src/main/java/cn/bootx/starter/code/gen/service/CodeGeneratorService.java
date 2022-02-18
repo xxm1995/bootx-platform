@@ -3,9 +3,11 @@ package cn.bootx.starter.code.gen.service;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.starter.code.gen.code.CodeGenColumnTypeEnum;
 import cn.bootx.starter.code.gen.code.CodeGenTemplateVmEnum;
+import cn.bootx.starter.code.gen.dto.CodeGenPreview;
 import cn.bootx.starter.code.gen.entity.CodeGenColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseTable;
+import cn.bootx.starter.code.gen.param.CodeGenParam;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.CharsetUtil;
@@ -42,22 +44,42 @@ public class CodeGeneratorService {
             CommonCode.DELETED
     );
 
-    /**
-     * 生成实体类
-     */
-    public String genEntity(String tableName){
-
-        DatabaseTable databaseTable = databaseTableService.findByTableName(tableName);
-        List<DatabaseColumn> databaseColumns = databaseTableService.findColumnByTableName(tableName);
-
+    // 初始化Velocity
+    static {
         //设置velocity资源加载器
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
-        Template template = Velocity.getTemplate(CodeGenTemplateVmEnum.ENTITY.getPath(), CharsetUtil.UTF_8);
+    }
+
+    /**
+     * 生成实体类
+     */
+    public List<CodeGenPreview> codeGenPreview(CodeGenParam codeGenParam){
+        // 获取生成代码所用的数据
+        Map<String, Object> map = this.getCodeGenInfo(codeGenParam);
+        // 遍历生成代码预览
+        return Arrays.stream(CodeGenTemplateVmEnum.values())
+                .map(vmEnum -> {
+                    VelocityContext context = new VelocityContext(map);
+                    StringWriter sw = new StringWriter();
+                    Template template = Velocity.getTemplate(vmEnum.getPath(), CharsetUtil.UTF_8);
+                    template.merge(context, sw);
+                    return new CodeGenPreview()
+                            .setName(vmEnum.getName())
+                            .setContent(sw.toString());
+                }).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取生成代码所用的数据
+     */
+    private Map<String,Object> getCodeGenInfo(CodeGenParam codeGenParam){
+        DatabaseTable databaseTable = databaseTableService.findByTableName(codeGenParam.getTableName());
+        List<DatabaseColumn> databaseColumns = databaseTableService.findColumnByTableName(codeGenParam.getTableName());
 
         Map<String, Object> map = new HashMap<>(16);
-        // 字段
+        // 数据库字段
         List<CodeGenColumn> columns = databaseColumns.stream()
                 .map(databaseColumn -> new CodeGenColumn()
                         .setComments(databaseColumn.getColumnComment())
@@ -66,22 +88,17 @@ public class CodeGeneratorService {
                 .filter(codeGenColumn->!entityFilterFields.contains(codeGenColumn.getName()))
                 .collect(Collectors.toList());
 
-        map.put("module","iam");
-        map.put("method","client");
+        // 添加代码生成所需要的属性
+        map.put("module",codeGenParam.getModule());
+        map.put("method",codeGenParam.getMethod());
         map.put("comments",databaseTable.getTableComment());
-        map.put("author","xxm");
+        map.put("author",codeGenParam.getAuthor());
         map.put("datetime", DateUtil.formatDate(new Date()));
         map.put("className",tableToJava(databaseTable.getTableName()));
         map.put("tableName",databaseTable.getTableName());
         map.put("columns",columns);
-
-        VelocityContext context = new VelocityContext(map);
-        StringWriter sw = new StringWriter();
-        template.merge(context, sw);
-        System.out.println(sw.toString());
-        return sw.toString();
+        return map;
     }
-
 
     /**
      * 表名转换成Java类名 大驼峰

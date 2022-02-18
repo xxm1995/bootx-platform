@@ -2,13 +2,15 @@ package cn.bootx.starter.code.gen.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.starter.code.gen.dto.CodeGenPreview;
+import cn.bootx.starter.code.gen.param.CodeGenParam;
 import cn.bootx.starter.code.gen.service.CodeGeneratorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**   
 * 代码生成
@@ -23,9 +25,8 @@ public class CodeGeneratorController {
     private final CodeGeneratorService generatorService;
 
     @Operation(summary = "生成代码")
-    @GetMapping("/codeGen")
-    public ResResult<String> codeGen(String tableName){
-        return Res.ok(generatorService.genEntity(tableName));
+    @PostMapping("/codeGenPreview")
+    public ResResult<List<CodeGenPreview>> codeGenPreview(@RequestBody CodeGenParam param){
+        return Res.ok(generatorService.codeGenPreview(param));
     }
-
 }
