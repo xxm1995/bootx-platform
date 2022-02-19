@@ -27,19 +27,19 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ${className} extends MpBaseEntity implements EntityBaseFunction<${className}Dto>{
 
-    #foreach ($column in $columns)
-        /** $column.comments */
-        private $column.attrType $column.name;
-    #end
+#foreach ($column in $columns)
+    /** $column.comments */
+    private $column.attrType $column.name;
+#end
 
-        /** 创建对象 */
-        public static ${className} init(${className}Param in) {
-                return ${className}Convert.CONVERT.convert(in);
-        }
+    /** 创建对象 */
+    public static ${className} init(${className}Param in) {
+            return ${className}Convert.CONVERT.convert(in);
+    }
 
-        /** 转换成dto */
-        @Override
-        public ${className}Dto toDto() {
-            return ${className}Convert.CONVERT.convert(this);
-        }
+    /** 转换成dto */
+    @Override
+    public ${className}Dto toDto() {
+        return ${className}Convert.CONVERT.convert(this);
+    }
 }

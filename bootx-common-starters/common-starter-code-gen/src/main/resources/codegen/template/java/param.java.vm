@@ -21,9 +21,9 @@ public class ${className}Param {
     @Schema(description= "主键")
     private Long id;
 
-    #foreach ($column in $columns)
-        @Schema(description = "$column.comments")
-        private $column.attrType $column.name;
-    #end
+#foreach ($column in $columns)
+    @Schema(description = "$column.comments")
+    private $column.attrType $column.name;
+#end
 
 }

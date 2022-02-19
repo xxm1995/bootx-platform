@@ -8,6 +8,7 @@ import cn.bootx.starter.code.gen.service.CodeGeneratorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +25,15 @@ import java.util.List;
 public class CodeGeneratorController {
     private final CodeGeneratorService generatorService;
 
-    @Operation(summary = "生成代码")
+    @Operation(summary = "预览生成代码")
     @PostMapping("/codeGenPreview")
     public ResResult<List<CodeGenPreview>> codeGenPreview(@RequestBody CodeGenParam param){
         return Res.ok(generatorService.codeGenPreview(param));
+    }
+
+    @Operation(summary = "下载生成代码")
+    @PostMapping("/genCodeZip")
+    public ResponseEntity<byte[]> genCodeZip(@RequestBody CodeGenParam param){
+        return generatorService.genCodeZip(param);
     }
 }

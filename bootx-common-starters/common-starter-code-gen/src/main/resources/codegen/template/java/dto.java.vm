@@ -21,9 +21,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ${className}Dto extends BaseDto {
 
-    #foreach ($column in $columns)
-        @Schema(description = "$column.comments")
-        private $column.attrType $column.name;
-    #end
+#foreach ($column in $columns)
+    @Schema(description = "$column.comments")
+    private $column.attrType $column.name;
+#end
 
 }

@@ -45,7 +45,7 @@ public enum CodeGenColumnTypeEnum {
         return Arrays.stream(CodeGenColumnTypeEnum.values())
                 .filter(e -> Objects.equals(columnType,e.getColumnType()))
                 .findFirst()
-                .orElseThrow(() -> new BizException("不支持的数据库类型"))
+                .orElseThrow(() -> new BizException("不支持的数据库字段类型"))
                 .getJavaType();
     }
 }
