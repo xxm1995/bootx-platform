@@ -2,6 +2,7 @@ package cn.bootx.starter.code.gen.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
+@FieldNameConstants
 public class DatabaseTable {
 
     /** 表名 */

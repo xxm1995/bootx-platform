@@ -12,6 +12,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -105,7 +106,12 @@ public class CodeGeneratorService {
         map.put("comments",databaseTable.getTableComment());
         map.put("author",codeGenParam.getAuthor());
         map.put("datetime", DateUtil.formatDate(new Date()));
+        // 大写开头
         map.put("className",tableToJava(databaseTable.getTableName()));
+        // 小写开头
+        map.put("classname", StrUtil.lowerFirst(tableToJava(databaseTable.getTableName())));
+        // 连接线
+        map.put("classNameKebab", NamingCase.toKebabCase(tableToJava(databaseTable.getTableName())));
         map.put("tableName",databaseTable.getTableName());
         map.put("columns",columns);
         return map;

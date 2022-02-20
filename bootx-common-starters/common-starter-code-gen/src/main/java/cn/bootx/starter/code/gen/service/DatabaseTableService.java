@@ -6,6 +6,8 @@ import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.code.gen.dao.DatabaseTableMapper;
 import cn.bootx.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseTable;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +31,20 @@ public class DatabaseTableService {
      * 查询全部
      */
     public List<DatabaseTable> findAll(){
-        return databaseTableMapper.findAll();
+        QueryWrapper<DatabaseTable> wrapper = new QueryWrapper<>();
+        return databaseTableMapper.findAll(wrapper);
     }
 
     /**
      * 分页
      */
-    public Page<DatabaseTable> page(PageParam pageParam){
+    public Page<DatabaseTable> page(PageParam pageParam,DatabaseTable param){
         val mpPage = MpUtil.getMpPage(pageParam, DatabaseTable.class);
-        return databaseTableMapper.page(mpPage);
+        QueryWrapper<DatabaseTable> wrapper = new QueryWrapper<>();
+
+        wrapper.like(StrUtil.isNotBlank(param.getTableName()),DatabaseTable.Fields.tableName,param.getTableName())
+                .like(StrUtil.isNotBlank(param.getTableComment()),DatabaseTable.Fields.tableComment,param.getTableComment());
+        return databaseTableMapper.page(mpPage,wrapper);
     }
 
     /**

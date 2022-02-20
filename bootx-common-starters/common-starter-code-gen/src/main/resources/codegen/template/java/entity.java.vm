@@ -9,7 +9,7 @@ import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import cn.bootx.${module}.dto.${method}.${className}Dto;
 import cn.bootx.${module}.param.${method}.${className}Param;
-import cn.bootx.${module}.core.${method}.convert.$!{className}Convert;
+import cn.bootx.${module}.core.${method}.convert.${className}Convert;
 
 
 import lombok.Data;

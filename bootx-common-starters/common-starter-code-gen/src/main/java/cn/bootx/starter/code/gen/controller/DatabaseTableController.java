@@ -36,8 +36,8 @@ public class DatabaseTableController {
 
     @Operation(summary = "表列表分页")
     @GetMapping("/page")
-    public ResResult<Page<DatabaseTable>> page(@ParameterObject PageParam pageParam){
-        return Res.ok(databaseTableService.page(pageParam));
+    public ResResult<Page<DatabaseTable>> page(@ParameterObject PageParam pageParam,@ParameterObject DatabaseTable param){
+        return Res.ok(databaseTableService.page(pageParam,param));
     }
 
     @Operation(summary = "获取表信息")

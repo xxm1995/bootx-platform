@@ -2,6 +2,8 @@ package cn.bootx.starter.code.gen.dao;
 
 import cn.bootx.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseTable;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,16 +23,16 @@ public interface DatabaseTableMapper {
     /**
      * 查询表信息 列表
      */
-    @Select("select table_name, engine, table_comment, create_time from information_schema.tables"
-            + " where table_schema = (select database())")
-    List<DatabaseTable> findAll();
+    @Select("select table_name tableName, engine, table_comment tableComment, create_time createTime from information_schema.tables"
+            + " where table_schema = (select database()) ${ew.customSqlSegment}")
+    List<DatabaseTable> findAll(@Param(Constants.WRAPPER) Wrapper<?> wrapper);
 
     /**
      * 查询表信息 分页
      */
-    @Select("select table_name, engine, table_comment, create_time from information_schema.tables"
-            + " where table_schema = (select database())")
-    Page<DatabaseTable> page(Page<DatabaseTable> mpPage);
+    @Select("select * from (select table_name tableName, engine, table_comment tableComment, create_time createTime from information_schema.tables"
+            + " where table_schema = (select database())) as t ${ew.customSqlSegment}")
+    Page<DatabaseTable> page(Page<DatabaseTable> mpPage,@Param(Constants.WRAPPER) Wrapper<?> wrapper);
 
     /**
      * 查询表信息 详情

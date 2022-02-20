@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
-* 终端对象转换
-* @author xxm
-* @date 2021/8/25
-*/
+ * 认证终端
+ * @author bootx
+ * @date 2022-02-20
+ */
 @Mapper
 public interface ClientConvert {
     ClientConvert CONVERT = Mappers.getMapper(ClientConvert.class);

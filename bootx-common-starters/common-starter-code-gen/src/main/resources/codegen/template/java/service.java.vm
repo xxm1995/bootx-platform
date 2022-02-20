@@ -1,0 +1,70 @@
+package cn.bootx.${module}.core.${method}.service;
+
+import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.${module}.dto.${method}.${className}Dto;
+import cn.bootx.${module}.param.${method}.${className}Param;
+import cn.bootx.${module}.core.${method}.convert.${className}Convert;
+import cn.bootx.${module}.core.${method}.entity.${className};
+import cn.bootx.${module}.core.${method}.dao.${className}Manager;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ${className}Service {
+    private final ${className}Manager ${classname}Manager;
+
+    /**
+     * 添加
+     */
+    public ${className}Dto add(${className}Param param){
+        ${className} ${classname} = ${className}.init(param);
+        return ${classname}Manager.save(${classname}).toDto();
+    }
+
+    /**
+     * 修改
+     */
+    public ${className}Dto update(${className}Param param){
+        ${className} ${classname} = ${classname}Manager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+
+        BeanUtil.copyProperties(param,${classname}, CopyOptions.create().ignoreNullValue());
+        return ${classname}Manager.updateById(${classname}).toDto();
+    }
+
+    /**
+     * 分页
+     */
+    public PageResult<${className}Dto> page(PageParam pageParam,${className}Param ${classname}Param){
+        return MpUtil.convert2PageResult(${classname}Manager.page(pageParam,${classname}Param));
+    }
+
+    /**
+     * 获取单条
+     */
+    public ${className}Dto findById(Long id){
+        return ${classname}Manager.findById(id).map(${className}::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 获取全部
+     */
+    public List<${className}Dto> findAll(){
+        return ResultConvertUtil.dtoListConvert(${classname}Manager.findAll());
+    }
+
+
+}
