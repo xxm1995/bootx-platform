@@ -63,7 +63,7 @@ public class DataVersionLogDbService implements DataVersionLogService {
      */
     @Override
     public PageResult<DataVersionLogDto> page(PageParam pageParam, DataVersionLogParam param) {
-        return MpUtil.convert2PageResult(manager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(manager.page(pageParam,param));
     }
 
     /**

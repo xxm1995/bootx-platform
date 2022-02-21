@@ -35,7 +35,7 @@ public class PayNotifyRecordService {
      */
     public PageResult<PayNotifyRecordDto> page(PageParam pageParam){
         Page<PayNotifyRecord> page = payNotifyRecordManager.page(pageParam);
-        return MpUtil.convert2PageResult(page);
+        return MpUtil.convert2DtoPageResult(page);
     }
 
     /**

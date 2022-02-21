@@ -79,6 +79,6 @@ public class PaymentQueryService {
      * 分页
      */
     public PageResult<PaymentDto> page(PageParam pageParam, PaymentQuery param){
-        return MpUtil.convert2PageResult(paymentManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(paymentManager.page(pageParam,param));
     }
 }

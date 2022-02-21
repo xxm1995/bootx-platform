@@ -48,7 +48,7 @@ public class OrderFindService {
      * 订单列表 分页
      */
     public PageResult<OrderDto> page(PageParam page){
-        return MpUtil.convert2PageResult(orderManager.page(page));
+        return MpUtil.convert2DtoPageResult(orderManager.page(page));
     }
 
     /**

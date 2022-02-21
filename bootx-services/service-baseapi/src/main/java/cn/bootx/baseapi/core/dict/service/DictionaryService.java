@@ -113,6 +113,6 @@ public class DictionaryService {
      * 查询所有字典
      */
     public PageResult<DictionaryDto> page(PageParam pageParam, DictionaryParam param) {
-        return MpUtil.convert2PageResult(dictionaryManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(dictionaryManager.page(pageParam,param));
     }
 }

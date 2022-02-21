@@ -125,7 +125,7 @@ public class UserAdminService {
      * 分页查询
      */
     public PageResult<UserInfoDto> page(PageParam pageParam, UserInfoParam userInfoParam){
-        return MpUtil.convert2PageResult(userInfoManager.page(pageParam,userInfoParam));
+        return MpUtil.convert2DtoPageResult(userInfoManager.page(pageParam,userInfoParam));
     }
 
     /**

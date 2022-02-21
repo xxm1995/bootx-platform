@@ -171,7 +171,7 @@ public class DataScopeService {
      * 分页
      */
     public PageResult<DataScopeDto> page(PageParam pageParam, DataScopeParam param){
-        return MpUtil.convert2PageResult(dataScopeManager.page(MpUtil.getMpPage(pageParam,DataScope.class)));
+        return MpUtil.convert2DtoPageResult(dataScopeManager.page(MpUtil.getMpPage(pageParam,DataScope.class)));
     }
 
     /**

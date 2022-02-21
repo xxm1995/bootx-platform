@@ -56,7 +56,7 @@ public class SystemParamService {
      * 分页
      */
     public PageResult<SystemParameterDto> page(PageParam pageParam, SystemParameterParam param) {
-        return MpUtil.convert2PageResult(systemParamManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(systemParamManager.page(pageParam,param));
     }
 
     /**

@@ -1,4 +1,4 @@
-package cn.bootx.demo.core.service;
+package cn.bootx.demo.core.test.service;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import io.swagger.v3.oas.annotations.Operation;

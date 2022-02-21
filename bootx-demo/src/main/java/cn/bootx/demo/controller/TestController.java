@@ -8,7 +8,7 @@ import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRangeManager;
-import cn.bootx.demo.core.service.TestService;
+import cn.bootx.demo.core.test.service.TestService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

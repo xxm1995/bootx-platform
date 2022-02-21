@@ -52,7 +52,7 @@ public class AppVersionService {
      * 分页
      */
     public PageResult<AppVersionDto> page(PageParam pageParam){
-        return MpUtil.convert2PageResult(appVersionManager.page(pageParam));
+        return MpUtil.convert2DtoPageResult(appVersionManager.page(pageParam));
     }
 
     /**

@@ -25,7 +25,7 @@ public class MpUtil {
 	/**
 	 * mp page转换为 PageResult 同时进行dto转换
 	 */
-	public static <T> PageResult<T> convert2PageResult(Page<? extends EntityBaseFunction<T>> page){
+	public static <T> PageResult<T> convert2DtoPageResult(Page<? extends EntityBaseFunction<T>> page){
 		if (Objects.isNull(page)){
 			return new PageResult<>();
 		}
@@ -44,7 +44,7 @@ public class MpUtil {
     /**
      * page转换为 PageResult
      */
-    public static <T> PageResult<T> page2PageResult(Page<T> page){
+    public static <T> PageResult<T> convert2PageResult(Page<T> page){
         if (Objects.isNull(page)){
             return new PageResult<>();
         }

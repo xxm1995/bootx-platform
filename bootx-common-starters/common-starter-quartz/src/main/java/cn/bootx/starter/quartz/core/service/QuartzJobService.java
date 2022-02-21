@@ -102,7 +102,7 @@ public class QuartzJobService {
      * 分页
      */
     public PageResult<QuartzJobDto> page(PageParam pageParam, QuartzJobParam param){
-        return MpUtil.convert2PageResult(quartzJobManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(quartzJobManager.page(pageParam,param));
     }
 
     /**

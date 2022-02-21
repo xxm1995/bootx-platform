@@ -118,7 +118,7 @@ public class FileUploadService {
      * 分页
      */
     public PageResult<UpdateFileDto> page(PageParam pageParam) {
-        return MpUtil.convert2PageResult(updateFileManager.page(pageParam));
+        return MpUtil.convert2DtoPageResult(updateFileManager.page(pageParam));
     }
 
     /**

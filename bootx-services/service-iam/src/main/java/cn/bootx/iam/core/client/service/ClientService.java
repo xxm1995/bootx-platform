@@ -60,13 +60,12 @@ public class ClientService {
      * 分页
      */
     public PageResult<ClientDto> page(PageParam pageParam,ClientParam clientParam){
-        return MpUtil.convert2PageResult(clientManager.page(pageParam,clientParam));
+        return MpUtil.convert2DtoPageResult(clientManager.page(pageParam,clientParam));
     }
 
 
     public PageResult<ClientDto> superPage(PageParam pageParam, QueryParams queryParams) {
-        return MpUtil.convert2PageResult(clientManager.supperPage(pageParam,queryParams));
-
+        return MpUtil.convert2DtoPageResult(clientManager.supperPage(pageParam,queryParams));
     }
 
     /**

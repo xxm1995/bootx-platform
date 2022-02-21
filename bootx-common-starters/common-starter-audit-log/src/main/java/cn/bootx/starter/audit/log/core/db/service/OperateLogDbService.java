@@ -50,7 +50,7 @@ public class OperateLogDbService implements OperateLogService {
      */
     @Override
     public PageResult<OperateLogDto> page(PageParam pageParam, OperateLogParam operateLogParam){
-        return MpUtil.convert2PageResult(operateLogManager.page(pageParam,operateLogParam));
+        return MpUtil.convert2DtoPageResult(operateLogManager.page(pageParam,operateLogParam));
     }
 
     /**

@@ -67,7 +67,7 @@ public class DingRobotConfigService {
      * 获取所有配置
      */
     public PageResult<DingRobotConfigDto> page(PageParam pageParam){
-        return MpUtil.convert2PageResult(dingRobotConfigManage.page(pageParam));
+        return MpUtil.convert2DtoPageResult(dingRobotConfigManage.page(pageParam));
     }
 
     /**

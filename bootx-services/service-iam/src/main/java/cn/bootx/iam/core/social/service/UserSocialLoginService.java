@@ -49,7 +49,7 @@ public class UserSocialLoginService {
      * 分页
      */
     public PageResult<UserSocialLoginDto> page(PageParam pageParam){
-        return MpUtil.convert2PageResult(userSocialLoginManager.page(pageParam));
+        return MpUtil.convert2DtoPageResult(userSocialLoginManager.page(pageParam));
     }
 
     /**

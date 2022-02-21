@@ -108,7 +108,7 @@ public class AlipayConfigService {
      * 分页
      */
     public PageResult<AlipayConfigDto> page(PageParam pageParam, AlipayConfigQuery param) {
-        return MpUtil.convert2PageResult(alipayConfigManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(alipayConfigManager.page(pageParam,param));
     }
 
     /**

@@ -81,7 +81,7 @@ public class MailConfigService {
      * 分页
      */
     public PageResult<MailConfigDto> page(PageParam pageParam,MailConfigParam param){
-        return MpUtil.convert2PageResult(mailConfigManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(mailConfigManager.page(pageParam,param));
     }
 
     /**

@@ -101,7 +101,7 @@ public class DictionaryItemService {
      */
     public PageResult<DictionaryItemDto> pageByDictionaryId(Long dictionaryId, PageParam pageParam) {
         Page<DictionaryItem> dictionaryItems = dictionaryItemManager.findAllByDictionaryId(dictionaryId, pageParam);
-        return MpUtil.convert2PageResult(dictionaryItems);
+        return MpUtil.convert2DtoPageResult(dictionaryItems);
     }
 
     /**

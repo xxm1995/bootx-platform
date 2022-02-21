@@ -5,14 +5,13 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.${module}.dto.${method}.${className}Dto;
-import cn.bootx.${module}.param.${method}.${className}Param;
-import cn.bootx.${module}.core.${method}.convert.${className}Convert;
-import cn.bootx.${module}.core.${method}.entity.${className};
-import cn.bootx.${module}.core.${method}.dao.${className}Manager;
+    ${module}.dto.${method}.${className}Dto;
+    ${module}.param.${method}.${className}Param;
+    ${module}.core.${method}.convert.${className}Convert;
+    ${module}.core.${method}.entity.${className};
+    ${module}.core.${method}.dao.${className}Manager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class ${className}Service {
      * 分页
      */
     public PageResult<${className}Dto> page(PageParam pageParam,${className}Param ${classname}Param){
-        return MpUtil.convert2PageResult(${classname}Manager.page(pageParam,${classname}Param));
+        return MpUtil.convert2DtoPageResult(${classname}Manager.page(pageParam,${classname}Param));
     }
 
     /**
