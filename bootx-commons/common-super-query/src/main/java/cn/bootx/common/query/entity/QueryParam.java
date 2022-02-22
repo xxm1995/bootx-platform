@@ -1,5 +1,7 @@
-package cn.bootx.starter.query.entity;
+package cn.bootx.common.query.entity;
 
+import cn.bootx.common.query.code.CompareTypeEnum;
+import cn.bootx.common.query.code.ParamTypeEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -22,13 +24,13 @@ public class QueryParam {
     private String paramName;
 
     /**
-     * @see cn.bootx.starter.query.code.CompareTypeEnum
+     * @see CompareTypeEnum
      */
     @Schema(description= "比较类型")
     private String compareType;
 
     /**
-     * @see cn.bootx.starter.query.code.ParamTypeEnum
+     * @see ParamTypeEnum
      */
     @Schema(description= "参数类型")
     private String paramType;

@@ -1,4 +1,4 @@
-package cn.bootx.starter.query.code;
+package cn.bootx.common.query.code;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;

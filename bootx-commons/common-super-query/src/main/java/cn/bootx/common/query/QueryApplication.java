@@ -1,4 +1,4 @@
-package cn.bootx.starter.query;
+package cn.bootx.common.query;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;

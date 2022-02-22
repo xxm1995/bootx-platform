@@ -203,7 +203,7 @@
         <dependencies>
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
-                <artifactId>common-starter-query</artifactId>
+                <artifactId>common-super-query</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
             <dependency>

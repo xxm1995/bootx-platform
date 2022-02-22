@@ -48,7 +48,7 @@ public class SecurityUtil {
      * 获取登录方式
      */
     @Nullable
-    public String obtainClient(HttpServletRequest request) {
+    public String getClientType(HttpServletRequest request) {
         return request.getParameter(CLIENT_PARAMETER);
     }
 

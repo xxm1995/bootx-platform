@@ -82,7 +82,7 @@ public class TokenService {
      */
     private AuthClient getAuthClient(HttpServletRequest request){
         // 终端
-        AuthClient authClient = getAuthClientService.getAuthClient(SecurityUtil.obtainClient(request));
+        AuthClient authClient = getAuthClientService.getAuthClient(SecurityUtil.getClientType(request));
         // 终端处理
         if (!authClient.isEnable()){
             throw new ClientNotEnableException();

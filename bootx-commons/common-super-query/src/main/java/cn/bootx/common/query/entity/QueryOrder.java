@@ -1,4 +1,4 @@
-package cn.bootx.starter.query.entity;
+package cn.bootx.common.query.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -125,7 +125,7 @@ public class DictionaryItemService {
         return dictionaryItemManager.findAll().stream()
                 .sorted(Comparator.comparing(DictionaryItem::getDictId)
                         .thenComparing(DictionaryItem::getSortNo)
-                        .thenComparing(MpBaseEntity::getId).reversed()
+                        .thenComparing(MpBaseEntity::getId)
                 )
                 .map(DictionaryItem::toDto)
                 .collect(Collectors.toList());

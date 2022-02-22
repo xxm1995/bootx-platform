@@ -1,12 +1,14 @@
 package cn.bootx.demo.core.perm.service;
 
 import cn.bootx.common.core.annotation.Permission;
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.demo.core.perm.dao.DataPermDemoManager;
 import cn.bootx.demo.core.perm.entity.DataPermDemo;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +45,7 @@ public class DataPermDemoService {
      * 添加
      */
     public void add(DataPermDemo param){
+        param.setCreatorName(SecurityUtil.getCurrentUser().map(UserDetail::getName).orElse("未知"));
         dataPermDemoManager.save(param);
     }
 

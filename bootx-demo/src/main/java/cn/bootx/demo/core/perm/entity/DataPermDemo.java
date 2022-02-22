@@ -22,6 +22,9 @@ public class DataPermDemo extends MpBaseEntity {
     @Schema(description = "名称")
     private String name;
 
+    @Schema(description = "创建人名称")
+    private String creatorName;
+
     @Schema(description = "备注")
     private String remark;
 }

@@ -33,13 +33,13 @@
       <vxe-table-column field="createTime" title="创建时间" />
       <vxe-table-column fixed="right" width="150" :showOverflow="false" title="操作">
         <template v-slot="{row}">
-      <span>
-      <a href="javascript:" @click="show(row)">查看</a>
-      </span>
-          <a-divider type="vertical"/>
           <span>
-      <a href="javascript:" @click="edit(row)">编辑</a>
-      </span>
+          <a href="javascript:" @click="show(row)">查看</a>
+          </span>
+              <a-divider type="vertical"/>
+              <span>
+          <a href="javascript:" @click="edit(row)">编辑</a>
+          </span>
           <a-divider type="vertical"/>
           <a-popconfirm
               title="是否删除"

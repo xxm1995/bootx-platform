@@ -25,6 +25,7 @@
         <module>common-idempotency</module>
         <module>common-exception-handler</module>
         <module>common-sequence</module>
+        <module>common-super-query</module>
         <module>common-xxl-job</module>
         <module>common-mongo</module>
     </modules>

@@ -1,11 +1,11 @@
-package cn.bootx.starter.query.generator;
+package cn.bootx.common.query.generator;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.starter.query.code.CompareTypeEnum;
-import cn.bootx.starter.query.entity.QueryBetweenParam;
-import cn.bootx.starter.query.entity.QueryOrder;
-import cn.bootx.starter.query.entity.QueryParam;
-import cn.bootx.starter.query.entity.QueryParams;
+import cn.bootx.common.query.code.CompareTypeEnum;
+import cn.bootx.common.query.entity.QueryBetweenParam;
+import cn.bootx.common.query.entity.QueryOrder;
+import cn.bootx.common.query.entity.QueryParam;
+import cn.bootx.common.query.entity.QueryParams;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

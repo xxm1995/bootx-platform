@@ -16,7 +16,6 @@
         <module>common-starter-auth</module>
         <module>common-starter-quartz</module>
         <module>common-starter-audit-log</module>
-        <module>common-starter-query</module>
         <module>common-starter-data-perm</module>
         <module>common-starter-file</module>
         <module>common-starter-code-gen</module>
