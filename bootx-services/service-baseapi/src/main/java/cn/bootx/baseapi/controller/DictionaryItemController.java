@@ -2,6 +2,7 @@ package cn.bootx.baseapi.controller;
 
 import cn.bootx.baseapi.core.dict.service.DictionaryItemService;
 import cn.bootx.baseapi.dto.dict.DictionaryItemDto;
+import cn.bootx.baseapi.dto.dict.DictionaryItemSimpleDto;
 import cn.bootx.baseapi.param.dict.DictionaryItemParam;
 import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.PageResult;
@@ -71,10 +72,9 @@ public class DictionaryItemController {
     @IgnoreAuth
     @Operation( summary = "获取全部字典项")
     @GetMapping("/findAll")
-    public ResResult<List<DictionaryItemDto>> findAll() {
+    public ResResult<List<DictionaryItemSimpleDto>> findAll() {
         return Res.ok(dictionaryItemService.findAll());
     }
-
 
     @Operation( summary = "编码是否被使用")
     @GetMapping("/existsByCode")

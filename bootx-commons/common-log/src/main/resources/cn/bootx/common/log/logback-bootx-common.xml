@@ -13,12 +13,25 @@
         </layout>
     </appender>
 
+    <!-- log格式日志收集 -->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${logdir}/${appname}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${logdir}/${appname}.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%date{yyyy-MM-dd HH:mm:ssS} | %-5level[%X{traceId:-}] %thread - %logger{36}| %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!-- elk配套日志收集 -->
     <appender name="elk" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logdir}/${appname}.link.json</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${logdir}/${appname}.link.%d{yyyy-MM-dd}.gz</fileNamePattern>
-            <maxHistory>5</maxHistory>
+            <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
@@ -41,6 +54,7 @@
 
     <!-- 开发级别 -->
     <root level="INFO">
+        <appender-ref ref="fileInfoLog"/>
         <appender-ref ref="elk"/>
         <appender-ref ref="console"/>
     </root>

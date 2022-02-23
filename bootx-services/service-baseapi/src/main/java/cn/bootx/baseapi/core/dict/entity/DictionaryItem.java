@@ -2,6 +2,7 @@ package cn.bootx.baseapi.core.dict.entity;
 
 import cn.bootx.baseapi.core.dict.convert.DictionaryConvert;
 import cn.bootx.baseapi.dto.dict.DictionaryItemDto;
+import cn.bootx.baseapi.dto.dict.DictionaryItemSimpleDto;
 import cn.bootx.baseapi.param.dict.DictionaryItemParam;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
@@ -46,6 +47,14 @@ public class DictionaryItem extends MpBaseEntity implements EntityBaseFunction<D
     @Override
     public DictionaryItemDto toDto() {
         return DictionaryConvert.CONVERT.convert(this);
+    }
+
+    /**
+     * 转换成简单对象
+     */
+    public DictionaryItemSimpleDto toSimpleDto(){
+        return DictionaryConvert.CONVERT.convertSimple(this);
+
     }
 
 }

@@ -5,6 +5,7 @@ import cn.bootx.baseapi.core.dict.dao.DictionaryManager;
 import cn.bootx.baseapi.core.dict.entity.Dictionary;
 import cn.bootx.baseapi.core.dict.entity.DictionaryItem;
 import cn.bootx.baseapi.dto.dict.DictionaryItemDto;
+import cn.bootx.baseapi.dto.dict.DictionaryItemSimpleDto;
 import cn.bootx.baseapi.exception.dict.DictItemAlreadyExistedException;
 import cn.bootx.baseapi.exception.dict.DictItemNotExistedException;
 import cn.bootx.baseapi.param.dict.DictionaryItemParam;
@@ -121,13 +122,13 @@ public class DictionaryItemService {
     /**
      * 获取全部字典项
      */
-    public List<DictionaryItemDto> findAll(){
+    public List<DictionaryItemSimpleDto> findAll(){
         return dictionaryItemManager.findAll().stream()
                 .sorted(Comparator.comparing(DictionaryItem::getDictId)
                         .thenComparing(DictionaryItem::getSortNo)
                         .thenComparing(MpBaseEntity::getId)
                 )
-                .map(DictionaryItem::toDto)
+                .map(DictionaryItem::toSimpleDto)
                 .collect(Collectors.toList());
     }
 
