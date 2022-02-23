@@ -1,0 +1,34 @@
+package cn.bootx.demo.core.cashier.entity;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+
+/**
+* 结算台发起支付参数
+* @author xxm  
+* @date 2022/2/23 
+*/
+@Data
+@Accessors(chain = true)
+@Schema(title = "结算台发起支付参数")
+public class CashierPay {
+
+    @Schema(description = "支付通道")
+    private String payChannel;
+
+    @Schema(description = "业务id")
+    private String businessId;
+
+    @Schema(description = "支付方式")
+    private Integer payWay;
+
+    @Schema(description = "金额")
+    private BigDecimal amount;
+
+    @Schema(description = "标题")
+    private String title;
+
+}
