@@ -17,13 +17,13 @@ import java.math.BigDecimal;
 public class CashierPay {
 
     @Schema(description = "支付通道")
-    private String payChannel;
-
-    @Schema(description = "业务id")
-    private String businessId;
+    private Integer payChannel;
 
     @Schema(description = "支付方式")
     private Integer payWay;
+
+    @Schema(description = "业务id")
+    private String businessId;
 
     @Schema(description = "金额")
     private BigDecimal amount;

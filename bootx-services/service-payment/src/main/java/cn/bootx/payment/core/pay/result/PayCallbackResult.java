@@ -15,7 +15,7 @@ public class PayCallbackResult {
 
     /**
      * 处理状态
-     * @see PayStatusCode
+     * @see PayStatusCode#NOTIFY_PROCESS_SUCCESS
      */
     private int code;
 

@@ -1,12 +1,12 @@
-package cn.bootx.payment.core.paymodel.base.service;
+package cn.bootx.payment.core.notify.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.payment.core.paymodel.base.dao.PayNotifyRecordManager;
-import cn.bootx.payment.core.paymodel.base.entity.PayNotifyRecord;
-import cn.bootx.payment.dto.pay.PayNotifyRecordDto;
+import cn.bootx.payment.core.notify.dao.PayNotifyRecordManager;
+import cn.bootx.payment.core.notify.entity.PayNotifyRecord;
+import cn.bootx.payment.dto.notify.PayNotifyRecordDto;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

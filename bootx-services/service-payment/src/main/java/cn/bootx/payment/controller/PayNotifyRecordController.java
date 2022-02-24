@@ -4,8 +4,8 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.payment.core.paymodel.base.service.PayNotifyRecordService;
-import cn.bootx.payment.dto.pay.PayNotifyRecordDto;
+import cn.bootx.payment.core.notify.service.PayNotifyRecordService;
+import cn.bootx.payment.dto.notify.PayNotifyRecordDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 */
 @Tag(name ="支付回调记录")
 @RestController
-@RequestMapping("/notify/record")
+@RequestMapping("/pay/notify/record")
 @RequiredArgsConstructor
 public class PayNotifyRecordController {
     private final PayNotifyRecordService notifyRecordService;

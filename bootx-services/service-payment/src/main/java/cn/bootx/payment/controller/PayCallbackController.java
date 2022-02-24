@@ -5,8 +5,8 @@ import cn.bootx.payment.core.paymodel.wechat.service.WeChatPayCallbackService;
 import com.ijpay.alipay.AliPayApi;
 import com.ijpay.core.kit.HttpKit;
 import com.ijpay.core.kit.WxPayKit;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ import java.util.Map;
 @Slf4j
 @Tag(name ="支付回调")
 @RestController
-@RequestMapping("/callback")
+@RequestMapping("/pay/callback")
 @AllArgsConstructor
 public class PayCallbackController {
     private final AliPayCallbackService aliPayCallbackService;
@@ -47,5 +47,4 @@ public class PayCallbackController {
         Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
         return weChatPayCallbackService.payCallback(params);
     }
-
 }

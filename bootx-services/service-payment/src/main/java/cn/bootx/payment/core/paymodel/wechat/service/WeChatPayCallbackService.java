@@ -7,7 +7,7 @@ import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.pay.func.AbsPayCallbackStrategy;
 import cn.bootx.payment.core.pay.service.PayCallbackService;
-import cn.bootx.payment.core.paymodel.base.service.PayNotifyRecordService;
+import cn.bootx.payment.core.notify.service.PayNotifyRecordService;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.hutool.core.util.StrUtil;

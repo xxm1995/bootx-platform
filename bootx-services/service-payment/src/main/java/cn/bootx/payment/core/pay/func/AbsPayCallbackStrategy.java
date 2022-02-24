@@ -5,8 +5,8 @@ import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.result.PayCallbackResult;
 import cn.bootx.payment.core.pay.service.PayCallbackService;
-import cn.bootx.payment.core.paymodel.base.entity.PayNotifyRecord;
-import cn.bootx.payment.core.paymodel.base.service.PayNotifyRecordService;
+import cn.bootx.payment.core.notify.entity.PayNotifyRecord;
+import cn.bootx.payment.core.notify.service.PayNotifyRecordService;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
@@ -94,11 +94,11 @@ public abstract class AbsPayCallbackStrategy {
      */
     public void saveNotifyRecord(PayCallbackResult result){
         PayNotifyRecord payNotifyRecord = new PayNotifyRecord()
-                .setNotify(JSONUtil.toJsonStr(PARAMS.get()))
+                .setNotifyInfo(JSONUtil.toJsonStr(PARAMS.get()))
                 .setNotifyTime(LocalDateTime.now())
                 .setPaymentId(this.getPaymentId())
                 .setPayChannel(this.getPayChannel())
-                .setCode(result.getCode())
+                .setStatus(result.getCode())
                 .setMsg(result.getMsg());
         payNotifyRecordService.saveNotifyRecord(payNotifyRecord);
     }

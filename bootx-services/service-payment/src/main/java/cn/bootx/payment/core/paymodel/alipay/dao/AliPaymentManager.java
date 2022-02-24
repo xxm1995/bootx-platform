@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.paymodel.alipay.dao;
 
-import cn.bootx.common.headerholder.HeaderHolder;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AliPayment;
 import cn.bootx.payment.core.paymodel.base.entity.BasePayment;

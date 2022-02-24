@@ -1,6 +1,6 @@
-package cn.bootx.payment.core.paymodel.base.dao;
+package cn.bootx.payment.core.notify.dao;
 
-import cn.bootx.payment.core.paymodel.base.entity.PayNotifyRecord;
+import cn.bootx.payment.core.notify.entity.PayNotifyRecord;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

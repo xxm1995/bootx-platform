@@ -28,7 +28,7 @@
     >
       <vxe-table-column type="seq" title="序号" width="60" />
       #foreach ($column in $columns)
-        <vxe-table-column field="$column.name" title="$column.comments" />
+        <vxe-table-column field="$column.name" title="$column.comments"/>
       #end
       <vxe-table-column field="createTime" title="创建时间" />
       <vxe-table-column fixed="right" width="150" :showOverflow="false" title="操作">
@@ -71,7 +71,7 @@
   import ${className}Edit from './${className}Edit'
   import { TableMixin } from '@/mixins/TableMixin'
   export default {
-    name: '${className}',
+    name: '${className}List',
     components: {
       ${className}Edit
     },

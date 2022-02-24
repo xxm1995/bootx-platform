@@ -31,7 +31,7 @@ public class CashierService {
     public String pay(CashierPay cashierPay){
         // 构建支付参数
         PayModeParam payModeParam = new PayModeParam()
-                .setPayChannel(PayChannelEnum.findByCode(cashierPay.getPayChannel()).getNo())
+                .setPayChannel(PayChannelEnum.findByNo(cashierPay.getPayChannel()).getNo())
                 .setPayWay(cashierPay.getPayWay())
                 .setAmount(cashierPay.getAmount());
 
