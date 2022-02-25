@@ -1,7 +1,7 @@
-package cn.bootx.demo.core.cashier.service;
+package cn.bootx.payment.core.cashier.service;
 
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.demo.core.cashier.entity.CashierPay;
+import cn.bootx.payment.core.cashier.entity.CashierPay;
 import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.core.pay.service.PayService;
 import cn.bootx.payment.dto.pay.PayResult;

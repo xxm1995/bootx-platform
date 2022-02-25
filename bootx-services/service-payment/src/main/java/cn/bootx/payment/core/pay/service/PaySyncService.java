@@ -146,7 +146,6 @@ public class PaySyncService {
         // 修改payment支付状态为成功
         payment.setPayStatus(PayStatusCode.TRADE_SUCCESS);
         payment.setPayTime(LocalDateTime.now());
-        payment.setErrorCode("");
         paymentManager.save(payment);
 
         // 发送成功事件

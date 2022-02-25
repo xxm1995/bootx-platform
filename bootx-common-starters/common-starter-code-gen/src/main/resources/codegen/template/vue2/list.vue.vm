@@ -13,18 +13,18 @@
       </a-form>
     </div>
     <vxe-toolbar
-        custom
-        zoom
-        :refresh="{query: init}"
+      custom
+      zoom
+      :refresh="{query: init}"
     >
       <template v-slot:buttons>
         <a-button type="primary" icon="plus" @click="add">新建</a-button>
       </template>
     </vxe-toolbar>
     <vxe-table
-        row-id="id"
-        :loading="loading"
-        :data="tableData"
+      row-id="id"
+      :loading="loading"
+      :data="tableData"
     >
       <vxe-table-column type="seq" title="序号" width="60" />
       #foreach ($column in $columns)
@@ -36,33 +36,31 @@
           <span>
           <a href="javascript:" @click="show(row)">查看</a>
           </span>
-              <a-divider type="vertical"/>
-              <span>
+            <a-divider type="vertical"/>
+            <span>
           <a href="javascript:" @click="edit(row)">编辑</a>
           </span>
           <a-divider type="vertical"/>
           <a-popconfirm
-              title="是否删除"
-              @confirm="remove(row)"
-              okText="是"
-              cancelText="否">
+            title="是否删除"
+            @confirm="remove(row)"
+            okText="是"
+            cancelText="否">
             <a href="javascript:" style="color: red">删除</a>
           </a-popconfirm>
         </template>
       </vxe-table-column>
     </vxe-table>
     <vxe-pager
-        size="medium"
-        :loading="loading"
-        :current-page="pagination.current"
-        :page-size="pagination.size"
-        :total="pagination.total"
-        @page-change="handleTableChange">
-      />
-    </vxe-pager>
+      size="medium"
+      :loading="loading"
+      :current-page="pagination.current"
+      :page-size="pagination.size"
+      :total="pagination.total"
+      @page-change="handleTableChange"/>
     <${classNameKebab}-edit
-        ref="${classname}Edit"
-        @ok="handleOk"/>
+      ref="${classname}Edit"
+      @ok="handleOk"/>
   </a-card>
 </template>
 

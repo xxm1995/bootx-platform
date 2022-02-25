@@ -40,8 +40,6 @@ public class PayNotifyRecord extends MpBaseEntity implements EntityBaseFunction<
     private int status;
     /** 提示信息 */
     private String msg;
-    /** 支付方式 */
-    private Integer payWay;
     /** 回调时间 */
     private LocalDateTime notifyTime;
 

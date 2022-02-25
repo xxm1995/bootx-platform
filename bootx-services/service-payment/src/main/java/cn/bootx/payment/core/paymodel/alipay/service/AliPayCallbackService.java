@@ -75,7 +75,7 @@ public class AliPayCallbackService extends AbsPayCallbackStrategy {
                 return AlipaySignature.rsaCheckV1(params, alipayConfig.getAlipayPublicKey(), CharsetUtil.UTF_8, AlipayConstants.SIGN_TYPE_RSA2);
             } else {
                 return AlipaySignature.verifyV1(params,
-                        CertUtil.getCertByContent(alipayConfig.getAlipayPublicKey()),
+                        CertUtil.getCertByContent(alipayConfig.getAlipayCert()),
                         CharsetUtil.UTF_8, AlipayConstants.SIGN_TYPE_RSA2);
             }
         }

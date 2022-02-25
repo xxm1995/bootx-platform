@@ -1,4 +1,4 @@
-package cn.bootx.demo.core.cashier.entity;
+package cn.bootx.payment.core.cashier.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

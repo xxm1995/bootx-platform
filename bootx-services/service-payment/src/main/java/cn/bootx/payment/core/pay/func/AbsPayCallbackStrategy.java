@@ -40,7 +40,7 @@ public abstract class AbsPayCallbackStrategy {
                 return null;
             }
             // 去重处理
-            if (this.duplicateChecker()){
+            if (!this.duplicateChecker()){
                 return null;
             }
             // 调用统一回调处理

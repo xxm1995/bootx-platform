@@ -84,8 +84,7 @@ public class PayCallbackService {
                 // 修改payment支付状态为成功
                 paymentObj.setPayStatus(PayStatusCode.TRADE_SUCCESS);
                 paymentObj.setPayTime(LocalDateTime.now());
-                paymentObj.setErrorCode("");
-                paymentManager.save(paymentObj);
+                paymentManager.updateById(paymentObj);
             });
 
             if (handlerFlag) {
@@ -144,9 +143,9 @@ public class PayCallbackService {
         // 更新Payment的状态
         payment.setErrorCode(String.valueOf(exceptionInfo.getErrorCode()));
         payment.setPayStatus(PayStatusCode.TRADE_FAIL);
-        paymentManager.save(payment);
+        paymentManager.updateById(payment);
 
-        // 调用ErrorHandler
+        // 调用失败处理
         for (AbsPayStrategy paymentStrategy : strategyList) {
             paymentStrategy.doAsyncErrorHandler(exceptionInfo);
         }

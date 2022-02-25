@@ -129,6 +129,10 @@ public class CodeGeneratorService {
             // 添加到zip
             CodeGenTemplateVmEnum vmEnum = CodeGenTemplateVmEnum.findByName(codeGenPreview.getName());
             String fileName = tableToJava(codeGenParam.getTableName())+vmEnum.getFileSuffixName();
+            // js后缀特殊处理
+            if (vmEnum.getFileSuffixName().equals(".js")||vmEnum.getFileSuffixName().equals(".ts")){
+                fileName = StrUtil.lowerFirst(tableToJava(fileName));
+            }
             zip.putNextEntry(new ZipEntry(fileName));
             IOUtils.write(codeGenPreview.getContent(), zip, CharsetUtil.UTF_8);
             zip.flush();

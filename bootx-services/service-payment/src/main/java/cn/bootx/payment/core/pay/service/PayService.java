@@ -57,7 +57,7 @@ public class PayService {
         payValidationService.validationSyncPayModel(payParam);
 
         // 获取并校验支付状态
-        Payment payment = paymentService.getByBusinessId(payParam.getBusinessId());
+        Payment payment = paymentService.getAndCheckPaymentByBusinessId(payParam.getBusinessId());
 
         // 异步支付且非第一次支付
         if (Objects.nonNull(payment) && payment.isSyncPayMode()){
@@ -157,7 +157,6 @@ public class PayService {
                 // 修改payment支付状态为成功
                 paymentObj.setPayStatus(PayStatusCode.TRADE_SUCCESS);
                 paymentObj.setPayTime(LocalDateTime.now());
-                paymentObj.setErrorCode("");
                 paymentManager.updateById(paymentObj);
             }
         });

@@ -37,6 +37,7 @@ public class AliPaymentService {
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
         payment.setSyncPayMode(true)
                 .setSyncPayTypeCode(PayChannelCode.ALI);
+        // TODO 设置超时时间
 
         List<PayChannelInfo> payTypeInfos = payment.getPayTypeInfos();
         // 清除已有的异步支付类型信息
@@ -48,18 +49,6 @@ public class AliPaymentService {
                 .setExtraParamsJson(payModeParam.getExtraParamsJson()));
         payment.setPayChannelInfo(JSONUtil.toJsonStr(payTypeInfos));
         paymentManager.updateById(payment);
-    }
-
-    /**
-     * 更新支付记录错误状态
-     */
-    public void updateError(Long paymentId) {
-        Optional<AliPayment> aliPaymentOptional = aliPaymentManager.findByPaymentId(paymentId);
-        if (aliPaymentOptional.isPresent()){
-            AliPayment aliPayment = aliPaymentOptional.get();
-            aliPayment.setPayStatus(PayStatusCode.TRADE_FAIL);
-            aliPaymentManager.updateById(aliPayment);
-        }
     }
 
     /**
@@ -80,7 +69,7 @@ public class AliPaymentService {
                 .setUserId(payment.getUserId())
                 .setPayStatus(PayStatusCode.TRADE_SUCCESS)
                 .setPayTime(LocalDateTime.now());
-        aliPaymentManager.updateById(aliPayment);
+        aliPaymentManager.save(aliPayment);
     }
 
     /**

@@ -69,6 +69,9 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
     /** 支付时间 */
     private LocalDateTime payTime;
 
+    /** 超时时间 */
+    private LocalDateTime expiredTime;
+
     @Override
     public PaymentDto toDto() {
         return PaymentConvert.CONVERT.convert(this);

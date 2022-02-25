@@ -25,13 +25,12 @@ public class PaymentService {
     /**
      * 校验支付状态，支付成功则返回，支付失败/支付进行中则抛出对应的异常
      */
-    public Payment getByBusinessId(String businessId) {
+    public Payment getAndCheckPaymentByBusinessId(String businessId) {
 
-        Payment payment;
         // 根据订单查询支付记录
         List<Payment> payments = paymentManager.findByBusinessIdNoCancelDesc(businessId);
         if (!CollectionUtil.isEmpty(payments)) {
-            payment = payments.get(0);
+            Payment  payment = payments.get(0);
 
             // 成功 或 异步支付
             if (payment.getPayStatus() == PayStatusCode.TRADE_SUCCESS || payment.isSyncPayMode()) {

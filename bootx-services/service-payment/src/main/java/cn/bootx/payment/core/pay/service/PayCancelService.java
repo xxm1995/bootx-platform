@@ -37,7 +37,7 @@ public class PayCancelService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void cancelByBusinessId(String businessId) {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getByBusinessId(businessId));
+        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(businessId));
         paymentOptional.ifPresent(this::cancelPayment);
     }
 
@@ -78,8 +78,7 @@ public class PayCancelService {
             strategyList.forEach(AbsPayStrategy::doCancelHandler);
             // 取消订单
             paymentObj.setPayStatus(PayStatusCode.TRADE_CANCEL);
-            paymentObj.setErrorCode("");
-            paymentManager.save(paymentObj);
+            paymentManager.updateById(paymentObj);
         });
     }
 
