@@ -25,6 +25,7 @@
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 
 ## 🍎特色功能
+- 支持支付宝微信相关收单、聚合支付、组合支付、退款等支付功能
 - 针对敏感信息，可以通过注解配置实现返回时自动脱敏
 - 针对重要信息，可以通过添加注解，实现在数据库中保密存储，配合数据脱敏使用可以更好的保护系统数据的安全
 - 支持多种范围的数据权限控制，如只能查看自己、只能查询指定部门、用户、可以查询全部的数据等等
@@ -32,7 +33,6 @@
 - 异常时返回链路追踪id，方便错误日志追踪
 - 提供项目对应的代码生成器，方便开发
 - 定制Mybatis Plus组件，更方便开发
-- 支持支付宝发起支付、取消支付、退款、同步信息等
 
 ## 🥞项目整体结构
 ```lua
@@ -69,7 +69,7 @@ bootx-platform
        ├── service-notice -- 消息通知服务(未完成)
        ├── service-office -- 办公服务(未开始)
        ├── service-order -- 订单服务(未完成)
-       ├── service-payment -- 支付服务(部分完成)
+       ├── service-payment -- 支付服务
        ├── service-sales -- 销售中心(未完成)
        ├── service-social -- 三方系统管理(未开始)
     ├── bootx-start -- 启动模块
@@ -119,8 +119,8 @@ service-iam
 数据权限配置
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-1dbbb058d0d00b0a8d36998ccf26208fc7e.png)
 
-支付报配置
-![输入图片说明](https://oscimg.oschina.net/oscnet/up-5ea6c04fe29c2dfd05f386526d8ad96a08d.png)
+收银台演示
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-955423400be42e28004208671cbdde4d3c7.png)
 
 登录方式管理
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-6cf4a123e2c26a3db5786b2cd264d52c4d8.png)
