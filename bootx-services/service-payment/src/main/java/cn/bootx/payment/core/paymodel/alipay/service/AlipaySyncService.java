@@ -4,7 +4,6 @@ import cn.bootx.payment.code.pay.PaySyncStatus;
 import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradeQueryModel;
@@ -26,7 +25,6 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class AlipaySyncService {
-    private final AlipayConfigManager alipayConfigManager;
 
     /**
      * 与支付宝网关同步状态

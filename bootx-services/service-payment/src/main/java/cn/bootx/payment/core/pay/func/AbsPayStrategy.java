@@ -110,12 +110,9 @@ public abstract class AbsPayStrategy {
     public abstract void doCloseHandler();
 
     /**
-     * 关闭本地以及支付网关的支付记录 用户在一定时间内未进行支付，可调用该接口直接将支付王冠中的未付款交易进行关闭
-     * 默认为关闭本地支付记录
+     * 退款
      */
-    public void doCloseRemoteHandler(){
-        this.doCloseHandler();
-    }
+    public abstract void doRefundHandler();
 
     /**
      * 异步支付单与支付网关进行状态比对

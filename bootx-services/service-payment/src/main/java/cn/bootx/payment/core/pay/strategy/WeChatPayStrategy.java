@@ -153,6 +153,14 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     }
 
     /**
+     * 退款
+     */
+    @Override
+    public void doRefundHandler() {
+
+    }
+
+    /**
      * 异步支付单与支付网关进行状态比对
      */
     @Override

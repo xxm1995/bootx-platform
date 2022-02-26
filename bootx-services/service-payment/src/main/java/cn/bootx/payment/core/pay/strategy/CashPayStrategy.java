@@ -69,4 +69,12 @@ public class CashPayStrategy extends AbsPayStrategy {
     public void doCloseHandler() {
         cashService.close(this.getPayment().getId());
     }
+
+    /**
+     * 退款
+     */
+    @Override
+    public void doRefundHandler() {
+
+    }
 }

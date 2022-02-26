@@ -1,11 +1,10 @@
 package cn.bootx.payment.core.pay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayStatusCode;
+import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
-import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
@@ -20,43 +19,30 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * 取消订单处理
- * @author xxm
- * @date 2021/3/2
- */
+/**   
+* 支付退款
+* @author xxm  
+* @date 2022/2/26 
+*/
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PayCancelService {
-    private final PaymentManager paymentManager;
+public class PayRefundService {
     private final PaymentService paymentService;
-
+    private final PaymentManager paymentManager;
     /**
      * 根据业务id取消支付记录
      */
     @Transactional(rollbackFor = Exception.class)
-    public void cancelByBusinessId(String businessId) {
+    public void refundByBusinessId(String businessId) {
         Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(businessId));
-        paymentOptional.ifPresent(this::cancelPayment);
-    }
-
-
-    /**
-     * 根据paymentId取消支付记录
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void cancelByPaymentId(Long paymentId){
-        // 获取payment和paymentParam数据
-        Payment payment = paymentManager.findById(paymentId)
-                .orElseThrow(() -> new BizException("未找到payment"));
-        this.cancelPayment(payment);
+        paymentOptional.ifPresent(this::refundPayment);
     }
 
     /**
-     * 取消支付记录
+     * 退款
      */
-    private void cancelPayment(Payment payment){
+    private void refundPayment(Payment payment){
 
         // 获取 paymentParam
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);;
@@ -74,14 +60,12 @@ public class PayCancelService {
 
         // 3.执行取消订单
         this.doHandler(payment,paymentStrategyList,(strategyList, paymentObj) -> {
-            // 发起取消进行的执行方法
-            strategyList.forEach(AbsPayStrategy::doCancelHandler);
-            // 取消订单
-            paymentObj.setPayStatus(PayStatusCode.TRADE_CANCEL);
+            // 发起支付成功进行的执行方法
+            strategyList.forEach(AbsPayStrategy::doRefundHandler);
+            paymentObj.setPayStatus(PayStatusCode.TRADE_REFUND);
             paymentManager.updateById(paymentObj);
         });
     }
-
     /**
      * 处理方法
      * @param payment 支付记录

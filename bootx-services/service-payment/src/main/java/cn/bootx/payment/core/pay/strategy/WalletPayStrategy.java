@@ -90,4 +90,12 @@ public class WalletPayStrategy extends AbsPayStrategy {
         walletPayService.close(this.getPayment().getId());
     }
 
+    /**
+     * 退款
+     */
+    @Override
+    public void doRefundHandler() {
+
+    }
+
 }

@@ -124,7 +124,7 @@ public class PaySyncService {
     private void paymentAndRemoteCancel(Payment payment, List<AbsPayStrategy> absPayStrategies) {
         // 先判断是否超时
         this.doHandler(payment,absPayStrategies,(strategyList, paymentObj) -> {
-            strategyList.forEach(AbsPayStrategy::doCloseRemoteHandler);
+            strategyList.forEach(AbsPayStrategy::doCancelHandler);
             // 修改payment支付状态为取消
             payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
             paymentManager.save(payment);
@@ -146,7 +146,7 @@ public class PaySyncService {
         // 修改payment支付状态为成功
         payment.setPayStatus(PayStatusCode.TRADE_SUCCESS);
         payment.setPayTime(LocalDateTime.now());
-        paymentManager.save(payment);
+        paymentManager.updateById(payment);
 
         // 发送成功事件
         PayResult paymentResult = PaymentBuilder.buildResultByPayment(payment);

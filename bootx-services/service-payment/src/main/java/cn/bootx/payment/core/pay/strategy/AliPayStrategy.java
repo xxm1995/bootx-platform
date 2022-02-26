@@ -143,6 +143,18 @@ public class AliPayStrategy extends AbsPayStrategy {
     }
 
     /**
+     * 退款
+     */
+    @Override
+    public void doRefundHandler() {
+        // 检查并获取支付宝支付配置
+        this.alipayConfig = alipayConfigManager.findActivity()
+                .orElseThrow(() -> new BizException("支付配置不存在"));
+        AlipayConfigService.initApiConfig(this.alipayConfig);
+        aliPayCancelService.refund(this.getPayment(),this.getPayMode().getAmount());
+    }
+
+    /**
      * 异步支付单与支付网关进行状态比对
      */
     @Override
