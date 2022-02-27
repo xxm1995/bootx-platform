@@ -51,6 +51,9 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
     /** 金额 */
     private BigDecimal amount;
 
+    /** 可退款余额 */
+    private BigDecimal refundableBalance;
+
     /** 错误码 */
     private String errorCode;
 
@@ -68,6 +71,9 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
 
     /** 支付时间 */
     private LocalDateTime payTime;
+
+    /** 支付终端ip */
+    private String clientIp;
 
     /** 超时时间 */
     private LocalDateTime expiredTime;

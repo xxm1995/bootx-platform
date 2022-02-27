@@ -41,17 +41,15 @@ public class PaymentDto extends BaseDto implements Serializable {
     @Schema(description= "异步支付方式")
     private Integer syncPayTypeCode;
 
-    @Schema(description= "支付时间")
-    private LocalDateTime payTime;
-
-    @Schema(description= "过期时间")
-    private LocalDateTime expiredTime;
-
     @Schema(description= "支付状态")
     private int payStatus;
 
     @Schema(description= "金额")
     private BigDecimal amount;
+
+    @Schema(description= "可退款余额")
+    private BigDecimal refundableBalance;
+
 
     @Schema(description= "错误码")
     private String errorCode;
@@ -61,5 +59,14 @@ public class PaymentDto extends BaseDto implements Serializable {
      */
     @Schema(description= "支付通道信息")
     private String payChannelInfo;
+
+    @Schema(description= "支付时间")
+    private LocalDateTime payTime;
+
+    @Schema(description= "支付终端ip")
+    private String clientIp;
+
+    @Schema(description= "过期时间")
+    private LocalDateTime expiredTime;
 
 }

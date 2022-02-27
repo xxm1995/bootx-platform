@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.pay.builder;
 
+import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.local.SyncPayInfoLocal;
@@ -11,10 +12,12 @@ import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.beans.BeanUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +38,8 @@ public class PaymentBuilder {
     public Payment buildPayment(PayParam payParam){
         Payment payment = new Payment();
 
+        HttpServletRequest request = WebServletUtil.getRequest();
+        String ip = ServletUtil.getClientIP(request);
         // 基础信息
         payment.setBusinessId(payParam.getBusinessId())
                 .setUserId(payParam.getUserId())
@@ -52,7 +57,9 @@ public class PaymentBuilder {
 
         payment.setPayChannelInfo(JSONUtil.toJsonStr(payTypeInfos))
                 .setPayStatus(PayStatusCode.TRADE_PROGRESS)
-                .setAmount(sumAmount);
+                .setAmount(sumAmount)
+                .setClientIp(ip)
+                .setRefundableBalance(sumAmount);
         return payment;
     }
 

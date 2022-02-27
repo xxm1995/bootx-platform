@@ -1,4 +1,4 @@
-package cn.bootx.payment.core.cashier.entity;
+package cn.bootx.payment.param.cashier;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -13,8 +13,14 @@ import java.math.BigDecimal;
 */
 @Data
 @Accessors(chain = true)
-@Schema(title = "结算台发起支付参数")
-public class CashierPay {
+@Schema(title = "结算台单支付参数")
+public class CashierSinglePayParam {
+
+    @Schema(description = "标题")
+    private String title;
+
+    @Schema(description = "金额")
+    private BigDecimal amount;
 
     @Schema(description = "支付通道")
     private Integer payChannel;
@@ -25,10 +31,7 @@ public class CashierPay {
     @Schema(description = "业务id")
     private String businessId;
 
-    @Schema(description = "金额")
-    private BigDecimal amount;
-
-    @Schema(description = "标题")
-    private String title;
+    @Schema(description = "付款码")
+    private String authCode;
 
 }
