@@ -1,7 +1,7 @@
 package cn.bootx.payment.param.payment;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -31,7 +31,7 @@ public class PaymentParam implements Serializable {
     private boolean syncPayMode;
 
     @Schema(description= "异步支付方式")
-    private Integer syncPayTypeCode;
+    private Integer syncPayWay;
 
     @Schema(description= "支付状态")
     private int payStatus;

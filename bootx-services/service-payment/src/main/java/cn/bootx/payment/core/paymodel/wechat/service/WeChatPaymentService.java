@@ -36,7 +36,7 @@ public class WeChatPaymentService {
      */
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
         payment.setSyncPayMode(true)
-                .setSyncPayTypeCode(PayChannelCode.WECHAT);
+                .setSyncPayWay(PayChannelCode.WECHAT);
 
         List<PayChannelInfo> payTypeInfos = payment.getPayTypeInfos();
         // 清除已有的异步支付类型信息

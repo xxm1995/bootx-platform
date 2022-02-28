@@ -2,6 +2,7 @@ package cn.bootx.payment.dto.pay;
 
 
 import cn.bootx.payment.dto.payment.PaymentDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -24,9 +25,10 @@ public class PayResult implements Serializable {
     private boolean syncPayMode;
 
     /** 异步支付方式 */
-    private Integer syncPayTypeCode;
+    private Integer syncPayWay;
 
     /** 主支付记录 */
+    @JsonIgnore
     private PaymentDto payment;
 
     /** 异步支付参数 */

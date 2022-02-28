@@ -32,7 +32,7 @@ public class CashierService {
     /**
      * 发起支付(单渠道支付)
      */
-    public String singlePay(CashierSinglePayParam param){
+    public PayResult singlePay(CashierSinglePayParam param){
         // 构建支付方式参数
         PayModeParam payModeParam = new PayModeParam()
                 .setPayChannel(PayChannelEnum.findByNo(param.getPayChannel()).getNo())
@@ -51,11 +51,7 @@ public class CashierService {
                 .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(0L))
                 .setPayModeList(Collections.singletonList(payModeParam));
 
-        PayResult pay = payService.pay(payParam);
-        return pay.getSyncPayInfo().getPayBody();
+        return payService.pay(payParam);
     }
-
-
-
 
 }

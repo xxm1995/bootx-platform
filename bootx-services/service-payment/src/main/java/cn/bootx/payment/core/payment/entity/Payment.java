@@ -46,7 +46,7 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
     private boolean syncPayMode;
 
     /** 异步支付方式(支付通道) */
-    private Integer syncPayTypeCode;
+    private Integer syncPayWay;
 
     /** 金额 */
     private BigDecimal amount;

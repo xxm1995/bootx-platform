@@ -2,8 +2,9 @@ package cn.bootx.payment.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import cn.bootx.payment.core.cashier.service.CashierService;
+import cn.bootx.payment.dto.pay.PayResult;
+import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class CashierController {
 
     @Operation(summary = "发起支付(单渠道)")
     @PostMapping("/singlePay")
-    public ResResult<String> singlePay(@RequestBody CashierSinglePayParam cashierSinglePayParam){
+    public ResResult<PayResult> singlePay(@RequestBody CashierSinglePayParam cashierSinglePayParam){
         return Res.ok(cashierService.singlePay(cashierSinglePayParam));
     }
 }
