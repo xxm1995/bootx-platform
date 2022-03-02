@@ -21,17 +21,23 @@ public class PayResult implements Serializable {
 
     private static final long serialVersionUID = 7729669194741851195L;
 
-    /** 是否是异步支付 */
+    @Schema(description= "是否是异步支付")
     private boolean syncPayMode;
 
-    /** 异步支付方式 */
+    @Schema(description= "异步支付方式")
     private Integer syncPayWay;
 
     /** 主支付记录 */
     @JsonIgnore
     private PaymentDto payment;
 
-    /** 异步支付参数 */
+    /**
+     * @see cn.bootx.payment.code.pay.PayStatusCode#TRADE_PROGRESS
+     */
+    @Schema(description= "支付状态")
+    private int payStatus;
+
+    @Schema(description= "异步支付参数")
     private AsyncPayInfo syncPayInfo;
 
 }

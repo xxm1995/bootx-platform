@@ -13,7 +13,7 @@ import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.pay.PayResult;
-import cn.bootx.payment.exception.payment.PaymentUnsupportedMethodException;
+import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
@@ -69,7 +69,7 @@ public class PayCallbackService {
 
             List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
             if (CollectionUtil.isEmpty(paymentStrategyList)) {
-                throw new PaymentUnsupportedMethodException();
+                throw new PayUnsupportedMethodException();
             }
 
             // 3.初始化支付的参数

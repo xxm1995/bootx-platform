@@ -10,7 +10,7 @@ import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.core.paymodel.alipay.service.*;
-import cn.bootx.payment.exception.payment.PaymentAmountAbnormalException;
+import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
 import cn.hutool.core.util.StrUtil;
@@ -68,12 +68,16 @@ public class AliPayStrategy extends AbsPayStrategy {
         // 检查金额
         PayModeParam payMode = this.getPayMode();
         if (BigDecimalUtil.compareTo(payMode.getAmount(), BigDecimal.ZERO) < 1){
-            throw new PaymentAmountAbnormalException();
+            throw new PayAmountAbnormalException();
         }
         // 检查并获取支付宝支付配置
         this.alipayConfig = alipayConfigManager.findActivity()
                 .orElseThrow(() -> new BizException("支付配置不存在"));
         aliPayService.validation(this.getPayMode(),alipayConfig);
+        // 如果没有显式传入同步回调地址, 使用默认配置
+        if (StrUtil.isBlank(aliPayParam.getReturnUrl())){
+            aliPayParam.setReturnUrl(alipayConfig.getReturnUrl());
+        }
         AlipayConfigService.initApiConfig(alipayConfig);
     }
 
@@ -163,6 +167,6 @@ public class AliPayStrategy extends AbsPayStrategy {
         this.alipayConfig = alipayConfigManager.findActivity()
                 .orElseThrow(() -> new BizException("支付配置不存在"));
         AlipayConfigService.initApiConfig(this.alipayConfig);
-        return alipaySyncService.syncPayStatus(this.getPayment(),alipayConfig);
+        return alipaySyncService.syncPayStatus(this.getPayment());
     }
 }

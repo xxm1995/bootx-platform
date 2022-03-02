@@ -5,7 +5,7 @@ import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.paymodel.cash.service.CashService;
-import cn.bootx.payment.exception.payment.PaymentAmountAbnormalException;
+import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class CashPayStrategy extends AbsPayStrategy {
         // 检查金额
         PayModeParam payMode = this.getPayMode();
         if (BigDecimalUtil.compareTo(payMode.getAmount(), BigDecimal.ZERO) < 1){
-            throw new PaymentAmountAbnormalException();
+            throw new PayAmountAbnormalException();
         }
     }
     /**

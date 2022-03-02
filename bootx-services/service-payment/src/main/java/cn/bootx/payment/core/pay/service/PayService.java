@@ -12,8 +12,8 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.dto.pay.PayResult;
-import cn.bootx.payment.exception.payment.PaymentNotExistedException;
-import cn.bootx.payment.exception.payment.PaymentUnsupportedMethodException;
+import cn.bootx.payment.exception.payment.PayNotExistedException;
+import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollectionUtil;
@@ -87,7 +87,7 @@ public class PayService {
 
         // 4. 获取支付记录信息
         payment = paymentManager.findById(payment.getId())
-                .orElseThrow(PaymentNotExistedException::new);
+                .orElseThrow(PayNotExistedException::new);
 
         // 5. 返回支付结果
         return PaymentBuilder.buildResultByPayment(payment);
@@ -123,7 +123,7 @@ public class PayService {
 
         // 5. 获取支付记录信息
         payment = paymentManager.findById(payment.getId())
-                .orElseThrow(PaymentNotExistedException::new);
+                .orElseThrow(PayNotExistedException::new);
 
         // 6. 组装返回参数
         return PaymentBuilder.buildResultByPayment(payment);
@@ -137,7 +137,7 @@ public class PayService {
         // 1.获取支付方式，通过工厂生成对应的策略组
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
         if (CollectionUtil.isEmpty(paymentStrategyList)) {
-            throw new PaymentUnsupportedMethodException();
+            throw new PayUnsupportedMethodException();
         }
 
         // 2.初始化支付的参数

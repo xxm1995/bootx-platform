@@ -10,6 +10,9 @@ import cn.bootx.payment.code.PaymentCenterErrorCode;
 */
 public class PayFailureException extends BizException {
 
+    public PayFailureException(String message) {
+        super(PaymentCenterErrorCode.PAY_FAILURE, message);
+    }
     public PayFailureException() {
         super(PaymentCenterErrorCode.PAY_FAILURE, "支付失败");
     }

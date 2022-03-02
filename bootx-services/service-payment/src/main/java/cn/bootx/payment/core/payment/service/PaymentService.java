@@ -3,7 +3,7 @@ package cn.bootx.payment.core.payment.service;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.exception.payment.PaymentIsProcessingException;
+import cn.bootx.payment.exception.payment.PayIsProcessingException;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class PaymentService {
 
             // 支付中 (非异步支付方式下)
             if (payment.getPayStatus() == PayStatusCode.TRADE_PROGRESS) {
-                throw new PaymentIsProcessingException();
+                throw new PayIsProcessingException();
             }
         }
         return null;

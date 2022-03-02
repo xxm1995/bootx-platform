@@ -3,7 +3,7 @@ package cn.bootx.payment.core.pay.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
-import cn.bootx.payment.exception.payment.PaymentAmountAbnormalException;
+import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class PayValidationService {
         for (PayModeParam payModeParam : payModeList) {
             // 同时满足支付金额小于等于零
             if (BigDecimalUtil.compareTo(payModeParam.getAmount(), BigDecimal.ZERO) < 1){
-                throw new PaymentAmountAbnormalException();
+                throw new PayAmountAbnormalException();
             }
         }
     }

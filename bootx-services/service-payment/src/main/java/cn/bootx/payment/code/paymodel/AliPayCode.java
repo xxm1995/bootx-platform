@@ -14,6 +14,13 @@ public interface AliPayCode {
     /** 证书 */
     int AUTH_TYPE_CART = 2;
 
+    /** 目前PC支付必填 */
+    String FAST_INSTANT_TRADE_PAY = "FAST_INSTANT_TRADE_PAY";
+    /** WAP支付必填 手机网站支付产品 */
+    String QUICK_WAP_PAY = "QUICK_WAP_PAY";
+    /** APP支付必填 APP支付产品 */
+    String QUICK_MSECURITY_PAY = "QUICK_MSECURITY_PAY";
+
     // 响应字段
     /** 支付状态 */
     String TRADE_STATUS = "trade_status";

@@ -1,11 +1,12 @@
 package cn.bootx.payment.param.paymodel.alipay;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+
+;
 
 
 /**
@@ -20,4 +21,7 @@ public class AliPayParam implements Serializable {
 
     @Schema(description= "授权码(主动扫描用户的付款码)")
     private String authCode;
+
+    @Schema(description = "页面跳转同步通知页面路径")
+    private String returnUrl;
 }

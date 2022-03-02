@@ -8,9 +8,9 @@ import cn.bootx.payment.code.PaymentCenterErrorCode;
 * @author xxm  
 * @date 2020/12/8 
 */
-public class PaymentAmountAbnormalException extends FatalException {
+public class PayAmountAbnormalException extends FatalException {
 
-    public PaymentAmountAbnormalException() {
+    public PayAmountAbnormalException() {
         super(PaymentCenterErrorCode.PAYMENT_AMOUNT_ABNORMAL, "异常金额");
     }
 }

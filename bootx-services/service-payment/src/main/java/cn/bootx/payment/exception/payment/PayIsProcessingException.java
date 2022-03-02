@@ -8,9 +8,9 @@ import cn.bootx.payment.code.PaymentCenterErrorCode;
 * @author xxm  
 * @date 2020/12/8 
 */
-public class PaymentIsProcessingException extends BizException {
+public class PayIsProcessingException extends BizException {
 
-    public PaymentIsProcessingException() {
+    public PayIsProcessingException() {
         super(PaymentCenterErrorCode.PAYMENT_IS_PROCESSING, "付款正在处理中");
     }
 }

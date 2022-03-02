@@ -4,7 +4,6 @@ import cn.bootx.payment.code.pay.PaySyncStatus;
 import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradeQueryModel;
 import com.alipay.api.response.AlipayTradeQueryResponse;
@@ -34,7 +33,7 @@ public class AlipaySyncService {
      * 4 查询不到
      * 5 查询失败
      */
-    public PaySyncResult syncPayStatus(Payment payment, AlipayConfig alipayConfig){
+    public PaySyncResult syncPayStatus(Payment payment){
         PaySyncResult paySyncResult = new PaySyncResult()
                 .setPaySyncStatus(PaySyncStatus.FAIL);
 

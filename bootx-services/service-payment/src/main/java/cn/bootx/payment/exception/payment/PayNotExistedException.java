@@ -8,9 +8,9 @@ import cn.bootx.payment.code.PaymentCenterErrorCode;
 * @author xxm  
 * @date 2020/12/8 
 */
-public class PaymentNotExistedException extends BizException {
+public class PayNotExistedException extends BizException {
 
-    public PaymentNotExistedException() {
+    public PayNotExistedException() {
         super(PaymentCenterErrorCode.PAYMENT_RECORD_NOT_EXISTED, "付款记录不存在");
     }
 }

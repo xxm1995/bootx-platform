@@ -13,7 +13,7 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.dto.payment.PaymentDto;
-import cn.bootx.payment.exception.payment.PaymentUnsupportedMethodException;
+import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollUtil;
@@ -57,7 +57,7 @@ public class PaySyncService {
         // 1.获取支付方式，通过工厂生成对应的策略组
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
         if (CollUtil.isEmpty(paymentStrategyList)) {
-            throw new PaymentUnsupportedMethodException();
+            throw new PayUnsupportedMethodException();
         }
 
         // 2.初始化支付的参数
@@ -119,19 +119,6 @@ public class PaySyncService {
     }
 
     /**
-     * payment 变更为取消支付并关闭网关的支付
-     */
-    private void paymentAndRemoteCancel(Payment payment, List<AbsPayStrategy> absPayStrategies) {
-        // 先判断是否超时
-        this.doHandler(payment,absPayStrategies,(strategyList, paymentObj) -> {
-            strategyList.forEach(AbsPayStrategy::doCancelHandler);
-            // 修改payment支付状态为取消
-            payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
-            paymentManager.save(payment);
-        });
-    }
-
-    /**
      * payment 变更为已支付
      */
     private void paymentSuccess(Payment payment, AbsPayStrategy syncPayStrategy, PaySyncResult paySyncResult) {
@@ -140,9 +127,7 @@ public class PaySyncService {
         if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
             return;
         }
-
         syncPayStrategy.doAsyncSuccessHandler(paySyncResult.getMap());
-
         // 修改payment支付状态为成功
         payment.setPayStatus(PayStatusCode.TRADE_SUCCESS);
         payment.setPayTime(LocalDateTime.now());

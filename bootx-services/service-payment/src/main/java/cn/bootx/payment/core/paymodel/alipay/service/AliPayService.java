@@ -12,10 +12,13 @@ import cn.bootx.payment.dto.pay.AsyncPayInfo;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.Method;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayResponse;
 import com.alipay.api.domain.*;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alipay.api.response.AlipayTradePayResponse;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.ijpay.alipay.AliPayApi;
@@ -47,7 +50,7 @@ public class AliPayService {
                 .filter(StrUtil::isNotBlank)
                 .map(s -> StrUtil.split(s, ','))
                 .orElse(new ArrayList<>(1));
-
+        // 发起的支付类型是否在支持的范围内
         PayWayEnum payWayEnum = Optional.ofNullable(AliPayWay.findByNo(payModeParam.getPayWay()))
                 .orElseThrow(() -> new BizException("非法的支付宝支付类型"));
         if (!payTypes.contains(payWayEnum.getCode())) {
@@ -62,7 +65,7 @@ public class AliPayService {
         String payBody = null;
         // wap支付
         if (payModeParam.getPayWay()== PayWayCode.WAP){
-            payBody = this.wapPay(amount, payment,alipayConfig);
+            payBody = this.wapPay(amount, payment,alipayConfig,aliPayParam);
         }
         // 程序支付
         else if (payModeParam.getPayWay() == PayWayCode.APP){
@@ -70,7 +73,7 @@ public class AliPayService {
         }
         // pc支付
         else if (payModeParam.getPayWay() == PayWayCode.WEB){
-            payBody = this.webPay(amount, payment, alipayConfig);
+            payBody = this.webPay(amount, payment, alipayConfig,aliPayParam);
         }
         // 二维码支付
         else if (payModeParam.getPayWay() == PayWayCode.QRCODE){
@@ -93,21 +96,26 @@ public class AliPayService {
     /**
      * wap支付
      */
-    public String wapPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig){
+    public String wapPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig,AliPayParam aliPayParam){
 
         AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
-
         model.setSubject(payment.getTitle());
         model.setOutTradeNo(String.valueOf(payment.getId()));
-        // 过期时间
-        model.setTimeoutExpress(alipayConfig.getExpireTime());
-
         model.setTotalAmount(amount.toPlainString());
-        model.setProductCode(payment.getBusinessId());
+        // 过期时间
+//        model.setTimeoutExpress(alipayConfig.getExpireTime());
+        model.setProductCode(AliPayCode.QUICK_WAP_PAY);
+//        model.setQuitUrl(aliPayParam.getReturnUrl());
+
+        AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+        request.setBizModel(model);
+        request.setNotifyUrl(alipayConfig.getNotifyUrl());
+        request.setReturnUrl(aliPayParam.getReturnUrl());
 
         try {
-            return AliPayApi.wapPayStr(model, alipayConfig.getReturnUrl(),
-                    alipayConfig.getNotifyUrl());
+            // 通过GET方式的请求, 返回URL的响应, 默认是POST方式的请求, 返回的是表单响应
+            AlipayTradePagePayResponse response = AliPayApi.pageExecute(request, Method.GET.name());
+            return response.getBody();
         }
         catch (AlipayApiException e) {
             log.error("支付宝手机支付失败", e);
@@ -128,7 +136,8 @@ public class AliPayService {
         model.setTotalAmount(amount.toPlainString());
 
         try {
-            return AliPayApi.appPayToResponse(model, alipayConfig.getNotifyUrl()).getBody();
+            AlipayTradeAppPayResponse response = AliPayApi.appPayToResponse(model, alipayConfig.getNotifyUrl());
+            return response.getBody();
         }
         catch (AlipayApiException e) {
             log.error("支付宝APP支付失败", e);
@@ -139,7 +148,7 @@ public class AliPayService {
     /**
      * PC支付
      */
-    public String webPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig){
+    public String webPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig, AliPayParam aliPayParam){
 
         AlipayTradePagePayModel model = new AlipayTradePagePayModel();
 
@@ -148,15 +157,16 @@ public class AliPayService {
         model.setTimeoutExpress(alipayConfig.getExpireTime());
         model.setTotalAmount(amount.toPlainString());
         // 目前仅支持FAST_INSTANT_TRADE_PAY
-        model.setProductCode("FAST_INSTANT_TRADE_PAY");
+        model.setProductCode(AliPayCode.FAST_INSTANT_TRADE_PAY);
 
         AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
         request.setBizModel(model);
         request.setNotifyUrl(alipayConfig.getNotifyUrl());
-        request.setReturnUrl(alipayConfig.getReturnUrl());
+        request.setReturnUrl(aliPayParam.getReturnUrl());
         try {
-            return AliPayApi.pageExecute(request).getBody();
-
+            // 通过GET方式的请求, 返回URL的响应, 默认是POST方式的请求, 返回的是表单响应
+            AlipayTradePagePayResponse response = AliPayApi.pageExecute(request, Method.GET.name());
+            return response.getBody();
         } catch (AlipayApiException e) {
             log.error("支付宝PC支付失败", e);
             throw new BizException("支付宝PC支付失败");

@@ -1,11 +1,12 @@
 package cn.bootx.payment.core.cashier.service;
 
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
+import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.service.PayService;
 import cn.bootx.payment.dto.pay.PayResult;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
@@ -35,7 +36,7 @@ public class CashierService {
     public PayResult singlePay(CashierSinglePayParam param){
         // 构建支付方式参数
         PayModeParam payModeParam = new PayModeParam()
-                .setPayChannel(PayChannelEnum.findByNo(param.getPayChannel()).getNo())
+                .setPayChannel(param.getPayChannel())
                 .setPayWay(param.getPayWay())
                 .setAmount(param.getAmount());
         // 判断是否可能是付款码支付
@@ -50,8 +51,14 @@ public class CashierService {
                 .setBusinessId(param.getBusinessId())
                 .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(0L))
                 .setPayModeList(Collections.singletonList(payModeParam));
+        PayResult payResult = payService.pay(payParam);
 
-        return payService.pay(payParam);
+        if (PayStatusCode.TRADE_SUCCESS == payResult.getPayStatus()){
+            throw new PayFailureException("支付已经完成");
+        }
+        if (PayStatusCode.TRADE_REFUND == payResult.getPayStatus()){
+            throw new PayFailureException("已经退款");
+        }
+        return payResult;
     }
-
 }

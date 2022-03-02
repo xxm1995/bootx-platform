@@ -4,7 +4,7 @@ package cn.bootx.payment.core.pay.factory;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.strategy.*;
-import cn.bootx.payment.exception.payment.PaymentUnsupportedMethodException;
+import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -55,7 +55,7 @@ public class PayStrategyFactory {
             case PayChannelCode.CHANNEL_PAY:
                 break;
             default:
-                throw new PaymentUnsupportedMethodException();
+                throw new PayUnsupportedMethodException();
         }
         //noinspection ConstantConditions
         strategy.setPayMode(payModeParam);
