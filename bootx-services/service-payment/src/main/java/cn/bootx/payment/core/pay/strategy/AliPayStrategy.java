@@ -132,6 +132,7 @@ public class AliPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doCancelHandler() {
+        this.initAlipayConfig();
         // 撤销支付
         aliPayCancelService.cancelRemote(this.getPayment());
         // 调用关闭本地支付记录
@@ -151,10 +152,7 @@ public class AliPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
-        // 检查并获取支付宝支付配置
-        this.alipayConfig = alipayConfigManager.findActivity()
-                .orElseThrow(() -> new BizException("支付配置不存在"));
-        AlipayConfigService.initApiConfig(this.alipayConfig);
+        this.initAlipayConfig();
         aliPayCancelService.refund(this.getPayment(),this.getPayMode().getAmount());
     }
 
@@ -163,10 +161,16 @@ public class AliPayStrategy extends AbsPayStrategy {
      */
     @Override
     public PaySyncResult doSyncPayStatusHandler(){
+        return alipaySyncService.syncPayStatus(this.getPayment());
+    }
+
+    /**
+     * 初始化支付宝配置信息
+     */
+    private void initAlipayConfig(){
         // 检查并获取支付宝支付配置
         this.alipayConfig = alipayConfigManager.findActivity()
                 .orElseThrow(() -> new BizException("支付配置不存在"));
         AlipayConfigService.initApiConfig(this.alipayConfig);
-        return alipaySyncService.syncPayStatus(this.getPayment());
     }
 }

@@ -142,6 +142,7 @@ public class PayCallbackService {
 
         // 更新Payment的状态
         payment.setErrorCode(String.valueOf(exceptionInfo.getErrorCode()));
+        payment.setErrorMsg(String.valueOf(exceptionInfo.getErrorMsg()));
         payment.setPayStatus(PayStatusCode.TRADE_FAIL);
         paymentManager.updateById(payment);
 

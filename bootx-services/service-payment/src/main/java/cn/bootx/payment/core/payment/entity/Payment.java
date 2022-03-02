@@ -4,8 +4,9 @@ import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.convert.PaymentConvert;
-import cn.bootx.payment.dto.pay.PayChannelInfo;
+import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.PaymentDto;
+import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
@@ -57,11 +58,20 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
     /** 错误码 */
     private String errorCode;
 
+    /** 错误信息 */
+    private String errorMsg;
+
     /**
      * 支付通道信息列表
      * @see PayChannelInfo
      */
     private String payChannelInfo;
+
+    /**
+     * 支付通道信息列表
+     * @see cn.bootx.payment.dto.payment.RefundableInfo
+     */
+    private String refundableInfo;
 
     /**
      * 支付状态
@@ -84,12 +94,23 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
     }
 
     /**
-     * 获取支付类型
+     * 获取支付通道
      */
-    public List<PayChannelInfo> getPayTypeInfos(){
+    public List<PayChannelInfo> getPayChannelInfoList(){
         if (StrUtil.isNotBlank(this.payChannelInfo)){
             JSONArray array = JSONUtil.parseArray(this.payChannelInfo);
             return JSONUtil.toList(array, PayChannelInfo.class);
+        }
+        return new ArrayList<>(0);
+    }
+
+    /**
+     * 获取可退款信息列表
+     */
+    public List<RefundableInfo> getRefundableInfoList(){
+        if (StrUtil.isNotBlank(this.refundableInfo)){
+            JSONArray array = JSONUtil.parseArray(this.refundableInfo);
+            return JSONUtil.toList(array, RefundableInfo.class);
         }
         return new ArrayList<>(0);
     }

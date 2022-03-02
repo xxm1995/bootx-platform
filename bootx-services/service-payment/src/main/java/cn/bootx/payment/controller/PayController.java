@@ -9,6 +9,7 @@ import cn.bootx.payment.core.pay.service.PaySyncService;
 import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.param.pay.PayParam;
+import cn.bootx.payment.param.refund.RefundParam;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,7 +59,13 @@ public class PayController {
         return Res.ok(paySyncService.syncByBusinessId(businessId));
     }
     
-    @Operation(summary = "退款(业务id)")
+    @Operation(summary = "退款")
+    @PostMapping("/refund")
+    public ResResult<Void> refund(@RequestBody RefundParam refundParam){
+        payRefundService.refund(refundParam);
+        return Res.ok();
+    }
+    @Operation(summary = "全额退款(业务id)")
     @PostMapping("/refundByBusinessId")
     public ResResult<Void> refundByBusinessId(@Parameter(description = "业务id") String businessId){
         payRefundService.refundByBusinessId(businessId);

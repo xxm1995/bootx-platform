@@ -1,4 +1,4 @@
-package cn.bootx.payment.dto.pay;
+package cn.bootx.payment.dto.payment;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -17,19 +17,19 @@ import java.math.BigDecimal;
 public class PayChannelInfo implements Serializable {
 
     private static final long serialVersionUID = -7757908686367215682L;
-    @Schema(description= "类型")
+
+    @Schema(description= "支付通道")
     private int payChannel;
 
-    @Schema(description= "支付类型")
+    @Schema(description= "支付方式")
     private int payWay;
 
     @Schema(description= "金额")
     private BigDecimal amount;
 
-    @Schema(description= "数量")
-    private int count;
-
     @Schema(description= "扩展参数的json字符串",hidden = true)
     private String extraParamsJson;
+
+
 
 }

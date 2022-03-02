@@ -5,9 +5,10 @@ import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.local.SyncPayInfoLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.dto.pay.PayChannelInfo;
+import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.dto.payment.PaymentDto;
+import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollUtil;
@@ -48,14 +49,16 @@ public class PaymentBuilder {
 
         // 支付方式和状态
         List<PayChannelInfo> payTypeInfos = buildPayTypeInfo(payParam.getPayModeList());
+        List<RefundableInfo> refundableInfos = buildRefundableInfo(payParam.getPayModeList());
         // 计算总价
         BigDecimal sumAmount = payTypeInfos.stream()
                 .map(PayChannelInfo::getAmount)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
-
+        // 支付通道信息
         payment.setPayChannelInfo(JSONUtil.toJsonStr(payTypeInfos))
+                .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos))
                 .setPayStatus(PayStatusCode.TRADE_PROGRESS)
                 .setAmount(sumAmount)
                 .setClientIp(ip)
@@ -71,6 +74,14 @@ public class PaymentBuilder {
                 .map(PayModeParam::toPayTypeInfo)
                 .collect(Collectors.toList());
     }
+    /**
+     * 构建RefundableInfo
+     */
+    private List<RefundableInfo> buildRefundableInfo(List<PayModeParam> payModeParamList) {
+        return CollectionUtil.isEmpty(payModeParamList) ? Collections.emptyList() : payModeParamList.stream()
+                .map(PayModeParam::toRefundableInfo)
+                .collect(Collectors.toList());
+    }
 
     /**
      * 根据Payment构建PayParam支付参数
@@ -78,7 +89,7 @@ public class PaymentBuilder {
     public PayParam buildPayParamByPayment(Payment payment){
         PayParam payParam = new PayParam();
         // 恢复 payModeList
-        List<PayModeParam> payModeParams = payment.getPayTypeInfos().stream()
+        List<PayModeParam> payModeParams = payment.getPayChannelInfoList().stream()
                 .map(payTypeInfo -> new PayModeParam()
                         .setAmount(payTypeInfo.getAmount())
                         .setPayChannel(payTypeInfo.getPayChannel())
@@ -112,7 +123,7 @@ public class PaymentBuilder {
                     .setPayStatus(payment.getPayStatus())
                     .setPayment(paymentDto);
 
-            List<PayChannelInfo> channelInfos = payment.getPayTypeInfos();
+            List<PayChannelInfo> channelInfos = payment.getPayChannelInfoList();
 
             // 设置异步支付参数
             List<PayChannelInfo> moneyPayTypeInfos = channelInfos.stream()

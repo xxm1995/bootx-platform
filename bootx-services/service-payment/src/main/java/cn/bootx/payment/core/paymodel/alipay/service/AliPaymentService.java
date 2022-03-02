@@ -7,7 +7,8 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.alipay.dao.AliPaymentManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AliPayment;
-import cn.bootx.payment.dto.pay.PayChannelInfo;
+import cn.bootx.payment.dto.payment.PayChannelInfo;
+import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +40,23 @@ public class AliPaymentService {
                 .setSyncPayWay(PayChannelCode.ALI);
         // TODO 设置超时时间
 
-        List<PayChannelInfo> payTypeInfos = payment.getPayTypeInfos();
+        List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();
+        List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();
         // 清除已有的异步支付类型信息
         payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()));
-        // 添加支付宝支付类型信息
+        refundableInfos.removeIf(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()));
+        // 更新支付宝支付类型信息
         payTypeInfos.add(new PayChannelInfo()
                 .setPayChannel(PayChannelCode.ALI)
+                .setPayWay(payModeParam.getPayWay())
                 .setAmount(payModeParam.getAmount())
                 .setExtraParamsJson(payModeParam.getExtraParamsJson()));
         payment.setPayChannelInfo(JSONUtil.toJsonStr(payTypeInfos));
+        // 更新支付宝可退款类型信息
+        refundableInfos.add(new RefundableInfo()
+                .setPayChannel(PayChannelCode.ALI)
+                .setAmount(payModeParam.getAmount()));
+        payment.setRefundableInfo(JSONUtil.toJsonStr(payTypeInfos));
         paymentManager.updateById(payment);
     }
 

@@ -5,7 +5,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.payment.service.PaymentQueryService;
-import cn.bootx.payment.dto.pay.PayChannelInfo;
+import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.param.payment.PaymentQuery;
 import io.swagger.v3.oas.annotations.tags.Tag;

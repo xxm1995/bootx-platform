@@ -1,7 +1,6 @@
 package cn.bootx.payment.dto.payment;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import cn.bootx.payment.dto.pay.PayChannelInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -50,15 +49,23 @@ public class PaymentDto extends BaseDto implements Serializable {
     @Schema(description= "可退款余额")
     private BigDecimal refundableBalance;
 
-
     @Schema(description= "错误码")
     private String errorCode;
+
+    @Schema(description= "错误信息")
+    private String errorMsg;
 
     /**
      * @see PayChannelInfo
      */
     @Schema(description= "支付通道信息")
     private String payChannelInfo;
+
+    /**
+     * @see cn.bootx.payment.dto.payment.RefundableInfo
+     */
+    @Schema(description= "支付通道信息列表")
+    private String refundableInfo;
 
     @Schema(description= "支付时间")
     private LocalDateTime payTime;

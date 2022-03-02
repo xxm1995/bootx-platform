@@ -6,7 +6,7 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.dto.pay.PayChannelInfo;
+import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.param.payment.PaymentQuery;
 import lombok.RequiredArgsConstructor;
@@ -53,7 +53,7 @@ public class PaymentQueryService {
         List<Payment> payments = paymentManager.findByBusinessIdDesc(businessId);
         return payments.stream()
                 .findFirst()
-                .map(Payment::getPayTypeInfos)
+                .map(Payment::getPayChannelInfoList)
                 .orElse(new ArrayList<>(1));
     }
 
@@ -62,7 +62,7 @@ public class PaymentQueryService {
      */
     public List<PayChannelInfo> findPayTypeInfoById(Long id){
         return paymentManager.findById(id)
-                .map(Payment::getPayTypeInfos)
+                .map(Payment::getPayChannelInfoList)
                 .orElse(new ArrayList<>(1));
     }
 

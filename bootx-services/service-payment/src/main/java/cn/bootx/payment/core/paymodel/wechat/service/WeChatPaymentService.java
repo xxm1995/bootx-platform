@@ -7,7 +7,8 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPaymentManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayment;
-import cn.bootx.payment.dto.pay.PayChannelInfo;
+import cn.bootx.payment.dto.payment.PayChannelInfo;
+import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
@@ -38,9 +39,11 @@ public class WeChatPaymentService {
         payment.setSyncPayMode(true)
                 .setSyncPayWay(PayChannelCode.WECHAT);
 
-        List<PayChannelInfo> payTypeInfos = payment.getPayTypeInfos();
+        List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();
+        List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();
         // 清除已有的异步支付类型信息
         payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()));
+        refundableInfos.removeIf(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         // 添加微信支付类型信息
         payTypeInfos.add(new PayChannelInfo()
                 .setPayChannel(PayChannelCode.WECHAT)
@@ -48,6 +51,12 @@ public class WeChatPaymentService {
                 .setAmount(payModeParam.getAmount())
                 .setExtraParamsJson(payModeParam.getExtraParamsJson()));
         payment.setPayChannelInfo(JSONUtil.toJsonStr(payTypeInfos));
+        // 更新微信可退款类型信息
+        refundableInfos.add(new RefundableInfo()
+                .setPayChannel(PayChannelCode.WECHAT)
+                .setAmount(payModeParam.getAmount()));
+        payment.setRefundableInfo(JSONUtil.toJsonStr(payTypeInfos))
+                .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos));
         paymentManager.updateById(payment);
     }
 

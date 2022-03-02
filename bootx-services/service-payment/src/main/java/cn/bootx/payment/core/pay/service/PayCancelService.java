@@ -107,5 +107,6 @@ public class PayCancelService {
      */
     private void errorHandler(Payment payment, List<AbsPayStrategy> strategyList, Exception e) {
         // 待编写
+        log.warn("取消订单失败");
     }
 }
