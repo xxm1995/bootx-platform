@@ -115,7 +115,7 @@ public class AliPayStrategy extends AbsPayStrategy {
     @Override
     public void doAsyncSuccessHandler(Map<String, String> map) {
         String tradeNo = map.get(AliPayCode.TRADE_NO);
-        aliPaymentService.updateSyncSuccess(this.getPayment().getId(),this.getPayMode(),tradeNo);
+        aliPaymentService.updateAsyncSuccess(this.getPayment().getId(),this.getPayMode(),tradeNo);
     }
 
     /**
@@ -154,6 +154,7 @@ public class AliPayStrategy extends AbsPayStrategy {
     public void doRefundHandler() {
         this.initAlipayConfig();
         aliPayCancelService.refund(this.getPayment(),this.getPayMode().getAmount());
+        aliPaymentService.updateRefundSuccess(this.getPayment());
     }
 
     /**

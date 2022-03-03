@@ -70,9 +70,6 @@ public class PermMenuParam implements Serializable {
     @Schema(description = "隐藏的标题内容")
     private boolean hiddenHeaderContent;
 
-    @Schema(description = "系统菜单")
-    private boolean admin;
-
     @Schema(description = "描述")
     private String remark;
 

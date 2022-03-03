@@ -24,13 +24,6 @@ public class PayNotifyRecordService {
     private final PayNotifyRecordManager payNotifyRecordManager;
 
     /**
-     * 保存回调记录
-     */
-    public void saveNotifyRecord(PayNotifyRecord payNotifyRecord){
-        payNotifyRecordManager.save(payNotifyRecord);
-    }
-
-    /**
      * 分页查询
      */
     public PageResult<PayNotifyRecordDto> page(PageParam pageParam){

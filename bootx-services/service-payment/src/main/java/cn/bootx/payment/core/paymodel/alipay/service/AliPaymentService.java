@@ -56,14 +56,13 @@ public class AliPaymentService {
         refundableInfos.add(new RefundableInfo()
                 .setPayChannel(PayChannelCode.ALI)
                 .setAmount(payModeParam.getAmount()));
-        payment.setRefundableInfo(JSONUtil.toJsonStr(payTypeInfos));
-        paymentManager.updateById(payment);
+        payment.setRefundableInfo(JSONUtil.toJsonStr(refundableInfos));
     }
 
     /**
-     * 更新支付记录成功状态, 并创建支付宝支付记录
+     * 更新异步支付记录成功状态, 并创建支付宝支付记录
      */
-    public void updateSyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
+    public void updateAsyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
 
         // 更新支付记录
         Payment payment = paymentManager.findById(id)
@@ -90,6 +89,19 @@ public class AliPaymentService {
             aliPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
             aliPaymentManager.updateById(aliPayment);
         });
+    }
+
+    /**
+     * 更新退款成功处理, 更新可退款信息
+     */
+    public void updateRefundSuccess(Payment payment){
+        List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();
+        RefundableInfo refundableInfo = refundableInfos.stream()
+                .filter(o -> o.getPayChannel() == PayChannelCode.ALI)
+                .findFirst()
+                .orElseThrow(() -> new BizException("数据不存在"));
+        refundableInfos.remove(refundableInfo);
+
     }
 
 }

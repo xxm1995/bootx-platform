@@ -6,7 +6,7 @@ import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.paymodel.AliPayCode;
-import cn.bootx.payment.core.notify.service.PayNotifyRecordService;
+import cn.bootx.payment.core.notify.dao.PayNotifyRecordManager;
 import cn.bootx.payment.core.pay.func.AbsPayCallbackStrategy;
 import cn.bootx.payment.core.pay.service.PayCallbackService;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
@@ -34,8 +34,8 @@ import java.util.Objects;
 public class AliPayCallbackService extends AbsPayCallbackStrategy {
     private final AlipayConfigManager alipayConfigManager;
 
-    public AliPayCallbackService(RedisClient redisClient, PayNotifyRecordService payNotifyRecordService, PayCallbackService payCallbackService, AlipayConfigService alipayConfigService, AlipayConfigManager alipayConfigManager) {
-        super(redisClient, payNotifyRecordService, payCallbackService);
+    public AliPayCallbackService(RedisClient redisClient, PayNotifyRecordManager payNotifyRecordManager, PayCallbackService payCallbackService, AlipayConfigService alipayConfigService, AlipayConfigManager alipayConfigManager) {
+        super(redisClient, payNotifyRecordManager, payCallbackService);
         this.alipayConfigManager = alipayConfigManager;
     }
 

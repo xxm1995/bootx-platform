@@ -1,8 +1,7 @@
 package cn.bootx.payment.core.refund.convert;
 
-import cn.bootx.payment.core.pay.convert.PayConvert;
-import cn.bootx.payment.dto.payment.RefundableInfo;
-import cn.bootx.payment.param.pay.PayModeParam;
+import cn.bootx.payment.core.refund.entity.RefundRecord;
+import cn.bootx.payment.dto.refund.RefundRecordDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -13,8 +12,8 @@ import org.mapstruct.factory.Mappers;
 */
 @Mapper
 public interface RefundConvert {
-    PayConvert CONVERT = Mappers.getMapper(PayConvert.class);
+    RefundConvert CONVERT = Mappers.getMapper(RefundConvert.class);
 
-    RefundableInfo convert(PayModeParam in);
+    RefundRecordDto convert(RefundRecord in);
 
 }

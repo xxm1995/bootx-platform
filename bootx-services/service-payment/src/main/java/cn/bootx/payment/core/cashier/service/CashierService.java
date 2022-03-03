@@ -11,6 +11,7 @@ import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,14 +50,14 @@ public class CashierService {
         PayParam payParam = new PayParam()
                 .setTitle(param.getTitle())
                 .setBusinessId(param.getBusinessId())
-                .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(0L))
+                .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                 .setPayModeList(Collections.singletonList(payModeParam));
         PayResult payResult = payService.pay(payParam);
 
         if (PayStatusCode.TRADE_SUCCESS == payResult.getPayStatus()){
             throw new PayFailureException("支付已经完成");
         }
-        if (PayStatusCode.TRADE_REFUND == payResult.getPayStatus()){
+        if (PayStatusCode.TRADE_REFUNDED == payResult.getPayStatus()){
             throw new PayFailureException("已经退款");
         }
         return payResult;

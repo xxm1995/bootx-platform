@@ -3,10 +3,10 @@ package cn.bootx.payment.core.pay.func;
 import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
+import cn.bootx.payment.core.notify.dao.PayNotifyRecordManager;
 import cn.bootx.payment.core.pay.result.PayCallbackResult;
 import cn.bootx.payment.core.pay.service.PayCallbackService;
 import cn.bootx.payment.core.notify.entity.PayNotifyRecord;
-import cn.bootx.payment.core.notify.service.PayNotifyRecordService;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.Map;
 public abstract class AbsPayCallbackStrategy {
     protected static final ThreadLocal<Map<String,String>> PARAMS = new TransmittableThreadLocal<>();
     private final RedisClient redisClient;
-    private final PayNotifyRecordService payNotifyRecordService;
+    private final PayNotifyRecordManager payNotifyRecordManager;
     private final PayCallbackService payCallbackService;
 
     /**
@@ -100,6 +100,6 @@ public abstract class AbsPayCallbackStrategy {
                 .setPayChannel(this.getPayChannel())
                 .setStatus(result.getCode())
                 .setMsg(result.getMsg());
-        payNotifyRecordService.saveNotifyRecord(payNotifyRecord);
+        payNotifyRecordManager.save(payNotifyRecord);
     }
 }

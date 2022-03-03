@@ -68,7 +68,7 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
     private String payChannelInfo;
 
     /**
-     * 支付通道信息列表
+     * 退款信息列表
      * @see cn.bootx.payment.dto.payment.RefundableInfo
      */
     private String refundableInfo;

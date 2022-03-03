@@ -13,13 +13,15 @@ public interface PayStatusCode {
      * 1.成功
      * 2.失败
      * 3.支付取消(超时/手动取消/订单已经关闭,撤销支付单)
-     * 4.退款
+     * 4.退款中
+     * 5.已退款
      */
     int TRADE_PROGRESS = 0;
     int TRADE_SUCCESS = 1;
     int TRADE_FAIL = 2;
     int TRADE_CANCEL = 3;
-    int TRADE_REFUND = 4;
+    int TRADE_REFUNDING = 4;
+    int TRADE_REFUNDED = 5;
 
     /**
      * 回调信息支付状态 0.失败 2.成功

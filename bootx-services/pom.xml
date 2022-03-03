@@ -33,7 +33,6 @@
         <fastjson.version>1.2.79</fastjson.version>
         <kryo.serializers.version>0.41</kryo.serializers.version>
         <asyncTool.version>V1.4-SNAPSHOT</asyncTool.version>
-        <hibernate-types.version>hibernate-types</hibernate-types.version>
     </properties>
 
     <dependencies>

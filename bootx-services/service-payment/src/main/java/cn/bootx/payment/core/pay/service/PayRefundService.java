@@ -1,6 +1,8 @@
 package cn.bootx.payment.core.pay.service;
 
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.util.BigDecimalUtil;
+import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
@@ -10,7 +12,7 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.refund.dao.RefundRecordManager;
-import cn.bootx.payment.dto.payment.PayChannelInfo;
+import cn.bootx.payment.core.refund.entity.RefundRecord;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.exception.payment.PayFailureException;
@@ -19,13 +21,19 @@ import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.payment.param.refund.RefundModeParam;
 import cn.bootx.payment.param.refund.RefundParam;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.DesensitizedUtil;
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -95,13 +103,32 @@ public class PayRefundService {
         this.doHandler(payment,paymentStrategyList,(strategyList, paymentObj) -> {
             // 发起支付成功进行的执行方法
             strategyList.forEach(AbsPayStrategy::doRefundHandler);
-            paymentObj.setPayStatus(PayStatusCode.TRADE_REFUND);
-            paymentManager.updateById(paymentObj);
-            // 记录退款成功的记录
-            this.saveRefund(payment);
-
+            // 处理支付单
+            this.paymentHandler(paymentObj,refundModeParams);
         });
     }
+
+    /**
+     * 支付单处理
+     */
+    private void paymentHandler(Payment payment, List<RefundModeParam> refundModeParams) {
+        BigDecimal amount = refundModeParams.stream().map(RefundModeParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+        // 剩余可退款余额
+        BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
+
+        // 退款完成
+        if (BigDecimalUtil.compareTo(amount,BigDecimal.ZERO) < 1){
+            payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
+        } else {
+            payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
+        }
+
+        payment.setRefundableBalance(refundableBalance);
+        paymentManager.updateById(payment);
+        // 记录退款成功的记录
+        this.saveRefund(payment,amount,refundModeParams);
+    }
+
     /**
      * 处理方法
      * @param payment 支付记录
@@ -162,8 +189,19 @@ public class PayRefundService {
     /**
      * 保存退款记录
      */
-    private void saveRefund(Payment payment){
-        // TODO
-        List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();
+    private void saveRefund(Payment payment, BigDecimal amount, List<RefundModeParam> refundModeParams){
+        List<RefundableInfo> refundableInfos = refundModeParams.stream().map(RefundModeParam::toRefundableInfo).collect(Collectors.toList());
+        HttpServletRequest request = WebServletUtil.getRequest();
+        String ip = ServletUtil.getClientIP(request);
+        RefundRecord refundRecord = new RefundRecord()
+                .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos))
+                .setAmount(amount)
+                .setClientIp(ip)
+                .setPaymentId(payment.getId())
+                .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setRefundTime(LocalDateTime.now())
+                .setTitle(payment.getTitle())
+                .setRefundStatus(1);
+        refundRecordManager.save(refundRecord);
     }
 }

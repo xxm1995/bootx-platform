@@ -1,6 +1,7 @@
 package cn.bootx.payment.param.refund;
 
 import cn.bootx.payment.code.pay.PayChannelCode;
+import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.param.pay.PayModeParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -32,6 +33,14 @@ public class RefundModeParam {
      */
     public PayModeParam toPayModeParam(){
         return new PayModeParam()
+                .setPayChannel(getPayChannel())
+                .setAmount(getAmount());
+    }
+    /**
+     * 转换成退款方式记录对象
+     */
+    public RefundableInfo toRefundableInfo(){
+        return new RefundableInfo()
                 .setPayChannel(getPayChannel())
                 .setAmount(getAmount());
     }

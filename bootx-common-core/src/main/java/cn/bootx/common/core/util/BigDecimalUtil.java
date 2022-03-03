@@ -40,7 +40,7 @@ public class BigDecimalUtil {
             lastArgs[i] = lastArgs[i] == null ? new BigDecimal("0.00") : lastArgs[i];
             result = result.add(lastArgs[i]);
         }
-        result = result.setScale(CURRENCY_DECIMAL_PLACES, BigDecimal.ROUND_UP);
+        result = result.setScale(CURRENCY_DECIMAL_PLACES, RoundingMode.UP);
         return result;
     }
 
@@ -122,7 +122,7 @@ public class BigDecimalUtil {
      *
      * @param first 数字1
      * @param last  数字2
-     * @return first gt last =1 / first eq last = 0 / first lt last = -1
+     * @return first > last =1 / first == last = 0 / first < last = -1
      */
     public static int compareTo(BigDecimal first, BigDecimal last) {
         BigDecimal newFirst = BigDecimal.ZERO;

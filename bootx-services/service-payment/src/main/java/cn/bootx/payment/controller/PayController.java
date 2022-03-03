@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author xxm
  * @date 2020/12/9
  */
-@Tag(name ="统一支付")
+@Tag(name = "统一支付")
 @RestController
 @RequestMapping("/uni_pay")
 @AllArgsConstructor

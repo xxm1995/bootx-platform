@@ -157,8 +157,8 @@ public class PayService {
                 // 修改payment支付状态为成功
                 paymentObj.setPayStatus(PayStatusCode.TRADE_SUCCESS);
                 paymentObj.setPayTime(LocalDateTime.now());
-                paymentManager.updateById(paymentObj);
             }
+            paymentManager.updateById(paymentObj);
         });
     }
 
