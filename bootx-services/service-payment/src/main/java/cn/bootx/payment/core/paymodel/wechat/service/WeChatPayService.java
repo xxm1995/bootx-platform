@@ -4,7 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayWayCode;
 import cn.bootx.payment.code.pay.PayWayEnum;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
-import cn.bootx.payment.code.paymodel.WeChatPayType;
+import cn.bootx.payment.code.paymodel.WeChatPayWay;
 import cn.bootx.payment.core.pay.local.SyncPayInfoLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
@@ -42,14 +42,14 @@ public class WeChatPayService {
      * 校验
      */
     public void validation(PayModeParam payModeParam, WeChatPayConfig weChatPayConfig) {
-        List<String> payTypes = Optional.ofNullable(weChatPayConfig.getPayTypes())
+        List<String> payWays = Optional.ofNullable(weChatPayConfig.getPayWays())
                 .filter(StrUtil::isNotBlank)
                 .map(s -> StrUtil.split(s, ','))
                 .orElse(new ArrayList<>(1));
 
-        PayWayEnum payWayEnum = Optional.ofNullable(WeChatPayType.findByNo(payModeParam.getPayWay()))
+        PayWayEnum payWayEnum = Optional.ofNullable(WeChatPayWay.findByNo(payModeParam.getPayWay()))
                 .orElseThrow(() -> new BizException("非法的微信支付类型"));
-        if (!payTypes.contains(payWayEnum.getCode())) {
+        if (!payWays.contains(payWayEnum.getCode())) {
             throw new BizException("该微信支付方式不可用");
         }
     }

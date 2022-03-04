@@ -37,8 +37,8 @@ public class PaymentDto extends BaseDto implements Serializable {
     @Schema(description= "是否是异步支付")
     private boolean syncPayMode;
 
-    @Schema(description= "异步支付方式")
-    private Integer syncPayWay;
+    @Schema(description= "异步支付通道")
+    private Integer syncPayChannel;
 
     @Schema(description= "支付状态")
     private int payStatus;

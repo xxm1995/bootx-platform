@@ -89,13 +89,13 @@ public class PayStrategyFactory {
         List<AbsPayStrategy> list = new ArrayList<>(payModeParamList.size());
 
         // 同步支付
-        List<PayModeParam> syncPayModelParamList = payModeParamList.stream()
+        List<PayModeParam> syncPayModeParamList = payModeParamList.stream()
                 .filter(Objects::nonNull)
                 .filter(payModeParam -> !PayChannelCode.SYNC_TYPE.contains(payModeParam.getPayChannel()))
                 .collect(Collectors.toList());
 
         // 异步支付
-        List<PayModeParam> asyncPayModelParamList = payModeParamList.stream()
+        List<PayModeParam> asyncPayModeParamList = payModeParamList.stream()
                 .filter(Objects::nonNull)
                 .filter(payModeParam -> PayChannelCode.SYNC_TYPE.contains(payModeParam.getPayChannel()))
                 .collect(Collectors.toList());
@@ -104,11 +104,11 @@ public class PayStrategyFactory {
 
         // 异步在后面
         if (description){
-            sortList.addAll(syncPayModelParamList);
-            sortList.addAll(asyncPayModelParamList);
+            sortList.addAll(syncPayModeParamList);
+            sortList.addAll(asyncPayModeParamList);
         } else {
-            sortList.addAll(asyncPayModelParamList);
-            sortList.addAll(syncPayModelParamList);
+            sortList.addAll(asyncPayModeParamList);
+            sortList.addAll(syncPayModeParamList);
         }
 
         // 此处有一个根据Type的反转排序，

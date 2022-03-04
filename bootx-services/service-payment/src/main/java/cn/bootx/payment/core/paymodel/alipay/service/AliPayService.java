@@ -46,14 +46,14 @@ public class AliPayService {
      * 支付前检查支付方式是否可用
      */
     public void validation(PayModeParam payModeParam, AlipayConfig alipayConfig){
-        List<String> payTypes = Optional.ofNullable(alipayConfig.getPayTypes())
+        List<String> payWays = Optional.ofNullable(alipayConfig.getPayWays())
                 .filter(StrUtil::isNotBlank)
                 .map(s -> StrUtil.split(s, ','))
                 .orElse(new ArrayList<>(1));
         // 发起的支付类型是否在支持的范围内
         PayWayEnum payWayEnum = Optional.ofNullable(AliPayWay.findByNo(payModeParam.getPayWay()))
                 .orElseThrow(() -> new BizException("非法的支付宝支付类型"));
-        if (!payTypes.contains(payWayEnum.getCode())) {
+        if (!payWays.contains(payWayEnum.getCode())) {
             throw new BizException("该支付宝支付方式不可用");
         }
     }

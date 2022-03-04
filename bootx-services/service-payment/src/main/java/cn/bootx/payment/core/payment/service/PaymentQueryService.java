@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.common.query.entity.QueryParams;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
@@ -80,5 +81,12 @@ public class PaymentQueryService {
      */
     public PageResult<PaymentDto> page(PageParam pageParam, PaymentQuery param){
         return MpUtil.convert2DtoPageResult(paymentManager.page(pageParam,param));
+    }
+
+    /**
+     * 超级查询
+     */
+    public PageResult<PaymentDto> superPage(PageParam pageParam, QueryParams queryParams){
+        return MpUtil.convert2DtoPageResult(paymentManager.superPage(pageParam,queryParams));
     }
 }

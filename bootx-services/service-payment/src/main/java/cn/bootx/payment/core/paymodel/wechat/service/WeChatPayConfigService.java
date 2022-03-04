@@ -3,9 +3,11 @@ package cn.bootx.payment.core.paymodel.wechat.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
+import cn.bootx.payment.code.paymodel.WeChatPayWay;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
@@ -19,7 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
 * 微信支付配置
@@ -51,10 +55,10 @@ public class WeChatPayConfigService {
                 .orElseThrow(() -> new BizException("微信支付配置不存在"));
         BeanUtil.copyProperties(param,weChatPayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
-        if (CollUtil.isNotEmpty(param.getPayTypeList())){
-            weChatPayConfig.setPayTypes(String.join(",", param.getPayTypeList()));
+        if (CollUtil.isNotEmpty(param.getPayWayList())){
+            weChatPayConfig.setPayWays(String.join(",", param.getPayWayList()));
         } else {
-            weChatPayConfig.setPayTypes(null);
+            weChatPayConfig.setPayWays(null);
         }
         return weChatPayConfigManager.updateById(weChatPayConfig).toDto();
     }
@@ -76,6 +80,20 @@ public class WeChatPayConfigService {
             return;
         }
         weChatPayConfigManager.removeAllActivity();
+        weChatPayConfig.setActivity(true);
+        weChatPayConfigManager.updateById(weChatPayConfig);
+    }
+
+    /**
+     * 清除启用状态
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void clearActivity(Long id){
+        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id).orElseThrow(() -> new BizException("微信支付配置不存在"));
+        if (Objects.equals(weChatPayConfig.getActivity(),Boolean.TRUE)){
+            return;
+        }
+        weChatPayConfig.setActivity(false);
         weChatPayConfigManager.updateById(weChatPayConfig);
     }
 
@@ -87,6 +105,15 @@ public class WeChatPayConfigService {
         return weChatPayConfigManager.findById(id)
                 .map(WeChatPayConfig::toDto)
                 .orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 微信支持支付方式
+     */
+    public List<KeyValue> findPayWayList() {
+        return WeChatPayWay.getPayWays().stream()
+                .map(e->new KeyValue(e.getCode(),e.getName()))
+                .collect(Collectors.toList());
     }
 
     /**

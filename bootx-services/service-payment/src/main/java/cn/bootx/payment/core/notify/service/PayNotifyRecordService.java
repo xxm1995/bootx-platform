@@ -26,8 +26,8 @@ public class PayNotifyRecordService {
     /**
      * 分页查询
      */
-    public PageResult<PayNotifyRecordDto> page(PageParam pageParam){
-        Page<PayNotifyRecord> page = payNotifyRecordManager.page(pageParam);
+    public PageResult<PayNotifyRecordDto> page(PageParam pageParam,PayNotifyRecordDto param){
+        Page<PayNotifyRecord> page = payNotifyRecordManager.page(pageParam,param);
         return MpUtil.convert2DtoPageResult(page);
     }
 

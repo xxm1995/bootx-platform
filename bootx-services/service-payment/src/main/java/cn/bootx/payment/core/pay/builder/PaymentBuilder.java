@@ -118,7 +118,7 @@ public class PaymentBuilder {
             PaymentDto paymentDto = new PaymentDto();
             BeanUtils.copyProperties(payment, paymentDto);
             // 异步支付信息
-            paymentResult.setSyncPayWay(payment.getSyncPayWay())
+            paymentResult.setSyncPayChannel(payment.getSyncPayChannel())
                     .setSyncPayMode(payment.isSyncPayMode())
                     .setPayStatus(payment.getPayStatus())
                     .setPayment(paymentDto);

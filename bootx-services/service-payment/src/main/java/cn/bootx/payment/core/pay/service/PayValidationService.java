@@ -38,7 +38,7 @@ public class PayValidationService {
     /**
      * 检查异步支付方式
      */
-    public void validationSyncPayModel(PayParam payParam) {
+    public void validationSyncPayMode(PayParam payParam) {
         // 组合支付时只允许有一个异步支付方式
         List<PayModeParam> payModeList = payParam.getPayModeList();
 

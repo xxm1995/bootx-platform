@@ -69,6 +69,7 @@ public class AlipayConfigService {
     /**
      * 清除启用状态
      */
+    @Transactional(rollbackFor = Exception.class)
     public void clearActivity(Long id){
         AlipayConfig mailConfig = alipayConfigManager.findById(id).orElseThrow(() -> new BizException("支付宝配置不存在"));
         if (Objects.equals(mailConfig.getActivity(),Boolean.FALSE)){
@@ -87,10 +88,10 @@ public class AlipayConfigService {
                 .orElseThrow(() -> new BizException("支付宝配置不存在"));
         BeanUtil.copyProperties(param,alipayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
-        if (CollUtil.isNotEmpty(param.getPayTypeList())){
-            alipayConfig.setPayTypes(String.join(",", param.getPayTypeList()));
+        if (CollUtil.isNotEmpty(param.getPayWayList())){
+            alipayConfig.setPayWays(String.join(",", param.getPayWayList()));
         } else {
-            alipayConfig.setPayTypes(null);
+            alipayConfig.setPayWays(null);
         }
         return alipayConfigManager.updateById(alipayConfig).toDto();
     }
@@ -114,7 +115,7 @@ public class AlipayConfigService {
     /**
      * 支付宝支持支付方式
      */
-    public List<KeyValue> findPayTypeList() {
+    public List<KeyValue> findPayWayList() {
         return AliPayWay.getPayWays().stream()
                 .map(e->new KeyValue(e.getCode(),e.getName()))
                 .collect(Collectors.toList());

@@ -37,7 +37,7 @@ public class AliPaymentService {
      */
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
         payment.setSyncPayMode(true)
-                .setSyncPayWay(PayChannelCode.ALI);
+                .setSyncPayChannel(PayChannelCode.ALI);
         // TODO 设置超时时间
 
         List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();

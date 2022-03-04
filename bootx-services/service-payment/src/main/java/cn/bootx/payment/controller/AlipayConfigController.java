@@ -66,8 +66,8 @@ public class AlipayConfigController {
     }
 
     @Operation(summary = "支付宝支持支付方式")
-    @GetMapping("/findPayTypeList")
-    public ResResult<List<KeyValue>> findPayTypeList(){
-        return Res.ok(alipayConfigService.findPayTypeList());
+    @GetMapping("/findPayWayList")
+    public ResResult<List<KeyValue>> findPayWayList(){
+        return Res.ok(alipayConfigService.findPayWayList());
     }
 }

@@ -66,7 +66,7 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
     /** 是否沙箱环境 */
     private boolean sandbox;
     /** 可用支付方式 */
-    private String payTypes;
+    private String payWays;
     /** 是否启用 */
     private Boolean activity;
     /** 状态 */
@@ -75,16 +75,16 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
     @Override
     public WeChatPayConfigDto toDto() {
         WeChatPayConfigDto convert =  WeChatConvert.CONVERT.convert(this);
-        if (StrUtil.isNotBlank(this.getPayTypes())){
-            convert.setPayTypeList(StrUtil.split(this.getPayTypes(),','));
+        if (StrUtil.isNotBlank(this.getPayWays())){
+            convert.setPayWayList(StrUtil.split(this.getPayWays(),','));
         }
         return convert;
     }
 
     public static WeChatPayConfig init(WeChatPayConfigDto dto){
         WeChatPayConfig convert = WeChatConvert.CONVERT.convert(dto);
-        if (CollUtil.isNotEmpty(dto.getPayTypeList())){
-            convert.setPayTypes(String.join(",", dto.getPayTypeList()));
+        if (CollUtil.isNotEmpty(dto.getPayWayList())){
+            convert.setPayWays(String.join(",", dto.getPayWayList()));
         }
         return convert;
     }

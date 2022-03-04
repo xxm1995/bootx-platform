@@ -13,22 +13,17 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@Schema(title = "查询参数")
+@Schema(title = "支付记录查询参数")
 public class PaymentQuery implements Serializable {
     private static final long serialVersionUID = 7071042101962400106L;
+
+    @Schema(description= "支付单id")
+    private String paymentId;
 
     @Schema(description= "关联的业务id")
     private String businessId;
 
-    @Schema(description= "是否是异步支付")
-    private Boolean syncPayMode;
+    @Schema(description= "关联的业务id")
+    private String title;
 
-    @Schema(description= "异步支付方式")
-    private Integer syncPayWay;
-
-    @Schema(description= "支付状态")
-    private Integer payStatus;
-
-    @Schema(description= "错误码")
-    private String errorCode;
 }

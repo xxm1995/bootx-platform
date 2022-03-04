@@ -27,8 +27,8 @@ public class PayNotifyRecordController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<PayNotifyRecordDto>> page(PageParam pageParam){
-        return Res.ok(notifyRecordService.page(pageParam));
+    public ResResult<PageResult<PayNotifyRecordDto>> page(PageParam pageParam,PayNotifyRecordDto param){
+        return Res.ok(notifyRecordService.page(pageParam,param));
     }
 
     @Operation(summary = "根据id查询")

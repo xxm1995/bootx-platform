@@ -68,7 +68,7 @@ public class AlipayConfigDto extends BaseDto implements Serializable {
     private String expireTime;
 
     /** 可用支付方式 */
-    private List<String> payTypeList;
+    private List<String> payWayList;
 
     /** 是否沙箱环境 */
     private boolean sandbox;

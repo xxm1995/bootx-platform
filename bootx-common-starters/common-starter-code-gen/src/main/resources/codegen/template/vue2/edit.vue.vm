@@ -17,14 +17,14 @@
       <a-form-model-item label="主键" prop="id" hidden="true" >
         <a-input v-model="form.id" :disabled="showable"/>
       </a-form-model-item>
-      #foreach ($column in $columns)
+  #foreach ($column in $columns)
         <a-form-model-item
           label="$column.comments"
           prop="$column.name"
         >
           <a-input v-model="form.$column.name" :disabled="showable"/>
         </a-form-model-item>
-      #end
+  #end
     </a-form-model>
 
     <template v-slot:footer>

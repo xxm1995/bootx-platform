@@ -37,7 +37,7 @@ public class WeChatPaymentService {
      */
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
         payment.setSyncPayMode(true)
-                .setSyncPayWay(PayChannelCode.WECHAT);
+                .setSyncPayChannel(PayChannelCode.WECHAT);
 
         List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();
         List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();

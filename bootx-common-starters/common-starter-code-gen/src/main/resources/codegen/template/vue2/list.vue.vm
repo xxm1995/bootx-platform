@@ -27,18 +27,18 @@
       :data="tableData"
     >
       <vxe-table-column type="seq" title="序号" width="60" />
-      #foreach ($column in $columns)
-        <vxe-table-column field="$column.name" title="$column.comments"/>
-      #end
+  #foreach ($column in $columns)
+      <vxe-table-column field="$column.name" title="$column.comments"/>
+  #end
       <vxe-table-column field="createTime" title="创建时间" />
       <vxe-table-column fixed="right" width="150" :showOverflow="false" title="操作">
         <template v-slot="{row}">
           <span>
-          <a href="javascript:" @click="show(row)">查看</a>
+            <a href="javascript:" @click="show(row)">查看</a>
           </span>
-            <a-divider type="vertical"/>
-            <span>
-          <a href="javascript:" @click="edit(row)">编辑</a>
+          <a-divider type="vertical"/>
+          <span>
+            <a href="javascript:" @click="edit(row)">编辑</a>
           </span>
           <a-divider type="vertical"/>
           <a-popconfirm

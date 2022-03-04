@@ -21,38 +21,38 @@ import java.time.LocalDateTime;
 @Schema(title = "退款记录")
 public class RefundRecordDto extends BaseDto {
 
-    @Schema(description = "款订单号")
+    @Schema(description = "退款订单号")
     private String refundOrderId;
 
-    @Schema(description = "付单号")
+    @Schema(description = "付款付单号")
     private Long paymentId;
 
-    @Schema(description = "户ID")
+    @Schema(description = "用户ID")
     private Long userId;
 
-    @Schema(description = "题")
+    @Schema(description = "标题")
     private String title;
 
-    @Schema(description = "额")
+    @Schema(description = "退款金额")
     private BigDecimal amount;
 
-    @Schema(description = "款终端ip")
+    @Schema(description = "退款终端ip")
     private String clientIp;
 
-    @Schema(description = "款时间")
+    @Schema(description = "退款时间")
     private LocalDateTime refundTime;
     /**
-     * 退款信息列表
      * @see RefundableInfo
      */
+    @Schema(description = "退款信息列表")
     private String refundableInfo;
 
-    @Schema(description = "款状态")
+    @Schema(description = "退款状态")
     private int refundStatus;
 
-    @Schema(description = "误码")
+    @Schema(description = "错误码")
     private String errorCode;
 
-    @Schema(description = "误信息")
+    @Schema(description = "错误信息")
     private String errorMsg;
 }

@@ -4,6 +4,7 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.query.entity.QueryParams;
 import cn.bootx.payment.core.payment.service.PaymentQueryService;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.PaymentDto;
@@ -11,9 +12,7 @@ import cn.bootx.payment.param.payment.PaymentQuery;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +43,12 @@ public class PaymentController {
     @GetMapping("/page")
     public ResResult<PageResult<PaymentDto>> page(PageParam pageParam, PaymentQuery param){
         return Res.ok(paymentQueryService.page(pageParam,param));
+    }
+
+    @Operation(summary = "分页查询(超级查询)")
+    @PostMapping("/superPage")
+    public ResResult<PageResult<PaymentDto>> superPage(PageParam pageParam, @RequestBody QueryParams queryParams){
+        return Res.ok(paymentQueryService.superPage(pageParam,queryParams));
     }
 
     @Operation(summary = "根据businessId获取列表")

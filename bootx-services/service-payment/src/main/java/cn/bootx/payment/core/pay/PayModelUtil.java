@@ -34,7 +34,7 @@ public class PayModelUtil {
     /**
      * 获取异步支付参数
      */
-    public PayModeParam getSyncPayModel(PayParam payParam){
+    public PayModeParam getSyncPayModeParam(PayParam payParam){
         return payParam.getPayModeList().stream()
                 .filter(payMode -> PayChannelCode.SYNC_TYPE.contains(payMode.getPayChannel()))
                 .findFirst()

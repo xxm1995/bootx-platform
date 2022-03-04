@@ -77,7 +77,7 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     private String expireTime;
 
     /** 可用支付方式 */
-    private String payTypes;
+    private String payWays;
 
     /** 是否启用 */
     private Boolean activity;
@@ -92,16 +92,16 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     @Override
     public AlipayConfigDto toDto(){
         AlipayConfigDto convert = AlipayConvert.CONVERT.convert(this);
-        if (StrUtil.isNotBlank(this.getPayTypes())) {
-            convert.setPayTypeList(StrUtil.split(this.getPayTypes(), ','));
+        if (StrUtil.isNotBlank(this.getPayWays())) {
+            convert.setPayWayList(StrUtil.split(this.getPayWays(), ','));
         }
         return convert;
     }
 
     public static AlipayConfig init(AlipayConfigParam in){
         AlipayConfig convert = AlipayConvert.CONVERT.convert(in);
-        if (CollUtil.isNotEmpty(in.getPayTypeList())){
-            convert.setPayTypes(String.join(",", in.getPayTypeList()));
+        if (CollUtil.isNotEmpty(in.getPayWayList())){
+            convert.setPayWays(String.join(",", in.getPayWayList()));
         }
         return convert;
     }

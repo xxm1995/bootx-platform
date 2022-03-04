@@ -3,13 +3,16 @@ package cn.bootx.payment.controller;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.paymodel.wechat.service.WeChatPayConfigService;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
 * @author xxm
@@ -41,9 +44,28 @@ public class WeChatPayConfigController {
         return Res.ok();
     }
 
+    @Operation(summary = "清除指定的微信支付配置")
+    @PostMapping("/clearActivity")
+    public ResResult<Void> clearActivity(Long id){
+        weChatPayConfigService.clearActivity(id);
+        return Res.ok();
+    }
+
     @Operation(summary = "分页")
     @GetMapping("/page")
     public ResResult<PageResult<WeChatPayConfigDto>> page(PageParam pageParam){
         return Res.ok(weChatPayConfigService.page(pageParam));
+    }
+
+    @Operation(summary = "根据Id查询")
+    @GetMapping("/findById")
+    public ResResult<WeChatPayConfigDto> findById(Long id){
+        return Res.ok(weChatPayConfigService.findById(id));
+    }
+
+    @Operation(summary = "微信支持支付方式")
+    @GetMapping("/findPayWayList")
+    public ResResult<List<KeyValue>> findPayWayList(){
+        return Res.ok(weChatPayConfigService.findPayWayList());
     }
 }

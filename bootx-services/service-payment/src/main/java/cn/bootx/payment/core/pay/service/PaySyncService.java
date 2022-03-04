@@ -66,8 +66,8 @@ public class PaySyncService {
         }
 
         // 3 拿到异步支付方法, 与支付网关进行同步
-        PayModeParam syncPayModel = PayModelUtil.getSyncPayModel(payParam);
-        AbsPayStrategy syncPayStrategy = PayStrategyFactory.create(syncPayModel);
+        PayModeParam syncPayMode = PayModelUtil.getSyncPayModeParam(payParam);
+        AbsPayStrategy syncPayStrategy = PayStrategyFactory.create(syncPayMode);
         syncPayStrategy.initPayParam(payment,payParam);
         PaySyncResult paySyncResult = syncPayStrategy.doSyncPayStatusHandler();
         int paySyncStatus = paySyncResult.getPaySyncStatus();

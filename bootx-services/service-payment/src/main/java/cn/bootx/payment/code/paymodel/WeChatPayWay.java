@@ -14,7 +14,7 @@ import java.util.Objects;
 * @date 2021/7/2
 */
 @UtilityClass
-public class WeChatPayType {
+public class WeChatPayWay {
     private static final List<PayWayEnum> PAY_WAYS =
             Arrays.asList(PayWayEnum.WAP,PayWayEnum.APP,PayWayEnum.JSAPI,PayWayEnum.QRCODE,PayWayEnum.BARCODE);
 
@@ -35,5 +35,12 @@ public class WeChatPayType {
                 .filter(e -> Objects.equals(code,e.getCode()))
                 .findFirst()
                 .orElseThrow(() -> new BizException("不存在的支付方式"));
+    }
+
+    /**
+     * 获取支持的支付方式
+     */
+    public List<PayWayEnum> getPayWays(){
+        return PAY_WAYS;
     }
 }
