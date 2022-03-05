@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PayWayCode;
 import cn.bootx.payment.code.pay.PayWayEnum;
 import cn.bootx.payment.code.paymodel.AliPayCode;
@@ -27,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -212,7 +214,17 @@ public class AliPayService {
 
         try {
             AlipayTradePayResponse response = AliPayApi.tradePayToResponse(model, alipayConfig.getNotifyUrl());
-            this.verifyErrorMsg(response);
+
+            // 支付成功处理 金额2000以下免密支付
+            if (Objects.equals(response.getCode(),AliPayCode.SUCCESS)) {
+                payment.setPayStatus(PayStatusCode.TRADE_SUCCESS)
+                        .setPayTime(LocalDateTime.now());
+                return;
+            }
+            // 非支付中响应码, 进行错误处理
+            if (!Objects.equals(response.getCode(),AliPayCode.INPROCESS)){
+                this.verifyErrorMsg(response);
+            }
         } catch (AlipayApiException e) {
             log.error("主动扫码支付失败", e);
             throw new BizException("主动扫码支付失败");

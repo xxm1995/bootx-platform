@@ -10,6 +10,7 @@ import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.param.payment.PaymentQuery;
+import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,19 @@ public class PaymentQueryService {
         return paymentManager.findByBusinessIdDesc(businessId).stream()
                 .map(Payment::toDto)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * 根据业务ID获取支付状态
+     */
+    public Integer findStatusByBusinessId(String businessId){
+        // 根据订单查询支付记录
+        List<Payment> payments = paymentManager.findByBusinessIdNoCancelDesc(businessId);
+        if (!CollectionUtil.isEmpty(payments)) {
+            Payment payment = payments.get(0);
+            return payment.getPayStatus();
+        }
+        return -1;
     }
 
     /**

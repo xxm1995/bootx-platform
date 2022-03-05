@@ -117,7 +117,7 @@ public class PayRefundService {
         BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
 
         // 退款完成
-        if (BigDecimalUtil.compareTo(amount,BigDecimal.ZERO) < 1){
+        if (BigDecimalUtil.compareTo(refundableBalance,BigDecimal.ZERO) < 1){
             payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
         } else {
             payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
@@ -198,6 +198,7 @@ public class PayRefundService {
                 .setAmount(amount)
                 .setClientIp(ip)
                 .setPaymentId(payment.getId())
+                .setBusinessId(payment.getBusinessId())
                 .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                 .setRefundTime(LocalDateTime.now())
                 .setTitle(payment.getTitle())

@@ -24,7 +24,8 @@ public enum PayChannelEnum {
     VOUCHER(PayChannelCode.VOUCHER,"VOUCHER"),
     CREDIT_CARD(PayChannelCode.CREDIT_CARD,"CREDIT"),
     APPLE_PAY(PayChannelCode.APPLE_PAY,"APPLE"),
-    CHANNEL_PAY(PayChannelCode.CHANNEL_PAY,"CHANNEL");
+    CHANNEL_PAY(PayChannelCode.CHANNEL_PAY,"CHANNEL"),
+    AGGREGATION(PayChannelCode.AGGREGATION,"AGGREGATION");
 
     /** 支付通道数字编码 */
     private final int no;

@@ -24,6 +24,9 @@ public class RefundRecordDto extends BaseDto {
     @Schema(description = "退款订单号")
     private String refundOrderId;
 
+    @Schema(description= "关联的业务id")
+    private String businessId;
+
     @Schema(description = "付款付单号")
     private Long paymentId;
 

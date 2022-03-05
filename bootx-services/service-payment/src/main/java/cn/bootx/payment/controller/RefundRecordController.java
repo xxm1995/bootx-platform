@@ -26,11 +26,10 @@ public class RefundRecordController {
 
     private final RefundRecordService refundRecordService;
 
-
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<RefundRecordDto>> page(PageParam pageParam){
-        return Res.ok(refundRecordService.page(pageParam));
+    public ResResult<PageResult<RefundRecordDto>> page(PageParam pageParam,RefundRecordDto param){
+        return Res.ok(refundRecordService.page(pageParam,param));
     }
 
     @Operation(summary = "根据id查询")

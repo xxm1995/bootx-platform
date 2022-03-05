@@ -65,5 +65,8 @@ public interface AliPayCode {
     // 网关返回码
     String SUCCESS = "10000";
 
+    // 网关返回码 支付进行中 order success pay inprocess
+    String INPROCESS = "10003";
+
 
 }

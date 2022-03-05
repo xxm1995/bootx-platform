@@ -8,10 +8,11 @@ import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.SneakyThrows;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
 *
@@ -29,5 +30,20 @@ public class CashierController {
     @PostMapping("/singlePay")
     public ResResult<PayResult> singlePay(@RequestBody CashierSinglePayParam cashierSinglePayParam){
         return Res.ok(cashierService.singlePay(cashierSinglePayParam));
+    }
+
+    @Operation(summary = "创建聚合支付")
+    @PostMapping("/createAggregatePay")
+    public ResResult<String> createAggregatePay(@RequestBody CashierSinglePayParam param){
+        return Res.ok(cashierService.createAggregatePay(param));
+    }
+
+    @SneakyThrows
+    @Operation(summary = "扫码聚合支付")
+    @GetMapping("/aggregatePay")
+    public ModelAndView aggregatePay(String key, HttpServletRequest request){
+        String ua = request.getHeader("User-Agent");
+        String payBody = cashierService.aggregatePay(key, ua);
+        return new ModelAndView("redirect:"+payBody);
     }
 }

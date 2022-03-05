@@ -26,8 +26,8 @@ public class RefundRecordService {
     /**
      * 分页查询
      */
-    public PageResult<RefundRecordDto> page(PageParam pageParam){
-        Page<RefundRecord> page = refundRecordManager.page(pageParam);
+    public PageResult<RefundRecordDto> page(PageParam pageParam,RefundRecordDto param){
+        Page<RefundRecord> page = refundRecordManager.page(pageParam,param);
         return MpUtil.convert2DtoPageResult(page);
     }
 

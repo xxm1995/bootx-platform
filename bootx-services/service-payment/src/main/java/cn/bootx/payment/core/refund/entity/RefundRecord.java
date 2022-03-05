@@ -35,6 +35,9 @@ public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<Ref
     /** 支付单号 */
     private Long paymentId;
 
+    /** 关联的业务id */
+    private String businessId;
+
     /** 用户ID */
     private Long userId;
 

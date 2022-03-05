@@ -57,6 +57,12 @@ public class PaymentController {
         return Res.ok(paymentQueryService.findByBusinessId(businessId));
     }
 
+    @Operation(summary = "根据业务ID获取支付状态")
+    @GetMapping("/findStatusByBusinessId")
+    public ResResult<Integer> findStatusByBusinessId(String businessId){
+        return Res.ok(paymentQueryService.findStatusByBusinessId(businessId));
+    }
+
     @Operation(summary = "根据businessId获取订单支付方式")
     @GetMapping("/findPayTypeInfoByBusinessId")
     public ResResult<List<PayChannelInfo>> findPayTypeInfoByBusinessId(String businessId){
