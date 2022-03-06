@@ -9,6 +9,8 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,7 @@ public class SystemParamService {
         if (systemParamManager.existedByKey(param.getParamKey(),param.getId())) {
             throw new BizException("key重复");
         }
+        BeanUtil.copyProperties(param,systemParameter, CopyOptions.create().ignoreNullValue());
         systemParamManager.updateById(systemParameter);
     }
 
