@@ -118,15 +118,6 @@ service-iam
         ├── service -- 服务类
 ```
 
-## 💡FAQ常见问题
-- 项目不全是UTF-8，导致无法无法启动
-
-- idea启动时显示命令过长，需要在启动配置编辑中设置缩短命令行
-
-- 打包或者maven构建时丢文件或者Excel表格构建好打开报错
-
-- SQL执行批量插入慢，数据库连接默认不开启批量插入功能，需要手动在MySQL URL连接中开启allowMultiQueries=true批量执行功能
-
 ## 🍌项目展示
 菜单管理
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-19866964c4d12e197daf9f33d51f0f30564.png)
@@ -134,8 +125,17 @@ service-iam
 数据权限配置
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-1dbbb058d0d00b0a8d36998ccf26208fc7e.png)
 
-收银台演示
-![输入图片说明](https://oscimg.oschina.net/oscnet/up-955423400be42e28004208671cbdde4d3c7.png)
+超级查询器
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-b888976cccac630663bf55cb7689ab39333.png)
+
+支付宝支付配置
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-5c4fd5380463596db224c3d27329c494ace.png)
+
+代码生成器
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-38cdcb4928d7495f0c73fa6eaf4f5ede6fd.png)
+
+数据字典
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-3c8b4bf1483744c04f8147fc61d5dc51b95.png)
 
 登录方式管理
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-6cf4a123e2c26a3db5786b2cd264d52c4d8.png)
