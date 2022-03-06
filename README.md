@@ -17,8 +17,8 @@
 
 ## 🍒文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) 、[管理平台(vue3)](http://vben.platform.bootx.cn/)
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) 、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vben)
+- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) 
+- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) 
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
 - 快速启动：[启动说明](https://www.yuque.com/bootx/bootx-platform/vpi0gn)
 - 开发计划：[开发任务](./_doc/TASK.md)
@@ -63,7 +63,6 @@ bootx-platform
        ├── common-starter-data-perm -- 数据权限模块
        ├── common-starter-file -- 文件管理模块
        ├── common-starter-quartz -- Quartz定时任务模块
-       ├── common-starter-query -- 超级查询器
     ├── bootx-commons -- commons工具配置封装
        ├── common-cache -- 缓存配置
        ├── common-exception-handler -- 异常处理器
@@ -74,6 +73,7 @@ bootx-platform
        ├── common-redis-client -- Redis客户端封装和配置
        ├── common-sequence -- 发号器（序列号生成器）
        ├── common-spring -- Spring相关配置
+       ├── common-super-query -- 超级查询器
        ├── common-swagger -- swagger3配置（Spring Doc）
        ├── common-xxl-job -- XXL-JOB定时任务
     ├── bootx-demo -- demo示例模块
