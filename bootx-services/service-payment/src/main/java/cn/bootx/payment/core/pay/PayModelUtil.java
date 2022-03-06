@@ -51,7 +51,8 @@ public class PayModelUtil {
         switch (payChannelEnum){
             case ALI:{
                 return JSONUtil.toJsonStr(new AliPayParam()
-                        .setAuthCode(map.get(PayModelExtraCode.AUTH_CODE)));
+                        .setAuthCode(map.get(PayModelExtraCode.AUTH_CODE))
+                        .setReturnUrl(map.get(PayModelExtraCode.RETURN_URL)));
             }
             case WECHAT:{
                 return JSONUtil.toJsonStr(new WeChatPayParam()

@@ -9,4 +9,7 @@ public interface PayModelExtraCode {
 
     /** 付款码 */
     String AUTH_CODE = "authCode";
+
+    /** 同步通知路径 支付完成跳转的页面地址 */
+    String RETURN_URL = "returnUrl";
 }
