@@ -7,7 +7,8 @@ import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PayWayCode;
-import cn.bootx.payment.core.cashier.entity.AggregatePayInfo;
+import cn.bootx.payment.core.aggregate.entity.AggregatePayInfo;
+import cn.bootx.payment.core.aggregate.service.AggregateService;
 import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.service.PayService;
 import cn.bootx.payment.dto.pay.PayResult;
@@ -17,7 +18,6 @@ import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.util.DesensitizedUtil;
-import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +39,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CashierService {
     private final PayService payService;
+    private final AggregateService aggregateService;
     private final RedisClient redisClient;
     private final String PREFIX_KEY = "cashier:pay:aggregate:";
+
+
 
     /**
      * 发起支付(单渠道支付)
@@ -49,7 +52,8 @@ public class CashierService {
 
         // 如果是聚合支付, 特殊处理
         if (Objects.equals(PayChannelCode.AGGREGATION,param.getPayChannel())){
-            this.aggregateBarCode(param);
+            int payChannel = aggregateService.getPayChannel(param.getAuthCode());
+            param.setPayChannel(payChannel);
         }
         // 构建支付方式参数
         PayModeParam payModeParam = new PayModeParam()
@@ -76,42 +80,6 @@ public class CashierService {
         return payResult;
     }
 
-    /**
-     * 聚合付款码支付处理
-     */
-    public void aggregateBarCode(CashierSinglePayParam param){
-        String authCode = param.getAuthCode();
-        if (StrUtil.isBlank(authCode)){
-            throw new BizException("付款码不可为空");
-        }
-        String[] wx = { "10", "11", "12", "13", "14", "15" };
-        String[] ali = { "25", "26", "27", "28", "29", "30" };
-
-        // 微信
-        if (StrUtil.startWithAny(authCode.substring(0, 2), wx)) {
-            param.setPayChannel(PayChannelCode.WECHAT);
-        }
-        // 支付宝
-        else if (StrUtil.startWithAny(authCode.substring(0, 2), ali)) {
-            param.setPayChannel(PayChannelCode.ALI);
-        } else {
-            throw new BizException("不支持的支付方式");
-        }
-    }
-
-    /**
-     * 创建聚合支付
-     */
-    public String createAggregatePay(CashierSinglePayParam param){
-        // 保存并生成code
-        AggregatePayInfo aggregatePayInfo = new AggregatePayInfo()
-                .setAmount(param.getAmount())
-                .setTitle(param.getTitle())
-                .setBusinessId(param.getBusinessId());
-        String key = RandomUtil.randomString(10);
-        redisClient.setWithTimeout(PREFIX_KEY + key, JSONUtil.toJsonStr(aggregatePayInfo),2*60*1000);
-        return key;
-    }
 
     /**
      * 扫码发起自动支付

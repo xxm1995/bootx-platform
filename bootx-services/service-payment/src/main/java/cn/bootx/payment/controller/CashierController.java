@@ -32,11 +32,6 @@ public class CashierController {
         return Res.ok(cashierService.singlePay(cashierSinglePayParam));
     }
 
-    @Operation(summary = "创建聚合支付")
-    @PostMapping("/createAggregatePay")
-    public ResResult<String> createAggregatePay(@RequestBody CashierSinglePayParam param){
-        return Res.ok(cashierService.createAggregatePay(param));
-    }
 
     @SneakyThrows
     @Operation(summary = "扫码聚合支付")
@@ -46,4 +41,5 @@ public class CashierController {
         String payBody = cashierService.aggregatePay(key, ua);
         return new ModelAndView("redirect:"+payBody);
     }
+
 }

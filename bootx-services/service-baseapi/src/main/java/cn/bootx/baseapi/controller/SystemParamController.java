@@ -34,7 +34,7 @@ public class SystemParamController {
     }
     @Operation(summary = "更新")
     @PostMapping("/update")
-    public ResResult<Void> update(SystemParameterParam param){
+    public ResResult<Void> update(@RequestBody SystemParameterParam param){
         systemParamService.update(param);
         return Res.ok();
     }
@@ -69,5 +69,11 @@ public class SystemParamController {
     @GetMapping("/existsByKeyNotId")
     public ResResult<Boolean> existsByKeyNotId(String key,Long id){
         return Res.ok(systemParamService.existsByKey(key,id));
+    }
+
+    @Operation(summary = "根据键名获取键值")
+    @GetMapping("/findByParamKey")
+    public ResResult<String> findByParamKey(String key){
+        return Res.ok(systemParamService.findByParamKey(key));
     }
 }

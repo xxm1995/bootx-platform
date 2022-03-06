@@ -6,10 +6,13 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**   
 * 系统参数
@@ -41,6 +44,12 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
         Page<SystemParameter> mpPage = MpUtil.getMpPage(pageParam, SystemParameter.class);
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getId)
+                .like(StrUtil.isNotBlank(param.getName()),SystemParameter::getName,param.getName())
+                .like(StrUtil.isNotBlank(param.getParamKey()),SystemParameter::getParamKey,param.getParamKey())
                 .page(mpPage);
+    }
+
+    public Optional<SystemParameter> findByParamKey(String key) {
+        return this.findByField(SystemParameter::getParamKey,key);
     }
 }

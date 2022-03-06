@@ -1,4 +1,4 @@
-package cn.bootx.payment.core.cashier.entity;
+package cn.bootx.payment.core.aggregate.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

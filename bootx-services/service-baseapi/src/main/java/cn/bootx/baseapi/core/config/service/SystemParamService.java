@@ -34,6 +34,7 @@ public class SystemParamService {
         if (systemParamManager.existedByKey(systemParameter.getParamKey())){
             throw new BizException("key重复");
         }
+        // 默认非内置
         systemParameter.setInternal(false);
         systemParamManager.save(systemParameter);
     }
@@ -72,10 +73,10 @@ public class SystemParamService {
      */
     public void delete(Long id) {
         SystemParameter systemParameter = systemParamManager.findById(id).orElseThrow(() -> new BizException("系统参数不存在"));
-
         if (systemParameter.isInternal()){
             throw new BizException("内置参数不可以被删除");
         }
+        systemParamManager.deleteById(id);
     }
 
     /**
@@ -92,5 +93,11 @@ public class SystemParamService {
         return systemParamManager.existedByKey(key,id);
     }
 
-
+    /**
+     * 根据键名获取键值
+     */
+    public String findByParamKey(String key) {
+        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue)
+                .orElseThrow(DataNotExistException::new);
+    }
 }
