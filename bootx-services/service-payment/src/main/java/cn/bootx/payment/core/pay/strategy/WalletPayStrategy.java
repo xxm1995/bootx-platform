@@ -2,8 +2,10 @@ package cn.bootx.payment.core.pay.strategy;
 
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
+import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletManager;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.core.paymodel.wallet.service.WalletPayService;
@@ -30,6 +32,7 @@ public class WalletPayStrategy extends AbsPayStrategy {
     private final WalletManager walletManager;
     private final WalletPaymentService walletPaymentService;
     private final WalletPayService walletPayService;
+    private final PaymentService paymentService;
 
     private Wallet wallet;
 
@@ -95,7 +98,7 @@ public class WalletPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
-
+        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.WALLET);
     }
 
 }

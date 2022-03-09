@@ -1,14 +1,19 @@
 package cn.bootx.payment.core.payment.service;
 
+import cn.bootx.common.core.exception.BizException;
+import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
+import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.exception.payment.PayIsProcessingException;
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**   
@@ -43,6 +48,23 @@ public class PaymentService {
             }
         }
         return null;
+    }
+
+
+    /**
+     * 退款成功处理, 更新可退款信息
+     */
+    public void updateRefundSuccess(Payment payment, BigDecimal amount, PayChannelEnum payChannelEnum){
+        // 删除旧有的退款记录, 替换退款完的新的
+        List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();
+        RefundableInfo refundableInfo = refundableInfos.stream()
+                .filter(o -> o.getPayChannel() == payChannelEnum.getNo())
+                .findFirst()
+                .orElseThrow(() -> new BizException("数据不存在"));
+        refundableInfos.remove(refundableInfo);
+        refundableInfo.setAmount(refundableInfo.getAmount().subtract(amount));
+        refundableInfos.add(refundableInfo);
+        payment.setRefundableInfo(JSONUtil.toJsonStr(refundableInfos));
     }
 
 }

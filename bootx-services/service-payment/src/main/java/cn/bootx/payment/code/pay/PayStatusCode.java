@@ -32,4 +32,10 @@ public interface PayStatusCode {
     /** 回调处理状态 0.失败 1.成功 */
     int NOTIFY_PROCESS_FAIL = 0;
     int NOTIFY_PROCESS_SUCCESS = 1;
+
+    /** 退款处理状态 0.失败 1.成功 */
+    int REFUND_PROCESS_FAIL = 0;
+    int REFUND_PROCESS_SUCCESS = 1;
+
+
 }

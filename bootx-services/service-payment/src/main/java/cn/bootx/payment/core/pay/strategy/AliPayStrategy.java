@@ -3,10 +3,12 @@ package cn.bootx.payment.core.pay.strategy;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
+import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.core.paymodel.alipay.service.*;
@@ -40,6 +42,7 @@ public class AliPayStrategy extends AbsPayStrategy {
     private final AliPayService aliPayService;
     private final AliPayCancelService aliPayCancelService;
     private final AlipayConfigManager alipayConfigManager;
+    private final PaymentService paymentService;
 
     private AlipayConfig alipayConfig;
     private AliPayParam aliPayParam;
@@ -154,7 +157,7 @@ public class AliPayStrategy extends AbsPayStrategy {
     public void doRefundHandler() {
         this.initAlipayConfig();
         aliPayCancelService.refund(this.getPayment(),this.getPayMode().getAmount());
-        aliPaymentService.updateRefundSuccess(this.getPayment());
+        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.ALI);
     }
 
     /**
@@ -162,6 +165,7 @@ public class AliPayStrategy extends AbsPayStrategy {
      */
     @Override
     public PaySyncResult doSyncPayStatusHandler(){
+        this.initAlipayConfig();
         return alipaySyncService.syncPayStatus(this.getPayment());
     }
 

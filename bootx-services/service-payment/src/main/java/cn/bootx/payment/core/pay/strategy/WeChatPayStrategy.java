@@ -3,10 +3,12 @@ package cn.bootx.payment.core.pay.strategy;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
+import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.core.paymodel.wechat.service.*;
@@ -41,6 +43,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     private final WeChatPaymentService weChatPaymentService;
     private final WeChatPayCancelService weChatPayCancelService;
     private final WeChatPaySyncService weChatPaySyncService;
+    private final PaymentService paymentService;
 
     private WeChatPayConfig weChatPayConfig;
     private WeChatPayParam weChatPayParam;
@@ -78,8 +81,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
         }
 
         // 检查并获取微信支付配置
-        this.weChatPayConfig = weChatPayConfigManager.findEnable()
-                .orElseThrow(() -> new BizException("微信支付配置不存在"));
+        this.initWeChatPayConfig();
         weChatPayService.validation(this.getPayMode(),weChatPayConfig);
         WeChatPayConfigService.initApiConfig(weChatPayConfig);
     }
@@ -135,10 +137,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     @Override
     public void doCancelHandler() {
         // 检查并获取微信支付配置
-        this.weChatPayConfig = Optional.ofNullable(this.weChatPayConfig)
-                .orElse(weChatPayConfigManager.findEnable()
-                        .orElseThrow(() -> new BizException("支付配置不存在")));
-        WeChatPayConfigService.initApiConfig(weChatPayConfig);
+        this.initWeChatPayConfig();
         weChatPayCancelService.cancelRemote(this.getPayment(),weChatPayConfig);
         // 调用关闭本地支付记录
         this.doCloseHandler();
@@ -157,7 +156,8 @@ public class WeChatPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
-
+        this.initWeChatPayConfig();
+        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.WECHAT);
     }
 
     /**
@@ -166,10 +166,18 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     @Override
     public PaySyncResult doSyncPayStatusHandler(){
         // 检查并获取微信支付配置
+        this.initWeChatPayConfig();
+        return weChatPaySyncService.syncPayStatus(this.getPayment().getId(),this.weChatPayConfig);
+    }
+
+    /**
+     * 初始化微信支付
+     */
+    private void initWeChatPayConfig(){
+        // 检查并获取微信支付配置
         this.weChatPayConfig = Optional.ofNullable(this.weChatPayConfig)
                 .orElse(weChatPayConfigManager.findEnable()
                         .orElseThrow(() -> new BizException("支付配置不存在")));
-        WeChatPayConfigService.initApiConfig(weChatPayConfig);
-        return weChatPaySyncService.syncPayStatus(this.getPayment().getId(),this.weChatPayConfig);
+        WeChatPayConfigService.initApiConfig(weChatPayConfig);;
     }
 }

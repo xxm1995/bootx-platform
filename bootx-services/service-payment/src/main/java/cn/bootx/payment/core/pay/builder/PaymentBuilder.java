@@ -3,7 +3,7 @@ package cn.bootx.payment.core.pay.builder;
 import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
-import cn.bootx.payment.core.pay.local.SyncPayInfoLocal;
+import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.pay.PayResult;
@@ -130,11 +130,11 @@ public class PaymentBuilder {
                     .filter(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()))
                     .collect(Collectors.toList());
             if (!CollUtil.isEmpty(moneyPayTypeInfos)) {
-                paymentResult.setSyncPayInfo(SyncPayInfoLocal.get());
+                paymentResult.setSyncPayInfo(AsyncPayInfoLocal.get());
             }
             // 清空线程变量
         } finally {
-            SyncPayInfoLocal.clear();
+            AsyncPayInfoLocal.clear();
         }
         return paymentResult;
     }

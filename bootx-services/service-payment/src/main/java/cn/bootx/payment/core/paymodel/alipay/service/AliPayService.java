@@ -1,15 +1,15 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PayWayCode;
 import cn.bootx.payment.code.pay.PayWayEnum;
 import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.code.paymodel.AliPayWay;
-import cn.bootx.payment.core.pay.local.SyncPayInfoLocal;
+import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.dto.pay.AsyncPayInfo;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
 import cn.hutool.core.util.StrUtil;
@@ -54,9 +54,9 @@ public class AliPayService {
                 .orElse(new ArrayList<>(1));
         // 发起的支付类型是否在支持的范围内
         PayWayEnum payWayEnum = Optional.ofNullable(AliPayWay.findByNo(payModeParam.getPayWay()))
-                .orElseThrow(() -> new BizException("非法的支付宝支付类型"));
+                .orElseThrow(() -> new PayFailureException("非法的支付宝支付类型"));
         if (!payWays.contains(payWayEnum.getCode())) {
-            throw new BizException("该支付宝支付方式不可用");
+            throw new PayFailureException("该支付宝支付方式不可用");
         }
     }
 
@@ -90,7 +90,7 @@ public class AliPayService {
         if (StrUtil.isNotBlank(payBody)) {
             AsyncPayInfo syncPayInfo = new AsyncPayInfo()
                     .setPayBody(payBody);
-            SyncPayInfoLocal.set(syncPayInfo);
+            AsyncPayInfoLocal.set(syncPayInfo);
         }
     }
 
@@ -121,7 +121,7 @@ public class AliPayService {
         }
         catch (AlipayApiException e) {
             log.error("支付宝手机支付失败", e);
-            throw new BizException("支付宝手机支付失败");
+            throw new PayFailureException("支付宝手机支付失败");
         }
     }
 
@@ -143,7 +143,7 @@ public class AliPayService {
         }
         catch (AlipayApiException e) {
             log.error("支付宝APP支付失败", e);
-            throw new BizException("支付宝APP支付失败");
+            throw new PayFailureException("支付宝APP支付失败");
         }
     }
 
@@ -171,7 +171,7 @@ public class AliPayService {
             return response.getBody();
         } catch (AlipayApiException e) {
             log.error("支付宝PC支付失败", e);
-            throw new BizException("支付宝PC支付失败");
+            throw new PayFailureException("支付宝PC支付失败");
         }
     }
 
@@ -193,7 +193,7 @@ public class AliPayService {
             return response.getQrCode();
         } catch (AlipayApiException e) {
             log.error("支付宝手机支付失败", e);
-            throw new BizException("支付宝手机支付失败");
+            throw new PayFailureException("支付宝手机支付失败");
         }
     }
 
@@ -227,7 +227,7 @@ public class AliPayService {
             }
         } catch (AlipayApiException e) {
             log.error("主动扫码支付失败", e);
-            throw new BizException("主动扫码支付失败");
+            throw new PayFailureException("主动扫码支付失败");
         }
     }
 
@@ -241,7 +241,7 @@ public class AliPayService {
                 errorMsg = alipayResponse.getMsg();
             }
             log.error("支付失败 {}", errorMsg);
-            throw new BizException(errorMsg);
+            throw new PayFailureException(errorMsg);
         }
     }
 }

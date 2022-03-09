@@ -11,6 +11,6 @@ import cn.bootx.payment.code.PaymentCenterErrorCode;
 public class PayUnsupportedMethodException extends FatalException {
 
     public PayUnsupportedMethodException() {
-        super(PaymentCenterErrorCode.PAYMENT_METHOD_UNSUPPORT, "不支持的付款方式");
+        super(PaymentCenterErrorCode.PAYMENT_METHOD_UNSUPPORT, "不支持的支付方式");
     }
 }

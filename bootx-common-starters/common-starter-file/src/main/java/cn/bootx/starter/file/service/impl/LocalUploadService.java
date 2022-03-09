@@ -47,7 +47,7 @@ public class LocalUploadService implements UploadService {
     @Override
     public UpdateFileInfo upload(MultipartFile file, UploadFileContext context){
         String fileSuffix = Optional.ofNullable(context.getFileSuffix()).map(s -> "." + s).orElse("");
-        String filePath = DateUtil.today() + "/" + IdUtil.getSnowflake().nextIdStr() + fileSuffix;
+        String filePath = DateUtil.today() + "/" + IdUtil.getSnowflakeNextIdStr() + fileSuffix;
         String storePath = fileUploadProperties.getLocal().getLocalPath()+filePath;
         FileUtil.writeFromStream(file.getInputStream(),storePath);
         return new UpdateFileInfo()

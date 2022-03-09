@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.cash.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.cash.dao.CashPaymentManager;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -46,5 +48,14 @@ public class CashService {
             cashPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
             cashPaymentManager.updateById(cashPayment);
         });
+    }
+
+    /**
+     * 退款
+     */
+    public void refund(Payment payment, BigDecimal amount){
+        CashPayment cashPayment = cashPaymentManager.findByPaymentId(payment.getId()).orElseThrow(DataNotExistException::new);
+        cashPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
+        cashPaymentManager.updateById(cashPayment);
     }
 }

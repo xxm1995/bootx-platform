@@ -21,14 +21,14 @@ import java.time.LocalDateTime;
 @Schema(title = "退款记录")
 public class RefundRecordDto extends BaseDto {
 
-    @Schema(description = "退款订单号")
-    private String refundOrderId;
-
     @Schema(description= "关联的业务id")
     private String businessId;
 
     @Schema(description = "付款付单号")
     private Long paymentId;
+
+    @Schema(description = "异步方式关联退款请求号(部分退款情况)")
+    private String refundRequestNo;
 
     @Schema(description = "用户ID")
     private Long userId;
@@ -50,6 +50,9 @@ public class RefundRecordDto extends BaseDto {
     @Schema(description = "退款信息列表")
     private String refundableInfo;
 
+    /**
+     * @see cn.bootx.payment.code.pay.PayStatusCode
+     */
     @Schema(description = "退款状态")
     private int refundStatus;
 

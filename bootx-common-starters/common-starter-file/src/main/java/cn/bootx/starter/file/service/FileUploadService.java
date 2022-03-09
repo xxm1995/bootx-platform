@@ -69,7 +69,7 @@ public class FileUploadService {
             fileSuffix = StrUtil.subAfter(fileName, ".", true);
         }
         UploadFileContext context = new UploadFileContext()
-                .setFileId(IdUtil.getSnowflake().nextId())
+                .setFileId(IdUtil.getSnowflakeNextId())
                 .setFileName(fileName)
                 .setFileSuffix(fileSuffix);
 

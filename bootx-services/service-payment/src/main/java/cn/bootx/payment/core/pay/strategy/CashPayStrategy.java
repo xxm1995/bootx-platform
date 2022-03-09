@@ -2,8 +2,10 @@ package cn.bootx.payment.core.pay.strategy;
 
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
+import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.cash.service.CashService;
 import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.param.pay.PayModeParam;
@@ -27,6 +29,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @RequiredArgsConstructor
 public class CashPayStrategy extends AbsPayStrategy {
     private final CashService cashService;
+    private final PaymentService paymentService;
 
     /**
      * 现金支付
@@ -75,6 +78,7 @@ public class CashPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
-
+        cashService.refund(this.getPayment(),this.getPayMode().getAmount());
+        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.CASH);
     }
 }

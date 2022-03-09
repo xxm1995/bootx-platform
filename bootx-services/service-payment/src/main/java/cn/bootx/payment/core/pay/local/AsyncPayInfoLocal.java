@@ -8,7 +8,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 * @author xxm  
 * @date 2021/4/21 
 */
-public final class SyncPayInfoLocal {
+public final class AsyncPayInfoLocal {
     private static final ThreadLocal<AsyncPayInfo> THREAD_LOCAL = new TransmittableThreadLocal<>();
 
     /**

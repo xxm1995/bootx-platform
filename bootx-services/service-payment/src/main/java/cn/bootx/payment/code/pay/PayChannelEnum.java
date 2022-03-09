@@ -18,6 +18,7 @@ public enum PayChannelEnum {
 
     ALI(PayChannelCode.ALI,"ALI"),
     WECHAT(PayChannelCode.WECHAT,"WECHAT"),
+    UNION_PAY(PayChannelCode.UNION_PAY,"UNION_PAY"),
     CASH(PayChannelCode.CASH,"CASH"),
     WALLET(PayChannelCode.WALLET,"WALLET"),
     CREDIT(PayChannelCode.CREDIT,"CREDIT"),

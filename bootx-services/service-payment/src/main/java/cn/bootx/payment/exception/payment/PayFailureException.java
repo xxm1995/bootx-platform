@@ -4,7 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.PaymentCenterErrorCode;
 
 /**
-* 付款付款错误
+* 付款错误
 * @author xxm
 * @date 2020/12/8
 */

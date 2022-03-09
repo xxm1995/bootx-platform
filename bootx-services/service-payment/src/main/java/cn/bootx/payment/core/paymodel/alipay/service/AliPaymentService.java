@@ -91,17 +91,4 @@ public class AliPaymentService {
         });
     }
 
-    /**
-     * 更新退款成功处理, 更新可退款信息
-     */
-    public void updateRefundSuccess(Payment payment){
-        List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();
-        RefundableInfo refundableInfo = refundableInfos.stream()
-                .filter(o -> o.getPayChannel() == PayChannelCode.ALI)
-                .findFirst()
-                .orElseThrow(() -> new BizException("数据不存在"));
-        refundableInfos.remove(refundableInfo);
-
-    }
-
 }

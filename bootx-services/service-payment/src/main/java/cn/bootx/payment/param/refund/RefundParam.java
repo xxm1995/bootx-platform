@@ -1,5 +1,6 @@
 package cn.bootx.payment.param.refund;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -15,6 +16,12 @@ import java.util.List;
 @Accessors(chain = true)
 @Schema(title = "退款参数")
 public class RefundParam {
+
+
+    @Schema(description = "支付id",hidden = true)
+    @Deprecated
+    @JsonIgnore
+    private String paymentId;
 
     @Schema(description = "业务id")
     private String businessId;

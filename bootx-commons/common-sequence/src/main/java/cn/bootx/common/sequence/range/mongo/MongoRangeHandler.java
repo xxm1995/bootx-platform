@@ -28,7 +28,7 @@ public class MongoRangeHandler {
         Query query = new Query(criteria);
         if (!mongoTemplate.exists(query,SequenceRange.class)){
             mongoTemplate.save(new SequenceRange().setRangeKey(key).setRangeValue(rangeStart)
-                    .setId(IdUtil.getSnowflake().nextId()));
+                    .setId(IdUtil.getSnowflakeNextId()));
         }
     }
 

@@ -35,7 +35,7 @@ public class OrderFactory {
     public Order buildOrder(OrderPreviewResult previewResult, OrderParam orderParam){
         List<OrderDetailPreviewResult> orderDetails = previewResult.getOrderDetails();
 
-        long orderId = IdUtil.getSnowflake().nextId();
+        long orderId = IdUtil.getSnowflakeNextId();
 
         // 明细转换为持久类
         List<OrderDetail> collect = orderDetails.stream()
@@ -64,7 +64,7 @@ public class OrderFactory {
      * 转换订单明细
      */
     private OrderDetail buildOrderDetail(OrderDetailPreviewResult orderDetailCheckDto, long orderId){
-        long orderDetailId = IdUtil.getSnowflake().nextId();
+        long orderDetailId = IdUtil.getSnowflakeNextId();
         OrderDetail orderDetail = new OrderDetail();
         BeanUtil.copyProperties(orderDetailCheckDto,orderDetail, CopyOptions.create().ignoreNullValue());
 

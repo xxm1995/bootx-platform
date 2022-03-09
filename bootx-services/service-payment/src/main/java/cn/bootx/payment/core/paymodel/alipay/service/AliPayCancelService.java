@@ -1,8 +1,10 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.paymodel.AliPayCode;
+import cn.bootx.payment.core.pay.local.AsyncRefundLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
+import cn.bootx.payment.exception.payment.PayFailureException;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradeCancelModel;
@@ -40,11 +42,11 @@ public class AliPayCancelService {
             log.info(JSONUtil.toJsonStr(response));
             if (!Objects.equals(AliPayCode.SUCCESS,response.getCode())){
                 log.error("网关返回撤销失败: {}",response.getSubMsg());
-                throw new BizException(response.getSubMsg());
+                throw new PayFailureException(response.getSubMsg());
             }
         } catch (AlipayApiException e) {
             log.error("关闭订单失败:",e);
-            throw new BizException("关闭订单失败");
+            throw new PayFailureException("关闭订单失败");
         }
     }
 
@@ -55,16 +57,24 @@ public class AliPayCancelService {
         AlipayTradeRefundModel refundModel = new AlipayTradeRefundModel();
         refundModel.setOutTradeNo(String.valueOf(payment.getId()));
         refundModel.setRefundAmount(amount.toPlainString());
+
+        // 设置退款号
+        AsyncRefundLocal.set(IdUtil.getSnowflakeNextIdStr());
+        refundModel.setOutRequestNo(AsyncRefundLocal.get());
         try {
             AlipayTradeRefundResponse response = AliPayApi.tradeRefundToResponse(refundModel);
             log.info(JSONUtil.toJsonStr(response));
             if (!Objects.equals(AliPayCode.SUCCESS,response.getCode())){
+                AsyncRefundLocal.setErrorMsg(response.getSubMsg());
+                AsyncRefundLocal.setErrorCode(response.getCode());
                 log.error("网关返回退款失败: {}",response.getSubMsg());
-                throw new BizException(response.getSubMsg());
+                throw new PayFailureException(response.getSubMsg());
             }
         } catch (AlipayApiException e) {
             log.error("订单退款失败:",e);
-            throw new BizException("订单退款失败");
+            AsyncRefundLocal.setErrorMsg(e.getErrMsg());
+            AsyncRefundLocal.setErrorCode(e.getErrCode());
+            throw new PayFailureException("订单退款失败");
         }
     }
 }

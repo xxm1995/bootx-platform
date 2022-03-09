@@ -61,7 +61,7 @@ public class DataVersionLogMongoService implements DataVersionLogService {
                 .setCreator(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                 .setCreateTime(LocalDateTime.now())
                 .setVersion(maxVersion+1);
-        dataVersionLog.setId(IdUtil.getSnowflake().nextId());
+        dataVersionLog.setId(IdUtil.getSnowflakeNextId());
         repository.save(dataVersionLog);
     }
 

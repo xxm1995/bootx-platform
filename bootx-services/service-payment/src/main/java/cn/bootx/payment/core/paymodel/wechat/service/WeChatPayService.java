@@ -5,7 +5,7 @@ import cn.bootx.payment.code.pay.PayWayCode;
 import cn.bootx.payment.code.pay.PayWayEnum;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.code.paymodel.WeChatPayWay;
-import cn.bootx.payment.core.pay.local.SyncPayInfoLocal;
+import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.dto.pay.AsyncPayInfo;
@@ -85,7 +85,7 @@ public class WeChatPayService {
         if (StrUtil.isNotBlank(payBody)) {
             AsyncPayInfo syncPayInfo = new AsyncPayInfo()
                     .setPayBody(payBody);
-            SyncPayInfoLocal.set(syncPayInfo);
+            AsyncPayInfoLocal.set(syncPayInfo);
         }
 
     }

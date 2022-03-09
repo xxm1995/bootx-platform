@@ -10,6 +10,9 @@ import cn.bootx.payment.code.PaymentCenterErrorCode;
 */
 public class PayAmountAbnormalException extends FatalException {
 
+    public PayAmountAbnormalException(String msg) {
+        super(PaymentCenterErrorCode.PAYMENT_AMOUNT_ABNORMAL, msg);
+    }
     public PayAmountAbnormalException() {
         super(PaymentCenterErrorCode.PAYMENT_AMOUNT_ABNORMAL, "异常金额");
     }

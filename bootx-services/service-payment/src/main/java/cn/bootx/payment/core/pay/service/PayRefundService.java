@@ -8,6 +8,7 @@ import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
+import cn.bootx.payment.core.pay.local.AsyncRefundLocal;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
@@ -22,13 +23,16 @@ import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.payment.param.refund.RefundModeParam;
 import cn.bootx.payment.param.refund.RefundParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,6 +63,7 @@ public class PayRefundService {
     @Transactional(rollbackFor = Exception.class)
     public void refund(RefundParam refundParam) {
         Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(refundParam.getBusinessId()));
+
         paymentOptional.ifPresent(payment -> this.refundPayment(payment,refundParam.getRefundModeParams()));
     }
 
@@ -81,7 +86,8 @@ public class PayRefundService {
      * 退款
      */
     private void refundPayment(Payment payment, List<RefundModeParam> refundModeParams){
-
+        // 删除退款金额为0的支付通道参数
+        refundModeParams.removeIf(refundModeParam -> BigDecimalUtil.compareTo(refundModeParam.getAmount(),BigDecimal.ZERO) == 0);
         // 获取 paymentParam
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
         // 退款参数检查
@@ -102,7 +108,14 @@ public class PayRefundService {
         // 3.执行退款
         this.doHandler(payment,paymentStrategyList,(strategyList, paymentObj) -> {
             // 发起支付成功进行的执行方法
-            strategyList.forEach(AbsPayStrategy::doRefundHandler);
+            try {
+                strategyList.forEach(AbsPayStrategy::doRefundHandler);
+            } catch (Exception e) {
+                // 记录退款失败的记录
+                BigDecimal amount = refundModeParams.stream().map(RefundModeParam::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+                SpringUtil.getBean(this.getClass()).saveRefund(payment,amount,refundModeParams);
+                throw e;
+            }
             // 处理支付单
             this.paymentHandler(paymentObj,refundModeParams);
         });
@@ -126,7 +139,7 @@ public class PayRefundService {
         payment.setRefundableBalance(refundableBalance);
         paymentManager.updateById(payment);
         // 记录退款成功的记录
-        this.saveRefund(payment,amount,refundModeParams);
+        SpringUtil.getBean(this.getClass()).saveRefund(payment,amount,refundModeParams);
     }
 
     /**
@@ -146,6 +159,9 @@ public class PayRefundService {
             // error事件的处理
             this.errorHandler(payment, strategyList, e);
             throw e;
+        } finally {
+            // 清除
+            AsyncRefundLocal.clear();
         }
     }
 
@@ -158,30 +174,35 @@ public class PayRefundService {
 
     /**
      * 支付方式检查
-     * @param refundPayModes 退款参数
+     * @param refundModeParams 退款参数
      * @param refundableInfos 可退款信息
      */
-    private void payModeCheck(List<RefundModeParam> refundPayModes,List<RefundableInfo> refundableInfos){
+    private void payModeCheck(List<RefundModeParam> refundModeParams,List<RefundableInfo> refundableInfos){
+        if (CollUtil.isEmpty(refundModeParams)){
+            throw new PayFailureException("传入的退款参数不合法");
+        }
         Map<Integer, RefundableInfo> payModeMap = refundableInfos.stream().collect(Collectors.toMap(RefundableInfo::getPayChannel, o -> o));
-        for (RefundModeParam refundPayMode : refundPayModes) {
+        for (RefundModeParam refundPayMode : refundModeParams) {
             this.payModeCheck(refundPayMode,payModeMap.get(refundPayMode.getPayChannel()));
         }
     }
 
     /**
      * 支付方式检查
+     * @param refundModeParam 退款参数
+     * @param refundableInfo 可退款对象
      */
-    public void payModeCheck(RefundModeParam refundPayMode,RefundableInfo refundableInfo){
+    public void payModeCheck(RefundModeParam refundModeParam,RefundableInfo refundableInfo){
         if (Objects.isNull(refundableInfo)){
             throw new PayFailureException("退款参数非法");
         }
-        // 金额检查
-        if (BigDecimalUtil.compareTo(refundPayMode.getAmount(),BigDecimal.ZERO) < 1){
+        // 退款金额为负数的
+        if (BigDecimalUtil.compareTo(refundModeParam.getAmount(),BigDecimal.ZERO) < 1){
             throw new PayAmountAbnormalException();
         }
-        // 退款金额
-        if (BigDecimalUtil.compareTo(refundPayMode.getAmount(),refundableInfo.getAmount()) == 1){
-            throw new PayAmountAbnormalException();
+        // 退款金额大于可退款金额
+        if (BigDecimalUtil.compareTo(refundModeParam.getAmount(),refundableInfo.getAmount()) == 1){
+            throw new PayAmountAbnormalException("退款金额大于可退款金额");
         }
 
     }
@@ -189,11 +210,13 @@ public class PayRefundService {
     /**
      * 保存退款记录
      */
-    private void saveRefund(Payment payment, BigDecimal amount, List<RefundModeParam> refundModeParams){
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void saveRefund(Payment payment, BigDecimal amount, List<RefundModeParam> refundModeParams){
         List<RefundableInfo> refundableInfos = refundModeParams.stream().map(RefundModeParam::toRefundableInfo).collect(Collectors.toList());
         HttpServletRequest request = WebServletUtil.getRequest();
         String ip = ServletUtil.getClientIP(request);
         RefundRecord refundRecord = new RefundRecord()
+                .setRefundRequestNo(AsyncRefundLocal.get())
                 .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos))
                 .setAmount(amount)
                 .setClientIp(ip)
@@ -202,7 +225,9 @@ public class PayRefundService {
                 .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                 .setRefundTime(LocalDateTime.now())
                 .setTitle(payment.getTitle())
-                .setRefundStatus(1);
+                .setErrorMsg(AsyncRefundLocal.getErrorMsg())
+                .setErrorCode(AsyncRefundLocal.getErrorCode())
+                .setRefundStatus(Objects.isNull(AsyncRefundLocal.getErrorCode())?PayStatusCode.REFUND_PROCESS_SUCCESS:PayStatusCode.REFUND_PROCESS_FAIL);
         refundRecordManager.save(refundRecord);
     }
 }

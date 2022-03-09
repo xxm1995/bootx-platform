@@ -35,7 +35,7 @@ public class OperateLogMongoService implements OperateLogService {
     @Override
     public void add(OperateLogParam operateLog) {
         OperateLogMongo operateLogMongo = LogConvert.CONVERT.convert(operateLog);
-        operateLogMongo.setId(IdUtil.getSnowflake().nextId());
+        operateLogMongo.setId(IdUtil.getSnowflakeNextId());
         repository.save(operateLogMongo);
     }
 

@@ -35,7 +35,7 @@ public class LoginLogMongoService implements LoginLogService {
     @Override
     public void add(LoginLogParam loginLog) {
         LoginLogMongo loginLogMongo = LogConvert.CONVERT.convert(loginLog);
-        loginLogMongo.setId(IdUtil.getSnowflake().nextId());
+        loginLogMongo.setId(IdUtil.getSnowflakeNextId());
         repository.save(loginLogMongo);
     }
 

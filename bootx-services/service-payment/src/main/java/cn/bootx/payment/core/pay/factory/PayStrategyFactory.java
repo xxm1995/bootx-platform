@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**   
-* 支付策略工厂
-* @author xxm  
-* @date 2020/12/11 
-*/
+/**
+ * 支付策略工厂
+ * @author xxm
+ * @date 2020/12/11
+ */
 public class PayStrategyFactory {
 
     /**
@@ -38,6 +38,8 @@ public class PayStrategyFactory {
             case PayChannelCode.WECHAT:
                 strategy = SpringUtil.getBean(WeChatPayStrategy.class);
                 break;
+            case PayChannelCode.UNION_PAY:
+                strategy = SpringUtil.getBean(UnionPayStrategy.class);
             case PayChannelCode.CASH:
                 strategy = SpringUtil.getBean(CashPayStrategy.class);
                 break;

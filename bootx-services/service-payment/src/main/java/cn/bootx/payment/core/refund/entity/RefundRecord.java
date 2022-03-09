@@ -29,14 +29,14 @@ import java.util.List;
 @TableName("pc_refund_record")
 public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<RefundRecordDto>{
 
-    /** 退款订单号 */
-    private String refundOrderId;
-
     /** 支付单号 */
     private Long paymentId;
 
     /** 关联的业务id */
     private String businessId;
+
+    /** 异步方式关联退款请求号(部分退款情况) */
+    private String refundRequestNo;
 
     /** 用户ID */
     private Long userId;
@@ -58,7 +58,10 @@ public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<Ref
      */
     private String refundableInfo;
 
-    /** 退款状态 */
+    /**
+     * 退款状态
+     * @see cn.bootx.payment.code.pay.PayStatusCode
+     */
     private int refundStatus;
 
     /** 错误码 */
