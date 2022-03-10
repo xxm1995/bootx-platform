@@ -1,7 +1,7 @@
 package cn.bootx.payment.core.payment.dao;
 
+import cn.bootx.common.core.rest.param.OrderParam;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.common.query.entity.QueryParams;
@@ -9,6 +9,8 @@ import cn.bootx.common.query.generator.QueryGenerator;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.param.payment.PaymentQuery;
+import cn.hutool.core.text.NamingCase;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -55,13 +57,13 @@ public class PaymentManager extends BaseManager<PaymentMapper, Payment> {
     /**
      * 分页查询
      */
-    public Page<Payment> page(PageParam pageParam, PaymentQuery param) {
+    public Page<Payment> page(PageParam pageParam, PaymentQuery param, OrderParam orderParam) {
         Page<Payment> mpPage = MpUtil.getMpPage(pageParam, Payment.class);
-        return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
-                .like(Objects.nonNull(param.getPaymentId()),Payment::getId,param.getPaymentId())
-                .like(Objects.nonNull(param.getBusinessId()),Payment::getBusinessId,param.getBusinessId())
-                .like(Objects.nonNull(param.getTitle()),Payment::getTitle,param.getTitle())
+        return query()
+                .orderBy(Objects.nonNull(orderParam.getSortField()),orderParam.isAsc(), StrUtil.toUnderlineCase(orderParam.getSortField()))
+                .like(Objects.nonNull(param.getPaymentId()), MpUtil.getColumnName(Payment::getId),param.getPaymentId())
+                .like(Objects.nonNull(param.getBusinessId()),MpUtil.getColumnName(Payment::getBusinessId),param.getBusinessId())
+                .like(Objects.nonNull(param.getTitle()),MpUtil.getColumnName(Payment::getTitle),param.getTitle())
                 .page(mpPage);
     }
     /**

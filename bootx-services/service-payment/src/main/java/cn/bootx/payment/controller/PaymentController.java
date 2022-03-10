@@ -3,14 +3,15 @@ package cn.bootx.payment.controller;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.param.OrderParam;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.query.entity.QueryParams;
 import cn.bootx.payment.core.payment.service.PaymentQueryService;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.param.payment.PaymentQuery;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,8 +42,8 @@ public class PaymentController {
 
     @Operation(summary = "分页查询")
     @GetMapping("/page")
-    public ResResult<PageResult<PaymentDto>> page(PageParam pageParam, PaymentQuery param){
-        return Res.ok(paymentQueryService.page(pageParam,param));
+    public ResResult<PageResult<PaymentDto>> page(PageParam pageParam, PaymentQuery param, OrderParam orderParam){
+        return Res.ok(paymentQueryService.page(pageParam,param,orderParam));
     }
 
     @Operation(summary = "分页查询(超级查询)")

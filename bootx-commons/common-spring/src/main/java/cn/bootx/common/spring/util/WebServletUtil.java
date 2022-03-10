@@ -7,6 +7,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**   
 * web服务器工具类
@@ -20,34 +21,34 @@ public class WebServletUtil {
      * 获取http请求
      */
     public HttpServletRequest getRequest(){
-        return getRequestAttributes().getRequest();
+        return Optional.ofNullable(getRequestAttributes()).map(ServletRequestAttributes::getRequest).orElse(null);
     }
 
     /**
      * 获取请求类型
      */
     public String getMethod(){
-        return getRequest().getMethod();
+        return Optional.ofNullable(getRequest()).map(HttpServletRequest::getMethod).orElse(null);
     }
     /**
      * 获取请求路径
      */
     public String getPath(){
-        return getRequest().getRequestURI();
+        return Optional.ofNullable(getRequest()).map(HttpServletRequest::getRequestURI).orElse(null);
     }
 
     /**
      * 获取参数
      */
     public String getParameter(String name){
-        return getRequest().getParameter(name);
+        return Optional.ofNullable(getRequest()).map(o-> o.getParameter(name)).orElse(null);
     }
 
     /**
      * 获取http响应
      */
     public HttpServletResponse getResponse(){
-        return getRequestAttributes().getResponse();
+        return Optional.ofNullable(getRequestAttributes()).map(ServletRequestAttributes::getResponse).orElse(null);
     }
 
     /**

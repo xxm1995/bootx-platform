@@ -1,9 +1,9 @@
 package cn.bootx.iam.core.permission.service;
 
-import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.iam.core.permission.entity.RequestPath;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -108,7 +108,8 @@ public class RequestPathService {
      */
     private String getSummary(Method method){
         Operation annotation = AnnotationUtil.getAnnotation(method, Operation.class);
-        return Optional.ofNullable(annotation).map(Operation::summary).orElse(null);
+        String summary = Optional.ofNullable(annotation).map(Operation::summary).orElse(null);
+        return StrUtil.isNotBlank(summary)?summary:method.getName();
     }
 
     /**
@@ -116,6 +117,6 @@ public class RequestPathService {
      */
     private String getTagName(Class<?> beanClass){
         Tag annotation = AnnotationUtil.getAnnotation(beanClass, Tag.class);
-        return Optional.ofNullable(annotation).map(Tag::name).orElseThrow(DataNotExistException::new);
+        return Optional.ofNullable(annotation).map(Tag::name).orElse(beanClass.getSimpleName());
     }
 }

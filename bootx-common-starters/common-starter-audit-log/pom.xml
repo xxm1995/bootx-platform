@@ -32,6 +32,10 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-header-holder</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
             <artifactId>common-mybatis-plus</artifactId>
             <optional>true</optional>
         </dependency>

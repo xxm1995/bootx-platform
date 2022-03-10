@@ -176,7 +176,11 @@ public class QueryGenerator {
             return;
         }
         for (QueryOrder queryOrder : queryOrders) {
-            queryWrapper.orderBy(true,queryOrder.isAsc(),queryOrder.getSortField());
+            if (queryOrder.isUnderLine()){
+                queryWrapper.orderBy(true,queryOrder.isAsc(),StrUtil.toUnderlineCase(queryOrder.getSortField()));
+            } else {
+                queryWrapper.orderBy(true,queryOrder.isAsc(),queryOrder.getSortField());
+            }
         }
     }
 

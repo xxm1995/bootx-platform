@@ -68,7 +68,7 @@ public class MpUtil {
      * @param function Lambda表达式
      * @return 字段名
      */
-    public static String getColumnName(SFunction<?,?> function){
+    public static <T> String getColumnName(SFunction<T,?> function){
         LambdaMeta meta = LambdaUtils.extract(function);
         Map<String, ColumnCache> columnMap = LambdaUtils.getColumnMap(meta.getInstantiatedClass());
         Assert.notEmpty(columnMap, "错误:无法执行.因为无法获取到实体类的表对应缓存!");

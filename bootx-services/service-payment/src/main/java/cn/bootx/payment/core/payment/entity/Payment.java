@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ import java.util.List;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@FieldNameConstants
 @Accessors(chain = true)
 @TableName("pc_payment")
 public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentDto> {

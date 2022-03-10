@@ -20,6 +20,7 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,6 +60,8 @@ public class PermPathService {
         PermPath permPath = permPathManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("信息不存在"));
         BeanUtil.copyProperties(param, permPath,CopyOptions.create().ignoreNullValue());
+        // 编辑过的信息不再作为系统生成的
+        permPath.setGenerate(false);
         return permPathManager.updateById(permPath).toDto();
     }
 
@@ -106,6 +109,7 @@ public class PermPathService {
      */
     @Transactional(rollbackFor = Exception.class)
     @OperateLog(title = "同步系统请求资源")
+    @Async("asyncExecutor")
     public void syncSystem() {
         List<RequestPath> requestPaths = requestPathService.getRequestPaths();
         List<PermPath> permPaths = requestPaths.stream()

@@ -38,7 +38,7 @@ public class PermPathController {
     }
 
     @Operation(summary = "删除权限")
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public ResResult<Void> delete(Long id){
         pathService.delete(id);
         return Res.ok();

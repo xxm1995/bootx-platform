@@ -2,7 +2,9 @@ package cn.bootx.starter.audit.log.handler;
 
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.annotation.OperateLogs;
+import cn.bootx.common.core.code.ServletCode;
 import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.common.headerholder.HeaderHolder;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.common.spring.util.AopUtil;
 import cn.bootx.common.spring.util.WebServletUtil;
@@ -22,7 +24,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -73,10 +74,8 @@ public class OperateLogAspectHandler {
         if (CollUtil.isEmpty(logs)){
             return;
         }
-
         // 基础信息
-        HttpServletRequest request = WebServletUtil.getRequest();
-        String ip = ServletUtil.getClientIP(request);
+        String ip = Optional.ofNullable(WebServletUtil.getRequest()).map(ServletUtil::getClientIP).orElse("未知");
         Optional<UserDetail> currentUser = SecurityUtil.getCurrentUser();
         // 设置方法名称
         String className = joinPoint.getTarget().getClass().getName();
@@ -88,9 +87,9 @@ public class OperateLogAspectHandler {
                     .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                     .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
                     .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
-                    .setOperateUrl(request.getRequestURI())
+                    .setOperateUrl(HeaderHolder.getHeader(ServletCode.REQUEST_URI))
                     .setMethod(className + "#" + methodName)
-                    .setRequestMethod(request.getMethod())
+                    .setRequestMethod(HeaderHolder.getHeader(ServletCode.METHOD))
                     .setSuccess(true)
                     .setOperateIp(ip)
                     .setOperateTime(LocalDateTime.now());
