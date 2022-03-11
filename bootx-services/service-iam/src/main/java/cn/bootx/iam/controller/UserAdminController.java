@@ -75,7 +75,6 @@ public class UserAdminController {
         return Res.ok();
     }
 
-
     @Operation(summary = "锁定用户")
     @OperateLog(title = "锁定用户",businessType= BusinessType.UPDATE, saveParam = true)
     @PostMapping("/lock")

@@ -1,6 +1,6 @@
 package cn.bootx.payment.core.paymodel.cash.service;
 
-import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.cash.dao.CashPaymentManager;
@@ -35,6 +35,7 @@ public class CashService {
                 .setUserId(payment.getUserId())
                 .setBusinessId(payParam.getBusinessId())
                 .setAmount(payMode.getAmount())
+                .setRefundableBalance(payMode.getAmount())
                 .setPayStatus(payment.getPayStatus());
         cashPaymentManager.save(walletPayment);
     }
@@ -53,9 +54,16 @@ public class CashService {
     /**
      * 退款
      */
-    public void refund(Payment payment, BigDecimal amount){
-        CashPayment cashPayment = cashPaymentManager.findByPaymentId(payment.getId()).orElseThrow(DataNotExistException::new);
-        cashPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
-        cashPaymentManager.updateById(cashPayment);
+    public void refund(Long paymentId, BigDecimal amount){
+        Optional<CashPayment> cashPayment = cashPaymentManager.findByPaymentId(paymentId);
+        cashPayment.ifPresent(payment->{
+            BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
+            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
+            } else {
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
+            }
+            cashPaymentManager.updateById(payment);
+        });
     }
 }

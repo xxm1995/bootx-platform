@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +37,7 @@ public class AliPaymentService {
      * 支付调起成功
      * 更新 payment 中 异步支付类型信息
      */
-    public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
+    public void updatePaySuccess(Payment payment, PayModeParam payModeParam) {
         payment.setSyncPayMode(true)
                 .setSyncPayChannel(PayChannelCode.ALI);
         // TODO 设置超时时间
@@ -73,6 +75,7 @@ public class AliPaymentService {
         aliPayment.setTradeNo(tradeNo)
                 .setPaymentId(payment.getId())
                 .setAmount(payModeParam.getAmount())
+                .setRefundableBalance(payModeParam.getAmount())
                 .setBusinessId(payment.getBusinessId())
                 .setUserId(payment.getUserId())
                 .setPayStatus(PayStatusCode.TRADE_SUCCESS)
@@ -83,7 +86,7 @@ public class AliPaymentService {
     /**
      * 取消状态
      */
-    public void updateClose(Long paymentId){
+    public void updateClose(Long paymentId) {
         Optional<AliPayment> aliPaymentOptional = aliPaymentManager.findByPaymentId(paymentId);
         aliPaymentOptional.ifPresent(aliPayment -> {
             aliPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
@@ -91,4 +94,20 @@ public class AliPaymentService {
         });
     }
 
+    /**
+     * 更新退款
+     */
+    public void updatePayRefund(Long paymentId, BigDecimal amount) {
+        Optional<AliPayment> aliPaymentOptional = aliPaymentManager.findByPaymentId(paymentId);
+        aliPaymentOptional.ifPresent(payment -> {
+            BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
+            payment.setRefundableBalance(refundableBalance);
+            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
+            } else {
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
+            }
+            aliPaymentManager.updateById(payment);
+        });
+    }
 }

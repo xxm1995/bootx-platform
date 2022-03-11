@@ -74,8 +74,7 @@ public class AliPayStrategy extends AbsPayStrategy {
             throw new PayAmountAbnormalException();
         }
         // 检查并获取支付宝支付配置
-        this.alipayConfig = alipayConfigManager.findActivity()
-                .orElseThrow(() -> new BizException("支付配置不存在"));
+        this.initAlipayConfig();
         aliPayService.validation(this.getPayMode(),alipayConfig);
         // 如果没有显式传入同步回调地址, 使用默认配置
         if (StrUtil.isBlank(aliPayParam.getReturnUrl())){
@@ -157,6 +156,7 @@ public class AliPayStrategy extends AbsPayStrategy {
     public void doRefundHandler() {
         this.initAlipayConfig();
         aliPayCancelService.refund(this.getPayment(),this.getPayMode().getAmount());
+        aliPaymentService.updatePayRefund(this.getPayment().getId(),this.getPayMode().getAmount());
         paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.ALI);
     }
 

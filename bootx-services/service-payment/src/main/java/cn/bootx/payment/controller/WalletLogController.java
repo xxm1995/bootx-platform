@@ -1,17 +1,20 @@
 package cn.bootx.payment.controller;
 
+import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.paymodel.wallet.service.WalletLogService;
 import cn.bootx.payment.dto.paymodel.wallet.WalletLogDto;
 import cn.bootx.payment.param.paymodel.wallet.WalletLogQueryParam;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 钱包日志相关接口
@@ -23,28 +26,18 @@ import java.util.List;
 @RequestMapping("/walletLog")
 @AllArgsConstructor
 public class WalletLogController {
-
     private final WalletLogService walletLogService;
 
 
-    @Operation(summary = "查询钱包日志")
-    @PostMapping("/search")
-    public ResResult<List<WalletLogDto>> searchLog(@RequestBody WalletLogQueryParam walletLogQueryParam) {
-        return Res.ok(walletLogService.queryLog(walletLogQueryParam));
+    @Operation(summary = "个人钱包日志")
+    @PostMapping("/pageByPersonal")
+    public ResResult<PageResult<WalletLogDto>> pageByPersonal(@ParameterObject PageParam pageParam,@ParameterObject WalletLogQueryParam param){
+        return Res.ok(walletLogService.pageByPersonal(pageParam,param));
     }
-
-    @Operation(summary = "查询钱包日志")
-    @PostMapping("/search/condition")
-    public ResResult<List<WalletLogDto>> searchByCondition(@RequestBody WalletLogQueryParam walletLogQueryParam) {
-        return Res.ok();
-    }
-
+    
     @Operation(summary = "查询钱包日志(分页)")
-    @PostMapping("/search/page")
-    public ResResult<List<WalletLogDto>> searchLog(@Parameter(description = "页码 默认为0") @RequestParam(value = "pageNo", required = false, defaultValue = "0") int pageNo,
-                                                   @Parameter(description = "每页展示条数 默认为1") @RequestParam(value = "pageSize", required = false, defaultValue = "1") int pageSize,
-                                                   @RequestBody WalletLogQueryParam walletLogQueryParam) {
-        return Res.ok();
-
+    @GetMapping("/page")
+    public ResResult<PageResult<WalletLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject WalletLogQueryParam param) {
+        return Res.ok(walletLogService.page(pageParam,param));
     }
 }

@@ -2,7 +2,6 @@ package cn.bootx.payment.core.paymodel.wallet.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.payment.code.paymodel.WalletCode;
 import cn.bootx.payment.core.paymodel.wallet.convert.WalletConvert;
 import cn.bootx.payment.dto.paymodel.wallet.WalletDto;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -31,15 +30,6 @@ public class Wallet extends MpBaseEntity implements EntityBaseFunction<WalletDto
 
     /** 状态 */
     private Integer status;
-
-    /**
-     * 保护方式
-     * @see WalletCode
-     */
-    private Integer protectionMode;
-
-    /** pin码 */
-    private String pinCode;
 
     @Override
     public WalletDto toDto() {

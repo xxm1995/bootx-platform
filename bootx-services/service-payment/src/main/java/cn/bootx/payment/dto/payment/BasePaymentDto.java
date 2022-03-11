@@ -32,6 +32,9 @@ public class BasePaymentDto extends BaseDto {
     @Schema(description= "金额")
     private BigDecimal amount;
 
+    @Schema(description= "可退款金额")
+    private BigDecimal refundableBalance;
+
     /**
      * @see PayStatusCode
      */

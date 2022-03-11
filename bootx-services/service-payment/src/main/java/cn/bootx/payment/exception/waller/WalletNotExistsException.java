@@ -11,6 +11,6 @@ import cn.bootx.payment.code.PaymentCenterErrorCode;
 public class WalletNotExistsException extends BizException {
 
     public WalletNotExistsException() {
-        super(PaymentCenterErrorCode.WALLET_NOT_EXISTS, "wallet not exists");
+        super(PaymentCenterErrorCode.WALLET_NOT_EXISTS, "钱包不存在");
     }
 }

@@ -1,19 +1,21 @@
 package cn.bootx.payment.core.paymodel.wallet.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletPaymentManager;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.core.paymodel.wallet.entity.WalletPayment;
-import cn.bootx.payment.dto.paymodel.wallet.WalletPaymentDto;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -26,7 +28,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class WalletPaymentService {
-    private final WalletService walletService;
     private final WalletPaymentManager walletPaymentManager;
 
     /**
@@ -39,6 +40,7 @@ public class WalletPaymentService {
                 .setUserId(payment.getUserId())
                 .setBusinessId(payParam.getBusinessId())
                 .setAmount(payMode.getAmount())
+                .setRefundableBalance(payMode.getAmount())
                 .setPayStatus(payment.getPayStatus());
         walletPaymentManager.save(walletPayment);
     }
@@ -46,6 +48,7 @@ public class WalletPaymentService {
     /**
      * 更新错误状态
      */
+    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
     public void updateError(Long paymentId){
         Optional<WalletPayment> payment = walletPaymentManager.findByPaymentId(paymentId);
         if (payment.isPresent()){
@@ -68,22 +71,29 @@ public class WalletPaymentService {
     }
 
     /**
-     * 查询交易记录
-     * @param paymentId 交易ID
+     * 关闭操作
      */
-    public WalletPaymentDto getByPaymentId(Long paymentId){
-        return walletPaymentManager.findByPaymentId(paymentId)
-                .map(WalletPayment::toDto)
-                .orElseThrow(DataNotExistException::new);
-    }
-
-    /**
-     * 取消操作
-     */
-    public void cancel(Long paymentId) {
+    public void updateClose(Long paymentId) {
         WalletPayment walletPayment = walletPaymentManager.findByPaymentId(paymentId)
                 .orElseThrow(() -> new BizException("未查询到查询交易记录"));
         walletPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
         walletPaymentManager.updateById(walletPayment);
+    }
+
+    /**
+     * 更新退款
+     */
+    public void updateRefund(Long paymentId, BigDecimal amount){
+        Optional<WalletPayment> walletPayment = walletPaymentManager.findByPaymentId(paymentId);
+        walletPayment.ifPresent(payment -> {
+            BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
+            payment.setRefundableBalance(refundableBalance);
+            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
+            } else {
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
+            }
+            walletPaymentManager.updateById(payment);
+        });
     }
 }

@@ -28,6 +28,9 @@ public class BasePayment extends MpBaseEntity {
     /** 交易金额 */
     private BigDecimal amount;
 
+    /** 可退款金额 */
+    private BigDecimal refundableBalance;
+
     /** 关联的业务id */
     private String businessId;
 

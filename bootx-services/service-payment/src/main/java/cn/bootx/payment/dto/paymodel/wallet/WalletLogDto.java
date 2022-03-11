@@ -1,27 +1,29 @@
 package cn.bootx.payment.dto.paymodel.wallet;
 
+import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.payment.code.paymodel.WalletCode;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+;
+
 /**
 * @author xxm
 * @date 2020/12/8
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "钱包日志")
-public class WalletLogDto implements Serializable {
+public class WalletLogDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = -2553004953931903738L;
-    @Schema(description= "ID")
-    private Long id;
 
     @Schema(description= "钱包ID")
     private Long walletId;

@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -61,7 +63,7 @@ public class WeChatPaymentService {
     }
 
     /**
-     * 更新支付记录成功状态, 并创建支付宝支付记录
+     * 更新支付记录成功状态, 并创建微信支付记录
      */
     public void updateSyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
         // 更新支付记录
@@ -88,6 +90,24 @@ public class WeChatPaymentService {
         weChatPaymentOptional.ifPresent(weChatPayment -> {
             weChatPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
             weChatPaymentManager.updateById(weChatPayment);
+        });
+    }
+
+
+    /**
+     * 更新退款
+     */
+    public void updatePayRefund(Long paymentId, BigDecimal amount) {
+        Optional<WeChatPayment> weChatPayment = weChatPaymentManager.findByPaymentId(paymentId);
+        weChatPayment.ifPresent(payment -> {
+            BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
+            payment.setRefundableBalance(refundableBalance);
+            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
+            } else {
+                payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
+            }
+            weChatPaymentManager.updateById(payment);
         });
     }
 }

@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Update;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 /**
  * 钱包
@@ -55,9 +54,4 @@ public interface WalletMapper extends BaseMapper<Wallet> {
     @Update("update pc_wallet set balance = (balance - ?2),lastModifier = ?3,lastModifiedTime = ?4,version = (version+1) where id = ?1 and tid = ?5")
     int reduceBalanceUnlimited(Long walletId, BigDecimal amount, Long operator, LocalDateTime date);
 
-    boolean existsByUserIdAndTid(Long userId,Long tid);
-
-    Optional<Wallet> findByUserIdAndTid(Long userId, Long tid);
-
-    Optional<Wallet> findByIdAndTid(Long id, Long tid);
 }

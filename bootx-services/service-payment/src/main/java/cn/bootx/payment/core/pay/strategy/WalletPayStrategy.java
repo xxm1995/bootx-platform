@@ -6,12 +6,11 @@ import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.payment.service.PaymentService;
-import cn.bootx.payment.core.paymodel.wallet.dao.WalletManager;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.core.paymodel.wallet.service.WalletPayService;
 import cn.bootx.payment.core.paymodel.wallet.service.WalletPaymentService;
+import cn.bootx.payment.core.paymodel.wallet.service.WalletService;
 import cn.bootx.payment.exception.waller.WalletLackOfBalanceException;
-import cn.bootx.payment.exception.waller.WalletNotExistsException;
 import cn.bootx.payment.param.pay.PayParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Scope;
@@ -29,9 +28,9 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @RequiredArgsConstructor
 public class WalletPayStrategy extends AbsPayStrategy {
 
-    private final WalletManager walletManager;
     private final WalletPaymentService walletPaymentService;
     private final WalletPayService walletPayService;
+    private final WalletService walletService;
     private final PaymentService paymentService;
 
     private Wallet wallet;
@@ -46,14 +45,11 @@ public class WalletPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doBeforePayHandler() {
-
         PayParam payParam = this.getPayParam();
-        // 校验钱包
-        this.wallet = walletManager.findByUser(payParam.getUserId())
-                .orElseThrow(WalletNotExistsException::new);
+        // 获取并校验钱包
+        this.wallet = walletService.getNormalWalletByUserId(payParam.getUserId());
         // 判断余额
-        boolean lackBalance = BigDecimalUtil.compareTo(this.wallet.getBalance(),getPayMode().getAmount()) < 0 ;
-        if (lackBalance) {
+        if (BigDecimalUtil.compareTo(this.wallet.getBalance(),getPayMode().getAmount()) < 0) {
             throw new WalletLackOfBalanceException();
         }
     }
@@ -73,7 +69,7 @@ public class WalletPayStrategy extends AbsPayStrategy {
     public void doPayHandler() {
         walletPayService.pay(getPayMode().getAmount(),
                 this.getPayment(),
-                this.getPayParam().getUserId());
+                this.wallet);
         walletPaymentService.savePayment(this.getPayment(), this.getPayParam(),this.getPayMode(),this.wallet);
     }
 
@@ -91,6 +87,7 @@ public class WalletPayStrategy extends AbsPayStrategy {
     @Override
     public void doCloseHandler() {
         walletPayService.close(this.getPayment().getId());
+        walletPaymentService.updateClose(this.getPayment().getId());
     }
 
     /**
@@ -98,6 +95,8 @@ public class WalletPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
+        walletPayService.refund(this.getPayment().getId(),this.getPayMode().getAmount());
+        walletPaymentService.updateRefund(this.getPayment().getId(),this.getPayMode().getAmount());
         paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.WALLET);
     }
 

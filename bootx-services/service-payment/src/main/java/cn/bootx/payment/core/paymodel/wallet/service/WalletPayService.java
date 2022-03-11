@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.wallet.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
@@ -10,9 +11,10 @@ import cn.bootx.payment.core.paymodel.wallet.dao.WalletManager;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletPaymentManager;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.core.paymodel.wallet.entity.WalletLog;
-import cn.bootx.payment.dto.paymodel.wallet.WalletDto;
+import cn.bootx.payment.core.paymodel.wallet.entity.WalletPayment;
 import cn.bootx.payment.exception.waller.WalletLackOfBalanceException;
 import cn.bootx.payment.exception.waller.WalletLogError;
+import cn.bootx.payment.exception.waller.WalletNotExistsException;
 import cn.hutool.core.util.StrUtil;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +27,14 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* 钱包支付操作
-* @author xxm
-* @date 2021/2/27
-*/
+ * 钱包支付操作
+ * @author xxm
+ * @date 2021/2/27
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WalletPayService {
-
-    private final WalletService walletService;
 
     private final WalletManager walletManager;
     private final WalletPaymentManager walletPaymentManager;
@@ -42,14 +42,11 @@ public class WalletPayService {
 
     /**
      * 支付操作
-     * @param amount         付款金额
-     * @param payment        支付记录
-     * @param userId         用户Id
+     * @param amount 付款金额
+     * @param payment 支付记录
+     * @param wallet 钱包
      */
-    public void pay(BigDecimal amount, Payment payment, Long userId) {
-        // 获取钱包
-        WalletDto wallet = walletService.getByUserId(userId);
-
+    public void pay(BigDecimal amount, Payment payment, Wallet wallet) {
         // 扣减余额
         int i = walletManager.reduceBalance(wallet.getId(), amount);
 
@@ -63,7 +60,7 @@ public class WalletPayService {
                 .setUserId(wallet.getUserId())
                 .setPaymentId(payment.getId())
                 .setAmount(payment.getAmount())
-                .setType(WalletCode.WALLET_LOG_PAY)
+                .setType(WalletCode.LOG_PAY)
                 .setRemark(String.format("钱包支付金额 %.2f ", amount))
                 .setOperationSource(WalletCode.OPERATION_SOURCE_USER)
                 .setBusinessId(payment.getBusinessId());
@@ -83,9 +80,9 @@ public class WalletPayService {
         }
 
         // 充值类型
-        List<Integer> chargeLogType = Lists.newArrayList(WalletCode.WALLET_LOG_RECHARGE,
-                WalletCode.WALLET_LOG_AUTO_RECHARGE,
-                WalletCode.WALLET_LOG_ADMIN_RECHARGE);
+        List<Integer> chargeLogType = Lists.newArrayList(WalletCode.LOG_RECHARGE,
+                WalletCode.LOG_AUTO_RECHARGE,
+                WalletCode.LOG_ADMIN_RECHARGE);
 
         // 保证是充值类型 且充值金额大于0
         if (!chargeLogType.contains(walletLog.getType()) || BigDecimalUtil.compareTo(walletLog.getAmount(), BigDecimal.ZERO) < 0) {
@@ -105,7 +102,7 @@ public class WalletPayService {
                 .setUserId(walletLog.getUserId())
                 .setPaymentId(paymentId)
                 .setAmount(walletLog.getAmount())
-                .setType(WalletCode.WALLET_LOG_SYSTEM_REDUCE_BALANCE)
+                .setType(WalletCode.LOG_SYSTEM_REDUCE_BALANCE)
                 .setRemark(StrUtil.format("系统减少余额 %.2f (" + remark + ")", walletLog.getAmount()))
                 .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM)
                 .setPaymentId(paymentId)
@@ -117,34 +114,26 @@ public class WalletPayService {
     /**
      * 退款
      */
-//    @Transactional(rollbackFor = Exception.class)
-//    public void refund(RefundParam refundParam, List<PayRefundDetailParam> payRefundDetailParams) {
-//
-//        // 获取钱包
-//        Wallet wallet = walletManager.findById(refundParam.getWalletId()).orElseThrow(WalletNotExistsException::new);
-//
-//        // 计算总退款金额
-//        BigDecimal totalRefundAmount = payRefundDetailParams.stream()
-//                .map(PayRefundDetailParam::getRefundAmount)
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
-//
-//        walletManager.increaseBalance(refundParam.getWalletId(), totalRefundAmount, null);
-//
-//        for (PayRefundDetailParam payRefundDetailParam : payRefundDetailParams) {
-//
-//            WalletLog walletLog = new WalletLog()
-//                    .setAmount(payRefundDetailParam.getRefundAmount())
-//                    .setPaymentId(payRefundDetailParam.getPaymentId())
-//                    .setWalletId(wallet.getId())
-//                    .setUserId(wallet.getUserId())
-//                    .setType(WalletCode.WALLET_LOG_REFUND)
-//                    .setRemark(String.format("钱包退款金额 %.2f ", payRefundDetailParam.getRefundAmount()))
-//                    .setOperationSource(WalletCode.OPERATION_SOURCE_ADMIN)
-//                    .setBusinessId(String.valueOf(payRefundDetailParam.getOrderId()));
-//            // save log
-//            walletLogManager.save(walletLog);
-//        }
-//    }
+    @Transactional(rollbackFor = Exception.class)
+    public void refund(Long paymentId, BigDecimal amount) {
+        // 钱包支付记录
+        WalletPayment walletPayment = walletPaymentManager.findByPaymentId(paymentId).orElseThrow(() -> new BizException("钱包支付记录不存在"));
+        // 获取钱包
+        Wallet wallet = walletManager.findById(walletPayment.getWalletId()).orElseThrow(WalletNotExistsException::new);
+        walletManager.increaseBalance(wallet.getId(), amount);
+
+        WalletLog walletLog = new WalletLog()
+                .setAmount(amount)
+                .setPaymentId(walletPayment.getPaymentId())
+                .setWalletId(wallet.getId())
+                .setUserId(wallet.getUserId())
+                .setType(WalletCode.LOG_REFUND)
+                .setRemark(String.format("钱包退款金额 %.2f ", amount))
+                .setOperationSource(WalletCode.OPERATION_SOURCE_ADMIN)
+                .setBusinessId(walletPayment.getBusinessId());
+        // save log
+        walletLogManager.save(walletLog);
+    }
 
     /**
      * 取消支付并返还金额
@@ -162,7 +151,7 @@ public class WalletPayService {
             walletPaymentManager.save(walletPayment);
 
             // 金额返还
-            walletManager.increaseBalance(wallet.getId(), walletPayment.getAmount(), null);
+            walletManager.increaseBalance(wallet.getId(), walletPayment.getAmount());
 
             // 记录日志
             WalletLog walletLog = new WalletLog()
@@ -170,7 +159,7 @@ public class WalletPayService {
                     .setPaymentId(walletPayment.getPaymentId())
                     .setWalletId(wallet.getId())
                     .setUserId(wallet.getUserId())
-                    .setType(WalletCode.WALLET_LOG_REFUND)
+                    .setType(WalletCode.LOG_REFUND)
                     .setRemark(String.format("取消支付返回金额 %.2f ", walletPayment.getAmount()))
                     .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM)
                     .setBusinessId(walletPayment.getBusinessId());

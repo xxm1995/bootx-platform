@@ -1,14 +1,11 @@
 package cn.bootx.payment.core.paymodel.wallet.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.exception.DataNotExistException;
-import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.paymodel.WalletCode;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletLogManager;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletManager;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.core.paymodel.wallet.entity.WalletLog;
-import cn.bootx.payment.dto.paymodel.wallet.WalletDto;
 import cn.bootx.payment.exception.waller.WalletBannedException;
 import cn.bootx.payment.exception.waller.WalletNotExistsException;
 import cn.bootx.payment.param.paymodel.wallet.WalletActiveParam;
@@ -18,9 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * 钱包的相关操作
@@ -35,43 +31,59 @@ public class WalletService{
     private final WalletLogManager walletLogManager;
 
     /**
-     * 开通操作
+     * 开通操作 创建
      */
     @Transactional(rollbackFor = Exception.class)
-    public WalletDto activeWallet(WalletActiveParam param){
+    public void createWallet(Long userId){
         // 判断钱包是否已开通
-        if (walletManager.existsByUser(param.getUserId())) {
+        if (walletManager.existsByUser(userId)) {
             throw new BizException("钱包已经开通");
         }
         Wallet wallet = new Wallet()
-                .setUserId(param.getUserId())
-                .setProtectionMode(WalletCode.PROTECTION_MODE_NONE)
-                .setStatus(WalletCode.WALLET_STATUS_NORMAL)
-                .setBalance(Optional.ofNullable(param.getPresentBalance()).orElse(BigDecimal.ZERO));
-        Wallet save = walletManager.save(wallet);
+                .setUserId(userId)
+                .setStatus(WalletCode.STATUS_NORMAL);
 
         // 激活 log
         WalletLog activeLog = new WalletLog()
                 .setWalletId(wallet.getId())
                 .setUserId(wallet.getUserId())
-                .setType(WalletCode.WALLET_LOG_ACTIVE)
+                .setType(WalletCode.LOG_ACTIVE)
                 .setRemark("激活钱包")
                 .setOperationSource(WalletCode.OPERATION_SOURCE_USER);
         walletLogManager.save(activeLog);
 
-        // 赠送记录log
-        if (BigDecimalUtil.compareTo(wallet.getBalance(), BigDecimal.ZERO) > 0) {
-            WalletLog presentLog = new WalletLog()
-                    .setWalletId(wallet.getId())
-                    .setUserId(wallet.getUserId())
-                    .setAmount(wallet.getBalance())
-                    .setType(WalletCode.WALLET_LOG_PRESENT)
-                    .setRemark("赠送")
-                    .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM);
-            walletLogManager.save(presentLog);
-        }
-        return save.toDto();
+//        // 赠送记录log
+//        if (BigDecimalUtil.compareTo(wallet.getBalance(), BigDecimal.ZERO) > 0) {
+//            WalletLog presentLog = new WalletLog()
+//                    .setWalletId(wallet.getId())
+//                    .setUserId(wallet.getUserId())
+//                    .setAmount(wallet.getBalance())
+//                    .setType(WalletCode.WALLET_LOG_PRESENT)
+//                    .setRemark("赠送")
+//                    .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM);
+//            walletLogManager.save(presentLog);
+//        }
+    }
 
+    /**
+     * 批量开通
+     */
+    public void createWalletBatch(List<WalletActiveParam> walletActiveParams){
+
+    }
+
+    /**
+     * 锁定钱包
+     */
+    public void lock(Long walletId){
+        walletManager.setUpStatus(walletId,WalletCode.STATUS_FORBIDDEN);
+    }
+
+    /**
+     * 解锁钱包
+     */
+    public void unlock(Long walletId){
+        walletManager.setUpStatus(walletId,WalletCode.STATUS_NORMAL);
     }
 
     /**
@@ -80,7 +92,7 @@ public class WalletService{
     @Transactional(rollbackFor = Exception.class)
     public void recharge(WalletRechargeParam param){
         Wallet wallet = this.getNormalWalletById(param.getWalletId());
-        walletManager.increaseBalance(param.getWalletId(), param.getAmount(), param.getOperatorId());
+        walletManager.increaseBalance(param.getWalletId(), param.getAmount());
 
         WalletLog walletLog = new WalletLog()
                 .setAmount(param.getAmount())
@@ -95,41 +107,26 @@ public class WalletService{
     }
 
     /**
-     * 根据ID查询Wallet
-     */
-    public WalletDto getById(Long walletId) {
-        return walletManager.findById(walletId).map(Wallet::toDto).orElseThrow(DataNotExistException::new);
-    }
-
-    /**
-     * 根据用户ID查询钱包
-     */
-    public WalletDto getByUserId(Long userId) {
-        return walletManager.findByUser(userId).map(Wallet::toDto).orElseThrow(DataNotExistException::new);
-    }
-
-    /**
      * 查询钱包，如果钱包不存在或者钱包被禁用将抛出异常
      */
     public Wallet getNormalWalletById(Long walletId) {
         // 查询Wallet
         Wallet wallet = walletManager.findById(walletId).orElseThrow(WalletNotExistsException::new);
-
         // 是否被禁用
-        if (Objects.equals(WalletCode.WALLET_STATUS_FORBIDDEN, wallet.getStatus())) {
+        if (Objects.equals(WalletCode.STATUS_FORBIDDEN, wallet.getStatus())) {
             throw new WalletBannedException();
         }
         return wallet;
     }
+
     /**
      * 查询钱包，如果钱包不存在或者钱包被禁用将抛出异常
      */
-    private Wallet getNormalWalletByUserId(Long userId) {
+    public Wallet getNormalWalletByUserId(Long userId) {
         // 查询Wallet
         Wallet wallet = walletManager.findByUser(userId).orElseThrow(WalletNotExistsException::new);
-
         // 是否被禁用
-        if (Objects.equals(WalletCode.WALLET_STATUS_FORBIDDEN, wallet.getStatus())) {
+        if (Objects.equals(WalletCode.STATUS_FORBIDDEN, wallet.getStatus())) {
             throw new WalletBannedException();
         }
         return wallet;

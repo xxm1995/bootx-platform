@@ -1,12 +1,13 @@
 package cn.bootx.payment.param.paymodel.wallet;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+;
 
 /**
 * @author xxm
@@ -32,9 +33,6 @@ public class WalletRechargeParam implements Serializable {
 
     @Schema(description= "业务ID，对应的充值订单ID等")
     private String businessId;
-
-    @Schema(description= "操作人")
-    private Long operatorId;
 
     @Schema(description= "操作源")
     private Integer operationSource;

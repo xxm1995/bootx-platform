@@ -8,16 +8,6 @@ package cn.bootx.payment.code.paymodel;
 public interface WalletCode {
 
     /**
-     * 主动充值
-     */
-    int RECHARGE = 2;
-
-    /**
-     * 自动充值
-     */
-    int AUTO_RECHARGE = 3;
-
-    /**
      * 系统操作
      */
     int OPERATION_SOURCE_SYSTEM = 1;
@@ -33,73 +23,58 @@ public interface WalletCode {
     int OPERATION_SOURCE_USER = 3;
 
     /**
-     * 保护模式-无保护
-     */
-    int PROTECTION_MODE_NONE = 0;
-
-    /**
-     * 保护模式-PIN Code
-     */
-    int PROTECTION_MODE_PIN = 1;
-
-    /**
-     * 保护模式-Finger/Face
-     */
-    int PROTECTION_MODE_OTHER = 2;
-
-    /**
      * 钱包状态-正常
      */
-    int WALLET_STATUS_NORMAL = 1;
+    int STATUS_NORMAL = 1;
 
     /**
      * 钱包状态-禁用
      */
-    int WALLET_STATUS_FORBIDDEN = 2;
+    int STATUS_FORBIDDEN = 2;
 
     /**
      * 钱包日志-开通
      */
-    int WALLET_LOG_ACTIVE = 1;
+    int LOG_ACTIVE = 1;
 
     /**
      * 钱包日志-主动充值
      */
-    int WALLET_LOG_RECHARGE = 2;
+    int LOG_RECHARGE = 2;
 
     /**
      * 钱包日志-自动充值
      */
-    int WALLET_LOG_AUTO_RECHARGE = 3;
+    int LOG_AUTO_RECHARGE = 3;
 
     /**
      * 钱包日志-Admin充值
      */
-    int WALLET_LOG_ADMIN_RECHARGE = 4;
+    int LOG_ADMIN_RECHARGE = 4;
 
     /**
      * 钱包日志-支付
      */
-    int WALLET_LOG_PAY = 5;
+    int LOG_PAY = 5;
 
     /**
      * 钱包日志-修改安全模式
      */
-    int WALLET_CHANGE_PROTECTION_MODE = 6;
+    int CHANGE_PROTECTION_MODE = 6;
 
     /**
-     * 钱包日志-系统扣除余额的日志(通常是chargeback之类的交易取消之后需要扣除已充值的金额)
+     * 钱包日志-系统扣除余额的日志
      */
-    int WALLET_LOG_SYSTEM_REDUCE_BALANCE = 7;
+    int LOG_SYSTEM_REDUCE_BALANCE = 7;
 
     /**
      * 钱包日志-退款
      */
-    int WALLET_LOG_REFUND = 8;
+    int LOG_REFUND = 8;
 
     /**
-     * 钱包日志-赠送 handsel
+     * 钱包日志-赠送
      */
-    int WALLET_LOG_PRESENT = 9;
+    int LOG_PRESENT = 9;
 
 }

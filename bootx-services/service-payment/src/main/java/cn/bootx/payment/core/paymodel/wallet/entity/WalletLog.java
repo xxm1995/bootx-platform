@@ -40,7 +40,7 @@ public class WalletLog extends MpBaseEntity implements EntityBaseFunction<Wallet
     /** 业务ID */
     private String businessId;
 
-    /** 操作源 */
+    /** 操作类型 */
     private int operationSource;
 
     /** 金额 */
