@@ -4,6 +4,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.payment.core.cashier.service.CashierService;
 import cn.bootx.payment.dto.pay.PayResult;
+import cn.bootx.payment.param.cashier.CashierCombinationPayParam;
 import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,9 +33,14 @@ public class CashierController {
         return Res.ok(cashierService.singlePay(cashierSinglePayParam));
     }
 
+    @Operation(summary = "发起支付(组合支付)")
+    @PostMapping("/combinationPay")
+    public ResResult<PayResult> combinationPay(@RequestBody CashierCombinationPayParam param){
+        return Res.ok(cashierService.combinationPay(param));
+    }
 
     @SneakyThrows
-    @Operation(summary = "扫码聚合支付")
+    @Operation(summary = "扫码聚合支付(单渠道)")
     @GetMapping("/aggregatePay")
     public ModelAndView aggregatePay(String key, HttpServletRequest request){
         String ua = request.getHeader("User-Agent");

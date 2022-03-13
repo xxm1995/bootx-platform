@@ -63,7 +63,6 @@ public class PayRefundService {
     @Transactional(rollbackFor = Exception.class)
     public void refund(RefundParam refundParam) {
         Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(refundParam.getBusinessId()));
-
         paymentOptional.ifPresent(payment -> this.refundPayment(payment,refundParam.getRefundModeParams()));
     }
 
@@ -219,6 +218,7 @@ public class PayRefundService {
                 .setRefundRequestNo(AsyncRefundLocal.get())
                 .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos))
                 .setAmount(amount)
+                .setRefundableBalance(payment.getRefundableBalance())
                 .setClientIp(ip)
                 .setPaymentId(payment.getId())
                 .setBusinessId(payment.getBusinessId())

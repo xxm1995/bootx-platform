@@ -10,7 +10,7 @@ import java.util.List;
 */
 public interface PayChannelCode {
     /**
-     * 支付通道类型 1.支付宝 2.微信 3.云闪付 4.现金 5.钱包 6.代金券 7.兑换券 8.信用卡 9.ApplePay 10.渠道方支付 99.聚合支付
+     * 支付通道类型 1.支付宝 2.微信 3.云闪付 4.现金 5.钱包 6.储值卡 7.兑换券 8.信用卡 9.ApplePay 10.渠道方支付 99.聚合支付
      */
     int ALI = 1;
     int WECHAT = 2;
@@ -34,6 +34,7 @@ public interface PayChannelCode {
     List<Integer> SYNC_TYPE = Arrays.asList(
             ALI,
             WECHAT,
+            UNION_PAY,
             APPLE_PAY
     );
 }

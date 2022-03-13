@@ -39,6 +39,9 @@ public class RefundRecordDto extends BaseDto {
     @Schema(description = "退款金额")
     private BigDecimal amount;
 
+    @Schema(description = "剩余可退")
+    private BigDecimal refundableBalance;
+
     @Schema(description = "退款终端ip")
     private String clientIp;
 

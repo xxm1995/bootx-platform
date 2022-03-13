@@ -2,6 +2,7 @@ package cn.bootx.payment.core.cashier.service;
 
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
@@ -18,6 +19,7 @@ import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -25,10 +27,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * 结算台
@@ -81,7 +81,6 @@ public class CashierService {
         return payResult;
     }
 
-
     /**
      * 扫码发起自动支付
      */
@@ -111,13 +110,16 @@ public class CashierService {
      * 组合支付
      */
     public PayResult combinationPay(CashierCombinationPayParam param){
-        Long userId = SecurityUtil.getUserId();
         // 处理支付参数
-
+        List<PayModeParam> payModeList = param.getPayModeList();
+        // 删除小于等于零的
+        payModeList.removeIf(payModeParam -> BigDecimalUtil.compareTo(payModeParam.getAmount(), BigDecimal.ZERO)<1);
+        if (CollUtil.isEmpty(payModeList)){
+            throw new PayFailureException("支付参数有误");
+        }
         // 发起支付
         PayParam payParam = new PayParam()
                 .setTitle(param.getTitle())
-                .setUserId(userId)
                 .setBusinessId(param.getBusinessId())
                 .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                 .setPayModeList(param.getPayModeList());

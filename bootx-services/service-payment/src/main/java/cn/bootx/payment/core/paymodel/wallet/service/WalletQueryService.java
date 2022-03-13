@@ -12,6 +12,7 @@ import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.dto.paymodel.wallet.WalletDto;
 import cn.bootx.payment.dto.paymodel.wallet.WalletInfoDto;
 import cn.bootx.payment.param.paymodel.wallet.WalletPayParam;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,8 @@ public class WalletQueryService {
     /**
      * 根据用户ID查询钱包
      */
-    public WalletDto findByUserId(Long userId) {
+    public WalletDto findByUser() {
+        Long userId = SecurityUtil.getUserId();
         return walletManager.findByUser(userId).map(Wallet::toDto).orElseThrow(DataNotExistException::new);
     }
 

@@ -82,10 +82,10 @@ public class WalletController {
         return Res.ok(walletQueryService.pageByNotWallet(pageParam,param));
     }
 
-    @Operation(summary = "根据用户ID查询钱包")
-    @GetMapping("/findByUserId")
-    public ResResult<WalletDto> findByUserId(Long userId) {
-        return Res.ok(walletQueryService.findByUserId(userId));
+    @Operation(summary = "根据用户查询钱包")
+    @GetMapping("/findByUser")
+    public ResResult<WalletDto> findByUser() {
+        return Res.ok(walletQueryService.findByUser());
     }
 
     @Operation(summary = "根据钱包ID查询钱包")

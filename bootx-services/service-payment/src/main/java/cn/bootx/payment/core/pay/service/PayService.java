@@ -23,10 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -63,6 +60,7 @@ public class PayService {
         if (Objects.nonNull(payment) && payment.isSyncPayMode()){
             return this.paySyncNotFirst(payParam,payment);
         } else {
+            // 首次支付或同步支付
             return this.payFirst(payParam,payment);
         }
     }
@@ -98,8 +96,9 @@ public class PayService {
      */
     private PayResult paySyncNotFirst(PayParam payParam, Payment payment){
 
-        // 0. 支付完成
-        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+        // 0. 处理支付完成情况(完成/退款)
+        List<Integer> trades = Arrays.asList(PayStatusCode.TRADE_SUCCESS, PayStatusCode.TRADE_REFUNDING, PayStatusCode.TRADE_REFUNDED);
+        if (trades.contains(payment.getPayStatus())){
             return PaymentBuilder.buildResultByPayment(payment);
         }
 
