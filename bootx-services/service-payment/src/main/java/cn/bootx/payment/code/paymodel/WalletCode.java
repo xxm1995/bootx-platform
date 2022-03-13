@@ -48,9 +48,9 @@ public interface WalletCode {
     int LOG_AUTO_RECHARGE = 3;
 
     /**
-     * 钱包日志-Admin充值
+     * 钱包日志-Admin余额变动
      */
-    int LOG_ADMIN_RECHARGE = 4;
+    int LOG_ADMIN_CHANGER = 4;
 
     /**
      * 钱包日志-支付
@@ -58,23 +58,13 @@ public interface WalletCode {
     int LOG_PAY = 5;
 
     /**
-     * 钱包日志-修改安全模式
-     */
-    int CHANGE_PROTECTION_MODE = 6;
-
-    /**
      * 钱包日志-系统扣除余额的日志
      */
-    int LOG_SYSTEM_REDUCE_BALANCE = 7;
+    int LOG_SYSTEM_REDUCE_BALANCE = 6;
 
     /**
      * 钱包日志-退款
      */
-    int LOG_REFUND = 8;
-
-    /**
-     * 钱包日志-赠送
-     */
-    int LOG_PRESENT = 9;
+    int LOG_REFUND = 7;
 
 }

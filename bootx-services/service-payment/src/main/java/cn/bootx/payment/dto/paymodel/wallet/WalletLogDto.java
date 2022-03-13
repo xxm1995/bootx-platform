@@ -34,7 +34,7 @@ public class WalletLogDto extends BaseDto implements Serializable {
     /**
      * @see WalletCode
      */
-    @Schema(description= "类型 1开通钱包 2用户主动充值 3系统充值 4admin充值 5支付 6修改安全模式")
+    @Schema(description= "类型")
     private Integer type;
 
     @Schema(description= "交易记录ID")

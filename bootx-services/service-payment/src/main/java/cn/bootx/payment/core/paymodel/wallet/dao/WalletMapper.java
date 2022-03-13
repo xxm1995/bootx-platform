@@ -1,10 +1,13 @@
 package cn.bootx.payment.core.paymodel.wallet.dao;
 
+import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Update;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,7 +30,6 @@ public interface WalletMapper extends BaseMapper<Wallet> {
      * @param date     时间
      * @return 更新数量
      */
-    @Update("update pc_wallet set balance = (balance + #{amount}),last_modifier = #{operator},last_modified_time = #{date},version = (version+1) where id = #{walletId}")
     int increaseBalance(@Param("walletId") Long walletId,@Param("amount") BigDecimal amount,@Param("operator") Long operator,@Param("date") LocalDateTime date);
 
     /**
@@ -39,7 +41,6 @@ public interface WalletMapper extends BaseMapper<Wallet> {
      * @param date     操作时间
      * @return 操作条数
      */
-    @Update("update pc_wallet set balance = (balance - #{amount}),last_modifier = #{operator},last_modified_time = #{date},version = (version+1) where id = #{walletId} and (balance- #{amount}) >= 0")
     int reduceBalance(@Param("walletId") Long walletId,@Param("amount") BigDecimal amount,@Param("operator") Long operator,@Param("date") LocalDateTime date);
 
     /**
@@ -51,7 +52,10 @@ public interface WalletMapper extends BaseMapper<Wallet> {
      * @param date     操作时间
      * @return 操作条数
      */
-    @Update("update pc_wallet set balance = (balance - ?2),lastModifier = ?3,lastModifiedTime = ?4,version = (version+1) where id = ?1 and tid = ?5")
-    int reduceBalanceUnlimited(Long walletId, BigDecimal amount, Long operator, LocalDateTime date);
+    int reduceBalanceUnlimited(@Param("walletId")Long walletId, @Param("amount")BigDecimal amount,@Param("operator") Long operator,@Param("date") LocalDateTime date);
 
+    /**
+     * 待开通钱包的用户列表
+     */
+    Page<UserInfo> pageByNotWallet(Page<UserInfo> mpPage, @Param(Constants.WRAPPER) Wrapper<?> wrapper);
 }

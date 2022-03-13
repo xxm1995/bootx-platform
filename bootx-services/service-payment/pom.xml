@@ -59,12 +59,20 @@
             <version>${IJPay.version}</version>
         </dependency>
 
+        <!-- 身份识别与访问管理 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-iam</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
         <!-- 认证 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-auth</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+
         <!-- 超级查询 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>

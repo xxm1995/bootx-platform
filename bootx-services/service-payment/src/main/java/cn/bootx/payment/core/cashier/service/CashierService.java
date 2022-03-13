@@ -13,6 +13,7 @@ import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.service.PayService;
 import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.exception.payment.PayFailureException;
+import cn.bootx.payment.param.cashier.CashierCombinationPayParam;
 import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
@@ -104,5 +105,27 @@ public class CashierService {
                 .setBusinessId(aggregatePayInfo.getBusinessId());
         PayResult payResult = this.singlePay(cashierSinglePayParam);
         return payResult.getSyncPayInfo().getPayBody();
+    }
+
+    /**
+     * 组合支付
+     */
+    public PayResult combinationPay(CashierCombinationPayParam param){
+        Long userId = SecurityUtil.getUserId();
+        // 处理支付参数
+
+        // 发起支付
+        PayParam payParam = new PayParam()
+                .setTitle(param.getTitle())
+                .setUserId(userId)
+                .setBusinessId(param.getBusinessId())
+                .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setPayModeList(param.getPayModeList());
+        PayResult payResult = payService.pay(payParam);
+
+        if (PayStatusCode.TRADE_REFUNDED == payResult.getPayStatus()){
+            throw new PayFailureException("已经退款");
+        }
+        return payResult;
     }
 }

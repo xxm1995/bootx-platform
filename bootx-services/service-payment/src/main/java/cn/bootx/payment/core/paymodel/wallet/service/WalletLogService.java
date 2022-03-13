@@ -37,4 +37,11 @@ public class WalletLogService {
     public PageResult<WalletLogDto> page(PageParam pageParam, WalletLogQueryParam param){
         return MpUtil.convert2DtoPageResult(walletLogManager.page(pageParam,param));
     }
+
+    /**
+     * 根据钱包id查询钱包日志(分页)
+     */
+    public PageResult<WalletLogDto> pageByWalletId(PageParam pageParam, WalletLogQueryParam param) {
+        return MpUtil.convert2DtoPageResult(walletLogManager.pageByWalletId(pageParam,param));
+    }
 }

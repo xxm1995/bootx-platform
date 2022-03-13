@@ -5,17 +5,23 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.iam.core.user.entity.UserInfo;
+import cn.bootx.iam.param.user.UserInfoParam;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.param.paymodel.wallet.WalletPayParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.util.DesensitizedUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**   
 * 钱包管理
@@ -28,7 +34,7 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
     private final WalletMapper walletMapper;
 
     /**
-     * 更新余额
+     * 增加余额
      *
      * @param walletId 钱包
      * @param amount   金额
@@ -97,5 +103,31 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
         return this.lambdaQuery()
                 .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
+    }
+
+    /**
+     * 待开通钱包的用户列表
+     */
+    public Page<UserInfo> pageByNotWallet(PageParam pageParam, UserInfoParam userInfoParam) {
+        Page<UserInfo> mpPage = MpUtil.getMpPage(pageParam, UserInfo.class);
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        wrapper.isNull("w.id")
+                .orderByDesc("w.id")
+                .like(StrUtil.isNotBlank(userInfoParam.getUsername()),"w.username",userInfoParam.getUsername())
+                .like(StrUtil.isNotBlank(userInfoParam.getName()),"w.name",userInfoParam.getName());
+        return walletMapper.pageByNotWallet(mpPage,wrapper);
+    }
+
+    /**
+     * 查询已经存在钱包的用户id
+     */
+    public List<Long> findExistUserIds(List<Long> userIds) {
+        return this.lambdaQuery()
+                .select(Wallet::getUserId)
+                .in(Wallet::getUserId,userIds)
+                .list().stream()
+                .map(Wallet::getUserId)
+                .collect(Collectors.toList());
+
     }
 }

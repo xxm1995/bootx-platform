@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Tag(name ="钱包日志相关的接口")
 @RestController
-@RequestMapping("/walletLog")
+@RequestMapping("/wallet/log")
 @AllArgsConstructor
 public class WalletLogController {
     private final WalletLogService walletLogService;
@@ -40,4 +40,11 @@ public class WalletLogController {
     public ResResult<PageResult<WalletLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject WalletLogQueryParam param) {
         return Res.ok(walletLogService.page(pageParam,param));
     }
+
+    @Operation(summary = "根据钱包id查询钱包日志(分页)")
+    @GetMapping("/pageByWalletId")
+    public ResResult<PageResult<WalletLogDto>> pageByWalletId(@ParameterObject PageParam pageParam,@ParameterObject WalletLogQueryParam param) {
+        return Res.ok(walletLogService.pageByWalletId(pageParam,param));
+    }
+
 }

@@ -1,8 +1,6 @@
 package cn.bootx.payment.core.paymodel.wallet.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.exception.DataNotExistException;
-import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.paymodel.WalletCode;
 import cn.bootx.payment.core.payment.entity.Payment;
@@ -13,17 +11,13 @@ import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.core.paymodel.wallet.entity.WalletLog;
 import cn.bootx.payment.core.paymodel.wallet.entity.WalletPayment;
 import cn.bootx.payment.exception.waller.WalletLackOfBalanceException;
-import cn.bootx.payment.exception.waller.WalletLogError;
 import cn.bootx.payment.exception.waller.WalletNotExistsException;
-import cn.hutool.core.util.StrUtil;
-import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -65,50 +59,6 @@ public class WalletPayService {
                 .setOperationSource(WalletCode.OPERATION_SOURCE_USER)
                 .setBusinessId(payment.getBusinessId());
         walletLogManager.save(walletLog);
-    }
-
-    /**
-     * 根据支付单对钱包充值的余额进行扣减
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void deductedBalanceByPaymentId(Long paymentId, Long orderId, String remark, Boolean isThrowError) {
-
-        // 根据支付记录ID查询交易的金额和交易的钱包ID
-        WalletLog walletLog =  walletLogManager.findFirstByPayment(paymentId).orElseThrow(DataNotExistException::new);
-        if (walletLog == null) {
-            return;
-        }
-
-        // 充值类型
-        List<Integer> chargeLogType = Lists.newArrayList(WalletCode.LOG_RECHARGE,
-                WalletCode.LOG_AUTO_RECHARGE,
-                WalletCode.LOG_ADMIN_RECHARGE);
-
-        // 保证是充值类型 且充值金额大于0
-        if (!chargeLogType.contains(walletLog.getType()) || BigDecimalUtil.compareTo(walletLog.getAmount(), BigDecimal.ZERO) < 0) {
-            log.warn("退款 发现非充值交易，日志ID:{},交易类型:{}", walletLog.getId(), walletLog.getType());
-            if (isThrowError) {
-                throw new WalletLogError();
-            }
-            return;
-        }
-
-        // 获取钱包ID 并扣减对应金额(允许扣成负数)
-        walletManager.reduceBalanceUnlimited(walletLog.getWalletId(), walletLog.getAmount());
-
-        // 记录日志
-        WalletLog log = new WalletLog()
-                .setWalletId(walletLog.getWalletId())
-                .setUserId(walletLog.getUserId())
-                .setPaymentId(paymentId)
-                .setAmount(walletLog.getAmount())
-                .setType(WalletCode.LOG_SYSTEM_REDUCE_BALANCE)
-                .setRemark(StrUtil.format("系统减少余额 %.2f (" + remark + ")", walletLog.getAmount()))
-                .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM)
-                .setPaymentId(paymentId)
-                .setBusinessId(String.valueOf(orderId));
-        walletLogManager.save(log);
-
     }
 
     /**

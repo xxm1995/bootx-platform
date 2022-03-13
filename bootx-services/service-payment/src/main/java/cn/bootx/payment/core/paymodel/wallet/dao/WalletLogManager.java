@@ -48,9 +48,18 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
      */
     public Page<WalletLog> page(PageParam pageParam, WalletLogQueryParam param) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
-
         return this.lambdaQuery()
                 .orderByDesc(MpBaseEntity::getId)
+                .page(mpPage);
+    }
+    /**
+     * 分页查询 根据钱包id
+     */
+    public Page<WalletLog> pageByWalletId(PageParam pageParam, WalletLogQueryParam param) {
+        Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
+        return this.lambdaQuery()
+                .orderByDesc(MpBaseEntity::getId)
+                .eq(WalletLog::getWalletId,param.getWalletId())
                 .page(mpPage);
     }
 }
