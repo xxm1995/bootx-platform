@@ -19,9 +19,6 @@ import java.time.LocalDateTime;
 public class MpBaseEntity  extends MpIdEntity implements Serializable {
     private static final long serialVersionUID = -2699324766101179583L;
 
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
-
     /** 创建者ID */
     @TableField(fill = FieldFill.INSERT)
     private Long creator;
