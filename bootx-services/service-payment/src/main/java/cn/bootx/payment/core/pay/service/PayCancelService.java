@@ -1,14 +1,14 @@
 package cn.bootx.payment.core.pay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayStatusCode;
+import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
-import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollectionUtil;
@@ -49,7 +49,7 @@ public class PayCancelService {
     public void cancelByPaymentId(Long paymentId){
         // 获取payment和paymentParam数据
         Payment payment = paymentManager.findById(paymentId)
-                .orElseThrow(() -> new BizException("未找到payment"));
+                .orElseThrow(() -> new PayFailureException("未找到payment"));
         this.cancelPayment(payment);
     }
 

@@ -1,7 +1,6 @@
 package cn.bootx.payment.core.cashier.service;
 
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
@@ -94,10 +93,10 @@ public class CashierService {
         else if (ua.contains(PayChannelCode.UA_WECHAT_PAY)) {
             cashierSinglePayParam.setPayChannel(PayChannelCode.WECHAT);
         } else {
-            throw new BizException("不支持的支付方式");
+            throw new PayFailureException("不支持的支付方式");
         }
         String jsonStr = Optional.ofNullable(redisClient.get(PREFIX_KEY + key))
-                .orElseThrow(() -> new BizException("支付超时"));
+                .orElseThrow(() -> new PayFailureException("支付超时"));
         AggregatePayInfo aggregatePayInfo = JSONUtil.toBean(jsonStr, AggregatePayInfo.class);
         cashierSinglePayParam.setTitle(aggregatePayInfo.getTitle())
                 .setAmount(aggregatePayInfo.getAmount())

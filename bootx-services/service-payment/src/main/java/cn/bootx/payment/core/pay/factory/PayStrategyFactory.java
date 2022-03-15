@@ -49,6 +49,7 @@ public class PayStrategyFactory {
             case PayChannelCode.CREDIT:
                 break;
             case PayChannelCode.VOUCHER:
+                strategy = SpringUtil.getBean(VoucherStrategy.class);
                 break;
             case PayChannelCode.CREDIT_CARD:
                 break;

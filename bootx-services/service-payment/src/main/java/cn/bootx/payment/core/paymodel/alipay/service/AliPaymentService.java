@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
@@ -10,6 +9,7 @@ import cn.bootx.payment.core.paymodel.alipay.dao.AliPaymentManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AliPayment;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.RefundableInfo;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
@@ -68,7 +68,7 @@ public class AliPaymentService {
 
         // 更新支付记录
         Payment payment = paymentManager.findById(id)
-                .orElseThrow(() -> new BizException("支付记录不存在"));
+                .orElseThrow(() -> new PayFailureException("支付记录不存在"));
 
         // 创建支付宝支付记录
         AliPayment aliPayment = new AliPayment();

@@ -1,7 +1,7 @@
 package cn.bootx.payment.code.paymodel;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayWayEnum;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import lombok.experimental.UtilityClass;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ public class WeChatPayWay {
         return PAY_WAYS.stream()
                 .filter(e -> e.getNo() == no)
                 .findFirst()
-                .orElseThrow(() -> new BizException("不存在的支付方式"));
+                .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
     /**
      * 根据数字编号获取
@@ -34,7 +34,7 @@ public class WeChatPayWay {
         return PAY_WAYS.stream()
                 .filter(e -> Objects.equals(code,e.getCode()))
                 .findFirst()
-                .orElseThrow(() -> new BizException("不存在的支付方式"));
+                .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
 
     /**

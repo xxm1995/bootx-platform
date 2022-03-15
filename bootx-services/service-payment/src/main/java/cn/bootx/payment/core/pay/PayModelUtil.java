@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
@@ -38,7 +39,7 @@ public class PayModelUtil {
         return payParam.getPayModeList().stream()
                 .filter(payMode -> PayChannelCode.SYNC_TYPE.contains(payMode.getPayChannel()))
                 .findFirst()
-                .orElseThrow(() -> new BizException("支付方式数据异常"));
+                .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
     }
 
     /**

@@ -8,13 +8,13 @@ package cn.bootx.payment.code.paymodel;
 public interface VoucherCode {
 
     /**
-     * 状态-正常
+     * 状态-启用
      */
     int STATUS_NORMAL = 1;
 
 
     /**
-     * 状态-禁用
+     * 状态-停用
      */
     int STATUS_FORBIDDEN = 2;
 }

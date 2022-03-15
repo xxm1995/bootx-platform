@@ -1,18 +1,18 @@
 package cn.bootx.payment.core.pay.strategy;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
-import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.core.paymodel.wechat.service.*;
 import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.wechat.WeChatPayParam;
 import cn.hutool.core.util.StrUtil;
@@ -71,7 +71,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
                 this.weChatPayParam = new WeChatPayParam();
             }
         } catch (JSONException e) {
-            throw new BizException("支付参数错误");
+            throw new PayFailureException("支付参数错误");
         }
 
         // 检查金额
@@ -178,7 +178,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
         // 检查并获取微信支付配置
         this.weChatPayConfig = Optional.ofNullable(this.weChatPayConfig)
                 .orElse(weChatPayConfigManager.findEnable()
-                        .orElseThrow(() -> new BizException("支付配置不存在")));
+                        .orElseThrow(() -> new PayFailureException("支付配置不存在")));
         WeChatPayConfigService.initApiConfig(weChatPayConfig);;
     }
 }

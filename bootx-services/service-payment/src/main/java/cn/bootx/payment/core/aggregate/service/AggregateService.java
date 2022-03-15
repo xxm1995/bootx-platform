@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.core.aggregate.entity.AggregatePayInfo;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.cashier.CashierSinglePayParam;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
@@ -43,7 +44,7 @@ public class AggregateService {
      */
     public int getPayChannel(String authCode){
         if (StrUtil.isBlank(authCode)){
-            throw new BizException("付款码不可为空");
+            throw new PayFailureException("付款码不可为空");
         }
         String[] wx = { "10", "11", "12", "13", "14", "15" };
         String[] ali = { "25", "26", "27", "28", "29", "30" };
@@ -56,7 +57,7 @@ public class AggregateService {
         else if (StrUtil.startWithAny(authCode.substring(0, 2), ali)) {
             return PayChannelCode.ALI;
         } else {
-            throw new BizException("不支持的支付方式");
+            throw new PayFailureException("不支持的支付方式");
         }
     }
 }

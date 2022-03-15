@@ -1,6 +1,7 @@
 package cn.bootx.payment.code.pay;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -39,7 +40,7 @@ public enum PayWayEnum {
         return Arrays.stream(PayWayEnum.values())
                 .filter(e -> e.getNo() == no)
                 .findFirst()
-                .orElseThrow(() -> new BizException("不存在的支付方式"));
+                .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
     /**
      * 根据字符编码获取
@@ -48,6 +49,6 @@ public enum PayWayEnum {
         return Arrays.stream(PayWayEnum.values())
                 .filter(e -> Objects.equals(code,e.getCode()))
                 .findFirst()
-                .orElseThrow(() -> new BizException("不存在的支付方式"));
+                .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
 }

@@ -47,6 +47,14 @@ public class VoucherManager extends BaseManager<VoucherMapper, Voucher> {
     public Optional<Voucher> findByCardNo(String cardNo){
         return this.findByField(Voucher::getCardNo,cardNo);
     }
+
+    /**
+     * 根据卡号查询
+     */
+    public List<Voucher> findByCardNoList(List<String> cardNos){
+        return this.findAllByFields(Voucher::getCardNo,cardNos);
+    }
+
     /**
      * 更改状态
      */

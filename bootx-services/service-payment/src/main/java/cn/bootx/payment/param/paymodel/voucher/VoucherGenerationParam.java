@@ -1,11 +1,13 @@
 package cn.bootx.payment.param.paymodel.voucher;
 
+import cn.hutool.core.date.DatePattern;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -27,10 +29,12 @@ public class VoucherGenerationParam {
     private Boolean enduring;
 
     @Schema(description = "开始时间")
-    private LocalDateTime startTime;
+    @JsonFormat(pattern = DatePattern.NORM_DATE_PATTERN)
+    private LocalDate startTime;
 
     @Schema(description = "结束时间")
-    private LocalDateTime endTime;
+    @JsonFormat(pattern = DatePattern.NORM_DATE_PATTERN)
+    private LocalDate endTime;
 
     /**
      * @see cn.bootx.payment.code.paymodel.VoucherCode

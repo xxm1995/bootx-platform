@@ -11,6 +11,7 @@ import cn.bootx.payment.code.paymodel.AliPayWay;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.dto.paymodel.alipay.AlipayConfigDto;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigParam;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigQuery;
 import cn.hutool.core.bean.BeanUtil;
@@ -57,7 +58,7 @@ public class AlipayConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void setUpActivity(Long id){
-        AlipayConfig mailConfig = alipayConfigManager.findById(id).orElseThrow(() -> new BizException("支付宝配置不存在"));
+        AlipayConfig mailConfig = alipayConfigManager.findById(id).orElseThrow(DataNotExistException::new);
         if (Objects.equals(mailConfig.getActivity(),Boolean.TRUE)){
             return;
         }
@@ -71,7 +72,7 @@ public class AlipayConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void clearActivity(Long id){
-        AlipayConfig mailConfig = alipayConfigManager.findById(id).orElseThrow(() -> new BizException("支付宝配置不存在"));
+        AlipayConfig mailConfig = alipayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("支付宝配置不存在"));
         if (Objects.equals(mailConfig.getActivity(),Boolean.FALSE)){
             return;
         }
@@ -85,7 +86,7 @@ public class AlipayConfigService {
     @Transactional(rollbackFor = Exception.class)
     public AlipayConfigDto update(AlipayConfigParam param){
         AlipayConfig alipayConfig = alipayConfigManager.findById(param.getId())
-                .orElseThrow(() -> new BizException("支付宝配置不存在"));
+                .orElseThrow(DataNotExistException::new);
         BeanUtil.copyProperties(param,alipayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
         if (CollUtil.isNotEmpty(param.getPayWayList())){

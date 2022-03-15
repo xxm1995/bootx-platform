@@ -65,7 +65,7 @@ public class PaymentService {
         RefundableInfo refundableInfo = refundableInfos.stream()
                 .filter(o -> o.getPayChannel() == payChannelEnum.getNo())
                 .findFirst()
-                .orElseThrow(() -> new BizException("数据不存在"));
+                .orElseThrow(() -> new PayFailureException("数据不存在"));
         refundableInfos.remove(refundableInfo);
         refundableInfo.setAmount(refundableInfo.getAmount().subtract(amount));
         refundableInfos.add(refundableInfo);

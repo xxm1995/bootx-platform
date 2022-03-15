@@ -1,18 +1,18 @@
 package cn.bootx.payment.core.pay.strategy;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.paymodel.AliPayCode;
-import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.core.paymodel.alipay.service.*;
 import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
 import cn.hutool.core.util.StrUtil;
@@ -66,7 +66,7 @@ public class AliPayStrategy extends AbsPayStrategy {
                 this.aliPayParam = new AliPayParam();
             }
         } catch (JSONException e) {
-            throw new BizException("支付参数错误");
+            throw new PayFailureException("支付参数错误");
         }
         // 检查金额
         PayModeParam payMode = this.getPayMode();
@@ -175,7 +175,7 @@ public class AliPayStrategy extends AbsPayStrategy {
     private void initAlipayConfig(){
         // 检查并获取支付宝支付配置
         this.alipayConfig = alipayConfigManager.findActivity()
-                .orElseThrow(() -> new BizException("支付配置不存在"));
+                .orElseThrow(() -> new PayFailureException("支付配置不存在"));
         AlipayConfigService.initApiConfig(this.alipayConfig);
     }
 }

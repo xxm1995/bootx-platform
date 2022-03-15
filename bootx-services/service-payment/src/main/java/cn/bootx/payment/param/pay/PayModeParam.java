@@ -6,6 +6,7 @@ import cn.bootx.payment.core.pay.convert.PayConvert;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
+import cn.bootx.payment.param.paymodel.voucher.VoucherPayParam;
 import cn.bootx.payment.param.paymodel.wechat.WeChatPayParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -44,6 +45,7 @@ public class PayModeParam implements Serializable {
     /**
      * @see AliPayParam
      * @see WeChatPayParam
+     * @see VoucherPayParam
      */
     @Schema(description= "扩展参数的json字符串")
     private String extraParamsJson;

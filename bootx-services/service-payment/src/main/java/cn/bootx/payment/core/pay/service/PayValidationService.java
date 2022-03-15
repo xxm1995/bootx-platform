@@ -1,9 +1,9 @@
 package cn.bootx.payment.core.pay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +47,7 @@ public class PayValidationService {
                 .filter(PayChannelCode.SYNC_TYPE::contains)
                 .count();
         if (syncPayModeCount>1){
-            throw new BizException("组合支付时只允许有一个异步支付方式");
+            throw new PayFailureException("组合支付时只允许有一个异步支付方式");
         }
     }
 }

@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.pay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.PayModelUtil;
@@ -12,6 +11,7 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.dto.pay.PayResult;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.exception.payment.PayNotExistedException;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.param.pay.PayModeParam;
@@ -192,13 +192,13 @@ public class PayService {
         PayModeParam oldModeParam = oldPayModes.stream()
                 .filter(payMode -> PayChannelCode.SYNC_TYPE.contains(payMode.getPayChannel()))
                 .findFirst()
-                .orElseThrow(() -> new BizException("支付方式数据异常"));
+                .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
 
         // 新的异步支付方式
         PayModeParam payModeParam = payParam.getPayModeList().stream()
                 .filter(payMode -> PayChannelCode.SYNC_TYPE.contains(payMode.getPayChannel()))
                 .findFirst()
-                .orElseThrow(() -> new BizException("支付方式数据异常"));
+                .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
         payModeParam.setAmount(oldModeParam.getAmount());
 
         return payModeParam;
