@@ -37,9 +37,9 @@
         <ttl.version>2.12.1</ttl.version>
         <logback-classic.version>1.2.3</logback-classic.version>
         <xxl-job.version>2.3.0</xxl-job.version>
-        <mybatis-plus.version>3.5.0</mybatis-plus.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <swagger-annotations.version>2.1.11</swagger-annotations.version>
-        <springdoc.version>1.5.13</springdoc.version>
+        <springdoc.version>1.6.6</springdoc.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <sa-token.version>1.29.0</sa-token.version>

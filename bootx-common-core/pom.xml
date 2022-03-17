@@ -14,17 +14,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hutool.version>5.7.18</hutool.version>
+        <hutool.version>5.7.22</hutool.version>
         <jackson.version>2.12.3</jackson.version>
         <lang3.version>3.11</lang3.version>
         <collections4.version>4.4</collections4.version>
         <text.version>1.9</text.version>
         <commons-io.version>2.11.0</commons-io.version>
-        <guava.version>31.0.1-jre</guava.version>
+        <guava.version>31.1-jre</guava.version>
         <validator.version>7.0.1.Final</validator.version>
         <servlet-api.version>4.0.1</servlet-api.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <browscap.version>1.3.11</browscap.version>
     </properties>
 
     <dependencies>
