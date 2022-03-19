@@ -20,7 +20,6 @@ import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.DesensitizedUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,13 +59,14 @@ public class CashierService {
                 .setPayChannel(param.getPayChannel())
                 .setPayWay(param.getPayWay())
                 .setAmount(param.getAmount());
-        // 判断是否可能是付款码支付
-        if (StrUtil.isNotBlank(param.getAuthCode())){
-            HashMap<String, String> map = new HashMap<>(1);
-            map.put(PayModelExtraCode.AUTH_CODE,param.getAuthCode());
-            String extraParamsJson = PayModelUtil.buildExtraParamsJson(param.getPayChannel(), map);
-            payModeParam.setExtraParamsJson(extraParamsJson);
-        }
+
+        // 处理附加参数
+        HashMap<String, String> map = new HashMap<>(1);
+        map.put(PayModelExtraCode.AUTH_CODE,param.getAuthCode());
+        map.put(PayModelExtraCode.VOUCHER_NO,param.getVoucherNo());
+        String extraParamsJson = PayModelUtil.buildExtraParamsJson(param.getPayChannel(), map);
+        payModeParam.setExtraParamsJson(extraParamsJson);
+
         PayParam payParam = new PayParam()
                 .setTitle(param.getTitle())
                 .setBusinessId(param.getBusinessId())
@@ -102,7 +102,7 @@ public class CashierService {
                 .setAmount(aggregatePayInfo.getAmount())
                 .setBusinessId(aggregatePayInfo.getBusinessId());
         PayResult payResult = this.singlePay(cashierSinglePayParam);
-        return payResult.getSyncPayInfo().getPayBody();
+        return payResult.getAsyncPayInfo().getPayBody();
     }
 
     /**

@@ -1,8 +1,8 @@
 package cn.bootx.payment.core.pay.strategy;
 
 import cn.bootx.payment.code.pay.PayChannelCode;
-import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.paymodel.voucher.entity.Voucher;
 import cn.bootx.payment.core.paymodel.voucher.service.VoucherPayService;
 import cn.bootx.payment.core.paymodel.voucher.service.VoucherPaymentService;
 import cn.bootx.payment.core.paymodel.voucher.service.VoucherService;
@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
@@ -26,6 +28,7 @@ public class VoucherStrategy extends AbsPayStrategy {
     private final VoucherPayService voucherPayService;
     private final VoucherService voucherService;
     private final VoucherPaymentService voucherPaymentService;
+    private List<Voucher> vouchers;
 
     @Override
     public int getType() {
@@ -38,16 +41,15 @@ public class VoucherStrategy extends AbsPayStrategy {
     @Override
     public void doBeforePayHandler() {
         // 获取并校验余额
+        this.vouchers = voucherPayService.getAndCheckVoucher(this.getPayMode());
     }
 
+    /**
+     * 支付操作
+     */
     @Override
     public void doPayHandler() {
-
-    }
-
-    @Override
-    public void doErrorHandler(ExceptionInfo exceptionInfo) {
-
+        voucherPayService.pay(getPayMode().getAmount(),this.getPayment(),this.vouchers);
     }
 
     @Override

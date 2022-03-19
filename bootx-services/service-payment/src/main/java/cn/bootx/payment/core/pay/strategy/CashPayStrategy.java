@@ -3,7 +3,6 @@ package cn.bootx.payment.core.pay.strategy;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
-import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.cash.service.CashService;
@@ -39,6 +38,9 @@ public class CashPayStrategy extends AbsPayStrategy {
         return PayChannelCode.CASH;
     }
 
+    /**
+     * 支付前检查
+     */
     @Override
     public void doBeforePayHandler() {
         // 检查金额
@@ -55,14 +57,6 @@ public class CashPayStrategy extends AbsPayStrategy {
         cashService.pay(this.getPayMode(),
                 this.getPayment(),
                 this.getPayParam());
-    }
-
-    /**
-     * 支付失败的处理方式
-     */
-    @Override
-    public void doErrorHandler(ExceptionInfo exceptionInfo) {
-        this.doCloseHandler();
     }
 
     /**

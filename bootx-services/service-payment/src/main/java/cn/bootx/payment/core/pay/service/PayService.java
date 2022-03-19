@@ -51,13 +51,13 @@ public class PayService {
     @Transactional(rollbackFor = Exception.class)
     public PayResult pay(PayParam payParam) {
         // 支付参数检查
-        payValidationService.validationSyncPayMode(payParam);
+        payValidationService.validationAsyncPayMode(payParam);
 
         // 获取并校验支付状态
         Payment payment = paymentService.getAndCheckPaymentByBusinessId(payParam.getBusinessId());
 
         // 异步支付且非第一次支付
-        if (Objects.nonNull(payment) && payment.isSyncPayMode()){
+        if (Objects.nonNull(payment) && payment.isAsyncPayMode()){
             return this.paySyncNotFirst(payParam,payment);
         } else {
             // 首次支付或同步支付
@@ -104,7 +104,7 @@ public class PayService {
 
         // 1.获取 异步支付 通道，通过工厂生成对应的策略组
         PayParam oldPayParam = PaymentBuilder.buildPayParamByPayment(payment);
-        PayModeParam payModeParam = this.getSyncPayModeParam(payParam,oldPayParam);
+        PayModeParam payModeParam = this.getAsyncPayModeParam(payParam,oldPayParam);
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(Collections.singletonList(payModeParam));
 
         // 2.初始化支付的参数
@@ -185,7 +185,7 @@ public class PayService {
     /**
      * 获取异步支付参数
      */
-    private PayModeParam getSyncPayModeParam(PayParam payParam, PayParam oldPaymentParam){
+    private PayModeParam getAsyncPayModeParam(PayParam payParam, PayParam oldPaymentParam){
 
         List<PayModeParam> oldPayModes = oldPaymentParam.getPayModeList();
         // 旧的异步支付方式

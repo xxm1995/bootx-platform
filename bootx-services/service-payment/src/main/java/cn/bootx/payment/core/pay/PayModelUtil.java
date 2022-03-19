@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.pay;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
@@ -8,10 +7,13 @@ import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
+import cn.bootx.payment.param.paymodel.voucher.VoucherPayParam;
 import cn.bootx.payment.param.paymodel.wechat.WeChatPayParam;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.experimental.UtilityClass;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +37,7 @@ public class PayModelUtil {
     /**
      * 获取异步支付参数
      */
-    public PayModeParam getSyncPayModeParam(PayParam payParam){
+    public PayModeParam getAsyncPayModeParam(PayParam payParam){
         return payParam.getPayModeList().stream()
                 .filter(payMode -> PayChannelCode.SYNC_TYPE.contains(payMode.getPayChannel()))
                 .findFirst()
@@ -58,6 +60,14 @@ public class PayModelUtil {
             case WECHAT:{
                 return JSONUtil.toJsonStr(new WeChatPayParam()
                         .setAuthCode(map.get(PayModelExtraCode.AUTH_CODE)));
+            }
+            case VOUCHER:{
+                String voucherNo = map.get(PayModelExtraCode.VOUCHER_NO);
+                List<String> list = new ArrayList<>();
+                if (StrUtil.isNotBlank(voucherNo)){
+                    list.add(voucherNo);
+                }
+               return JSONUtil.toJsonStr(new VoucherPayParam().setCardNoList(list));
             }
             default:{
                 return null;

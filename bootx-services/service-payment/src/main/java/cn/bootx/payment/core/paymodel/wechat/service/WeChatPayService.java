@@ -83,9 +83,9 @@ public class WeChatPayService {
         }
         // payBody到线程存储
         if (StrUtil.isNotBlank(payBody)) {
-            AsyncPayInfo syncPayInfo = new AsyncPayInfo()
+            AsyncPayInfo asyncPayInfo = new AsyncPayInfo()
                     .setPayBody(payBody);
-            AsyncPayInfoLocal.set(syncPayInfo);
+            AsyncPayInfoLocal.set(asyncPayInfo);
         }
 
     }

@@ -38,8 +38,8 @@ public class AliPaymentService {
      * 更新 payment 中 异步支付类型信息
      */
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam) {
-        payment.setSyncPayMode(true)
-                .setSyncPayChannel(PayChannelCode.ALI);
+        payment.setAsyncPayMode(true)
+                .setAsyncPayChannel(PayChannelCode.ALI);
         // TODO 设置超时时间
 
         List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();

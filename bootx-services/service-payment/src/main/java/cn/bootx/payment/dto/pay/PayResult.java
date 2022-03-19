@@ -22,10 +22,10 @@ public class PayResult implements Serializable {
     private static final long serialVersionUID = 7729669194741851195L;
 
     @Schema(description= "是否是异步支付")
-    private boolean syncPayMode;
+    private boolean asyncPayMode;
 
     @Schema(description= "异步支付通道")
-    private Integer syncPayChannel;
+    private Integer asyncPayChannel;
 
     /** 主支付记录 */
     @JsonIgnore
@@ -38,6 +38,6 @@ public class PayResult implements Serializable {
     private int payStatus;
 
     @Schema(description= "异步支付参数")
-    private AsyncPayInfo syncPayInfo;
+    private AsyncPayInfo asyncPayInfo;
 
 }

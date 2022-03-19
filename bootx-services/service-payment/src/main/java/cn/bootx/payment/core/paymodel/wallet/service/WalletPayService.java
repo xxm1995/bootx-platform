@@ -53,7 +53,7 @@ public class WalletPayService {
                 .setWalletId(wallet.getId())
                 .setUserId(wallet.getUserId())
                 .setPaymentId(payment.getId())
-                .setAmount(payment.getAmount())
+                .setAmount(amount)
                 .setType(WalletCode.LOG_PAY)
                 .setRemark(String.format("钱包支付金额 %.2f ", amount))
                 .setOperationSource(WalletCode.OPERATION_SOURCE_USER)

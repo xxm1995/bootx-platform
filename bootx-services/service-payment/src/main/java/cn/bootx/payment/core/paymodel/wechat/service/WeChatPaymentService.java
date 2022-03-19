@@ -38,8 +38,8 @@ public class WeChatPaymentService {
      * 更新 payment 中 异步支付类型信息
      */
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
-        payment.setSyncPayMode(true)
-                .setSyncPayChannel(PayChannelCode.WECHAT);
+        payment.setAsyncPayMode(true)
+                .setAsyncPayChannel(PayChannelCode.WECHAT);
 
         List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();
         List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();

@@ -1,0 +1,42 @@
+package cn.bootx.payment.core.paymodel.voucher.entity;
+
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import java.math.BigDecimal;
+
+/**   
+* 充值卡日志
+* @author xxm  
+* @date 2022/3/17 
+*/
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Accessors(chain = true)
+@TableName("pc_voucher_log")
+public class VoucherLog extends MpBaseEntity {
+
+    /** 储值卡id */
+    private Long voucherId;
+
+    /** 储值卡号 */
+    private Long voucherNo;
+
+    /** 类型 */
+    private Integer type;
+
+    /** 交易记录ID */
+    private Long paymentId;
+
+    /** 业务ID */
+    private String businessId;
+
+    /** 备注 */
+    private String remark;
+
+    /** 金额 */
+    private BigDecimal amount;
+}

@@ -42,6 +42,5 @@ public class VoucherQueryService {
      */
     public VoucherDto findByCardNo(String cardNo){
         return voucherManager.findByCardNo(cardNo).map(Voucher::toDto).orElseThrow(DataNotExistException::new);
-
     }
 }

@@ -80,7 +80,8 @@ public abstract class AbsPayStrategy {
     /**
      * 支付失败的处理方式
      */
-    public abstract void doErrorHandler(ExceptionInfo exceptionInfo);
+    public void doErrorHandler(ExceptionInfo exceptionInfo){
+    }
 
     /**
      * 异步支付成功的处理方式

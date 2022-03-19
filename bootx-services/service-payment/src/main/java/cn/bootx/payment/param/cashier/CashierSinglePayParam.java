@@ -34,4 +34,7 @@ public class CashierSinglePayParam {
     @Schema(description = "付款码")
     private String authCode;
 
+    @Schema(description = "储值卡")
+    private String voucherNo;
+
 }

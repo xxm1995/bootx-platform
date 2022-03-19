@@ -46,8 +46,6 @@ public class PayStrategyFactory {
             case PayChannelCode.WALLET:
                 strategy = SpringUtil.getBean(WalletPayStrategy.class);
                 break;
-            case PayChannelCode.CREDIT:
-                break;
             case PayChannelCode.VOUCHER:
                 strategy = SpringUtil.getBean(VoucherStrategy.class);
                 break;

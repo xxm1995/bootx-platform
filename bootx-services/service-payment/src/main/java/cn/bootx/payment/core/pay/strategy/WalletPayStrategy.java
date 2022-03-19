@@ -3,7 +3,6 @@ package cn.bootx.payment.core.pay.strategy;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
-import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
@@ -52,14 +51,6 @@ public class WalletPayStrategy extends AbsPayStrategy {
         if (BigDecimalUtil.compareTo(this.wallet.getBalance(),getPayMode().getAmount()) < 0) {
             throw new WalletLackOfBalanceException();
         }
-    }
-
-    /**
-     * 支付异常处理
-     */
-    @Override
-    public void doErrorHandler(ExceptionInfo exceptionInfo) {
-        walletPaymentService.updateError(this.getPayment().getId());
     }
 
     /**

@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
 * @author xxm
@@ -35,10 +35,10 @@ public class VoucherDto extends BaseDto {
     private Boolean enduring;
 
     @Schema(description = "开始时间")
-    private LocalDate startTime;
+    private LocalDateTime startTime;
 
     @Schema(description = "结束时间")
-    private LocalDate endTime;
+    private LocalDateTime endTime;
 
     /**
      * @see cn.bootx.payment.code.paymodel.VoucherCode

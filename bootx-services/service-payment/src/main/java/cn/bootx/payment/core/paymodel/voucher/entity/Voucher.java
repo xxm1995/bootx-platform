@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
 * 储值卡
@@ -39,10 +39,10 @@ public class Voucher extends MpBaseEntity implements EntityBaseFunction<VoucherD
     private Boolean enduring;
 
     /** 开始时间 */
-    private LocalDate startTime;
+    private LocalDateTime startTime;
 
     /** 结束时间 */
-    private LocalDate endTime;
+    private LocalDateTime endTime;
 
     /**
      * 状态

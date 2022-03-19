@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -29,12 +29,12 @@ public class VoucherGenerationParam {
     private Boolean enduring;
 
     @Schema(description = "开始时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATE_PATTERN)
-    private LocalDate startTime;
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+    private LocalDateTime startTime;
 
     @Schema(description = "结束时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATE_PATTERN)
-    private LocalDate endTime;
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
+    private LocalDateTime endTime;
 
     /**
      * @see cn.bootx.payment.code.paymodel.VoucherCode

@@ -1,6 +1,5 @@
 package cn.bootx.payment.code.pay;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,6 @@ public enum PayChannelEnum {
     UNION_PAY(PayChannelCode.UNION_PAY,"UNION_PAY"),
     CASH(PayChannelCode.CASH,"CASH"),
     WALLET(PayChannelCode.WALLET,"WALLET"),
-    CREDIT(PayChannelCode.CREDIT,"CREDIT"),
     VOUCHER(PayChannelCode.VOUCHER,"VOUCHER"),
     CREDIT_CARD(PayChannelCode.CREDIT_CARD,"CREDIT"),
     APPLE_PAY(PayChannelCode.APPLE_PAY,"APPLE"),

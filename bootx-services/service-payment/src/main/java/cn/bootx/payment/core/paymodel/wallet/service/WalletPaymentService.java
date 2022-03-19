@@ -12,8 +12,6 @@ import cn.bootx.payment.param.pay.PayParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -45,18 +43,6 @@ public class WalletPaymentService {
         walletPaymentManager.save(walletPayment);
     }
 
-    /**
-     * 更新错误状态
-     */
-    @Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
-    public void updateError(Long paymentId){
-        Optional<WalletPayment> payment = walletPaymentManager.findByPaymentId(paymentId);
-        if (payment.isPresent()){
-            WalletPayment walletPayment = payment.get();
-            walletPayment.setPayStatus(PayStatusCode.TRADE_FAIL);
-            walletPaymentManager.updateById(walletPayment);
-        }
-    }
     /**
      * 更新成功状态
      */

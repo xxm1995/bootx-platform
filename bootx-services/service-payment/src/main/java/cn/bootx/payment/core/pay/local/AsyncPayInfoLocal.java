@@ -14,8 +14,8 @@ public final class AsyncPayInfoLocal {
     /**
      * 设置
      */
-    public static void set(AsyncPayInfo syncPayInfo) {
-        THREAD_LOCAL.set(syncPayInfo);
+    public static void set(AsyncPayInfo asyncPayInfo) {
+        THREAD_LOCAL.set(asyncPayInfo);
     }
 
     /**

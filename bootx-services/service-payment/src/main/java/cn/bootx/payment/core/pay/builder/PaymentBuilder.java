@@ -118,8 +118,8 @@ public class PaymentBuilder {
             PaymentDto paymentDto = new PaymentDto();
             BeanUtils.copyProperties(payment, paymentDto);
             // 异步支付信息
-            paymentResult.setSyncPayChannel(payment.getSyncPayChannel())
-                    .setSyncPayMode(payment.isSyncPayMode())
+            paymentResult.setAsyncPayChannel(payment.getAsyncPayChannel())
+                    .setAsyncPayMode(payment.isAsyncPayMode())
                     .setPayStatus(payment.getPayStatus())
                     .setPayment(paymentDto);
 
@@ -130,7 +130,7 @@ public class PaymentBuilder {
                     .filter(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()))
                     .collect(Collectors.toList());
             if (!CollUtil.isEmpty(moneyPayTypeInfos)) {
-                paymentResult.setSyncPayInfo(AsyncPayInfoLocal.get());
+                paymentResult.setAsyncPayInfo(AsyncPayInfoLocal.get());
             }
             // 清空线程变量
         } finally {
