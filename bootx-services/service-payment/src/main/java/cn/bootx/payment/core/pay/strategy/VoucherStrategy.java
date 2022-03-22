@@ -1,7 +1,9 @@
 package cn.bootx.payment.core.pay.strategy;
 
 import cn.bootx.payment.code.pay.PayChannelCode;
+import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.voucher.entity.Voucher;
 import cn.bootx.payment.core.paymodel.voucher.service.VoucherPayService;
 import cn.bootx.payment.core.paymodel.voucher.service.VoucherPaymentService;
@@ -26,6 +28,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 public class VoucherStrategy extends AbsPayStrategy {
     private final VoucherPayService voucherPayService;
     private final VoucherPaymentService voucherPaymentService;
+    private final PaymentService paymentService;
     private List<Voucher> vouchers;
 
     @Override
@@ -75,5 +78,6 @@ public class VoucherStrategy extends AbsPayStrategy {
     public void doRefundHandler() {
         voucherPayService.refund(this.getPayment().getId(),this.getPayMode().getAmount());
         voucherPaymentService.updateRefund(this.getPayment().getId(),this.getPayMode().getAmount());
+        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.VOUCHER);
     }
 }

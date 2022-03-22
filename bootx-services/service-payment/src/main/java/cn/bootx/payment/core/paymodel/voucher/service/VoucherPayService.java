@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.voucher.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.payment.code.paymodel.VoucherCode;
@@ -48,12 +49,12 @@ public class VoucherPayService {
     public List<Voucher> getAndCheckVoucher(PayModeParam payModeParam) {
         VoucherPayParam voucherPayParam;
         try {
-            // 支付宝参数验证
+            // 储值卡参数验证
             String extraParamsJson = payModeParam.getExtraParamsJson();
             if (StrUtil.isNotBlank(extraParamsJson)) {
                 voucherPayParam = JSONUtil.toBean(extraParamsJson, VoucherPayParam.class);
             } else {
-                throw new PayFailureException("");
+                throw new PayFailureException("储值卡支付参数错误");
             }
         } catch (JSONException e) {
             throw new PayFailureException("储值卡支付参数错误");
@@ -86,7 +87,7 @@ public class VoucherPayService {
      * 支付
      */
     public void pay(BigDecimal amount, Payment payment, List<Voucher> vouchers) {
-        // 排序,金额小的在前
+        // 排序,金额小的在前 TODO 有期限的在前面, 同样有期限到期时间短的在前面, 同样到期日金额小的在前面
         vouchers.sort((o1, o2) -> BigDecimalUtil.compareTo(o1.getBalance(), o2.getBalance()));
         List<VoucherLog> voucherLogs = new ArrayList<>();
 
@@ -109,7 +110,7 @@ public class VoucherPayService {
             if (BigDecimalUtil.compareTo(amount, balance) == 1) {
                 amount = amount.subtract(balance);
                 voucher.setBalance(BigDecimal.ZERO);
-                voucherLog.setAmount(amount);
+                voucherLog.setAmount(balance);
             } else {
                 voucher.setBalance(balance.subtract(amount));
                 voucherLog.setAmount(voucher.getBalance());
@@ -148,52 +149,25 @@ public class VoucherPayService {
     }
 
     /**
-     * 退款 部分退款平均分摊到到支付使用的储值卡上
+     * 退款 退到使用的第一个卡上
      */
     public void refund(Long paymentId, BigDecimal amount){
         VoucherPayment voucherPayment = voucherPaymentManager.findByPaymentId(paymentId).orElseThrow(() -> new BizException("储值卡支付记录不存在"));
 
-        // 分摊比例
-        BigDecimal proportion = BigDecimalUtil.divide(voucherPayment.getAmount(), amount);
+        Long voucherId = Long.valueOf(voucherPayment.getVoucherIds().split(",")[0]);
+        Voucher voucher = voucherManager.findById(voucherId).orElseThrow(DataNotExistException::new);
 
-        // 查找支付记录日志
-        List<VoucherLog> voucherLogs = voucherLogManager.findByPaymentIdAndType(paymentId, VoucherCode.LOG_PAY);
-        // 查出关联的储值卡
-        Map<Long, VoucherLog> voucherLogMap = voucherLogs.stream().collect(Collectors.toMap(VoucherLog::getVoucherId, o -> o));
-        List<Voucher> vouchers = voucherManager.findAllByIds(voucherLogMap.keySet());
+        voucher.setBalance(voucher.getBalance().add(amount));
 
-        List<VoucherLog> logs = new ArrayList<>();
-
-        // 已经分摊金额
-        BigDecimal alreadyShareValue = BigDecimal.ZERO;
-        //计算 分摊至订单细节的金额 先分摊N-1个, 剩下的分摊到最后一个
-        for (int i = 0; i < vouchers.size(); i++) {
-            Voucher voucher = vouchers.get(i);
-            VoucherLog voucherLog = voucherLogMap.get(voucher.getId());
-            // 分摊退款值
-            BigDecimal priceChange;
-            // 最后一个订单分摊剩余的
-            if (vouchers.size() - 1 == i) {
-                priceChange = BigDecimalUtil.subtract(amount, alreadyShareValue);
-            } else {
-                // 退款分摊金额
-                priceChange = BigDecimalUtil.multiply(voucherLog.getAmount(), proportion);
-                // 累加到已分摊金额上
-                alreadyShareValue = BigDecimalUtil.add(alreadyShareValue, priceChange);
-            }
-            voucher.setBalance(voucher.getBalance().add(priceChange));
-            // logs
-            VoucherLog log = new VoucherLog()
-                    .setAmount(priceChange)
-                    .setPaymentId(paymentId)
-                    .setBusinessId(voucherLog.getBusinessId())
-                    .setVoucherId(voucher.getId())
-                    .setVoucherNo(voucher.getCardNo())
-                    .setType(VoucherCode.LOG_REFUND);
-            logs.add(log);
-        }
-        voucherManager.updateAllById(vouchers);
-        voucherLogManager.saveAll(logs);
+        VoucherLog log = new VoucherLog()
+                .setAmount(amount)
+                .setPaymentId(paymentId)
+                .setBusinessId(voucherPayment.getBusinessId())
+                .setVoucherId(voucher.getId())
+                .setVoucherNo(voucher.getCardNo())
+                .setType(VoucherCode.LOG_REFUND);
+        voucherManager.updateById(voucher);
+        voucherLogManager.save(log);
     }
 
 }

@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @TableName("pc_voucher_payment")
 public class VoucherPayment extends BasePayment implements EntityBaseFunction<VoucherPaymentDto> {
 
-    /** 列表 */
+    /** 储值卡id列表 */
     private String voucherIds;
 
     @Override

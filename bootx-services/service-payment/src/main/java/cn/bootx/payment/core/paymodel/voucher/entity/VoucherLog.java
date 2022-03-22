@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 
 /**   
-* 充值卡日志
+* 储值卡日志
 * @author xxm  
 * @date 2022/3/17 
 */

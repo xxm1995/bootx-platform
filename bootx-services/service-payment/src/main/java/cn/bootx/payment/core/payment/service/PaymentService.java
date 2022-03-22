@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.payment.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
@@ -54,7 +53,6 @@ public class PaymentService {
         }
         return null;
     }
-
 
     /**
      * 退款成功处理, 更新可退款信息

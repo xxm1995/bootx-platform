@@ -8,6 +8,7 @@ import cn.bootx.payment.core.paymodel.voucher.entity.VoucherLog;
 import cn.bootx.payment.param.paymodel.voucher.VoucherGenerationParam;
 import cn.bootx.payment.param.paymodel.voucher.VoucherImportParam;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class VoucherService {
         long batchNo = IdUtil.getSnowflakeNextId();
         for (int i = 0; i < count; i++) {
             Voucher voucher = new Voucher()
-                    .setCardNo('V'+IdUtil.getSnowflakeNextIdStr())
+                    .setCardNo('V'+IdUtil.getSnowflakeNextIdStr()+ RandomUtil.randomNumbers(2))
                     .setBatchNo(batchNo)
                     .setBalance(param.getFaceValue())
                     .setFaceValue(param.getFaceValue())
