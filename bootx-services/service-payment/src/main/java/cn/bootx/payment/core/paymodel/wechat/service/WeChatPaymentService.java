@@ -44,8 +44,8 @@ public class WeChatPaymentService {
         List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();
         List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();
         // 清除已有的异步支付类型信息
-        payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()));
-        refundableInfos.removeIf(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()));
+        payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
+        refundableInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         // 添加微信支付类型信息
         payTypeInfos.add(new PayChannelInfo()
                 .setPayChannel(PayChannelCode.WECHAT)

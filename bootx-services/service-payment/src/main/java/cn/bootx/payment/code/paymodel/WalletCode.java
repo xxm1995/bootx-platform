@@ -67,4 +67,9 @@ public interface WalletCode {
      */
     int LOG_REFUND = 7;
 
+    /**
+     * 钱包日志-取消支付返还
+     */
+    int LOG_PAY_CLOSE = 8;
+
 }

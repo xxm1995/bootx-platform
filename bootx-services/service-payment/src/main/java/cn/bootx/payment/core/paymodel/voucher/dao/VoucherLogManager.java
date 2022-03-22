@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
 *
 * @author xxm
@@ -15,4 +17,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class VoucherLogManager extends BaseManager<VoucherLogMapper, VoucherLog> {
+
+    /**
+     * 根据支付id和类型进行查询
+     */
+    public List<VoucherLog> findByPaymentIdAndType(Long paymentId,int type){
+        return lambdaQuery().eq(VoucherLog::getPaymentId,paymentId)
+                .eq(VoucherLog::getType,type)
+                .list();
+    }
 }

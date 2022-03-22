@@ -1,8 +1,10 @@
 package cn.bootx.payment.core.paymodel.voucher.service;
 
 import cn.bootx.payment.code.paymodel.VoucherCode;
+import cn.bootx.payment.core.paymodel.voucher.dao.VoucherLogManager;
 import cn.bootx.payment.core.paymodel.voucher.dao.VoucherManager;
 import cn.bootx.payment.core.paymodel.voucher.entity.Voucher;
+import cn.bootx.payment.core.paymodel.voucher.entity.VoucherLog;
 import cn.bootx.payment.param.paymodel.voucher.VoucherGenerationParam;
 import cn.bootx.payment.param.paymodel.voucher.VoucherImportParam;
 import cn.hutool.core.util.IdUtil;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**   
 * 储值卡
@@ -25,6 +28,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class VoucherService {
     private final VoucherManager voucherManager;
+    private final VoucherLogManager voucherLogManager;
 
     /**
      * 批量生成
@@ -49,8 +53,16 @@ public class VoucherService {
             vouchers.add(voucher);
         }
         voucherManager.saveAll(vouchers);
+        // 日志
+        List<VoucherLog> voucherLogs = vouchers.stream()
+                .map(voucher -> new VoucherLog()
+                        .setType(VoucherCode.LOG_ACTIVE)
+                        .setAmount(voucher.getBalance())
+                        .setVoucherId(voucher.getId())
+                        .setVoucherNo(voucher.getCardNo()))
+                .collect(Collectors.toList());
+        voucherLogManager.saveAll(voucherLogs);
     }
-
 
     /**
      * 批量导入

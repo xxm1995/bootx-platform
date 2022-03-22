@@ -127,7 +127,7 @@ public class PaymentBuilder {
 
             // 设置异步支付参数
             List<PayChannelInfo> moneyPayTypeInfos = channelInfos.stream()
-                    .filter(payTypeInfo -> PayChannelCode.SYNC_TYPE.contains(payTypeInfo.getPayChannel()))
+                    .filter(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()))
                     .collect(Collectors.toList());
             if (!CollUtil.isEmpty(moneyPayTypeInfos)) {
                 paymentResult.setAsyncPayInfo(AsyncPayInfoLocal.get());

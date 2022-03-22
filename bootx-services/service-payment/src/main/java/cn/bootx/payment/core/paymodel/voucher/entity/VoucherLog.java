@@ -23,9 +23,15 @@ public class VoucherLog extends MpBaseEntity {
     private Long voucherId;
 
     /** 储值卡号 */
-    private Long voucherNo;
+    private String voucherNo;
 
-    /** 类型 */
+    /** 金额 */
+    private BigDecimal amount;
+
+    /**
+     * 类型
+     * @see cn.bootx.payment.code.paymodel.VoucherCode
+     */
     private Integer type;
 
     /** 交易记录ID */
@@ -36,7 +42,4 @@ public class VoucherLog extends MpBaseEntity {
 
     /** 备注 */
     private String remark;
-
-    /** 金额 */
-    private BigDecimal amount;
 }

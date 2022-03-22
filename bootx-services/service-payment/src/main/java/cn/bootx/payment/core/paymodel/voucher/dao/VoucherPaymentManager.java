@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
 *
 * @author xxm
@@ -14,5 +16,13 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class VoucherPaymentManger extends BaseManager<VoucherPaymentMapper, VoucherPayment> {
+public class VoucherPaymentManager extends BaseManager<VoucherPaymentMapper, VoucherPayment> {
+
+
+    /**
+     * 根据支付id
+     */
+    public Optional<VoucherPayment> findByPaymentId(Long paymentId){
+        return this.findByField(VoucherPayment::getPaymentId,paymentId);
+    }
 }

@@ -62,30 +62,6 @@ public class WalletPayService {
     }
 
     /**
-     * 退款
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void refund(Long paymentId, BigDecimal amount) {
-        // 钱包支付记录
-        WalletPayment walletPayment = walletPaymentManager.findByPaymentId(paymentId).orElseThrow(() -> new BizException("钱包支付记录不存在"));
-        // 获取钱包
-        Wallet wallet = walletManager.findById(walletPayment.getWalletId()).orElseThrow(WalletNotExistsException::new);
-        walletManager.increaseBalance(wallet.getId(), amount);
-
-        WalletLog walletLog = new WalletLog()
-                .setAmount(amount)
-                .setPaymentId(walletPayment.getPaymentId())
-                .setWalletId(wallet.getId())
-                .setUserId(wallet.getUserId())
-                .setType(WalletCode.LOG_REFUND)
-                .setRemark(String.format("钱包退款金额 %.2f ", amount))
-                .setOperationSource(WalletCode.OPERATION_SOURCE_ADMIN)
-                .setBusinessId(walletPayment.getBusinessId());
-        // save log
-        walletLogManager.save(walletLog);
-    }
-
-    /**
      * 取消支付并返还金额
      */
     public void close(Long paymentId){
@@ -109,12 +85,36 @@ public class WalletPayService {
                     .setPaymentId(walletPayment.getPaymentId())
                     .setWalletId(wallet.getId())
                     .setUserId(wallet.getUserId())
-                    .setType(WalletCode.LOG_REFUND)
+                    .setType(WalletCode.LOG_PAY_CLOSE)
                     .setRemark(String.format("取消支付返回金额 %.2f ", walletPayment.getAmount()))
                     .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM)
                     .setBusinessId(walletPayment.getBusinessId());
             // save log
             walletLogManager.save(walletLog);
         });
+    }
+
+    /**
+     * 退款
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void refund(Long paymentId, BigDecimal amount) {
+        // 钱包支付记录
+        WalletPayment walletPayment = walletPaymentManager.findByPaymentId(paymentId).orElseThrow(() -> new BizException("钱包支付记录不存在"));
+        // 获取钱包
+        Wallet wallet = walletManager.findById(walletPayment.getWalletId()).orElseThrow(WalletNotExistsException::new);
+        walletManager.increaseBalance(wallet.getId(), amount);
+
+        WalletLog walletLog = new WalletLog()
+                .setAmount(amount)
+                .setPaymentId(walletPayment.getPaymentId())
+                .setWalletId(wallet.getId())
+                .setUserId(wallet.getUserId())
+                .setType(WalletCode.LOG_REFUND)
+                .setRemark(String.format("钱包退款金额 %.2f ", amount))
+                .setOperationSource(WalletCode.OPERATION_SOURCE_ADMIN)
+                .setBusinessId(walletPayment.getBusinessId());
+        // save log
+        walletLogManager.save(walletLog);
     }
 }

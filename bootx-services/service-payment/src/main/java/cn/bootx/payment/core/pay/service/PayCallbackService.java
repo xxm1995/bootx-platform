@@ -114,7 +114,7 @@ public class PayCallbackService {
         try {
             // 1.获取异步支付方式，通过工厂生成对应的策略组
             List<AbsPayStrategy> syncPaymentStrategyList = strategyList.stream()
-                    .filter(paymentStrategy -> PayChannelCode.SYNC_TYPE.contains(paymentStrategy.getType()))
+                    .filter(paymentStrategy -> PayChannelCode.ASYNC_TYPE.contains(paymentStrategy.getType()))
                     .collect(Collectors.toList());
             // 执行成功
             successCallback.accept(syncPaymentStrategyList, payment);

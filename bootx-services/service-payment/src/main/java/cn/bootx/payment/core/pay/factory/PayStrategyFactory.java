@@ -40,6 +40,7 @@ public class PayStrategyFactory {
                 break;
             case PayChannelCode.UNION_PAY:
                 strategy = SpringUtil.getBean(UnionPayStrategy.class);
+                break;
             case PayChannelCode.CASH:
                 strategy = SpringUtil.getBean(CashPayStrategy.class);
                 break;
@@ -92,13 +93,13 @@ public class PayStrategyFactory {
         // 同步支付
         List<PayModeParam> syncPayModeParamList = payModeParamList.stream()
                 .filter(Objects::nonNull)
-                .filter(payModeParam -> !PayChannelCode.SYNC_TYPE.contains(payModeParam.getPayChannel()))
+                .filter(payModeParam -> !PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
                 .collect(Collectors.toList());
 
         // 异步支付
         List<PayModeParam> asyncPayModeParamList = payModeParamList.stream()
                 .filter(Objects::nonNull)
-                .filter(payModeParam -> PayChannelCode.SYNC_TYPE.contains(payModeParam.getPayChannel()))
+                .filter(payModeParam -> PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
                 .collect(Collectors.toList());
 
         List<PayModeParam> sortList = new ArrayList<>(payModeParamList.size());

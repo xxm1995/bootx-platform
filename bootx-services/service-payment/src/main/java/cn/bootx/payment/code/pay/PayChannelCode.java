@@ -30,7 +30,7 @@ public interface PayChannelCode {
     String UA_WECHAT_PAY = "MicroMessenger";
 
     /** 异步支付通道 */
-    List<Integer> SYNC_TYPE = Arrays.asList(
+    List<Integer> ASYNC_TYPE = Arrays.asList(
             ALI,
             WECHAT,
             UNION_PAY,

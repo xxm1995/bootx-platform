@@ -31,7 +31,7 @@ public class PayModelUtil {
     public boolean isNotSync(List<PayModeParam> payModeParams){
         return payModeParams.stream()
                 .map(PayModeParam::getPayChannel)
-                .noneMatch(PayChannelCode.SYNC_TYPE::contains);
+                .noneMatch(PayChannelCode.ASYNC_TYPE::contains);
     }
 
     /**
@@ -39,7 +39,7 @@ public class PayModelUtil {
      */
     public PayModeParam getAsyncPayModeParam(PayParam payParam){
         return payParam.getPayModeList().stream()
-                .filter(payMode -> PayChannelCode.SYNC_TYPE.contains(payMode.getPayChannel()))
+                .filter(payMode -> PayChannelCode.ASYNC_TYPE.contains(payMode.getPayChannel()))
                 .findFirst()
                 .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
     }

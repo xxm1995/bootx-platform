@@ -5,7 +5,6 @@ import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.paymodel.voucher.entity.Voucher;
 import cn.bootx.payment.core.paymodel.voucher.service.VoucherPayService;
 import cn.bootx.payment.core.paymodel.voucher.service.VoucherPaymentService;
-import cn.bootx.payment.core.paymodel.voucher.service.VoucherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
@@ -26,7 +25,6 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 @RequiredArgsConstructor
 public class VoucherStrategy extends AbsPayStrategy {
     private final VoucherPayService voucherPayService;
-    private final VoucherService voucherService;
     private final VoucherPaymentService voucherPaymentService;
     private List<Voucher> vouchers;
 
@@ -50,15 +48,32 @@ public class VoucherStrategy extends AbsPayStrategy {
     @Override
     public void doPayHandler() {
         voucherPayService.pay(getPayMode().getAmount(),this.getPayment(),this.vouchers);
+        voucherPaymentService.savePayment(getPayment(),getPayParam(),getPayMode(),vouchers);
     }
 
+    /**
+     * 成功
+     */
+    @Override
+    public void doSuccessHandler() {
+        voucherPaymentService.updateSuccess(this.getPayment().getId());
+    }
+
+    /**
+     * 关闭支付
+     */
     @Override
     public void doCloseHandler() {
-
+        voucherPayService.close(this.getPayment().getId());
+        voucherPaymentService.updateClose(this.getPayment().getId());
     }
 
+    /**
+     * 退款
+     */
     @Override
     public void doRefundHandler() {
-
+        voucherPayService.refund(this.getPayment().getId(),this.getPayMode().getAmount());
+        voucherPaymentService.updateRefund(this.getPayment().getId(),this.getPayMode().getAmount());
     }
 }
