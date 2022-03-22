@@ -113,7 +113,7 @@ public class VoucherPayService {
                 voucherLog.setAmount(balance);
             } else {
                 voucher.setBalance(balance.subtract(amount));
-                voucherLog.setAmount(voucher.getBalance());
+                voucherLog.setAmount(amount);
             }
             voucherLogs.add(voucherLog);
         }
