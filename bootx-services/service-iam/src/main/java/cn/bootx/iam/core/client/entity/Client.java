@@ -33,6 +33,9 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     /** 是否需要验证码 */
     private boolean captcha;
 
+    /** 是否系统内置 */
+    private boolean system;
+
     /** 是否可用 */
     private boolean enable;
 

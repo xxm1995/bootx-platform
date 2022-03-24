@@ -40,6 +40,7 @@ public class ClientService {
             throw new BizException("终端编码不得重复");
         }
         Client client = Client.init(param);
+        client.setSystem(false);
         return clientManager.save(client).toDto();
     }
 
@@ -48,9 +49,11 @@ public class ClientService {
      */
     public ClientDto update(ClientParam param){
         Client client = clientManager.findById(param.getId()).orElseThrow(() -> new BizException("终端不存在"));
-
         if (clientManager.existsByCode(param.getCode(),client.getId())) {
             throw new BizException("终端编码不得重复");
+        }
+        if (client.isSystem()){
+            client.setEnable(true);
         }
         BeanUtil.copyProperties(param,client, CopyOptions.create().ignoreNullValue());
         return clientManager.updateById(client).toDto();
@@ -63,7 +66,9 @@ public class ClientService {
         return MpUtil.convert2DtoPageResult(clientManager.page(pageParam,clientParam));
     }
 
-
+    /**
+     * 超级查询
+     */
     public PageResult<ClientDto> superPage(PageParam pageParam, QueryParams queryParams) {
         return MpUtil.convert2DtoPageResult(clientManager.supperPage(pageParam,queryParams));
     }
@@ -78,7 +83,6 @@ public class ClientService {
     /**
      * 获取单条
      */
-    @Permission(dataScope = false,selectField = false)
     public ClientDto findByCode(String code){
         return clientManager.findByCode(code).map(Client::toDto).orElseThrow(DataNotExistException::new);
     }
@@ -94,6 +98,10 @@ public class ClientService {
      * 删除
      */
     public void delete(Long id) {
+        Client client = clientManager.findById(id).orElseThrow(DataNotExistException::new);
+        if (client.isSystem()){
+            throw new BizException("系统内置终端，不可删除");
+        }
         clientManager.deleteById(id);
     }
 

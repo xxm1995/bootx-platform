@@ -29,6 +29,9 @@ public class ClientDto extends BaseDto {
     /** 是否启用验证码 */
     private boolean captcha;
 
+    /** 是否系统内置 */
+    private boolean system;
+
     /** 是否可用 */
     private boolean enable;
 
