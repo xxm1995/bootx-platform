@@ -30,7 +30,10 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-file</artifactId>
-            <version>${bootx-platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-websocket</artifactId>
         </dependency>
     </dependencies>
 </project>

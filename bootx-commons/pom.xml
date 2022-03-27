@@ -28,6 +28,7 @@
         <module>common-super-query</module>
         <module>common-xxl-job</module>
         <module>common-mongo</module>
+        <module>common-websocket</module>
     </modules>
 
     <dependencies>

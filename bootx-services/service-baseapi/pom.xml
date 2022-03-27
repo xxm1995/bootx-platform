@@ -39,7 +39,6 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-auth</artifactId>
-            <version>${bootx-platform.version}</version>
         </dependency>
 
         <!--数学验证码-->

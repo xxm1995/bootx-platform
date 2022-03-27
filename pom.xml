@@ -168,46 +168,49 @@
                 <artifactId>bootx-common-core</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-
+            <!-- swagger封装 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-swagger</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-
+            <!-- spring 自定义配置 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-spring</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-
-            <!-- 定时任务 -->
+            <!-- 定时任务(XXL) -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-xxl-job</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-
+            <!-- redis客户端封装 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-redis-client</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- MP封装 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-mybatis-plus</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 请求头工具 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-header-holder</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- jackson序列化 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-jackson</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 异常处理 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-exception-handler</artifactId>
@@ -219,24 +222,71 @@
                 <artifactId>common-sequence</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 幂等处理器-->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-idempotency</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 日志工具 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-log</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- mongo配置 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-mongo</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 缓存 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-cache</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- websocket -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-websocket</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+
+            <!-- 权限认证 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-auth</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 审计日志 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-audit-log</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 代码生成模块 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-code-gen</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 数据权限 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-data-perm</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 文件管理 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-file</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 定时任务(quartz) -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-quartz</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
         </dependencies>

@@ -95,14 +95,12 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-quartz</artifactId>
-            <version>${bootx-platform.version}</version>
         </dependency>
 
         <!-- 代码生成 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-code-gen</artifactId>
-            <version>${bootx-platform.version}</version>
         </dependency>
     </dependencies>
 
