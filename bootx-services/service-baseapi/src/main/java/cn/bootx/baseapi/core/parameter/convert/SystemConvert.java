@@ -1,10 +1,9 @@
-package cn.bootx.baseapi.core.config.convert;
+package cn.bootx.baseapi.core.parameter.convert;
 
-import cn.bootx.baseapi.core.config.entity.SystemParameter;
-import cn.bootx.baseapi.dto.system.SystemParameterDto;
+import cn.bootx.baseapi.core.parameter.entity.SystemParameter;
+import cn.bootx.baseapi.dto.parameter.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**   

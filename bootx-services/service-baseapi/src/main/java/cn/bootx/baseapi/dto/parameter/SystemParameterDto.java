@@ -1,4 +1,4 @@
-package cn.bootx.baseapi.dto.system;
+package cn.bootx.baseapi.dto.parameter;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;

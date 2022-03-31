@@ -1,6 +1,6 @@
-package cn.bootx.baseapi.core.config.dao;
+package cn.bootx.baseapi.core.parameter.dao;
 
-import cn.bootx.baseapi.core.config.entity.SystemParameter;
+import cn.bootx.baseapi.core.parameter.entity.SystemParameter;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
@@ -49,6 +49,9 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
                 .page(mpPage);
     }
 
+    /**
+     * 根据键名获取键值
+     */
     public Optional<SystemParameter> findByParamKey(String key) {
         return this.findByField(SystemParameter::getParamKey,key);
     }

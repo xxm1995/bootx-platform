@@ -1,8 +1,8 @@
-package cn.bootx.baseapi.core.config.service;
+package cn.bootx.baseapi.core.parameter.service;
 
-import cn.bootx.baseapi.core.config.dao.SystemParamManager;
-import cn.bootx.baseapi.core.config.entity.SystemParameter;
-import cn.bootx.baseapi.dto.system.SystemParameterDto;
+import cn.bootx.baseapi.core.parameter.dao.SystemParamManager;
+import cn.bootx.baseapi.core.parameter.entity.SystemParameter;
+import cn.bootx.baseapi.dto.parameter.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
@@ -72,6 +72,22 @@ public class SystemParamService {
     }
 
     /**
+     * 根据key获取单条
+     */
+    public String get(String key) {
+        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue)
+                .orElse(null);
+    }
+
+    /**
+     * 根据键名获取键值
+     */
+    public String findByParamKey(String key) {
+        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue)
+                .orElseThrow(DataNotExistException::new);
+    }
+
+    /**
      * 删除
      */
     public void delete(Long id) {
@@ -96,11 +112,4 @@ public class SystemParamService {
         return systemParamManager.existedByKey(key,id);
     }
 
-    /**
-     * 根据键名获取键值
-     */
-    public String findByParamKey(String key) {
-        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue)
-                .orElseThrow(DataNotExistException::new);
-    }
 }

@@ -1,7 +1,7 @@
-package cn.bootx.baseapi.core.config.entity;
+package cn.bootx.baseapi.core.parameter.entity;
 
-import cn.bootx.baseapi.core.config.convert.SystemConvert;
-import cn.bootx.baseapi.dto.system.SystemParameterDto;
+import cn.bootx.baseapi.core.parameter.convert.SystemConvert;
+import cn.bootx.baseapi.dto.parameter.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;

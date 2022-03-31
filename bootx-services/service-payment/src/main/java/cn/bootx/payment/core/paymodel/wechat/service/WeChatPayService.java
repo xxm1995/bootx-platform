@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PayWayCode;
 import cn.bootx.payment.code.pay.PayWayEnum;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -176,9 +178,12 @@ public class WeChatPayService {
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
         this.verifyErrorMsg(result);
         String tradeType = result.get(WeChatPayCode.TRADE_TYPE);
-        // 支付成功
-        // 发布事件
-        // 发布事件
+        // 支付成功处理
+        if (Objects.equals(result.get(WeChatPayCode.TRADE_STATE), WeChatPayCode.TRADE_SUCCESS)) {
+            payment.setPayStatus(PayStatusCode.TRADE_SUCCESS)
+                    .setPayTime(LocalDateTime.now());
+            return;
+        }
     }
 
     /**

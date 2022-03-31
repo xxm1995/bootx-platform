@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.controller;
 
-import cn.bootx.baseapi.core.config.service.SystemParamService;
-import cn.bootx.baseapi.dto.system.SystemParameterDto;
+import cn.bootx.baseapi.core.parameter.service.SystemParamService;
+import cn.bootx.baseapi.dto.parameter.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
