@@ -1,6 +1,5 @@
 package cn.bootx.starter.audit.log.controller;
 
-import cn.bootx.common.core.annotation.Idempotent;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;

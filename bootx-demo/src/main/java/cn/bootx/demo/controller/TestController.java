@@ -62,13 +62,6 @@ public class TestController {
         return Res.ok(defaultRangeSequence.next("aa"));
     }
 
-    @Idempotent(name = "idempotent",timeout = 1000*60)
-    @Operation(summary = "幂等演示")
-    @GetMapping("/idempotent")
-    public ResResult<String> Idempotent(){
-        return Res.ok("幂等演示");
-    }
-
     @Operation(summary = "获取所有接口请求")
     @GetMapping("/xx")
     public ResResult<Void> xx(){

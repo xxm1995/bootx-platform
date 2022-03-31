@@ -49,11 +49,15 @@ public class IdempotentAop {
                 }
                 // 进行判断拦截
                 if (StrUtil.isNotBlank(idempotentToken)){
-                    String key = WebHeaderCode.IDEMPOTENT_TOKEN;
+                    String key;
                     // 是否有自定义的命名空间
                     if (StrUtil.isNotBlank(idempotent.name())){
-                        key = key + ":" + idempotent.name();
+                        key = WebHeaderCode.IDEMPOTENT_TOKEN + ":" + idempotent.name();
+                    } else {
+                        // 没有的话添方法名为命名空间
+                        key = WebHeaderCode.IDEMPOTENT_TOKEN + ":" + pjp.getStaticPart().getSignature().getName();
                     }
+                    // 是否已经存在幂等token
                     Boolean flag = redisClient.setIfAbsent(key + ":" + idempotentToken, "", idempotent.timeout());
                     if (Boolean.FALSE.equals(flag)){
                         throw new RepetitiveOperationException();
