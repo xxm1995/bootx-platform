@@ -13,6 +13,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.boot.context.properties.bind.Binder;
@@ -55,11 +56,13 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
      * 空白分组(防止knife4j报错)
      */
     @Bean
+    @ConditionalOnProperty(prefix = "bootx.common.swagger", value = "enabled", havingValue = "true", matchIfMissing = true)
     public GroupedOpenApi blankApi(){
         return this.createApi(" 空白页","null.null");
     }
 
     @Bean
+    @ConditionalOnProperty(prefix = "bootx.common.swagger", value = "enabled", havingValue = "true", matchIfMissing = true)
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
@@ -82,12 +85,14 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
      */
     @Override
     public void postProcessBeanDefinitionRegistry(@NotNull BeanDefinitionRegistry registry) throws BeansException {
-        Map<String, String> basePackages = this.swaggerProperties.getBasePackages();
-        AtomicInteger atomicInteger = new AtomicInteger(96);
-        basePackages.forEach((name, basePackage) -> {
-            RootBeanDefinition bean = new RootBeanDefinition(GroupedOpenApi.class,()->this.createApi(name,basePackage));
-            registry.registerBeanDefinition((char)atomicInteger.incrementAndGet()+"ModelAPi", bean);
-        });
+        if (swaggerProperties.isEnabled()){
+            Map<String, String> basePackages = this.swaggerProperties.getBasePackages();
+            AtomicInteger atomicInteger = new AtomicInteger(96);
+            basePackages.forEach((name, basePackage) -> {
+                RootBeanDefinition bean = new RootBeanDefinition(GroupedOpenApi.class,()->this.createApi(name,basePackage));
+                registry.registerBeanDefinition((char)atomicInteger.incrementAndGet()+"ModelAPi", bean);
+            });
+        }
     }
 
     @Override
