@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.auth.login;
 
-import cn.bootx.baseapi.core.captcha.service.CaptchaService;
-import cn.bootx.iam.code.OpenIdLoginType;
+import cn.bootx.iam.core.social.entity.UserSocialLogin;
+import cn.bootx.iam.core.social.service.UserSocialQueryService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
@@ -9,51 +9,49 @@ import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static cn.bootx.iam.code.OpenIdLoginType.DING_TALK;
+
 /**   
-* 手机号登录
+* 钉钉登录
 * @author xxm  
-* @date 2021/8/2 
+* @date 2022/4/2 
 */
-@Slf4j
 @Component
 @RequiredArgsConstructor
-public class PhoneLoginHandler implements OpenIdAuthentication {
+public class DingTalkLoginHandler implements OpenIdAuthentication {
     // 手机号
-    private final String phoneParameter = "phone";
-    // 短信验证码
-    private final String captchaParameter = "smsCaptcha";
+    private final String DING_OPEN_ID = "dingOpenId";
 
+    private final UserSocialQueryService userSocialQueryService;
     private final UserInfoManager userInfoManager;
-    private final CaptchaService captchaService;
 
+    /**
+     * 钉钉登录
+     */
     @Override
     public String getOpenIdType() {
-        return OpenIdLoginType.PHONE;
+        return DING_TALK;
     }
 
     /**
-     * 认证
+     * 尝试认证, 获取用户
      */
     @Override
     public AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient) {
-        String phone = request.getParameter(phoneParameter);
-        String captcha = request.getParameter(captchaParameter);
+        String dingOpenId = request.getParameter(DING_OPEN_ID);
+        // 获取钉钉关联的用户id
+        UserSocialLogin userSocialLogin = userSocialQueryService.findByOpenid(dingOpenId, UserSocialLogin::getDingTalkId)
+                .orElseThrow(() -> new LoginFailureException("未找到对应用户"));
 
-        // 比较验证码是否正确
-        if (!captchaService.validateSmsCaptcha(phone,captcha)){
-            throw new LoginFailureException(phone,"短信验证码不正确");
-        }
         // 获取用户信息
-        UserInfo userInfo = userInfoManager.findByPhone(phone)
-                .orElseThrow(() -> new LoginFailureException(phone,"手机号不存在"));
+        UserInfo userInfo = userInfoManager.findById(userSocialLogin.getUserId())
+                .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
-        captchaService.deleteSmsCaptcha(phone);
         return new AuthInfoResult()
                 .setUserDetail(userInfo.toUserDetail())
                 .setId(userInfo.getId());

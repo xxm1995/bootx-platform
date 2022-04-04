@@ -4,7 +4,8 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.iam.core.social.service.UserSocialLoginService;
+import cn.bootx.iam.core.social.service.UserSocialBindService;
+import cn.bootx.iam.core.social.service.UserSocialQueryService;
 import cn.bootx.iam.dto.user.UserSocialLoginDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,18 +25,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user/social")
 @AllArgsConstructor
 public class UserSocialLoginController {
-    private final UserSocialLoginService userSocialLoginService;
-    
+    private final UserSocialBindService userSocialBindService;
+    private final UserSocialQueryService userSocialQueryService;
+
     @Operation(summary = "分页")
     @GetMapping("/page")
     public ResResult<PageResult<UserSocialLoginDto>> page(PageParam pageParam){
-        return Res.ok(userSocialLoginService.page(pageParam));
+        return Res.ok(userSocialQueryService.page(pageParam));
     }
     
     @Operation(summary = "获取详情")
     @PostMapping("/findById")
     public ResResult<UserSocialLoginDto> findById(Long id){
-        return Res.ok(userSocialLoginService.findById(id));
+        return Res.ok(userSocialQueryService.findById(id));
     }
 
 

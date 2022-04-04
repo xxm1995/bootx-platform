@@ -20,7 +20,7 @@ public interface OpenIdLoginType {
     String GITEE = "gitee";
 
     /** 钉钉登录 */
-    String DING_TALK_ID = "dingTalkId";
+    String DING_TALK = "dingTalk";
 
     /** 企业微信 */
     String WE_COM = "weCom";

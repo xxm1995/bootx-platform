@@ -8,7 +8,6 @@ import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.service.UserAdminService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
-import cn.bootx.starter.auth.config.AuthProperties;
 import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.LoginFailureException;
@@ -43,7 +42,6 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     // 前端传入的验证码的key
     private final String CAPTCHA_KEY_PARAMETER = "captchaKey";
 
-    private final AuthProperties authProperties;
     private final PasswordEncoder passwordEncoder;
     private final UserAdminService userAdminService;
     private final CaptchaService captchaService;

@@ -18,7 +18,6 @@ public class AuthAssistService {
 
     /**
      * 发送短信验证码
-     * @param phone
      */
     public void sendSmsCaptcha(String phone) {
         captchaService.sendSmsCaptcha(phone,5*60);

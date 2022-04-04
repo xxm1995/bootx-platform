@@ -58,13 +58,13 @@ public class AlipayConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void setUpActivity(Long id){
-        AlipayConfig mailConfig = alipayConfigManager.findById(id).orElseThrow(DataNotExistException::new);
-        if (Objects.equals(mailConfig.getActivity(),Boolean.TRUE)){
+        AlipayConfig alipayConfig = alipayConfigManager.findById(id).orElseThrow(DataNotExistException::new);
+        if (Objects.equals(alipayConfig.getActivity(),Boolean.TRUE)){
             return;
         }
         alipayConfigManager.removeAllActivity();
-        mailConfig.setActivity(true);
-        alipayConfigManager.updateById(mailConfig);
+        alipayConfig.setActivity(true);
+        alipayConfigManager.updateById(alipayConfig);
     }
 
     /**
@@ -72,12 +72,12 @@ public class AlipayConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void clearActivity(Long id){
-        AlipayConfig mailConfig = alipayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("支付宝配置不存在"));
-        if (Objects.equals(mailConfig.getActivity(),Boolean.FALSE)){
+        AlipayConfig alipayConfig = alipayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("支付宝配置不存在"));
+        if (Objects.equals(alipayConfig.getActivity(),Boolean.FALSE)){
             return;
         }
-        mailConfig.setActivity(false);
-        alipayConfigManager.updateById(mailConfig);
+        alipayConfig.setActivity(false);
+        alipayConfigManager.updateById(alipayConfig);
     }
 
     /**
