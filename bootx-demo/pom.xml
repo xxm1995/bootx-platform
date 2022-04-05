@@ -35,5 +35,9 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-websocket</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-dingtalk</artifactId>
+        </dependency>
     </dependencies>
 </project>

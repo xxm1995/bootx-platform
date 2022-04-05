@@ -22,9 +22,9 @@ public class DingTalkConfigDto extends BaseDto {
     @Schema(description = "名称")
     private String name;
 
-    @Schema(description = "AppKay")
+    @Schema(description = "AppKey")
     @SensitiveInfo(value = SensitiveType.OTHER)
-    private String appKay;
+    private String appKey;
 
     @Schema(description = "AppSecret")
     @SensitiveInfo(value = SensitiveType.OTHER)

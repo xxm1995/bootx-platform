@@ -24,8 +24,8 @@ public class DingTalkConfig extends MpBaseEntity implements EntityBaseFunction<D
     /** 名称 */
     private String name;
 
-    /** AppKay */
-    private String appKay;
+    /** AppKey */
+    private String appKey;
 
     /** AppSecret */
     private String appSecret;
@@ -43,6 +43,6 @@ public class DingTalkConfig extends MpBaseEntity implements EntityBaseFunction<D
 
     @Override
     public DingTalkConfigDto toDto() {
-        return null;
+        return DingConfigConvert.CONVERT.convert(this);
     }
 }

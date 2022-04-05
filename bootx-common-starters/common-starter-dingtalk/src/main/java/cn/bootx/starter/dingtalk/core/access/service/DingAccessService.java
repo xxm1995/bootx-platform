@@ -1,10 +1,14 @@
 package cn.bootx.starter.dingtalk.core.access.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.jackson.util.JacksonUtil;
+import cn.bootx.starter.dingtalk.core.config.dao.DingTalkConfigManager;
+import cn.bootx.starter.dingtalk.core.config.entity.DingTalkConfig;
 import cn.bootx.starter.dingtalk.dto.access.AccessTokenResult;
 import cn.hutool.cache.Cache;
 import cn.hutool.cache.CacheUtil;
+import cn.hutool.core.net.URLEncodeUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +30,21 @@ import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 @RequiredArgsConstructor
 public class DingAccessService {
 
+    private final DingTalkConfigManager dingTalkConfigManager;
+
     /** 缓存, 有效期两小时 容量500 先进先出缓存. */
     private final Cache<String, String> appAccessTokenCache = CacheUtil.newFIFOCache(500,1000*60*60*2);
     private final Cache<String, String> userAccessTokenCache = CacheUtil.newFIFOCache(500,1000*60*60*2);
+
+
+
+    /**
+     * 企业内部应用的access_token
+     */
+    public String getAppAccessToken() {
+        DingTalkConfig dingTalkConfig = dingTalkConfigManager.findByEnable().orElseThrow(DataNotExistException::new);
+        return this.getAppAccessToken(dingTalkConfig.getAppKey(),dingTalkConfig.getAppSecret());
+    }
 
     /**
      * 企业内部应用的access_token
@@ -53,6 +69,14 @@ public class DingAccessService {
         } else {
             throw new BizException("获取钉钉应用AccessToken失败");
         }
+    }
+
+    /**
+     * 获取用户token
+     */
+    public String getUserAccessToken(String authCode) {
+        DingTalkConfig dingTalkConfig = dingTalkConfigManager.findByEnable().orElseThrow(DataNotExistException::new);
+        return this.getUserAccessToken(dingTalkConfig.getAppKey(),dingTalkConfig.getAppSecret(),authCode);
     }
 
     /**
@@ -86,21 +110,23 @@ public class DingAccessService {
     /**
      * 生成第三方登录网址
      */
-    public String genThirdLoginUrl(String redirectUri,String responseType,String appKey){
-        Map<String,String> map = new HashMap<>();
-        map.put(REDIRECT_URI,redirectUri);
-        map.put(RESPONSE_TYPE,responseType);
-        map.put(CLIENT_ID,appKey);
-        map.put(SCOPE,OPEN_ID);
-        map.put(PROMPT,"consent");
-        return StrUtil.format(THIRD_LOGIN_URL,map);
+    public String genThirdLoginUrl(String redirectUri){
+        DingTalkConfig dingTalkConfig = dingTalkConfigManager.findByEnable().orElseThrow(DataNotExistException::new);
+        return this.genThirdLoginUrl(redirectUri,dingTalkConfig.getAppKey());
     }
 
     /**
-     * 通过免登码获取用户信息
+     * 生成第三方登录网址
      */
-    public void x(){
+    public String genThirdLoginUrl(String redirectUri,String appKey){
+        Map<String,String> map = new HashMap<>();
 
+        map.put(REDIRECT_URI,URLEncodeUtil.encode(redirectUri));
+        map.put(RESPONSE_TYPE,"code");
+        map.put(CLIENT_ID,appKey);
+        map.put(SCOPE,OPEN_ID);
+        map.put(PROMPT,"consent");
+        map.put(STATE,"state");
+        return StrUtil.format(THIRD_LOGIN_URL,map);
     }
-
 }

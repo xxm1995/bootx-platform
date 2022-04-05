@@ -36,8 +36,9 @@ public class DingTalkConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public DingTalkConfigDto add(DingTalkConfigParam param) {
-        DingTalkConfig dingRobotConfig = DingTalkConfig.init(param);
-        return dingTalkConfigManager.save(dingRobotConfig).toDto();
+        DingTalkConfig dingTalkConfig = DingTalkConfig.init(param);
+        dingTalkConfig.setEnable(false);
+        return dingTalkConfigManager.save(dingTalkConfig).toDto();
     }
 
     /**
@@ -45,9 +46,9 @@ public class DingTalkConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public DingTalkConfigDto update(DingTalkConfigParam param) {
-        DingTalkConfig dingRobotConfig = dingTalkConfigManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-        BeanUtil.copyProperties(param,dingRobotConfig, CopyOptions.create().ignoreNullValue());
-        return dingTalkConfigManager.updateById(dingRobotConfig).toDto();
+        DingTalkConfig dingTalkConfig = dingTalkConfigManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+        BeanUtil.copyProperties(param,dingTalkConfig, CopyOptions.create().ignoreNullValue());
+        return dingTalkConfigManager.updateById(dingTalkConfig).toDto();
     }
 
     /**
@@ -88,15 +89,15 @@ public class DingTalkConfigService {
     /**
      * 获取所有配置
      */
-    public PageResult<DingTalkConfigDto> page(PageParam pageParam){
-        return MpUtil.convert2DtoPageResult(dingTalkConfigManager.page(pageParam));
+    public PageResult<DingTalkConfigDto> page(PageParam pageParam,DingTalkConfigParam param){
+        return MpUtil.convert2DtoPageResult(dingTalkConfigManager.page(pageParam,param));
     }
 
     /**
      * 根据 id 获取相应的配置
      */
     public DingTalkConfigDto findById(Long id) {
-        return ResultConvertUtil.dtoConvert(dingTalkConfigManager.findById(id));
+        return dingTalkConfigManager.findById(id).map(DingTalkConfig::toDto).orElseThrow(DataNotExistException::new);
     }
 
 

@@ -20,14 +20,11 @@ public class DingTalkConfigParam {
     @Schema(description = "名称")
     private String name;
 
-    @Schema(description = "AppKay")
-    private String appKay;
+    @Schema(description = "AppKey")
+    private String appKey;
 
     @Schema(description = "AppSecret")
     private String appSecret;
-
-    @Schema(description = "是否启用")
-    private Boolean enable;
 
     @Schema(description = "备注")
     private String remark;

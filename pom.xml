@@ -289,6 +289,12 @@
                 <artifactId>common-starter-quartz</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 钉钉对接模块 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-dingtalk</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>

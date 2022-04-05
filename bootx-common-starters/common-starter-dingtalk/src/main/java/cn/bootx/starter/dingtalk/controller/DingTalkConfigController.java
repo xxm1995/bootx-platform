@@ -10,6 +10,7 @@ import cn.bootx.starter.dingtalk.param.config.DingTalkConfigParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,8 +55,8 @@ public class DingTalkConfigController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<DingTalkConfigDto>> page(PageParam pageParam){
-        return Res.ok(dingTalkConfigService.page(pageParam));
+    public ResResult<PageResult<DingTalkConfigDto>> page(@ParameterObject PageParam pageParam, @ParameterObject DingTalkConfigParam param){
+        return Res.ok(dingTalkConfigService.page(pageParam,param));
     }
 
     @Operation(summary = "查询全部")

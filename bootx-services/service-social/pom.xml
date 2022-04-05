@@ -43,5 +43,11 @@
             <artifactId>service-baseapi</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+
+        <!-- 钉钉模块 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-dingtalk</artifactId>
+        </dependency>
     </dependencies>
 </project>

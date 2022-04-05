@@ -91,12 +91,6 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
-        <!-- quartz 定时任务 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-starter-quartz</artifactId>
-        </dependency>
-
         <!-- 代码生成 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
