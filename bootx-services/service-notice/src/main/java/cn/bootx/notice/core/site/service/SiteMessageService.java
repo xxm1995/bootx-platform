@@ -52,7 +52,7 @@ public class SiteMessageService {
     /**
      * 获取接收消息条数
      */
-    public Integer getReceiveCount(Boolean haveRead){
+    public Long getReceiveCount(Boolean haveRead){
         Long userId = SecurityUtil.getUserId();
         return siteMessageManager.countByReceive(userId,haveRead);
     }
@@ -61,7 +61,7 @@ public class SiteMessageService {
     /**
      * 获取发送消息条数
      */
-    public Integer getSenderCount(Boolean haveRead){
+    public Long getSenderCount(Boolean haveRead){
         Long userId = SecurityUtil.getUserId();
         return siteMessageManager.countBySender(userId,haveRead);
     }

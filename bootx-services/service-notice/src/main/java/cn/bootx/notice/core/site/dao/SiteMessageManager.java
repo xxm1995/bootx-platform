@@ -23,13 +23,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessage> {
 
-    public Integer countByReceive(Long userId, Boolean haveRead) {
+    public Long countByReceive(Long userId, Boolean haveRead) {
         return lambdaQuery().eq(SiteMessage::getReceiveId,userId)
                 .eq(Objects.nonNull(haveRead),SiteMessage::getHaveRead,haveRead)
                 .count();
     }
 
-    public Integer countBySender(Long userId, Boolean haveRead) {
+    public Long countBySender(Long userId, Boolean haveRead) {
         return lambdaQuery().eq(SiteMessage::getSenderId,userId)
                 .eq(Objects.nonNull(haveRead),SiteMessage::getHaveRead,haveRead)
                 .count();
