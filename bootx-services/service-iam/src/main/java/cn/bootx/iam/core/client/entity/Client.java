@@ -36,6 +36,9 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     /** 是否系统内置 */
     private boolean system;
 
+    /** 密码错误几次冻结 -1表示不限制 */
+    private Integer pwdErrNum;
+
     /** 是否可用 */
     private boolean enable;
 

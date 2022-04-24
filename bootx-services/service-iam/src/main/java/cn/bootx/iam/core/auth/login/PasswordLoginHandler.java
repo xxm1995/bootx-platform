@@ -8,6 +8,7 @@ import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.service.UserAdminService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
+import cn.bootx.starter.auth.config.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.LoginFailureException;
@@ -20,7 +21,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -50,7 +50,9 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
      * 认证前置操作, 默认处理验证码
      */
     @Override
-    public void authenticationBefore(HttpServletRequest request, HttpServletResponse response, AuthClient authClient){
+    public void authenticationBefore(LoginAuthContext context){
+        AuthClient authClient = context.getAuthClient();
+        HttpServletRequest request = context.getRequest();
         // 开启验证码验证
         if (authClient.isCaptcha()){
             String captcha = this.obtainCaptcha(request);
@@ -69,18 +71,21 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
      * 认证
      */
     @Override
-    public @NotNull AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient) {
-        String username = this.obtainUsername(request);
-        String password = this.obtainPassword(request);
+    public @NotNull AuthInfoResult attemptAuthentication(LoginAuthContext context) {
+        String username = this.obtainUsername(context.getRequest());
+        String password = this.obtainPassword(context.getRequest());
         UserDetail userDetail = this.loadUserByUsername(username);
         String saltPassword = passwordEncoder.encode(password);
         // 比对密码未通过
         if (!Objects.equals(saltPassword,userDetail.getPassword())){
-            throw new LoginFailureException(username,"密码不正确");
+            this.passwordError(userDetail,context);
         }
         // 管理员跳过各种校验
         if (!userDetail.isAdmin()) {
             // 账号状态
+            if (!Objects.equals(userDetail.getStatus(), UserStatusCode.LOCK)) {
+                throw new LoginFailureException(username, "密码多次输入错误，已被冻结");
+            }
             if (!Objects.equals(userDetail.getStatus(), UserStatusCode.NORMAL)) {
                 throw new LoginFailureException(username, "账号不是正常状态,无法登陆");
             }
@@ -94,8 +99,8 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
      * 认证后操作
      */
     @Override
-    public void authenticationAfter(AuthInfoResult authInfoResult,HttpServletRequest request, HttpServletResponse response){
-        String captchaKey = this.obtainCaptchaKey(request);
+    public void authenticationAfter(AuthInfoResult authInfoResult,LoginAuthContext context){
+        String captchaKey = this.obtainCaptchaKey(context.getRequest());
         captchaService.deleteImgCaptcha(captchaKey);
     }
 
@@ -119,6 +124,20 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
             throw new UserNotFoundException(username);
         }
         return userInfoDto.toUserDetail();
+    }
+
+    /**
+     * 密码输入错误处理
+     */
+    public void passwordError(UserDetail userDetail, LoginAuthContext context){
+        AuthClient authClient = context.getAuthClient();
+        int errCount = 0;
+        // 密码错误限制
+        if (authClient.getPwdErrNum() > -1){
+
+        }
+        String errMsg = StrUtil.format("密码不正确, 还有{}次机会",errCount);
+        throw new LoginFailureException(userDetail.getUsername(),errMsg);
     }
 
     @Nullable

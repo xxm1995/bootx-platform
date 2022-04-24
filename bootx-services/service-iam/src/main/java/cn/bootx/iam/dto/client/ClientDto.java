@@ -17,24 +17,27 @@ import lombok.experimental.Accessors;
 @Schema(title = "认证终端")
 public class ClientDto extends BaseDto {
 
-    /** 编码 */
+    @Schema(description = "编码")
     private String code;
 
-    /** 名称 */
+    @Schema(description = "名称")
     private String name;
 
-    /** 在线时长 分钟 */
+    @Schema(description = "在线时长 分钟")
     private Long timeout;
 
-    /** 是否启用验证码 */
+    @Schema(description = "是否启用验证码")
     private boolean captcha;
 
-    /** 是否系统内置 */
+    @Schema(description = "密码错误几次冻结 -1表示不限制")
+    private Integer pwdErrNum;
+
+    @Schema(description = "是否系统内置")
     private boolean system;
 
-    /** 是否可用 */
+    @Schema(description = "是否可用")
     private boolean enable;
 
-    /** 描述 */
+    @Schema(description = "描述")
     private String description;
 }

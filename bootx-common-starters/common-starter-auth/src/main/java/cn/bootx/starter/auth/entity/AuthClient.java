@@ -24,6 +24,9 @@ public class AuthClient {
     /** 是否可用 */
     private boolean enable;
 
+    /** 密码错误几次冻结 */
+    private int pwdErrNum;
+
     /** 是否需要验证码 */
     private boolean captcha;
 }

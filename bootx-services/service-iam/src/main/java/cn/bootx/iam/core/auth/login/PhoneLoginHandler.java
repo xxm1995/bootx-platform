@@ -5,7 +5,7 @@ import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
-import cn.bootx.starter.auth.entity.AuthClient;
+import cn.bootx.starter.auth.config.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**   
 * 手机号登录
@@ -41,7 +40,8 @@ public class PhoneLoginHandler implements OpenIdAuthentication {
      * 认证
      */
     @Override
-    public AuthInfoResult attemptAuthentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient) {
+    public AuthInfoResult attemptAuthentication(LoginAuthContext context) {
+        HttpServletRequest request = context.getRequest();
         String phone = request.getParameter(phoneParameter);
         String captcha = request.getParameter(captchaParameter);
 

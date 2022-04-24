@@ -3,7 +3,7 @@ package cn.bootx.starter.auth.handler;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
 import cn.bootx.starter.auth.config.AuthProperties;
-import cn.bootx.starter.auth.entity.AuthClient;
+import cn.bootx.starter.auth.config.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -30,11 +29,11 @@ public class OpenIdAuthenticationHandler {
     /**
      * 认证
      */
-    public @NotNull AuthInfoResult authentication(HttpServletRequest request, HttpServletResponse response, AuthClient authClient){
-        String obtainOpenIdType = obtainOpenIdType(request);
+    public @NotNull AuthInfoResult authentication(LoginAuthContext context){
+        String obtainOpenIdType = obtainOpenIdType(context.getRequest());
         for (OpenIdAuthentication openIdAuthentication : openIdAuthentications) {
             if (openIdAuthentication.adaptation(obtainOpenIdType)){
-                return openIdAuthentication.authentication(request,response, authClient);
+                return openIdAuthentication.authentication(context);
             }
         }
         throw new BizException("未找到对应的OpenId认证器");

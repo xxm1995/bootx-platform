@@ -37,4 +37,9 @@ public class AuthProperties {
      */
     private String openIdTypeParameter = "openIdType";
 
+    /**
+     * 开启超级管理员(生产模式推荐关闭)
+     */
+    private boolean enableAdmin = true;
+
 }

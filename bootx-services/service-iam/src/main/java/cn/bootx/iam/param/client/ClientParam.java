@@ -32,6 +32,9 @@ public class ClientParam {
     @Schema(description = "在线时长 分钟")
     private Long timeout;
 
+    @Schema(description = "密码错误几次冻结 -1表示不限制")
+    private Integer pwdErrNum;
+
     @Schema(description = "描述")
     private String description;
 
