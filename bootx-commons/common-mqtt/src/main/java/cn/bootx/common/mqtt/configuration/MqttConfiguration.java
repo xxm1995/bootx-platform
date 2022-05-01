@@ -36,10 +36,10 @@ public class MqttConfiguration {
             if (StrUtil.isNotBlank(mqttProperties.getPassword())){
                 options.setPassword(mqttProperties.getPassword().toCharArray());
             }
-            options.setCleanSession(true);
-            options.setConnectionTimeout(0);
-            options.setKeepAliveInterval(90);
-            options.setAutomaticReconnect(true);
+            options.setCleanSession(mqttProperties.isCleanSession());
+            options.setConnectionTimeout(mqttProperties.getConnectionTimeout());
+            options.setKeepAliveInterval(mqttProperties.getKeepAliveInterval());
+            options.setAutomaticReconnect(mqttProperties.isAutomaticReconnect());
             client.connect(options);
         } catch (MqttException e) {
             log.error("MQTT服务初始化失败",e);

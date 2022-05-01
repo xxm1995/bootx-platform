@@ -22,4 +22,12 @@ public class MqttProperties {
     private String password;
     /** clientId */
     private String clientId;
+    /** 连接超时 */
+    private int connectionTimeout = 30;
+    /** 清理会话 */
+    private boolean cleanSession = true;
+    /** 自动重连 */
+    private boolean automaticReconnect = true;
+    /** 保活间隔 */
+    private int keepAliveInterval = 60;
 }
