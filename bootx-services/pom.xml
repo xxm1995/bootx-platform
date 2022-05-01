@@ -28,8 +28,8 @@
 
     <properties>
         <knife4j.version>3.0.3</knife4j.version>
-        <logstash-logback.version>7.0.1</logstash-logback.version>
-        <fastjson.version>1.2.79</fastjson.version>
+        <logstash-logback.version>7.1.1</logstash-logback.version>
+        <fastjson.version>1.2.80</fastjson.version>
         <kryo.serializers.version>0.41</kryo.serializers.version>
         <asyncTool.version>V1.4-SNAPSHOT</asyncTool.version>
     </properties>
@@ -93,6 +93,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
+            <version>2.12.6</version>
         </dependency>
 
         <!-- 日志 -->

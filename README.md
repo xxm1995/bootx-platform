@@ -4,7 +4,7 @@
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
  <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.alpha6-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
- <img src="https://img.shields.io/badge/Spring%20Boot-2.6.4-blue.svg" alt="Downloads"/>
+ <img src="https://img.shields.io/badge/Spring%20Boot-2.6.7-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
 

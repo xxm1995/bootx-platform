@@ -22,7 +22,7 @@ public class FileUploadProperties {
      */
     private int uploadType = 1;
 
-    /** 服务器地址 */
+    /** 服务器地址,优先级低于系统参数配置 */
     private String serverUrl;
 
     /** 本地存储 */

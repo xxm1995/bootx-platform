@@ -6,6 +6,7 @@ import cn.bootx.baseapi.dto.parameter.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.extra.ParamService;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -24,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SystemParamService {
+public class SystemParamService implements ParamService {
 
     private final SystemParamManager systemParamManager;
 
@@ -112,4 +113,11 @@ public class SystemParamService {
         return systemParamManager.existedByKey(key,id);
     }
 
+    /**
+     * 获取参数值
+     */
+    @Override
+    public String getValue(String key) {
+        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue).orElse(null);
+    }
 }

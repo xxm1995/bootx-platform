@@ -1,6 +1,7 @@
 package cn.bootx.starter.file.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.extra.ParamService;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -41,6 +42,7 @@ public class FileUploadService {
     private final List<UploadService> uploadServices;
     private final UpdateFileManager updateFileManager;
     private final FileUploadProperties fileUploadProperties;
+    private final ParamService paramService;
 
     /**
      * 文件上传
@@ -125,20 +127,31 @@ public class FileUploadService {
      * 获取文件预览地址
      */
     public String getFilePreviewUrl(Long id){
-        return fileUploadProperties.getServerUrl()+"/file/preview/"+id;
+        return this.getServerUrl()+"/file/preview/"+id;
     }
 
     /**
      * 获取文件预览地址前缀
      */
     public String getFilePreviewUrlPrefix(){
-        return fileUploadProperties.getServerUrl()+"/file/preview/";
+        return this.getServerUrl()+"/file/preview/";
     }
 
     /**
      * 获取文件地址
      */
     public String getFileDownloadUrl(Long id){
-        return fileUploadProperties.getServerUrl()+"/file/download/"+id;
+        return this.getServerUrl()+"/file/download/"+id;
+    }
+
+    /**
+     * 服务地址
+     */
+    private String getServerUrl(){
+        String serverUrl = paramService.getValue("FileServerUrl");
+        if (StrUtil.isBlank(serverUrl)){
+            serverUrl = fileUploadProperties.getServerUrl();
+        }
+        return serverUrl;
     }
 }
