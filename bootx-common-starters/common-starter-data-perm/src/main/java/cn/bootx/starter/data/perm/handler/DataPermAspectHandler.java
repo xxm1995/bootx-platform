@@ -29,7 +29,7 @@ public class DataPermAspectHandler {
      * 数据权限注解切面
      */
     @Around("@annotation(permission)||@within(permission)")
-    public Object doAround(ProceedingJoinPoint pjp, Permission permission){
+    public Object doAround(ProceedingJoinPoint pjp, Permission permission) throws Throwable {
         Object obj = null;
         // 如果方法和类同时存在, 以方法上的注解为准
         Permission methodAnnotation = AopUtil.getMethodAnnotation(pjp, Permission.class);
@@ -41,8 +41,6 @@ public class DataPermAspectHandler {
         DataPermContextHolder.putUserDetail(SecurityUtil.getCurrentUser().orElse(null));
         try {
             obj = pjp.proceed();
-        } catch (Throwable e) {
-            e.printStackTrace();
         } finally {
             DataPermContextHolder.clearUserAndPermission();
         }
@@ -50,7 +48,7 @@ public class DataPermAspectHandler {
     }
 
     @Around("@annotation(nestedPermission)||@within(nestedPermission)")
-    public Object doAround(ProceedingJoinPoint pjp, NestedPermission nestedPermission){
+    public Object doAround(ProceedingJoinPoint pjp, NestedPermission nestedPermission) throws Throwable {
         Object obj = null;
         // 如果方法和类同时存在, 以方法上的注解为准
         NestedPermission methodAnnotation = AopUtil.getMethodAnnotation(pjp, NestedPermission.class);
@@ -62,8 +60,6 @@ public class DataPermAspectHandler {
         DataPermContextHolder.putUserDetail(SecurityUtil.getCurrentUser().orElse(null));
         try {
             obj = pjp.proceed();
-        } catch (Throwable e) {
-            e.printStackTrace();
         } finally {
             DataPermContextHolder.clearNestedPermission();
         }

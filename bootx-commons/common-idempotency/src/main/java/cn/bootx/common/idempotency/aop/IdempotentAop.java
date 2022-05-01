@@ -9,7 +9,6 @@ import cn.bootx.common.spring.util.WebServletUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.Method;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -35,9 +34,8 @@ public class IdempotentAop {
     /**
      * 幂等切面
      */
-    @SneakyThrows
     @Around("@annotation(idempotent)")
-    public Object doAround(ProceedingJoinPoint pjp, Idempotent idempotent){
+    public Object doAround(ProceedingJoinPoint pjp, Idempotent idempotent) throws Throwable {
         if (idempotent.enable()){
             String method = WebServletUtil.getMethod();
             // 只处理四种经典的情况

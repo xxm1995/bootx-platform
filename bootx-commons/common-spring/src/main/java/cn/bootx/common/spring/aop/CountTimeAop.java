@@ -20,14 +20,9 @@ import org.springframework.stereotype.Component;
 public class CountTimeAop {
 
     @Around("@annotation(countTime)")
-    public Object doAround(ProceedingJoinPoint pjp, CountTime countTime){
+    public Object doAround(ProceedingJoinPoint pjp, CountTime countTime) throws Throwable {
         long startTime = System.currentTimeMillis();
-        Object obj = null;
-        try {
-            obj = pjp.proceed();
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
+        Object obj = pjp.proceed();
         long endTime = System.currentTimeMillis();
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         String methodName = signature.getDeclaringTypeName() + "." + signature.getName();

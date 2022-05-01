@@ -9,6 +9,7 @@ import cn.bootx.starter.quartz.code.QuartzJobCode;
 import cn.bootx.starter.quartz.core.dao.QuartzJobManager;
 import cn.bootx.starter.quartz.core.entity.QuartzJob;
 import cn.bootx.starter.quartz.dto.QuartzJobDto;
+import cn.bootx.starter.quartz.handler.QuartzJobScheduler;
 import cn.bootx.starter.quartz.param.QuartzJobParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
