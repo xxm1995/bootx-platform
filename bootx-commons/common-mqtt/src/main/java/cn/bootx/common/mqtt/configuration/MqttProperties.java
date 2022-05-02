@@ -20,8 +20,10 @@ public class MqttProperties {
     private String name;
     /** 密码 */
     private String password;
-    /** clientId */
-    private String clientId;
+    /** 终端id */
+    private String clientId = "";
+    /** 自动追加终端id后缀 */
+    private boolean autoClientIdSuffix = true;
     /** 连接超时 */
     private int connectionTimeout = 30;
     /** 清理会话 */

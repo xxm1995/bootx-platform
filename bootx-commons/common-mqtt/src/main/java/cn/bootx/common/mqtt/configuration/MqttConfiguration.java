@@ -1,5 +1,6 @@
 package cn.bootx.common.mqtt.configuration;
 
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,10 @@ public class MqttConfiguration {
     public MqttClient mqttClient(){
         MqttClient client = null;
         try {
+            String clientId = mqttProperties.getClientId();
+            if (mqttProperties.isAutomaticReconnect()){
+                clientId = clientId+"@"+ RandomUtil.randomString(5);
+            }
             client = new MqttClient(mqttProperties.getUrl(), mqttProperties.getClientId());
             // MQTT配置对象
             MqttConnectOptions options = new MqttConnectOptions();
