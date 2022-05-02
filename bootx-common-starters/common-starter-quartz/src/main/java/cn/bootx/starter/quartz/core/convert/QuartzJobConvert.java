@@ -1,10 +1,11 @@
 package cn.bootx.starter.quartz.core.convert;
 
 import cn.bootx.starter.quartz.core.entity.QuartzJob;
+import cn.bootx.starter.quartz.core.entity.QuartzJobLog;
 import cn.bootx.starter.quartz.dto.QuartzJobDto;
+import cn.bootx.starter.quartz.dto.QuartzJobLogDto;
 import cn.bootx.starter.quartz.param.QuartzJobParam;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**   
@@ -19,4 +20,6 @@ public interface QuartzJobConvert {
     QuartzJobDto convert(QuartzJob in);
 
     QuartzJob convert(QuartzJobParam in);
+
+    QuartzJobLogDto convert(QuartzJobLog in);
 }

@@ -36,17 +36,17 @@ public class JobLogAspectHandler {
      */
     @Around("logPointCut()")
     public Object doAfterReturning(ProceedingJoinPoint pjp) throws Throwable {
-        String className = pjp.getTarget().getClass().getName();
+        Class<?> clazz = pjp.getTarget().getClass();
         LocalDateTime start = LocalDateTime.now();
         try {
             Object result = pjp.proceed();
             LocalDateTime end = LocalDateTime.now();
-            this.addLog(className,start,end);
+            this.addLog(clazz,start,end);
             // 保存正常日志
             return result;
         } catch (Throwable e) {
             // 保存异常日志
-            this.addErrLog(className, start, e.getMessage());
+            this.addErrLog(clazz, start, e.getMessage());
             throw e;
         }
     }
@@ -54,10 +54,11 @@ public class JobLogAspectHandler {
     /**
      * 记录日志
      */
-    private void addLog(String className, LocalDateTime start, LocalDateTime end){
+    private void addLog(Class<?> clazz, LocalDateTime start, LocalDateTime end){
         long duration = LocalDateTimeUtil.between(start, end).toMillis();
         QuartzJobLog quartzJobLog = new QuartzJobLog()
-                .setHandlerName(className)
+                .setHandlerName(clazz.getSimpleName())
+                .setClassName(clazz.getName())
                 .setSuccess(true)
                 .setStartTime(start)
                 .setEndTime(end)
@@ -67,9 +68,10 @@ public class JobLogAspectHandler {
     /**
      * 记录日志
      */
-    private void addErrLog(String className, LocalDateTime start, String message){
+    private void addErrLog(Class<?> clazz, LocalDateTime start, String message){
         QuartzJobLog quartzJobLog = new QuartzJobLog()
-                .setHandlerName(className)
+                .setHandlerName(clazz.getSimpleName())
+                .setClassName(clazz.getName())
                 .setSuccess(false)
                 .setErrorMessage(message)
                 .setStartTime(start);

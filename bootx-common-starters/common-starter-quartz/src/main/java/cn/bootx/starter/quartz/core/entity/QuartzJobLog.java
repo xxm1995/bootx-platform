@@ -1,6 +1,9 @@
 package cn.bootx.starter.quartz.core.entity;
 
+import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
+import cn.bootx.starter.quartz.core.convert.QuartzJobConvert;
+import cn.bootx.starter.quartz.dto.QuartzJobLogDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,16 +20,16 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("starter_quartz_job_log")
-public class QuartzJobLog extends MpIdEntity {
+public class QuartzJobLog extends MpIdEntity implements EntityBaseFunction<QuartzJobLogDto> {
 
     /** 处理器的名字 */
     private String handlerName;
 
+    /** 处理器全限定名 */
+    private String className;
+
     /** 是否执行成功 */
     private Boolean success;
-
-    /** 执行时长 */
-    private Long duration;
 
     /** 错误信息 */
     private String errorMessage;
@@ -37,4 +40,14 @@ public class QuartzJobLog extends MpIdEntity {
     /** 结束时间 */
     private LocalDateTime endTime;
 
+    /** 执行时长 */
+    private Long duration;
+
+    /** 创建时间 */
+    private LocalDateTime createTime;
+
+    @Override
+    public QuartzJobLogDto toDto() {
+        return QuartzJobConvert.CONVERT.convert(this);
+    }
 }

@@ -109,7 +109,7 @@ public class QuartzJobScheduler {
         try {
             clazz = Class.forName(classname);
         } catch (ClassNotFoundException e) {
-            throw new BizException("后台找不到该定时任务类名");
+            throw new BizException("找不到该定时任务类名");
         }
         if (Job.class.isAssignableFrom(clazz)){
             //noinspection unchecked

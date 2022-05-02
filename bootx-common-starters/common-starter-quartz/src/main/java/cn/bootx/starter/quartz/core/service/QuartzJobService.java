@@ -133,7 +133,7 @@ public class QuartzJobService {
         } catch (BizException e) {
             return e.getMessage();
         }
-        return "";
+        return null;
     }
 
 }
