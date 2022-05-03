@@ -49,7 +49,6 @@ public class BootxRedisCacheManager extends RedisCacheManager {
 
     /**
      * 创建Redis缓存
-     * @return
      */
     @Override
     @SuppressWarnings({"ConstantConditions", "NullableProblems"})

@@ -3,27 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>bootx-services</artifactId>
+        <artifactId>bootx-commons</artifactId>
         <groupId>cn.bootx.platform</groupId>
         <version>1.1.0-beta-1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-goods</artifactId>
+    <artifactId>common-rabbitmq</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
-        <!-- mysql -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
-
-        <!-- mp -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-jackson</artifactId>
         </dependency>
-
     </dependencies>
 </project>

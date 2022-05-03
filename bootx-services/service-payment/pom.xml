@@ -32,12 +32,6 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
-        <!--MQ-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
         <!-- 支付宝支付 -->
         <dependency>
             <groupId>com.github.javen205</groupId>
@@ -76,6 +70,12 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-super-query</artifactId>
+        </dependency>
+
+        <!-- 消息队列 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-rabbitmq</artifactId>
         </dependency>
     </dependencies>
 

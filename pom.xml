@@ -258,6 +258,12 @@
                 <artifactId>common-websocket</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- rabbitmq消息队列 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-rabbitmq</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
 
             <!-- 权限认证 -->
             <dependency>
@@ -334,6 +340,7 @@
     </repositories>
     <build>
         <plugins>
+            <!-- maven 版本号升级插件 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -349,6 +356,7 @@
                 </includes>
                 <filtering>true</filtering>
             </resource>
+            <!-- java类路径中会被打包的软件 -->
             <resource>
                 <directory>src/main/java</directory>
                 <includes>

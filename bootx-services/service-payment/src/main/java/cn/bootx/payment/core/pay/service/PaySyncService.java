@@ -14,6 +14,7 @@ import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
+import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollUtil;
@@ -36,6 +37,7 @@ import java.util.Objects;
 public class PaySyncService {
 
     private final PaymentManager paymentManager;
+    private final PaymentEventSender eventSender;
 
     /**
      * 同步订单的支付状态
@@ -134,8 +136,8 @@ public class PaySyncService {
         paymentManager.updateById(payment);
 
         // 发送成功事件
-        PayResult paymentResult = PaymentBuilder.buildResultByPayment(payment);
-//        messageSender.sendPaymentCompleted(paymentResult);
+        PayResult payResult = PaymentBuilder.buildResultByPayment(payment);
+        eventSender.sendPaymentCompleted(payResult);
     }
 
     /**

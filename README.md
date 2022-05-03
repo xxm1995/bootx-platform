@@ -69,7 +69,9 @@ bootx-platform
        ├── common-header-holder -- 请求头获取工具
        ├── common-jackson -- Json序列化配置
        ├── common-mongo -- MongoDB配置
+       ├── common-mqtt -- mqtt配置
        ├── common-mybatis-plus -- Mybatis Plus扩展
+       ├── common-rabbitmq -- rabbitmq消息队列
        ├── common-redis-client -- Redis客户端封装和配置
        ├── common-sequence -- 发号器（序列号生成器）
        ├── common-spring -- Spring相关配置

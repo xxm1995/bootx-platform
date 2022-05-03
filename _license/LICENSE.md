@@ -4,3 +4,5 @@ https://gitee.com/wxdfun/sw
 https://github.com/jeecgboot/jeecg-boot
 
 https://gitee.com/open-hand/hzero
+
+https://gitee.com/zhijiantianya/ruoyi-vue-pro

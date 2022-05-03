@@ -3,17 +3,18 @@ package cn.bootx.payment.core.pay.service;
 import cn.bootx.common.core.exception.ErrorCodeRuntimeException;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
-import cn.bootx.payment.core.pay.result.PayCallbackResult;
+import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.exception.BaseException;
 import cn.bootx.payment.core.pay.exception.ExceptionInfo;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
-import cn.bootx.payment.core.pay.builder.PaymentBuilder;
+import cn.bootx.payment.core.pay.result.PayCallbackResult;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
+import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PayCallbackService {
     private final PaymentManager paymentManager;
+    private final PaymentEventSender eventSender;
 
     /**
      * 统一回调处理
@@ -90,8 +92,8 @@ public class PayCallbackService {
             if (handlerFlag) {
                 // 5. 发送成功事件
                 PayResult paymentResult = PaymentBuilder.buildResultByPayment(payment);
-                // 成功事件
-//                messageSender.sendPaymentCompleted(paymentResult);
+                // 发送成功事件
+                eventSender.sendPaymentCompleted(paymentResult);
             } else {
                 return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
                         .setMsg("回调处理过程报错");

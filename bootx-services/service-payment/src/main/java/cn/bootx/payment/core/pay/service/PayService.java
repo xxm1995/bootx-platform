@@ -14,6 +14,7 @@ import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.exception.payment.PayNotExistedException;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
+import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollectionUtil;
@@ -39,6 +40,7 @@ public class PayService {
     private final PayValidationService payValidationService;
     private final PaymentManager paymentManager;
 
+    private final PaymentEventSender eventSender;
 
     /**
      * 支付方法(同步/异步/组合支付)
@@ -88,7 +90,13 @@ public class PayService {
                 .orElseThrow(PayNotExistedException::new);
 
         // 5. 返回支付结果
-        return PaymentBuilder.buildResultByPayment(payment);
+        PayResult payResult = PaymentBuilder.buildResultByPayment(payment);
+
+        // 如果是支付成功, 发送事件
+        if (Objects.equals(payResult.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+            eventSender.sendPaymentCompleted(payResult);
+        }
+        return payResult;
     }
 
     /**
