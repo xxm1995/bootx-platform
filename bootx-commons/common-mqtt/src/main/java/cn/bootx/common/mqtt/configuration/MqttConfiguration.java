@@ -32,7 +32,7 @@ public class MqttConfiguration {
             if (mqttProperties.isAutomaticReconnect()){
                 clientId = clientId+"@"+ RandomUtil.randomString(5);
             }
-            client = new MqttClient(mqttProperties.getUrl(), mqttProperties.getClientId());
+            client = new MqttClient(mqttProperties.getUrl(), clientId);
             // MQTT配置对象
             MqttConnectOptions options = new MqttConnectOptions();
             if (StrUtil.isNotBlank(mqttProperties.getName())){
