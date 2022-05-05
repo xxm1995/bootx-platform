@@ -2,8 +2,8 @@ package cn.bootx.starter.data.perm.select;
 
 import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.bootx.starter.data.perm.configuration.DataPermProperties;
+import cn.bootx.starter.data.perm.exception.NotLoginPermException;
 import cn.bootx.starter.data.perm.local.DataPermContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserSupport;
@@ -47,7 +47,7 @@ public class SelectFieldPermInterceptor  extends JsqlParserSupport implements In
         // 检查是否已经登录和是否是超级管理员
         boolean admin = DataPermContextHolder.getUserDetail()
                 .map(UserDetail::isAdmin)
-                .orElseThrow(NotLoginException::new);
+                .orElseThrow(NotLoginPermException::new);
         // 是否超级管理员
         if (admin){
             return;

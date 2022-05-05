@@ -2,7 +2,7 @@ package cn.bootx.iam.handler;
 
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.iam.core.upms.service.UserDataScopeService;
-import cn.bootx.starter.auth.exception.NotLoginException;
+import cn.bootx.starter.data.perm.exception.NotLoginPermException;
 import cn.bootx.starter.data.perm.local.DataPermContextHolder;
 import cn.bootx.starter.data.perm.scope.DataPermScope;
 import cn.bootx.starter.data.perm.scope.DataPermScopeHandler;
@@ -34,7 +34,9 @@ public class DataPermScopeHandlerImpl implements DataPermScopeHandler {
      */
     @Override
     public DataPermScope getDataPermScope() {
-        Long userId = DataPermContextHolder.getUserDetail().map(UserDetail::getId).orElseThrow(NotLoginException::new);
+        Long userId = DataPermContextHolder.getUserDetail()
+                .map(UserDetail::getId)
+                .orElseThrow(NotLoginPermException::new);
         return userDataScopeService.getDataPermScopeByUser(userId);
     }
 }

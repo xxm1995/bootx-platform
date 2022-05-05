@@ -5,9 +5,9 @@ import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.bootx.starter.data.perm.code.DataScopeEnum;
 import cn.bootx.starter.data.perm.configuration.DataPermProperties;
+import cn.bootx.starter.data.perm.exception.NotLoginPermException;
 import cn.bootx.starter.data.perm.local.DataPermContextHolder;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserSupport;
@@ -65,7 +65,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
         // 检查是否已经登录和是否是超级管理员
         boolean admin = DataPermContextHolder.getUserDetail()
                 .map(UserDetail::isAdmin)
-                .orElseThrow(NotLoginException::new);
+                .orElseThrow(NotLoginPermException::new);
         // 是否超级管理员
         if (admin){
             return;
@@ -150,7 +150,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     protected Expression selfScope(){
         Long userId = DataPermContextHolder.getUserDetail()
                 .map(UserDetail::getId)
-                .orElseThrow(NotLoginException::new);
+                .orElseThrow(NotLoginPermException::new);
         return new EqualsTo(new Column(CommonCode.CREATOR),new LongValue(userId));
     }
 
@@ -160,7 +160,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     protected Expression userScope(Set<Long> userScopeIds){
         Long userId = DataPermContextHolder.getUserDetail()
                 .map(UserDetail::getId)
-                .orElseThrow(NotLoginException::new);
+                .orElseThrow(NotLoginPermException::new);
         List<Expression> userExpressions = Optional.ofNullable(userScopeIds).orElse(new HashSet<>()).stream()
                 .map(LongValue::new)
                 .collect(Collectors.toList());
