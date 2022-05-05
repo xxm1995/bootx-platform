@@ -5,7 +5,7 @@ import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
-import cn.bootx.starter.auth.config.LoginAuthContext;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;

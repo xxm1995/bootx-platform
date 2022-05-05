@@ -67,7 +67,9 @@ bootx-platform
        ├── common-cache -- 缓存配置
        ├── common-exception-handler -- 异常处理器
        ├── common-header-holder -- 请求头获取工具
+       ├── common-idempotency -- 幂等控制组件
        ├── common-jackson -- Json序列化配置
+       ├── common-log -- 日志配置
        ├── common-mongo -- MongoDB配置
        ├── common-mqtt -- mqtt配置
        ├── common-mybatis-plus -- Mybatis Plus扩展
@@ -77,6 +79,7 @@ bootx-platform
        ├── common-spring -- Spring相关配置
        ├── common-super-query -- 超级查询器
        ├── common-swagger -- swagger3配置（Spring Doc）
+       ├── common-websocket  -- websocket
        ├── common-xxl-job -- XXL-JOB定时任务
     ├── bootx-demo -- demo示例模块
     ├── bootx-services -- 业务服务模块

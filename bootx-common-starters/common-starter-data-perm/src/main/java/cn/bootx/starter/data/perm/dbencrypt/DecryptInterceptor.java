@@ -1,4 +1,4 @@
-package cn.bootx.starter.data.perm.encrypt;
+package cn.bootx.starter.data.perm.dbencrypt;
 
 import cn.bootx.common.core.annotation.EncryptionField;
 import cn.bootx.starter.data.perm.configuration.DataPermProperties;

@@ -3,7 +3,7 @@ package cn.bootx.starter.auth.handler;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
 import cn.bootx.starter.auth.config.AuthProperties;
-import cn.bootx.starter.auth.config.LoginAuthContext;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

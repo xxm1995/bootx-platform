@@ -94,7 +94,7 @@ bootx:
         - '/mobile/**'
         - '/webjars/**'
         - '/css/**'
-        - '/**'
+#        - '/**'
     audit-log:
       store: mongo
     file-upload:

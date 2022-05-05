@@ -8,7 +8,7 @@ import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.service.UserAdminService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
-import cn.bootx.starter.auth.config.LoginAuthContext;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.LoginFailureException;

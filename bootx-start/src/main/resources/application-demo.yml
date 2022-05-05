@@ -22,6 +22,13 @@ spring:
         retry:
           enabled: true
           max-attempts: 5
+  data:
+    mongodb:
+      host: ${MONGODB_HOST}
+      database: ${MONGODB_DATABASE}
+      port: ${MONGODB_PORT}
+      username: ${MONGODB_USERNAME}
+      password: ${MONGODB_PASSWORD}
   #静态资源加载配置
   mvc:
     static-path-pattern: /**
@@ -80,6 +87,5 @@ bootx:
         - '/mobile/**'
         - '/webjars/**'
         - '/css/**'
-        - '/**'
     audit-log:
       store: mongo

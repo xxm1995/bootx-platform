@@ -5,7 +5,7 @@ import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.authentication.GetAuthClientService;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
 import cn.bootx.starter.auth.config.AuthProperties;
-import cn.bootx.starter.auth.config.LoginAuthContext;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.ClientNotEnableException;

@@ -2,14 +2,10 @@ package cn.bootx.iam.core.auth.login;
 
 import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
-import cn.bootx.starter.auth.config.LoginAuthContext;
-import cn.bootx.starter.auth.entity.AuthClient;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
 * 微信登录
