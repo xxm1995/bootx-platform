@@ -1,4 +1,4 @@
-package cn.bootx.sales.engine.java;
+package cn.bootx.sales.engine;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.FatalException;

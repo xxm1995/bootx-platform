@@ -33,6 +33,10 @@
         <module>common-rabbitmq</module>
     </modules>
 
+    <properties>
+        <springdoc-openapi.version></springdoc-openapi.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
@@ -55,6 +59,15 @@
             <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>

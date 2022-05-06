@@ -28,6 +28,7 @@
 
     <properties>
         <knife4j.version>3.0.3</knife4j.version>
+        <easy-captcha.version>1.6.2</easy-captcha.version>
         <logstash-logback.version>7.1.1</logstash-logback.version>
         <fastjson.version>1.2.80</fastjson.version>
         <kryo.serializers.version>0.41</kryo.serializers.version>
@@ -199,6 +200,7 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- 二方库 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-super-query</artifactId>
@@ -214,6 +216,40 @@
                 <artifactId>common-starter-audit-log</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 三方库 -->
+
+            <!-- captcha 验证码生成 -->
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${easy-captcha.version}</version>
+            </dependency>
+
+            <!-- weixin-java 微信小程序 -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+            <!-- weixin-java 微信开放平台 -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-open</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+            <!-- weixin-java 公众号（包括订阅号和服务号） -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+            <!-- weixin-java 企业号/企业微信 -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-cp</artifactId>
+                <version>${wxjava.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
