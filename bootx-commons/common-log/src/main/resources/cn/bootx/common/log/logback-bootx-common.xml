@@ -44,6 +44,7 @@
                         "trace": "%X{traceId:-}",
                         "class": "%logger{40}",
                         "rest": "%message",
+                        "thread_name": "%thread",
                         "stack_trace": "%exception{10}"
                         }
                     </pattern>

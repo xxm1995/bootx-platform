@@ -1,0 +1,8 @@
+version: '3'
+services:
+  # 日志收集
+  filebeat:
+    image: filebeat
+    restart: always
+    volumes:
+      - /data/logs:/data/logs

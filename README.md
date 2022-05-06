@@ -19,9 +19,8 @@
 
 - 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) 
 - 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) 
+- ELK日志收集：[Kibana](http://elk.dev.bootx.cn:5601/app/discove)
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
-- 快速启动：[启动说明](https://www.yuque.com/bootx/bootx-platform/vpi0gn)
-- 开发计划：[开发任务](./_doc/TASK.md)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 
 ## 🚩特色功能演示
@@ -48,6 +47,7 @@
 - 支持嵌套查询的超级查询构造器，自动生成对应条件SQL语句
 - 提供项目对应的代码生成器，方便开发
 - 定制Mybatis Plus组件和插件，更方便开发
+- 支持通过ELK来管理项目日志
 
 ## 🥞项目整体结构
 ```lua
