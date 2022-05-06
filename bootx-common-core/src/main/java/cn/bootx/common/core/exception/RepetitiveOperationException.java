@@ -15,4 +15,8 @@ public class RepetitiveOperationException extends SystemException implements Ser
     public RepetitiveOperationException() {
         super(REPETITIVE_OPERATION_ERROR, "重复操作异常");
     }
+
+    public RepetitiveOperationException(String msg) {
+        super(REPETITIVE_OPERATION_ERROR, msg);
+    }
 }

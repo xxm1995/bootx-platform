@@ -1,4 +1,4 @@
-package cn.bootx.starter.auth.local;
+package cn.bootx.starter.auth.cache;
 
 import cn.bootx.common.core.entity.UserDetail;
 import com.alibaba.ttl.TransmittableThreadLocal;

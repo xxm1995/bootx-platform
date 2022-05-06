@@ -3,7 +3,7 @@ package cn.bootx.starter.auth.util;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.exception.NotLoginException;
-import cn.bootx.starter.auth.local.SessionCacheLocal;
+import cn.bootx.starter.auth.cache.SessionCacheLocal;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.experimental.UtilityClass;

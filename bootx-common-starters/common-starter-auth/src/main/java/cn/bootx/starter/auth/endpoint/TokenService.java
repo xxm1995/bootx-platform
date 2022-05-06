@@ -1,4 +1,4 @@
-package cn.bootx.starter.auth.service;
+package cn.bootx.starter.auth.endpoint;
 
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;

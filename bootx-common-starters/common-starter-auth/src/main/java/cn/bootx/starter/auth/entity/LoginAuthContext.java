@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
@@ -33,6 +34,7 @@ public class LoginAuthContext {
     private AuthClient authClient;
 
     /** 用户对象 */
+    @Nullable
     private UserDetail userDetail;
 
     /** 认证参数配置 */

@@ -58,7 +58,7 @@ public class IdempotentAop {
                     // 是否已经存在幂等token
                     Boolean flag = redisClient.setIfAbsent(key + ":" + idempotentToken, "", idempotent.timeout());
                     if (Boolean.FALSE.equals(flag)){
-                        throw new RepetitiveOperationException();
+                        throw new RepetitiveOperationException(idempotent.message());
                     }
                 }
             }

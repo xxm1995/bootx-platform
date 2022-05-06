@@ -1,6 +1,5 @@
-package cn.bootx.starter.auth.filter;
+package cn.bootx.starter.auth.cache;
 
-import cn.bootx.starter.auth.local.SessionCacheLocal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.stereotype.Component;
