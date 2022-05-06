@@ -37,6 +37,10 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-lock</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-dingtalk</artifactId>
         </dependency>
         <dependency>

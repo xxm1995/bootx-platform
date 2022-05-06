@@ -22,7 +22,7 @@ public class SequenceProperties {
     /**
      * 序列生成器默认前缀
      */
-    private String keyPrefix = "Sequence:";
+    private String keyPrefix = "bootx:sequence:";
 
     /**
      * 序列生成器默认步长

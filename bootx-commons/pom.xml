@@ -31,11 +31,8 @@
         <module>common-websocket</module>
         <module>common-mqtt</module>
         <module>common-rabbitmq</module>
+        <module>common-lock</module>
     </modules>
-
-    <properties>
-        <springdoc-openapi.version></springdoc-openapi.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -61,11 +58,25 @@
     </dependencies>
     <dependencyManagement>
         <dependencies>
+            <!-- swagger-ui -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
+            <!-- redis redisson -->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+            <!-- 定时任务(XXL-JOB) -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

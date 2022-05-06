@@ -41,6 +41,7 @@
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <swagger-annotations.version>2.2.0</swagger-annotations.version>
         <springdoc.version>1.6.8</springdoc.version>
+        <redisson.version>3.17.1</redisson.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <velocity.version>2.3</velocity.version>
@@ -71,13 +72,6 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
-            </dependency>
-
-            <!-- 定时任务(XXL-JOB) -->
-            <dependency>
-                <groupId>com.xuxueli</groupId>
-                <artifactId>xxl-job-core</artifactId>
-                <version>${xxl-job.version}</version>
             </dependency>
 
             <!-- lombok 配合 mapstruct -->
@@ -210,6 +204,12 @@
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-rabbitmq</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 分布式锁 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-lock</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
 

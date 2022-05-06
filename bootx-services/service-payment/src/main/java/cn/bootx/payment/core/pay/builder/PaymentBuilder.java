@@ -5,9 +5,9 @@ import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.pay.PayResult;
-import cn.bootx.payment.dto.payment.PaymentDto;
+import cn.bootx.payment.dto.pay.PaymentInfo;
+import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
@@ -115,13 +115,11 @@ public class PaymentBuilder {
         PayResult paymentResult;
         try {
             paymentResult = new PayResult();
-            PaymentDto paymentDto = new PaymentDto();
-            BeanUtils.copyProperties(payment, paymentDto);
             // 异步支付信息
             paymentResult.setAsyncPayChannel(payment.getAsyncPayChannel())
                     .setAsyncPayMode(payment.isAsyncPayMode())
                     .setPayStatus(payment.getPayStatus())
-                    .setPayment(paymentDto);
+                    .setPayment(buildPaymentInfo(payment));
 
             List<PayChannelInfo> channelInfos = payment.getPayChannelInfoList();
 
@@ -137,5 +135,14 @@ public class PaymentBuilder {
             AsyncPayInfoLocal.clear();
         }
         return paymentResult;
+    }
+
+    /**
+     * 构建PaymentInfo
+     */
+    public PaymentInfo buildPaymentInfo(Payment payment){
+        PaymentInfo paymentInfo = new PaymentInfo();
+        BeanUtils.copyProperties(payment, paymentInfo);
+        return paymentInfo;
     }
 }

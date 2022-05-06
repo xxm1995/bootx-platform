@@ -3,7 +3,6 @@ package cn.bootx.goods.core.inventory.task;
 import cn.bootx.common.redis.RedisClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,7 +22,7 @@ public class InventoryTask {
     /**
      * 过期token任务, 释放库存 一分钟执行一次
      */
-    @Scheduled(fixedRate = 1000*60)
+//    @Scheduled(fixedRate = 1000*60)
     public void expireTokensTask(){
         if (redisClient.setIfAbsent(REDIS_LOCK_KEY,"",20*1000)){
             inventoryTaskService.expireTokens();

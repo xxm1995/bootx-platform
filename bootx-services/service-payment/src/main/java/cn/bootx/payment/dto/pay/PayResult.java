@@ -1,7 +1,6 @@
 package cn.bootx.payment.dto.pay;
 
 
-import cn.bootx.payment.dto.payment.PaymentDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -29,7 +28,7 @@ public class PayResult implements Serializable {
 
     /** 主支付记录 */
     @JsonIgnore
-    private PaymentDto payment;
+    private PaymentInfo payment;
 
     /**
      * @see cn.bootx.payment.code.pay.PayStatusCode#TRADE_PROGRESS

@@ -4,11 +4,13 @@ import cn.bootx.common.core.annotation.Idempotent;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.lock.annotation.Lock;
 import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRangeManager;
 import cn.bootx.demo.core.test.service.TestService;
+import cn.hutool.core.thread.ThreadUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Tag(name ="测试控制器")
@@ -66,6 +70,23 @@ public class TestController {
     @GetMapping("/xx")
     public ResResult<Void> xx(){
         testService.xx();
+        return Res.ok();
+    }
+
+    @Operation(summary = "lock1")
+    @GetMapping("/lock1")
+    @Lock(keys = "#x",name="lock",waitTime = Long.MAX_VALUE)
+    public ResResult<Void> lock1(Integer x){
+        log.info("start");
+        ThreadUtil.sleep(15, TimeUnit.SECONDS);
+        log.info("end");
+        return Res.ok();
+    }
+    @Operation(summary="lock2")
+    @GetMapping("/lock2")
+    @Lock(keys = "#x",name="lock",waitTime = Long.MAX_VALUE)
+    public ResResult<Void> lock2(Integer x){
+        log.info("345");
         return Res.ok();
     }
 }
