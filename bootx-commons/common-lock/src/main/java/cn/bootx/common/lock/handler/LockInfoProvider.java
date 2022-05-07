@@ -4,6 +4,8 @@ import cn.bootx.common.lock.annotation.Lock;
 import cn.bootx.common.lock.annotation.LockKey;
 import cn.bootx.common.lock.entity.LockInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.expression.EvaluationContext;
@@ -24,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author xianzhi.chen@hand-china.com 2019年1月14日下午7:08:06
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LockInfoProvider {
@@ -59,9 +62,12 @@ public class LockInfoProvider {
         } else {
             lockName = getLockName((MethodSignature) joinPoint.getSignature(), keyList);
         }
-        long waitTime = getLockWaitTime(lock);
-        long leaseTime = getLockLeaseTime(lock);
-        TimeUnit timeUnit = getLockTimeUnit(lock);
+        // 获取锁等待时间
+        long waitTime = lock.waitTime();
+        // 获取锁默认释放时间
+        long leaseTime = lock.leaseTime();
+        // 获取锁默认时间单位
+        TimeUnit timeUnit = lock.timeUnit();
         // 增加前缀
         lockName = "bootx:lock:"+lockName;
         return new LockInfo(lockName, keyList, waitTime, leaseTime, timeUnit);
@@ -72,7 +78,7 @@ public class LockInfoProvider {
      */
     private List<String> getKeyList(JoinPoint joinPoint, String[] keys, EvaluationContext context) {
         Method method = getMethod(joinPoint);
-        List<String> definitionKeys = getSpelDefinitionKey(keys, context);
+        List<String> definitionKeys = getSpElDefinitionKey(keys, context);
         List<String> keyList = new ArrayList<>(definitionKeys);
         List<String> parameterKeys = getParameterKey(method.getParameters(), joinPoint.getArgs());
         keyList.addAll(parameterKeys);
@@ -82,6 +88,7 @@ public class LockInfoProvider {
     /**
      * 获取拦截方法
      */
+    @SneakyThrows
     private Method getMethod(JoinPoint joinPoint) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
@@ -90,7 +97,8 @@ public class LockInfoProvider {
                 method = joinPoint.getTarget().getClass().getDeclaredMethod(signature.getName(),
                         method.getParameterTypes());
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
+                throw e;
             }
         }
         return method;
@@ -99,7 +107,7 @@ public class LockInfoProvider {
     /**
      * 获取方法定义KEY
      */
-    private List<String> getSpelDefinitionKey(String[] definitionKeys, EvaluationContext context) {
+    private List<String> getSpElDefinitionKey(String[] definitionKeys, EvaluationContext context) {
         List<String> definitionKeyList = new ArrayList<>();
         for (String definitionKey : definitionKeys) {
             if (definitionKey == null || definitionKey.isEmpty()) {
@@ -141,26 +149,5 @@ public class LockInfoProvider {
     private String getLockName(MethodSignature signature, List<String> keyList) {
         return String.format("%s.%s.%s", signature.getDeclaringTypeName(), signature.getMethod().getName(),
                 StringUtils.collectionToDelimitedString(keyList, "", "-", ""));
-    }
-
-    /**
-     * 获取锁等待时间
-     */
-    private long getLockWaitTime(Lock lock) {
-        return lock.waitTime();
-    }
-
-    /**
-     * 获取锁默认释放时间
-     */
-    private long getLockLeaseTime(Lock lock) {
-        return lock.leaseTime();
-    }
-
-    /**
-     * 获取锁默认时间单位
-     */
-    private TimeUnit getLockTimeUnit(Lock lock) {
-        return lock.timeUnit();
     }
 }

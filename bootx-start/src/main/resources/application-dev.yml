@@ -81,12 +81,6 @@ bootx:
         "[iam:user:path]" : 5200
     sequence:
       type: jdbc
-    lock:
-      single-server:
-        address: redis.dev.bootx.cn
-        port: 26379
-        database: 1
-        password: bootx:Bootx!@#
   starter:
     auth:
       default-password: 123456

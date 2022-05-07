@@ -78,7 +78,7 @@ public class QuartzJobScheduler {
      * @param jobClassName 任务类名
      * @param parameter 参数
      */
-    public void execute(String jobClassName, String parameter){
+    public void execute(String jobClassName, String parameter) {
         try {
             String identity = jobClassName+ RandomUtil.randomString(8);
 
@@ -96,7 +96,8 @@ public class QuartzJobScheduler {
             // 启动scheduler
             scheduler.start();
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
+            throw new BizException("定时任务启动失败");
         }
 
     }

@@ -1,6 +1,7 @@
 package cn.bootx.starter.dingtalk.util;
 
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;
@@ -14,6 +15,7 @@ import java.security.NoSuchAlgorithmException;
 * @author xxm  
 * @date 2022/4/2 
 */
+@Slf4j
 @UtilityClass
 public class DingTalkUtil {
 
@@ -28,7 +30,7 @@ public class DingTalkUtil {
             byte[] signData = mac.doFinal(combine.getBytes(StandardCharsets.UTF_8));
             return Base64.encodeBase64String(signData);
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            e.printStackTrace();
+            log.warn(e.getMessage(),e);
         }
         return null;
     }
