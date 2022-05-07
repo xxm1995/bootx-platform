@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.dept.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.redis.RedisClient;
+import cn.bootx.common.lock.annotation.Lock;
 import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.dept.entity.Dept;
 import cn.bootx.iam.dto.dept.DeptTreeResult;
@@ -23,12 +23,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DeptUtilService {
     private final DeptManager deptManager;
-    private final RedisClient redisClient;
 
     /**
      * 生成机构代码 根机构_子机构_子子机构
-     *
+     * 使用分布式锁
      */
+    @Lock(keys = "#parentId")
     public String generateOrgCode(Long parentId) {
         // 顶级机构
         if (Objects.isNull(parentId)) {
@@ -63,14 +63,8 @@ public class DeptUtilService {
     /**
      * 根据前一个code，获取同级下一个code
      * 例如:当前最大code为1_2，下一个code为：1_3
-     * 预防并发 TODO 需要加分布式锁
      */
-    private synchronized String getNextCode(String code) {
-        // 获取不到锁直接抛异常
-        if (!redisClient.setIfAbsent("lock:getNextCode:"+code,"",10*1000)){
-            throw new BizException("生成组织机构编码冲突，请稍等后重新生成");
-        }
-
+    public String getNextCode(String code) {
         // 没有分隔符, 纯数字
         if (!StrUtil.contains(code,"_")){
             int i = Integer.parseInt(code);

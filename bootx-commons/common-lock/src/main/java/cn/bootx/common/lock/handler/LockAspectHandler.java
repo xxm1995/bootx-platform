@@ -48,7 +48,7 @@ public class LockAspectHandler {
                 lockFlag = true;
                 return joinPoint.proceed();
             } else {
-                throw new BizException("获取锁失败.");
+                throw new BizException("获取锁失败");
             }
         } finally {
             if (lockFlag) {

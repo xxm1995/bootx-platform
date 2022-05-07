@@ -2,6 +2,7 @@ package cn.bootx.common.core.rest.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 

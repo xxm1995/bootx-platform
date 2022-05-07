@@ -1,9 +1,10 @@
 package cn.bootx.starter.auth.redis;
 
+import cn.bootx.common.core.exception.FatalException;
 import cn.dev33.satoken.dao.SaTokenDao;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -12,9 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
@@ -23,6 +22,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Sa-Token持久层接口 Redis版 配置
@@ -34,28 +36,12 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class SaTokenRedisConfiguration {
     private final SaTokenRedisProperties saTokenDaoRedisProperties;
     private final RedisConnectionFactory connectionFactory;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper redisObjectMapper;
 
     /**
      * 配置信息的前缀
      */
     private static final String ALONE_PREFIX = "sa-token.plugins.redis.alone-redis";
-
-    /**
-     * jackson序列化
-     */
-    protected GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer(){
-        return new GenericJackson2JsonRedisSerializer(objectMapper());
-    }
-
-    /**
-     *  ObjectMapper对象,使用jackson序列化情况下, 可以重写这个方法进行自定义ObjectMapper
-     */
-    protected ObjectMapper objectMapper(){
-        ObjectMapper copy = objectMapper.copy();
-        copy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
-        return copy;
-    }
 
 
     /**
@@ -63,17 +49,35 @@ public class SaTokenRedisConfiguration {
      */
     protected RedisConnectionFactory redisConnectionFactory(){
         boolean alone = saTokenDaoRedisProperties.isAlone();
+        // 获取自定义Redis对象
+        RedisProperties aloneRedis =saTokenDaoRedisProperties.getAloneRedis();
         if (alone){
-            // 获取自定义Redis对象
-            RedisProperties aloneRedis =saTokenDaoRedisProperties.getAloneRedis();
+            RedisConfiguration redisConfig = new RedisStandaloneConfiguration();
+            // 单机模式/集群模式
+            if (aloneRedis.getCluster() == null || CollUtil.isEmpty(aloneRedis.getCluster().getNodes())) {
 
-            // 1. Redis配置
-            RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
-            redisConfig.setHostName(aloneRedis.getHost());
-            redisConfig.setPort(aloneRedis.getPort());
-            redisConfig.setDatabase(aloneRedis.getDatabase());
-            redisConfig.setPassword(RedisPassword.of(aloneRedis.getPassword()));
-
+                RedisStandaloneConfiguration standaloneConfiguration = new RedisStandaloneConfiguration();
+                standaloneConfiguration.setHostName(aloneRedis.getHost());
+                standaloneConfiguration.setDatabase(aloneRedis.getDatabase());
+                standaloneConfiguration.setPort(aloneRedis.getPort());
+                standaloneConfiguration.setPassword(aloneRedis.getPassword());
+                redisConfig = standaloneConfiguration;
+            } else {
+                RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration();
+                RedisProperties.Cluster cluster = aloneRedis.getCluster();
+                List<RedisNode> redisNodes = cluster.getNodes().stream()
+                        .map(node -> {
+                            List<String> hostAndPort = StrUtil.split(node, ':');
+                            if (hostAndPort.size() != 2) {
+                                throw new FatalException(1, "Redis Cluster集群配置错误, 无法启动");
+                            }
+                            return new RedisNode(hostAndPort.get(0), Integer.parseInt(hostAndPort.get(1)));
+                        }).collect(Collectors.toList());
+                clusterConfiguration.setClusterNodes(redisNodes);
+                clusterConfiguration.setPassword(aloneRedis.getPassword());
+                clusterConfiguration.setMaxRedirects(cluster.getMaxRedirects());
+                redisConfig = clusterConfiguration;
+            }
             // 2. 连接池配置
             GenericObjectPoolConfig<?> poolConfig = new GenericObjectPoolConfig<>();
             // pool配置
@@ -104,6 +108,7 @@ public class SaTokenRedisConfiguration {
             factory.afterPropertiesSet();
             return factory;
         } else {
+            // 使用默认的
             return connectionFactory;
         }
     }
@@ -125,7 +130,7 @@ public class SaTokenRedisConfiguration {
      */
     protected RedisTemplate<String, Object> objectRedisTemplate(){
         StringRedisSerializer keySerializer = new StringRedisSerializer();
-        RedisSerializer<Object> valueSerializer = jackson2JsonRedisSerializer();
+        RedisSerializer<Object> valueSerializer = new GenericJackson2JsonRedisSerializer(redisObjectMapper);
 
         // 构建RedisTemplate
         RedisTemplate<String, Object> template = new RedisTemplate<>();

@@ -1,10 +1,13 @@
 package cn.bootx.common.lock.configurer;
 
 import cn.bootx.common.lock.handler.LockAspectHandler;
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
+import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
+import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -23,15 +26,41 @@ import org.springframework.context.annotation.Import;
 @Import({LockAspectHandler.class})
 @RequiredArgsConstructor
 public class LockAutoConfiguration {
+    private final RedisProperties redisProperties;
+    private final String REDIS_PREFIX = "redis://";
 
-    @Bean(name = "lockRedissonClient", destroyMethod = "shutdown")
+    @Bean
     @ConditionalOnMissingBean
-    public RedissonClient redisson(RedisProperties redisProperties) {
+    public RedissonClient redisson() {
+        // 单机/集群
         Config config = new Config();
-        config.useSingleServer()
-                .setAddress("redis://"+redisProperties.getHost()+":"+redisProperties.getPort())
+        RedisProperties.Cluster cluster = redisProperties.getCluster();
+        if (cluster == null || CollUtil.isEmpty(cluster.getNodes())) {
+            initSingleConfig(config.useSingleServer());
+        } else {
+            initClusterConfig(config.useClusterServers());
+        }
+
+        return Redisson.create(config);
+    }
+
+    /**
+     * 单节点模式
+     */
+    private void initSingleConfig(SingleServerConfig singleServerConfig){
+        singleServerConfig.setAddress(REDIS_PREFIX+redisProperties.getHost()+":"+redisProperties.getPort())
                 .setDatabase(redisProperties.getDatabase())
                 .setPassword(redisProperties.getPassword());
-        return Redisson.create(config);
+    }
+
+    /**
+     * 集群模式
+     */
+    private void initClusterConfig(ClusterServersConfig clusterServersConfig){
+        String[] nodes = redisProperties.getCluster().getNodes().stream()
+                .map(node -> REDIS_PREFIX + node)
+                .toArray(String[]::new);
+        clusterServersConfig.setPassword(redisProperties.getPassword())
+                .addNodeAddress(nodes);
     }
 }

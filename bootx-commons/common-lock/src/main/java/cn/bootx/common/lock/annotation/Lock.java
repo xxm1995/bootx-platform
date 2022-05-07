@@ -29,7 +29,7 @@ public @interface Lock {
     boolean enableNameSpEl() default false;
 
     /**
-     * 锁类型，默认可重入锁
+     * 锁类型，默认可公平锁
      */
     LockType lockType() default LockType.FAIR;
 
