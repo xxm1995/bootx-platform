@@ -1,4 +1,4 @@
-package cn.bootx.demo.controller;
+package cn.bootx.demo.controller.query;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;

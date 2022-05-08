@@ -1,6 +1,5 @@
-package cn.bootx.demo.core.topic;
+package cn.bootx.demo.core.mq.redis;
 
-import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.redis.listener.RedisTopicListener;
 import org.springframework.stereotype.Component;
 
@@ -10,14 +9,14 @@ import org.springframework.stereotype.Component;
 * @date 2022/5/7 
 */
 @Component
-public class T2TopicListener implements RedisTopicListener<KeyValue> {
+public class T1TopicListener implements RedisTopicListener<String> {
     @Override
     public String getTopic() {
-        return "t2";
+        return "testt1";
     }
 
     @Override
-    public void onMessage(KeyValue obj) {
+    public void onMessage(String obj) {
         System.out.println(obj);
     }
 }
