@@ -23,6 +23,7 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +37,9 @@ import java.util.stream.Collectors;
 public class SaTokenRedisConfiguration {
     private final SaTokenRedisProperties saTokenDaoRedisProperties;
     private final RedisConnectionFactory connectionFactory;
-    private final ObjectMapper redisObjectMapper;
+
+    @Resource
+    private ObjectMapper redisObjectMapper;
 
     /**
      * 配置信息的前缀
