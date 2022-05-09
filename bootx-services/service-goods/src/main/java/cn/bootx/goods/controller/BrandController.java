@@ -6,7 +6,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.goods.core.category.service.BrandService;
-import cn.bootx.goods.dto.brand.BrandDto;
+import cn.bootx.goods.dto.category.BrandDto;
 import cn.bootx.goods.param.category.BrandParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

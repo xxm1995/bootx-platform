@@ -10,6 +10,7 @@ import cn.bootx.${module}.param.${method}.${className}Param;
 import cn.bootx.${module}.core.${method}.convert.${className}Convert;
 import cn.bootx.${module}.core.${method}.entity.${className};
 import cn.bootx.${module}.core.${method}.dao.${className}Manager;
+import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

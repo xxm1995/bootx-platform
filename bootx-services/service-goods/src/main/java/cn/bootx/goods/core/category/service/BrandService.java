@@ -7,7 +7,7 @@ import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.goods.core.category.dao.BrandManager;
 import cn.bootx.goods.core.category.entity.Brand;
-import cn.bootx.goods.dto.brand.BrandDto;
+import cn.bootx.goods.dto.category.BrandDto;
 import cn.bootx.goods.param.category.BrandParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;

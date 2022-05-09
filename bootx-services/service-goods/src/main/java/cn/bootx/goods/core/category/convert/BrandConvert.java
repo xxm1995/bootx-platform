@@ -1,7 +1,7 @@
 package cn.bootx.goods.core.category.convert;
 
 import cn.bootx.goods.core.category.entity.Brand;
-import cn.bootx.goods.dto.brand.BrandDto;
+import cn.bootx.goods.dto.category.BrandDto;
 import cn.bootx.goods.param.category.BrandParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

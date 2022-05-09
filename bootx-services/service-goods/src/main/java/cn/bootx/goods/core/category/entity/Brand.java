@@ -3,7 +3,7 @@ package cn.bootx.goods.core.category.entity;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.goods.core.category.convert.BrandConvert;
-import cn.bootx.goods.dto.brand.BrandDto;
+import cn.bootx.goods.dto.category.BrandDto;
 import cn.bootx.goods.param.category.BrandParam;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

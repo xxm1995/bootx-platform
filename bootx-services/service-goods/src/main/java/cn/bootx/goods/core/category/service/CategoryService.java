@@ -2,6 +2,7 @@ package cn.bootx.goods.core.category.service;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.goods.code.CategoryCode;
 import cn.bootx.goods.core.category.convert.CategoryConvert;
 import cn.bootx.goods.core.category.dao.CategoryManager;
 import cn.bootx.goods.core.category.entity.Category;
@@ -43,6 +44,9 @@ public class CategoryService {
         if (Objects.nonNull(param.getPid())){
             Category category = categoryManager.findById(param.getPid()).orElseThrow(() -> new BizException("父类不存在"));
             level = category.getLevel() + 1;
+            if (level > CategoryCode.LEVEL_CHILD){
+                throw new BizException("类目层级最高为三层");
+            }
         }
         if (categoryManager.existsName(param.getName())) {
             throw new CategoryAlreadyExistedException();
@@ -93,7 +97,20 @@ public class CategoryService {
      * 根据 id 删除相应的类目
      */
     public void delete(Long id){
-
         categoryManager.deleteById(id);
+    }
+
+    /**
+     * 绑定品牌
+     */
+    public void bindBrand(){
+
+    }
+
+    /**
+     * 绑定规格
+     */
+    public void bindSpecification(){
+
     }
 }

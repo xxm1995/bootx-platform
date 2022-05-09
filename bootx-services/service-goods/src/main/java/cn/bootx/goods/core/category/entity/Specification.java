@@ -19,16 +19,19 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("gc_specification")
+@TableName("gc_category_spec")
 @Accessors(chain = true)
 public class Specification extends MpBaseEntity implements EntityBaseFunction<SpecificationDto>{
 
     /** 规格名称 */
     private String name;
-    /** 规格值 */
+
+    /** 规格值(列表) */
     private String values;
+
     /** 状态 */
     private String state;
+
     /** 描述 */
     private String remark;
 
