@@ -37,18 +37,18 @@ public class DictionaryItemController {
         return Res.ok(dictionaryItemService.add(param));
     }
 
-    @Operation( summary = "删除字典项")
-    @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id) {
-        dictionaryItemService.delete(id);
-        return Res.ok();
-    }
-
     @Operation( summary = "修改字典项（返回字典项对象）")
     @PostMapping(value = "/update")
     public ResResult<DictionaryItemDto> update(@RequestBody DictionaryItemParam param) {
         ValidationUtil.validateParam(param);
         return Res.ok( dictionaryItemService.update(param));
+    }
+
+    @Operation( summary = "删除字典项")
+    @DeleteMapping(value = "/delete")
+    public ResResult<Void> delete(Long id) {
+        dictionaryItemService.delete(id);
+        return Res.ok();
     }
 
     @Operation( summary = "根据字典项ID查询")

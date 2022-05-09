@@ -21,7 +21,6 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 public class FairLockServiceImpl implements LockService {
 
     private final RedissonClient redissonClient;
-
     private final ThreadLocal<LockInfo> lockInfoThreadLocal = new ThreadLocal<>();
 
     @Override

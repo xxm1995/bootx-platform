@@ -7,7 +7,6 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.${module}.core.${method}.service.${className}Service;
 import cn.bootx.${module}.dto.${method}.${className}Dto;
 import cn.bootx.${module}.param.${method}.${className}Param;
-import QueryParams;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

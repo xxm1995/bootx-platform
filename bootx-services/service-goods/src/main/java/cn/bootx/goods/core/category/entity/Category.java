@@ -29,16 +29,13 @@ public class Category extends MpBaseEntity implements EntityBaseFunction<Categor
     /** 类目名称 */
     private String name;
     /** 描述 */
-    private String description;
-    /** 序号 */
-    private int ordinal;
-
+    private String remark;
+    /** 拍戏 */
+    private Double sortNo;
+    /** 图标/图片地址 */
+    private String image;
     /** 是否叶节点 */
-    private boolean leaf;
-
-    public static Category init(CategoryDto in) {
-        return CategoryConvert.CONVERT.convert(in);
-    }
+    private Integer level;
 
     public static Category init(CategoryParam in) {
         return CategoryConvert.CONVERT.convert(in);

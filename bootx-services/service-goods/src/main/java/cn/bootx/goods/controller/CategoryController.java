@@ -2,10 +2,10 @@ package cn.bootx.goods.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.common.core.rest.param.SingleIdParam;
 import cn.bootx.goods.core.category.service.CategoryService;
 import cn.bootx.goods.dto.category.CategoryDto;
 import cn.bootx.goods.dto.category.CategoryTreeNode;
+import cn.bootx.goods.param.category.CategoryParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +27,9 @@ public class CategoryController {
 
     @Operation(summary = "增加新类目")
     @PostMapping("/add")
-    public ResResult<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto) {
-        return Res.ok(categoryService.addCategory(categoryDto));
+    public ResResult<Void> add(@RequestBody CategoryParam categoryParam) {
+        categoryService.add(categoryParam);
+        return Res.ok();
     }
 
     @Operation(summary = "更新类目")
@@ -38,28 +39,28 @@ public class CategoryController {
     }
 
     @Operation( summary = "获取所有类目")
-    @GetMapping("/all")
+    @GetMapping("/findAll")
     public ResResult<List<CategoryDto>> findAll() {
         return Res.ok(categoryService.findAll());
     }
 
     @Operation( summary = "获取类目树")
-    @GetMapping("/tree")
+    @GetMapping("/findTree")
     public ResResult<List<CategoryTreeNode>> findTree() {
         return Res.ok(categoryService.findTree());
     }
 
     @Operation( summary = "通过 id 获取指定类目")
-    @GetMapping("/id")
-    public ResResult<CategoryDto> getCategory(@Parameter(description = "类目 id", required = true)
+    @GetMapping("/findById")
+    public ResResult<CategoryDto> findById(@Parameter(description = "类目 id", required = true)
                                               @RequestParam(value = "id") Long id) {
         return Res.ok(categoryService.getById(id));
     }
 
     @Operation( summary = "通过 id 删除类目")
     @DeleteMapping("/delete")
-    public ResResult<Void> deleteCategoryById(@RequestBody SingleIdParam param)  {
-        categoryService.deleteById(param.getId());
+    public ResResult<Void> delete(Long id)  {
+        categoryService.delete(id);
         return Res.ok();
     }
 }

@@ -82,6 +82,8 @@ bootx-platform
        ├── common-websocket  -- websocket
        ├── common-xxl-job -- XXL-JOB定时任务
     ├── bootx-demo -- demo示例模块
+    ├── bootx-modules -- 业务系统
+       ├── eshop -- 网上商城
     ├── bootx-services -- 业务服务模块
        ├── service-baseapi -- 基础api功能服务
        ├── service-goods -- 商品中心服务(未完成)

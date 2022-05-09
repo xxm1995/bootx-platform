@@ -1,5 +1,6 @@
 package cn.bootx.goods.core.category.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.goods.core.category.convert.CategoryConvert;
 import cn.bootx.goods.core.category.dao.CategoryManager;
@@ -9,6 +10,7 @@ import cn.bootx.goods.dto.category.CategoryDto;
 import cn.bootx.goods.dto.category.CategoryTreeNode;
 import cn.bootx.goods.exception.category.CategoryAlreadyExistedException;
 import cn.bootx.goods.exception.category.CategoryNotExistedException;
+import cn.bootx.goods.param.category.CategoryParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -34,13 +37,19 @@ public class CategoryService {
      * 添加新类目
      */
     @Transactional(rollbackFor = Exception.class)
-    public CategoryDto addCategory(CategoryDto categoryDto) {
-        if (categoryManager.existsName(categoryDto.getName())) {
+    public void add(CategoryParam param) {
+        int level = 1;
+        // 获取新增类目的层级
+        if (Objects.nonNull(param.getPid())){
+            Category category = categoryManager.findById(param.getPid()).orElseThrow(() -> new BizException("父类不存在"));
+            level = category.getLevel() + 1;
+        }
+        if (categoryManager.existsName(param.getName())) {
             throw new CategoryAlreadyExistedException();
         }
-        Category convert = CategoryConvert.CONVERT.convert(categoryDto);
-        Category category = categoryManager.save(convert);
-        return category.toDto();
+        Category category = CategoryConvert.CONVERT.convert(param);
+        category.setLevel(level);
+        categoryManager.save(category);
     }
 
     /**
@@ -49,6 +58,8 @@ public class CategoryService {
     @Transactional(rollbackFor = Exception.class)
     public CategoryDto update(CategoryDto param) {
         Category category = categoryManager.findById(param.getId()).orElseThrow(CategoryNotExistedException::new);
+        // pid不可以更新
+        param.setPid(null);
         BeanUtil.copyProperties(param,category, CopyOptions.create().ignoreNullValue());
         return categoryManager.updateById(category).toDto();
     }
@@ -81,7 +92,8 @@ public class CategoryService {
     /**
      * 根据 id 删除相应的类目
      */
-    public void deleteById(Long id){
+    public void delete(Long id){
+
         categoryManager.deleteById(id);
     }
 }

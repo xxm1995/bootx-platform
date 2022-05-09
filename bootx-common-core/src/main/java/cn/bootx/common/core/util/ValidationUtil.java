@@ -23,9 +23,9 @@ public class ValidationUtil {
     /**
      * 验证参数对象，如果验证失败则抛出异常
      */
-    public void validateParam(Object paramObject) {
+    public void validateParam(Object paramObject, Class<?>... groups) {
         Validator validator = validatorFactory.getValidator();
-        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject);
+        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject,groups);
         if (!violations.isEmpty()) {
             throw new ValidationFailedException(extractMessages(violations));
         }
@@ -42,9 +42,9 @@ public class ValidationUtil {
     /**
      * 验证参数对象，如果验证失败则返回所有失败信息
      */
-    public String validate(Object paramObject){
+    public String validate(Object paramObject, Class<?>... groups){
         Validator validator = validatorFactory.getValidator();
-        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject);
+        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject,groups);
 
         StringBuilder message = new StringBuilder();
         for (ConstraintViolation<Object> violation : violations) {

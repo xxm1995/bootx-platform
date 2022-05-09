@@ -26,13 +26,11 @@ public class CategoryParam implements Serializable {
     @Schema(description= "类目名称", required = true)
     private String name;
 
-    @Schema(description="类目描述")
+    @Schema(description="类目备注")
     private String description;
 
-    @Schema(description="序号，默认0")
-    private int ordinal;
+    @Schema(description="排序，默认0")
+    private Double sortNo;
 
-    @Schema(description= "是否叶子节点")
-    private boolean leaf;
 
 }

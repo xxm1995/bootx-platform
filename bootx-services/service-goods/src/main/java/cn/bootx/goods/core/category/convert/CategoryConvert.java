@@ -12,6 +12,4 @@ public interface CategoryConvert {
     CategoryDto convert(Category in);
 
     Category convert(CategoryParam in);
-
-    Category convert(CategoryDto in);
 }

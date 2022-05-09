@@ -1,6 +1,7 @@
 package cn.bootx.${module}.core.${method}.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
+import cn.bootx.${module}.param.${method}.${className}Param;
 import cn.bootx.${module}.core.${method}.entity.${className};
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;

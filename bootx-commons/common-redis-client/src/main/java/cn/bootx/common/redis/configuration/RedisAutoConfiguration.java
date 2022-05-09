@@ -156,7 +156,8 @@ public class RedisAutoConfiguration {
     }
 
     /**
-     * redis序列化配置
+     * redis序列化配置 ObjectMapper 对象
+     * 会记录被序列化的类型信息, 反序列化时直接能反序列化回原始的对象类型
      */
     @Bean
     public ObjectMapper redisObjectMapper() {

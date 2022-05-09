@@ -2,12 +2,13 @@ package cn.bootx.sales.param.strategy;
 
 import cn.bootx.sales.code.StrategyCode;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
+
+;
 
 /**
 * @author xxm

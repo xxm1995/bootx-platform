@@ -1,4 +1,4 @@
-package cn.bootx.goods.core.inventory.task;
+package cn.bootx.goods.task;
 
 import cn.bootx.goods.core.inventory.dao.InventoryTokenRepository;
 import cn.bootx.goods.core.inventory.manager.InventoryTokenManager;

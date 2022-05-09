@@ -28,7 +28,6 @@ public class OperateInventoryService {
 
     /**
      * 预占指定 SKU 的库存，返回授权码，需要在调用释放或扣减库存API时使用
-     * 使用分布式事务
      */
     @Transactional(rollbackFor = Exception.class)
     public LockInventoryDto lockInventory(Long skuId, int count) {

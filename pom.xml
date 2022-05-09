@@ -24,6 +24,7 @@
         <module>bootx-services</module>
         <module>bootx-start</module>
         <module>bootx-demo</module>
+        <module>bootx-modules</module>
     </modules>
 
     <properties>

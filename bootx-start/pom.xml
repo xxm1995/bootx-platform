@@ -30,57 +30,10 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-
-        <!-- 商品中心 -->
+        <!-- 商城模块 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-goods</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-
-        <!-- 支付中心 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-payment</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-
-        <!-- 销售中心 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-sales</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-
-        <!-- 订单中心 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-order</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-
-        <!-- 认证和授权 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-iam</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-
-        <!-- 通知服务 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-notice</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-
-        <!-- 基础功能 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-baseapi</artifactId>
+            <artifactId>module-eshop</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
 
