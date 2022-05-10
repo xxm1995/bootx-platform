@@ -26,7 +26,7 @@ public class Brand extends MpBaseEntity implements EntityBaseFunction<BrandDto>{
     /** 品牌图标 */
     private String logo;
     /** 状态 */
-    private String state;
+    private Boolean enable;
     /** 描述 */
     private String remark;
 

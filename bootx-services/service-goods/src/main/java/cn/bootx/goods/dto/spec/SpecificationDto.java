@@ -19,7 +19,9 @@ public class SpecificationDto extends BaseDto {
 
     @Schema(description = "规格名称")
     private String name;
-    @Schema(description = "规格值")
+    @Schema(description = "类型")
+    private String type;
+    @Schema(description = "列表选择值")
     private String values;
     @Schema(description = "状态")
     private String state;

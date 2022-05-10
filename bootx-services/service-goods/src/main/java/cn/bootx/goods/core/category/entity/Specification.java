@@ -26,6 +26,9 @@ public class Specification extends MpBaseEntity implements EntityBaseFunction<Sp
     /** 规格名称 */
     private String name;
 
+    /** 规格类型(文本/列表选择) */
+    private String type;
+
     /** 规格值(列表) */
     private String values;
 

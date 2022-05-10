@@ -21,8 +21,8 @@ public class BrandDto extends BaseDto {
     private String name;
     @Schema(description = "品牌图标")
     private String logo;
-    @Schema(description = "状态")
-    private String state;
+    @Schema(description = "是否启用")
+    private Boolean enable;
     @Schema(description = "描述")
     private String remark;
 
