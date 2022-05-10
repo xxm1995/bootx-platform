@@ -6,7 +6,7 @@ import cn.bootx.goods.code.CategoryCode;
 import cn.bootx.goods.core.category.convert.CategoryConvert;
 import cn.bootx.goods.core.category.dao.CategoryManager;
 import cn.bootx.goods.core.category.entity.Category;
-import cn.bootx.goods.core.category.handler.CategoryTreeHandler;
+import cn.bootx.goods.core.category.util.CategoryTreeUtil;
 import cn.bootx.goods.dto.category.CategoryDto;
 import cn.bootx.goods.dto.category.CategoryTreeNode;
 import cn.bootx.goods.exception.category.CategoryAlreadyExistedException;
@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -40,13 +41,14 @@ public class CategoryService {
     @Transactional(rollbackFor = Exception.class)
     public void add(CategoryParam param) {
         int level = 1;
-        // 获取新增类目的层级
+        // 不传pid为根类目
         if (Objects.nonNull(param.getPid())){
             Category category = categoryManager.findById(param.getPid()).orElseThrow(() -> new BizException("父类不存在"));
             level = category.getLevel() + 1;
             if (level > CategoryCode.LEVEL_CHILD){
                 throw new BizException("类目层级最高为三层");
             }
+
         }
         if (categoryManager.existsName(param.getName())) {
             throw new CategoryAlreadyExistedException();
@@ -81,7 +83,7 @@ public class CategoryService {
     /**
      * 根据 id 获取相应的类目
      */
-    public CategoryDto getById(Long id){
+    public CategoryDto findById(Long id){
         return categoryManager.findById(id).map(Category::toDto).orElseThrow(DataNotExistException::new);
     }
 
@@ -89,13 +91,29 @@ public class CategoryService {
      * 获取类目树
      */
     public List<CategoryTreeNode> findTree() {
-        List<CategoryDto> dtos = this.findAll();
-        return CategoryTreeHandler.build(dtos);
+        List<Category> categories = categoryManager.findAll().stream()
+                .sorted(Comparator.comparingDouble(Category::getSortNo))
+                .collect(Collectors.toList());
+        return CategoryTreeUtil.build(categories);
     }
 
     /**
-     * 根据 id 删除相应的类目
+     * 判断类目是否已经存在
      */
+    public boolean existsByName(String name) {
+        return categoryManager.existsName(name);
+    }
+
+    /**
+     * 判断类目是否已经存在
+     */
+    public boolean existsByName(String name, Long id) {
+        return categoryManager.existsName(name,id);
+    }
+
+        /**
+         * 根据 id 删除相应的类目
+         */
     public void delete(Long id){
         categoryManager.deleteById(id);
     }
@@ -111,6 +129,13 @@ public class CategoryService {
      * 绑定规格
      */
     public void bindSpecification(){
+
+    }
+
+    /**
+     * 绑定参数
+     */
+    public void bindParameter(){
 
     }
 }

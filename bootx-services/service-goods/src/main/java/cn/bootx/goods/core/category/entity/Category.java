@@ -21,7 +21,6 @@ import lombok.experimental.Accessors;
 @TableName("gc_category")
 @Accessors(chain = true)
 public class Category extends MpBaseEntity implements EntityBaseFunction<CategoryDto> {
-
     private static final long serialVersionUID = -3604408346443111551L;
 
     /** 上级类目id */
@@ -30,11 +29,13 @@ public class Category extends MpBaseEntity implements EntityBaseFunction<Categor
     private String name;
     /** 描述 */
     private String remark;
-    /** 拍戏 */
+    /** 状态 */
+    private Boolean enable;
+    /** 排序 */
     private Double sortNo;
     /** 图标/图片地址 */
     private String image;
-    /** 是否叶节点 */
+    /** 层级 */
     private Integer level;
 
     public static Category init(CategoryParam in) {

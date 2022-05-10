@@ -2,6 +2,7 @@ package cn.bootx.goods.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.goods.core.category.service.CategoryService;
 import cn.bootx.goods.dto.category.CategoryDto;
 import cn.bootx.goods.dto.category.CategoryTreeNode;
@@ -28,6 +29,7 @@ public class CategoryController {
     @Operation(summary = "增加新类目")
     @PostMapping("/add")
     public ResResult<Void> add(@RequestBody CategoryParam categoryParam) {
+        ValidationUtil.validateParam(categoryParam);
         categoryService.add(categoryParam);
         return Res.ok();
     }
@@ -44,6 +46,18 @@ public class CategoryController {
         return Res.ok(categoryService.findAll());
     }
 
+    @Operation(summary = "判断类目是否已经存在")
+    @GetMapping("/existsByName")
+    public ResResult<Boolean> existsByName(String name){
+        return Res.ok(categoryService.existsByName(name));
+    }
+
+    @Operation(summary = "判断类目是否已经存在(不包含自身)")
+    @GetMapping("/existsByNameNotId")
+    public ResResult<Boolean> existsByName(String name,Long id){
+        return Res.ok(categoryService.existsByName(name,id));
+    }
+
     @Operation( summary = "获取类目树")
     @GetMapping("/findTree")
     public ResResult<List<CategoryTreeNode>> findTree() {
@@ -54,7 +68,7 @@ public class CategoryController {
     @GetMapping("/findById")
     public ResResult<CategoryDto> findById(@Parameter(description = "类目 id", required = true)
                                               @RequestParam(value = "id") Long id) {
-        return Res.ok(categoryService.getById(id));
+        return Res.ok(categoryService.findById(id));
     }
 
     @Operation( summary = "通过 id 删除类目")

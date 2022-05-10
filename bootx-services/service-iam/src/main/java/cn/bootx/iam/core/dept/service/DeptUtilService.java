@@ -6,13 +6,11 @@ import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.dept.entity.Dept;
 import cn.bootx.iam.dto.dept.DeptTreeResult;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
 * 部门规则工具类
@@ -83,22 +81,19 @@ public class DeptUtilService {
      * 构造部门树状结构
      */
     public List<DeptTreeResult> buildTreeList(List<Dept> recordList) {
-        // 查出没有父级的部门
-        List<DeptTreeResult> collect = recordList.stream()
-                .filter(dept -> Objects.isNull(dept.getParentId()))
-                .map(dept -> {
-                    DeptTreeResult deptTreeResult = new DeptTreeResult();
-                    BeanUtil.copyProperties(dept, deptTreeResult);
-                    return deptTreeResult;
-                }).collect(Collectors.toList());
-
-        // 查询子部门
-        for (DeptTreeResult dept : collect) {
-            this.findChildren(dept,recordList);
-        }
         // 排序
-        collect.sort(Comparator.comparing(DeptTreeResult::getSortNo));
-        return collect;
+        recordList.sort(Comparator.comparing(Dept::getSortNo));
+        List<DeptTreeResult> tree = new ArrayList<>();
+        for (Dept dept : recordList) {
+            // 查出没有父级的部门
+            if (Objects.isNull(dept.getParentId())){
+                DeptTreeResult deptTreeResult = new DeptTreeResult();
+                BeanUtil.copyProperties(dept, deptTreeResult);
+                this.findChildren(deptTreeResult,recordList);
+                tree.add(deptTreeResult);
+            }
+        }
+        return tree;
     }
 
     /**
@@ -115,25 +110,6 @@ public class DeptUtilService {
                 findChildren(childNode, categories);
                 // 子节点
                 treeNode.getChildren().add(childNode);
-            }
-        }
-        // 排序
-        if (CollUtil.isNotEmpty(treeNode.getChildren())){
-            treeNode.getChildren().sort(Comparator.comparing(DeptTreeResult::getSortNo));
-        }
-    }
-
-
-    /**
-     * 根据id查找出下属类目的id
-     * @author xxm
-     * @date 2020/2/2 18:01
-     */
-    public static void findChildrenById(Long id, List<Dept> categories, Set<Long> ids){
-        for (Dept category : categories) {
-            if (Objects.equals(category.getParentId(),id)){
-                ids.add(category.getId());
-                findChildrenById(category.getId(),categories,ids);
             }
         }
     }

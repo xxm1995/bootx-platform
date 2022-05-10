@@ -1,5 +1,7 @@
 package cn.bootx.goods.dto.category;
 
+import cn.bootx.goods.core.category.entity.Category;
+import cn.hutool.core.bean.BeanUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,17 +24,32 @@ import java.util.List;
 public class CategoryTreeNode implements Serializable {
 
     private static final long serialVersionUID = -1587023420309803676L;
-    @Schema(description= "是否叶节点")
-    private CategoryDto data;
+
+    @Schema(description="主键")
+    private Long id;
+
+    @Schema(description="类目名称")
+    private String name;
+
+    @Schema(description="类目描述")
+    private String remark;
+
+    @Schema(description="排序，默认0")
+    private Double sortNo;
+
+    @Schema(description="是否启用")
+    private Boolean enable;
+
+    @Schema(description= "层级")
+    private Integer level;
+
+    @Schema(description= " 图标/图片地址")
+    private String image;
 
     @Schema(description="子节点列表")
     private List<CategoryTreeNode> children;
 
-    public CategoryTreeNode(CategoryDto dto) {
-        this.data = dto;
-    }
-
-    public Long getId() {
-        return data.getId();
+    public CategoryTreeNode(Category category) {
+        BeanUtil.copyProperties(category,this);
     }
 }

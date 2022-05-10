@@ -1,4 +1,4 @@
-package cn.bootx.goods.core.category.handler;
+package cn.bootx.goods.core.category.util;
 
 import java.util.ArrayList;
 import java.util.List;
