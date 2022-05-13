@@ -4,6 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * 类目参数组
  * @author xxm
@@ -16,11 +19,12 @@ public class CategoryParameterGroupParam {
 
     @Schema(description= "主键")
     private Long id;
-
-    @Schema(description = "品牌名称")
+    @NotEmpty
+    @Schema(description = "参数组名称")
     private String name;
     @Schema(description = "排序")
     private Double sortNo;
+    @NotNull
     @Schema(description = "类目id")
     private Long categoryId;
     @Schema(description = "描述")

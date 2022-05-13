@@ -5,7 +5,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.goods.core.category.service.SpecificationService;
-import cn.bootx.goods.dto.spec.SpecificationDto;
+import cn.bootx.goods.dto.category.SpecificationDto;
 import cn.bootx.goods.param.category.SpecificationParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +28,9 @@ public class SpecificationController {
 
     @Operation( summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<SpecificationDto> add(@RequestBody SpecificationParam param){
-        return Res.ok(specificationService.add(param));
+    public ResResult<Void> add(@RequestBody SpecificationParam param){
+        specificationService.add(param);
+        return Res.ok();
     }
 
     @Operation( summary = "修改")

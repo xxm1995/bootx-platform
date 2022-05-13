@@ -30,19 +30,19 @@ public class ${className}Service {
     /**
      * 添加
      */
-    public ${className}Dto add(${className}Param param){
+    public void add(${className}Param param){
         ${className} ${classname} = ${className}.init(param);
-        return ${classname}Manager.save(${classname}).toDto();
+        ${classname}Manager.save(${classname});
     }
 
     /**
      * 修改
      */
-    public ${className}Dto update(${className}Param param){
+    public void update(${className}Param param){
         ${className} ${classname} = ${classname}Manager.findById(param.getId()).orElseThrow(DataNotExistException::new);
 
         BeanUtil.copyProperties(param,${classname}, CopyOptions.create().ignoreNullValue());
-        return ${classname}Manager.updateById(${classname}).toDto();
+        ${classname}Manager.updateById(${classname});
     }
 
     /**

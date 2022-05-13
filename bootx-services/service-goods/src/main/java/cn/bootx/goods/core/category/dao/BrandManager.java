@@ -25,6 +25,6 @@ public class BrandManager extends BaseManager<BrandMapper, Brand> {
     */
     public Page<Brand> page(PageParam pageParam, BrandParam param) {
         Page<Brand> mpPage = MpUtil.getMpPage(pageParam, Brand.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getCreateTime).page(mpPage);
+        return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
     }
 }

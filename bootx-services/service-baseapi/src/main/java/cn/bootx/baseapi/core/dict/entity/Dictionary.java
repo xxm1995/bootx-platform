@@ -22,15 +22,14 @@ public class Dictionary extends MpBaseEntity implements EntityBaseFunction<Dicti
 	/** 名称 */
 	private String name;
 
+    /** 分类标签 */
+    private String groupTag;
+
 	/** 编码 */
 	private String code;
 
 	/** 备注 */
 	private String remark;
-
-	public static Dictionary init(DictionaryDto in){
-		return DictionaryConvert.CONVERT.convert(in);
-	}
 
 	public static Dictionary init(DictionaryParam in){
 		return DictionaryConvert.CONVERT.convert(in);

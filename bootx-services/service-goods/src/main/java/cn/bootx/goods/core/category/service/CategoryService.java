@@ -4,16 +4,23 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.goods.code.CategoryCode;
 import cn.bootx.goods.core.category.convert.CategoryConvert;
+import cn.bootx.goods.core.category.dao.CategoryBrandManager;
 import cn.bootx.goods.core.category.dao.CategoryManager;
+import cn.bootx.goods.core.category.dao.CategorySpecificationManager;
 import cn.bootx.goods.core.category.entity.Category;
+import cn.bootx.goods.core.category.entity.CategoryBrand;
+import cn.bootx.goods.core.category.entity.CategorySpecification;
 import cn.bootx.goods.core.category.util.CategoryTreeUtil;
 import cn.bootx.goods.dto.category.CategoryDto;
 import cn.bootx.goods.dto.category.CategoryTreeNode;
 import cn.bootx.goods.exception.category.CategoryAlreadyExistedException;
 import cn.bootx.goods.exception.category.CategoryNotExistedException;
+import cn.bootx.goods.param.category.CategoryBrandParam;
 import cn.bootx.goods.param.category.CategoryParam;
+import cn.bootx.goods.param.category.CategorySpecParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,15 +32,17 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
-* 类目
-* @author xxm
-* @date 2020/11/19
-*/
+ * 类目
+ * @author xxm
+ * @date 2020/11/19
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryManager categoryManager;
+    private final CategoryBrandManager categoryBrandManager;
+    private final CategorySpecificationManager categorySpecificationManager;
 
     /**
      * 添加新类目
@@ -111,31 +120,62 @@ public class CategoryService {
         return categoryManager.existsName(name,id);
     }
 
-        /**
-         * 根据 id 删除相应的类目
-         */
+    /**
+     * 根据 id 删除相应的类目
+     */
     public void delete(Long id){
+        // 判断是否还有子类目
+        if (categoryManager.existedByChildren(id)){
+            throw new BizException("无法删除, 还有子类目");
+        }
         categoryManager.deleteById(id);
+    }
+
+    /**
+     * 查询已经绑定的品牌id
+     */
+    public List<Long> findBindBrandIds(Long categoryId){
+        return categoryBrandManager.findAllByCategoryId(categoryId).stream()
+                .map(CategoryBrand::getBrandId)
+                .collect(Collectors.toList());
     }
 
     /**
      * 绑定品牌
      */
-    public void bindBrand(){
+    @Transactional(rollbackFor = Exception.class)
+    public void bindBrand(CategoryBrandParam param){
+        // 先删后增
+        categoryBrandManager.deleteByCategoryId(param.getCategoryId());
+        if (CollUtil.isNotEmpty(param.getBrandIds())){
+            List<CategoryBrand> collect = param.getBrandIds().stream()
+                    .map(id -> new CategoryBrand().setCategoryId(param.getCategoryId()).setBrandId(id))
+                    .collect(Collectors.toList());
+            categoryBrandManager.saveAll(collect);
+        }
+    }
 
+    /**
+     * 查询绑定的规格id集合
+     */
+    public List<Long> findBindSpecIds(Long categoryId){
+        return categorySpecificationManager.findAllByCategoryId(categoryId).stream()
+                .map(CategorySpecification::getSpecificationId)
+                .collect(Collectors.toList());
     }
 
     /**
      * 绑定规格
      */
-    public void bindSpecification(){
-
-    }
-
-    /**
-     * 绑定参数
-     */
-    public void bindParameter(){
-
+    @Transactional(rollbackFor = Exception.class)
+    public void bindSpec(CategorySpecParam param){
+        // 删旧增新
+        categorySpecificationManager.deleteByCategoryId(param.getCategoryId());
+        if (CollUtil.isNotEmpty(param.getSpecIds())) {
+            List<CategorySpecification> collect = param.getSpecIds().stream()
+                    .map(id -> new CategorySpecification().setCategoryId(param.getCategoryId()).setSpecificationId(id))
+                    .collect(Collectors.toList());
+            categorySpecificationManager.saveAll(collect);
+        }
     }
 }

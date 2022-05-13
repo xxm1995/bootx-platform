@@ -1,7 +1,7 @@
 package cn.bootx.goods.core.category.convert;
 
 import cn.bootx.goods.core.category.entity.Specification;
-import cn.bootx.goods.dto.spec.SpecificationDto;
+import cn.bootx.goods.dto.category.SpecificationDto;
 import cn.bootx.goods.param.category.SpecificationParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

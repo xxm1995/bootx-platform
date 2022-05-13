@@ -7,7 +7,7 @@ import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.goods.core.category.dao.SpecificationManager;
 import cn.bootx.goods.core.category.entity.Specification;
-import cn.bootx.goods.dto.spec.SpecificationDto;
+import cn.bootx.goods.dto.category.SpecificationDto;
 import cn.bootx.goods.param.category.SpecificationParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -31,9 +31,9 @@ public class SpecificationService {
     /**
      * 添加
      */
-    public SpecificationDto add(SpecificationParam param){
+    public void add(SpecificationParam param){
         Specification specification = Specification.init(param);
-        return specificationManager.save(specification).toDto();
+        specificationManager.save(specification);
     }
 
     /**

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**   
 *
 * @author xxm  
@@ -15,4 +17,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class CategoryBrandManager extends BaseManager<CategoryBrandMapper, CategoryBrand> {
+
+    public List<CategoryBrand> findAllByCategoryId(Long categoryId) {
+        return findAllByField(CategoryBrand::getCategoryId,categoryId);
+    }
+
+    public void deleteByCategoryId(Long categoryId){
+        deleteByField(CategoryBrand::getCategoryId,categoryId);
+    }
 }

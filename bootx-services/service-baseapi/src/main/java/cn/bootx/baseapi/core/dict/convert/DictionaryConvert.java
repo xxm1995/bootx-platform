@@ -19,13 +19,11 @@ import org.mapstruct.factory.Mappers;
 public interface DictionaryConvert {
     DictionaryConvert CONVERT = Mappers.getMapper(DictionaryConvert.class);
 
-    Dictionary convert(DictionaryDto in);
 
     Dictionary convert(DictionaryParam in);
 
     DictionaryDto convert(Dictionary in);
 
-    DictionaryItem convert(DictionaryItemDto in);
 
     DictionaryItem convert(DictionaryItemParam in);
 

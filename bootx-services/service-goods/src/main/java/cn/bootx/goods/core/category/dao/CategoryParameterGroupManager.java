@@ -1,18 +1,14 @@
 package cn.bootx.goods.core.category.dao;
 
-import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.goods.param.category.CategoryParameterGroupParam;
-import cn.bootx.goods.core.category.entity.CategoryParameterGroup;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.goods.core.category.entity.CategoryParameterGroup;
+import cn.bootx.goods.param.category.CategoryParameterGroupParam;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 /**
  * 类目参数组
@@ -29,6 +25,9 @@ public class CategoryParameterGroupManager extends BaseManager<CategoryParameter
     */
     public Page<CategoryParameterGroup> page(PageParam pageParam, CategoryParameterGroupParam param) {
         Page<CategoryParameterGroup> mpPage = MpUtil.getMpPage(pageParam, CategoryParameterGroup.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getCreateTime).page(mpPage);
+        return lambdaQuery()
+                .eq(CategoryParameterGroup::getCategoryId,param.getCategoryId())
+                .orderByDesc(MpBaseEntity::getId)
+                .page(mpPage);
     }
 }

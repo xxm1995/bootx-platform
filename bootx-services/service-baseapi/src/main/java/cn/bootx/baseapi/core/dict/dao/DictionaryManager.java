@@ -43,7 +43,8 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
         return lambdaQuery()
                 .orderByDesc(MpBaseEntity::getId)
                 .like(StrUtil.isNotBlank(param.getName()),Dictionary::getName,param.getName())
-                .like(StrUtil.isNotBlank(param.getCode()),Dictionary::getCode,param.getCode())
+                .like(StrUtil.isNotBlank(param.getName()),Dictionary::getName,param.getName())
+                .like(StrUtil.isNotBlank(param.getGroupTag()),Dictionary::getGroupTag,param.getGroupTag())
                 .page(mpPage);
     }
 }

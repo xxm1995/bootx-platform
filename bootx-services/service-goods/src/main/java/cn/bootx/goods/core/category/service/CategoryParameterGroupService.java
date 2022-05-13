@@ -41,7 +41,7 @@ public class CategoryParameterGroupService {
      */
     public CategoryParameterGroupDto update(CategoryParameterGroupParam param){
         CategoryParameterGroup categoryParameterGroup = categoryParameterGroupManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-
+        param.setId(null);
         BeanUtil.copyProperties(param,categoryParameterGroup, CopyOptions.create().ignoreNullValue());
         return categoryParameterGroupManager.updateById(categoryParameterGroup).toDto();
     }

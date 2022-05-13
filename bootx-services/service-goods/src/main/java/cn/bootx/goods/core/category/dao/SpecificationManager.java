@@ -25,6 +25,6 @@ public class SpecificationManager extends BaseManager<SpecificationMapper, Speci
     */
     public Page<Specification> page(PageParam pageParam, SpecificationParam param) {
         Page<Specification> mpPage = MpUtil.getMpPage(pageParam, Specification.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getCreateTime).page(mpPage);
+        return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
     }
 }

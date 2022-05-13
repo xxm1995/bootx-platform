@@ -28,14 +28,16 @@ public class ${className}Controller {
 
     @Operation( summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<${className}Dto> add(@RequestBody ${className}Param param){
-        return Res.ok(${classname}Service.add(param));
+    public ResResult<Void> add(@RequestBody ${className}Param param){
+        ${classname}Service.add(param);
+        return Res.ok();
     }
 
     @Operation( summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<${className}Dto> update(@RequestBody ${className}Param param){
-        return Res.ok(${classname}Service.update(param));
+    public ResResult<Void> update(@RequestBody ${className}Param param){
+        ${classname}Service.update(param);
+        return Res.ok();
     }
 
     @Operation( summary = "删除")

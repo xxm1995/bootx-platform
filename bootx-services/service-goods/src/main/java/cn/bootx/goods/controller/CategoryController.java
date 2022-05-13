@@ -6,7 +6,9 @@ import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.goods.core.category.service.CategoryService;
 import cn.bootx.goods.dto.category.CategoryDto;
 import cn.bootx.goods.dto.category.CategoryTreeNode;
+import cn.bootx.goods.param.category.CategoryBrandParam;
 import cn.bootx.goods.param.category.CategoryParam;
+import cn.bootx.goods.param.category.CategorySpecParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -75,6 +77,34 @@ public class CategoryController {
     @DeleteMapping("/delete")
     public ResResult<Void> delete(Long id)  {
         categoryService.delete(id);
+        return Res.ok();
+    }
+    
+    @Operation(summary = "根据类目id查询关联的绑定品牌id集合")
+    @GetMapping("/findBindBrandIds")
+    public ResResult<List<Long>> findBindBrandIds(Long categoryId){
+        return Res.ok(categoryService.findBindBrandIds(categoryId));
+    }
+
+    @Operation(summary = "绑定品牌")
+    @PostMapping("/bindBrand")
+    public ResResult<Void> bindBrand(@RequestBody CategoryBrandParam param){
+        ValidationUtil.validateParam(param);
+        categoryService.bindBrand(param);
+        return Res.ok();
+    }
+
+    @Operation(summary = "根据类目id查询关联的绑定规格id集合")
+    @GetMapping("/findBindSpecIds")
+    public ResResult<List<Long>> findBindSpecIds(Long categoryId){
+        return Res.ok(categoryService.findBindSpecIds(categoryId));
+    }
+
+    @Operation(summary = "绑定规格")
+    @PostMapping("/bindSpec")
+    public ResResult<Void> bindSpec(@RequestBody CategorySpecParam param){
+        ValidationUtil.validateParam(param);
+        categoryService.bindSpec(param);
         return Res.ok();
     }
 }

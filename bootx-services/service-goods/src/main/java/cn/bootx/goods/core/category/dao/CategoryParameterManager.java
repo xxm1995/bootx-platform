@@ -25,6 +25,10 @@ public class CategoryParameterManager extends BaseManager<CategoryParameterMappe
     */
     public Page<CategoryParameter> page(PageParam pageParam, CategoryParameterParam param) {
         Page<CategoryParameter> mpPage = MpUtil.getMpPage(pageParam, CategoryParameter.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getCreateTime).page(mpPage);
+        return lambdaQuery()
+                .eq(CategoryParameter::getCategoryId,param.getCategoryId())
+                .eq(CategoryParameter::getGroupId,param.getGroupId())
+                .orderByDesc(MpBaseEntity::getId)
+                .page(mpPage);
     }
 }

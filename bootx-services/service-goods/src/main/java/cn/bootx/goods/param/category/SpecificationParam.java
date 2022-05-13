@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * 规格
  * @author xxm
@@ -21,7 +23,7 @@ public class SpecificationParam {
     @Schema(description = "类型")
     private String type;
     @Schema(description = "列表选择值")
-    private String values;
+    private List<String> options;
     @Schema(description = "状态")
     private String state;
     @Schema(description = "描述")

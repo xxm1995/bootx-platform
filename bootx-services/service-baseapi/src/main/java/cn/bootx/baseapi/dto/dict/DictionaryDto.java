@@ -2,12 +2,13 @@ package cn.bootx.baseapi.dto.dict;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+
+;
 
 /**
 * @author xxm
@@ -26,6 +27,9 @@ public class DictionaryDto extends BaseDto implements Serializable {
 
 	@Schema(description= "名称")
 	private String name;
+
+    @Schema(description= "分类标签")
+    private String groupTag;
 
 	@Schema(description= "描述")
 	private String remark;

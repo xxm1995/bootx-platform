@@ -37,6 +37,9 @@ public class DictionaryParam implements Serializable {
     @Schema(description= "名称")
 	private String name;
 
+    @Schema(description= "分类标签")
+    private String groupTag;
+
 	@Schema(description= "描述")
 	private String remark;
 }

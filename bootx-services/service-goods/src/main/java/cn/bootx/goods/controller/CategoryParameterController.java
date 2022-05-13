@@ -4,6 +4,8 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.ValidationUtil;
+import cn.bootx.common.core.validation.ValidationGroup;
 import cn.bootx.goods.core.category.service.CategoryParameterService;
 import cn.bootx.goods.dto.category.CategoryParameterDto;
 import cn.bootx.goods.param.category.CategoryParameterParam;
@@ -29,12 +31,14 @@ public class CategoryParameterController {
     @Operation( summary = "添加")
     @PostMapping(value = "/add")
     public ResResult<CategoryParameterDto> add(@RequestBody CategoryParameterParam param){
+        ValidationUtil.validateParam(param, ValidationGroup.add.class);
         return Res.ok(categoryParameterService.add(param));
     }
 
     @Operation( summary = "修改")
     @PostMapping(value = "/update")
     public ResResult<CategoryParameterDto> update(@RequestBody CategoryParameterParam param){
+        ValidationUtil.validateParam(param,ValidationGroup.edit.class);
         return Res.ok(categoryParameterService.update(param));
     }
 
@@ -57,9 +61,10 @@ public class CategoryParameterController {
         return Res.ok(categoryParameterService.findAll());
     }
 
-    @Operation( summary = "分页查询")
+    @Operation( summary = "分页查询(限定类目和分组id)")
     @GetMapping(value = "/page")
     public ResResult<PageResult<CategoryParameterDto>> page(PageParam pageParam, CategoryParameterParam categoryParameterParam){
+        ValidationUtil.validateParam(categoryParameterParam);
         return Res.ok(categoryParameterService.page(pageParam,categoryParameterParam));
     }
 }

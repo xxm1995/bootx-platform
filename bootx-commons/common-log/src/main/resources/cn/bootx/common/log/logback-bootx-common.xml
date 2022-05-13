@@ -18,6 +18,7 @@
         <File>${logdir}/${appname}.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${logdir}/${appname}.log.%d{yyyy-MM-dd}.gz</FileNamePattern>
+            <!-- 保存30天 -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -31,6 +32,7 @@
         <file>${logdir}/${appname}.link.json</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${logdir}/${appname}.link.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <!-- 保存30天 -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">

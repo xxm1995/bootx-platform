@@ -2,25 +2,30 @@ package cn.bootx.goods.core.category.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import cn.bootx.goods.dto.spec.SpecificationDto;
+import cn.bootx.goods.dto.category.SpecificationDto;
 import cn.bootx.goods.param.category.SpecificationParam;
 import cn.bootx.goods.core.category.convert.SpecificationConvert;
 
 
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
+
 /**
-* 规格
-* @author xxm
-* @date 2022-05-09
-*/
+ * 规格
+ * @author xxm
+ * @date 2022-05-09
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("gc_category_spec")
 @Accessors(chain = true)
+@TableName(value = "gc_specification",autoResultMap = true)
 public class Specification extends MpBaseEntity implements EntityBaseFunction<SpecificationDto>{
 
     /** 规格名称 */
@@ -30,7 +35,8 @@ public class Specification extends MpBaseEntity implements EntityBaseFunction<Sp
     private String type;
 
     /** 规格值(列表) */
-    private String values;
+    @TableField(typeHandler= JacksonTypeHandler.class)
+    private List<String> options;
 
     /** 状态 */
     private String state;
@@ -40,7 +46,7 @@ public class Specification extends MpBaseEntity implements EntityBaseFunction<Sp
 
     /** 创建对象 */
     public static Specification init(SpecificationParam in) {
-            return SpecificationConvert.CONVERT.convert(in);
+        return SpecificationConvert.CONVERT.convert(in);
     }
 
     /** 转换成dto */
