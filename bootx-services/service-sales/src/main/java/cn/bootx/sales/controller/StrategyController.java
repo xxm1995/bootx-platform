@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2020/10/17
-*/
+ * @author xxm
+ * @date 2020/10/17
+ */
 @Tag(name ="策略定义")
 @RestController
 @RequestMapping("/strategy")
@@ -26,8 +26,9 @@ public class StrategyController {
 
     @Operation(summary = "添加策略")
     @PostMapping("/add")
-    public ResResult<StrategyDto> add(@RequestBody StrategyParam param){
-        return Res.ok(strategyService.add(param));
+    public ResResult<Void> add(@RequestBody StrategyParam param){
+        strategyService.add(param);
+        return Res.ok();
     }
 
     @Operation(summary = "更新策略")

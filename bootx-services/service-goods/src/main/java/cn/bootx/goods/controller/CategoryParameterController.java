@@ -64,7 +64,20 @@ public class CategoryParameterController {
     @Operation( summary = "分页查询(限定类目和分组id)")
     @GetMapping(value = "/page")
     public ResResult<PageResult<CategoryParameterDto>> page(PageParam pageParam, CategoryParameterParam categoryParameterParam){
-        ValidationUtil.validateParam(categoryParameterParam);
+        ValidationUtil.validateParam(categoryParameterParam,ValidationGroup.query.class);
         return Res.ok(categoryParameterService.page(pageParam,categoryParameterParam));
     }
+
+    @Operation(summary = "判断类目参数是否已经存在")
+    @GetMapping("/existsByName")
+    public ResResult<Boolean> existsByName(String name,Long groupId){
+        return Res.ok(categoryParameterService.existsByName(name,groupId));
+    }
+
+    @Operation(summary = "判断类目参数是否已经存在(不包含自身)")
+    @GetMapping("/existsByNameNotId")
+    public ResResult<Boolean> existsByName(String name,Long groupId,Long id){
+        return Res.ok(categoryParameterService.existsByName(name,groupId,id));
+    }
+
 }

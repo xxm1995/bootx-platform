@@ -1,7 +1,10 @@
 package cn.bootx.goods.core.goods.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.goods.core.goods.dao.GoodsManager;
 import cn.bootx.goods.core.goods.entity.Goods;
 import cn.bootx.goods.core.sku.dao.GoodsSkuManager;
@@ -27,7 +30,6 @@ public class GoodsService {
     private final GoodsManager goodsManager;
     private final GoodsSkuManager goodsSkuManager;
 
-
     /**
      * 新增商品
      */
@@ -43,6 +45,12 @@ public class GoodsService {
         return ResultConvertUtil.dtoListConvert(goodsManager.findAll());
     }
 
+    /**
+     * 分页
+     */
+    public PageResult<GoodsDto> page(PageParam param,GoodsParam query){
+        return MpUtil.convert2DtoPageResult(goodsManager.page(param,query));
+    }
 
     /**
      * 查询商品详情

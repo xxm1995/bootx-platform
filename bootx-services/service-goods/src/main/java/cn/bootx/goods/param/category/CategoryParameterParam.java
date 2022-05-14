@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 类目参数
@@ -28,7 +29,7 @@ public class CategoryParameterParam {
     @Schema(description = "手动输入or列表选择")
     private String type;
     @Schema(description = "选择值(列表)")
-    private String options;
+    private List<String> options;
     @Schema(description = "是否必填")
     private Boolean required;
     @Schema(description = "排序")

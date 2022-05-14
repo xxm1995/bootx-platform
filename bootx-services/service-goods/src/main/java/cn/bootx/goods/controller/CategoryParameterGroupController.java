@@ -62,4 +62,17 @@ public class CategoryParameterGroupController {
     public ResResult<PageResult<CategoryParameterGroupDto>> page(PageParam pageParam, CategoryParameterGroupParam categoryParameterGroupParam){
         return Res.ok(categoryParameterGroupService.page(pageParam,categoryParameterGroupParam));
     }
+
+    @Operation(summary = "判断类目参数组是否已经存在")
+    @GetMapping("/existsByName")
+    public ResResult<Boolean> existsByName(String name,Long categoryId){
+        return Res.ok(categoryParameterGroupService.existsByName(name,categoryId));
+    }
+
+    @Operation(summary = "判断类目参数组是否已经存在(不包含自身)")
+    @GetMapping("/existsByNameNotId")
+    public ResResult<Boolean> existsByName(String name,Long categoryId,Long id){
+        return Res.ok(categoryParameterGroupService.existsByName(name,categoryId,id));
+    }
+
 }

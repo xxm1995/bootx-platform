@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CategoryParameterGroupDto extends BaseDto {
 
-    @Schema(description = "品牌名称")
+    @Schema(description = "参数组名称")
     private String name;
     @Schema(description = "排序")
     private Double sortNo;

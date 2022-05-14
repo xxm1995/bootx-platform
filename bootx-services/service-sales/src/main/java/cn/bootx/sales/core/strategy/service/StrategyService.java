@@ -41,7 +41,7 @@ public class StrategyService {
     /**
      * 添加策略及其配置项
      */
-    public StrategyDto add(StrategyParam param){
+    public void add(StrategyParam param){
         Strategy strategy = Strategy.init(param);
         // 检查code是否重复
         if (strategyManager.existsByCode(param.getCode())){
@@ -49,7 +49,6 @@ public class StrategyService {
         }
         Strategy save = strategyManager.save(strategy);
         this.strategyConfigsPersistence(save.getId(), param.getConfigParams());
-        return save.toDto();
     }
 
     /**

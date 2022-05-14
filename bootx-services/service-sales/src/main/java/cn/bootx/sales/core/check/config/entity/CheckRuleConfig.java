@@ -57,7 +57,7 @@ public class CheckRuleConfig extends MpBaseEntity implements EntityBaseFunction<
 
     /**
      * 类型
-     * @see StrategyCode
+     * @see StrategyCode#ENGINE_SYSTEM
      */
     @TableField(exist = false)
     private int engineType;

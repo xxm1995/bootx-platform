@@ -1,11 +1,12 @@
 package cn.bootx.goods.param.goods;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+
+;
 
 /**
 * @author xxm
@@ -30,7 +31,7 @@ public class GoodsParam implements Serializable {
     private String name;
 
     @Schema(description= "商品描述")
-    private String description;
+    private String remark;
 
     @Schema(description= "附加信息")
     private String addition;

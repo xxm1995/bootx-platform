@@ -30,4 +30,24 @@ public class CategoryParameterGroupManager extends BaseManager<CategoryParameter
                 .orderByDesc(MpBaseEntity::getId)
                 .page(mpPage);
     }
+
+    /**
+     * 名称是否存在
+     */
+    public boolean existedByName(String name,Long categoryId){
+        return this.lambdaQuery()
+                .eq(CategoryParameterGroup::getName,name)
+                .eq(CategoryParameterGroup::getCategoryId,categoryId)
+                .exists();
+    }
+    /**
+     * 名称是否存在
+     */
+    public boolean existedByName(String name,Long categoryId,Long id){
+        return this.lambdaQuery()
+                .eq(CategoryParameterGroup::getName,name)
+                .eq(CategoryParameterGroup::getCategoryId,categoryId)
+                .ne(CategoryParameterGroup::getId,id)
+                .exists();
+    }
 }

@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 类目参数
  * @author xxm
@@ -19,8 +22,10 @@ public class CategoryParameterDto extends BaseDto {
 
     @Schema(description = "品牌名称")
     private String name;
+    @Schema(description = "类型")
+    private String type;
     @Schema(description = "选择值(列表)")
-    private String options;
+    private List<String> options = new ArrayList<>();
     @Schema(description = "是否必填")
     private Boolean required;
     @Schema(description = "排序")

@@ -18,7 +18,5 @@ public interface GoodsConvert {
 
     Goods convert(GoodsParam in);
 
-    Goods convert(GoodsDto in);
-
     GoodsDto convert(Goods in);
 }

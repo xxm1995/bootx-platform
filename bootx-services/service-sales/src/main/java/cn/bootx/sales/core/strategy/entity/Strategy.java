@@ -33,17 +33,18 @@ public class Strategy extends MpBaseEntity implements EntityBaseFunction<Strateg
 
     /**
      * 目标类型
-     * @see StrategyCode
+     * @see StrategyCode#TARGET_TYPE_CALCULATE
      */
     private int targetType;
 
     /**
-     * 应用的引擎类型
-     * @see StrategyCode
+     * 应用的引擎类型 (只支持java)
+     * @see StrategyCode#ENGINE_JAVASCRIPT
      */
     private int engineType;
 
-    /** 策略计算脚本 */
+    /** 策略计算脚本 (废弃) */
+    @Deprecated
     private String ruleScript;
 
     /** 可用状态 */

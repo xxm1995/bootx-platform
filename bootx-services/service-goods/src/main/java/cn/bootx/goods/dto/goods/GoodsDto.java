@@ -3,13 +3,14 @@ package cn.bootx.goods.dto.goods;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.goods.dto.sku.GoodsSkuDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
+
+;
 
 /**
 * @author xxm
@@ -32,7 +33,7 @@ public class GoodsDto extends BaseDto implements Serializable {
     private String name;
 
     @Schema(description= "商品描述")
-    private String description;
+    private String remark;
 
     /** banner图片 多个图片逗号分隔 */
     private String bannerUri;

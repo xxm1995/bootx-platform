@@ -31,7 +31,7 @@ public class CategoryParameterGroupService {
     /**
      * 添加
      */
-    public CategoryParameterGroupDto add(CategoryParameterGroupParam param){
+    public CategoryParameterGroupDto add(CategoryParameterGroupParam param) {
         CategoryParameterGroup categoryParameterGroup = CategoryParameterGroup.init(param);
         return categoryParameterGroupManager.save(categoryParameterGroup).toDto();
     }
@@ -39,38 +39,52 @@ public class CategoryParameterGroupService {
     /**
      * 修改
      */
-    public CategoryParameterGroupDto update(CategoryParameterGroupParam param){
+    public CategoryParameterGroupDto update(CategoryParameterGroupParam param) {
         CategoryParameterGroup categoryParameterGroup = categoryParameterGroupManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
         param.setId(null);
-        BeanUtil.copyProperties(param,categoryParameterGroup, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, categoryParameterGroup, CopyOptions.create().ignoreNullValue());
         return categoryParameterGroupManager.updateById(categoryParameterGroup).toDto();
     }
 
     /**
      * 分页
      */
-    public PageResult<CategoryParameterGroupDto> page(PageParam pageParam,CategoryParameterGroupParam categoryParameterGroupParam){
-        return MpUtil.convert2DtoPageResult(categoryParameterGroupManager.page(pageParam,categoryParameterGroupParam));
+    public PageResult<CategoryParameterGroupDto> page(PageParam pageParam, CategoryParameterGroupParam categoryParameterGroupParam) {
+        return MpUtil.convert2DtoPageResult(categoryParameterGroupManager.page(pageParam, categoryParameterGroupParam));
     }
 
     /**
      * 获取单条
      */
-    public CategoryParameterGroupDto findById(Long id){
+    public CategoryParameterGroupDto findById(Long id) {
         return categoryParameterGroupManager.findById(id).map(CategoryParameterGroup::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
-    public List<CategoryParameterGroupDto> findAll(){
+    public List<CategoryParameterGroupDto> findAll() {
         return ResultConvertUtil.dtoListConvert(categoryParameterGroupManager.findAll());
     }
 
     /**
      * 删除
      */
-    public void delete(Long id){
+    public void delete(Long id) {
         categoryParameterGroupManager.deleteById(id);
+    }
+
+    /**
+     * 名称是否存在
+     */
+    public boolean existsByName(String name, Long categoryId) {
+        return categoryParameterGroupManager.existedByName(name,categoryId);
+    }
+
+    /**
+     * 名称是否存在
+     */
+    public boolean existsByName(String name, Long categoryId, Long id) {
+        return categoryParameterGroupManager.existedByName(name,categoryId,id);
     }
 }

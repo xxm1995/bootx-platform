@@ -1,18 +1,11 @@
 package cn.bootx.goods.core.category.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.bootx.goods.core.category.convert.CategoryParameterGroupConvert;
 import cn.bootx.goods.dto.category.CategoryParameterGroupDto;
 import cn.bootx.goods.param.category.CategoryParameterGroupParam;
-import cn.bootx.goods.core.category.convert.CategoryParameterGroupConvert;
-
-
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,7 +21,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CategoryParameterGroup extends MpBaseEntity implements EntityBaseFunction<CategoryParameterGroupDto>{
 
-    /** 品牌名称 */
+    /** 参数组名称 */
     private String name;
     /** 排序 */
     private Double sortNo;

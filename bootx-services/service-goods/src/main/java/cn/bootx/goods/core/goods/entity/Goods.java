@@ -33,7 +33,7 @@ public class Goods extends MpBaseEntity implements EntityBaseFunction<GoodsDto> 
     private String name;
 
     /** 描述*/
-    private String description;
+    private String remark;
 
     /** banner图片 多个图片逗号分隔 */
     private String bannerUri;
@@ -49,10 +49,6 @@ public class Goods extends MpBaseEntity implements EntityBaseFunction<GoodsDto> 
 
     /** 状态(1:可用，0:不可用) */
     private int state;
-
-    public static Goods init(GoodsDto in){
-        return GoodsConvert.CONVERT.convert(in);
-    }
 
     public static Goods init(GoodsParam in){
         return GoodsConvert.CONVERT.convert(in);

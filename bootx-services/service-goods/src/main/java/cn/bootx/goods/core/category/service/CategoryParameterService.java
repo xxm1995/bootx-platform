@@ -73,4 +73,18 @@ public class CategoryParameterService {
     public void delete(Long id){
         categoryParameterManager.deleteById(id);
     }
+
+    /**
+     * 名称是否存在
+     */
+    public boolean existsByName(String name, Long groupId) {
+        return categoryParameterManager.existedByName(name,groupId);
+    }
+
+    /**
+     * 名称是否存在
+     */
+    public boolean existsByName(String name, Long groupId, Long id) {
+        return categoryParameterManager.existedByName(name,groupId,id);
+    }
 }

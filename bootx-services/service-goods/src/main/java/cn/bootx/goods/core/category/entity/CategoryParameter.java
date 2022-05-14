@@ -5,10 +5,14 @@ import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.goods.core.category.convert.CategoryParameterConvert;
 import cn.bootx.goods.dto.category.CategoryParameterDto;
 import cn.bootx.goods.param.category.CategoryParameterParam;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
 * 类目参数
@@ -17,14 +21,17 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("gc_category_parameter")
+@TableName(value = "gc_category_parameter",autoResultMap = true)
 @Accessors(chain = true)
 public class CategoryParameter extends MpBaseEntity implements EntityBaseFunction<CategoryParameterDto>{
 
-    /** 品牌名称 */
+    /** 参数名称 */
     private String name;
+    /** 类型 */
+    private String type;
     /** 选择值(列表) */
-    private String options;
+    @TableField(typeHandler= JacksonTypeHandler.class)
+    private List<String> options;
     /** 是否必填 */
     private Boolean required;
     /** 排序 */
