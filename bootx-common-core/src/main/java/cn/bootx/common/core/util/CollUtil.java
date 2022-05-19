@@ -10,7 +10,7 @@ import java.util.Collection;
 * @date 2020/11/28
 */
 @UtilityClass
-public class CollUtil {
+public class CollUtil extends cn.hutool.core.collection.CollUtil {
 
     /**
      * 判断两个集合是否有交集

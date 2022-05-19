@@ -33,4 +33,9 @@ public class PermMenuManager extends BaseManager<PermMenuMapper, PermMenu> {
     public List<PermMenu> findAllByParentId(Long parentId) {
         return findAllByField(PermMenu::getParentId,parentId);
     }
+
+    public List<PermMenu> findAllByClientCode(String clientCode) {
+        return findAllByField(PermMenu::getClientCode,clientCode);
+    }
+
 }

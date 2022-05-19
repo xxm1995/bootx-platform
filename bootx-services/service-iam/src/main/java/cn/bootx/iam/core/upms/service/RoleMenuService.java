@@ -73,8 +73,8 @@ public class RoleMenuService {
     /**
      * 获取菜单权限树, 不包含资源权限
      */
-    public List<PermMenuDto> findMenuTree(){
-        List<PermMenuDto> permissions = this.findPermissions();
+    public List<PermMenuDto> findMenuTree(String clientCode){
+        List<PermMenuDto> permissions = this.findPermissions(clientCode);
         List<PermMenuDto> permissionsByNotButton = permissions.stream()
                 .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
                 .collect(Collectors.toList());
@@ -84,15 +84,15 @@ public class RoleMenuService {
     /**
      * 获取权限树, 包含菜单和资源权限
      */
-    public List<PermMenuDto> findAllTree(){
-        return this.recursiveBuildTree(this.findPermissions(), null);
+    public List<PermMenuDto> findAllTree(String clientCode){
+        return this.recursiveBuildTree(this.findPermissions(clientCode), null);
     }
 
     /**
      * 获取权限菜单id列表,不包含资源权限
      */
-    public List<Long> findMenuIds() {
-        List<PermMenuDto> permissions = this.findPermissions();
+    public List<Long> findMenuIds(String clientCode) {
+        List<PermMenuDto> permissions = this.findPermissions(clientCode);
         return permissions.stream()
                 .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
                 .map(PermMenuDto::getId)
@@ -102,8 +102,8 @@ public class RoleMenuService {
     /**
      * 获取权限id列表,包含菜单和资源权限
      */
-    public List<Long> findPermissionIds() {
-        List<PermMenuDto> permissions = this.findPermissions();
+    public List<Long> findPermissionIds(String clientCode) {
+        List<PermMenuDto> permissions = this.findPermissions(clientCode);
         return permissions.stream()
                 .map(PermMenuDto::getId)
                 .collect(Collectors.toList());
@@ -112,8 +112,8 @@ public class RoleMenuService {
     /**
      * 获取菜单和资源权限
      */
-    public MenuAndResourceDto getPermissions(){
-        List<PermMenuDto> permissions = this.findPermissions();
+    public MenuAndResourceDto getPermissions(String clientCode){
+        List<PermMenuDto> permissions = this.findPermissions(clientCode);
         List<String> resourcePerms = permissions.stream()
                 .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
                 .map(PermMenuDto::getPermCode)
@@ -129,13 +129,13 @@ public class RoleMenuService {
     /**
      * 获取权限信息列表
      */
-    private List<PermMenuDto> findPermissions(){
+    private List<PermMenuDto> findPermissions(String clientCode){
         UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
         List<PermMenuDto> permissions;
 
         //系统管理员，获取全部的权限
         if (userDetail.isAdmin()) {
-            permissions = permMenuService.findAll();
+            permissions = permMenuService.findAllByClientCode(clientCode);
         } else {
             // 非管理员获取自身拥有的权限
             permissions = this.findPermissionsByUser(userDetail.getId());

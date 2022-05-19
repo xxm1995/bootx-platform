@@ -26,6 +26,9 @@ public class ClientParam {
     @Schema(description = "是否可用")
     private boolean enable;
 
+    @Schema(description = "是否有独立菜单和权限")
+    private boolean alonePrem;
+
     @Schema(description = "是否启用验证码")
     private boolean captcha;
 

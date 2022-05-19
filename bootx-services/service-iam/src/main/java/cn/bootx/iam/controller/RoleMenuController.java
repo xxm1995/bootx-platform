@@ -34,8 +34,8 @@ public class RoleMenuController {
 
     @Operation(summary = "获取权限菜单id列表,不包含资源权限")
     @GetMapping("/findMenuIds")
-    public ResResult<List<Long>> findMenuIds(){
-        return Res.ok(roleMenuService.findMenuIds());
+    public ResResult<List<Long>> findMenuIds(String clientCode){
+        return Res.ok(roleMenuService.findMenuIds(clientCode));
     }
 
     @Operation(summary = "根据角色id获取关联权限id集合(包含资源和菜单)")
@@ -47,7 +47,7 @@ public class RoleMenuController {
     @IgnoreAuth
     @Operation(summary = "获取菜单和资源权限")
     @GetMapping("/getPermissions")
-    public ResResult<MenuAndResourceDto> getPermissions(){
-        return Res.ok(roleMenuService.getPermissions());
+    public ResResult<MenuAndResourceDto> getPermissions(String clientCode){
+        return Res.ok(roleMenuService.getPermissions(clientCode));
     }
 }

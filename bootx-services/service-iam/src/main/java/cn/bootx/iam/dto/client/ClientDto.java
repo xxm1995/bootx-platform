@@ -26,6 +26,9 @@ public class ClientDto extends BaseDto {
     @Schema(description = "在线时长 分钟")
     private Long timeout;
 
+    @Schema(description = "是否有独立菜单和权限")
+    private boolean alonePrem;
+
     @Schema(description = "是否启用验证码")
     private boolean captcha;
 

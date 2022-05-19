@@ -12,6 +12,10 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(title = "认证终端")
 public class AuthClient {
+
+    /** 终端id */
+    private Long id;
+
     /** 编码 */
     private String code;
 
@@ -20,6 +24,9 @@ public class AuthClient {
 
     /** 在线时长 分钟 */
     private long timeout;
+
+    /** 是否有独立菜单和权限 */
+    private boolean alonePrem;
 
     /** 是否可用 */
     private boolean enable;

@@ -23,6 +23,9 @@ public class PermMenuDto extends BaseDto implements Serializable {
     @Schema(description = "父id")
     private Long parentId;
 
+    @Schema(description = "关联终端code")
+    private String clientCode;
+
     @Schema(description = "菜单标题/资源名称")
     private String title;
 

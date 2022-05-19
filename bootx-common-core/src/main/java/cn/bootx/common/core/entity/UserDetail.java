@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**   
 * 用户类
 * @author xxm  
@@ -26,6 +28,9 @@ public class UserDetail{
 
     @JsonIgnore
     private transient String password;
+
+    /** 拥有终端列表 */
+    private List<Long> clientIds;
 
     /** 是否管理员 */
     private boolean admin;

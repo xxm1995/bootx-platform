@@ -66,6 +66,12 @@ public class ClientController {
         return Res.ok(clientService.findAll());
     }
 
+    @Operation( summary = "查询有独立菜单和权限的终端列表")
+    @GetMapping(value = "/findAllByAlonePrem")
+    public ResResult<List<ClientDto>> findAllByAlonePrem(){
+        return Res.ok(clientService.findAllByAlonePrem());
+    }
+
     @Operation( summary = "分页查询终端")
     @GetMapping(value = "/page")
     public ResResult<PageResult<ClientDto>> page(PageParam pageParam, ClientParam clientParam){

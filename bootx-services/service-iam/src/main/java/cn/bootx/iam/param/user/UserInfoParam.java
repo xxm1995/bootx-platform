@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**   
 * @author xxm
@@ -31,6 +32,9 @@ public class UserInfoParam implements Serializable {
 
     @Schema(description= "邮箱")
     private String email;
+
+    @Schema(description= "终端id列表")
+    private List<String> clientIdList;
 
     @Schema(description= "头像")
     private String avatar;

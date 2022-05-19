@@ -5,6 +5,7 @@ import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import cn.bootx.iam.code.UserStatusCode;
+import cn.hutool.core.collection.CollUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,9 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xxm
@@ -45,6 +49,9 @@ public class UserInfoDto extends BaseDto implements Serializable {
     @SensitiveInfo(SensitiveType.EMAIL)
     private String email;
 
+    @Schema(description= "终端id列表")
+    private List<String> clientIdList = new ArrayList<>();
+
     @Schema(description= "注册来源")
     private String source;
 
@@ -61,12 +68,19 @@ public class UserInfoDto extends BaseDto implements Serializable {
     private LocalDateTime registerTime;
 
     public UserDetail toUserDetail(){
+        List<Long> clientIds = new ArrayList<>();
+        if (CollUtil.isNotEmpty(this.getClientIdList())){
+            clientIds = this.getClientIdList().stream()
+                    .map(Long::valueOf)
+                    .collect(Collectors.toList());
+        }
         return new UserDetail()
                 .setId(this.getId())
                 .setPassword(this.password)
                 .setUsername(this.getUsername())
                 .setName(this.name)
                 .setAdmin(this.admin)
+                .setClientIds(clientIds)
                 .setStatus(this.status);
     }
 }

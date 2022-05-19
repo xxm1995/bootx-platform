@@ -62,7 +62,7 @@ public class WebSocketDemo {
      */
     private void sendMessage(String message, Session toSession) {
         try {
-            log.info("服务端给客户端[{}]发送消息{}", toSession.getId(), message);
+//            log.info("服务端给客户端[{}]发送消息{}", toSession.getId(), message);
             toSession.getBasicRemote().sendText(message);
         } catch (Exception e) {
             log.error("服务端发送消息给客户端失败：", e);

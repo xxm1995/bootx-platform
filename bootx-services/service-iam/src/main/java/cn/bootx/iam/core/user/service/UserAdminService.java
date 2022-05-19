@@ -21,6 +21,7 @@ import cn.bootx.iam.param.user.UserInfoParam;
 import cn.bootx.starter.auth.util.PasswordEncoder;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -93,12 +94,10 @@ public class UserAdminService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void add(UserInfoParam userInfoParam){
-
         // 如果用户的手机号和邮箱都不存在则抛出异常, 第三方登录除外
         if (Objects.isNull(userInfoParam.getPhone()) && Objects.isNull(userInfoParam.getEmail())) {
             throw new UserNonePhoneAndEmailException();
         }
-
         if (userInfoService.existsUsername(userInfoParam.getUsername())){
             throw new BizException("账号已存在");
         }
@@ -148,6 +147,11 @@ public class UserAdminService {
         UserInfo userInfo = userInfoManager.findById(userInfoParam.getId()).orElseThrow(UserInfoNotExistsException::new);
         userInfoParam.setPassword(null);
         BeanUtil.copyProperties(userInfoParam,userInfo, CopyOptions.create().ignoreNullValue());
+        if (CollUtil.isNotEmpty(userInfoParam.getClientIdList())){
+            userInfo.setClientIds(String.join(",",userInfoParam.getClientIdList()));
+        } else {
+            userInfo.setClientIds("");
+        }
         return userInfoManager.updateById(userInfo).toDto();
     }
 

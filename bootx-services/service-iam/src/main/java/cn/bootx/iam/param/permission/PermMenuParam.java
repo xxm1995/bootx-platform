@@ -1,9 +1,14 @@
 package cn.bootx.iam.param.permission;
 
+import cn.bootx.common.core.validation.ValidationGroup;
+import cn.bootx.common.core.validation.ValidationGroup.edit;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
@@ -16,11 +21,17 @@ import java.io.Serializable;
 public class PermMenuParam implements Serializable {
     private static final long serialVersionUID = 3017200753543614579L;
 
+    @Null(groups = { edit.class})
+    @NotNull(groups = {ValidationGroup.add.class})
     @Schema(description = "主键")
     private Long id;
 
     @Schema(description = "父id")
     private Long parentId;
+
+    @NotEmpty(groups = {ValidationGroup.add.class, edit.class})
+    @Schema(description = "关联终端code")
+    private String clientCode;
 
     @Schema(description = "菜单标题")
     private String title;

@@ -83,7 +83,7 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         // 管理员跳过各种校验
         if (!userDetail.isAdmin()) {
             // 账号状态
-            if (!Objects.equals(userDetail.getStatus(), UserStatusCode.LOCK)) {
+            if (Objects.equals(userDetail.getStatus(), UserStatusCode.LOCK)) {
                 throw new LoginFailureException(username, "密码多次输入错误，已被冻结");
             }
             if (!Objects.equals(userDetail.getStatus(), UserStatusCode.NORMAL)) {

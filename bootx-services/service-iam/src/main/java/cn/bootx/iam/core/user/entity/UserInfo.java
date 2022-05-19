@@ -8,12 +8,17 @@ import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.convert.UserConvert;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.param.user.UserInfoParam;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * 用户的核心信息
@@ -41,6 +46,9 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     /** 邮箱 */
     private String email;
 
+    /** 关联终端id集合 */
+    private String clientIds;
+
     /** 注册来源 */
     private String source;
 
@@ -58,7 +66,22 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
 
     @Override
     public UserInfoDto toDto() {
-        return UserConvert.CONVERT.convert(this);
+        UserInfoDto userInfoDto = UserConvert.CONVERT.convert(this);
+        if (StrUtil.isNotBlank(this.getClientIds())){
+            List<String> collect = Arrays.stream(this.getClientIds().split(","))
+                    .collect(Collectors.toList());
+            userInfoDto.setClientIdList(collect);
+        }
+        return userInfoDto;
+    }
+
+    public static UserInfo init(UserInfoParam param) {
+        UserInfo userInfo = UserConvert.CONVERT.convert(param);
+        if (CollUtil.isNotEmpty(param.getClientIdList())){
+            String clientIds= String.join(",", param.getClientIdList());
+            userInfo.setClientIds(clientIds);
+        }
+        return userInfo;
     }
 
     public UserDetail toUserDetail(){
@@ -71,7 +94,4 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
                 .setStatus(this.status);
     }
 
-    public static UserInfo init(UserInfoParam param) {
-        return UserConvert.CONVERT.convert(param);
-    }
 }
