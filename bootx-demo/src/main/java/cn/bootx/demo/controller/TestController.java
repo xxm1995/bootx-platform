@@ -6,20 +6,20 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.lock.annotation.Lock;
-import cn.bootx.common.redis.RedisClient;
 import cn.bootx.common.redis.code.RedisCode;
 import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRangeManager;
+import cn.bootx.demo.ws.WebSocketDemo;
 import cn.hutool.core.thread.ThreadUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,9 +32,8 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class TestController {
     private final Sequence sequence;
+    private final WebSocketDemo webSocketDemo;
     private final SeqRangeManager seqRangeManager;
-    private final RedisClient redisClient;
-    private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate<String,Object> redisTemplate;
 
     @OperateLog(title = "测试日志")
@@ -98,6 +97,20 @@ public class TestController {
         redisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+"t2",new KeyValue("aa","bbb"));
 //        stringRedisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+"t1","aaass");
 //        stringRedisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+"t2",new KeyValue("aa","bbb"));
+        return Res.ok();
+    }
+
+    @Operation(summary = "发送ws消息")
+    @PostMapping("/sendWsByUserId")
+    public ResResult<Void> sendWsByUserId(Long userId,String msg){
+        webSocketDemo.sendMessage(msg,userId);
+        return Res.ok();
+    }
+
+    @Operation(summary = "发送ws消息(全部用户)")
+    @PostMapping("/sendWsByAll")
+    public ResResult<Void> sendWsByUserId(String msg){
+        webSocketDemo.sendMessage(msg);
         return Res.ok();
     }
 }

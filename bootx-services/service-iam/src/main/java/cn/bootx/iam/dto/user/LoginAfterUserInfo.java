@@ -13,6 +13,8 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(title = "用户登录后所需的基础信息信息")
 public class LoginAfterUserInfo {
+    @Schema(description = "主键")
+    private Long userId;
 
     @Schema(description= "名称")
     private String name;

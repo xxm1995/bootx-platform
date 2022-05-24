@@ -67,6 +67,7 @@ public class UserInfoService {
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
                 .orElseThrow(UserInfoNotExistsException::new);
         return new LoginAfterUserInfo().setAvatar(userExpandInfo.getAvatar())
+                .setUserId(userInfo.getId())
                 .setUsername(userInfo.getUsername())
                 .setName(userInfo.getName());
     }
