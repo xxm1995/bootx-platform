@@ -49,7 +49,7 @@ public @interface Lock {
     TimeUnit timeUnit() default TimeUnit.SECONDS;
 
     /**
-     * 自定义业务key
+     * 自定义业务key 支持SpEl表达式
      */
     String[] keys() default {};
 }

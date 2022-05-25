@@ -73,7 +73,7 @@ public class TestController {
 
     @Operation(summary = "lock1")
     @GetMapping("/lock1")
-    @Lock(keys = "#x",name="lock",waitTime = Long.MAX_VALUE)
+    @Lock(keys = "#x",name="lock",waitTime = 5)
     public ResResult<Void> lock1(Integer x){
         log.info("start");
         ThreadUtil.sleep(15, TimeUnit.SECONDS);
@@ -82,7 +82,7 @@ public class TestController {
     }
     @Operation(summary="lock2")
     @GetMapping("/lock2")
-    @Lock(keys = "#x",name="lock",waitTime = Long.MAX_VALUE)
+    @Lock(keys = "#x",name="lock",waitTime = 5)
     public ResResult<Void> lock2(Integer x){
         log.info("345");
         return Res.ok();
@@ -111,6 +111,12 @@ public class TestController {
     @PostMapping("/sendWsByAll")
     public ResResult<Void> sendWsByUserId(String msg){
         webSocketDemo.sendMessage(msg);
+        return Res.ok();
+    }
+
+    @Operation(summary = "关闭ws连接")
+    @PostMapping("/wsClose")
+    public ResResult<Void> wsClose(Long userId){
         return Res.ok();
     }
 }
