@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
-*
-* @author xxm
-* @date 2022/5/9
-*/
+ * 库存解锁事件
+ * @author xxm
+ * @date 2022/5/9
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

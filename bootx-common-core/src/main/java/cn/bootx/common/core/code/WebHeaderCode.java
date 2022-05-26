@@ -1,7 +1,7 @@
 package cn.bootx.common.core.code;
 
 /**
- * web常量
+ * web请求头常量
  * @author network
  */
 public interface WebHeaderCode {

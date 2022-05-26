@@ -4,9 +4,16 @@ package cn.bootx.starter.quartz.handler;
 import cn.bootx.common.core.exception.BizException;
 import cn.hutool.core.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 定时任务调度器
@@ -99,7 +106,27 @@ public class QuartzJobScheduler {
             log.error(e.getMessage(),e);
             throw new BizException("定时任务启动失败");
         }
+    }
 
+    /**
+     * 获取定时任务列表
+     */
+    public List<Trigger> findTriggers() {
+        try {
+            GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
+            Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
+            return jobKeys.stream().map(this::getTriggersOfJob)
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+
+        } catch (SchedulerException e) {
+            throw new BizException(e.getMessage());
+        }
+    }
+
+    @SneakyThrows
+    private List<? extends Trigger> getTriggersOfJob(JobKey jobKey){
+        return scheduler.getTriggersOfJob(jobKey);
     }
 
     /**

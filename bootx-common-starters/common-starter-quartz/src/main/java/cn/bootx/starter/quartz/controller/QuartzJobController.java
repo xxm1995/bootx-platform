@@ -83,4 +83,11 @@ public class QuartzJobController {
     public ResResult<String> judgeJobClass(String jobClassName){
         return Res.ok(quartzJobService.judgeJobClass(jobClassName));
     }
+
+    @Operation(summary = "同步定时任务状态")
+    @PostMapping("/syncJobStatus")
+    public ResResult<Void> syncJobStatus(){
+        quartzJobService.syncJobStatus();
+        return Res.ok();
+    }
 }

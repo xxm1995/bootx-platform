@@ -14,7 +14,6 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
 @Configuration
 @RequiredArgsConstructor
 public class BootxRabbitListenerConfigurer implements RabbitListenerConfigurer {
-
     private final DefaultMessageHandlerMethodFactory jsonHandlerMethodFactory;
 
     @Override

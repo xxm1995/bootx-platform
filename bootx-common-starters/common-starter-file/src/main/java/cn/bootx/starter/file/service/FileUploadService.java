@@ -1,7 +1,7 @@
 package cn.bootx.starter.file.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.extra.ParamService;
+import cn.bootx.common.core.function.ParamService;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;

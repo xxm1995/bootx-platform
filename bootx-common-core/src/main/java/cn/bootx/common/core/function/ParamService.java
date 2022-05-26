@@ -1,7 +1,7 @@
-package cn.bootx.common.core.extra;
+package cn.bootx.common.core.function;
 
 /**
-* 参数获取服务
+* 参数获取服务(必须有实现类)
 * @author xxm
 * @date 2022/5/1
 */

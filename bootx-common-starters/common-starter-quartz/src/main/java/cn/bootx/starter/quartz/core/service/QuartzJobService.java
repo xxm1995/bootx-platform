@@ -4,6 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.quartz.code.QuartzJobCode;
 import cn.bootx.starter.quartz.core.dao.QuartzJobManager;
@@ -15,16 +16,21 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.Trigger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
-* 定时任务
-* @author xxm
-* @date 2021/11/2
-*/
+ * 定时任务
+ * @author xxm
+ * @date 2021/11/2
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -134,6 +140,34 @@ public class QuartzJobService {
             return e.getMessage();
         }
         return null;
+    }
+
+    /**
+     * 同步状态
+     */
+    public void syncJobStatus(){
+        Map<String, QuartzJob> quartzJobMap = quartzJobManager.findRunning().stream()
+                .collect(Collectors.toMap(o->o.getId().toString(), o -> o));
+
+        List<Trigger> triggers = jobScheduler.findTriggers();
+
+        // 将开始任务列表里没有的Trigger给删除. 将未启动的任务状态更新成停止
+        for (Trigger trigger : triggers) {
+            String triggerName = trigger.getKey().getName();
+            if (!quartzJobMap.containsKey(triggerName)) {
+                jobScheduler.delete(Long.valueOf(triggerName));
+            } else {
+                quartzJobMap.remove(triggerName);
+            }
+        }
+        // 更新任务列表状态
+        Collection<QuartzJob> quartzJobs = quartzJobMap.values();
+        for (QuartzJob quartzJob : quartzJobs) {
+            quartzJob.setState(QuartzJobCode.STOP);
+        }
+        if (CollUtil.isNotEmpty(quartzJobs)) {
+            quartzJobManager.updateAllById(quartzJobs);
+        }
     }
 
 }

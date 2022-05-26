@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.validation.constraints.NotNull;
 
 /**   
-*
+* 设置JacksonUtil 的 om对象
 * @author xxm  
 * @date 2021/7/6 
 */

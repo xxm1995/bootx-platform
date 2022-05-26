@@ -4,11 +4,14 @@ import cn.bootx.common.core.annotation.Idempotent;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.lock.annotation.Lock;
+import cn.bootx.common.lock.annotation.LockKey;
+import cn.bootx.common.lock.constant.LockType;
 import cn.hutool.core.thread.ThreadUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,17 +38,19 @@ public class IdempotencyDemoController {
     }
 
     @Operation(summary = "分布式锁(暂停5秒)")
-    @PostMapping("/lock5")
-    @Lock(name = "test:lock")
-    public ResResult<Void> lock5(){
+    @GetMapping("/lock5")
+    @Lock(name = "test:lock",lockType = LockType.REENTRANT)
+    public ResResult<Void> lock5(@LockKey Integer a){
+        log.info("开始");
         ThreadUtil.sleep(5, TimeUnit.SECONDS);
+        log.info("结束");
         return Res.ok();
     }
 
     @Operation(summary = "分布式锁(暂停20秒)")
-    @PostMapping("/lock20")
+    @GetMapping("/lock20")
     @Lock(name = "test:lock")
-    public ResResult<Void> lock20(){
+    public ResResult<Void> lock20(@LockKey Integer a){
         ThreadUtil.sleep(20, TimeUnit.SECONDS);
         return Res.ok();
     }
