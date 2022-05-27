@@ -38,7 +38,7 @@
         <ttl.version>2.12.6</ttl.version>
         <logback-classic.version>1.2.3</logback-classic.version>
         <xxl-job.version>2.3.0</xxl-job.version>
-        <sa-token.version>1.29.0</sa-token.version>
+        <sa-token.version>1.30.0</sa-token.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
         <swagger-annotations.version>2.2.0</swagger-annotations.version>
         <springdoc.version>1.6.8</springdoc.version>

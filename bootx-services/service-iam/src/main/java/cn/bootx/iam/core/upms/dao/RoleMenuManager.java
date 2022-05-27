@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**   
-* 角色权限关系
-* @author xxm  
-* @date 2021/8/3 
-*/
+/**
+ * 角色权限关系
+ * @author xxm
+ * @date 2021/8/3
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -30,7 +30,11 @@ public class RoleMenuManager extends BaseManager<RoleMenuMapper, RoleMenu> {
         return findAllByFields(RoleMenu::getRoleId,roleIds);
     }
 
-    public List<RoleMenu> findAllByRole(Long roleId) {
-        return findAllByField(RoleMenu::getRoleId,roleId);
+    public List<RoleMenu> findAllByRoleAndClientCode(Long roleId,String clientCode) {
+        return lambdaQuery()
+                .eq(RoleMenu::getRoleId,roleId)
+                .eq(RoleMenu::getClientCode,clientCode)
+                .list();
+
     }
 }

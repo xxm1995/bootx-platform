@@ -13,7 +13,12 @@ import java.util.Objects;
 * @date 2021/12/21 
 */
 @Component
-public class IgnoreAuthRouterCheck implements RouterCheck {
+public class IgnoreAnnotationRouterCheck implements RouterCheck {
+
+    @Override
+    public int sortNo() {
+        return -99;
+    }
 
     @Override
     public boolean check(Object handler) {

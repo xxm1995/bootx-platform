@@ -41,9 +41,9 @@ public class RoleMenuService {
      * 保存角色菜单授权
      */
     @Transactional(rollbackFor = Exception.class)
-    public void save(Long roleId, List<Long> permissionIds){
+    public void save(Long roleId, String clientCode, List<Long> permissionIds){
         // 先删后增
-        List<RoleMenu> RoleMenus = roleMenuManager.findAllByRole(roleId);
+        List<RoleMenu> RoleMenus = roleMenuManager.findAllByRoleAndClientCode(roleId,clientCode);
         List<Long> roleMenuIds = RoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
         // 需要删除的
         List<Long> deleteIds = RoleMenus.stream()
@@ -53,7 +53,7 @@ public class RoleMenuService {
 
         List<RoleMenu> roleMenus = permissionIds.stream()
                 .filter(id->!roleMenuIds.contains(id))
-                .map(permissionId -> new RoleMenu(roleId, permissionId))
+                .map(permissionId -> new RoleMenu(roleId, clientCode,permissionId))
                 .collect(Collectors.toList());
         roleMenuManager.deleteByIds(deleteIds);
         roleMenuManager.saveAll(roleMenus);
@@ -63,8 +63,8 @@ public class RoleMenuService {
     /**
      * 根据角色查询对应的权限id
      */
-    public List<Long> findPermissionIdsByRole(Long roleId){
-        List<RoleMenu> rolePermissions = roleMenuManager.findAllByRole(roleId);
+    public List<Long> findPermissionIdsByRole(Long roleId,String clientCode){
+        List<RoleMenu> rolePermissions = roleMenuManager.findAllByRoleAndClientCode(roleId,clientCode);
         return rolePermissions.stream()
                 .map(RoleMenu::getPermissionId)
                 .collect(Collectors.toList());

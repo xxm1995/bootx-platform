@@ -2,15 +2,14 @@ package cn.bootx.starter.auth.util;
 
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.bootx.starter.auth.cache.SessionCacheLocal;
+import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.lang.Nullable;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -56,15 +55,15 @@ public class SecurityUtil {
      * 获取当前用户,无异常, 使用线程缓存来减少redis的访问频率
      */
     private Optional<UserDetail> getCurrentUser0(){
-        Optional<UserDetail> userDetail = SessionCacheLocal.get();
-        if (Objects.isNull(userDetail)){
+        Optional<UserDetail> userDetail = Optional.ofNullable(SessionCacheLocal.get());
+        if (!userDetail.isPresent()){
             try {
                 userDetail = Optional.ofNullable(StpUtil.getSession())
                         .map(saSession -> saSession.getModel(CommonCode.USER,UserDetail.class));
+                SessionCacheLocal.put(userDetail.orElse(null));
             } catch (SaTokenException e) {
                 userDetail = Optional.empty();
             }
-            SessionCacheLocal.put(userDetail);
         }
         return userDetail;
     }

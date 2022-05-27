@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 权限
 * @author xxm
@@ -30,5 +32,15 @@ public class PermPathManager extends BaseManager<PermPathMapper, PermPath> {
                 .like(StrUtil.isNotBlank(param.getGroupName()), PermPath::getGroupName,param.getGroupName())
                 .page(mpPage);
 
+    }
+
+    /**
+     * 查询未被启用的请求路径权限
+     */
+    public List<PermPath> findByNotEnableAndRequestType(String requestType){
+        return lambdaQuery()
+                .eq(PermPath::isEnable,false)
+                .eq(PermPath::getRequestType,requestType)
+                .list();
     }
 }

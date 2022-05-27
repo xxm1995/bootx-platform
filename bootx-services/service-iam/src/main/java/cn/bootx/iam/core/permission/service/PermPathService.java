@@ -20,6 +20,7 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.StrUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static cn.bootx.iam.code.CachingCode.IGNORE_PATH;
 import static cn.bootx.iam.code.CachingCode.USER_PATH;
 
 
@@ -55,7 +57,7 @@ public class PermPathService {
     /**
      * 更新权限信息
      */
-    @CacheEvict(value = {USER_PATH},allEntries = true)
+    @CacheEvict(value = {USER_PATH,IGNORE_PATH},allEntries = true)
     public PermPathDto update(PermPathParam param){
         PermPath permPath = permPathManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("信息不存在"));
@@ -68,11 +70,21 @@ public class PermPathService {
     /**
      * 删除
      */
-    @CacheEvict(value = {USER_PATH},allEntries = true)
+    @CacheEvict(value = {USER_PATH,IGNORE_PATH},allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id){
         rolePathManager.deleteByPermission(id);
         permPathManager.deleteById(id);
+    }
+
+    /**
+     * 获取指请求定类型未启用访问控制的请求路径
+     */
+    @Cacheable(value = {IGNORE_PATH})
+    public List<String> findIgnorePathByRequestType(String requestType){
+        return permPathManager.findByNotEnableAndRequestType(requestType).stream()
+                .map(PermPath::getPath)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -109,6 +121,7 @@ public class PermPathService {
      */
     @Transactional(rollbackFor = Exception.class)
     @OperateLog(title = "同步系统请求资源")
+    @CacheEvict(value = {USER_PATH},allEntries = true)
     @Async("asyncExecutor")
     public void syncSystem() {
         List<RequestPath> requestPaths = requestPathService.getRequestPaths();

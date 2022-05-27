@@ -1,12 +1,13 @@
 package cn.bootx.iam.param.upms;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.List;
+
+;
 
 /**
 * @author xxm
@@ -21,6 +22,10 @@ public class RolePermissionParam implements Serializable {
     @Schema(description= "角色的ID")
     private Long roleId;
 
+    @Schema(description= "终端code")
+    private String clientCode;
+
     @Schema(description= "权限id")
     private List<Long> permissionIds;
+
 }

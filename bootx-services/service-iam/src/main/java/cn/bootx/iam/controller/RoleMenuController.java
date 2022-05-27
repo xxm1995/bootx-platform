@@ -28,7 +28,7 @@ public class RoleMenuController {
     @Operation(summary = "保存请求权限关系")
     @PostMapping("/save")
     public ResResult<Boolean> save(@RequestBody RolePermissionParam param){
-        roleMenuService.save(param.getRoleId(),param.getPermissionIds());
+        roleMenuService.save(param.getRoleId(),param.getClientCode(),param.getPermissionIds());
         return Res.ok(true);
     }
 
@@ -40,8 +40,8 @@ public class RoleMenuController {
 
     @Operation(summary = "根据角色id获取关联权限id集合(包含资源和菜单)")
     @GetMapping("/findPermissionIdsByRole")
-    public ResResult<List<Long>> findPermissionIdsByRole(Long roleId){
-        return Res.ok(roleMenuService.findPermissionIdsByRole(roleId));
+    public ResResult<List<Long>> findPermissionIdsByRole(Long roleId,String clientCode){
+        return Res.ok(roleMenuService.findPermissionIdsByRole(roleId,clientCode));
     }
 
     @IgnoreAuth
