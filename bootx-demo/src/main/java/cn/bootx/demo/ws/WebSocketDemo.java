@@ -1,56 +1,37 @@
 package cn.bootx.demo.ws;
 
-import cn.bootx.common.core.util.CollUtil;
+import cn.bootx.common.websocket.service.WebSocketSessionManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
-* websocket demo
-* @author xxm
-* @date 2022/3/27
-*/
+ * websocket demo
+ * @author xxm
+ * @date 2022/3/27
+ */
 @Slf4j
 @Component
 @ServerEndpoint("/test/ws/{userId}")
 public class WebSocketDemo {
-
+    private final WebSocketSessionManager wsManager = new WebSocketSessionManager();
     /** 记录当前在线连接数 */
     private static final AtomicInteger onlineCount = new AtomicInteger(0);
-
-    /**
-     * 线程安全Map
-     */
-    private static final Map<String, Session> sessionPool = new ConcurrentHashMap<>();
-    private static final Map<String, Long> sid2uid = new ConcurrentHashMap<>();
-    private static final Map<Long, List<String>> uid2sid = new ConcurrentHashMap<>();
 
     /**
      * 连接建立成功调用的方法
      */
     @OnOpen
     public void onOpen(@PathParam("userId") Long userId,Session session) {
-        try {
-            sid2uid.put(session.getId(),userId);
-            sessionPool.put(session.getId(),session);
-            List<String> list = Optional.ofNullable(uid2sid.get(userId))
-                    .orElse(new CopyOnWriteArrayList<>());
-            list.add(session.getId());
-            uid2sid.put(userId,list);
-            onlineCount.incrementAndGet(); // 在线数加1
-            log.info("有新连接加入：{}，当前在线人数为：{}", userId, onlineCount.get());
-        } catch (Exception ignored) {
-        }
+        wsManager.addSession(String.valueOf(userId),session);
+        onlineCount.incrementAndGet(); // 在线数加1
+        log.info("有新连接加入：{}，当前在线人数为：{}", userId, onlineCount.get());
     }
 
     /**
@@ -59,10 +40,8 @@ public class WebSocketDemo {
     @OnClose
     public void onClose(Session session) {
         onlineCount.decrementAndGet(); // 在线数减1
-        sessionPool.remove(session.getId());
-        Long userId = sid2uid.remove(session.getId());
-        Optional.ofNullable(uid2sid.get(userId))
-                .ifPresent(list->list.removeIf(s->Objects.equals(s,session.getId())));
+        String userId = wsManager.getIdBySession(session);
+        wsManager.removeSession(session);
         log.info("有一连接关闭：{}，当前在线人数为：{}", userId, onlineCount.get());
     }
 
@@ -73,7 +52,7 @@ public class WebSocketDemo {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        Long userId = sid2uid.get(session.getId());
+        Long userId = Long.valueOf(wsManager.getIdBySession(session));
         log.info("服务端收到客户端[{}]的消息:{}", userId, message);
         this.sendMessage("响应: "+message,userId);
     }
@@ -89,14 +68,10 @@ public class WebSocketDemo {
      */
     public void sendMessage(String message, Long userId) {
         try {
-            List<String> sessionIds = uid2sid.get(userId);
-            if (CollUtil.isNotEmpty(sessionIds)){
-                for (String sessionId : sessionIds) {
-                    Session session = sessionPool.get(sessionId);
-                    if (Objects.nonNull(session)){
-                        session.getBasicRemote().sendText(message);
-                    }
-                }
+            List<Session> sessions = wsManager.getSessionsById(String.valueOf(userId));
+
+            for (Session session : sessions) {
+                session.getBasicRemote().sendText(message);
             }
         } catch (Exception e) {
             log.error("服务端发送消息给客户端失败：", e);
@@ -108,7 +83,8 @@ public class WebSocketDemo {
      */
     public void sendMessage(String message) {
         try {
-            for (Session session : sessionPool.values()) {
+            ArrayList<Session> sessions = wsManager.getSessions();
+            for (Session session : sessions) {
                 session.getBasicRemote().sendText(message);
             }
         } catch (Exception e) {

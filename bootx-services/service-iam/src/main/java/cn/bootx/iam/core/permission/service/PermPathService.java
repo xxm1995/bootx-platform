@@ -80,7 +80,7 @@ public class PermPathService {
     /**
      * 获取指请求定类型未启用访问控制的请求路径
      */
-    @Cacheable(value = {IGNORE_PATH})
+    @Cacheable(value = {IGNORE_PATH}, key = "#requestType")
     public List<String> findIgnorePathByRequestType(String requestType){
         return permPathManager.findByNotEnableAndRequestType(requestType).stream()
                 .map(PermPath::getPath)

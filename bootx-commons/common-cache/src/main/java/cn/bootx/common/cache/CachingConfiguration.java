@@ -1,10 +1,7 @@
 package cn.bootx.common.cache;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,11 +30,15 @@ import java.time.Duration;
 @EnableConfigurationProperties(CachingProperties.class)
 @ConditionalOnClass(CacheManager.class)
 @ConditionalOnProperty(prefix = "bootx.common.cache", value = "enabled", havingValue = "true",matchIfMissing = true)
-@RequiredArgsConstructor
 public class CachingConfiguration extends CachingConfigurerSupport {
 
     private final CachingProperties cachingProperties;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper redisObjectMapper;
+
+    public CachingConfiguration(CachingProperties cachingProperties, @Qualifier("redisObjectMapper") ObjectMapper redisObjectMapper) {
+        this.cachingProperties = cachingProperties;
+        this.redisObjectMapper = redisObjectMapper;
+    }
 
     /**
      * 不配置key的情况,将方法名作为缓存key名称
@@ -69,15 +70,7 @@ public class CachingConfiguration extends CachingConfigurerSupport {
     private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Duration duration) {
         // 序列化方式
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-
-        // 复制出一份
-        ObjectMapper objectMapperCopy = objectMapper.copy();
-        //指定序列化输入的类型为非最终类型，除了少数“自然”类型（字符串、布尔值、整数、双精度），它们可以从 JSON 正确推断； 以及所有非最终类型的数组
-        objectMapperCopy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY)
-                // null 值不序列化
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
-        jackson2JsonRedisSerializer.setObjectMapper(objectMapperCopy);
+        jackson2JsonRedisSerializer.setObjectMapper(redisObjectMapper);
 
         // redis缓存配置
         return RedisCacheConfiguration

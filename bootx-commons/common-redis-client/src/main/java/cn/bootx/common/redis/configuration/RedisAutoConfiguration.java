@@ -6,6 +6,7 @@ import cn.bootx.common.redis.code.RedisCode;
 import cn.bootx.common.redis.listener.RedisTopicReceiver;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
@@ -164,7 +165,10 @@ public class RedisAutoConfiguration {
         // 对象映射器
         ObjectMapper copy = objectMapper.copy();
         // 序列化是记录被序列化的类型信息
-        copy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
+        //指定序列化输入的类型为非最终类型，除了少数“自然”类型（字符串、布尔值、整数、双精度），它们可以从 JSON 正确推断； 以及所有非最终类型的数组
+        copy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY)
+                // null 值不序列化
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return copy;
     }
 }
