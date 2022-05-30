@@ -5,7 +5,7 @@ package cn.bootx.common.redis.listener;
 * @author xxm  
 * @date 2022/5/7 
 */
-public interface KeyExpiredListener {
+public interface RedisKeyExpiredListener {
 
     /**
      * 要监听的key

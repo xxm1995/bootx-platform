@@ -42,6 +42,11 @@ public class RedisClient {
         stringRedisTemplate.opsForValue().set(key, value, timeoutMs, TimeUnit.MILLISECONDS);
     }
 
+    /** 设置超时通知的事件 */
+    public void setKeyExpired(String keyPrefix, String key, long timeoutMs) {
+        stringRedisTemplate.opsForValue().set(keyPrefix+key, "", timeoutMs, TimeUnit.MILLISECONDS);
+    }
+
     /** 是否过期 */
     @SuppressWarnings("all")
     public boolean exists(String key) {

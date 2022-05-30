@@ -16,22 +16,22 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class KeyExpiredReceiver extends KeyExpirationEventMessageListener {
-    private final List<KeyExpiredListener> keyExpiredListeners;
+public class RedisKeyExpiredReceiver extends KeyExpirationEventMessageListener {
+    private final List<RedisKeyExpiredListener> redisKeyExpiredListeners;
 
-    public KeyExpiredReceiver(RedisMessageListenerContainer listenerContainer, List<KeyExpiredListener> keyExpiredListeners) {
+    public RedisKeyExpiredReceiver(RedisMessageListenerContainer listenerContainer, List<RedisKeyExpiredListener> redisKeyExpiredListeners) {
         super(listenerContainer);
-        this.keyExpiredListeners = keyExpiredListeners;
+        this.redisKeyExpiredListeners = redisKeyExpiredListeners;
     }
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String expiredKey = new String(message.getBody());
-        for (KeyExpiredListener keyExpiredListener : keyExpiredListeners) {
-            String prefixKey = keyExpiredListener.getPrefixKey();
+        for (RedisKeyExpiredListener redisKeyExpiredListener : redisKeyExpiredListeners) {
+            String prefixKey = redisKeyExpiredListener.getPrefixKey();
             if (StrUtil.startWith(expiredKey,prefixKey)){
                 // 去除key前缀
-                keyExpiredListener.onMessage(StrUtil.removePrefix(expiredKey,prefixKey));
+                redisKeyExpiredListener.onMessage(StrUtil.removePrefix(expiredKey,prefixKey));
             }
         }
     }

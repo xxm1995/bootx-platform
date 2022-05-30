@@ -1,6 +1,8 @@
 package cn.bootx.demo.core.mq.redis;
 
+import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.redis.listener.RedisTopicListener;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**   
@@ -8,16 +10,17 @@ import org.springframework.stereotype.Component;
 * @author xxm  
 * @date 2022/5/7 
 */
+@Slf4j
 @Component
-public class DemoRedisTopicListener implements RedisTopicListener<String> {
+public class DemoRedisTopicListener implements RedisTopicListener<ResResult<String>> {
 
     @Override
     public String getTopic() {
-        return "testt1";
+        return "demo:redis";
     }
 
     @Override
-    public void onMessage(String obj) {
-        System.out.println(obj);
+    public void onMessage(ResResult<String> obj) {
+        log.info("{}",obj);
     }
 }

@@ -3,6 +3,7 @@ package cn.bootx.common.core.rest;
 import cn.bootx.common.core.code.CommonCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
 */
 @Getter
 @Setter
+@ToString
 public class ResResult<T> implements Serializable {
     private static final long serialVersionUID = -3041700282408360384L;
     private String msg = "success";

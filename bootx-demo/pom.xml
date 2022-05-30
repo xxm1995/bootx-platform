@@ -41,6 +41,10 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-mqtt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-dingtalk</artifactId>
         </dependency>
         <dependency>
