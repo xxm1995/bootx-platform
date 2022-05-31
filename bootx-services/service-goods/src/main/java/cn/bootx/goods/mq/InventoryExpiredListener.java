@@ -1,6 +1,6 @@
 package cn.bootx.goods.mq;
 
-import cn.bootx.common.redis.listener.KeyExpiredListener;
+import cn.bootx.common.redis.listener.RedisKeyExpiredListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class InventoryExpiredListener implements KeyExpiredListener {
+public class InventoryExpiredListener implements RedisKeyExpiredListener {
 
     @Override
     public String getPrefixKey() {
