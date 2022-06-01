@@ -104,5 +104,14 @@ public class RestExceptionHandler {
         log.error("内存不足错误 " + ex.getMessage(), ex);
         return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));
     }
+
+    /**
+     * 处理 Throwable 异常
+     */
+    @ExceptionHandler(Throwable.class)
+    public ResResult<Void> handleThrowable(Throwable ex) {
+        log.error("系统错误 " + ex.getMessage(), ex);
+        return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));
+    }
     
 }
