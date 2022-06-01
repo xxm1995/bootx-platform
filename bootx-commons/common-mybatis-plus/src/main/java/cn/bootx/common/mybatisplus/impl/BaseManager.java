@@ -40,7 +40,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     /**
      * 默认批次提交数量
      */
-    int DEFAULT_BATCH_SIZE = 1000;
+    protected int DEFAULT_BATCH_SIZE = 1000;
 
     protected Log log = LogFactory.getLog(getClass());
 

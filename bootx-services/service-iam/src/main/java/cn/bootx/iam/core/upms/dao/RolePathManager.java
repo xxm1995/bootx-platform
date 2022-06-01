@@ -1,7 +1,9 @@
 package cn.bootx.iam.core.upms.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.upms.entity.RolePath;
+import cn.hutool.core.util.IdUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +17,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class RolePathManager extends BaseManager<RolePathMapper,RolePath> {
+    private final RolePathMapper rolePathMapper;
 
     public List<RolePath> findAllByRole(Long roleId) {
         return findAllByField(RolePath::getRoleId,roleId);
@@ -33,4 +36,13 @@ public class RolePathManager extends BaseManager<RolePathMapper,RolePath> {
 
     }
 
+    /**
+     * 替换为for方式
+     */
+    @Override
+    public List<RolePath> saveAll(List<RolePath> rolePaths) {
+        rolePaths.forEach(rolePath -> rolePath.setId(IdUtil.getSnowflakeNextId()));
+        MpUtil.executeBatch(rolePaths,baseMapper::saveAll,this.DEFAULT_BATCH_SIZE);
+        return rolePaths;
+    }
 }

@@ -30,12 +30,13 @@ import java.util.stream.Collectors;
 public class RequestPathService {
 
     private final WebApplicationContext applicationContext;
+    private final static String REQUEST_MAPPING_HANDLER_MAPPING = "requestMappingHandlerMapping";
 
     /**
      * 获取系统请求列表
      */
     public List<RequestPath> getRequestPaths() {
-        RequestMappingHandlerMapping mapping = applicationContext.getBean(RequestMappingHandlerMapping.class);
+        RequestMappingHandlerMapping mapping = applicationContext.getBean(REQUEST_MAPPING_HANDLER_MAPPING,RequestMappingHandlerMapping.class);
         // 获取url与类和方法的对应信息
         Map<RequestMappingInfo, HandlerMethod> map = mapping.getHandlerMethods();
         List<RequestPath> requestPathList = new ArrayList<>(map.size());

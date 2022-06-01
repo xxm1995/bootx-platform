@@ -3,6 +3,7 @@ package cn.bootx.common.mybatisplus.util;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.ColumnCache;
@@ -14,6 +15,7 @@ import org.apache.ibatis.reflection.property.PropertyNamer;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -75,5 +77,22 @@ public class MpUtil {
         String fieldName = PropertyNamer.methodToProperty(meta.getImplMethodName());
         ColumnCache columnCache = columnMap.get(LambdaUtils.formatKey(fieldName));
         return columnCache.getColumn();
+    }
+
+    /**
+     * 批量执行语句, 通常用于for循环方式的批量插入
+     */
+    public static <T> void executeBatch(List<T> saveList, Consumer<List<T>> consumer,int batchSize){
+        // 开始游标
+        int start = 0;
+        // 结束游标
+        int end = Math.min(batchSize, saveList.size());
+        while (start < end){
+            List<T> list = ListUtil.sub(saveList, start, end);
+            start = end;
+            end = Math.min(end + batchSize, saveList.size());
+            consumer.accept(list);
+        }
+
     }
 }

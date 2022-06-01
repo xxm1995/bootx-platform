@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.upms.service;
 
+import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.code.PermissionCode;
@@ -40,6 +41,7 @@ public class RoleMenuService {
     /**
      * 保存角色菜单授权
      */
+    @CountTime
     @Transactional(rollbackFor = Exception.class)
     public void save(Long roleId, String clientCode, List<Long> permissionIds){
         // 先删后增

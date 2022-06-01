@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.upms.service;
 
+import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.ResultConvertUtil;
@@ -84,6 +85,7 @@ public class UserDataScopeService {
     /**
      * 根据用户id获取对应的数据权限范围
      */
+    @CountTime
     @NestedPermission
     @Cacheable(value = USER_DATA_SCOPE,key = "#userId")
     public DataPermScope getDataPermScopeByUser(Long userId){
