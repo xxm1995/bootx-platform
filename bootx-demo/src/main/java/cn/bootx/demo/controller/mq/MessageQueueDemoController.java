@@ -11,6 +11,7 @@ import lombok.SneakyThrows;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ public class MessageQueueDemoController {
     private final RabbitTemplate rabbitTemplate;
     private final MqttClient mqttClient;
     private final RedisClient redisClient;
+    private final RedisTemplate<String,?> redisTemplate;
 
     @SneakyThrows
     @Operation(summary = "发送MQTT消息")

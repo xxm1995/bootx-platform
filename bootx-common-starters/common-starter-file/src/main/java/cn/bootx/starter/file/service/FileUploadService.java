@@ -16,6 +16,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,7 +52,7 @@ public class FileUploadService {
      */
     @Transactional(rollbackFor = Exception.class)
     public UpdateFileDto upload(MultipartFile file, String fileName) throws IOException {
-        int uploadType = fileUploadProperties.getUploadType();
+        val uploadType = fileUploadProperties.getUploadType();
         UploadService uploadService = uploadServices.stream()
                 .filter(s -> s.enable(uploadType))
                 .findFirst()
@@ -88,7 +89,7 @@ public class FileUploadService {
      * 浏览
      */
     public void preview(Long id, HttpServletResponse response){
-        int uploadType = fileUploadProperties.getUploadType();
+        val uploadType = fileUploadProperties.getUploadType();
         UploadService uploadService = uploadServices.stream()
                 .filter(s -> s.enable(uploadType))
                 .findFirst()
@@ -101,7 +102,7 @@ public class FileUploadService {
      * 文件下载
      */
     public ResponseEntity<byte[]> download(Long id, HttpServletResponse response){
-        int uploadType = fileUploadProperties.getUploadType();
+        val uploadType = fileUploadProperties.getUploadType();
         UploadService uploadService = uploadServices.stream()
                 .filter(s -> s.enable(uploadType))
                 .findFirst()

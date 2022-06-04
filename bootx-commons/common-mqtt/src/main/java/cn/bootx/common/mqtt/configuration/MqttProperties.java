@@ -21,7 +21,9 @@ public class MqttProperties {
     /** 密码 */
     private String password;
     /** 终端id */
-    private String clientId = "";
+    private String clientId = "bootx";
+    /** 内存持久化使, 将不会生成.lock文件, 在需要可靠性的情况下, 需要关闭 */
+    private boolean memoryPersistence = true;
     /** 自动追加终端id后缀 */
     private boolean autoClientIdSuffix = true;
     /** 连接超时 */

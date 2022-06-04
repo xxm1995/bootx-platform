@@ -1,7 +1,7 @@
 package cn.bootx.starter.file.service.impl;
 
 import cn.bootx.common.core.exception.DataNotExistException;
-import cn.bootx.starter.file.code.FileUploadTypeCode;
+import cn.bootx.starter.file.code.FileUploadTypeEnum;
 import cn.bootx.starter.file.entity.UpdateFileInfo;
 import cn.bootx.starter.file.entity.UploadFileContext;
 import cn.bootx.starter.file.service.UploadService;
@@ -36,8 +36,8 @@ public class MongoUploadService implements UploadService {
     private final GridFsTemplate gridFsTemplate;
 
     @Override
-    public boolean enable(int type) {
-        return type == FileUploadTypeCode.MONGO;
+    public boolean enable(FileUploadTypeEnum type) {
+        return type == FileUploadTypeEnum.MONGO;
     }
 
     /**

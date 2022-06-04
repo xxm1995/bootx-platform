@@ -1,5 +1,6 @@
 package cn.bootx.starter.file.configuration;
 
+import cn.bootx.starter.file.code.FileUploadTypeEnum;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,13 +18,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class FileUploadProperties {
 
     /**
-     * 上传文件类型
-     * @see cn.bootx.starter.file.code.FileUploadTypeCode
+     * 上传文件类型 默认为本地
      */
-    private int uploadType = 1;
+    private FileUploadTypeEnum uploadType = FileUploadTypeEnum.LOCAL;
 
     /** 服务器地址,优先级低于系统参数配置 */
-    private String serverUrl;
+    private String serverUrl = "http://127.0.0.1:8080";
 
     /** 本地存储 */
     private Local local = new Local();
@@ -42,7 +42,7 @@ public class FileUploadProperties {
     }
 
     /**
-     * mongo存储
+     * mongo存储配置
      */
     @Getter
     @Setter

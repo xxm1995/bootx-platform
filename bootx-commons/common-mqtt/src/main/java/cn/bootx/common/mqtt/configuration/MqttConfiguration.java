@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,12 +28,18 @@ public class MqttConfiguration {
     @Bean
     public MqttClient mqttClient(){
         MqttClient client = null;
+        // 是否启用mqtt
         try {
             String clientId = mqttProperties.getClientId();
             if (mqttProperties.isAutomaticReconnect()){
                 clientId = clientId+"@"+ RandomUtil.randomString(5);
             }
-            client = new MqttClient(mqttProperties.getUrl(), clientId);
+            // 使用内存的持久性, 将不会生成.lock文件
+            if (mqttProperties.isMemoryPersistence()){
+                client = new MqttClient(mqttProperties.getUrl(), clientId, new MemoryPersistence());
+            } else {
+                client = new MqttClient(mqttProperties.getUrl(), clientId);
+            }
             // MQTT配置对象
             MqttConnectOptions options = new MqttConnectOptions();
             if (StrUtil.isNotBlank(mqttProperties.getName())){

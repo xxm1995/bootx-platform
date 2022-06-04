@@ -36,6 +36,7 @@
         <bootx-platform.version>1.1.0-beta-1-SNAPSHOT</bootx-platform.version>
         <!-- 三方库 -->
         <ttl.version>2.12.6</ttl.version>
+        <flyway.version>7.15.0</flyway.version>
         <logback-classic.version>1.2.11</logback-classic.version>
         <xxl-job.version>2.3.0</xxl-job.version>
         <sa-token.version>1.30.0</sa-token.version>
@@ -159,7 +160,7 @@
                 <artifactId>common-exception-handler</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-            <!-- 发号器 -->
+            <!-- 序列生成器 -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-sequence</artifactId>

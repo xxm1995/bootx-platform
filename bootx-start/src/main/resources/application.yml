@@ -10,6 +10,11 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       enabled: true
+  flyway:
+    # 默认不启用
+    enabled: false
+    # 对特殊占位符不进行替换
+    placeholder-replacement: false
 # mp配置
 mybatis-plus:
   mapper-locations: classpath*:mapper/**/*Mapper.xml

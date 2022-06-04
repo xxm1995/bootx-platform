@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
-* 发号器参数
+* 序列生成器参数
 * @author xxm
 * @date 2021/8/6
 */
@@ -15,7 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class SequenceProperties {
 
     /**
-     * 存储类型
+     * 存储类型 默认为数据库
      */
     private Type type = Type.JDBC;
 

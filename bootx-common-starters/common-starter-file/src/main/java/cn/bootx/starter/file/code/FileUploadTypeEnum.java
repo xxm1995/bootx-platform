@@ -1,21 +1,18 @@
 package cn.bootx.starter.file.code;
 
 /**
-* 上传类型
+* 文件上传类型
 * @author xxm
 * @date 2022/1/14
 */
-public interface FileUploadTypeCode {
-
+public enum FileUploadTypeEnum {
     /** 本地存储 */
-    int LOCAL = 1;
-
+    LOCAL,
     /** Mongo存储 */
-    int MONGO = 2;
-
+    MONGO,
     /** minio存储 */
-    int MINIO = 3;
-
+    MINIO,
     /** 阿里云 oss存储 */
-    int ALIYUN_OSS = 4;
+    ALIYUN_OSS;
+
 }

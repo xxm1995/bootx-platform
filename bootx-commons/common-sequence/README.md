@@ -22,7 +22,7 @@
     public class TestController {
         private final Sequence sequence;
     
-        @Operation(summary = "发号器")
+        @Operation(summary = "序列生成器")
         @GetMapping("/sequence")
         public ResResult<Void> sequence(){
             // 通过传入业务键获取long 类型的号码,

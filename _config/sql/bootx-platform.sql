@@ -2,13 +2,8 @@
  Navicat Premium Data Transfer
 
  Source Server Type    : MySQL
- Source Schema         : bootx-platform-demo
 
- Target Server Type    : MySQL
- Target Server Version : 50735
- File Encoding         : 65001
-
- Date: 01/06/2022 15:07:10
+ Date: 04/06/2022 19:08:47
 */
 
 SET NAMES utf8mb4;
@@ -19,16 +14,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `demo_data_encrypt`;
 CREATE TABLE `demo_data_encrypt`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                      `id` bigint(20) NOT NULL,
+                                      `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                      `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
+                                      `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                      `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                      `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                      `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                      `version` int(11) NOT NULL COMMENT '版本',
+                                      `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据加密解密演示' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -42,17 +37,17 @@ INSERT INTO `demo_data_encrypt` VALUES (1506943412354408448, '测试下', 'Dgv5O
 -- ----------------------------
 DROP TABLE IF EXISTS `demo_data_perm`;
 CREATE TABLE `demo_data_perm`  (
-  `id` bigint(20) NOT NULL COMMENT '角色ID',
-  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
-  `creator_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建者名称',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '说明',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                   `id` bigint(20) NOT NULL COMMENT '角色ID',
+                                   `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
+                                   `creator_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '创建者名称',
+                                   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '说明',
+                                   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                   `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                   `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                   `version` int(11) NOT NULL COMMENT '版本',
+                                   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据权限演示' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -67,21 +62,21 @@ INSERT INTO `demo_data_perm` VALUES (1531547191561072640, '测试', '测试', '1
 -- ----------------------------
 DROP TABLE IF EXISTS `demo_data_sensitive`;
 CREATE TABLE `demo_data_sensitive`  (
-  `id` bigint(20) NOT NULL COMMENT '角色ID',
-  `chinese_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '中文名字',
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
-  `id_card` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '身份证号',
-  `mobile_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '手机号',
-  `car_license` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '车牌号',
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '电子邮件',
-  `other` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其他',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                        `id` bigint(20) NOT NULL COMMENT '角色ID',
+                                        `chinese_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '中文名字',
+                                        `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
+                                        `id_card` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '身份证号',
+                                        `mobile_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '手机号',
+                                        `car_license` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '车牌号',
+                                        `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '电子邮件',
+                                        `other` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其他',
+                                        `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                        `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                        `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                        `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                        `version` int(11) NOT NULL COMMENT '版本',
+                                        `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                        PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据脱敏演示' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -95,22 +90,22 @@ INSERT INTO `demo_data_sensitive` VALUES (1506943326094352384, '成是非', '998
 -- ----------------------------
 DROP TABLE IF EXISTS `demo_super_query`;
 CREATE TABLE `demo_super_query`  (
-  `id` bigint(20) NOT NULL COMMENT '角色ID',
-  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
-  `age` int(5) NULL DEFAULT NULL COMMENT '年龄',
-  `vip` bit(1) NULL DEFAULT NULL COMMENT '是否vip',
-  `birthday` date NULL DEFAULT NULL COMMENT '生日',
-  `work_time` time(0) NULL DEFAULT NULL COMMENT '上班时间',
-  `registration_time` datetime(0) NULL DEFAULT NULL COMMENT '注册时间',
-  `political` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '政治面貌',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(20) NOT NULL COMMENT '角色ID',
+                                     `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
+                                     `age` int(5) NULL DEFAULT NULL COMMENT '年龄',
+                                     `vip` bit(1) NULL DEFAULT NULL COMMENT '是否vip',
+                                     `birthday` date NULL DEFAULT NULL COMMENT '生日',
+                                     `work_time` time(0) NULL DEFAULT NULL COMMENT '上班时间',
+                                     `registration_time` datetime(0) NULL DEFAULT NULL COMMENT '注册时间',
+                                     `political` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '政治面貌',
+                                     `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                     `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                     `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                     `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                     `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                     `version` int(11) NOT NULL COMMENT '版本',
+                                     `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '超级查询演示' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -127,19 +122,19 @@ INSERT INTO `demo_super_query` VALUES (1496373512871284736, '刘备', 108, b'0',
 -- ----------------------------
 DROP TABLE IF EXISTS `ding_config`;
 CREATE TABLE `ding_config`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `app_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `app_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `enable` bit(1) NOT NULL COMMENT '是否启用',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                `id` bigint(20) NOT NULL,
+                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                `app_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+                                `app_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+                                `enable` bit(1) NOT NULL COMMENT '是否启用',
+                                `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
+                                `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                `version` int(11) NOT NULL COMMENT '版本',
+                                `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
+                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钉钉配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -153,20 +148,20 @@ INSERT INTO `ding_config` VALUES (1511283139236810752, '测试钉钉h5配置', '
 -- ----------------------------
 DROP TABLE IF EXISTS `ding_robot_config`;
 CREATE TABLE `ding_robot_config`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编号',
-  `access_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人访问token',
-  `enable_signature_check` bit(1) NOT NULL COMMENT '是否开启验签',
-  `sign_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人私钥',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                      `id` bigint(20) NOT NULL,
+                                      `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                      `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编号',
+                                      `access_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人访问token',
+                                      `enable_signature_check` bit(1) NOT NULL COMMENT '是否开启验签',
+                                      `sign_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人私钥',
+                                      `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                      `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                      `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
+                                      `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                      `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                      `version` int(11) NOT NULL COMMENT '版本',
+                                      `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
+                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钉钉机器人配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -176,22 +171,46 @@ INSERT INTO `ding_robot_config` VALUES (1333022277138264064, 'bootx机器人', '
 INSERT INTO `ding_robot_config` VALUES (1454001517812203520, '33', '12', '111111111111111111', b'1', '', '', 1399985191002447872, '2021-10-29 16:25:50.547000', 1399985191002447872, '2021-10-29 16:25:50.597000', 2, b'1');
 
 -- ----------------------------
+-- Table structure for flyway_schema_history
+-- ----------------------------
+DROP TABLE IF EXISTS `flyway_schema_history`;
+CREATE TABLE `flyway_schema_history`  (
+                                          `installed_rank` int(11) NOT NULL,
+                                          `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+                                          `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+                                          `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+                                          `script` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+                                          `checksum` int(11) NULL DEFAULT NULL,
+                                          `installed_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+                                          `installed_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+                                          `execution_time` int(11) NOT NULL,
+                                          `success` tinyint(1) NOT NULL,
+                                          PRIMARY KEY (`installed_rank`) USING BTREE,
+                                          INDEX `flyway_schema_history_s_idx`(`success`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = 'flyway数据库版本控制' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of flyway_schema_history
+-- ----------------------------
+INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', 1303985288, 'bootx', '2022-06-04 19:02:37', 64715, 1);
+
+-- ----------------------------
 -- Table structure for gc_brand
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_brand`;
 CREATE TABLE `gc_brand`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌名称',
-  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌图标',
-  `enable` bit(1) NULL DEFAULT NULL COMMENT '是否启用',
-  `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                             `id` bigint(20) NOT NULL,
+                             `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌名称',
+                             `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌图标',
+                             `enable` bit(1) NULL DEFAULT NULL COMMENT '是否启用',
+                             `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                             `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                             `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                             `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                             `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                             `version` int(11) NOT NULL COMMENT '版本',
+                             `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                             PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -207,112 +226,101 @@ INSERT INTO `gc_brand` VALUES (1525092854139944960, '绿城', '', b'1', '', 1399
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_category`;
 CREATE TABLE `gc_category`  (
-  `id` bigint(20) NOT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图标/图片地址',
-  `enable` bit(1) NOT NULL COMMENT '是否启用',
-  `sort_no` double(8, 2) NULL DEFAULT NULL COMMENT '排序',
-  `level` int(5) NULL DEFAULT NULL COMMENT '层级',
-  `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  `pid` bigint(20) NULL DEFAULT NULL COMMENT '上级类目id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类目名称',
-  PRIMARY KEY (`id`) USING BTREE
+                                `id` bigint(20) NOT NULL,
+                                `pid` bigint(20) NULL DEFAULT NULL COMMENT '上级类目id',
+                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类目名称',
+                                `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图标/图片地址',
+                                `enable` bit(1) NOT NULL COMMENT '是否启用',
+                                `sort_no` double(8, 2) NULL DEFAULT NULL COMMENT '排序',
+                                `level` int(5) NULL DEFAULT NULL COMMENT '层级',
+                                `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                `version` int(11) NOT NULL COMMENT '版本',
+                                `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_category
 -- ----------------------------
-INSERT INTO `gc_category` VALUES (1394227859480010752, NULL, b'1', 0.00, 1, '数码产品', NULL, NULL, 1399985191002447872, '2022-05-10 19:54:09', 2, 0, NULL, '数码产品');
-INSERT INTO `gc_category` VALUES (1394227965352632320, NULL, b'1', 0.00, 1, '笔记本', NULL, NULL, NULL, NULL, 0, 0, 1394227859480010752, '笔记本');
-INSERT INTO `gc_category` VALUES (1394228080222035968, NULL, b'1', 0.00, 2, '手机', NULL, NULL, NULL, NULL, 0, 0, 1394227859480010752, '手机');
-INSERT INTO `gc_category` VALUES (1523988757219287040, '', b'1', 0.00, 1, '', 1399985191002447872, '2022-05-10 19:30:09', 1399985191002447872, '2022-05-10 19:54:05', 3, 0, NULL, '电子');
-INSERT INTO `gc_category` VALUES (1523994966466924544, '', b'1', 0.00, 3, '', 1399985191002447872, '2022-05-10 19:54:49', 1399985191002447872, '2022-05-10 19:54:49', 0, 0, 1394227965352632320, '超极本');
-INSERT INTO `gc_category` VALUES (1523995016001654784, '', b'1', 0.00, 3, '', 1399985191002447872, '2022-05-10 19:55:01', 1399985191002447872, '2022-05-10 19:55:01', 0, 0, 1394227965352632320, '便携本');
-INSERT INTO `gc_category` VALUES (1524729302837313536, '', b'1', 0.00, 2, '', 1399985191002447872, '2022-05-12 20:32:49', 1399985191002447872, '2022-05-12 20:32:49', 0, 0, 1523988757219287040, '小家电');
-INSERT INTO `gc_category` VALUES (1524729512229552128, '', b'1', 0.00, 3, '', 1399985191002447872, '2022-05-12 20:33:38', 1399985191002447872, '2022-05-12 20:33:39', 0, 0, 1524729302837313536, '煮蛋器');
 
 -- ----------------------------
 -- Table structure for gc_category_brand
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_category_brand`;
 CREATE TABLE `gc_category_brand`  (
-  `id` bigint(20) NOT NULL,
-  `category_id` bigint(20) NOT NULL COMMENT '分类id',
-  `brand_id` bigint(20) NOT NULL COMMENT '品牌id',
-  PRIMARY KEY (`id`) USING BTREE
+                                      `id` bigint(20) NOT NULL,
+                                      `category_id` bigint(20) NOT NULL COMMENT '分类id',
+                                      `brand_id` bigint(20) NOT NULL COMMENT '品牌id',
+                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目品牌关联' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_category_brand
 -- ----------------------------
-INSERT INTO `gc_category_brand` VALUES (1525130994372276224, 1523994966466924544, 1525092807788691456);
 
 -- ----------------------------
 -- Table structure for gc_category_parameter
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_category_parameter`;
 CREATE TABLE `gc_category_parameter`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '品牌名称',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型',
-  `options` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '选择值(列表)',
-  `required` bit(1) NULL DEFAULT NULL COMMENT '是否必填',
-  `sort_no` double(8, 2) NULL DEFAULT NULL COMMENT '排序',
-  `group_id` bigint(20) NULL DEFAULT NULL COMMENT '参数组id',
-  `category_id` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
-  `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                          `id` bigint(20) NOT NULL,
+                                          `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '品牌名称',
+                                          `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型',
+                                          `options` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '选择值(列表)',
+                                          `required` bit(1) NULL DEFAULT NULL COMMENT '是否必填',
+                                          `sort_no` double(8, 2) NULL DEFAULT NULL COMMENT '排序',
+                                          `group_id` bigint(20) NULL DEFAULT NULL COMMENT '参数组id',
+                                          `category_id` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
+                                          `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                          `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                          `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                          `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                          `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                          `version` int(11) NOT NULL COMMENT '版本',
+                                          `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目参数' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_category_parameter
 -- ----------------------------
-INSERT INTO `gc_category_parameter` VALUES (1525490897779625984, 'cs', 'input', NULL, b'1', 0.00, 1524739815256322048, 1523994966466924544, NULL, 1399985191002447872, '2022-05-14 22:59:07', 1399985191002447872, '2022-05-14 23:23:23', 2, 0);
 
 -- ----------------------------
 -- Table structure for gc_category_parameter_group
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_category_parameter_group`;
 CREATE TABLE `gc_category_parameter_group`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `sort_no` double(8, 2) NULL DEFAULT NULL COMMENT '排序',
-  `category_id` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
-  `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                                `id` bigint(20) NOT NULL,
+                                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                                `sort_no` double(8, 2) NULL DEFAULT NULL COMMENT '排序',
+                                                `category_id` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
+                                                `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                                `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                                `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                                `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                                `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                                `version` int(11) NOT NULL COMMENT '版本',
+                                                `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目参数组' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_category_parameter_group
 -- ----------------------------
-INSERT INTO `gc_category_parameter_group` VALUES (1524739815256322048, 'cs', 0.00, 1523994966466924544, NULL, 1399985191002447872, '2022-05-12 21:14:35', 1399985191002447872, '2022-05-12 21:14:35', 0, 0);
 
 -- ----------------------------
 -- Table structure for gc_category_specification
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_category_specification`;
 CREATE TABLE `gc_category_specification`  (
-  `id` bigint(20) NOT NULL,
-  `category_id` bigint(20) NOT NULL COMMENT '分类id',
-  `specification_id` bigint(20) NOT NULL COMMENT '规格id',
-  PRIMARY KEY (`id`) USING BTREE
+                                              `id` bigint(20) NOT NULL,
+                                              `category_id` bigint(20) NOT NULL COMMENT '分类id',
+                                              `specification_id` bigint(20) NOT NULL COMMENT '规格id',
+                                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目规格关联' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -326,58 +334,57 @@ INSERT INTO `gc_category_specification` VALUES (1525131071694270464, 15239949664
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_goods`;
 CREATE TABLE `gc_goods`  (
-  `id` bigint(20) NOT NULL,
-  `cid` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
-  `cname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类目名称',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品名',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '编码',
-  `packing` bit(1) NOT NULL COMMENT '是否是打包品',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `addition` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数',
-  `state` int(11) NOT NULL COMMENT '状态',
-  `banner_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `display_price` decimal(19, 2) NULL DEFAULT NULL,
-  `goods_type` int(11) NULL DEFAULT NULL,
-  `main_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `sale_off_time` datetime(6) NULL DEFAULT NULL,
-  `sale_on_time` datetime(6) NULL DEFAULT NULL,
-  `sale_state` int(11) NULL DEFAULT NULL,
-  `shop_id` bigint(20) NULL DEFAULT NULL,
-  `attr_def_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `attr_value_displays` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `attr_values` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `display_lower_price` decimal(19, 2) NULL DEFAULT NULL,
-  `display_upper_price` decimal(19, 2) NULL DEFAULT NULL,
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `out_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                             `id` bigint(20) NOT NULL,
+                             `cid` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
+                             `cname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类目名称',
+                             `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品名',
+                             `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '编码',
+                             `packing` bit(1) NOT NULL COMMENT '是否是打包品',
+                             `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                             `addition` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数',
+                             `state` int(11) NOT NULL COMMENT '状态',
+                             `banner_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                             `display_price` decimal(19, 2) NULL DEFAULT NULL,
+                             `goods_type` int(11) NULL DEFAULT NULL,
+                             `main_uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                             `sale_off_time` datetime(6) NULL DEFAULT NULL,
+                             `sale_on_time` datetime(6) NULL DEFAULT NULL,
+                             `sale_state` int(11) NULL DEFAULT NULL,
+                             `shop_id` bigint(20) NULL DEFAULT NULL,
+                             `attr_def_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                             `attr_value_displays` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                             `attr_values` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                             `display_lower_price` decimal(19, 2) NULL DEFAULT NULL,
+                             `display_upper_price` decimal(19, 2) NULL DEFAULT NULL,
+                             `creator` bigint(20) NULL DEFAULT NULL,
+                             `create_time` datetime(6) NULL DEFAULT NULL,
+                             `last_modifier` bigint(20) NULL DEFAULT NULL,
+                             `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                             `version` int(11) NULL DEFAULT NULL,
+                             `deleted` bit(1) NOT NULL,
+                             `out_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                             PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品spu' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_goods
 -- ----------------------------
-INSERT INTO `gc_goods` VALUES (1, 1, '测试类目', '测试商品', 'cs', b'0', '测试商品', '', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, 'cs', 199.00, 199.00, 1, '2021-04-16 13:52:41.777000', 1, '2021-04-16 13:52:41.777000', 0, b'0', NULL);
 
 -- ----------------------------
 -- Table structure for gc_goods_packing
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_goods_packing`;
 CREATE TABLE `gc_goods_packing`  (
-  `id` bigint(20) NOT NULL,
-  `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '打包品',
-  `packed_goods_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包品',
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(20) NOT NULL,
+                                     `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '打包品',
+                                     `packed_goods_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包品',
+                                     `create_time` datetime(6) NULL DEFAULT NULL,
+                                     `creator` bigint(20) NULL DEFAULT NULL,
+                                     `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                     `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                     `version` int(11) NULL DEFAULT NULL,
+                                     `deleted` bit(1) NOT NULL,
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品打包关系' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -389,92 +396,84 @@ CREATE TABLE `gc_goods_packing`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_goods_sku`;
 CREATE TABLE `gc_goods_sku`  (
-  `id` bigint(20) NOT NULL,
-  `cid` bigint(20) NULL DEFAULT NULL COMMENT '所属类目id',
-  `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '所属商品 id',
-  `shop_id` bigint(20) NULL DEFAULT NULL COMMENT '所属商户',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '外部编码',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'SKU 名称',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `packing` bit(1) NOT NULL COMMENT '是否打包品',
-  `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加信息',
-  `business_id` bigint(20) NULL DEFAULT NULL COMMENT '业务id',
-  `attr_def_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '生成此商品 SKU 的属性定义的 id 拼接串',
-  `attr_values` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性值id拼接串',
-  `attr_value_displays` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '示值拼接串',
-  `is_unlimited` bit(1) NOT NULL COMMENT '是否无限库存',
-  `capacity` int(11) NOT NULL COMMENT '初始库存',
-  `locked` int(11) NOT NULL COMMENT '预占库存',
-  `sold` int(11) NOT NULL COMMENT '已用库存',
-  `available` int(11) NOT NULL COMMENT '可用库存',
-  `sale_state` int(11) NULL DEFAULT NULL COMMENT '销售状态',
-  `sale_off_time` datetime(6) NULL DEFAULT NULL COMMENT '上架时间',
-  `sale_on_time` datetime(6) NULL DEFAULT NULL COMMENT '下架时间',
-  `price` decimal(19, 2) NULL DEFAULT NULL COMMENT '价格',
-  `state` int(11) NOT NULL COMMENT '状态',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NULL DEFAULT NULL,
-  `out_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                 `id` bigint(20) NOT NULL,
+                                 `cid` bigint(20) NULL DEFAULT NULL COMMENT '所属类目id',
+                                 `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '所属商品 id',
+                                 `shop_id` bigint(20) NULL DEFAULT NULL COMMENT '所属商户',
+                                 `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '外部编码',
+                                 `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'SKU 名称',
+                                 `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                 `packing` bit(1) NOT NULL COMMENT '是否打包品',
+                                 `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加信息',
+                                 `business_id` bigint(20) NULL DEFAULT NULL COMMENT '业务id',
+                                 `attr_def_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '生成此商品 SKU 的属性定义的 id 拼接串',
+                                 `attr_values` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性值id拼接串',
+                                 `attr_value_displays` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '示值拼接串',
+                                 `is_unlimited` bit(1) NOT NULL COMMENT '是否无限库存',
+                                 `capacity` int(11) NOT NULL COMMENT '初始库存',
+                                 `locked` int(11) NOT NULL COMMENT '预占库存',
+                                 `sold` int(11) NOT NULL COMMENT '已用库存',
+                                 `available` int(11) NOT NULL COMMENT '可用库存',
+                                 `sale_state` int(11) NULL DEFAULT NULL COMMENT '销售状态',
+                                 `sale_off_time` datetime(6) NULL DEFAULT NULL COMMENT '上架时间',
+                                 `sale_on_time` datetime(6) NULL DEFAULT NULL COMMENT '下架时间',
+                                 `price` decimal(19, 2) NULL DEFAULT NULL COMMENT '价格',
+                                 `state` int(11) NOT NULL COMMENT '状态',
+                                 `creator` bigint(20) NULL DEFAULT NULL,
+                                 `create_time` datetime(6) NULL DEFAULT NULL,
+                                 `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                 `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                 `version` int(11) NULL DEFAULT NULL,
+                                 `deleted` bit(1) NOT NULL,
+                                 `tid` bigint(20) NULL DEFAULT NULL,
+                                 `out_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                 PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品sku' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_goods_sku
 -- ----------------------------
-INSERT INTO `gc_goods_sku` VALUES (1418449614855626752, 1, 1, NULL, 'cs001', '0.01元测试商品', '0.01元测试商品', b'0', NULL, NULL, '', '', NULL, b'1', 99999999, 5, 5, 99999989, NULL, NULL, NULL, 0.01, 0, 1, '2021-07-23 13:55:16.350000', 1, '2021-07-23 13:55:16.350000', 3, b'0', 10011, NULL);
-INSERT INTO `gc_goods_sku` VALUES (1418449728756146176, 1, 1, NULL, 'cs01', '0.1元测试商品', '0.1元测试商品', b'0', NULL, NULL, '', '', NULL, b'1', 99999999, 0, 1, 99999998, NULL, NULL, NULL, 0.10, 0, 1, '2021-07-23 13:55:43.514000', 1, '2021-07-23 13:55:43.514000', 36, b'0', 10011, NULL);
-INSERT INTO `gc_goods_sku` VALUES (1418449821873889280, 1, 1, NULL, 'cs1', '1元测试商品', '1元测试商品', b'0', NULL, NULL, '', '', NULL, b'1', 99999999, 0, 1, 99999998, NULL, NULL, NULL, 1.00, 0, 1, '2021-07-23 13:56:05.715000', 1, '2021-07-23 13:56:05.715000', 36, b'0', 10011, NULL);
-INSERT INTO `gc_goods_sku` VALUES (1418449867554054144, 1, 1, NULL, 'cs2', '2元测试商品', '2元测试商品', b'0', NULL, NULL, '', '', NULL, b'1', 99999999, 0, 0, 99999999, NULL, NULL, NULL, 2.00, 0, 1, '2021-07-23 13:56:16.605000', 1, '2021-07-23 13:56:16.605000', 0, b'0', 10011, NULL);
-INSERT INTO `gc_goods_sku` VALUES (1418449906091319296, 1, 1, NULL, 'cs5', '5元测试商品', '5元测试商品', b'0', NULL, NULL, '', '', NULL, b'1', 99999999, 0, 0, 99999999, NULL, NULL, NULL, 5.00, 0, 1, '2021-07-23 13:56:25.794000', 1, '2021-07-23 13:56:25.794000', 0, b'0', 10011, NULL);
-INSERT INTO `gc_goods_sku` VALUES (1418450070289932288, 1, 1, NULL, 'cs50', '50元测试商品', '50元测试商品', b'0', NULL, NULL, '', '', NULL, b'1', 99999999, 0, 0, 99999999, NULL, NULL, NULL, 50.00, 0, 1, '2021-07-23 13:57:04.942000', 1, '2021-07-23 13:57:04.942000', 0, b'0', 10011, NULL);
-INSERT INTO `gc_goods_sku` VALUES (1418450137004531712, 1, 1, NULL, 'cs100', '100元测试商品', '10元测试商品', b'0', NULL, NULL, '', '', NULL, b'1', 99999999, 0, 0, 99999999, NULL, NULL, NULL, 100.00, 0, 1, '2021-07-23 13:57:20.848000', 1, '2021-07-23 13:57:20.848000', 0, b'0', 10011, NULL);
 
 -- ----------------------------
 -- Table structure for gc_goods_sku_attr
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_goods_sku_attr`;
 CREATE TABLE `gc_goods_sku_attr`  (
-  `id` bigint(20) NOT NULL,
-  `cid` bigint(20) NULL DEFAULT NULL COMMENT '类目 id',
-  `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '商品 id',
-  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'SKU id',
-  `attr_def_id` bigint(20) NULL DEFAULT NULL COMMENT '属性定义 id',
-  `attr_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性值',
-  `attr_value_display` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '显示值',
-  `tid` bigint(20) NOT NULL,
-  `attr_values_display` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `attr_value_displays` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                      `id` bigint(20) NOT NULL,
+                                      `cid` bigint(20) NULL DEFAULT NULL COMMENT '类目 id',
+                                      `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '商品 id',
+                                      `sku_id` bigint(20) NULL DEFAULT NULL COMMENT 'SKU id',
+                                      `attr_def_id` bigint(20) NULL DEFAULT NULL COMMENT '属性定义 id',
+                                      `attr_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性值',
+                                      `attr_value_display` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '显示值',
+                                      `tid` bigint(20) NOT NULL,
+                                      `attr_values_display` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                      `attr_value_displays` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku属性' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_goods_sku_attr
 -- ----------------------------
-INSERT INTO `gc_goods_sku_attr` VALUES (1382934955662925827, 1, 1382934955662925824, 1382934955662925826, 0, '199', NULL, 10011, NULL, '199元');
 
 -- ----------------------------
 -- Table structure for gc_goods_sku_packing
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_goods_sku_packing`;
 CREATE TABLE `gc_goods_sku_packing`  (
-  `id` bigint(20) NOT NULL,
-  `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '打包品',
-  `packed_goods_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包品',
-  `goods_sku_id` bigint(20) NULL DEFAULT NULL COMMENT '打包SKU',
-  `packed_sku_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包SKU',
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                         `id` bigint(20) NOT NULL,
+                                         `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '打包品',
+                                         `packed_goods_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包品',
+                                         `goods_sku_id` bigint(20) NULL DEFAULT NULL COMMENT '打包SKU',
+                                         `packed_sku_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包SKU',
+                                         `create_time` datetime(6) NULL DEFAULT NULL,
+                                         `creator` bigint(20) NULL DEFAULT NULL,
+                                         `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                         `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                         `version` int(11) NULL DEFAULT NULL,
+                                         `deleted` bit(1) NOT NULL,
+                                         `tid` bigint(20) NULL DEFAULT NULL,
+                                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku打包关系' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -486,50 +485,48 @@ CREATE TABLE `gc_goods_sku_packing`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `gc_specification`;
 CREATE TABLE `gc_specification`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规格名称',
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型',
-  `options` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规格列表值',
-  `state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '状态',
-  `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(20) NOT NULL,
+                                     `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规格名称',
+                                     `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型',
+                                     `options` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规格列表值',
+                                     `state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '状态',
+                                     `remark` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                     `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                     `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                     `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                     `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                     `version` int(11) NOT NULL COMMENT '版本',
+                                     `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '规格' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of gc_specification
 -- ----------------------------
-INSERT INTO `gc_specification` VALUES (1524258633343254528, '测试', 'input', NULL, NULL, 'aaa', 1399985191002447872, '2022-05-11 13:22:32', 1399985191002447872, '2022-05-11 13:22:32', 0, 0);
-INSERT INTO `gc_specification` VALUES (1524360756764590080, 'cs', 'select', '[\"11\",\"22\",\"43\",\"5\"]', NULL, '', 1399985191002447872, '2022-05-11 20:08:20', 1399985191002447872, '2022-05-11 20:08:20', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_client
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_client`;
 CREATE TABLE `iam_client`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `system` bit(1) NOT NULL COMMENT '是否系统内置',
-  `alone_prem` bit(1) NOT NULL COMMENT '是否有独立菜单和权限',
-  `timeout` bigint(11) NULL DEFAULT NULL COMMENT '在线时长 秒',
-  `captcha` bit(1) NOT NULL COMMENT '启用验证码',
-  `pwd_err_num` int(8) NOT NULL COMMENT '密码错误次数',
-  `enable` bit(1) NOT NULL COMMENT '是否可用',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `inx_creator`(`creator`) USING BTREE
+                               `id` bigint(20) NOT NULL,
+                               `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
+                               `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                               `system` bit(1) NOT NULL COMMENT '是否系统内置',
+                               `alone_prem` bit(1) NOT NULL COMMENT '是否有独立菜单和权限',
+                               `timeout` bigint(11) NULL DEFAULT NULL COMMENT '在线时长 秒',
+                               `captcha` bit(1) NOT NULL COMMENT '启用验证码',
+                               `pwd_err_num` int(8) NOT NULL COMMENT '密码错误次数',
+                               `enable` bit(1) NOT NULL COMMENT '是否可用',
+                               `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                               `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                               `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                               `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                               `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                               `version` int(11) NOT NULL COMMENT '版本',
+                               `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                               PRIMARY KEY (`id`) USING BTREE,
+                               INDEX `inx_creator`(`creator`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '认证终端' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -544,18 +541,18 @@ INSERT INTO `iam_client` VALUES (1435138582839009280, 'phone', '手机短信登�
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_data_scope`;
 CREATE TABLE `iam_data_scope`  (
-  `id` bigint(20) NOT NULL COMMENT '角色ID',
-  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编码',
-  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
-  `type` int(4) NOT NULL COMMENT '类型',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '说明',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                   `id` bigint(20) NOT NULL COMMENT '角色ID',
+                                   `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编码',
+                                   `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
+                                   `type` int(4) NOT NULL COMMENT '类型',
+                                   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '说明',
+                                   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                   `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                   `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                   `version` int(11) NOT NULL COMMENT '版本',
+                                   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据范围权限' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -575,10 +572,10 @@ INSERT INTO `iam_data_scope` VALUES (1477990439800721408, 'belong_dept_and_sub',
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_data_scope_dept`;
 CREATE TABLE `iam_data_scope_dept`  (
-  `id` bigint(20) NOT NULL,
-  `data_scope_id` bigint(20) NOT NULL COMMENT '数据范围id',
-  `dept_id` bigint(20) NOT NULL COMMENT '部门id',
-  PRIMARY KEY (`id`) USING BTREE
+                                        `id` bigint(20) NOT NULL,
+                                        `data_scope_id` bigint(20) NOT NULL COMMENT '数据范围id',
+                                        `dept_id` bigint(20) NOT NULL COMMENT '部门id',
+                                        PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据范围部门关联配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -592,10 +589,10 @@ INSERT INTO `iam_data_scope_dept` VALUES (1478742920071675904, 14747171606714859
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_data_scope_user`;
 CREATE TABLE `iam_data_scope_user`  (
-  `id` bigint(20) NOT NULL,
-  `data_scope_id` bigint(20) NOT NULL COMMENT '数据范围id',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  PRIMARY KEY (`id`) USING BTREE
+                                        `id` bigint(20) NOT NULL,
+                                        `data_scope_id` bigint(20) NOT NULL COMMENT '数据范围id',
+                                        `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                        PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '数据范围用户关联配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -612,27 +609,27 @@ INSERT INTO `iam_data_scope_user` VALUES (1478747304587309056, 14747170849852702
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_dept`;
 CREATE TABLE `iam_dept`  (
-  `id` bigint(20) NOT NULL COMMENT 'ID',
-  `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父机构ID',
-  `dept_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '机构/部门名称',
-  `sort_no` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
-  `org_category` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '机构类别 1公司 2部门 3岗位',
-  `org_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '机构编码',
-  `mobile` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
-  `fax` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '传真',
-  `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
-  `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_depart_org_code`(`org_code`) USING BTREE,
-  INDEX `uniq_depart_org_code`(`org_code`) USING BTREE,
-  INDEX `index_depart_depart_order`(`sort_no`) USING BTREE,
-  INDEX `index_depart_parent_id`(`parent_id`) USING BTREE
+                             `id` bigint(20) NOT NULL COMMENT 'ID',
+                             `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父机构ID',
+                             `dept_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '机构/部门名称',
+                             `sort_no` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
+                             `org_category` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '1' COMMENT '机构类别 1公司 2部门 3岗位',
+                             `org_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '机构编码',
+                             `mobile` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机号',
+                             `fax` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '传真',
+                             `address` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '地址',
+                             `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+                             `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                             `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                             `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                             `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                             `version` int(11) NOT NULL COMMENT '版本',
+                             `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                             PRIMARY KEY (`id`) USING BTREE,
+                             INDEX `index_depart_org_code`(`org_code`) USING BTREE,
+                             INDEX `uniq_depart_org_code`(`org_code`) USING BTREE,
+                             INDEX `index_depart_depart_order`(`sort_no`) USING BTREE,
+                             INDEX `index_depart_parent_id`(`parent_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门组织机构表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -658,35 +655,35 @@ INSERT INTO `iam_dept` VALUES (1477978883247493120, 1477977827897692160, '潍城
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_perm_menu`;
 CREATE TABLE `iam_perm_menu`  (
-  `id` bigint(20) NOT NULL,
-  `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '终端code',
-  `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父id',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单名称',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由名称',
-  `perm_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单权限编码',
-  `effect` bit(1) NULL DEFAULT NULL COMMENT '是否有效',
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单图标',
-  `hidden` bit(1) NOT NULL COMMENT '是否隐藏',
-  `hide_children_in_menu` bit(1) NOT NULL COMMENT '是否隐藏子菜单',
-  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件',
-  `component_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件名字',
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路径',
-  `redirect` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单跳转地址(重定向)',
-  `sort_no` double NOT NULL COMMENT '菜单排序',
-  `menu_type` int(5) NOT NULL COMMENT '类型（0：一级菜单；1：子菜单 ；2：按钮权限）',
-  `leaf` bit(1) NULL DEFAULT NULL COMMENT '是否叶子节点',
-  `keep_alive` bit(1) NULL DEFAULT NULL COMMENT '是否缓存页面',
-  `target_outside` bit(1) NULL DEFAULT NULL COMMENT '是否外部打开方式',
-  `hidden_header_content` bit(1) NULL DEFAULT NULL COMMENT '隐藏的标题内容',
-  `admin` bit(1) NOT NULL COMMENT '系统菜单',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '终端code',
+                                  `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父id',
+                                  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单名称',
+                                  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由名称',
+                                  `perm_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单权限编码',
+                                  `effect` bit(1) NULL DEFAULT NULL COMMENT '是否有效',
+                                  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单图标',
+                                  `hidden` bit(1) NOT NULL COMMENT '是否隐藏',
+                                  `hide_children_in_menu` bit(1) NOT NULL COMMENT '是否隐藏子菜单',
+                                  `component` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件',
+                                  `component_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件名字',
+                                  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路径',
+                                  `redirect` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '菜单跳转地址(重定向)',
+                                  `sort_no` double NOT NULL COMMENT '菜单排序',
+                                  `menu_type` int(5) NOT NULL COMMENT '类型（0：一级菜单；1：子菜单 ；2：按钮权限）',
+                                  `leaf` bit(1) NULL DEFAULT NULL COMMENT '是否叶子节点',
+                                  `keep_alive` bit(1) NULL DEFAULT NULL COMMENT '是否缓存页面',
+                                  `target_outside` bit(1) NULL DEFAULT NULL COMMENT '是否外部打开方式',
+                                  `hidden_header_content` bit(1) NULL DEFAULT NULL COMMENT '隐藏的标题内容',
+                                  `admin` bit(1) NOT NULL COMMENT '系统菜单',
+                                  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                  `version` int(11) NOT NULL COMMENT '版本',
+                                  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限_菜单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -773,464 +770,425 @@ INSERT INTO `iam_perm_menu` VALUES (1530120821144473600, 'admin', 15301200844820
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_perm_path`;
 CREATE TABLE `iam_perm_path`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限标识',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限名称',
-  `request_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求类型',
-  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求路径',
-  `group_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分组名称',
-  `enable` bit(1) NOT NULL COMMENT '启用状态',
-  `generate` bit(1) NOT NULL COMMENT '是否通过系统生成的权限',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `version` int(11) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `inx_creator`(`creator`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限标识',
+                                  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限名称',
+                                  `request_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求类型',
+                                  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求路径',
+                                  `group_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '分组名称',
+                                  `enable` bit(1) NOT NULL COMMENT '启用状态',
+                                  `generate` bit(1) NOT NULL COMMENT '是否通过系统生成的权限',
+                                  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                  `creator` bigint(20) NULL DEFAULT NULL,
+                                  `create_time` datetime(6) NULL DEFAULT NULL,
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                  `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                  `deleted` bit(1) NOT NULL,
+                                  `version` int(11) NOT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `inx_creator`(`creator`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限_请求' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_perm_path
 -- ----------------------------
-INSERT INTO `iam_perm_path` VALUES (1501754047214862336, 'UserRoleController#findRolesByUser', '根据用户ID获取到角色集合', 'GET', '/user/role/findRolesByUser', '用户角色管理', b'1', b'1', '用户角色管理 根据用户ID获取到角色集合', 0, '2022-03-10 10:57:20.755000', 0, '2022-03-10 10:57:20.761000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047273582592, 'RoleController#dropdown', '角色下拉框', 'GET', '/role/dropdown', '角色管理', b'1', b'1', '角色管理 角色下拉框', 0, '2022-03-10 10:57:20.767000', 0, '2022-03-10 10:57:20.767000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047277776896, 'DictionaryController#add', '添加', 'POST', '/dict/add', '字典', b'1', b'1', '字典 添加', 0, '2022-03-10 10:57:20.768000', 0, '2022-03-10 10:57:20.768000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047281971200, 'GoodsSkuController#findByGoodsId', '根据goodsId查询', 'GET', '/sku/findByGoodsId', 'sku操作', b'1', b'1', 'sku操作 根据goodsId查询', 0, '2022-03-10 10:57:20.769000', 0, '2022-03-10 10:57:20.769000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047286165504, 'RoleMenuController#save', '保存请求权限关系', 'POST', '/role/menu/save', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 保存请求权限关系', 0, '2022-03-10 10:57:20.770000', 0, '2022-03-10 10:57:20.770000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047290359808, 'PaymentController#superPage', '分页查询(超级查询)', 'POST', '/payment/superPage', '支付记录', b'1', b'1', '支付记录 分页查询(超级查询)', 0, '2022-03-10 10:57:20.771000', 0, '2022-03-10 10:57:20.771000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047294554112, 'UserSocialLoginController#findById', '获取详情', 'POST', '/user/social/findById', '用户三方登录管理', b'1', b'1', '用户三方登录管理 获取详情', 0, '2022-03-10 10:57:20.772000', 0, '2022-03-10 10:57:20.772000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047298748416, 'RoleController#findById', '通过ID查询角色', 'GET', '/role/findById', '角色管理', b'1', b'1', '角色管理 通过ID查询角色', 0, '2022-03-10 10:57:20.773000', 0, '2022-03-10 10:57:20.773000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047307137024, 'PermPathController#findAll', '权限列表', 'GET', '/perm/path/findAll', '请求权限资源', b'1', b'1', '请求权限资源 权限列表', 0, '2022-03-10 10:57:20.775000', 0, '2022-03-10 10:57:20.775000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047307137025, 'CategoryController#addCategory', '增加新类目', 'POST', '/category/add', '类目管理', b'1', b'1', '类目管理 增加新类目', 0, '2022-03-10 10:57:20.775000', 0, '2022-03-10 10:57:20.775000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047311331328, 'PaymentController#findStatusByBusinessId', '根据业务ID获取支付状态', 'GET', '/payment/findStatusByBusinessId', '支付记录', b'1', b'1', '支付记录 根据业务ID获取支付状态', 0, '2022-03-10 10:57:20.776000', 0, '2022-03-10 10:57:20.776000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047315525632, 'InventoryController#increaseAvailable', '增补指定 SKU 的可售库存', 'POST', '/inventory/increaseAvailable', '库存操作', b'1', b'1', '库存操作 增补指定 SKU 的可售库存', 0, '2022-03-10 10:57:20.777000', 0, '2022-03-10 10:57:20.777000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047319719936, 'OrderFindController#findByUser', '根据用户获取订单', 'GET', '/order/findByUser', '订单查询', b'1', b'1', '订单查询 根据用户获取订单', 0, '2022-03-10 10:57:20.778000', 0, '2022-03-10 10:57:20.778000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047319719937, 'MailConfigController#findById', '通过 id 获取指定邮箱配置', 'GET', '/mail/config/findById', '邮箱配置', b'1', b'1', '邮箱配置 通过 id 获取指定邮箱配置', 0, '2022-03-10 10:57:20.778000', 0, '2022-03-10 10:57:20.778000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047328108544, 'ClientController#add', '添加终端', 'POST', '/client/add', '终端管理', b'1', b'1', '终端管理 添加终端', 0, '2022-03-10 10:57:20.780000', 0, '2022-03-10 10:57:20.780000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047332302848, 'RolePathController#findPathsByUser', '根据用户id获取角色授权(请求权限列表)', 'GET', '/role/path/findPathsByUser', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 根据用户id获取角色授权(请求权限列表)', 0, '2022-03-10 10:57:20.782000', 0, '2022-03-10 10:57:20.782000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047344885760, 'DataVersionLogController#findById', '获取', 'GET', '/log/dataVersion/findById', '数据版本日志', b'1', b'1', '数据版本日志 获取', 0, '2022-03-10 10:57:20.784000', 0, '2022-03-10 10:57:20.784000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047349080064, 'TestController#xx', '获取所有接口请求', 'GET', '/test/xx', '测试控制器', b'1', b'1', '测试控制器 获取所有接口请求', 0, '2022-03-10 10:57:20.785000', 0, '2022-03-10 10:57:20.785000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047353274368, 'SuperQueryDemoController#update', '修改', 'POST', '/demo/super/query/update', '超级查询演示', b'1', b'1', '超级查询演示 修改', 0, '2022-03-10 10:57:20.786000', 0, '2022-03-10 10:57:20.786000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047353274369, 'UserSocialLoginController#page', '分页', 'GET', '/user/social/page', '用户三方登录管理', b'1', b'1', '用户三方登录管理 分页', 0, '2022-03-10 10:57:20.786000', 0, '2022-03-10 10:57:20.786000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047357468672, 'CategoryController#getCategory', '通过 id 获取指定类目', 'GET', '/category/id', '类目管理', b'1', b'1', '类目管理 通过 id 获取指定类目', 0, '2022-03-10 10:57:20.787000', 0, '2022-03-10 10:57:20.787000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047357468673, 'AppVersionController#add', '添加', 'POST', '/app/version/add', 'app版本管理', b'1', b'1', 'app版本管理 添加', 0, '2022-03-10 10:57:20.787000', 0, '2022-03-10 10:57:20.787000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047361662976, 'SiteMessageController#read', '标为已读', 'POST', '/site/message/read', '站内信', b'1', b'1', '站内信 标为已读', 0, '2022-03-10 10:57:20.788000', 0, '2022-03-10 10:57:20.788000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047361662977, 'MailConfigController#existsByCode', '编码是否被使用', 'GET', '/mail/config/existsByCode', '邮箱配置', b'1', b'1', '邮箱配置 编码是否被使用', 0, '2022-03-10 10:57:20.788000', 0, '2022-03-10 10:57:20.788000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047365857280, 'FIleUpLoadController#download', '下载文件', 'GET', '/file/download/{id}', '文件上传', b'0', b'0', '文件上传 下载文件', 0, '2022-03-10 10:57:20.789000', 1399985191002447872, '2022-05-27 15:13:39.420000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1501754047365857281, 'GoodsController#findAll', '查询全部', 'GET', '/goods/findAll', '商品管理', b'1', b'1', '商品管理 查询全部', 0, '2022-03-10 10:57:20.789000', 0, '2022-03-10 10:57:20.789000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047370051584, 'FIleUpLoadController#preview', '预览文件', 'GET', '/file/preview/{id}', '文件上传', b'0', b'0', '文件上传 预览文件', 0, '2022-03-10 10:57:20.790000', 1399985191002447872, '2022-05-27 15:15:27.836000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1501754047370051585, 'PayNotifyRecordController#findById', '根据id查询', 'GET', '/pay/notify/record/findById', '支付回调记录', b'1', b'1', '支付回调记录 根据id查询', 0, '2022-03-10 10:57:20.790000', 0, '2022-03-10 10:57:20.790000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047374245888, 'SiteMessageController#send', '发送站内信', 'POST', '/site/message/send', '站内信', b'1', b'1', '站内信 发送站内信', 0, '2022-03-10 10:57:20.791000', 0, '2022-03-10 10:57:20.791000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047374245889, 'DataPermDemoController#findById', '通过ID查询', 'GET', '/demo/data/perm/findById', '数据权限演示', b'1', b'1', '数据权限演示 通过ID查询', 0, '2022-03-10 10:57:20.791000', 0, '2022-03-10 10:57:20.791000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047374245890, 'DictionaryController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/dict/existsByCodeNotId', '字典', b'1', b'1', '字典 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.791000', 0, '2022-03-10 10:57:20.791000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047378440192, 'DatabaseTableController#page', '表列表分页', 'GET', '/gen/table/page', '数据库表信息', b'1', b'1', '数据库表信息 表列表分页', 0, '2022-03-10 10:57:20.792000', 0, '2022-03-10 10:57:20.792000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047378440193, 'DataScopeController#update', '更新', 'POST', '/data/scope/update', '数据范围权限配置', b'1', b'1', '数据范围权限配置 更新', 0, '2022-03-10 10:57:20.792000', 0, '2022-03-10 10:57:20.792000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047382634496, 'GoodsController#add', '添加商品', 'POST', '/goods/add', '商品管理', b'1', b'1', '商品管理 添加商品', 0, '2022-03-10 10:57:20.793000', 0, '2022-03-10 10:57:20.793000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047382634497, 'RoleMenuController#findPermissionIdsByRole', '根据角色id获取关联权限id集合(包含资源和菜单)', 'GET', '/role/menu/findPermissionIdsByRole', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 根据角色id获取关联权限id集合(包含资源和菜单)', 0, '2022-03-10 10:57:20.793000', 0, '2022-03-10 10:57:20.793000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047382634498, 'RoleController#delete', '删除角色', 'DELETE', '/role/delete', '角色管理', b'1', b'1', '角色管理 删除角色', 0, '2022-03-10 10:57:20.793000', 0, '2022-03-10 10:57:20.794000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047386828800, 'DataVersionLogController#page', '分页', 'GET', '/log/dataVersion/page', '数据版本日志', b'1', b'1', '数据版本日志 分页', 0, '2022-03-10 10:57:20.794000', 0, '2022-03-10 10:57:20.794000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047386828801, 'OrderPreviewController#previewOrderPriceNoCheck', '预览价格(手动无检查)', 'POST', '/order/preview/previewOrderPriceNoCheck', '订单计算', b'1', b'1', '订单计算 预览价格(手动无检查)', 0, '2022-03-10 10:57:20.794000', 0, '2022-03-10 10:57:20.794000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047391023104, 'DataScopeController#page', '分页', 'GET', '/data/scope/page', '数据范围权限配置', b'1', b'1', '数据范围权限配置 分页', 0, '2022-03-10 10:57:20.795000', 0, '2022-03-10 10:57:20.795000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047391023105, 'AppVersionController#check', '检查更新', 'POST', '/app/version/check', 'app版本管理', b'1', b'1', 'app版本管理 检查更新', 0, '2022-03-10 10:57:20.795000', 0, '2022-03-10 10:57:20.795000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047395217408, 'CashierController#aggregatePay', '扫码聚合支付', 'GET', '/cashier/aggregatePay', '结算台', b'1', b'1', '结算台 扫码聚合支付', 0, '2022-03-10 10:57:20.796000', 0, '2022-03-10 10:57:20.796000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047395217409, 'DataPermDemoController#delete', '删除', 'DELETE', '/demo/data/perm/delete', '数据权限演示', b'1', b'1', '数据权限演示 删除', 0, '2022-03-10 10:57:20.796000', 0, '2022-03-10 10:57:20.796000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047395217410, 'PermPathController#update', '更新权限', 'POST', '/perm/path/update', '请求权限资源', b'1', b'1', '请求权限资源 更新权限', 0, '2022-03-10 10:57:20.796000', 0, '2022-03-10 10:57:20.796000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047399411712, 'DingRobotConfigController#page', '分页', 'GET', '/ding/robot/config/page', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 分页', 0, '2022-03-10 10:57:20.797000', 0, '2022-03-10 10:57:20.797000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047399411713, 'NcDemoController#sendMsg', '消息发送测试', 'GET', '/nc/test/sendMsg', 'nc测试', b'1', b'1', 'nc测试 消息发送测试', 0, '2022-03-10 10:57:20.797000', 0, '2022-03-10 10:57:20.797000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047403606016, 'CategoryController#findTree', '获取类目树', 'GET', '/category/tree', '类目管理', b'1', b'1', '类目管理 获取类目树', 0, '2022-03-10 10:57:20.798000', 0, '2022-03-10 10:57:20.798000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047403606017, 'DictionaryItemController#update', '修改字典项（返回字典项对象）', 'POST', '/dict/item/update', '字典项', b'1', b'1', '字典项 修改字典项（返回字典项对象）', 0, '2022-03-10 10:57:20.798000', 0, '2022-03-10 10:57:20.798000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047407800320, 'FIleUpLoadController#getFilePreviewUrlPrefix', '获取文件预览地址前缀', 'GET', '/file/getFilePreviewUrlPrefix', '文件上传', b'0', b'0', '文件上传 获取文件预览地址前缀', 0, '2022-03-10 10:57:20.799000', 1414143554414059520, '2022-06-01 14:54:45.283000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1501754047407800321, 'InventoryController#reduceInventory', '扣减指定 SKU 的预占库存，增加对应售出', 'POST', '/inventory/reduceInventory', '库存操作', b'1', b'1', '库存操作 扣减指定 SKU 的预占库存，增加对应售出', 0, '2022-03-10 10:57:20.799000', 0, '2022-03-10 10:57:20.799000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047407800322, 'WeChatPayConfigController#findById', '根据Id查询', 'GET', '/wechat/pay/findById', '微信支付', b'1', b'1', '微信支付 根据Id查询', 0, '2022-03-10 10:57:20.799000', 0, '2022-03-10 10:57:20.799000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047411994624, 'OrderOperateController#cancelOrderState', '取消订单', 'POST', '/order/cancelOrderState', '订单操作', b'1', b'1', '订单操作 取消订单', 0, '2022-03-10 10:57:20.800000', 0, '2022-03-10 10:57:20.800000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047411994625, 'CouponTemplateController#findAll', '查询优惠券模板', 'POST', '/coupon/template/findAll', '优惠券模板', b'1', b'1', '优惠券模板 查询优惠券模板', 0, '2022-03-10 10:57:20.800000', 0, '2022-03-10 10:57:20.800000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047416188928, 'MessageTemplateController#add', '添加', 'POST', '/message/template/add', '消息模板', b'1', b'1', '消息模板 添加', 0, '2022-03-10 10:57:20.801000', 0, '2022-03-10 10:57:20.801000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047416188929, 'AppVersionController#findById', '查询详情', 'POST', '/app/version/findById', 'app版本管理', b'1', b'1', 'app版本管理 查询详情', 0, '2022-03-10 10:57:20.801000', 0, '2022-03-10 10:57:20.801000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047420383232, 'InventoryController#unlockInventory', '释放预占的SKU库存，需使用token', 'POST', '/inventory/unlockInventory', '库存操作', b'1', b'1', '库存操作 释放预占的SKU库存，需使用token', 0, '2022-03-10 10:57:20.802000', 0, '2022-03-10 10:57:20.802000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047420383233, 'CouponTemplateController#get', '优惠券模板详情', 'POST', '/coupon/template/get/{id}', '优惠券模板', b'1', b'1', '优惠券模板 优惠券模板详情', 0, '2022-03-10 10:57:20.802000', 0, '2022-03-10 10:57:20.802000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047420383234, 'PayController#pay', '支付', 'POST', '/uni_pay/pay', '统一支付', b'1', b'1', '统一支付 支付', 0, '2022-03-10 10:57:20.802000', 0, '2022-03-10 10:57:20.802000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047424577536, 'PermMenuController#menuTree', '获取菜单树', 'GET', '/perm/menu/menuTree', '菜单权限资源', b'1', b'1', '菜单权限资源 获取菜单树', 0, '2022-03-10 10:57:20.803000', 0, '2022-03-10 10:57:20.803000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047424577537, 'DataPermDemoController#page', '分页查询', 'GET', '/demo/data/perm/page', '数据权限演示', b'1', b'1', '数据权限演示 分页查询', 0, '2022-03-10 10:57:20.803000', 0, '2022-03-10 10:57:20.803000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047424577538, 'DeptController#findById', '获取', 'GET', '/dept/findById', '部门管理', b'1', b'1', '部门管理 获取', 0, '2022-03-10 10:57:20.803000', 0, '2022-03-10 10:57:20.803000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047428771840, 'WalletLogController#searchLog', '查询钱包日志(分页)', 'POST', '/walletLog/search/page', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 查询钱包日志(分页)', 0, '2022-03-10 10:57:20.804000', 0, '2022-03-10 10:57:20.804000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047428771841, 'RoleController#page', '分页查询角色', 'GET', '/role/page', '角色管理', b'1', b'1', '角色管理 分页查询角色', 0, '2022-03-10 10:57:20.804000', 0, '2022-03-10 10:57:20.804000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047432966144, 'WalletController#recharge', '充值操作', 'POST', '/wallet/recharge', '钱包相关的接口', b'1', b'1', '钱包相关的接口 充值操作', 0, '2022-03-10 10:57:20.805000', 0, '2022-03-10 10:57:20.805000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047432966145, 'DictionaryItemController#findById', '根据字典项ID查询', 'GET', '/dict/item/findById', '字典项', b'1', b'1', '字典项 根据字典项ID查询', 0, '2022-03-10 10:57:20.805000', 0, '2022-03-10 10:57:20.805000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047437160448, 'WalletLogController#searchByCondition', '查询钱包日志', 'POST', '/walletLog/search/condition', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 查询钱包日志', 0, '2022-03-10 10:57:20.806000', 0, '2022-03-10 10:57:20.806000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047437160449, 'OrderFindController#getWholeById', '获取完整订单详情', 'GET', '/order/getWholeById', '订单查询', b'1', b'1', '订单查询 获取完整订单详情', 0, '2022-03-10 10:57:20.806000', 0, '2022-03-10 10:57:20.806000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047437160450, 'DingRobotSendController#sendText', '测试发送text', 'POST', '/ding/robot/send/text', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送text', 0, '2022-03-10 10:57:20.806000', 0, '2022-03-10 10:57:20.806000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047441354752, 'PayCallbackController#aliPay', '支付宝回调', 'POST', '/pay/callback/aliPay', '支付回调', b'1', b'1', '支付回调 支付宝回调', 0, '2022-03-10 10:57:20.807000', 0, '2022-03-10 10:57:20.807000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047441354753, 'SiteMessageController#getSenderCount', '获取发送消息条数', 'GET', '/site/message/getSenderCount', '站内信', b'1', b'1', '站内信 获取发送消息条数', 0, '2022-03-10 10:57:20.807000', 0, '2022-03-10 10:57:20.807000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047445549056, 'OpenApiWebMvcResource#openapiYaml', 'openapiYaml', 'GET', '/v3/api-docs.yaml', 'OpenApiWebMvcResource', b'1', b'1', 'OpenApiWebMvcResource openapiYaml', 0, '2022-03-10 10:57:20.808000', 0, '2022-03-10 10:57:20.808000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047445549057, 'TestController#hello', '测试', 'GET', '/test/hello', '测试控制器', b'1', b'1', '测试控制器 测试', 0, '2022-03-10 10:57:20.808000', 0, '2022-03-10 10:57:20.808000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047449743360, 'OperateLogController#page', '分页', 'GET', '/log/operate/page', '操作日志', b'1', b'1', '操作日志 分页', 0, '2022-03-10 10:57:20.809000', 0, '2022-03-10 10:57:20.809000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047449743361, 'TokenEndpoint#logout', '退出', 'POST', '/token/logout', '认证相关', b'1', b'1', '认证相关 退出', 0, '2022-03-10 10:57:20.809000', 0, '2022-03-10 10:57:20.809000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047449743362, 'CouponController#findByIds', '批量查询优惠券', 'GET', '/coupon/findByIds', '优惠券', b'1', b'1', '优惠券 批量查询优惠券', 0, '2022-03-10 10:57:20.809000', 0, '2022-03-10 10:57:20.809000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047453937664, 'DeptController#tree', '树状展示', 'GET', '/dept/tree', '部门管理', b'1', b'1', '部门管理 树状展示', 0, '2022-03-10 10:57:20.810000', 0, '2022-03-10 10:57:20.810000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047453937665, 'MailSendController#sendMail', '发送邮件', 'POST', '/mail/send/sendMail', '邮件发送', b'1', b'1', '邮件发送 发送邮件', 0, '2022-03-10 10:57:20.810000', 0, '2022-03-10 10:57:20.810000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047453937666, 'AppVersionController#delete', '删除', 'DELETE', '/app/version/delete', 'app版本管理', b'1', b'1', 'app版本管理 删除', 0, '2022-03-10 10:57:20.810000', 0, '2022-03-10 10:57:20.810000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047458131968, 'DeptController#deleteAndChildren', '强制级联删除', 'DELETE', '/dept/deleteAndChildren', '部门管理', b'1', b'1', '部门管理 强制级联删除', 0, '2022-03-10 10:57:20.811000', 0, '2022-03-10 10:57:20.811000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047458131969, 'StrategyRegisterController#findAll', '查询全部', 'GET', '/strategy/register/findAll', '策略注册', b'1', b'1', '策略注册 查询全部', 0, '2022-03-10 10:57:20.811000', 0, '2022-03-10 10:57:20.811000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047458131970, 'StrategyController#add', '添加策略', 'POST', '/strategy/add', '策略定义', b'1', b'1', '策略定义 添加策略', 0, '2022-03-10 10:57:20.811000', 0, '2022-03-10 10:57:20.811000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047458131971, 'RoleController#findAll', '查询所有的角色', 'GET', '/role/findAll', '角色管理', b'1', b'1', '角色管理 查询所有的角色', 0, '2022-03-10 10:57:20.811000', 0, '2022-03-10 10:57:20.812000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047462326272, 'AlipayConfigController#update', '更新', 'POST', '/alipay/update', '支付宝配置', b'1', b'1', '支付宝配置 更新', 0, '2022-03-10 10:57:20.812000', 0, '2022-03-10 10:57:20.812000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047462326273, 'RoleController#add', '添加角色（返回角色对象）', 'POST', '/role/add', '角色管理', b'1', b'1', '角色管理 添加角色（返回角色对象）', 0, '2022-03-10 10:57:20.812000', 0, '2022-03-10 10:57:20.812000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047462326274, 'PermMenuController#add', '添加菜单权限', 'POST', '/perm/menu/add', '菜单权限资源', b'1', b'1', '菜单权限资源 添加菜单权限', 0, '2022-03-10 10:57:20.812000', 0, '2022-03-10 10:57:20.812000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047466520576, 'PaymentController#findPayTypeInfoById', '根据id获取订单支付方式', 'GET', '/payment/findPayTypeInfoById', '支付记录', b'1', b'1', '支付记录 根据id获取订单支付方式', 0, '2022-03-10 10:57:20.813000', 0, '2022-03-10 10:57:20.813000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047466520577, 'AlipayConfigController#clearActivity', '清除指定的支付宝配置', 'POST', '/alipay/clearActivity', '支付宝配置', b'1', b'1', '支付宝配置 清除指定的支付宝配置', 0, '2022-03-10 10:57:20.813000', 0, '2022-03-10 10:57:20.813000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047466520578, 'ClientController#findByCode', '通过code查询终端', 'GET', '/client/findByCode', '终端管理', b'1', b'1', '终端管理 通过code查询终端', 0, '2022-03-10 10:57:20.813000', 0, '2022-03-10 10:57:20.814000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047470714880, 'QuartzJobController#stop', '停止', 'POST', '/quartz/stop', '定时任务', b'1', b'1', '定时任务 停止', 0, '2022-03-10 10:57:20.814000', 0, '2022-03-10 10:57:20.814000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047470714881, 'UserAdminController#findById', '根据用户id查询用户', 'GET', '/user/admin/findById', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据用户id查询用户', 0, '2022-03-10 10:57:20.814000', 0, '2022-03-10 10:57:20.814000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047474909184, 'DataScopeController#add', '添加', 'POST', '/data/scope/add', '数据范围权限配置', b'1', b'1', '数据范围权限配置 添加', 0, '2022-03-10 10:57:20.815000', 0, '2022-03-10 10:57:20.815000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047474909185, 'PayController#cancelByBusinessId', '取消支付(业务id)', 'POST', '/uni_pay/cancelByBusinessId', '统一支付', b'1', b'1', '统一支付 取消支付(业务id)', 0, '2022-03-10 10:57:20.815000', 0, '2022-03-10 10:57:20.815000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047474909186, 'UserAdminController#getUserInfoWhole', '查询用户详情', 'GET', '/user/admin/getUserInfoWhole', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 查询用户详情', 0, '2022-03-10 10:57:20.815000', 0, '2022-03-10 10:57:20.815000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047474909187, 'FIleUpLoadController#page', '分页', 'GET', '/file/page', '文件上传', b'1', b'1', '文件上传 分页', 0, '2022-03-10 10:57:20.815000', 0, '2022-03-10 10:57:20.816000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047479103488, 'RefundRecordController#findById', '根据id查询', 'GET', '/pay/refund/findById', '退款记录', b'1', b'1', '退款记录 根据id查询', 0, '2022-03-10 10:57:20.816000', 0, '2022-03-10 10:57:20.816000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047479103489, 'AlipayConfigController#findById', '根据Id查询', 'GET', '/alipay/findById', '支付宝配置', b'1', b'1', '支付宝配置 根据Id查询', 0, '2022-03-10 10:57:20.816000', 0, '2022-03-10 10:57:20.816000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047479103490, 'DictionaryItemController#existsByCode', '编码是否被使用', 'GET', '/dict/item/existsByCode', '字典项', b'1', b'1', '字典项 编码是否被使用', 0, '2022-03-10 10:57:20.816000', 0, '2022-03-10 10:57:20.816000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047483297792, 'DataScopeController#saveDeptAssign', '保存关联部门', 'POST', '/data/scope/saveDeptAssign', '数据范围权限配置', b'1', b'1', '数据范围权限配置 保存关联部门', 0, '2022-03-10 10:57:20.817000', 0, '2022-03-10 10:57:20.817000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047483297793, 'SystemParamController#findByParamKey', '根据键名获取键值', 'GET', '/system/param/findByParamKey', '系统参数', b'1', b'1', '系统参数 根据键名获取键值', 0, '2022-03-10 10:57:20.817000', 0, '2022-03-10 10:57:20.817000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047483297794, 'DataScopeController#findById', '获取', 'GET', '/data/scope/findById', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取', 0, '2022-03-10 10:57:20.818000', 0, '2022-03-10 10:57:20.818000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047487492096, 'DataScopeController#getDeptIds', '获取关联部门id', 'GET', '/data/scope/getDeptIds', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取关联部门id', 0, '2022-03-10 10:57:20.818000', 0, '2022-03-10 10:57:20.818000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047487492097, 'SystemParamController#add', '添加', 'POST', '/system/param/add', '系统参数', b'1', b'1', '系统参数 添加', 0, '2022-03-10 10:57:20.818000', 0, '2022-03-10 10:57:20.818000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047487492098, 'TokenEndpoint#loginOpenId', '三方登录登录', 'POST', '/token/loginOpenId', '认证相关', b'1', b'1', '认证相关 三方登录登录', 0, '2022-03-10 10:57:20.818000', 0, '2022-03-10 10:57:20.818000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047491686400, 'PayNotifyRecordController#page', '分页', 'GET', '/pay/notify/record/page', '支付回调记录', b'1', b'1', '支付回调记录 分页', 0, '2022-03-10 10:57:20.819000', 0, '2022-03-10 10:57:20.819000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047491686401, 'OrderPreviewController#previewOrderPrice', '预览价格(手动)', 'POST', '/order/preview/previewOrderPrice', '订单计算', b'1', b'1', '订单计算 预览价格(手动)', 0, '2022-03-10 10:57:20.819000', 0, '2022-03-10 10:57:20.819000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047491686402, 'ActivityController#get', '查询活动', 'GET', '/activity//get/{id}', '活动', b'1', b'1', '活动 查询活动', 0, '2022-03-10 10:57:20.819000', 0, '2022-03-10 10:57:20.819000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047495880704, 'ClientController#delete', '删除终端', 'DELETE', '/client/delete', '终端管理', b'1', b'1', '终端管理 删除终端', 0, '2022-03-10 10:57:20.820000', 0, '2022-03-10 10:57:20.820000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047495880705, 'TestController#say', '测试回声', 'GET', '/test/say', '测试控制器', b'1', b'1', '测试控制器 测试回声', 0, '2022-03-10 10:57:20.820000', 0, '2022-03-10 10:57:20.820000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047495880706, 'PaymentController#findByUser', '根据userId获取列表', 'GET', '/payment/findByUser', '支付记录', b'1', b'1', '支付记录 根据userId获取列表', 0, '2022-03-10 10:57:20.820000', 0, '2022-03-10 10:57:20.820000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047500075008, 'UserDeptController#saveAndUpdate', '给用户分配部门', 'POST', '/user/dept/saveAndUpdate', '用户部门关联关系', b'1', b'1', '用户部门关联关系 给用户分配部门', 0, '2022-03-10 10:57:20.821000', 0, '2022-03-10 10:57:20.821000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047500075009, 'SystemParamController#update', '更新', 'POST', '/system/param/update', '系统参数', b'1', b'1', '系统参数 更新', 0, '2022-03-10 10:57:20.821000', 0, '2022-03-10 10:57:20.821000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047500075010, 'AlipayConfigController#setUpActivity', '启用指定的支付宝配置', 'POST', '/alipay/setUpActivity', '支付宝配置', b'1', b'1', '支付宝配置 启用指定的支付宝配置', 0, '2022-03-10 10:57:20.821000', 0, '2022-03-10 10:57:20.821000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047500075011, 'AuthAssistController#sendSmsCaptcha', '发送短信验证码', 'POST', '/auth/sendSmsCaptcha', '认证支撑接口', b'1', b'1', '认证支撑接口 发送短信验证码', 0, '2022-03-10 10:57:20.821000', 0, '2022-03-10 10:57:20.821000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047504269312, 'PermMenuController#existsByPermCode', '编码是否被使用(不包含自己)', 'GET', '/perm/menu/existsByPermCodeNotId', '菜单权限资源', b'1', b'1', '菜单权限资源 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.822000', 0, '2022-03-10 10:57:20.822000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047504269313, 'UserAdminController#getByEmail', '根据邮箱查询用户', 'GET', '/user/admin/getByEmail', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据邮箱查询用户', 0, '2022-03-10 10:57:20.822000', 0, '2022-03-10 10:57:20.822000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047504269314, 'SystemParamController#page', '分页', 'GET', '/system/param/page', '系统参数', b'1', b'1', '系统参数 分页', 0, '2022-03-10 10:57:20.822000', 0, '2022-03-10 10:57:20.822000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047504269315, 'QuartzJobController#start', '启动', 'POST', '/quartz/start', '定时任务', b'1', b'1', '定时任务 启动', 0, '2022-03-10 10:57:20.822000', 0, '2022-03-10 10:57:20.822000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047508463616, 'WalletController#activeWallet', '开通操作', 'POST', '/wallet/active', '钱包相关的接口', b'1', b'1', '钱包相关的接口 开通操作', 0, '2022-03-10 10:57:20.823000', 0, '2022-03-10 10:57:20.823000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047508463617, 'SuperQueryDemoController#page', '分页查询', 'GET', '/demo/super/query/page', '超级查询演示', b'1', b'1', '超级查询演示 分页查询', 0, '2022-03-10 10:57:20.823000', 0, '2022-03-10 10:57:20.823000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047508463618, 'DingRobotConfigController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/ding/robot/config/existsByCodeNotId', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.823000', 0, '2022-03-10 10:57:20.823000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047512657920, 'UserRoleController#saveAndUpdate', '给用户分配角色', 'POST', '/user/role/saveAndUpdate', '用户角色管理', b'1', b'1', '用户角色管理 给用户分配角色', 0, '2022-03-10 10:57:20.824000', 0, '2022-03-10 10:57:20.824000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047512657921, 'UserAdminController#getByPhone', '根据手机号查询用户', 'GET', '/user/admin/getByPhone', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据手机号查询用户', 0, '2022-03-10 10:57:20.824000', 0, '2022-03-10 10:57:20.824000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047512657922, 'PermMenuController#allTree', '获取全部树', 'GET', '/perm/menu/allTree', '菜单权限资源', b'1', b'1', '菜单权限资源 获取全部树', 0, '2022-03-10 10:57:20.824000', 0, '2022-03-10 10:57:20.824000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047512657923, 'CashierController#singlePay', '发起支付(单渠道)', 'POST', '/cashier/singlePay', '结算台', b'1', b'1', '结算台 发起支付(单渠道)', 0, '2022-03-10 10:57:20.824000', 0, '2022-03-10 10:57:20.824000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047516852224, 'QuartzJobController#add', '添加', 'POST', '/quartz/add', '定时任务', b'1', b'1', '定时任务 添加', 0, '2022-03-10 10:57:20.825000', 0, '2022-03-10 10:57:20.825000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047516852225, 'PayController#syncByBusinessId', '刷新指定业务id的支付单状态', 'POST', '/uni_pay/syncByBusinessId', '统一支付', b'1', b'1', '统一支付 刷新指定业务id的支付单状态', 0, '2022-03-10 10:57:20.825000', 0, '2022-03-10 10:57:20.825000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047516852226, 'MessageTemplateController#existsByCode', '编码是否被使用', 'GET', '/message/template/existsByCode', '消息模板', b'1', b'1', '消息模板 编码是否被使用', 0, '2022-03-10 10:57:20.825000', 0, '2022-03-10 10:57:20.825000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047521046528, 'OperateLogController#findById', '获取', 'GET', '/log/operate/findById', '操作日志', b'1', b'1', '操作日志 获取', 0, '2022-03-10 10:57:20.826000', 0, '2022-03-10 10:57:20.826000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047521046529, 'InventoryController#getAvailable', '获取指定 SKU 的可用库存', 'GET', '/inventory/getAvailable', '库存操作', b'1', b'1', '库存操作 获取指定 SKU 的可用库存', 0, '2022-03-10 10:57:20.826000', 0, '2022-03-10 10:57:20.826000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047525240832, 'CategoryController#findAll', '获取所有类目', 'GET', '/category/all', '类目管理', b'1', b'1', '类目管理 获取所有类目', 0, '2022-03-10 10:57:20.827000', 0, '2022-03-10 10:57:20.827000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047525240833, 'CouponTemplateController#addCouponTemplate', '新建优惠券模板', 'POST', '/coupon/template/add', '优惠券模板', b'1', b'1', '优惠券模板 新建优惠券模板', 0, '2022-03-10 10:57:20.827000', 0, '2022-03-10 10:57:20.827000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047525240834, 'DataScopeController#saveUserAssign', '保存关联用户权限', 'POST', '/data/scope/saveUserAssign', '数据范围权限配置', b'1', b'1', '数据范围权限配置 保存关联用户权限', 0, '2022-03-10 10:57:20.827000', 0, '2022-03-10 10:57:20.827000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047529435136, 'InventoryController#reduceSoldAndCapacity', '扣减指定 SKU 的售出库存并减少总库存', 'POST', '/inventory/reduceSoldAndCapacity', '库存操作', b'1', b'1', '库存操作 扣减指定 SKU 的售出库存并减少总库存', 0, '2022-03-10 10:57:20.828000', 0, '2022-03-10 10:57:20.828000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047529435137, 'PayController#cancelByPaymentId', '取消支付(支付id)', 'POST', '/uni_pay/cancelByPaymentId', '统一支付', b'1', b'1', '统一支付 取消支付(支付id)', 0, '2022-03-10 10:57:20.828000', 0, '2022-03-10 10:57:20.828000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047529435138, 'DataScopeController#existsByCode', '编码是否被使用', 'GET', '/data/scope/existsByCode', '数据范围权限配置', b'1', b'1', '数据范围权限配置 编码是否被使用', 0, '2022-03-10 10:57:20.828000', 0, '2022-03-10 10:57:20.828000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047529435139, 'UserInfoController#updatePassword', '修改密码', 'POST', '/user/updatePassword', '用户管理', b'1', b'1', '用户管理 修改密码', 0, '2022-03-10 10:57:20.828000', 0, '2022-03-10 10:57:20.828000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047533629440, 'DictionaryController#page', '分页', 'GET', '/dict/page', '字典', b'1', b'1', '字典 分页', 0, '2022-03-10 10:57:20.829000', 0, '2022-03-10 10:57:20.829000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047533629441, 'SystemParamController#delete', '删除', 'DELETE', '/system/param/delete', '系统参数', b'1', b'1', '系统参数 删除', 0, '2022-03-10 10:57:20.829000', 0, '2022-03-10 10:57:20.829000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047533629442, 'WeChatPayConfigController#add', '添加微信支付配置', 'POST', '/wechat/pay/add', '微信支付', b'1', b'1', '微信支付 添加微信支付配置', 0, '2022-03-10 10:57:20.829000', 0, '2022-03-10 10:57:20.829000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047533629443, 'UserDeptController#findAllByUser', '根据用户ID获取到部门集合', 'GET', '/user/dept/findAllByUser', '用户部门关联关系', b'1', b'1', '用户部门关联关系 根据用户ID获取到部门集合', 0, '2022-03-10 10:57:20.829000', 0, '2022-03-10 10:57:20.829000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047537823744, 'UserDeptController#findIdsByUser', '根据用户ID获取到部门id集合', 'GET', '/user/dept/findIdsByUser', '用户部门关联关系', b'1', b'1', '用户部门关联关系 根据用户ID获取到部门id集合', 0, '2022-03-10 10:57:20.830000', 0, '2022-03-10 10:57:20.830000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047537823745, 'StrategyController#findByType', '根据类型查询', 'GET', '/strategy/findByType', '策略定义', b'1', b'1', '策略定义 根据类型查询', 0, '2022-03-10 10:57:20.830000', 0, '2022-03-10 10:57:20.830000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047537823746, 'DataScopeController#delete', '删除', 'DELETE', '/data/scope/delete', '数据范围权限配置', b'1', b'1', '数据范围权限配置 删除', 0, '2022-03-10 10:57:20.830000', 0, '2022-03-10 10:57:20.830000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047542018048, 'SiteMessageController#page', '消息分页', 'GET', '/site/message/page', '站内信', b'1', b'1', '站内信 消息分页', 0, '2022-03-10 10:57:20.831000', 0, '2022-03-10 10:57:20.831000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047542018049, 'ClientController#existsByCode', '编码是否被使用', 'GET', '/client/existsByCode', '终端管理', b'1', b'1', '终端管理 编码是否被使用', 0, '2022-03-10 10:57:20.831000', 0, '2022-03-10 10:57:20.831000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047542018050, 'ClientController#findById', '通过ID查询终端', 'GET', '/client/findById', '终端管理', b'1', b'1', '终端管理 通过ID查询终端', 0, '2022-03-10 10:57:20.831000', 0, '2022-03-10 10:57:20.831000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047542018051, 'StrategyController#findById', '获取策略及其配置项', 'GET', '/strategy/findById', '策略定义', b'1', b'1', '策略定义 获取策略及其配置项', 0, '2022-03-10 10:57:20.831000', 0, '2022-03-10 10:57:20.831000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047542018052, 'DatabaseTableController#findByTableName', '获取表信息', 'GET', '/gen/table/findByTableName', '数据库表信息', b'1', b'1', '数据库表信息 获取表信息', 0, '2022-03-10 10:57:20.831000', 0, '2022-03-10 10:57:20.831000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047546212352, 'LoginLogController#findById', '获取', 'GET', '/log/login/findById', '登录日志', b'1', b'1', '登录日志 获取', 0, '2022-03-10 10:57:20.832000', 0, '2022-03-10 10:57:20.832000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047546212353, 'FIleUpLoadController#local', '上传', 'POST', '/file/upload', '文件上传', b'1', b'1', '文件上传 上传', 0, '2022-03-10 10:57:20.832000', 0, '2022-03-10 10:57:20.832000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047546212354, 'GoodsSkuController#getById', '获取sku', 'GET', '/sku/get', 'sku操作', b'1', b'1', 'sku操作 获取sku', 0, '2022-03-10 10:57:20.832000', 0, '2022-03-10 10:57:20.832000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047546212355, 'InventoryController#reduceLockedAndCapacity', '扣减指定的 SKU 的库存', 'POST', '/inventory/reduceLockedAndCapacity', '库存操作', b'1', b'1', '库存操作 扣减指定的 SKU 的库存', 0, '2022-03-10 10:57:20.832000', 0, '2022-03-10 10:57:20.832000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047550406656, 'InventoryController#increaseInventory', '增补指定 SKU 的可售库存， 扣减对应售出', 'POST', '/inventory/increaseInventory', '库存操作', b'1', b'1', '库存操作 增补指定 SKU 的可售库存， 扣减对应售出', 0, '2022-03-10 10:57:20.833000', 0, '2022-03-10 10:57:20.833000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047550406657, 'PaymentController#findByBusinessId', '根据businessId获取列表', 'GET', '/payment/findByBusinessId', '支付记录', b'1', b'1', '支付记录 根据businessId获取列表', 0, '2022-03-10 10:57:20.833000', 0, '2022-03-10 10:57:20.833000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047550406658, 'DataScopeController#deleteUserAssigns', '批量删除关联用户', 'DELETE', '/data/scope/deleteUserAssigns', '数据范围权限配置', b'1', b'1', '数据范围权限配置 批量删除关联用户', 0, '2022-03-10 10:57:20.833000', 0, '2022-03-10 10:57:20.833000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047550406659, 'DingRobotConfigController#add', '新增机器人配置', 'POST', '/ding/robot/config/add', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 新增机器人配置', 0, '2022-03-10 10:57:20.833000', 0, '2022-03-10 10:57:20.833000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047554600960, 'CouponController#lockById', '锁定优惠券', 'POST', '/coupon/lockById', '优惠券', b'1', b'1', '优惠券 锁定优惠券', 0, '2022-03-10 10:57:20.834000', 0, '2022-03-10 10:57:20.834000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047554600961, 'MailConfigController#updateMailConfig', '更新邮箱配置', 'POST', '/mail/config/update', '邮箱配置', b'1', b'1', '邮箱配置 更新邮箱配置', 0, '2022-03-10 10:57:20.834000', 0, '2022-03-10 10:57:20.834000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047554600962, 'UserInfoController#existsPhone', '手机号是否被使用', 'GET', '/user/existsPhone', '用户管理', b'1', b'1', '用户管理 手机号是否被使用', 0, '2022-03-10 10:57:20.834000', 0, '2022-03-10 10:57:20.834000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047554600963, 'RolePathController#findIdsByRole', '根据角色id获取关联权限id', 'GET', '/role/path/findIdsByRole', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 根据角色id获取关联权限id', 0, '2022-03-10 10:57:20.834000', 0, '2022-03-10 10:57:20.834000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047554600964, 'DictionaryController#findById', '根据id获取', 'GET', '/dict/findById', '字典', b'1', b'1', '字典 根据id获取', 0, '2022-03-10 10:57:20.834000', 0, '2022-03-10 10:57:20.834000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047558795264, 'PaymentController#page', '分页查询', 'GET', '/payment/page', '支付记录', b'1', b'1', '支付记录 分页查询', 0, '2022-03-10 10:57:20.835000', 0, '2022-03-10 10:57:20.835000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047558795265, 'MultipleOpenApiWebMvcResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs/{group}', 'MultipleOpenApiWebMvcResource', b'1', b'1', 'MultipleOpenApiWebMvcResource openapiJson', 0, '2022-03-10 10:57:20.835000', 0, '2022-03-10 10:57:20.835000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047558795266, 'DataScopeController#findUsersByDataScopeId', '获取关联的用户列表', 'GET', '/data/scope/findUsersByDataScopeId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取关联的用户列表', 0, '2022-03-10 10:57:20.835000', 0, '2022-03-10 10:57:20.835000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047558795267, 'MailConfigController#add', '增加新邮箱配置', 'POST', '/mail/config/add', '邮箱配置', b'1', b'1', '邮箱配置 增加新邮箱配置', 0, '2022-03-10 10:57:20.835000', 0, '2022-03-10 10:57:20.835000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047562989568, 'UserInfoController#getLoginAfterUserInfo', '登录后获取用户信息', 'GET', '/user/getLoginAfterUserInfo', '用户管理', b'1', b'1', '用户管理 登录后获取用户信息', 0, '2022-03-10 10:57:20.836000', 0, '2022-03-10 10:57:20.836000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047562989569, 'OpenApiWebMvcResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs', 'OpenApiWebMvcResource', b'1', b'1', 'OpenApiWebMvcResource openapiJson', 0, '2022-03-10 10:57:20.836000', 0, '2022-03-10 10:57:20.836000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047562989570, 'OnlineUserController#page', '分页', 'GET', '/user/online/page', '在线用户', b'1', b'1', '在线用户 分页', 0, '2022-03-10 10:57:20.836000', 0, '2022-03-10 10:57:20.836000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047562989571, 'TestController#sequence', '发号器', 'GET', '/test/sequence', '测试控制器', b'1', b'1', '测试控制器 发号器', 0, '2022-03-10 10:57:20.836000', 0, '2022-03-10 10:57:20.836000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047562989572, 'CategoryController#update', '更新类目', 'POST', '/category/update', '类目管理', b'1', b'1', '类目管理 更新类目', 0, '2022-03-10 10:57:20.836000', 0, '2022-03-10 10:57:20.837000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047567183872, 'RefundRecordController#page', '分页', 'GET', '/pay/refund/page', '退款记录', b'1', b'1', '退款记录 分页', 0, '2022-03-10 10:57:20.837000', 0, '2022-03-10 10:57:20.837000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047567183873, 'StrategyRegisterController#delete', '删除', 'DELETE', '/strategy/register/del/{id}', '策略注册', b'1', b'1', '策略注册 删除', 0, '2022-03-10 10:57:20.837000', 0, '2022-03-10 10:57:20.837000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047567183874, 'CouponController#obtainCoupon', '领取优惠券', 'POST', '/coupon/obtainCoupon', '优惠券', b'1', b'1', '优惠券 领取优惠券', 0, '2022-03-10 10:57:20.837000', 0, '2022-03-10 10:57:20.837000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047567183875, 'UserAdminController#page', '分页', 'GET', '/user/admin/page', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 分页', 0, '2022-03-10 10:57:20.837000', 0, '2022-03-10 10:57:20.837000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047571378176, 'DictionaryController#update', '更新', 'POST', '/dict/update', '字典', b'1', b'1', '字典 更新', 0, '2022-03-10 10:57:20.838000', 0, '2022-03-10 10:57:20.838000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047571378177, 'DeptController#add', '添加', 'POST', '/dept/add', '部门管理', b'1', b'1', '部门管理 添加', 0, '2022-03-10 10:57:20.838000', 0, '2022-03-10 10:57:20.838000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047571378178, 'TestController#sequenceZdy', '发号器自定义', 'GET', '/test/sequenceZdy', '测试控制器', b'1', b'1', '测试控制器 发号器自定义', 0, '2022-03-10 10:57:20.838000', 0, '2022-03-10 10:57:20.838000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047571378179, 'OnlineUserController#findBySessionId', '获取单条', 'GET', '/user/online/findBySessionId', '在线用户', b'1', b'1', '在线用户 获取单条', 0, '2022-03-10 10:57:20.838000', 0, '2022-03-10 10:57:20.838000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047575572480, 'UserAdminController#restartPassword', '重置密码', 'POST', '/user/admin/restartPassword', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 重置密码', 0, '2022-03-10 10:57:20.839000', 0, '2022-03-10 10:57:20.839000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047575572481, 'CouponController#getByIds', '批量优惠券', 'GET', '/coupon/getById', '优惠券', b'1', b'1', '优惠券 批量优惠券', 0, '2022-03-10 10:57:20.839000', 0, '2022-03-10 10:57:20.839000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047575572482, 'DictionaryItemController#add', '添加字典项（返回字典项对象）', 'POST', '/dict/item/add', '字典项', b'1', b'1', '字典项 添加字典项（返回字典项对象）', 0, '2022-03-10 10:57:20.839000', 0, '2022-03-10 10:57:20.839000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047575572483, 'ClientController#page', '分页查询终端', 'GET', '/client/page', '终端管理', b'1', b'1', '终端管理 分页查询终端', 0, '2022-03-10 10:57:20.839000', 0, '2022-03-10 10:57:20.839000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047575572484, 'GoodsController#findByCategory', '按类目查询', 'GET', '/goods/findByCategory', '商品管理', b'1', b'1', '商品管理 按类目查询', 0, '2022-03-10 10:57:20.839000', 0, '2022-03-10 10:57:20.839000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047579766784, 'PermPathController#delete', '删除权限', 'POST', '/perm/path/delete', '请求权限资源', b'1', b'1', '请求权限资源 删除权限', 0, '2022-03-10 10:57:20.840000', 0, '2022-03-10 10:57:20.840000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047579766785, 'SiteMessageController#findById', '消息详情', 'GET', '/site/message/findById', '站内信', b'1', b'1', '站内信 消息详情', 0, '2022-03-10 10:57:20.840000', 0, '2022-03-10 10:57:20.840000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047579766786, 'DingRobotConfigController#existsByCode', '编码是否被使用', 'GET', '/ding/robot/config/existsByCode', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 编码是否被使用', 0, '2022-03-10 10:57:20.840000', 0, '2022-03-10 10:57:20.840000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047579766787, 'SystemParamController#existsByKey', '判断编码是否存在', 'GET', '/system/param/existsByKey', '系统参数', b'1', b'1', '系统参数 判断编码是否存在', 0, '2022-03-10 10:57:20.840000', 0, '2022-03-10 10:57:20.840000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047583961088, 'UserAdminController#unlock', '解锁用户', 'POST', '/user/admin/unlock', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 解锁用户', 0, '2022-03-10 10:57:20.841000', 0, '2022-03-10 10:57:20.841000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047583961089, 'CaptchaController#imgCaptcha', '获取图片验证码', 'POST', '/captcha/imgCaptcha', '验证码服务', b'1', b'1', '验证码服务 获取图片验证码', 0, '2022-03-10 10:57:20.841000', 0, '2022-03-10 10:57:20.841000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047583961090, 'OrderFindController#findOrderSkuIds', '查询订单包含的skuIds', 'GET', '/order/findOrderSkuIds', '订单查询', b'1', b'1', '订单查询 查询订单包含的skuIds', 0, '2022-03-10 10:57:20.841000', 0, '2022-03-10 10:57:20.841000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047583961091, 'MessageTemplateController#rendering', '渲染模板', 'GET', '/message/template/rendering', '消息模板', b'1', b'1', '消息模板 渲染模板', 0, '2022-03-10 10:57:20.841000', 0, '2022-03-10 10:57:20.841000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047588155392, 'MailSendController#sentSimpleMail', '发送简单邮件', 'POST', '/mail/send/sentSimpleMail', '邮件发送', b'1', b'1', '邮件发送 发送简单邮件', 0, '2022-03-10 10:57:20.842000', 0, '2022-03-10 10:57:20.842000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047588155393, 'ActivityController#findAll', '查询活动', 'GET', '/activity/findAll', '活动', b'1', b'1', '活动 查询活动', 0, '2022-03-10 10:57:20.842000', 0, '2022-03-10 10:57:20.842000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047592349696, 'SiteMessageController#getReceiveCount', '获取接收消息条数', 'GET', '/site/message/getReceiveCount', '站内信', b'1', b'1', '站内信 获取接收消息条数', 0, '2022-03-10 10:57:20.843000', 0, '2022-03-10 10:57:20.843000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047592349697, 'RoleController#existsByName', '名称是否被使用(不包含自己)', 'GET', '/role/existsByNameNotId', '角色管理', b'1', b'1', '角色管理 名称是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.843000', 0, '2022-03-10 10:57:20.843000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047592349698, 'RoleController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/role/existsByCodeNotId', '角色管理', b'1', b'1', '角色管理 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.843000', 0, '2022-03-10 10:57:20.843000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047596544000, 'AggregateController#createAggregatePay', '创建聚合支付', 'POST', '/aggregate/createAggregatePay', '聚合支付', b'1', b'1', '聚合支付 创建聚合支付', 0, '2022-03-10 10:57:20.844000', 0, '2022-03-10 10:57:20.844000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047596544001, 'UserAdminController#add', '添加用户', 'POST', '/user/admin/add', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 添加用户', 0, '2022-03-10 10:57:20.844000', 0, '2022-03-10 10:57:20.844000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047596544002, 'DeptController#delete', '普通删除', 'DELETE', '/dept/delete', '部门管理', b'1', b'1', '部门管理 普通删除', 0, '2022-03-10 10:57:20.844000', 0, '2022-03-10 10:57:20.844000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047596544003, 'DataPermDemoController#add', '添加', 'POST', '/demo/data/perm/add', '数据权限演示', b'1', b'1', '数据权限演示 添加', 0, '2022-03-10 10:57:20.844000', 0, '2022-03-10 10:57:20.844000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047600738304, 'PermPathController#findById', '获取详情', 'GET', '/perm/path/findById', '请求权限资源', b'1', b'1', '请求权限资源 获取详情', 0, '2022-03-10 10:57:20.845000', 0, '2022-03-10 10:57:20.845000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047600738305, 'WalletController#getWalletByUserId', '根据用户ID查询钱包', 'GET', '/wallet/getByUserId', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据用户ID查询钱包', 0, '2022-03-10 10:57:20.845000', 0, '2022-03-10 10:57:20.845000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047600738306, 'RolePathController#save', '保存角色权限关联关系', 'POST', '/role/path/save', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 保存角色权限关联关系', 0, '2022-03-10 10:57:20.845000', 0, '2022-03-10 10:57:20.845000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047600738307, 'RoleController#existsByName', '名称是否被使用', 'GET', '/role/existsByName', '角色管理', b'1', b'1', '角色管理 名称是否被使用', 0, '2022-03-10 10:57:20.845000', 0, '2022-03-10 10:57:20.845000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047604932608, 'DataScopeController#existsByName', '名称是否被使用(不包含自己)', 'GET', '/data/scope/existsByNameNotId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 名称是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.846000', 0, '2022-03-10 10:57:20.846000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047604932609, 'PermMenuController#resourceList', '资源列表', 'GET', '/perm/menu/resourceList', '菜单权限资源', b'1', b'1', '菜单权限资源 资源列表', 0, '2022-03-10 10:57:20.846000', 0, '2022-03-10 10:57:20.846000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047604932610, 'DatabaseTableController#findAll', '表列表', 'GET', '/gen/table/findAll', '数据库表信息', b'1', b'1', '数据库表信息 表列表', 0, '2022-03-10 10:57:20.846000', 0, '2022-03-10 10:57:20.846000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047604932611, 'UserInfoController#getUserSecurityInfo', '查询用户安全信息', 'GET', '/user/getUserSecurityInfo', '用户管理', b'1', b'1', '用户管理 查询用户安全信息', 0, '2022-03-10 10:57:20.846000', 0, '2022-03-10 10:57:20.846000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047604932612, 'OrderFindController#findPayTimeoutOrderIdsByType', '获取指定类型超时订单的id集合', 'GET', '/order/findPayTimeoutOrderIdsByType', '订单查询', b'1', b'1', '订单查询 获取指定类型超时订单的id集合', 0, '2022-03-10 10:57:20.846000', 0, '2022-03-10 10:57:20.846000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047609126912, 'SiteMessageController#pageBySender', '发送消息分页', 'GET', '/site/message/pageBySender', '站内信', b'1', b'1', '站内信 发送消息分页', 0, '2022-03-10 10:57:20.847000', 0, '2022-03-10 10:57:20.847000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047609126913, 'QuartzJobController#delete', '删除', 'DELETE', '/quartz/delete', '定时任务', b'1', b'1', '定时任务 删除', 0, '2022-03-10 10:57:20.847000', 0, '2022-03-10 10:57:20.847000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047609126914, 'QuartzJobController#execute', '立即执行', 'POST', '/quartz/execute', '定时任务', b'1', b'1', '定时任务 立即执行', 0, '2022-03-10 10:57:20.847000', 0, '2022-03-10 10:57:20.847000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047609126915, 'StrategyController#findAll', '查询全部策略', 'GET', '/strategy/findAll', '策略定义', b'1', b'1', '策略定义 查询全部策略', 0, '2022-03-10 10:57:20.847000', 0, '2022-03-10 10:57:20.847000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047613321216, 'PaymentController#findById', '根据id获取', 'GET', '/payment/findById', '支付记录', b'1', b'1', '支付记录 根据id获取', 0, '2022-03-10 10:57:20.848000', 0, '2022-03-10 10:57:20.848000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047613321217, 'OrderOperateController#paidOrderState', '付款成功状态变更', 'POST', '/order/paidOrderState', '订单操作', b'1', b'1', '订单操作 付款成功状态变更', 0, '2022-03-10 10:57:20.848000', 0, '2022-03-10 10:57:20.848000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047613321218, 'WeChatPayConfigController#clearActivity', '清除指定的微信支付配置', 'POST', '/wechat/pay/clearActivity', '微信支付', b'1', b'1', '微信支付 清除指定的微信支付配置', 0, '2022-03-10 10:57:20.848000', 0, '2022-03-10 10:57:20.848000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047613321219, 'SystemParamController#existsByKeyNotId', '判断编码是否存在(不包含自己)', 'GET', '/system/param/existsByKeyNotId', '系统参数', b'1', b'1', '系统参数 判断编码是否存在(不包含自己)', 0, '2022-03-10 10:57:20.848000', 0, '2022-03-10 10:57:20.848000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047617515520, 'DictionaryItemController#findByDictionaryId', '查询指定字典ID下的所有字典项', 'GET', '/dict/item/findByDictionaryId', '字典项', b'1', b'1', '字典项 查询指定字典ID下的所有字典项', 0, '2022-03-10 10:57:20.849000', 0, '2022-03-10 10:57:20.849000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047617515521, 'CouponController#lockByIds', '批量锁定优惠券', 'POST', '/coupon/lockByIds', '优惠券', b'1', b'1', '优惠券 批量锁定优惠券', 0, '2022-03-10 10:57:20.849000', 0, '2022-03-10 10:57:20.849000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047617515522, 'ClientController#findAll', '查询所有的终端', 'GET', '/client/findAll', '终端管理', b'1', b'1', '终端管理 查询所有的终端', 0, '2022-03-10 10:57:20.849000', 0, '2022-03-10 10:57:20.849000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047621709824, 'QuartzJobController#judgeJobClass', '判断是否是定时任务类', 'GET', '/quartz/judgeJobClass', '定时任务', b'1', b'1', '定时任务 判断是否是定时任务类', 0, '2022-03-10 10:57:20.850000', 0, '2022-03-10 10:57:20.850000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047621709825, 'UserRoleController#findRoleIdsByUser', '根据用户ID获取到角色id集合', 'GET', '/user/role/findRoleIdsByUser', '用户角色管理', b'1', b'1', '用户角色管理 根据用户ID获取到角色id集合', 0, '2022-03-10 10:57:20.850000', 0, '2022-03-10 10:57:20.850000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047621709826, 'GoodsSkuController#findBySkuIds', '获取sku集合', 'GET', '/sku/findBySkuIds', 'sku操作', b'1', b'1', 'sku操作 获取sku集合', 0, '2022-03-10 10:57:20.850000', 0, '2022-03-10 10:57:20.850000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047625904128, 'StrategyController#findConfigs', '获取参数配置', 'GET', '/strategy/findConfigs', '策略定义', b'1', b'1', '策略定义 获取参数配置', 0, '2022-03-10 10:57:20.851000', 0, '2022-03-10 10:57:20.851000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047625904129, 'PaymentController#findPayTypeInfoByBusinessId', '根据businessId获取订单支付方式', 'GET', '/payment/findPayTypeInfoByBusinessId', '支付记录', b'1', b'1', '支付记录 根据businessId获取订单支付方式', 0, '2022-03-10 10:57:20.851000', 0, '2022-03-10 10:57:20.851000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047625904130, 'MailConfigController#setUpActivity', '设置启用的邮箱配置', 'POST', '/mail/config/setUpActivity', '邮箱配置', b'1', b'1', '邮箱配置 设置启用的邮箱配置', 0, '2022-03-10 10:57:20.851000', 0, '2022-03-10 10:57:20.851000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047625904131, 'AlipayConfigController#page', '分页', 'GET', '/alipay/page', '支付宝配置', b'1', b'1', '支付宝配置 分页', 0, '2022-03-10 10:57:20.851000', 0, '2022-03-10 10:57:20.851000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047625904132, 'RoleController#existsByCode', '编码是否被使用', 'GET', '/role/existsByCode', '角色管理', b'1', b'1', '角色管理 编码是否被使用', 0, '2022-03-10 10:57:20.851000', 0, '2022-03-10 10:57:20.851000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047630098432, 'LoginLogController#page', '分页', 'GET', '/log/login/page', '登录日志', b'1', b'1', '登录日志 分页', 0, '2022-03-10 10:57:20.852000', 0, '2022-03-10 10:57:20.852000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047630098433, 'ClientController#update', '修改终端（返回终端对象）', 'POST', '/client/update', '终端管理', b'1', b'1', '终端管理 修改终端（返回终端对象）', 0, '2022-03-10 10:57:20.852000', 0, '2022-03-10 10:57:20.852000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047630098434, 'UserInfoController#getUserBaseInfo', '查询用户基础信息', 'GET', '/user/getUserBaseInfo', '用户管理', b'1', b'1', '用户管理 查询用户基础信息', 0, '2022-03-10 10:57:20.852000', 0, '2022-03-10 10:57:20.852000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047630098435, 'PermMenuController#update', '修改菜单权限', 'POST', '/perm/menu/update', '菜单权限资源', b'1', b'1', '菜单权限资源 修改菜单权限', 0, '2022-03-10 10:57:20.852000', 0, '2022-03-10 10:57:20.852000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047630098436, 'ClientController#superPage', '超级查询', 'POST', '/client/superPage', '终端管理', b'1', b'1', '终端管理 超级查询', 0, '2022-03-10 10:57:20.852000', 0, '2022-03-10 10:57:20.852000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047634292736, 'DictionaryItemController#delete', '删除字典项', 'DELETE', '/dict/item/delete', '字典项', b'1', b'1', '字典项 删除字典项', 0, '2022-03-10 10:57:20.853000', 0, '2022-03-10 10:57:20.853000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047634292737, 'DictionaryController#delete', '根据id删除', 'DELETE', '/dict/delete', '字典', b'1', b'1', '字典 根据id删除', 0, '2022-03-10 10:57:20.853000', 0, '2022-03-10 10:57:20.853000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047634292738, 'UserInfoController#existsUsername', '账号是否被使用(不包含自己)', 'GET', '/user/existsUsernameNotId', '用户管理', b'1', b'1', '用户管理 账号是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.853000', 0, '2022-03-10 10:57:20.853000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047634292739, 'PermPathController#page', '权限分页', 'GET', '/perm/path/page', '请求权限资源', b'1', b'1', '请求权限资源 权限分页', 0, '2022-03-10 10:57:20.853000', 0, '2022-03-10 10:57:20.853000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047634292740, 'DeptController#update', '更新', 'POST', '/dept/update', '部门管理', b'1', b'1', '部门管理 更新', 0, '2022-03-10 10:57:20.853000', 0, '2022-03-10 10:57:20.853000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047638487040, 'QuartzJobController#update', '更新', 'POST', '/quartz/update', '定时任务', b'1', b'1', '定时任务 更新', 0, '2022-03-10 10:57:20.854000', 0, '2022-03-10 10:57:20.854000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047638487041, 'CodeGeneratorController#genCodeZip', '下载生成代码', 'POST', '/gen/code/genCodeZip', '代码生成', b'1', b'1', '代码生成 下载生成代码', 0, '2022-03-10 10:57:20.854000', 0, '2022-03-10 10:57:20.854000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047638487042, 'WeChatPayConfigController#update', '更新', 'POST', '/wechat/pay/update', '微信支付', b'1', b'1', '微信支付 更新', 0, '2022-03-10 10:57:20.854000', 0, '2022-03-10 10:57:20.854000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047638487043, 'SuperQueryDemoController#findById', '通过ID查询', 'GET', '/demo/super/query/findById', '超级查询演示', b'1', b'1', '超级查询演示 通过ID查询', 0, '2022-03-10 10:57:20.854000', 0, '2022-03-10 10:57:20.854000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047642681344, 'OrderFindController#page', '订单列表 分页', 'GET', '/order/page', '订单查询', b'1', b'1', '订单查询 订单列表 分页', 0, '2022-03-10 10:57:20.855000', 0, '2022-03-10 10:57:20.855000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047642681345, 'SuperQueryDemoController#superQuery', '超级查询(分页)', 'POST', '/demo/super/query/superQuery', '超级查询演示', b'1', b'1', '超级查询演示 超级查询(分页)', 0, '2022-03-10 10:57:20.855000', 0, '2022-03-10 10:57:20.855000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047642681346, 'PayCallbackController#wechat', '微信支付回调', 'POST', '/pay/callback/wechat', '支付回调', b'1', b'1', '支付回调 微信支付回调', 0, '2022-03-10 10:57:20.855000', 0, '2022-03-10 10:57:20.855000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047642681347, 'RoleMenuController#findMenuIds', '获取权限菜单id列表,不包含资源权限', 'GET', '/role/menu/findMenuIds', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 获取权限菜单id列表,不包含资源权限', 0, '2022-03-10 10:57:20.855000', 0, '2022-03-10 10:57:20.855000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047642681348, 'UserInfoController#existsUsername', '账号是否被使用', 'GET', '/user/existsUsername', '用户管理', b'1', b'1', '用户管理 账号是否被使用', 0, '2022-03-10 10:57:20.855000', 0, '2022-03-10 10:57:20.855000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047646875648, 'ClientController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/client/existsByCodeNotId', '终端管理', b'1', b'1', '终端管理 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.856000', 0, '2022-03-10 10:57:20.856000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047646875649, 'TestController#Idempotent', '幂等演示', 'GET', '/test/idempotent', '测试控制器', b'1', b'1', '测试控制器 幂等演示', 0, '2022-03-10 10:57:20.856000', 0, '2022-03-10 10:57:20.856000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047646875650, 'PermMenuController#existsByPermCode', '编码是否被使用', 'GET', '/perm/menu/existsByPermCode', '菜单权限资源', b'1', b'1', '菜单权限资源 编码是否被使用', 0, '2022-03-10 10:57:20.856000', 0, '2022-03-10 10:57:20.856000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047646875651, 'OrderRecommendController#findActivity', '查询适用的活动', 'POST', '/order/recommend/findActivity', '订单优惠选择与推荐', b'1', b'1', '订单优惠选择与推荐 查询适用的活动', 0, '2022-03-10 10:57:20.856000', 0, '2022-03-10 10:57:20.856000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047651069952, 'AlipayConfigController#add', '添加', 'POST', '/alipay/add', '支付宝配置', b'1', b'1', '支付宝配置 添加', 0, '2022-03-10 10:57:20.857000', 0, '2022-03-10 10:57:20.857000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047651069953, 'UserInfoController#existsEmail', '邮箱是否被使用', 'GET', '/user/existsEmail', '用户管理', b'1', b'1', '用户管理 邮箱是否被使用', 0, '2022-03-10 10:57:20.857000', 0, '2022-03-10 10:57:20.857000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047651069954, 'MailConfigController#delete', '删除', 'DELETE', '/mail/config/delete', '邮箱配置', b'1', b'1', '邮箱配置 删除', 0, '2022-03-10 10:57:20.857000', 0, '2022-03-10 10:57:20.857000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047655264256, 'InventoryController#lockInventory', '锁定库存', 'POST', '/inventory/lockInventory', '库存操作', b'1', b'1', '库存操作 锁定库存', 0, '2022-03-10 10:57:20.858000', 0, '2022-03-10 10:57:20.858000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047655264257, 'UserDataScopeController#findAllByUser', '根据用户ID获取到部门集合', 'GET', '/user/data/scope/findAllByUser', '用户数据权限配置', b'1', b'1', '用户数据权限配置 根据用户ID获取到部门集合', 0, '2022-03-10 10:57:20.858000', 0, '2022-03-10 10:57:20.858000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047655264258, 'SuperQueryDemoController#delete', '删除', 'DELETE', '/demo/super/query/delete', '超级查询演示', b'1', b'1', '超级查询演示 删除', 0, '2022-03-10 10:57:20.858000', 0, '2022-03-10 10:57:20.858000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047663652864, 'PermMenuController#delete', '删除', 'DELETE', '/perm/menu/delete', '菜单权限资源', b'1', b'1', '菜单权限资源 删除', 0, '2022-03-10 10:57:20.860000', 0, '2022-03-10 10:57:20.860000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047667847168, 'DingRobotSendController#sendMarkdown', '测试发送Markdown', 'POST', '/ding/robot/send/markdown', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送Markdown', 0, '2022-03-10 10:57:20.861000', 0, '2022-03-10 10:57:20.861000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047667847169, 'WeChatPayConfigController#page', '分页', 'GET', '/wechat/pay/page', '微信支付', b'1', b'1', '微信支付 分页', 0, '2022-03-10 10:57:20.861000', 0, '2022-03-10 10:57:20.861000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047667847170, 'TestLogController#testDataVersion', '测试数据版本日志', 'POST', '/testDataVersion', '测试日志', b'1', b'1', '测试日志 测试数据版本日志', 0, '2022-03-10 10:57:20.861000', 0, '2022-03-10 10:57:20.861000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047667847171, 'MessageTemplateController#findById', '获取详情', 'GET', '/message/template/findById', '消息模板', b'1', b'1', '消息模板 获取详情', 0, '2022-03-10 10:57:20.861000', 0, '2022-03-10 10:57:20.861000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047672041472, 'TokenEndpoint#login', '普通登录', 'POST', '/token/login', '认证相关', b'1', b'1', '认证相关 普通登录', 0, '2022-03-10 10:57:20.862000', 0, '2022-03-10 10:57:20.862000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047672041473, 'PayController#refundByBusinessId', '全额退款(业务id)', 'POST', '/uni_pay/refundByBusinessId', '统一支付', b'1', b'1', '统一支付 全额退款(业务id)', 0, '2022-03-10 10:57:20.862000', 0, '2022-03-10 10:57:20.862000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047672041474, 'MessageTemplateController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/message/template/existsByCodeNotId', '消息模板', b'1', b'1', '消息模板 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.862000', 0, '2022-03-10 10:57:20.862000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047672041475, 'MailConfigController#page', '分页', 'GET', '/mail/config/page', '邮箱配置', b'1', b'1', '邮箱配置 分页', 0, '2022-03-10 10:57:20.862000', 0, '2022-03-10 10:57:20.862000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047676235776, 'UserAdminController#update', '修改用户', 'POST', '/user/admin/update', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 修改用户', 0, '2022-03-10 10:57:20.863000', 0, '2022-03-10 10:57:20.863000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047676235777, 'FIleUpLoadController#getFileDownloadUrl', '获取文件下载地址', 'GET', '/file/getFileDownloadUrl', '文件上传', b'1', b'1', '文件上传 获取文件下载地址', 0, '2022-03-10 10:57:20.863000', 0, '2022-03-10 10:57:20.863000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047676235778, 'MailConfigController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/mail/config/existsByCodeNotId', '邮箱配置', b'1', b'1', '邮箱配置 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.863000', 0, '2022-03-10 10:57:20.863000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047676235779, 'WeChatPayConfigController#setUpActivity', '设置启用的微信支付配置', 'POST', '/wechat/pay/setUpActivity', '微信支付', b'1', b'1', '微信支付 设置启用的微信支付配置', 0, '2022-03-10 10:57:20.863000', 0, '2022-03-10 10:57:20.863000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047680430080, 'InventoryController#unlockInventoryWithoutToken', '解锁没有令牌的库存', 'POST', '/inventory/unlockInventoryWithoutToken', '库存操作', b'1', b'1', '库存操作 解锁没有令牌的库存', 0, '2022-03-10 10:57:20.864000', 0, '2022-03-10 10:57:20.864000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047680430081, 'SuperQueryDemoController#add', '添加', 'POST', '/demo/super/query/add', '超级查询演示', b'1', b'1', '超级查询演示 添加', 0, '2022-03-10 10:57:20.864000', 0, '2022-03-10 10:57:20.864000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047680430082, 'SystemParamController#findById', '获取单条', 'GET', '/system/param/findById', '系统参数', b'1', b'1', '系统参数 获取单条', 0, '2022-03-10 10:57:20.864000', 0, '2022-03-10 10:57:20.864000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047680430083, 'CodeGeneratorController#codeGenPreview', '预览生成代码', 'POST', '/gen/code/codeGenPreview', '代码生成', b'1', b'1', '代码生成 预览生成代码', 0, '2022-03-10 10:57:20.865000', 0, '2022-03-10 10:57:20.865000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047684624384, 'UserInfoController#existsPhone', '手机号是否被使用(不包含自己)', 'GET', '/user/existsPhoneNotId', '用户管理', b'1', b'1', '用户管理 手机号是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.865000', 0, '2022-03-10 10:57:20.865000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047684624385, 'DingRobotConfigController#update', '修改机器人配置', 'POST', '/ding/robot/config/update', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 修改机器人配置', 0, '2022-03-10 10:57:20.865000', 0, '2022-03-10 10:57:20.865000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047684624386, 'SwaggerWelcomeWebMvc#redirectToUi', 'redirectToUi', 'GET', '/swagger-ui.html', 'SwaggerWelcomeWebMvc', b'1', b'1', 'SwaggerWelcomeWebMvc redirectToUi', 0, '2022-03-10 10:57:20.865000', 0, '2022-03-10 10:57:20.865000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047684624387, 'WalletController#getWallet', '根据钱包ID查询钱包', 'GET', '/wallet/getById', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据钱包ID查询钱包', 0, '2022-03-10 10:57:20.865000', 0, '2022-03-10 10:57:20.865000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047688818688, 'OnlineUserController#logoutByUserId', '踢人下线', 'POST', '/user/online/logoutByUserId', '在线用户', b'1', b'1', '在线用户 踢人下线', 0, '2022-03-10 10:57:20.866000', 0, '2022-03-10 10:57:20.866000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047688818689, 'MessageTemplateController#page', '分页', 'GET', '/message/template/page', '消息模板', b'1', b'1', '消息模板 分页', 0, '2022-03-10 10:57:20.866000', 0, '2022-03-10 10:57:20.866000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047688818690, 'FIleUpLoadController#getFilePreviewUrl', '获取文件预览地址', 'GET', '/file/getFilePreviewUrl', '文件上传', b'1', b'1', '文件上传 获取文件预览地址', 0, '2022-03-10 10:57:20.866000', 0, '2022-03-10 10:57:20.866000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047688818691, 'MailConfigController#findAll', '获取所有邮箱配置', 'GET', '/mail/config/findAll', '邮箱配置', b'1', b'1', '邮箱配置 获取所有邮箱配置', 0, '2022-03-10 10:57:20.866000', 0, '2022-03-10 10:57:20.866000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047693012992, 'MessageTemplateController#update', '更新', 'POST', '/message/template/update', '消息模板', b'1', b'1', '消息模板 更新', 0, '2022-03-10 10:57:20.867000', 0, '2022-03-10 10:57:20.867000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047693012993, 'DictionaryController#existsByCode', '编码是否被使用', 'GET', '/dict/existsByCode', '字典', b'1', b'1', '字典 编码是否被使用', 0, '2022-03-10 10:57:20.867000', 0, '2022-03-10 10:57:20.867000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047693012994, 'RoleMenuController#getPermissions', '获取菜单和资源权限', 'GET', '/role/menu/getPermissions', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 获取菜单和资源权限', 0, '2022-03-10 10:57:20.867000', 0, '2022-03-10 10:57:20.867000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047693012995, 'DataScopeController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/data/scope/existsByCodeNotId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.867000', 0, '2022-03-10 10:57:20.867000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047693012996, 'DataScopeController#existsByName', '名称是否被使用', 'GET', '/data/scope/existsByName', '数据范围权限配置', b'1', b'1', '数据范围权限配置 名称是否被使用', 0, '2022-03-10 10:57:20.867000', 0, '2022-03-10 10:57:20.867000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047693012997, 'UserAdminController#lock', '锁定用户', 'POST', '/user/admin/lock', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 锁定用户', 0, '2022-03-10 10:57:20.867000', 0, '2022-03-10 10:57:20.867000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047697207296, 'DingRobotConfigController#findAll', '查询全部', 'GET', '/ding/robot/config/findAll', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 查询全部', 0, '2022-03-10 10:57:20.868000', 0, '2022-03-10 10:57:20.868000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047697207297, 'DataScopeController#findAll', '查询全部', 'GET', '/data/scope/findAll', '数据范围权限配置', b'1', b'1', '数据范围权限配置 查询全部', 0, '2022-03-10 10:57:20.868000', 0, '2022-03-10 10:57:20.868000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047697207298, 'DataPermDemoController#update', '修改', 'POST', '/demo/data/perm/update', '数据权限演示', b'1', b'1', '数据权限演示 修改', 0, '2022-03-10 10:57:20.868000', 0, '2022-03-10 10:57:20.868000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047697207299, 'DictionaryItemController#findAll', '获取全部字典项', 'GET', '/dict/item/findAll', '字典项', b'1', b'1', '字典项 获取全部字典项', 0, '2022-03-10 10:57:20.868000', 0, '2022-03-10 10:57:20.868000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047697207300, 'UserDataScopeController#saveAssign', '给用户分配权限', 'POST', '/user/data/scope/saveAssign', '用户数据权限配置', b'1', b'1', '用户数据权限配置 给用户分配权限', 0, '2022-03-10 10:57:20.868000', 0, '2022-03-10 10:57:20.868000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047701401600, 'UserInfoController#existsEmail', '邮箱是否被使用(不包含自己)', 'GET', '/user/existsEmailNotId', '用户管理', b'1', b'1', '用户管理 邮箱是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.869000', 0, '2022-03-10 10:57:20.869000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047701401601, 'AlipayConfigController#findPayWayList', '支付宝支持支付方式', 'GET', '/alipay/findPayWayList', '支付宝配置', b'1', b'1', '支付宝配置 支付宝支持支付方式', 0, '2022-03-10 10:57:20.869000', 0, '2022-03-10 10:57:20.869000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047701401602, 'DictionaryItemController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/dict/item/existsByCodeNotId', '字典项', b'1', b'1', '字典项 编码是否被使用(不包含自己)', 0, '2022-03-10 10:57:20.869000', 0, '2022-03-10 10:57:20.869000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047701401603, 'PermMenuController#findById', '根据id查询', 'GET', '/perm/menu/findById', '菜单权限资源', b'1', b'1', '菜单权限资源 根据id查询', 0, '2022-03-10 10:57:20.869000', 0, '2022-03-10 10:57:20.869000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047701401604, 'UserDataScopeController#findDataScopeIdsByUser', '根据用户ID获取到部门id集合', 'GET', '/user/data/scope/findIdsByUser', '用户数据权限配置', b'1', b'1', '用户数据权限配置 根据用户ID获取到部门id集合', 0, '2022-03-10 10:57:20.869000', 0, '2022-03-10 10:57:20.869000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047701401605, 'SwaggerConfigResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs/swagger-config', 'SwaggerConfigResource', b'1', b'1', 'SwaggerConfigResource openapiJson', 0, '2022-03-10 10:57:20.870000', 0, '2022-03-10 10:57:20.870000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047705595904, 'QuartzJobController#findById', '单条', 'GET', '/quartz/findById', '定时任务', b'1', b'1', '定时任务 单条', 0, '2022-03-10 10:57:20.870000', 0, '2022-03-10 10:57:20.870000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047705595905, 'WeChatPayConfigController#findPayWayList', '微信支持支付方式', 'GET', '/wechat/pay/findPayWayList', '微信支付', b'1', b'1', '微信支付 微信支持支付方式', 0, '2022-03-10 10:57:20.870000', 0, '2022-03-10 10:57:20.870000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047705595906, 'UserInfoController#updateBaseInfo', '修改用户基础信息', 'POST', '/user/updateBaseInfo', '用户管理', b'1', b'1', '用户管理 修改用户基础信息', 0, '2022-03-10 10:57:20.870000', 0, '2022-03-10 10:57:20.870000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047705595907, 'PermPathController#add', '添加权限', 'POST', '/perm/path/add', '请求权限资源', b'1', b'1', '请求权限资源 添加权限', 0, '2022-03-10 10:57:20.870000', 0, '2022-03-10 10:57:20.870000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047705595908, 'GoodsController#findById', '查询包含商品信息', 'GET', '/goods/findById', '商品管理', b'1', b'1', '商品管理 查询包含商品信息', 0, '2022-03-10 10:57:20.870000', 0, '2022-03-10 10:57:20.870000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047709790208, 'DictionaryItemController#pageByDictionaryId', '分页查询指定字典下的字典项', 'GET', '/dict/item/pageByDictionaryId', '字典项', b'1', b'1', '字典项 分页查询指定字典下的字典项', 0, '2022-03-10 10:57:20.871000', 0, '2022-03-10 10:57:20.871000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047709790209, 'PermPathController#syncSystem', '同步系统请求资源', 'POST', '/perm/path/syncSystem', '请求权限资源', b'1', b'1', '请求权限资源 同步系统请求资源', 0, '2022-03-10 10:57:20.871000', 0, '2022-03-10 10:57:20.871000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047709790210, 'OrderRecommendController#findCoupon', '查询适用的优惠券', 'POST', '/order/recommend/findCoupon', '订单优惠选择与推荐', b'1', b'1', '订单优惠选择与推荐 查询适用的优惠券', 0, '2022-03-10 10:57:20.871000', 0, '2022-03-10 10:57:20.871000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047709790211, 'ActivityController#add', '注册活动', 'POST', '/activity/add', '活动', b'1', b'1', '活动 注册活动', 0, '2022-03-10 10:57:20.871000', 0, '2022-03-10 10:57:20.871000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047709790212, 'MessageTemplateController#delete', '删除', 'DELETE', '/message/template/delete', '消息模板', b'1', b'1', '消息模板 删除', 0, '2022-03-10 10:57:20.871000', 0, '2022-03-10 10:57:20.871000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047709790213, 'RoleController#update', '修改角色（返回角色对象）', 'POST', '/role/update', '角色管理', b'1', b'1', '角色管理 修改角色（返回角色对象）', 0, '2022-03-10 10:57:20.871000', 0, '2022-03-10 10:57:20.871000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047713984512, 'WalletLogController#searchLog', '查询钱包日志', 'POST', '/walletLog/search', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 查询钱包日志', 0, '2022-03-10 10:57:20.872000', 0, '2022-03-10 10:57:20.872000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047713984513, 'DingRobotSendController#sendLink', '测试发送link', 'POST', '/ding/robot/send/link', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送link', 0, '2022-03-10 10:57:20.872000', 0, '2022-03-10 10:57:20.872000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047713984514, 'DingRobotConfigController#delete', '删除', 'DELETE', '/ding/robot/config/delete', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 删除', 0, '2022-03-10 10:57:20.872000', 0, '2022-03-10 10:57:20.872000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047713984515, 'DingRobotConfigController#findById', '获取详情', 'GET', '/ding/robot/config/findById', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 获取详情', 0, '2022-03-10 10:57:20.872000', 0, '2022-03-10 10:57:20.872000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047713984516, 'GoodsSkuController#add', '添加商品sku', 'POST', '/sku/add', 'sku操作', b'1', b'1', 'sku操作 添加商品sku', 0, '2022-03-10 10:57:20.872000', 0, '2022-03-10 10:57:20.872000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047713984517, 'AppVersionController#page', '分页', 'GET', '/app/version/page', 'app版本管理', b'1', b'1', 'app版本管理 分页', 0, '2022-03-10 10:57:20.872000', 0, '2022-03-10 10:57:20.872000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047713984518, 'PayController#refund', '退款', 'POST', '/uni_pay/refund', '统一支付', b'1', b'1', '统一支付 退款', 0, '2022-03-10 10:57:20.873000', 0, '2022-03-10 10:57:20.873000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047718178816, 'OrderOperateController#placeOrder', '传入订单和优惠, 下单', 'POST', '/order/placeOrder', '订单操作', b'1', b'1', '订单操作 传入订单和优惠, 下单', 0, '2022-03-10 10:57:20.873000', 0, '2022-03-10 10:57:20.873000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047718178817, 'SiteMessageController#pageByReceive', '接收消息分页', 'GET', '/site/message/pageByReceive', '站内信', b'1', b'1', '站内信 接收消息分页', 0, '2022-03-10 10:57:20.873000', 0, '2022-03-10 10:57:20.873000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047718178818, 'MultipleOpenApiWebMvcResource#openapiYaml', 'swagger文档', 'GET', '/v3/api-docs.yaml/{group}', 'MultipleOpenApiWebMvcResource', b'1', b'0', 'MultipleOpenApiWebMvcResource openapiYaml', 0, '2022-03-10 10:57:20.873000', 1399985191002447872, '2022-03-10 11:09:30.635000', b'1', 1);
-INSERT INTO `iam_perm_path` VALUES (1501754047718178819, 'CouponController#findCoupon', '个人可用的优惠券', 'GET', '/coupon/findCoupon', '优惠券', b'1', b'1', '优惠券 个人可用的优惠券', 0, '2022-03-10 10:57:20.873000', 0, '2022-03-10 10:57:20.873000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047718178820, 'DatabaseTableController#findColumnByTableName', '获取数据表行信息', 'GET', '/gen/table/findColumnByTableName', '数据库表信息', b'1', b'1', '数据库表信息 获取数据表行信息', 0, '2022-03-10 10:57:20.873000', 0, '2022-03-10 10:57:20.873000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047722373120, 'GoodsController#getDetails', '查询包含sku的详情', 'GET', '/goods/getDetails', '商品管理', b'1', b'1', '商品管理 查询包含sku的详情', 0, '2022-03-10 10:57:20.874000', 0, '2022-03-10 10:57:20.874000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047722373121, 'DictionaryController#findAll', '查询全部', 'GET', '/dict/findAll', '字典', b'1', b'1', '字典 查询全部', 0, '2022-03-10 10:57:20.874000', 0, '2022-03-10 10:57:20.874000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047722373122, 'StrategyController#update', '更新策略', 'POST', '/strategy/update', '策略定义', b'1', b'1', '策略定义 更新策略', 0, '2022-03-10 10:57:20.874000', 0, '2022-03-10 10:57:20.874000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047722373123, 'QuartzJobController#page', '分页', 'GET', '/quartz/page', '定时任务', b'1', b'1', '定时任务 分页', 0, '2022-03-10 10:57:20.874000', 0, '2022-03-10 10:57:20.874000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501754047726567424, 'CategoryController#deleteCategoryById', '通过 id 删除类目', 'DELETE', '/category/delete', '类目管理', b'1', b'1', '类目管理 通过 id 删除类目', 0, '2022-03-10 10:57:20.875000', 0, '2022-03-10 10:57:20.875000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1501759344775995392, 'MultipleOpenApiWebMvcResource#openapiYaml', 'openapiYaml111', 'GET', '/v3/api-docs.yaml/{group}', 'MultipleOpenApiWebMvcResource', b'1', b'0', 'MultipleOpenApiWebMvcResource openapiYaml', 0, '2022-03-10 11:18:23.791000', 1399985191002447872, '2022-05-27 14:06:28.722000', b'0', 2);
-INSERT INTO `iam_perm_path` VALUES (1530067921408061440, 'filePreview', '文件预览', 'GET', '/file/preview/**', '系统', b'1', b'0', '1', 1399985191002447872, '2022-05-27 14:06:34.408000', 1399985191002447872, '2022-05-27 14:10:46.552000', b'1', 1);
-INSERT INTO `iam_perm_path` VALUES (1530087105378570240, 'SpecificationController#add', '添加', 'POST', '/specification/add', '规格', b'1', b'1', '规格 添加', 1399985191002447872, '2022-05-27 15:22:48.240000', 1399985191002447872, '2022-05-27 15:22:48.242000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105487622144, 'DingTalkConfigController#page', '分页', 'GET', '/ding/config/page', '钉钉配置', b'1', b'1', '钉钉配置 分页', 1399985191002447872, '2022-05-27 15:22:48.248000', 1399985191002447872, '2022-05-27 15:22:48.249000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105496010752, 'WalletLogController#pageByWalletId', '根据钱包id查询钱包日志(分页)', 'GET', '/wallet/log/pageByWalletId', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 根据钱包id查询钱包日志(分页)', 1399985191002447872, '2022-05-27 15:22:48.250000', 1399985191002447872, '2022-05-27 15:22:48.250000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105500205056, 'DingTalkConfigController#clearEnable', '清除启用状态', 'POST', '/ding/config/clearEnable', '钉钉配置', b'1', b'1', '钉钉配置 清除启用状态', 1399985191002447872, '2022-05-27 15:22:48.251000', 1399985191002447872, '2022-05-27 15:22:48.251000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105500205057, 'CategoryParameterController#delete', '删除', 'DELETE', '/categoryParameter/delete', '类目参数', b'1', b'1', '类目参数 删除', 1399985191002447872, '2022-05-27 15:22:48.251000', 1399985191002447872, '2022-05-27 15:22:48.251000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105508593664, 'CategoryController#findAll', '获取所有类目', 'GET', '/category/findAll', '类目管理', b'1', b'1', '类目管理 获取所有类目', 1399985191002447872, '2022-05-27 15:22:48.253000', 1399985191002447872, '2022-05-27 15:22:48.253000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105508593665, 'DingTalkConfigController#add', '新增配置', 'POST', '/ding/config/add', '钉钉配置', b'1', b'1', '钉钉配置 新增配置', 1399985191002447872, '2022-05-27 15:22:48.253000', 1399985191002447872, '2022-05-27 15:22:48.253000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105512787968, 'DingAccessController#genThirdLoginUrl', '生成第三方登录网址', 'GET', '/ding/access/genThirdLoginUrl', '钉钉Access', b'1', b'1', '钉钉Access 生成第三方登录网址', 1399985191002447872, '2022-05-27 15:22:48.254000', 1399985191002447872, '2022-05-27 15:22:48.254000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105516982272, 'VoucherController#page', '分页', 'GET', '/voucher/page', '储值卡', b'1', b'1', '储值卡 分页', 1399985191002447872, '2022-05-27 15:22:48.255000', 1399985191002447872, '2022-05-27 15:22:48.255000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105521176576, 'CategoryParameterGroupController#findAll', '查询所有', 'GET', '/categoryParameterGroup/findAll', '类目参数组', b'1', b'1', '类目参数组 查询所有', 1399985191002447872, '2022-05-27 15:22:48.256000', 1399985191002447872, '2022-05-27 15:22:48.256000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105521176577, 'DataSensitiveDemoController#findById', '通过ID查询', 'GET', '/demo/data/sensitive/findById', '数据脱敏演示', b'1', b'1', '数据脱敏演示 通过ID查询', 1399985191002447872, '2022-05-27 15:22:48.256000', 1399985191002447872, '2022-05-27 15:22:48.256000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105525370880, 'BrandController#findAll', '查询所有', 'GET', '/brand/findAll', '品牌', b'1', b'1', '品牌 查询所有', 1399985191002447872, '2022-05-27 15:22:48.257000', 1399985191002447872, '2022-05-27 15:22:48.257000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105529565184, 'CategoryParameterGroupController#findById', '通过ID查询', 'GET', '/categoryParameterGroup/findById', '类目参数组', b'1', b'1', '类目参数组 通过ID查询', 1399985191002447872, '2022-05-27 15:22:48.258000', 1399985191002447872, '2022-05-27 15:22:48.258000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105533759488, 'CategoryParameterController#add', '添加', 'POST', '/categoryParameter/add', '类目参数', b'1', b'1', '类目参数 添加', 1399985191002447872, '2022-05-27 15:22:48.259000', 1399985191002447872, '2022-05-27 15:22:48.259000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105537953792, 'SpecificationController#update', '修改', 'POST', '/specification/update', '规格', b'1', b'1', '规格 修改', 1399985191002447872, '2022-05-27 15:22:48.260000', 1399985191002447872, '2022-05-27 15:22:48.260000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105537953793, 'DataEncryptDemoController#update', '修改', 'POST', '/demo/data/encrypt/update', '数据加密解密演示', b'1', b'1', '数据加密解密演示 修改', 1399985191002447872, '2022-05-27 15:22:48.260000', 1399985191002447872, '2022-05-27 15:22:48.261000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105546342400, 'BrandController#page', '分页查询', 'GET', '/brand/page', '品牌', b'1', b'1', '品牌 分页查询', 1399985191002447872, '2022-05-27 15:22:48.262000', 1399985191002447872, '2022-05-27 15:22:48.262000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105550536704, 'TestController#redisPub', 'redis消息队列发布', 'GET', '/test/redisPub', '测试控制器', b'1', b'1', '测试控制器 redis消息队列发布', 1399985191002447872, '2022-05-27 15:22:48.263000', 1399985191002447872, '2022-05-27 15:22:48.263000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105550536705, 'IdempotencyDemoController#lock20', '分布式锁(暂停20秒)', 'GET', '/demo/lock/lock20', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(暂停20秒)', 1399985191002447872, '2022-05-27 15:22:48.263000', 1399985191002447872, '2022-05-27 15:22:48.263000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105554731008, 'TestController#sendWsByUserId', '发送ws消息(全部用户)', 'POST', '/test/sendWsByAll', '测试控制器', b'1', b'1', '测试控制器 发送ws消息(全部用户)', 1399985191002447872, '2022-05-27 15:22:48.264000', 1399985191002447872, '2022-05-27 15:22:48.264000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105554731009, 'CategoryController#findBindSpecIds', '根据类目id查询关联的绑定规格id集合', 'GET', '/category/findBindSpecIds', '类目管理', b'1', b'1', '类目管理 根据类目id查询关联的绑定规格id集合', 1399985191002447872, '2022-05-27 15:22:48.264000', 1399985191002447872, '2022-05-27 15:22:48.264000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105558925312, 'BrandController#delete', '删除', 'DELETE', '/brand/delete', '品牌', b'1', b'1', '品牌 删除', 1399985191002447872, '2022-05-27 15:22:48.265000', 1399985191002447872, '2022-05-27 15:22:48.265000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105558925313, 'WalletController#lock', '锁定钱包', 'POST', '/wallet/lock', '钱包相关的接口', b'1', b'1', '钱包相关的接口 锁定钱包', 1399985191002447872, '2022-05-27 15:22:48.265000', 1399985191002447872, '2022-05-27 15:22:48.265000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105558925314, 'IdempotencyDemoController#idempotency', '幂等演示', 'POST', '/demo/lock/idempotency', '幂等控制演示', b'1', b'1', '幂等控制演示 幂等演示', 1399985191002447872, '2022-05-27 15:22:48.265000', 1399985191002447872, '2022-05-27 15:22:48.265000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105563119616, 'DataSensitiveDemoController#add', '添加', 'POST', '/demo/data/sensitive/add', '数据脱敏演示', b'1', b'1', '数据脱敏演示 添加', 1399985191002447872, '2022-05-27 15:22:48.266000', 1399985191002447872, '2022-05-27 15:22:48.266000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105563119617, 'VoucherController#findByCardNo', '根据卡号查询', 'GET', '/voucher/findByCardNo', '储值卡', b'1', b'1', '储值卡 根据卡号查询', 1399985191002447872, '2022-05-27 15:22:48.266000', 1399985191002447872, '2022-05-27 15:22:48.266000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105563119618, 'CategoryController#existsByName', '判断类目是否已经存在', 'GET', '/category/existsByName', '类目管理', b'1', b'1', '类目管理 判断类目是否已经存在', 1399985191002447872, '2022-05-27 15:22:48.266000', 1399985191002447872, '2022-05-27 15:22:48.267000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105567313920, 'CategoryController#bindBrand', '绑定品牌', 'POST', '/category/bindBrand', '类目管理', b'1', b'1', '类目管理 绑定品牌', 1399985191002447872, '2022-05-27 15:22:48.267000', 1399985191002447872, '2022-05-27 15:22:48.267000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105567313921, 'WalletController#findByUser', '根据用户查询钱包', 'GET', '/wallet/findByUser', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据用户查询钱包', 1399985191002447872, '2022-05-27 15:22:48.267000', 1399985191002447872, '2022-05-27 15:22:48.267000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105571508224, 'SpecificationController#findAll', '查询所有', 'GET', '/specification/findAll', '规格', b'1', b'1', '规格 查询所有', 1399985191002447872, '2022-05-27 15:22:48.268000', 1399985191002447872, '2022-05-27 15:22:48.268000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105571508225, 'CategoryParameterController#findAll', '查询所有', 'GET', '/categoryParameter/findAll', '类目参数', b'1', b'1', '类目参数 查询所有', 1399985191002447872, '2022-05-27 15:22:48.268000', 1399985191002447872, '2022-05-27 15:22:48.268000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105571508226, 'DataSensitiveDemoController#delete', '删除', 'DELETE', '/demo/data/sensitive/delete', '数据脱敏演示', b'1', b'1', '数据脱敏演示 删除', 1399985191002447872, '2022-05-27 15:22:48.268000', 1399985191002447872, '2022-05-27 15:22:48.268000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105575702528, 'DingTalkConfigController#findAll', '查询全部', 'GET', '/ding/config/findAll', '钉钉配置', b'1', b'1', '钉钉配置 查询全部', 1399985191002447872, '2022-05-27 15:22:48.269000', 1399985191002447872, '2022-05-27 15:22:48.269000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105575702529, 'QuartzJobLogController#page', '分页', 'GET', '/quartz/log/page', '定时任务执行日志', b'1', b'1', '定时任务执行日志 分页', 1399985191002447872, '2022-05-27 15:22:48.269000', 1399985191002447872, '2022-05-27 15:22:48.269000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105575702530, 'CategoryParameterController#page', '分页查询(限定类目和分组id)', 'GET', '/categoryParameter/page', '类目参数', b'1', b'1', '类目参数 分页查询(限定类目和分组id)', 1399985191002447872, '2022-05-27 15:22:48.269000', 1399985191002447872, '2022-05-27 15:22:48.269000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105579896832, 'VoucherController#unlock', '启用', 'POST', '/voucher/unlock', '储值卡', b'1', b'1', '储值卡 启用', 1399985191002447872, '2022-05-27 15:22:48.270000', 1399985191002447872, '2022-05-27 15:22:48.270000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105579896833, 'WalletController#createWalletBatch', '批量开通用户钱包操作', 'POST', '/wallet/createWalletBatch', '钱包相关的接口', b'1', b'1', '钱包相关的接口 批量开通用户钱包操作', 1399985191002447872, '2022-05-27 15:22:48.270000', 1399985191002447872, '2022-05-27 15:22:48.270000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105579896834, 'WalletLogController#pageByPersonal', '个人钱包日志', 'POST', '/wallet/log/pageByPersonal', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 个人钱包日志', 1399985191002447872, '2022-05-27 15:22:48.270000', 1399985191002447872, '2022-05-27 15:22:48.271000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105584091136, 'DingTalkConfigController#update', '修改配置', 'POST', '/ding/config/update', '钉钉配置', b'1', b'1', '钉钉配置 修改配置', 1399985191002447872, '2022-05-27 15:22:48.271000', 1399985191002447872, '2022-05-27 15:22:48.271000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105584091137, 'QuartzJobLogController#findById', '单条', 'GET', '/quartz/log/findById', '定时任务执行日志', b'1', b'1', '定时任务执行日志 单条', 1399985191002447872, '2022-05-27 15:22:48.271000', 1399985191002447872, '2022-05-27 15:22:48.271000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105588285440, 'CategoryParameterController#existsByName', '判断类目参数是否已经存在(不包含自身)', 'GET', '/categoryParameter/existsByNameNotId', '类目参数', b'1', b'1', '类目参数 判断类目参数是否已经存在(不包含自身)', 1399985191002447872, '2022-05-27 15:22:48.272000', 1399985191002447872, '2022-05-27 15:22:48.272000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105588285441, 'WalletController#unlock', '解锁钱包', 'POST', '/wallet/unlock', '钱包相关的接口', b'1', b'1', '钱包相关的接口 解锁钱包', 1399985191002447872, '2022-05-27 15:22:48.272000', 1399985191002447872, '2022-05-27 15:22:48.272000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105588285442, 'CategoryParameterGroupController#delete', '删除', 'DELETE', '/categoryParameterGroup/delete', '类目参数组', b'1', b'1', '类目参数组 删除', 1399985191002447872, '2022-05-27 15:22:48.272000', 1399985191002447872, '2022-05-27 15:22:48.272000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105592479744, 'IdempotencyDemoController#lock5', '分布式锁(暂停5秒)', 'GET', '/demo/lock/lock5', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(暂停5秒)', 1399985191002447872, '2022-05-27 15:22:48.273000', 1399985191002447872, '2022-05-27 15:22:48.273000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105592479745, 'WalletLogController#page', '查询钱包日志(分页)', 'GET', '/wallet/log/page', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 查询钱包日志(分页)', 1399985191002447872, '2022-05-27 15:22:48.273000', 1399985191002447872, '2022-05-27 15:22:48.273000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105596674048, 'VoucherController#lockBatch', '批量冻结', 'POST', '/voucher/lockBatch', '储值卡', b'1', b'1', '储值卡 批量冻结', 1399985191002447872, '2022-05-27 15:22:48.274000', 1399985191002447872, '2022-05-27 15:22:48.274000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105596674049, 'CategoryParameterController#existsByName', '判断类目参数是否已经存在', 'GET', '/categoryParameter/existsByName', '类目参数', b'1', b'1', '类目参数 判断类目参数是否已经存在', 1399985191002447872, '2022-05-27 15:22:48.274000', 1399985191002447872, '2022-05-27 15:22:48.274000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105596674050, 'IdempotencyDemoController#lock0', '分布式锁(不暂停)', 'POST', '/demo/lock/lock0', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(不暂停)', 1399985191002447872, '2022-05-27 15:22:48.274000', 1399985191002447872, '2022-05-27 15:22:48.275000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105600868352, 'WalletController#changerBalance', '充值操作(增减余额)', 'POST', '/wallet/changerBalance', '钱包相关的接口', b'1', b'1', '钱包相关的接口 充值操作(增减余额)', 1399985191002447872, '2022-05-27 15:22:48.275000', 1399985191002447872, '2022-05-27 15:22:48.275000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105600868353, 'DataSensitiveDemoController#page', '分页查询', 'GET', '/demo/data/sensitive/page', '数据脱敏演示', b'1', b'1', '数据脱敏演示 分页查询', 1399985191002447872, '2022-05-27 15:22:48.275000', 1399985191002447872, '2022-05-27 15:22:48.276000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105605062656, 'CategoryParameterGroupController#existsByName', '判断类目参数组是否已经存在(不包含自身)', 'GET', '/categoryParameterGroup/existsByNameNotId', '类目参数组', b'1', b'1', '类目参数组 判断类目参数组是否已经存在(不包含自身)', 1399985191002447872, '2022-05-27 15:22:48.276000', 1399985191002447872, '2022-05-27 15:22:48.276000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105605062657, 'DataEncryptDemoController#add', '添加', 'POST', '/demo/data/encrypt/add', '数据加密解密演示', b'1', b'1', '数据加密解密演示 添加', 1399985191002447872, '2022-05-27 15:22:48.276000', 1399985191002447872, '2022-05-27 15:22:48.276000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105609256960, 'QuartzJobController#syncJobStatus', '同步定时任务状态', 'POST', '/quartz/syncJobStatus', '定时任务', b'1', b'1', '定时任务 同步定时任务状态', 1399985191002447872, '2022-05-27 15:22:48.277000', 1399985191002447872, '2022-05-27 15:22:48.277000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105609256961, 'CategoryParameterGroupController#page', '分页查询', 'GET', '/categoryParameterGroup/page', '类目参数组', b'1', b'1', '类目参数组 分页查询', 1399985191002447872, '2022-05-27 15:22:48.277000', 1399985191002447872, '2022-05-27 15:22:48.277000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105609256962, 'BrandController#findById', '通过ID查询', 'GET', '/brand/findById', '品牌', b'1', b'1', '品牌 通过ID查询', 1399985191002447872, '2022-05-27 15:22:48.277000', 1399985191002447872, '2022-05-27 15:22:48.277000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105613451264, 'SpecificationController#page', '分页查询', 'GET', '/specification/page', '规格', b'1', b'1', '规格 分页查询', 1399985191002447872, '2022-05-27 15:22:48.278000', 1399985191002447872, '2022-05-27 15:22:48.278000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105613451265, 'SpecificationController#delete', '删除', 'DELETE', '/specification/delete', '规格', b'1', b'1', '规格 删除', 1399985191002447872, '2022-05-27 15:22:48.278000', 1399985191002447872, '2022-05-27 15:22:48.278000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105613451266, 'CategoryParameterController#findById', '通过ID查询', 'GET', '/categoryParameter/findById', '类目参数', b'1', b'1', '类目参数 通过ID查询', 1399985191002447872, '2022-05-27 15:22:48.278000', 1399985191002447872, '2022-05-27 15:22:48.278000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105617645568, 'CategoryController#existsByName', '判断类目是否已经存在(不包含自身)', 'GET', '/category/existsByNameNotId', '类目管理', b'1', b'1', '类目管理 判断类目是否已经存在(不包含自身)', 1399985191002447872, '2022-05-27 15:22:48.279000', 1399985191002447872, '2022-05-27 15:22:48.279000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105617645569, 'GoodsController#page', '分页', 'GET', '/goods/page', '商品管理', b'1', b'1', '商品管理 分页', 1399985191002447872, '2022-05-27 15:22:48.279000', 1399985191002447872, '2022-05-27 15:22:48.279000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105617645570, 'CategoryParameterGroupController#add', '添加', 'POST', '/categoryParameterGroup/add', '类目参数组', b'1', b'1', '类目参数组 添加', 1399985191002447872, '2022-05-27 15:22:48.279000', 1399985191002447872, '2022-05-27 15:22:48.279000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105621839872, 'CategoryController#findTree', '获取类目树', 'GET', '/category/findTree', '类目管理', b'1', b'1', '类目管理 获取类目树', 1399985191002447872, '2022-05-27 15:22:48.280000', 1399985191002447872, '2022-05-27 15:22:48.280000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105621839873, 'VoucherController#findById', '单条查询', 'GET', '/voucher/findById', '储值卡', b'1', b'1', '储值卡 单条查询', 1399985191002447872, '2022-05-27 15:22:48.280000', 1399985191002447872, '2022-05-27 15:22:48.280000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105621839874, 'DataEncryptDemoController#findById', '通过ID查询', 'GET', '/demo/data/encrypt/findById', '数据加密解密演示', b'1', b'1', '数据加密解密演示 通过ID查询', 1399985191002447872, '2022-05-27 15:22:48.280000', 1399985191002447872, '2022-05-27 15:22:48.280000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105626034176, 'DataEncryptDemoController#page', '分页查询', 'GET', '/demo/data/encrypt/page', '数据加密解密演示', b'1', b'1', '数据加密解密演示 分页查询', 1399985191002447872, '2022-05-27 15:22:48.281000', 1399985191002447872, '2022-05-27 15:22:48.281000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105626034177, 'DataEncryptDemoController#delete', '删除', 'DELETE', '/demo/data/encrypt/delete', '数据加密解密演示', b'1', b'1', '数据加密解密演示 删除', 1399985191002447872, '2022-05-27 15:22:48.281000', 1399985191002447872, '2022-05-27 15:22:48.281000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105626034178, 'CategoryController#bindSpec', '绑定规格', 'POST', '/category/bindSpec', '类目管理', b'1', b'1', '类目管理 绑定规格', 1399985191002447872, '2022-05-27 15:22:48.282000', 1399985191002447872, '2022-05-27 15:22:48.282000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105630228480, 'VoucherController#unlockBatch', '批量启用', 'POST', '/voucher/unlockBatch', '储值卡', b'1', b'1', '储值卡 批量启用', 1399985191002447872, '2022-05-27 15:22:48.282000', 1399985191002447872, '2022-05-27 15:22:48.282000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105630228481, 'CategoryParameterGroupController#existsByName', '判断类目参数组是否已经存在', 'GET', '/categoryParameterGroup/existsByName', '类目参数组', b'1', b'1', '类目参数组 判断类目参数组是否已经存在', 1399985191002447872, '2022-05-27 15:22:48.282000', 1399985191002447872, '2022-05-27 15:22:48.282000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105634422784, 'DingTalkConfigController#setEnable', '设置启用的配置', 'POST', '/ding/config/setEnable', '钉钉配置', b'1', b'1', '钉钉配置 设置启用的配置', 1399985191002447872, '2022-05-27 15:22:48.283000', 1399985191002447872, '2022-05-27 15:22:48.283000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105634422785, 'WalletController#findById', '根据钱包ID查询钱包', 'GET', '/wallet/findById', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据钱包ID查询钱包', 1399985191002447872, '2022-05-27 15:22:48.283000', 1399985191002447872, '2022-05-27 15:22:48.283000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105634422786, 'WalletController#page', '分页', 'GET', '/wallet/page', '钱包相关的接口', b'1', b'1', '钱包相关的接口 分页', 1399985191002447872, '2022-05-27 15:22:48.283000', 1399985191002447872, '2022-05-27 15:22:48.283000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105634422787, 'VoucherController#generationBatch', '批量生成储值卡', 'POST', '/voucher/generationBatch', '储值卡', b'1', b'1', '储值卡 批量生成储值卡', 1399985191002447872, '2022-05-27 15:22:48.283000', 1399985191002447872, '2022-05-27 15:22:48.284000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105638617088, 'WalletController#pageByNotWallet', '分页', 'GET', '/wallet/pageByNotWallet', '钱包相关的接口', b'1', b'1', '钱包相关的接口 分页', 1399985191002447872, '2022-05-27 15:22:48.284000', 1399985191002447872, '2022-05-27 15:22:48.284000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105638617089, 'DingTalkConfigController#findById', '获取详情', 'GET', '/ding/config/findById', '钉钉配置', b'1', b'1', '钉钉配置 获取详情', 1399985191002447872, '2022-05-27 15:22:48.284000', 1399985191002447872, '2022-05-27 15:22:48.284000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105638617090, 'CategoryController#findById', '通过 id 获取指定类目', 'GET', '/category/findById', '类目管理', b'1', b'1', '类目管理 通过 id 获取指定类目', 1399985191002447872, '2022-05-27 15:22:48.284000', 1399985191002447872, '2022-05-27 15:22:48.284000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105642811392, 'BrandController#update', '修改', 'POST', '/brand/update', '品牌', b'1', b'1', '品牌 修改', 1399985191002447872, '2022-05-27 15:22:48.285000', 1399985191002447872, '2022-05-27 15:22:48.285000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105642811393, 'DingTalkConfigController#delete', '删除', 'DELETE', '/ding/config/delete', '钉钉配置', b'1', b'1', '钉钉配置 删除', 1399985191002447872, '2022-05-27 15:22:48.285000', 1399985191002447872, '2022-05-27 15:22:48.285000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105642811394, 'CategoryController#findBindBrandIds', '根据类目id查询关联的绑定品牌id集合', 'GET', '/category/findBindBrandIds', '类目管理', b'1', b'1', '类目管理 根据类目id查询关联的绑定品牌id集合', 1399985191002447872, '2022-05-27 15:22:48.285000', 1399985191002447872, '2022-05-27 15:22:48.285000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105647005696, 'CategoryParameterController#update', '修改', 'POST', '/categoryParameter/update', '类目参数', b'1', b'1', '类目参数 修改', 1399985191002447872, '2022-05-27 15:22:48.286000', 1399985191002447872, '2022-05-27 15:22:48.286000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105647005697, 'SpecificationController#findById', '通过ID查询', 'GET', '/specification/findById', '规格', b'1', b'1', '规格 通过ID查询', 1399985191002447872, '2022-05-27 15:22:48.286000', 1399985191002447872, '2022-05-27 15:22:48.286000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105647005698, 'CashierController#combinationPay', '发起支付(组合支付)', 'POST', '/cashier/combinationPay', '结算台', b'1', b'1', '结算台 发起支付(组合支付)', 1399985191002447872, '2022-05-27 15:22:48.286000', 1399985191002447872, '2022-05-27 15:22:48.286000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105651200000, 'CategoryParameterGroupController#update', '修改', 'POST', '/categoryParameterGroup/update', '类目参数组', b'1', b'1', '类目参数组 修改', 1399985191002447872, '2022-05-27 15:22:48.287000', 1399985191002447872, '2022-05-27 15:22:48.287000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105651200001, 'DataSensitiveDemoController#update', '修改', 'POST', '/demo/data/sensitive/update', '数据脱敏演示', b'1', b'1', '数据脱敏演示 修改', 1399985191002447872, '2022-05-27 15:22:48.287000', 1399985191002447872, '2022-05-27 15:22:48.287000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105651200002, 'VoucherController#lock', '冻结', 'POST', '/voucher/lock', '储值卡', b'1', b'1', '储值卡 冻结', 1399985191002447872, '2022-05-27 15:22:48.287000', 1399985191002447872, '2022-05-27 15:22:48.287000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105655394304, 'WalletController#getWalletInfo', '获取钱包综合信息', 'GET', '/wallet/getWalletInfo', '钱包相关的接口', b'1', b'1', '钱包相关的接口 获取钱包综合信息', 1399985191002447872, '2022-05-27 15:22:48.288000', 1399985191002447872, '2022-05-27 15:22:48.288000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105655394305, 'WalletController#createWallet', '开通用户钱包操作', 'POST', '/wallet/createWallet', '钱包相关的接口', b'1', b'1', '钱包相关的接口 开通用户钱包操作', 1399985191002447872, '2022-05-27 15:22:48.288000', 1399985191002447872, '2022-05-27 15:22:48.288000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105655394306, 'ClientController#findAllByAlonePrem', '查询有独立菜单和权限的终端列表', 'GET', '/client/findAllByAlonePrem', '终端管理', b'1', b'1', '终端管理 查询有独立菜单和权限的终端列表', 1399985191002447872, '2022-05-27 15:22:48.288000', 1399985191002447872, '2022-05-27 15:22:48.288000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105659588608, 'BrandController#add', '添加', 'POST', '/brand/add', '品牌', b'1', b'1', '品牌 添加', 1399985191002447872, '2022-05-27 15:22:48.289000', 1399985191002447872, '2022-05-27 15:22:48.289000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1530087105659588609, 'TestController#sendWsByUserId', '发送ws消息', 'POST', '/test/sendWsByUserId', '测试控制器', b'1', b'1', '测试控制器 发送ws消息', 1399985191002447872, '2022-05-27 15:22:48.289000', 1399985191002447872, '2022-05-27 15:22:48.289000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132564578304, 'DingTalkConfigController#delete', '删除', 'DELETE', '/ding/config/delete', '钉钉配置', b'1', b'1', '钉钉配置 删除', 1399985191002447872, '2022-06-04 18:45:09.514000', 1399985191002447872, '2022-06-04 18:45:09.514000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132585549824, 'TokenEndpoint#login', '普通登录', 'POST', '/token/login', '认证相关', b'1', b'1', '认证相关 普通登录', 1399985191002447872, '2022-06-04 18:45:09.517000', 1399985191002447872, '2022-06-04 18:45:09.517000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132593938432, 'AlipayConfigController#add', '添加', 'POST', '/alipay/add', '支付宝配置', b'1', b'1', '支付宝配置 添加', 1399985191002447872, '2022-06-04 18:45:09.519000', 1399985191002447872, '2022-06-04 18:45:09.519000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132598132736, 'RoleController#add', '添加角色（返回角色对象）', 'POST', '/role/add', '角色管理', b'1', b'1', '角色管理 添加角色（返回角色对象）', 1399985191002447872, '2022-06-04 18:45:09.520000', 1399985191002447872, '2022-06-04 18:45:09.520000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132602327040, 'CategoryParameterController#findAll', '查询所有', 'GET', '/categoryParameter/findAll', '类目参数', b'1', b'1', '类目参数 查询所有', 1399985191002447872, '2022-06-04 18:45:09.521000', 1399985191002447872, '2022-06-04 18:45:09.521000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132606521344, 'DeptController#delete', '普通删除', 'DELETE', '/dept/delete', '部门管理', b'1', b'1', '部门管理 普通删除', 1399985191002447872, '2022-06-04 18:45:09.522000', 1399985191002447872, '2022-06-04 18:45:09.522000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132610715648, 'PayController#cancelByBusinessId', '取消支付(业务id)', 'POST', '/uni_pay/cancelByBusinessId', '统一支付', b'1', b'1', '统一支付 取消支付(业务id)', 1399985191002447872, '2022-06-04 18:45:09.523000', 1399985191002447872, '2022-06-04 18:45:09.523000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132614909952, 'DictionaryItemController#existsByCode', '编码是否被使用', 'GET', '/dict/item/existsByCode', '字典项', b'1', b'1', '字典项 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.524000', 1399985191002447872, '2022-06-04 18:45:09.524000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132614909953, 'PayController#refundByBusinessId', '全额退款(业务id)', 'POST', '/uni_pay/refundByBusinessId', '统一支付', b'1', b'1', '统一支付 全额退款(业务id)', 1399985191002447872, '2022-06-04 18:45:09.524000', 1399985191002447872, '2022-06-04 18:45:09.524000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132619104256, 'SwaggerWelcomeWebMvc#redirectToUi', 'redirectToUi', 'GET', '/swagger-ui.html', 'SwaggerWelcomeWebMvc', b'1', b'1', 'SwaggerWelcomeWebMvc redirectToUi', 1399985191002447872, '2022-06-04 18:45:09.525000', 1399985191002447872, '2022-06-04 18:45:09.525000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132623298560, 'CategoryController#findBindBrandIds', '根据类目id查询关联的绑定品牌id集合', 'GET', '/category/findBindBrandIds', '类目管理', b'1', b'1', '类目管理 根据类目id查询关联的绑定品牌id集合', 1399985191002447872, '2022-06-04 18:45:09.526000', 1399985191002447872, '2022-06-04 18:45:09.526000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132623298561, 'RoleMenuController#findMenuIds', '获取权限菜单id列表,不包含资源权限', 'GET', '/role/menu/findMenuIds', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 获取权限菜单id列表,不包含资源权限', 1399985191002447872, '2022-06-04 18:45:09.526000', 1399985191002447872, '2022-06-04 18:45:09.526000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132627492864, 'PaymentController#findByUser', '根据userId获取列表', 'GET', '/payment/findByUser', '支付记录', b'1', b'1', '支付记录 根据userId获取列表', 1399985191002447872, '2022-06-04 18:45:09.527000', 1399985191002447872, '2022-06-04 18:45:09.527000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132627492865, 'DataScopeController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/data/scope/existsByCodeNotId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.527000', 1399985191002447872, '2022-06-04 18:45:09.527000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132631687168, 'SystemParamController#add', '添加', 'POST', '/system/param/add', '系统参数', b'1', b'1', '系统参数 添加', 1399985191002447872, '2022-06-04 18:45:09.528000', 1399985191002447872, '2022-06-04 18:45:09.528000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132631687169, 'QuartzJobController#delete', '删除', 'DELETE', '/quartz/delete', '定时任务', b'1', b'1', '定时任务 删除', 1399985191002447872, '2022-06-04 18:45:09.528000', 1399985191002447872, '2022-06-04 18:45:09.528000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132640075776, 'UserInfoController#existsUsername', '账号是否被使用', 'GET', '/user/existsUsername', '用户管理', b'1', b'1', '用户管理 账号是否被使用', 1399985191002447872, '2022-06-04 18:45:09.530000', 1399985191002447872, '2022-06-04 18:45:09.530000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132640075777, 'ClientController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/client/existsByCodeNotId', '终端管理', b'1', b'1', '终端管理 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.530000', 1399985191002447872, '2022-06-04 18:45:09.531000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132644270080, 'PaymentController#findPayTypeInfoById', '根据id获取订单支付方式', 'GET', '/payment/findPayTypeInfoById', '支付记录', b'1', b'1', '支付记录 根据id获取订单支付方式', 1399985191002447872, '2022-06-04 18:45:09.531000', 1399985191002447872, '2022-06-04 18:45:09.531000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132648464384, 'AlipayConfigController#update', '更新', 'POST', '/alipay/update', '支付宝配置', b'1', b'1', '支付宝配置 更新', 1399985191002447872, '2022-06-04 18:45:09.532000', 1399985191002447872, '2022-06-04 18:45:09.532000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132656852992, 'UserAdminController#getByEmail', '根据邮箱查询用户', 'GET', '/user/admin/getByEmail', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据邮箱查询用户', 1399985191002447872, '2022-06-04 18:45:09.534000', 1399985191002447872, '2022-06-04 18:45:09.534000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132661047296, 'CategoryController#bindSpec', '绑定规格', 'POST', '/category/bindSpec', '类目管理', b'1', b'1', '类目管理 绑定规格', 1399985191002447872, '2022-06-04 18:45:09.535000', 1399985191002447872, '2022-06-04 18:45:09.535000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132661047297, 'CategoryController#existsByName', '判断类目是否已经存在', 'GET', '/category/existsByName', '类目管理', b'1', b'1', '类目管理 判断类目是否已经存在', 1399985191002447872, '2022-06-04 18:45:09.535000', 1399985191002447872, '2022-06-04 18:45:09.535000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132661047298, 'StrategyController#add', '添加策略', 'POST', '/strategy/add', '策略定义', b'1', b'1', '策略定义 添加策略', 1399985191002447872, '2022-06-04 18:45:09.535000', 1399985191002447872, '2022-06-04 18:45:09.536000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132665241600, 'UserInfoController#existsEmail', '邮箱是否被使用(不包含自己)', 'GET', '/user/existsEmailNotId', '用户管理', b'1', b'1', '用户管理 邮箱是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.536000', 1399985191002447872, '2022-06-04 18:45:09.536000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132665241601, 'AlipayConfigController#findPayWayList', '支付宝支持支付方式', 'GET', '/alipay/findPayWayList', '支付宝配置', b'1', b'1', '支付宝配置 支付宝支持支付方式', 1399985191002447872, '2022-06-04 18:45:09.536000', 1399985191002447872, '2022-06-04 18:45:09.536000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132669435904, 'DataScopeController#add', '添加', 'POST', '/data/scope/add', '数据范围权限配置', b'1', b'1', '数据范围权限配置 添加', 1399985191002447872, '2022-06-04 18:45:09.537000', 1399985191002447872, '2022-06-04 18:45:09.537000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132669435905, 'UserInfoController#existsEmail', '邮箱是否被使用', 'GET', '/user/existsEmail', '用户管理', b'1', b'1', '用户管理 邮箱是否被使用', 1399985191002447872, '2022-06-04 18:45:09.537000', 1399985191002447872, '2022-06-04 18:45:09.537000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132669435906, 'PayController#cancelByPaymentId', '取消支付(支付id)', 'POST', '/uni_pay/cancelByPaymentId', '统一支付', b'1', b'1', '统一支付 取消支付(支付id)', 1399985191002447872, '2022-06-04 18:45:09.537000', 1399985191002447872, '2022-06-04 18:45:09.538000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132673630208, 'SystemParamController#findByParamKey', '根据键名获取键值', 'GET', '/system/param/findByParamKey', '系统参数', b'1', b'1', '系统参数 根据键名获取键值', 1399985191002447872, '2022-06-04 18:45:09.538000', 1399985191002447872, '2022-06-04 18:45:09.538000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132673630209, 'DictionaryController#delete', '根据id删除', 'DELETE', '/dict/delete', '字典', b'1', b'1', '字典 根据id删除', 1399985191002447872, '2022-06-04 18:45:09.538000', 1399985191002447872, '2022-06-04 18:45:09.538000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132677824512, 'WalletController#createWalletBatch', '批量开通用户钱包操作', 'POST', '/wallet/createWalletBatch', '钱包相关的接口', b'1', b'1', '钱包相关的接口 批量开通用户钱包操作', 1399985191002447872, '2022-06-04 18:45:09.539000', 1399985191002447872, '2022-06-04 18:45:09.539000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132677824513, 'DataEncryptDemoController#findById', '通过ID查询', 'GET', '/demo/data/encrypt/findById', '数据加密解密演示', b'1', b'1', '数据加密解密演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.539000', 1399985191002447872, '2022-06-04 18:45:09.539000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132682018816, 'DataEncryptDemoController#add', '添加', 'POST', '/demo/data/encrypt/add', '数据加密解密演示', b'1', b'1', '数据加密解密演示 添加', 1399985191002447872, '2022-06-04 18:45:09.540000', 1399985191002447872, '2022-06-04 18:45:09.540000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132682018817, 'DingTalkConfigController#setEnable', '设置启用的配置', 'POST', '/ding/config/setEnable', '钉钉配置', b'1', b'1', '钉钉配置 设置启用的配置', 1399985191002447872, '2022-06-04 18:45:09.540000', 1399985191002447872, '2022-06-04 18:45:09.540000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132682018818, 'PermMenuController#existsByPermCode', '编码是否被使用', 'GET', '/perm/menu/existsByPermCode', '菜单权限资源', b'1', b'1', '菜单权限资源 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.540000', 1399985191002447872, '2022-06-04 18:45:09.540000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132686213120, 'QuartzJobController#syncJobStatus', '同步定时任务状态', 'POST', '/quartz/syncJobStatus', '定时任务', b'1', b'1', '定时任务 同步定时任务状态', 1399985191002447872, '2022-06-04 18:45:09.541000', 1399985191002447872, '2022-06-04 18:45:09.541000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132686213121, 'RoleController#findAll', '查询所有的角色', 'GET', '/role/findAll', '角色管理', b'1', b'1', '角色管理 查询所有的角色', 1399985191002447872, '2022-06-04 18:45:09.541000', 1399985191002447872, '2022-06-04 18:45:09.541000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132690407424, 'InventoryController#lockInventory', '锁定库存', 'POST', '/inventory/lockInventory', '库存操作', b'1', b'1', '库存操作 锁定库存', 1399985191002447872, '2022-06-04 18:45:09.542000', 1399985191002447872, '2022-06-04 18:45:09.542000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132690407425, 'DataPermDemoController#add', '添加', 'POST', '/demo/data/perm/add', '数据权限演示', b'1', b'1', '数据权限演示 添加', 1399985191002447872, '2022-06-04 18:45:09.542000', 1399985191002447872, '2022-06-04 18:45:09.542000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132690407426, 'UserDataScopeController#saveAssign', '给用户分配权限', 'POST', '/user/data/scope/saveAssign', '用户数据权限配置', b'1', b'1', '用户数据权限配置 给用户分配权限', 1399985191002447872, '2022-06-04 18:45:09.542000', 1399985191002447872, '2022-06-04 18:45:09.542000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132694601728, 'RolePathController#save', '保存角色权限关联关系', 'POST', '/role/path/save', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 保存角色权限关联关系', 1399985191002447872, '2022-06-04 18:45:09.543000', 1399985191002447872, '2022-06-04 18:45:09.543000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132694601729, 'WalletController#changerBalance', '充值操作(增减余额)', 'POST', '/wallet/changerBalance', '钱包相关的接口', b'1', b'1', '钱包相关的接口 充值操作(增减余额)', 1399985191002447872, '2022-06-04 18:45:09.543000', 1399985191002447872, '2022-06-04 18:45:09.543000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132698796032, 'UserInfoController#existsPhone', '手机号是否被使用(不包含自己)', 'GET', '/user/existsPhoneNotId', '用户管理', b'1', b'1', '用户管理 手机号是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.544000', 1399985191002447872, '2022-06-04 18:45:09.544000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132698796033, 'InventoryController#reduceLockedAndCapacity', '扣减指定的 SKU 的库存', 'POST', '/inventory/reduceLockedAndCapacity', '库存操作', b'1', b'1', '库存操作 扣减指定的 SKU 的库存', 1399985191002447872, '2022-06-04 18:45:09.544000', 1399985191002447872, '2022-06-04 18:45:09.544000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132702990336, 'DatabaseTableController#findByTableName', '获取表信息', 'GET', '/gen/table/findByTableName', '数据库表信息', b'1', b'1', '数据库表信息 获取表信息', 1399985191002447872, '2022-06-04 18:45:09.545000', 1399985191002447872, '2022-06-04 18:45:09.545000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132702990337, 'PermPathController#syncSystem', '同步系统请求资源', 'POST', '/perm/path/syncSystem', '请求权限资源', b'1', b'1', '请求权限资源 同步系统请求资源', 1399985191002447872, '2022-06-04 18:45:09.545000', 1399985191002447872, '2022-06-04 18:45:09.545000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132707184640, 'AuthAssistController#sendSmsCaptcha', '发送短信验证码', 'POST', '/auth/sendSmsCaptcha', '认证支撑接口', b'1', b'1', '认证支撑接口 发送短信验证码', 1399985191002447872, '2022-06-04 18:45:09.546000', 1399985191002447872, '2022-06-04 18:45:09.546000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132707184641, 'StrategyController#findById', '获取策略及其配置项', 'GET', '/strategy/findById', '策略定义', b'1', b'1', '策略定义 获取策略及其配置项', 1399985191002447872, '2022-06-04 18:45:09.546000', 1399985191002447872, '2022-06-04 18:45:09.546000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132707184642, 'RoleController#update', '修改角色（返回角色对象）', 'POST', '/role/update', '角色管理', b'1', b'1', '角色管理 修改角色（返回角色对象）', 1399985191002447872, '2022-06-04 18:45:09.546000', 1399985191002447872, '2022-06-04 18:45:09.546000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132711378944, 'UserAdminController#getByPhone', '根据手机号查询用户', 'GET', '/user/admin/getByPhone', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据手机号查询用户', 1399985191002447872, '2022-06-04 18:45:09.547000', 1399985191002447872, '2022-06-04 18:45:09.547000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132711378945, 'DataScopeController#saveUserAssign', '保存关联用户权限', 'POST', '/data/scope/saveUserAssign', '数据范围权限配置', b'1', b'1', '数据范围权限配置 保存关联用户权限', 1399985191002447872, '2022-06-04 18:45:09.547000', 1399985191002447872, '2022-06-04 18:45:09.547000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132719767552, 'CategoryController#existsByName', '判断类目是否已经存在(不包含自身)', 'GET', '/category/existsByNameNotId', '类目管理', b'1', b'1', '类目管理 判断类目是否已经存在(不包含自身)', 1399985191002447872, '2022-06-04 18:45:09.549000', 1399985191002447872, '2022-06-04 18:45:09.549000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132723961856, 'DingRobotConfigController#add', '新增机器人配置', 'POST', '/ding/robot/config/add', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 新增机器人配置', 1399985191002447872, '2022-06-04 18:45:09.550000', 1399985191002447872, '2022-06-04 18:45:09.550000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132723961857, 'GoodsController#getDetails', '查询包含sku的详情', 'GET', '/goods/getDetails', '商品管理', b'1', b'1', '商品管理 查询包含sku的详情', 1399985191002447872, '2022-06-04 18:45:09.550000', 1399985191002447872, '2022-06-04 18:45:09.550000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132728156160, 'FIleUpLoadController#getFilePreviewUrl', '获取文件预览地址', 'GET', '/file/getFilePreviewUrl', '文件上传', b'0', b'0', '文件上传 获取文件预览地址', 1399985191002447872, '2022-06-04 18:45:09.551000', 1399985191002447872, '2022-06-04 18:45:56.898000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037132728156161, 'DictionaryItemController#findAll', '获取全部字典项', 'GET', '/dict/item/findAll', '字典项', b'1', b'1', '字典项 获取全部字典项', 1399985191002447872, '2022-06-04 18:45:09.551000', 1399985191002447872, '2022-06-04 18:45:09.551000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132732350464, 'PermPathController#add', '添加权限', 'POST', '/perm/path/add', '请求权限资源', b'1', b'1', '请求权限资源 添加权限', 1399985191002447872, '2022-06-04 18:45:09.552000', 1399985191002447872, '2022-06-04 18:45:09.552000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132732350465, 'OrderRecommendController#findCoupon', '查询适用的优惠券', 'POST', '/order/recommend/findCoupon', '订单优惠选择与推荐', b'1', b'1', '订单优惠选择与推荐 查询适用的优惠券', 1399985191002447872, '2022-06-04 18:45:09.552000', 1399985191002447872, '2022-06-04 18:45:09.552000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132732350466, 'UserDeptController#findIdsByUser', '根据用户ID获取到部门id集合', 'GET', '/user/dept/findIdsByUser', '用户部门关联关系', b'1', b'1', '用户部门关联关系 根据用户ID获取到部门id集合', 1399985191002447872, '2022-06-04 18:45:09.552000', 1399985191002447872, '2022-06-04 18:45:09.552000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132736544768, 'IdempotencyDemoController#lock20', '分布式锁(暂停20秒)', 'GET', '/demo/lock/lock20', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(暂停20秒)', 1399985191002447872, '2022-06-04 18:45:09.553000', 1399985191002447872, '2022-06-04 18:45:09.553000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132736544769, 'StrategyRegisterController#delete', '删除', 'DELETE', '/strategy/register/del/{id}', '策略注册', b'1', b'1', '策略注册 删除', 1399985191002447872, '2022-06-04 18:45:09.553000', 1399985191002447872, '2022-06-04 18:45:09.553000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132740739072, 'WalletController#findById', '根据钱包ID查询钱包', 'GET', '/wallet/findById', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据钱包ID查询钱包', 1399985191002447872, '2022-06-04 18:45:09.554000', 1399985191002447872, '2022-06-04 18:45:09.554000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132740739073, 'UserRoleController#saveAndUpdate', '给用户分配角色', 'POST', '/user/role/saveAndUpdate', '用户角色管理', b'1', b'1', '用户角色管理 给用户分配角色', 1399985191002447872, '2022-06-04 18:45:09.554000', 1399985191002447872, '2022-06-04 18:45:09.554000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132740739074, 'TestController#redisPub', 'redis消息队列发布', 'GET', '/test/redisPub', '测试控制器', b'1', b'1', '测试控制器 redis消息队列发布', 1399985191002447872, '2022-06-04 18:45:09.554000', 1399985191002447872, '2022-06-04 18:45:09.555000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132744933376, 'GoodsController#page', '分页', 'GET', '/goods/page', '商品管理', b'1', b'1', '商品管理 分页', 1399985191002447872, '2022-06-04 18:45:09.555000', 1399985191002447872, '2022-06-04 18:45:09.555000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132744933377, 'SwaggerConfigResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs/swagger-config', 'SwaggerConfigResource', b'0', b'0', 'SwaggerConfigResource openapiJson', 1399985191002447872, '2022-06-04 18:45:09.555000', 1399985191002447872, '2022-06-04 18:47:08.619000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037132749127680, 'PermPathController#findAll', '权限列表', 'GET', '/perm/path/findAll', '请求权限资源', b'1', b'1', '请求权限资源 权限列表', 1399985191002447872, '2022-06-04 18:45:09.556000', 1399985191002447872, '2022-06-04 18:45:09.556000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132749127681, 'CategoryParameterGroupController#findById', '通过ID查询', 'GET', '/categoryParameterGroup/findById', '类目参数组', b'1', b'1', '类目参数组 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.556000', 1399985191002447872, '2022-06-04 18:45:09.556000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132753321984, 'PayController#syncByBusinessId', '刷新指定业务id的支付单状态', 'POST', '/uni_pay/syncByBusinessId', '统一支付', b'1', b'1', '统一支付 刷新指定业务id的支付单状态', 1399985191002447872, '2022-06-04 18:45:09.557000', 1399985191002447872, '2022-06-04 18:45:09.557000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132753321985, 'DingRobotConfigController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/ding/robot/config/existsByCodeNotId', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.557000', 1399985191002447872, '2022-06-04 18:45:09.557000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132753321986, 'PermMenuController#add', '添加菜单权限', 'POST', '/perm/menu/add', '菜单权限资源', b'1', b'1', '菜单权限资源 添加菜单权限', 1399985191002447872, '2022-06-04 18:45:09.557000', 1399985191002447872, '2022-06-04 18:45:09.557000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132757516288, 'CouponController#obtainCoupon', '领取优惠券', 'POST', '/coupon/obtainCoupon', '优惠券', b'1', b'1', '优惠券 领取优惠券', 1399985191002447872, '2022-06-04 18:45:09.558000', 1399985191002447872, '2022-06-04 18:45:09.558000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132757516289, 'MessageQueueDemoController#sendRabbitMsg', '发送RabbitMQ消息', 'POST', '/demo/mq/sendRabbitMsg', '测试消息队列', b'1', b'1', '测试消息队列 发送RabbitMQ消息', 1399985191002447872, '2022-06-04 18:45:09.558000', 1399985191002447872, '2022-06-04 18:45:09.558000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132761710592, 'DingRobotSendController#sendLink', '测试发送link', 'POST', '/ding/robot/send/link', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送link', 1399985191002447872, '2022-06-04 18:45:09.559000', 1399985191002447872, '2022-06-04 18:45:09.559000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132761710593, 'GoodsSkuController#findByGoodsId', '根据goodsId查询', 'GET', '/sku/findByGoodsId', 'sku操作', b'1', b'1', 'sku操作 根据goodsId查询', 1399985191002447872, '2022-06-04 18:45:09.559000', 1399985191002447872, '2022-06-04 18:45:09.559000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132761710594, 'UserAdminController#getUserInfoWhole', '查询用户详情', 'GET', '/user/admin/getUserInfoWhole', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 查询用户详情', 1399985191002447872, '2022-06-04 18:45:09.559000', 1399985191002447872, '2022-06-04 18:45:09.559000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132765904896, 'OperateLogController#findById', '获取', 'GET', '/log/operate/findById', '操作日志', b'1', b'1', '操作日志 获取', 1399985191002447872, '2022-06-04 18:45:09.560000', 1399985191002447872, '2022-06-04 18:45:09.560000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132765904897, 'InventoryController#increaseInventory', '增补指定 SKU 的可售库存， 扣减对应售出', 'POST', '/inventory/increaseInventory', '库存操作', b'1', b'1', '库存操作 增补指定 SKU 的可售库存， 扣减对应售出', 1399985191002447872, '2022-06-04 18:45:09.560000', 1399985191002447872, '2022-06-04 18:45:09.560000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132770099200, 'OrderFindController#findByUser', '根据用户获取订单', 'GET', '/order/findByUser', '订单查询', b'1', b'1', '订单查询 根据用户获取订单', 1399985191002447872, '2022-06-04 18:45:09.561000', 1399985191002447872, '2022-06-04 18:45:09.561000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132770099201, 'DataSensitiveDemoController#delete', '删除', 'DELETE', '/demo/data/sensitive/delete', '数据脱敏演示', b'1', b'1', '数据脱敏演示 删除', 1399985191002447872, '2022-06-04 18:45:09.561000', 1399985191002447872, '2022-06-04 18:45:09.561000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132770099202, 'DataPermDemoController#update', '修改', 'POST', '/demo/data/perm/update', '数据权限演示', b'1', b'1', '数据权限演示 修改', 1399985191002447872, '2022-06-04 18:45:09.561000', 1399985191002447872, '2022-06-04 18:45:09.561000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132774293504, 'CategoryParameterController#update', '修改', 'POST', '/categoryParameter/update', '类目参数', b'1', b'1', '类目参数 修改', 1399985191002447872, '2022-06-04 18:45:09.562000', 1399985191002447872, '2022-06-04 18:45:09.562000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132774293505, 'DataScopeController#existsByCode', '编码是否被使用', 'GET', '/data/scope/existsByCode', '数据范围权限配置', b'1', b'1', '数据范围权限配置 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.562000', 1399985191002447872, '2022-06-04 18:45:09.562000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132778487808, 'PermMenuController#allTree', '获取全部树', 'GET', '/perm/menu/allTree', '菜单权限资源', b'1', b'1', '菜单权限资源 获取全部树', 1399985191002447872, '2022-06-04 18:45:09.563000', 1399985191002447872, '2022-06-04 18:45:09.563000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132778487809, 'TestController#sendWsByUserId', '发送ws消息(全部用户)', 'POST', '/test/sendWsByAll', '测试控制器', b'1', b'1', '测试控制器 发送ws消息(全部用户)', 1399985191002447872, '2022-06-04 18:45:09.563000', 1399985191002447872, '2022-06-04 18:45:09.563000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132778487810, 'BrandController#findAll', '查询所有', 'GET', '/brand/findAll', '品牌', b'1', b'1', '品牌 查询所有', 1399985191002447872, '2022-06-04 18:45:09.563000', 1399985191002447872, '2022-06-04 18:45:09.563000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132786876416, 'PermPathController#delete', '删除权限', 'DELETE', '/perm/path/delete', '请求权限资源', b'1', b'1', '请求权限资源 删除权限', 1399985191002447872, '2022-06-04 18:45:09.565000', 1399985191002447872, '2022-06-04 18:45:09.565000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132786876417, 'ClientController#findAll', '查询所有的终端', 'GET', '/client/findAll', '终端管理', b'1', b'1', '终端管理 查询所有的终端', 1399985191002447872, '2022-06-04 18:45:09.565000', 1399985191002447872, '2022-06-04 18:45:09.565000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132791070720, 'StrategyController#findByType', '根据类型查询', 'GET', '/strategy/findByType', '策略定义', b'1', b'1', '策略定义 根据类型查询', 1399985191002447872, '2022-06-04 18:45:09.566000', 1399985191002447872, '2022-06-04 18:45:09.566000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132791070721, 'PermMenuController#update', '修改菜单权限', 'POST', '/perm/menu/update', '菜单权限资源', b'1', b'1', '菜单权限资源 修改菜单权限', 1399985191002447872, '2022-06-04 18:45:09.566000', 1399985191002447872, '2022-06-04 18:45:09.566000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132795265024, 'DataPermDemoController#findById', '通过ID查询', 'GET', '/demo/data/perm/findById', '数据权限演示', b'1', b'1', '数据权限演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.567000', 1399985191002447872, '2022-06-04 18:45:09.567000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132795265025, 'SystemParamController#existsByKey', '判断编码是否存在', 'GET', '/system/param/existsByKey', '系统参数', b'1', b'1', '系统参数 判断编码是否存在', 1399985191002447872, '2022-06-04 18:45:09.567000', 1399985191002447872, '2022-06-04 18:45:09.567000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132799459328, 'ClientController#findById', '通过ID查询终端', 'GET', '/client/findById', '终端管理', b'1', b'1', '终端管理 通过ID查询终端', 1399985191002447872, '2022-06-04 18:45:09.568000', 1399985191002447872, '2022-06-04 18:45:09.568000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132799459329, 'OnlineUserController#page', '分页', 'GET', '/user/online/page', '在线用户', b'1', b'1', '在线用户 分页', 1399985191002447872, '2022-06-04 18:45:09.568000', 1399985191002447872, '2022-06-04 18:45:09.568000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132799459330, 'DeptController#add', '添加', 'POST', '/dept/add', '部门管理', b'1', b'1', '部门管理 添加', 1399985191002447872, '2022-06-04 18:45:09.568000', 1399985191002447872, '2022-06-04 18:45:09.568000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132803653632, 'DictionaryController#update', '更新', 'POST', '/dict/update', '字典', b'1', b'1', '字典 更新', 1399985191002447872, '2022-06-04 18:45:09.569000', 1399985191002447872, '2022-06-04 18:45:09.569000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132803653633, 'ClientController#page', '分页查询终端', 'GET', '/client/page', '终端管理', b'1', b'1', '终端管理 分页查询终端', 1399985191002447872, '2022-06-04 18:45:09.569000', 1399985191002447872, '2022-06-04 18:45:09.569000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132807847936, 'AppVersionController#check', '检查更新', 'POST', '/app/version/check', 'app版本管理', b'1', b'1', 'app版本管理 检查更新', 1399985191002447872, '2022-06-04 18:45:09.570000', 1399985191002447872, '2022-06-04 18:45:09.570000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132807847937, 'UserInfoController#existsUsername', '账号是否被使用(不包含自己)', 'GET', '/user/existsUsernameNotId', '用户管理', b'1', b'1', '用户管理 账号是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.570000', 1399985191002447872, '2022-06-04 18:45:09.570000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132807847938, 'CategoryController#findTree', '获取类目树', 'GET', '/category/findTree', '类目管理', b'1', b'1', '类目管理 获取类目树', 1399985191002447872, '2022-06-04 18:45:09.570000', 1399985191002447872, '2022-06-04 18:45:09.570000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132812042240, 'PaymentController#findStatusByBusinessId', '根据业务ID获取支付状态', 'GET', '/payment/findStatusByBusinessId', '支付记录', b'1', b'1', '支付记录 根据业务ID获取支付状态', 1399985191002447872, '2022-06-04 18:45:09.571000', 1399985191002447872, '2022-06-04 18:45:09.571000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132812042241, 'BrandController#update', '修改', 'POST', '/brand/update', '品牌', b'1', b'1', '品牌 修改', 1399985191002447872, '2022-06-04 18:45:09.571000', 1399985191002447872, '2022-06-04 18:45:09.571000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132812042242, 'WalletLogController#page', '查询钱包日志(分页)', 'GET', '/wallet/log/page', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 查询钱包日志(分页)', 1399985191002447872, '2022-06-04 18:45:09.572000', 1399985191002447872, '2022-06-04 18:45:09.572000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132816236544, 'DataSensitiveDemoController#findById', '通过ID查询', 'GET', '/demo/data/sensitive/findById', '数据脱敏演示', b'1', b'1', '数据脱敏演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.572000', 1399985191002447872, '2022-06-04 18:45:09.572000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132816236545, 'OrderPreviewController#previewOrderPriceNoCheck', '预览价格(手动无检查)', 'POST', '/order/preview/previewOrderPriceNoCheck', '订单计算', b'1', b'1', '订单计算 预览价格(手动无检查)', 1399985191002447872, '2022-06-04 18:45:09.572000', 1399985191002447872, '2022-06-04 18:45:09.572000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132820430848, 'InventoryController#increaseAvailable', '增补指定 SKU 的可售库存', 'POST', '/inventory/increaseAvailable', '库存操作', b'1', b'1', '库存操作 增补指定 SKU 的可售库存', 1399985191002447872, '2022-06-04 18:45:09.573000', 1399985191002447872, '2022-06-04 18:45:09.573000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132820430849, 'CategoryController#add', '增加新类目', 'POST', '/category/add', '类目管理', b'1', b'1', '类目管理 增加新类目', 1399985191002447872, '2022-06-04 18:45:09.573000', 1399985191002447872, '2022-06-04 18:45:09.573000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132820430850, 'DictionaryController#page', '分页', 'GET', '/dict/page', '字典', b'1', b'1', '字典 分页', 1399985191002447872, '2022-06-04 18:45:09.573000', 1399985191002447872, '2022-06-04 18:45:09.573000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132824625152, 'PaymentController#findByBusinessId', '根据businessId获取列表', 'GET', '/payment/findByBusinessId', '支付记录', b'1', b'1', '支付记录 根据businessId获取列表', 1399985191002447872, '2022-06-04 18:45:09.574000', 1399985191002447872, '2022-06-04 18:45:09.574000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132824625153, 'BrandController#add', '添加', 'POST', '/brand/add', '品牌', b'1', b'1', '品牌 添加', 1399985191002447872, '2022-06-04 18:45:09.574000', 1399985191002447872, '2022-06-04 18:45:09.574000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132824625154, 'SuperQueryDemoController#page', '分页查询', 'GET', '/demo/super/query/page', '超级查询演示', b'1', b'1', '超级查询演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.574000', 1399985191002447872, '2022-06-04 18:45:09.574000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132828819456, 'ActivityController#add', '注册活动', 'POST', '/activity/add', '活动', b'1', b'1', '活动 注册活动', 1399985191002447872, '2022-06-04 18:45:09.575000', 1399985191002447872, '2022-06-04 18:45:09.575000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132828819457, 'SystemParamController#delete', '删除', 'DELETE', '/system/param/delete', '系统参数', b'1', b'1', '系统参数 删除', 1399985191002447872, '2022-06-04 18:45:09.575000', 1399985191002447872, '2022-06-04 18:45:09.575000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132828819458, 'UserSocialLoginController#page', '分页', 'GET', '/user/social/page', '用户三方登录管理', b'1', b'1', '用户三方登录管理 分页', 1399985191002447872, '2022-06-04 18:45:09.575000', 1399985191002447872, '2022-06-04 18:45:09.575000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132833013760, 'DataScopeController#delete', '删除', 'DELETE', '/data/scope/delete', '数据范围权限配置', b'1', b'1', '数据范围权限配置 删除', 1399985191002447872, '2022-06-04 18:45:09.576000', 1399985191002447872, '2022-06-04 18:45:09.576000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132833013761, 'MultipleOpenApiWebMvcResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs/{group}', 'MultipleOpenApiWebMvcResource', b'0', b'0', 'MultipleOpenApiWebMvcResource openapiJson', 1399985191002447872, '2022-06-04 18:45:09.576000', 1399985191002447872, '2022-06-04 18:47:14.753000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037132833013762, 'UserRoleController#findRolesByUser', '根据用户ID获取到角色集合', 'GET', '/user/role/findRolesByUser', '用户角色管理', b'1', b'1', '用户角色管理 根据用户ID获取到角色集合', 1399985191002447872, '2022-06-04 18:45:09.576000', 1399985191002447872, '2022-06-04 18:45:09.576000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132837208064, 'RoleMenuController#findPermissionIdsByRole', '根据角色id获取关联权限id集合(包含资源和菜单)', 'GET', '/role/menu/findPermissionIdsByRole', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 根据角色id获取关联权限id集合(包含资源和菜单)', 1399985191002447872, '2022-06-04 18:45:09.577000', 1399985191002447872, '2022-06-04 18:45:09.577000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132837208065, 'DingRobotConfigController#existsByCode', '编码是否被使用', 'GET', '/ding/robot/config/existsByCode', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.577000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132841402368, 'VoucherController#findById', '单条查询', 'GET', '/voucher/findById', '储值卡', b'1', b'1', '储值卡 单条查询', 1399985191002447872, '2022-06-04 18:45:09.578000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132841402369, 'RolePathController#findPathsByUser', '根据用户id获取角色授权(请求权限列表)', 'GET', '/role/path/findPathsByUser', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 根据用户id获取角色授权(请求权限列表)', 1399985191002447872, '2022-06-04 18:45:09.578000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132841402370, 'InventoryController#getAvailable', '获取指定 SKU 的可用库存', 'GET', '/inventory/getAvailable', '库存操作', b'1', b'1', '库存操作 获取指定 SKU 的可用库存', 1399985191002447872, '2022-06-04 18:45:09.578000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132845596672, 'CategoryParameterController#findById', '通过ID查询', 'GET', '/categoryParameter/findById', '类目参数', b'1', b'1', '类目参数 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.579000', 1399985191002447872, '2022-06-04 18:45:09.579000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132845596673, 'CategoryController#update', '更新类目', 'POST', '/category/update', '类目管理', b'1', b'1', '类目管理 更新类目', 1399985191002447872, '2022-06-04 18:45:09.579000', 1399985191002447872, '2022-06-04 18:45:09.579000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132849790976, 'ClientController#add', '添加终端', 'POST', '/client/add', '终端管理', b'1', b'1', '终端管理 添加终端', 1399985191002447872, '2022-06-04 18:45:09.580000', 1399985191002447872, '2022-06-04 18:45:09.580000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132853985280, 'VoucherController#lock', '冻结', 'POST', '/voucher/lock', '储值卡', b'1', b'1', '储值卡 冻结', 1399985191002447872, '2022-06-04 18:45:09.581000', 1399985191002447872, '2022-06-04 18:45:09.581000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132853985281, 'DataScopeController#deleteUserAssigns', '批量删除关联用户', 'DELETE', '/data/scope/deleteUserAssigns', '数据范围权限配置', b'1', b'1', '数据范围权限配置 批量删除关联用户', 1399985191002447872, '2022-06-04 18:45:09.581000', 1399985191002447872, '2022-06-04 18:45:09.581000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132858179584, 'DictionaryItemController#update', '修改字典项（返回字典项对象）', 'POST', '/dict/item/update', '字典项', b'1', b'1', '字典项 修改字典项（返回字典项对象）', 1399985191002447872, '2022-06-04 18:45:09.582000', 1399985191002447872, '2022-06-04 18:45:09.582000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132858179585, 'CategoryParameterGroupController#update', '修改', 'POST', '/categoryParameterGroup/update', '类目参数组', b'1', b'1', '类目参数组 修改', 1399985191002447872, '2022-06-04 18:45:09.582000', 1399985191002447872, '2022-06-04 18:45:09.582000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132862373888, 'SuperQueryDemoController#superQuery', '超级查询(分页)', 'POST', '/demo/super/query/superQuery', '超级查询演示', b'1', b'1', '超级查询演示 超级查询(分页)', 1399985191002447872, '2022-06-04 18:45:09.583000', 1399985191002447872, '2022-06-04 18:45:09.583000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132862373889, 'AggregateController#createAggregatePay', '创建聚合支付', 'POST', '/aggregate/createAggregatePay', '聚合支付', b'1', b'1', '聚合支付 创建聚合支付', 1399985191002447872, '2022-06-04 18:45:09.583000', 1399985191002447872, '2022-06-04 18:45:09.583000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132862373890, 'CategoryParameterController#page', '分页查询(限定类目和分组id)', 'GET', '/categoryParameter/page', '类目参数', b'1', b'1', '类目参数 分页查询(限定类目和分组id)', 1399985191002447872, '2022-06-04 18:45:09.583000', 1399985191002447872, '2022-06-04 18:45:09.583000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132866568192, 'WalletController#createWallet', '开通用户钱包操作', 'POST', '/wallet/createWallet', '钱包相关的接口', b'1', b'1', '钱包相关的接口 开通用户钱包操作', 1399985191002447872, '2022-06-04 18:45:09.584000', 1399985191002447872, '2022-06-04 18:45:09.584000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132866568193, 'CategoryParameterController#existsByName', '判断类目参数是否已经存在(不包含自身)', 'GET', '/categoryParameter/existsByNameNotId', '类目参数', b'1', b'1', '类目参数 判断类目参数是否已经存在(不包含自身)', 1399985191002447872, '2022-06-04 18:45:09.584000', 1399985191002447872, '2022-06-04 18:45:09.584000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132870762496, 'AlipayConfigController#findById', '根据Id查询', 'GET', '/alipay/findById', '支付宝配置', b'1', b'1', '支付宝配置 根据Id查询', 1399985191002447872, '2022-06-04 18:45:09.585000', 1399985191002447872, '2022-06-04 18:45:09.585000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132870762497, 'PermMenuController#menuTree', '获取菜单树', 'GET', '/perm/menu/menuTree', '菜单权限资源', b'1', b'1', '菜单权限资源 获取菜单树', 1399985191002447872, '2022-06-04 18:45:09.585000', 1399985191002447872, '2022-06-04 18:45:09.585000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132870762498, 'DataScopeController#getDeptIds', '获取关联部门id', 'GET', '/data/scope/getDeptIds', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取关联部门id', 1399985191002447872, '2022-06-04 18:45:09.585000', 1399985191002447872, '2022-06-04 18:45:09.585000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132874956800, 'QuartzJobLogController#findById', '单条', 'GET', '/quartz/log/findById', '定时任务执行日志', b'1', b'1', '定时任务执行日志 单条', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132874956801, 'IdempotencyDemoController#lock5', '分布式锁(暂停5秒)', 'GET', '/demo/lock/lock5', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(暂停5秒)', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132874956802, 'DingTalkConfigController#findAll', '查询全部', 'GET', '/ding/config/findAll', '钉钉配置', b'1', b'1', '钉钉配置 查询全部', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132874956803, 'DingRobotConfigController#update', '修改机器人配置', 'POST', '/ding/robot/config/update', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 修改机器人配置', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132879151104, 'PayNotifyRecordController#page', '分页', 'GET', '/pay/notify/record/page', '支付回调记录', b'1', b'1', '支付回调记录 分页', 1399985191002447872, '2022-06-04 18:45:09.587000', 1399985191002447872, '2022-06-04 18:45:09.587000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132879151105, 'CouponController#getByIds', '批量优惠券', 'GET', '/coupon/getById', '优惠券', b'1', b'1', '优惠券 批量优惠券', 1399985191002447872, '2022-06-04 18:45:09.587000', 1399985191002447872, '2022-06-04 18:45:09.587000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132879151106, 'GoodsSkuController#findBySkuIds', '获取sku集合', 'GET', '/sku/findBySkuIds', 'sku操作', b'1', b'1', 'sku操作 获取sku集合', 1399985191002447872, '2022-06-04 18:45:09.587000', 1399985191002447872, '2022-06-04 18:45:09.587000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132883345408, 'SuperQueryDemoController#findById', '通过ID查询', 'GET', '/demo/super/query/findById', '超级查询演示', b'1', b'1', '超级查询演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132883345409, 'CashierController#combinationPay', '发起支付(组合支付)', 'POST', '/cashier/combinationPay', '结算台', b'1', b'1', '结算台 发起支付(组合支付)', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132883345410, 'DataScopeController#page', '分页', 'GET', '/data/scope/page', '数据范围权限配置', b'1', b'1', '数据范围权限配置 分页', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132883345411, 'SpecificationController#page', '分页查询', 'GET', '/specification/page', '规格', b'1', b'1', '规格 分页查询', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132887539712, 'PermMenuController#existsByPermCode', '编码是否被使用(不包含自己)', 'GET', '/perm/menu/existsByPermCodeNotId', '菜单权限资源', b'1', b'1', '菜单权限资源 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.589000', 1399985191002447872, '2022-06-04 18:45:09.589000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132887539713, 'OnlineUserController#logoutByUserId', '踢人下线', 'POST', '/user/online/logoutByUserId', '在线用户', b'1', b'1', '在线用户 踢人下线', 1399985191002447872, '2022-06-04 18:45:09.589000', 1399985191002447872, '2022-06-04 18:45:09.589000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132887539714, 'CategoryParameterGroupController#add', '添加', 'POST', '/categoryParameterGroup/add', '类目参数组', b'1', b'1', '类目参数组 添加', 1399985191002447872, '2022-06-04 18:45:09.589000', 1399985191002447872, '2022-06-04 18:45:09.589000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132891734016, 'FIleUpLoadController#page', '分页', 'GET', '/file/page', '文件上传', b'1', b'1', '文件上传 分页', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:45:09.590000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132891734017, 'OpenApiWebMvcResource#openapiYaml', 'openapiYaml', 'GET', '/v3/api-docs.yaml', 'OpenApiWebMvcResource', b'0', b'0', 'OpenApiWebMvcResource openapiYaml', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:47:19.608000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037132891734018, 'WeChatPayConfigController#update', '更新', 'POST', '/wechat/pay/update', '微信支付', b'1', b'1', '微信支付 更新', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:45:09.590000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132891734019, 'RolePathController#findIdsByRole', '根据角色id获取关联权限id', 'GET', '/role/path/findIdsByRole', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 根据角色id获取关联权限id', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:45:09.590000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132895928320, 'DataVersionLogController#findById', '获取', 'GET', '/log/dataVersion/findById', '数据版本日志', b'1', b'1', '数据版本日志 获取', 1399985191002447872, '2022-06-04 18:45:09.591000', 1399985191002447872, '2022-06-04 18:45:09.591000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132895928321, 'DeptController#tree', '树状展示', 'GET', '/dept/tree', '部门管理', b'1', b'1', '部门管理 树状展示', 1399985191002447872, '2022-06-04 18:45:09.591000', 1399985191002447872, '2022-06-04 18:45:09.591000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132895928322, 'UserInfoController#existsPhone', '手机号是否被使用', 'GET', '/user/existsPhone', '用户管理', b'1', b'1', '用户管理 手机号是否被使用', 1399985191002447872, '2022-06-04 18:45:09.591000', 1399985191002447872, '2022-06-04 18:45:09.591000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132900122624, 'TestController#hello', '测试', 'GET', '/test/hello', '测试控制器', b'1', b'1', '测试控制器 测试', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132900122625, 'PayController#pay', '支付', 'POST', '/uni_pay/pay', '统一支付', b'1', b'1', '统一支付 支付', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132900122626, 'RoleController#dropdown', '角色下拉框', 'GET', '/role/dropdown', '角色管理', b'1', b'1', '角色管理 角色下拉框', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132900122627, 'DataSensitiveDemoController#page', '分页查询', 'GET', '/demo/data/sensitive/page', '数据脱敏演示', b'1', b'1', '数据脱敏演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132904316928, 'CouponController#findByIds', '批量查询优惠券', 'GET', '/coupon/findByIds', '优惠券', b'1', b'1', '优惠券 批量查询优惠券', 1399985191002447872, '2022-06-04 18:45:09.593000', 1399985191002447872, '2022-06-04 18:45:09.593000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132904316929, 'DingRobotConfigController#page', '分页', 'GET', '/ding/robot/config/page', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 分页', 1399985191002447872, '2022-06-04 18:45:09.593000', 1399985191002447872, '2022-06-04 18:45:09.593000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132904316930, 'CouponController#lockByIds', '批量锁定优惠券', 'POST', '/coupon/lockByIds', '优惠券', b'1', b'1', '优惠券 批量锁定优惠券', 1399985191002447872, '2022-06-04 18:45:09.593000', 1399985191002447872, '2022-06-04 18:45:09.593000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132908511232, 'ClientController#superPage', '超级查询', 'POST', '/client/superPage', '终端管理', b'1', b'1', '终端管理 超级查询', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132908511233, 'DataPermDemoController#page', '分页查询', 'GET', '/demo/data/perm/page', '数据权限演示', b'1', b'1', '数据权限演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132908511234, 'OrderOperateController#paidOrderState', '付款成功状态变更', 'POST', '/order/paidOrderState', '订单操作', b'1', b'1', '订单操作 付款成功状态变更', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132908511235, 'UserInfoController#getLoginAfterUserInfo', '登录后获取用户信息', 'GET', '/user/getLoginAfterUserInfo', '用户管理', b'1', b'1', '用户管理 登录后获取用户信息', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132912705536, 'FIleUpLoadController#download', '下载文件', 'GET', '/file/download/{id}', '文件上传', b'0', b'0', '文件上传 下载文件', 1399985191002447872, '2022-06-04 18:45:09.595000', 1399985191002447872, '2022-06-04 18:46:04.706000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037132912705537, 'CategoryParameterGroupController#existsByName', '判断类目参数组是否已经存在(不包含自身)', 'GET', '/categoryParameterGroup/existsByNameNotId', '类目参数组', b'1', b'1', '类目参数组 判断类目参数组是否已经存在(不包含自身)', 1399985191002447872, '2022-06-04 18:45:09.595000', 1399985191002447872, '2022-06-04 18:45:09.595000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132916899840, 'UserAdminController#update', '修改用户', 'POST', '/user/admin/update', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 修改用户', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132916899841, 'OrderOperateController#cancelOrderState', '取消订单', 'POST', '/order/cancelOrderState', '订单操作', b'1', b'1', '订单操作 取消订单', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132916899842, 'ClientController#delete', '删除终端', 'DELETE', '/client/delete', '终端管理', b'1', b'1', '终端管理 删除终端', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132916899843, 'PaymentController#findPayTypeInfoByBusinessId', '根据businessId获取订单支付方式', 'GET', '/payment/findPayTypeInfoByBusinessId', '支付记录', b'1', b'1', '支付记录 根据businessId获取订单支付方式', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132921094144, 'DingTalkConfigController#add', '新增配置', 'POST', '/ding/config/add', '钉钉配置', b'1', b'1', '钉钉配置 新增配置', 1399985191002447872, '2022-06-04 18:45:09.597000', 1399985191002447872, '2022-06-04 18:45:09.597000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132921094145, 'SpecificationController#update', '修改', 'POST', '/specification/update', '规格', b'1', b'1', '规格 修改', 1399985191002447872, '2022-06-04 18:45:09.597000', 1399985191002447872, '2022-06-04 18:45:09.597000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132921094146, 'InventoryController#unlockInventory', '释放预占的SKU库存，需使用token', 'POST', '/inventory/unlockInventory', '库存操作', b'1', b'1', '库存操作 释放预占的SKU库存，需使用token', 1399985191002447872, '2022-06-04 18:45:09.597000', 1399985191002447872, '2022-06-04 18:45:09.597000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132925288448, 'CategoryParameterController#existsByName', '判断类目参数是否已经存在', 'GET', '/categoryParameter/existsByName', '类目参数', b'1', b'1', '类目参数 判断类目参数是否已经存在', 1399985191002447872, '2022-06-04 18:45:09.598000', 1399985191002447872, '2022-06-04 18:45:09.598000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132925288449, 'DataEncryptDemoController#delete', '删除', 'DELETE', '/demo/data/encrypt/delete', '数据加密解密演示', b'1', b'1', '数据加密解密演示 删除', 1399985191002447872, '2022-06-04 18:45:09.598000', 1399985191002447872, '2022-06-04 18:45:09.598000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132925288450, 'AlipayConfigController#setUpActivity', '启用指定的支付宝配置', 'POST', '/alipay/setUpActivity', '支付宝配置', b'1', b'1', '支付宝配置 启用指定的支付宝配置', 1399985191002447872, '2022-06-04 18:45:09.598000', 1399985191002447872, '2022-06-04 18:45:09.598000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132929482752, 'DataScopeController#findById', '获取', 'GET', '/data/scope/findById', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取', 1399985191002447872, '2022-06-04 18:45:09.599000', 1399985191002447872, '2022-06-04 18:45:09.599000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132929482753, 'ClientController#findByCode', '通过code查询终端', 'GET', '/client/findByCode', '终端管理', b'1', b'1', '终端管理 通过code查询终端', 1399985191002447872, '2022-06-04 18:45:09.599000', 1399985191002447872, '2022-06-04 18:45:09.599000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132929482754, 'DataPermDemoController#delete', '删除', 'DELETE', '/demo/data/perm/delete', '数据权限演示', b'1', b'1', '数据权限演示 删除', 1399985191002447872, '2022-06-04 18:45:09.599000', 1399985191002447872, '2022-06-04 18:45:09.599000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132933677056, 'DingRobotSendController#sendMarkdown', '测试发送Markdown', 'POST', '/ding/robot/send/markdown', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送Markdown', 1399985191002447872, '2022-06-04 18:45:09.600000', 1399985191002447872, '2022-06-04 18:45:09.600000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132933677057, 'OrderRecommendController#findActivity', '查询适用的活动', 'POST', '/order/recommend/findActivity', '订单优惠选择与推荐', b'1', b'1', '订单优惠选择与推荐 查询适用的活动', 1399985191002447872, '2022-06-04 18:45:09.600000', 1399985191002447872, '2022-06-04 18:45:09.600000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132933677058, 'ActivityController#get', '查询活动', 'GET', '/activity//get/{id}', '活动', b'1', b'1', '活动 查询活动', 1399985191002447872, '2022-06-04 18:45:09.600000', 1399985191002447872, '2022-06-04 18:45:09.600000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132937871360, 'QuartzJobController#judgeJobClass', '判断是否是定时任务类', 'GET', '/quartz/judgeJobClass', '定时任务', b'1', b'1', '定时任务 判断是否是定时任务类', 1399985191002447872, '2022-06-04 18:45:09.601000', 1399985191002447872, '2022-06-04 18:45:09.601000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132937871361, 'TokenEndpoint#loginOpenId', '三方登录登录', 'POST', '/token/loginOpenId', '认证相关', b'1', b'1', '认证相关 三方登录登录', 1399985191002447872, '2022-06-04 18:45:09.601000', 1399985191002447872, '2022-06-04 18:45:09.601000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132937871362, 'AlipayConfigController#clearActivity', '清除指定的支付宝配置', 'POST', '/alipay/clearActivity', '支付宝配置', b'1', b'1', '支付宝配置 清除指定的支付宝配置', 1399985191002447872, '2022-06-04 18:45:09.601000', 1399985191002447872, '2022-06-04 18:45:09.601000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132942065664, 'StrategyController#update', '更新策略', 'POST', '/strategy/update', '策略定义', b'1', b'1', '策略定义 更新策略', 1399985191002447872, '2022-06-04 18:45:09.602000', 1399985191002447872, '2022-06-04 18:45:09.602000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132942065665, 'UserDeptController#findAllByUser', '根据用户ID获取到部门集合', 'GET', '/user/dept/findAllByUser', '用户部门关联关系', b'1', b'1', '用户部门关联关系 根据用户ID获取到部门集合', 1399985191002447872, '2022-06-04 18:45:09.602000', 1399985191002447872, '2022-06-04 18:45:09.602000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132942065666, 'StrategyController#findConfigs', '获取参数配置', 'GET', '/strategy/findConfigs', '策略定义', b'1', b'1', '策略定义 获取参数配置', 1399985191002447872, '2022-06-04 18:45:09.602000', 1399985191002447872, '2022-06-04 18:45:09.602000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132946259968, 'RoleController#existsByCode', '编码是否被使用', 'GET', '/role/existsByCode', '角色管理', b'1', b'1', '角色管理 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.603000', 1399985191002447872, '2022-06-04 18:45:09.603000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132946259969, 'DingRobotSendController#sendText', '测试发送text', 'POST', '/ding/robot/send/text', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送text', 1399985191002447872, '2022-06-04 18:45:09.603000', 1399985191002447872, '2022-06-04 18:45:09.603000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132946259970, 'QuartzJobController#stop', '停止', 'POST', '/quartz/stop', '定时任务', b'1', b'1', '定时任务 停止', 1399985191002447872, '2022-06-04 18:45:09.603000', 1399985191002447872, '2022-06-04 18:45:09.603000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132950454272, 'SystemParamController#update', '更新', 'POST', '/system/param/update', '系统参数', b'1', b'1', '系统参数 更新', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132950454273, 'CodeGeneratorController#codeGenPreview', '预览生成代码', 'POST', '/gen/code/codeGenPreview', '代码生成', b'1', b'1', '代码生成 预览生成代码', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132950454274, 'DataScopeController#saveDeptAssign', '保存关联部门', 'POST', '/data/scope/saveDeptAssign', '数据范围权限配置', b'1', b'1', '数据范围权限配置 保存关联部门', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132950454275, 'PayCallbackController#wechat', '微信支付回调', 'POST', '/pay/callback/wechat', '支付回调', b'1', b'1', '支付回调 微信支付回调', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132954648576, 'UserDeptController#saveAndUpdate', '给用户分配部门', 'POST', '/user/dept/saveAndUpdate', '用户部门关联关系', b'1', b'1', '用户部门关联关系 给用户分配部门', 1399985191002447872, '2022-06-04 18:45:09.605000', 1399985191002447872, '2022-06-04 18:45:09.605000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132954648577, 'BrandController#page', '分页查询', 'GET', '/brand/page', '品牌', b'1', b'1', '品牌 分页查询', 1399985191002447872, '2022-06-04 18:45:09.605000', 1399985191002447872, '2022-06-04 18:45:09.605000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132954648578, 'QuartzJobController#page', '分页', 'GET', '/quartz/page', '定时任务', b'1', b'1', '定时任务 分页', 1399985191002447872, '2022-06-04 18:45:09.605000', 1399985191002447872, '2022-06-04 18:45:09.605000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132958842880, 'DictionaryController#findAll', '查询全部', 'GET', '/dict/findAll', '字典', b'1', b'1', '字典 查询全部', 1399985191002447872, '2022-06-04 18:45:09.606000', 1399985191002447872, '2022-06-04 18:45:09.606000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132958842881, 'DingRobotConfigController#delete', '删除', 'DELETE', '/ding/robot/config/delete', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 删除', 1399985191002447872, '2022-06-04 18:45:09.606000', 1399985191002447872, '2022-06-04 18:45:09.606000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132958842882, 'RoleMenuController#getPermissions', '获取菜单和资源权限', 'GET', '/role/menu/getPermissions', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 获取菜单和资源权限', 1399985191002447872, '2022-06-04 18:45:09.606000', 1399985191002447872, '2022-06-04 18:45:09.606000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132963037184, 'VoucherController#findByCardNo', '根据卡号查询', 'GET', '/voucher/findByCardNo', '储值卡', b'1', b'1', '储值卡 根据卡号查询', 1399985191002447872, '2022-06-04 18:45:09.607000', 1399985191002447872, '2022-06-04 18:45:09.607000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132963037185, 'DingTalkConfigController#findById', '获取详情', 'GET', '/ding/config/findById', '钉钉配置', b'1', b'1', '钉钉配置 获取详情', 1399985191002447872, '2022-06-04 18:45:09.607000', 1399985191002447872, '2022-06-04 18:45:09.607000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132963037186, 'UserAdminController#findById', '根据用户id查询用户', 'GET', '/user/admin/findById', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据用户id查询用户', 1399985191002447872, '2022-06-04 18:45:09.607000', 1399985191002447872, '2022-06-04 18:45:09.607000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132967231488, 'QuartzJobLogController#page', '分页', 'GET', '/quartz/log/page', '定时任务执行日志', b'1', b'1', '定时任务执行日志 分页', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.608000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132967231489, 'DingTalkConfigController#clearEnable', '清除启用状态', 'POST', '/ding/config/clearEnable', '钉钉配置', b'1', b'1', '钉钉配置 清除启用状态', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.608000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132967231490, 'CouponTemplateController#get', '优惠券模板详情', 'POST', '/coupon/template/get/{id}', '优惠券模板', b'1', b'1', '优惠券模板 优惠券模板详情', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.608000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132967231491, 'SystemParamController#page', '分页', 'GET', '/system/param/page', '系统参数', b'1', b'1', '系统参数 分页', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132971425792, 'InventoryController#reduceInventory', '扣减指定 SKU 的预占库存，增加对应售出', 'POST', '/inventory/reduceInventory', '库存操作', b'1', b'1', '库存操作 扣减指定 SKU 的预占库存，增加对应售出', 1399985191002447872, '2022-06-04 18:45:09.609000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132971425793, 'WalletController#getWalletInfo', '获取钱包综合信息', 'GET', '/wallet/getWalletInfo', '钱包相关的接口', b'1', b'1', '钱包相关的接口 获取钱包综合信息', 1399985191002447872, '2022-06-04 18:45:09.609000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132971425794, 'WalletController#pageByNotWallet', '分页', 'GET', '/wallet/pageByNotWallet', '钱包相关的接口', b'1', b'1', '钱包相关的接口 分页', 1399985191002447872, '2022-06-04 18:45:09.609000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132975620096, 'UserAdminController#lock', '锁定用户', 'POST', '/user/admin/lock', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 锁定用户', 1399985191002447872, '2022-06-04 18:45:09.610000', 1399985191002447872, '2022-06-04 18:45:09.610000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132975620097, 'TestController#say', '测试回声', 'GET', '/test/say', '测试控制器', b'1', b'1', '测试控制器 测试回声', 1399985191002447872, '2022-06-04 18:45:09.610000', 1399985191002447872, '2022-06-04 18:45:09.610000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132975620098, 'PayController#refund', '退款', 'POST', '/uni_pay/refund', '统一支付', b'1', b'1', '统一支付 退款', 1399985191002447872, '2022-06-04 18:45:09.610000', 1399985191002447872, '2022-06-04 18:45:09.610000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132979814400, 'WeChatPayConfigController#setUpActivity', '设置启用的微信支付配置', 'POST', '/wechat/pay/setUpActivity', '微信支付', b'1', b'1', '微信支付 设置启用的微信支付配置', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132979814401, 'TestController#sendWsByUserId', '发送ws消息', 'POST', '/test/sendWsByUserId', '测试控制器', b'1', b'1', '测试控制器 发送ws消息', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132979814402, 'PermMenuController#findById', '根据id查询', 'GET', '/perm/menu/findById', '菜单权限资源', b'1', b'1', '菜单权限资源 根据id查询', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132979814403, 'WeChatPayConfigController#clearActivity', '清除指定的微信支付配置', 'POST', '/wechat/pay/clearActivity', '微信支付', b'1', b'1', '微信支付 清除指定的微信支付配置', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132984008704, 'PermPathController#findById', '获取详情', 'GET', '/perm/path/findById', '请求权限资源', b'1', b'1', '请求权限资源 获取详情', 1399985191002447872, '2022-06-04 18:45:09.612000', 1399985191002447872, '2022-06-04 18:45:09.612000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132984008705, 'RefundRecordController#findById', '根据id查询', 'GET', '/pay/refund/findById', '退款记录', b'1', b'1', '退款记录 根据id查询', 1399985191002447872, '2022-06-04 18:45:09.612000', 1399985191002447872, '2022-06-04 18:45:09.612000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132984008706, 'DatabaseTableController#findAll', '表列表', 'GET', '/gen/table/findAll', '数据库表信息', b'1', b'1', '数据库表信息 表列表', 1399985191002447872, '2022-06-04 18:45:09.612000', 1399985191002447872, '2022-06-04 18:45:09.612000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132988203008, 'CategoryParameterGroupController#delete', '删除', 'DELETE', '/categoryParameterGroup/delete', '类目参数组', b'1', b'1', '类目参数组 删除', 1399985191002447872, '2022-06-04 18:45:09.613000', 1399985191002447872, '2022-06-04 18:45:09.613000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132988203009, 'InventoryController#unlockInventoryWithoutToken', '解锁没有令牌的库存', 'POST', '/inventory/unlockInventoryWithoutToken', '库存操作', b'1', b'1', '库存操作 解锁没有令牌的库存', 1399985191002447872, '2022-06-04 18:45:09.613000', 1399985191002447872, '2022-06-04 18:45:09.613000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132988203010, 'SystemParamController#findById', '获取单条', 'GET', '/system/param/findById', '系统参数', b'1', b'1', '系统参数 获取单条', 1399985191002447872, '2022-06-04 18:45:09.613000', 1399985191002447872, '2022-06-04 18:45:09.613000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132992397312, 'WalletController#findByUser', '根据用户查询钱包', 'GET', '/wallet/findByUser', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据用户查询钱包', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132992397313, 'SuperQueryDemoController#add', '添加', 'POST', '/demo/super/query/add', '超级查询演示', b'1', b'1', '超级查询演示 添加', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132992397314, 'SpecificationController#findAll', '查询所有', 'GET', '/specification/findAll', '规格', b'1', b'1', '规格 查询所有', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132992397315, 'DingRobotConfigController#findById', '获取详情', 'GET', '/ding/robot/config/findById', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 获取详情', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132996591616, 'UserInfoController#updateBaseInfo', '修改用户基础信息', 'POST', '/user/updateBaseInfo', '用户管理', b'1', b'1', '用户管理 修改用户基础信息', 1399985191002447872, '2022-06-04 18:45:09.615000', 1399985191002447872, '2022-06-04 18:45:09.615000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132996591617, 'DataScopeController#findAll', '查询全部', 'GET', '/data/scope/findAll', '数据范围权限配置', b'1', b'1', '数据范围权限配置 查询全部', 1399985191002447872, '2022-06-04 18:45:09.615000', 1399985191002447872, '2022-06-04 18:45:09.615000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037132996591618, 'UserDataScopeController#findAllByUser', '根据用户ID获取到部门集合', 'GET', '/user/data/scope/findAllByUser', '用户数据权限配置', b'1', b'1', '用户数据权限配置 根据用户ID获取到部门集合', 1399985191002447872, '2022-06-04 18:45:09.615000', 1399985191002447872, '2022-06-04 18:45:09.615000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133000785920, 'StrategyController#findAll', '查询全部策略', 'GET', '/strategy/findAll', '策略定义', b'1', b'1', '策略定义 查询全部策略', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133000785921, 'PaymentController#findById', '根据id获取', 'GET', '/payment/findById', '支付记录', b'1', b'1', '支付记录 根据id获取', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133000785922, 'CouponTemplateController#addCouponTemplate', '新建优惠券模板', 'POST', '/coupon/template/add', '优惠券模板', b'1', b'1', '优惠券模板 新建优惠券模板', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133000785923, 'WalletController#page', '分页', 'GET', '/wallet/page', '钱包相关的接口', b'1', b'1', '钱包相关的接口 分页', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133004980224, 'InventoryController#reduceSoldAndCapacity', '扣减指定 SKU 的售出库存并减少总库存', 'POST', '/inventory/reduceSoldAndCapacity', '库存操作', b'1', b'1', '库存操作 扣减指定 SKU 的售出库存并减少总库存', 1399985191002447872, '2022-06-04 18:45:09.617000', 1399985191002447872, '2022-06-04 18:45:09.617000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133004980225, 'MultipleOpenApiWebMvcResource#openapiYaml', 'openapiYaml', 'GET', '/v3/api-docs.yaml/{group}', 'MultipleOpenApiWebMvcResource', b'0', b'0', 'MultipleOpenApiWebMvcResource openapiYaml', 1399985191002447872, '2022-06-04 18:45:09.617000', 1399985191002447872, '2022-06-04 18:47:22.698000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037133004980226, 'DataEncryptDemoController#page', '分页查询', 'GET', '/demo/data/encrypt/page', '数据加密解密演示', b'1', b'1', '数据加密解密演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.617000', 1399985191002447872, '2022-06-04 18:45:09.617000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133009174528, 'QuartzJobController#start', '启动', 'POST', '/quartz/start', '定时任务', b'1', b'1', '定时任务 启动', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:45:09.618000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133009174529, 'AppVersionController#page', '分页', 'GET', '/app/version/page', 'app版本管理', b'1', b'1', 'app版本管理 分页', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:45:09.618000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133009174530, 'FIleUpLoadController#local', '上传', 'POST', '/file/upload', '文件上传', b'0', b'0', '文件上传 上传', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:46:08.153000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037133009174531, 'AppVersionController#delete', '删除', 'DELETE', '/app/version/delete', 'app版本管理', b'1', b'1', 'app版本管理 删除', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:45:09.618000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133013368832, 'DeptController#deleteAndChildren', '强制级联删除', 'DELETE', '/dept/deleteAndChildren', '部门管理', b'1', b'1', '部门管理 强制级联删除', 1399985191002447872, '2022-06-04 18:45:09.619000', 1399985191002447872, '2022-06-04 18:45:09.619000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133013368833, 'SuperQueryDemoController#delete', '删除', 'DELETE', '/demo/super/query/delete', '超级查询演示', b'1', b'1', '超级查询演示 删除', 1399985191002447872, '2022-06-04 18:45:09.619000', 1399985191002447872, '2022-06-04 18:45:09.619000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133013368834, 'ClientController#existsByCode', '编码是否被使用', 'GET', '/client/existsByCode', '终端管理', b'1', b'1', '终端管理 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.619000', 1399985191002447872, '2022-06-04 18:45:09.619000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133017563136, 'OrderOperateController#placeOrder', '传入订单和优惠, 下单', 'POST', '/order/placeOrder', '订单操作', b'1', b'1', '订单操作 传入订单和优惠, 下单', 1399985191002447872, '2022-06-04 18:45:09.620000', 1399985191002447872, '2022-06-04 18:45:09.620000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133017563137, 'GoodsController#findById', '查询包含商品信息', 'GET', '/goods/findById', '商品管理', b'1', b'1', '商品管理 查询包含商品信息', 1399985191002447872, '2022-06-04 18:45:09.620000', 1399985191002447872, '2022-06-04 18:45:09.620000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133021757440, 'GoodsSkuController#add', '添加商品sku', 'POST', '/sku/add', 'sku操作', b'1', b'1', 'sku操作 添加商品sku', 1399985191002447872, '2022-06-04 18:45:09.621000', 1399985191002447872, '2022-06-04 18:45:09.621000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133021757441, 'LoginLogController#findById', '获取', 'GET', '/log/login/findById', '登录日志', b'1', b'1', '登录日志 获取', 1399985191002447872, '2022-06-04 18:45:09.621000', 1399985191002447872, '2022-06-04 18:45:09.621000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133021757442, 'CategoryParameterGroupController#existsByName', '判断类目参数组是否已经存在', 'GET', '/categoryParameterGroup/existsByName', '类目参数组', b'1', b'1', '类目参数组 判断类目参数组是否已经存在', 1399985191002447872, '2022-06-04 18:45:09.621000', 1399985191002447872, '2022-06-04 18:45:09.621000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133025951744, 'UserInfoController#updatePassword', '修改密码', 'POST', '/user/updatePassword', '用户管理', b'1', b'1', '用户管理 修改密码', 1399985191002447872, '2022-06-04 18:45:09.622000', 1399985191002447872, '2022-06-04 18:45:09.622000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133025951745, 'DataScopeController#existsByName', '名称是否被使用', 'GET', '/data/scope/existsByName', '数据范围权限配置', b'1', b'1', '数据范围权限配置 名称是否被使用', 1399985191002447872, '2022-06-04 18:45:09.622000', 1399985191002447872, '2022-06-04 18:45:09.622000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133025951746, 'GoodsSkuController#getById', '获取sku', 'GET', '/sku/get', 'sku操作', b'1', b'1', 'sku操作 获取sku', 1399985191002447872, '2022-06-04 18:45:09.622000', 1399985191002447872, '2022-06-04 18:45:09.622000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133030146048, 'GoodsController#add', '添加商品', 'POST', '/goods/add', '商品管理', b'1', b'1', '商品管理 添加商品', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133030146049, 'IdempotencyDemoController#lock0', '分布式锁(不暂停)', 'POST', '/demo/lock/lock0', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(不暂停)', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133030146050, 'RoleController#existsByName', '名称是否被使用(不包含自己)', 'GET', '/role/existsByNameNotId', '角色管理', b'1', b'1', '角色管理 名称是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133030146051, 'CaptchaController#imgCaptcha', '获取图片验证码', 'POST', '/captcha/imgCaptcha', '验证码服务', b'1', b'1', '验证码服务 获取图片验证码', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133034340352, 'PaymentController#page', '分页查询', 'GET', '/payment/page', '支付记录', b'1', b'1', '支付记录 分页查询', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:45:09.624000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133034340353, 'OpenApiWebMvcResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs', 'OpenApiWebMvcResource', b'0', b'0', 'OpenApiWebMvcResource openapiJson', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:47:25.990000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037133034340354, 'UserAdminController#page', '分页', 'GET', '/user/admin/page', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 分页', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:45:09.624000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133034340355, 'SuperQueryDemoController#update', '修改', 'POST', '/demo/super/query/update', '超级查询演示', b'1', b'1', '超级查询演示 修改', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:45:09.625000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133038534656, 'OperateLogController#page', '分页', 'GET', '/log/operate/page', '操作日志', b'1', b'1', '操作日志 分页', 1399985191002447872, '2022-06-04 18:45:09.625000', 1399985191002447872, '2022-06-04 18:45:09.625000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133038534657, 'DictionaryController#findById', '根据id获取', 'GET', '/dict/findById', '字典', b'1', b'1', '字典 根据id获取', 1399985191002447872, '2022-06-04 18:45:09.625000', 1399985191002447872, '2022-06-04 18:45:09.625000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133042728960, 'DingRobotConfigController#findAll', '查询全部', 'GET', '/ding/robot/config/findAll', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 查询全部', 1399985191002447872, '2022-06-04 18:45:09.626000', 1399985191002447872, '2022-06-04 18:45:09.626000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133042728961, 'StrategyRegisterController#findAll', '查询全部', 'GET', '/strategy/register/findAll', '策略注册', b'1', b'1', '策略注册 查询全部', 1399985191002447872, '2022-06-04 18:45:09.626000', 1399985191002447872, '2022-06-04 18:45:09.626000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133042728962, 'CategoryController#findById', '通过 id 获取指定类目', 'GET', '/category/findById', '类目管理', b'1', b'1', '类目管理 通过 id 获取指定类目', 1399985191002447872, '2022-06-04 18:45:09.626000', 1399985191002447872, '2022-06-04 18:45:09.626000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133046923264, 'CategoryController#findBindSpecIds', '根据类目id查询关联的绑定规格id集合', 'GET', '/category/findBindSpecIds', '类目管理', b'1', b'1', '类目管理 根据类目id查询关联的绑定规格id集合', 1399985191002447872, '2022-06-04 18:45:09.627000', 1399985191002447872, '2022-06-04 18:45:09.627000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133046923265, 'RefundRecordController#page', '分页', 'GET', '/pay/refund/page', '退款记录', b'1', b'1', '退款记录 分页', 1399985191002447872, '2022-06-04 18:45:09.627000', 1399985191002447872, '2022-06-04 18:45:09.627000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133046923266, 'RoleController#delete', '删除角色', 'DELETE', '/role/delete', '角色管理', b'1', b'1', '角色管理 删除角色', 1399985191002447872, '2022-06-04 18:45:09.627000', 1399985191002447872, '2022-06-04 18:45:09.627000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133051117568, 'GoodsController#findByCategory', '按类目查询', 'GET', '/goods/findByCategory', '商品管理', b'1', b'1', '商品管理 按类目查询', 1399985191002447872, '2022-06-04 18:45:09.628000', 1399985191002447872, '2022-06-04 18:45:09.628000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133051117569, 'IdempotencyDemoController#idempotency', '幂等演示', 'POST', '/demo/lock/idempotency', '幂等控制演示', b'1', b'1', '幂等控制演示 幂等演示', 1399985191002447872, '2022-06-04 18:45:09.628000', 1399985191002447872, '2022-06-04 18:45:09.628000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133051117570, 'AppVersionController#add', '添加', 'POST', '/app/version/add', 'app版本管理', b'1', b'1', 'app版本管理 添加', 1399985191002447872, '2022-06-04 18:45:09.628000', 1399985191002447872, '2022-06-04 18:45:09.628000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133055311872, 'TestController#sequenceZdy', '发号器自定义', 'GET', '/test/sequenceZdy', '测试控制器', b'1', b'1', '测试控制器 发号器自定义', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133055311873, 'CategoryParameterController#delete', '删除', 'DELETE', '/categoryParameter/delete', '类目参数', b'1', b'1', '类目参数 删除', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133055311874, 'DataSensitiveDemoController#update', '修改', 'POST', '/demo/data/sensitive/update', '数据脱敏演示', b'1', b'1', '数据脱敏演示 修改', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133055311875, 'SpecificationController#add', '添加', 'POST', '/specification/add', '规格', b'1', b'1', '规格 添加', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133059506176, 'PayNotifyRecordController#findById', '根据id查询', 'GET', '/pay/notify/record/findById', '支付回调记录', b'1', b'1', '支付回调记录 根据id查询', 1399985191002447872, '2022-06-04 18:45:09.630000', 1399985191002447872, '2022-06-04 18:45:09.630000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133059506177, 'DataSensitiveDemoController#add', '添加', 'POST', '/demo/data/sensitive/add', '数据脱敏演示', b'1', b'1', '数据脱敏演示 添加', 1399985191002447872, '2022-06-04 18:45:09.630000', 1399985191002447872, '2022-06-04 18:45:09.630000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133059506178, 'CouponController#findCoupon', '个人可用的优惠券', 'GET', '/coupon/findCoupon', '优惠券', b'1', b'1', '优惠券 个人可用的优惠券', 1399985191002447872, '2022-06-04 18:45:09.630000', 1399985191002447872, '2022-06-04 18:45:09.630000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133063700480, 'RoleMenuController#save', '保存请求权限关系', 'POST', '/role/menu/save', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 保存请求权限关系', 1399985191002447872, '2022-06-04 18:45:09.631000', 1399985191002447872, '2022-06-04 18:45:09.631000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133063700481, 'OrderFindController#findOrderSkuIds', '查询订单包含的skuIds', 'GET', '/order/findOrderSkuIds', '订单查询', b'1', b'1', '订单查询 查询订单包含的skuIds', 1399985191002447872, '2022-06-04 18:45:09.631000', 1399985191002447872, '2022-06-04 18:45:09.631000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133063700482, 'CategoryController#bindBrand', '绑定品牌', 'POST', '/category/bindBrand', '类目管理', b'1', b'1', '类目管理 绑定品牌', 1399985191002447872, '2022-06-04 18:45:09.631000', 1399985191002447872, '2022-06-04 18:45:09.631000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133067894784, 'FIleUpLoadController#preview', '预览文件', 'GET', '/file/preview/{id}', '文件上传', b'0', b'0', '文件上传 预览文件', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:46:13.683000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037133067894785, 'DatabaseTableController#findColumnByTableName', '获取数据表行信息', 'GET', '/gen/table/findColumnByTableName', '数据库表信息', b'1', b'1', '数据库表信息 获取数据表行信息', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:45:09.632000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133067894786, 'LoginLogController#page', '分页', 'GET', '/log/login/page', '登录日志', b'1', b'1', '登录日志 分页', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:45:09.632000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133067894787, 'CategoryController#findAll', '获取所有类目', 'GET', '/category/findAll', '类目管理', b'1', b'1', '类目管理 获取所有类目', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:45:09.632000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133072089088, 'WalletLogController#pageByWalletId', '根据钱包id查询钱包日志(分页)', 'GET', '/wallet/log/pageByWalletId', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 根据钱包id查询钱包日志(分页)', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133072089089, 'CategoryParameterGroupController#page', '分页查询', 'GET', '/categoryParameterGroup/page', '类目参数组', b'1', b'1', '类目参数组 分页查询', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133072089090, 'RoleController#page', '分页查询角色', 'GET', '/role/page', '角色管理', b'1', b'1', '角色管理 分页查询角色', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133072089091, 'WeChatPayConfigController#add', '添加微信支付配置', 'POST', '/wechat/pay/add', '微信支付', b'1', b'1', '微信支付 添加微信支付配置', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133076283392, 'UserSocialLoginController#findById', '获取详情', 'POST', '/user/social/findById', '用户三方登录管理', b'1', b'1', '用户三方登录管理 获取详情', 1399985191002447872, '2022-06-04 18:45:09.634000', 1399985191002447872, '2022-06-04 18:45:09.634000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133076283393, 'DictionaryItemController#add', '添加字典项（返回字典项对象）', 'POST', '/dict/item/add', '字典项', b'1', b'1', '字典项 添加字典项（返回字典项对象）', 1399985191002447872, '2022-06-04 18:45:09.634000', 1399985191002447872, '2022-06-04 18:45:09.634000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133076283394, 'PaymentController#superPage', '分页查询(超级查询)', 'POST', '/payment/superPage', '支付记录', b'1', b'1', '支付记录 分页查询(超级查询)', 1399985191002447872, '2022-06-04 18:45:09.634000', 1399985191002447872, '2022-06-04 18:45:09.634000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133076283395, 'MessageQueueDemoController#sendMqttMsg', '发送MQTT消息', 'POST', '/demo/mq/sendMqttMsg', '测试消息队列', b'1', b'1', '测试消息队列 发送MQTT消息', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133080477696, 'WalletController#lock', '锁定钱包', 'POST', '/wallet/lock', '钱包相关的接口', b'1', b'1', '钱包相关的接口 锁定钱包', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133080477697, 'VoucherController#page', '分页', 'GET', '/voucher/page', '储值卡', b'1', b'1', '储值卡 分页', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133080477698, 'UserAdminController#restartPassword', '重置密码', 'POST', '/user/admin/restartPassword', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 重置密码', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133080477699, 'DingTalkConfigController#page', '分页', 'GET', '/ding/config/page', '钉钉配置', b'1', b'1', '钉钉配置 分页', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133084672000, 'VoucherController#unlock', '启用', 'POST', '/voucher/unlock', '储值卡', b'1', b'1', '储值卡 启用', 1399985191002447872, '2022-06-04 18:45:09.636000', 1399985191002447872, '2022-06-04 18:45:09.636000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133084672001, 'OrderFindController#page', '订单列表 分页', 'GET', '/order/page', '订单查询', b'1', b'1', '订单查询 订单列表 分页', 1399985191002447872, '2022-06-04 18:45:09.636000', 1399985191002447872, '2022-06-04 18:45:09.636000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133084672002, 'UserAdminController#unlock', '解锁用户', 'POST', '/user/admin/unlock', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 解锁用户', 1399985191002447872, '2022-06-04 18:45:09.636000', 1399985191002447872, '2022-06-04 18:45:09.636000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133088866304, 'MessageQueueDemoController#sendRedisMsg', '发送RedisMq消息', 'POST', '/demo/mq/sendRedisMsg', '测试消息队列', b'1', b'1', '测试消息队列 发送RedisMq消息', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133088866305, 'DictionaryItemController#findById', '根据字典项ID查询', 'GET', '/dict/item/findById', '字典项', b'1', b'1', '字典项 根据字典项ID查询', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133088866306, 'GoodsController#findAll', '查询全部', 'GET', '/goods/findAll', '商品管理', b'1', b'1', '商品管理 查询全部', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133088866307, 'WeChatPayConfigController#findPayWayList', '微信支持支付方式', 'GET', '/wechat/pay/findPayWayList', '微信支付', b'1', b'1', '微信支付 微信支持支付方式', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133093060608, 'DataScopeController#existsByName', '名称是否被使用(不包含自己)', 'GET', '/data/scope/existsByNameNotId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 名称是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133093060609, 'CashierController#singlePay', '发起支付(单渠道)', 'POST', '/cashier/singlePay', '结算台', b'1', b'1', '结算台 发起支付(单渠道)', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133093060610, 'QuartzJobController#findById', '单条', 'GET', '/quartz/findById', '定时任务', b'1', b'1', '定时任务 单条', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133093060611, 'DataVersionLogController#page', '分页', 'GET', '/log/dataVersion/page', '数据版本日志', b'1', b'1', '数据版本日志 分页', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133097254912, 'DictionaryItemController#pageByDictionaryId', '分页查询指定字典下的字典项', 'GET', '/dict/item/pageByDictionaryId', '字典项', b'1', b'1', '字典项 分页查询指定字典下的字典项', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:45:09.639000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133097254913, 'FIleUpLoadController#getFilePreviewUrlPrefix', '获取文件预览地址前缀', 'GET', '/file/getFilePreviewUrlPrefix', '文件上传', b'0', b'0', '文件上传 获取文件预览地址前缀', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:46:20.486000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037133097254914, 'DictionaryItemController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/dict/item/existsByCodeNotId', '字典项', b'1', b'1', '字典项 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:45:09.639000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133097254915, 'UserInfoController#getUserSecurityInfo', '查询用户安全信息', 'GET', '/user/getUserSecurityInfo', '用户管理', b'1', b'1', '用户管理 查询用户安全信息', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:45:09.639000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133101449216, 'DictionaryItemController#delete', '删除字典项', 'DELETE', '/dict/item/delete', '字典项', b'1', b'1', '字典项 删除字典项', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133101449217, 'PermMenuController#resourceList', '资源列表', 'GET', '/perm/menu/resourceList', '菜单权限资源', b'1', b'1', '菜单权限资源 资源列表', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133101449218, 'DatabaseTableController#page', '表列表分页', 'GET', '/gen/table/page', '数据库表信息', b'1', b'1', '数据库表信息 表列表分页', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133101449219, 'DictionaryController#add', '添加', 'POST', '/dict/add', '字典', b'1', b'1', '字典 添加', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133105643520, 'WalletController#unlock', '解锁钱包', 'POST', '/wallet/unlock', '钱包相关的接口', b'1', b'1', '钱包相关的接口 解锁钱包', 1399985191002447872, '2022-06-04 18:45:09.641000', 1399985191002447872, '2022-06-04 18:45:09.641000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133109837824, 'QuartzJobController#add', '添加', 'POST', '/quartz/add', '定时任务', b'1', b'1', '定时任务 添加', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133109837825, 'DataScopeController#findUsersByDataScopeId', '获取关联的用户列表', 'GET', '/data/scope/findUsersByDataScopeId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取关联的用户列表', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133109837826, 'DataScopeController#update', '更新', 'POST', '/data/scope/update', '数据范围权限配置', b'1', b'1', '数据范围权限配置 更新', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133109837827, 'SpecificationController#findById', '通过ID查询', 'GET', '/specification/findById', '规格', b'1', b'1', '规格 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133114032128, 'OnlineUserController#findBySessionId', '获取单条', 'GET', '/user/online/findBySessionId', '在线用户', b'1', b'1', '在线用户 获取单条', 1399985191002447872, '2022-06-04 18:45:09.643000', 1399985191002447872, '2022-06-04 18:45:09.643000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133114032129, 'CategoryController#delete', '通过 id 删除类目', 'DELETE', '/category/delete', '类目管理', b'1', b'1', '类目管理 通过 id 删除类目', 1399985191002447872, '2022-06-04 18:45:09.643000', 1399985191002447872, '2022-06-04 18:45:09.643000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133114032130, 'TestController#sequence', '序列生成器', 'GET', '/test/sequence', '测试控制器', b'1', b'1', '测试控制器 发号器', 1399985191002447872, '2022-06-04 18:45:09.643000', 1399985191002447872, '2022-06-04 18:45:09.643000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133118226432, 'VoucherController#lockBatch', '批量冻结', 'POST', '/voucher/lockBatch', '储值卡', b'1', b'1', '储值卡 批量冻结', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133118226433, 'CategoryParameterGroupController#findAll', '查询所有', 'GET', '/categoryParameterGroup/findAll', '类目参数组', b'1', b'1', '类目参数组 查询所有', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133118226434, 'CodeGeneratorController#genCodeZip', '下载生成代码', 'POST', '/gen/code/genCodeZip', '代码生成', b'1', b'1', '代码生成 下载生成代码', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133118226435, 'DictionaryItemController#findByDictionaryId', '查询指定字典ID下的所有字典项', 'GET', '/dict/item/findByDictionaryId', '字典项', b'1', b'1', '字典项 查询指定字典ID下的所有字典项', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133122420736, 'OrderFindController#findPayTimeoutOrderIdsByType', '获取指定类型超时订单的id集合', 'GET', '/order/findPayTimeoutOrderIdsByType', '订单查询', b'1', b'1', '订单查询 获取指定类型超时订单的id集合', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133122420737, 'UserAdminController#add', '添加用户', 'POST', '/user/admin/add', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 添加用户', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133122420738, 'DictionaryController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/dict/existsByCodeNotId', '字典', b'1', b'1', '字典 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133122420739, 'DeptController#findById', '获取', 'GET', '/dept/findById', '部门管理', b'1', b'1', '部门管理 获取', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133126615040, 'VoucherController#generationBatch', '批量生成储值卡', 'POST', '/voucher/generationBatch', '储值卡', b'1', b'1', '储值卡 批量生成储值卡', 1399985191002447872, '2022-06-04 18:45:09.646000', 1399985191002447872, '2022-06-04 18:45:09.646000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133126615041, 'UserDataScopeController#findDataScopeIdsByUser', '根据用户ID获取到部门id集合', 'GET', '/user/data/scope/findIdsByUser', '用户数据权限配置', b'1', b'1', '用户数据权限配置 根据用户ID获取到部门id集合', 1399985191002447872, '2022-06-04 18:45:09.646000', 1399985191002447872, '2022-06-04 18:45:09.646000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133126615042, 'VoucherController#unlockBatch', '批量启用', 'POST', '/voucher/unlockBatch', '储值卡', b'1', b'1', '储值卡 批量启用', 1399985191002447872, '2022-06-04 18:45:09.646000', 1399985191002447872, '2022-06-04 18:45:09.646000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133130809344, 'AlipayConfigController#page', '分页', 'GET', '/alipay/page', '支付宝配置', b'1', b'1', '支付宝配置 分页', 1399985191002447872, '2022-06-04 18:45:09.647000', 1399985191002447872, '2022-06-04 18:45:09.647000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133130809345, 'PermPathController#page', '权限分页', 'GET', '/perm/path/page', '请求权限资源', b'1', b'1', '请求权限资源 权限分页', 1399985191002447872, '2022-06-04 18:45:09.647000', 1399985191002447872, '2022-06-04 18:45:09.647000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133130809346, 'DictionaryController#existsByCode', '编码是否被使用', 'GET', '/dict/existsByCode', '字典', b'1', b'1', '字典 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.647000', 1399985191002447872, '2022-06-04 18:45:09.647000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133135003648, 'QuartzJobController#update', '更新', 'POST', '/quartz/update', '定时任务', b'1', b'1', '定时任务 更新', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133135003649, 'DingAccessController#genThirdLoginUrl', '生成第三方登录网址', 'GET', '/ding/access/genThirdLoginUrl', '钉钉Access', b'1', b'1', '钉钉Access 生成第三方登录网址', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133135003650, 'ActivityController#findAll', '查询活动', 'GET', '/activity/findAll', '活动', b'1', b'1', '活动 查询活动', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133135003651, 'UserInfoController#getUserBaseInfo', '查询用户基础信息', 'GET', '/user/getUserBaseInfo', '用户管理', b'1', b'1', '用户管理 查询用户基础信息', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133139197952, 'MessageQueueDemoController#sendKeyExpired', '创建15秒后过期的事件', 'POST', '/demo/mq/sendKeyExpired', '测试消息队列', b'1', b'1', '测试消息队列 创建15秒后过期的事件', 1399985191002447872, '2022-06-04 18:45:09.649000', 1399985191002447872, '2022-06-04 18:45:09.649000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133139197953, 'OrderPreviewController#previewOrderPrice', '预览价格(手动)', 'POST', '/order/preview/previewOrderPrice', '订单计算', b'1', b'1', '订单计算 预览价格(手动)', 1399985191002447872, '2022-06-04 18:45:09.649000', 1399985191002447872, '2022-06-04 18:45:09.649000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133139197954, 'WalletLogController#pageByPersonal', '个人钱包日志', 'POST', '/wallet/log/pageByPersonal', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 个人钱包日志', 1399985191002447872, '2022-06-04 18:45:09.649000', 1399985191002447872, '2022-06-04 18:45:09.649000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133143392256, 'PermMenuController#delete', '删除', 'DELETE', '/perm/menu/delete', '菜单权限资源', b'1', b'1', '菜单权限资源 删除', 1399985191002447872, '2022-06-04 18:45:09.650000', 1399985191002447872, '2022-06-04 18:45:09.650000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133143392257, 'CategoryParameterController#add', '添加', 'POST', '/categoryParameter/add', '类目参数', b'1', b'1', '类目参数 添加', 1399985191002447872, '2022-06-04 18:45:09.650000', 1399985191002447872, '2022-06-04 18:45:09.650000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133143392258, 'PermPathController#update', '更新权限', 'POST', '/perm/path/update', '请求权限资源', b'1', b'1', '请求权限资源 更新权限', 1399985191002447872, '2022-06-04 18:45:09.650000', 1399985191002447872, '2022-06-04 18:45:09.650000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133147586560, 'BrandController#delete', '删除', 'DELETE', '/brand/delete', '品牌', b'1', b'1', '品牌 删除', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133147586561, 'DingTalkConfigController#update', '修改配置', 'POST', '/ding/config/update', '钉钉配置', b'1', b'1', '钉钉配置 修改配置', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133147586562, 'OrderFindController#getWholeById', '获取完整订单详情', 'GET', '/order/getWholeById', '订单查询', b'1', b'1', '订单查询 获取完整订单详情', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133147586563, 'SystemParamController#existsByKeyNotId', '判断编码是否存在(不包含自己)', 'GET', '/system/param/existsByKeyNotId', '系统参数', b'1', b'1', '系统参数 判断编码是否存在(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133151780864, 'CashierController#aggregatePay', '扫码聚合支付(单渠道)', 'GET', '/cashier/aggregatePay', '结算台', b'1', b'1', '结算台 扫码聚合支付(单渠道)', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133151780865, 'RoleController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/role/existsByCodeNotId', '角色管理', b'1', b'1', '角色管理 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133151780866, 'ClientController#findAllByAlonePrem', '查询有独立菜单和权限的终端列表', 'GET', '/client/findAllByAlonePrem', '终端管理', b'1', b'1', '终端管理 查询有独立菜单和权限的终端列表', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133151780867, 'RoleController#existsByName', '名称是否被使用', 'GET', '/role/existsByName', '角色管理', b'1', b'1', '角色管理 名称是否被使用', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133155975168, 'RoleController#findById', '通过ID查询角色', 'GET', '/role/findById', '角色管理', b'1', b'1', '角色管理 通过ID查询角色', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133155975169, 'AppVersionController#findById', '查询详情', 'POST', '/app/version/findById', 'app版本管理', b'1', b'1', 'app版本管理 查询详情', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133155975170, 'PayCallbackController#aliPay', '支付宝回调', 'POST', '/pay/callback/aliPay', '支付回调', b'1', b'1', '支付回调 支付宝回调', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133155975171, 'QuartzJobController#execute', '立即执行', 'POST', '/quartz/execute', '定时任务', b'1', b'1', '定时任务 立即执行', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133155975172, 'CouponTemplateController#findAll', '查询优惠券模板', 'POST', '/coupon/template/findAll', '优惠券模板', b'1', b'1', '优惠券模板 查询优惠券模板', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133160169472, 'WeChatPayConfigController#page', '分页', 'GET', '/wechat/pay/page', '微信支付', b'1', b'1', '微信支付 分页', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133160169473, 'TokenEndpoint#logout', '退出', 'POST', '/token/logout', '认证相关', b'1', b'1', '认证相关 退出', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133160169474, 'DeptController#update', '更新', 'POST', '/dept/update', '部门管理', b'1', b'1', '部门管理 更新', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133160169475, 'FIleUpLoadController#getFileDownloadUrl', '获取文件下载地址', 'GET', '/file/getFileDownloadUrl', '文件上传', b'0', b'0', '文件上传 获取文件下载地址', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:46:24.445000', b'0', 1);
+INSERT INTO `iam_perm_path` VALUES (1533037133160169476, 'DataEncryptDemoController#update', '修改', 'POST', '/demo/data/encrypt/update', '数据加密解密演示', b'1', b'1', '数据加密解密演示 修改', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133164363776, 'CouponController#lockById', '锁定优惠券', 'POST', '/coupon/lockById', '优惠券', b'1', b'1', '优惠券 锁定优惠券', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133164363777, 'ClientController#update', '修改终端（返回终端对象）', 'POST', '/client/update', '终端管理', b'1', b'1', '终端管理 修改终端（返回终端对象）', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133164363778, 'BrandController#findById', '通过ID查询', 'GET', '/brand/findById', '品牌', b'1', b'1', '品牌 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133164363779, 'WeChatPayConfigController#findById', '根据Id查询', 'GET', '/wechat/pay/findById', '微信支付', b'1', b'1', '微信支付 根据Id查询', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133168558080, 'UserRoleController#findRoleIdsByUser', '根据用户ID获取到角色id集合', 'GET', '/user/role/findRoleIdsByUser', '用户角色管理', b'1', b'1', '用户角色管理 根据用户ID获取到角色id集合', 1399985191002447872, '2022-06-04 18:45:09.656000', 1399985191002447872, '2022-06-04 18:45:09.656000', b'0', 0);
+INSERT INTO `iam_perm_path` VALUES (1533037133168558081, 'SpecificationController#delete', '删除', 'DELETE', '/specification/delete', '规格', b'1', b'1', '规格 删除', 1399985191002447872, '2022-06-04 18:45:09.656000', 1399985191002447872, '2022-06-04 18:45:09.656000', b'0', 0);
 
 -- ----------------------------
 -- Table structure for iam_role
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_role`;
 CREATE TABLE `iam_role`  (
-  `id` bigint(20) NOT NULL COMMENT '角色ID',
-  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编码',
-  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
-  `internal` bit(1) NOT NULL COMMENT '是否系统内置',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '说明',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                             `id` bigint(20) NOT NULL COMMENT '角色ID',
+                             `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编码',
+                             `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
+                             `internal` bit(1) NOT NULL COMMENT '是否系统内置',
+                             `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '说明',
+                             `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                             `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                             `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                             `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                             `version` int(11) NOT NULL COMMENT '版本',
+                             `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                             PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1238,7 +1196,7 @@ CREATE TABLE `iam_role`  (
 -- ----------------------------
 INSERT INTO `iam_role` VALUES (1405414804771971072, 'admin', '管理员', b'1', '管理员', 1, '2021-06-17 14:39:35', 1399985191002447872, '2021-07-18 22:31:02', 6, 0);
 INSERT INTO `iam_role` VALUES (1416730722714144768, 'test', '测试', b'0', '测试角色', 1399985191002447872, '2021-07-18 20:05:01', 1399985191002447872, '2021-07-18 20:16:15', 1, 0);
-INSERT INTO `iam_role` VALUES (1422832797731778562, 'user', '用户', b'0', '用户角色', 0, '2021-08-04 16:12:29', 1399985191002447872, '2021-08-04 16:15:03', 7, 0);
+INSERT INTO `iam_role` VALUES (1422832797731778562, 'user', '用户', b'0', '用户角色', 0, '2021-08-04 16:12:29', 1399985191002447872, '2021-08-04 16:15:03', 7, 1);
 INSERT INTO `iam_role` VALUES (1428891259564445696, 'manager', '管理者', b'0', 'manager管理者', 1399985191002447872, '2021-08-21 09:26:38', 1399985191002447872, '2021-08-21 09:26:39', 0, 1);
 
 -- ----------------------------
@@ -1246,465 +1204,630 @@ INSERT INTO `iam_role` VALUES (1428891259564445696, 'manager', '管理者', b'0'
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_role_menu`;
 CREATE TABLE `iam_role_menu`  (
-  `id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL COMMENT '角色id',
-  `client_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '终端code',
-  `permission_id` bigint(20) NOT NULL COMMENT '菜单权限id',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_group_per_id`(`permission_id`) USING BTREE,
-  INDEX `index_group_role_per_id`(`role_id`, `permission_id`) USING BTREE,
-  INDEX `index_group_role_id`(`role_id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+                                  `client_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '终端code',
+                                  `permission_id` bigint(20) NOT NULL COMMENT '菜单权限id',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `index_group_per_id`(`permission_id`) USING BTREE,
+                                  INDEX `index_group_role_per_id`(`role_id`, `permission_id`) USING BTREE,
+                                  INDEX `index_group_role_id`(`role_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_role_menu
 -- ----------------------------
-INSERT INTO `iam_role_menu` VALUES (1461167183761506304, 1429280485141336064, 'admin', 1414596052497092608);
-INSERT INTO `iam_role_menu` VALUES (1461167183769894912, 1429280485141336064, 'admin', 1414596773275652096);
-INSERT INTO `iam_role_menu` VALUES (1461167183769894913, 1429280485141336064, 'admin', 1452567897717321728);
-INSERT INTO `iam_role_menu` VALUES (1461167183769894914, 1429280485141336064, 'admin', 1435143678721236992);
-INSERT INTO `iam_role_menu` VALUES (1461167183774089216, 1429280485141336064, 'admin', 1435476255797624832);
-INSERT INTO `iam_role_menu` VALUES (1461167183778283520, 1429280485141336064, 'admin', 1452569339987472384);
-INSERT INTO `iam_role_menu` VALUES (1461167183778283521, 1429280485141336064, 'admin', 1414596805538238464);
-INSERT INTO `iam_role_menu` VALUES (1461167183778283522, 1429280485141336064, 'admin', 1431089129232498688);
-INSERT INTO `iam_role_menu` VALUES (1461167183782477824, 1429280485141336064, 'admin', 1452569691537256448);
-INSERT INTO `iam_role_menu` VALUES (1461167183795060736, 1429280485141336064, 'admin', 1414596647509446656);
-INSERT INTO `iam_role_menu` VALUES (1461167183799255040, 1429280485141336064, 'admin', 1414596842322284544);
-INSERT INTO `iam_role_menu` VALUES (1461167183799255041, 1429280485141336064, 'admin', 1431082258161434624);
-INSERT INTO `iam_role_menu` VALUES (1461167183803449344, 1429280485141336064, 'admin', 1450473063320526848);
-INSERT INTO `iam_role_menu` VALUES (1461167183803449345, 1429280485141336064, 'admin', 1452571269199540224);
-INSERT INTO `iam_role_menu` VALUES (1461167183803449346, 1429280485141336064, 'admin', 1414596877617352704);
-INSERT INTO `iam_role_menu` VALUES (1461167183803449347, 1429280485141336064, 'admin', 1431083330909208576);
-INSERT INTO `iam_role_menu` VALUES (1461167183807643648, 1429280485141336064, 'admin', 1450803906215886848);
-INSERT INTO `iam_role_menu` VALUES (1461167183807643649, 1429280485141336064, 'admin', 1452638905302966272);
-INSERT INTO `iam_role_menu` VALUES (1461167183807643650, 1429280485141336064, 'admin', 1431152689832525824);
-INSERT INTO `iam_role_menu` VALUES (1461167183807643651, 1429280485141336064, 'admin', 1431153358157348864);
-INSERT INTO `iam_role_menu` VALUES (1461167183811837952, 1429280485141336064, 'admin', 1438061887002759168);
-INSERT INTO `iam_role_menu` VALUES (1461167183811837953, 1429280485141336064, 'admin', 1438072357281542144);
-INSERT INTO `iam_role_menu` VALUES (1461167183811837954, 1429280485141336064, 'admin', 1439196893514031104);
-INSERT INTO `iam_role_menu` VALUES (1461167183811837955, 1429280485141336064, 'admin', 1440216178722050048);
-INSERT INTO `iam_role_menu` VALUES (1461167183811837956, 1429280485141336064, 'admin', 1440216612211757056);
-INSERT INTO `iam_role_menu` VALUES (1461167183816032256, 1429280485141336064, 'admin', 1450827660459458560);
-INSERT INTO `iam_role_menu` VALUES (1461167183816032257, 1429280485141336064, 'admin', 1450819607680991232);
-INSERT INTO `iam_role_menu` VALUES (1461167183816032258, 1429280485141336064, 'admin', 1450821723027881984);
-INSERT INTO `iam_role_menu` VALUES (1461167183816032259, 1429280485141336064, 'admin', 1450821877831254016);
-INSERT INTO `iam_role_menu` VALUES (1461167183816032260, 1429280485141336064, 'admin', 1450822511087271936);
-INSERT INTO `iam_role_menu` VALUES (1461167183820226560, 1429280485141336064, 'admin', 1450822842995130368);
-INSERT INTO `iam_role_menu` VALUES (1461167183820226561, 1429280485141336064, 'admin', 1450825488577544192);
-INSERT INTO `iam_role_menu` VALUES (1461167183820226562, 1429280485141336064, 'admin', 1450823960236081152);
-INSERT INTO `iam_role_menu` VALUES (1461167183820226563, 1429280485141336064, 'admin', 1450824117849636864);
-INSERT INTO `iam_role_menu` VALUES (1461167183824420864, 1429280485141336064, 'admin', 1450824319868289024);
-INSERT INTO `iam_role_menu` VALUES (1461167183824420865, 1429280485141336064, 'admin', 1450824637876224000);
-INSERT INTO `iam_role_menu` VALUES (1461167183824420866, 1429280485141336064, 'admin', 1450824875198332928);
-INSERT INTO `iam_role_menu` VALUES (1461167183824420867, 1429280485141336064, 'admin', 1450825615857893376);
-INSERT INTO `iam_role_menu` VALUES (1461167183828615168, 1429280485141336064, 'admin', 1450826890318135296);
-INSERT INTO `iam_role_menu` VALUES (1461167183828615169, 1429280485141336064, 'admin', 1450827159626006528);
-INSERT INTO `iam_role_menu` VALUES (1461167183828615170, 1429280485141336064, 'admin', 1450827308515409920);
-INSERT INTO `iam_role_menu` VALUES (1461167183828615171, 1429280485141336064, 'admin', 1450825819436826624);
-INSERT INTO `iam_role_menu` VALUES (1473094793843101696, 1405414804771971072, 'admin', 1414596052497092608);
-INSERT INTO `iam_role_menu` VALUES (1473094793851490304, 1405414804771971072, 'admin', 1452567897717321728);
-INSERT INTO `iam_role_menu` VALUES (1473094793851490305, 1405414804771971072, 'admin', 1435143678721236992);
-INSERT INTO `iam_role_menu` VALUES (1473094793851490306, 1405414804771971072, 'admin', 1435476255797624832);
-INSERT INTO `iam_role_menu` VALUES (1473094793855684608, 1405414804771971072, 'admin', 1452569339987472384);
-INSERT INTO `iam_role_menu` VALUES (1473094793859878912, 1405414804771971072, 'admin', 1414596805538238464);
-INSERT INTO `iam_role_menu` VALUES (1473094793859878913, 1405414804771971072, 'admin', 1431089129232498688);
-INSERT INTO `iam_role_menu` VALUES (1473094793859878914, 1405414804771971072, 'admin', 1452569691537256448);
-INSERT INTO `iam_role_menu` VALUES (1473094793859878915, 1405414804771971072, 'admin', 1414596647509446656);
-INSERT INTO `iam_role_menu` VALUES (1473094793864073216, 1405414804771971072, 'admin', 1414596842322284544);
-INSERT INTO `iam_role_menu` VALUES (1473094793864073217, 1405414804771971072, 'admin', 1431082258161434624);
-INSERT INTO `iam_role_menu` VALUES (1473094793864073218, 1405414804771971072, 'admin', 1450473063320526848);
-INSERT INTO `iam_role_menu` VALUES (1473094793864073219, 1405414804771971072, 'admin', 1452571269199540224);
-INSERT INTO `iam_role_menu` VALUES (1473094793868267520, 1405414804771971072, 'admin', 1414596877617352704);
-INSERT INTO `iam_role_menu` VALUES (1473094793872461824, 1405414804771971072, 'admin', 1450803906215886848);
-INSERT INTO `iam_role_menu` VALUES (1473094793872461825, 1405414804771971072, 'admin', 1452638905302966272);
-INSERT INTO `iam_role_menu` VALUES (1473094793872461826, 1405414804771971072, 'admin', 1438061887002759168);
-INSERT INTO `iam_role_menu` VALUES (1473094793872461827, 1405414804771971072, 'admin', 1438072357281542144);
-INSERT INTO `iam_role_menu` VALUES (1473094793872461828, 1405414804771971072, 'admin', 1439196893514031104);
-INSERT INTO `iam_role_menu` VALUES (1473094793876656128, 1405414804771971072, 'admin', 1440216178722050048);
-INSERT INTO `iam_role_menu` VALUES (1473094793876656129, 1405414804771971072, 'admin', 1440216612211757056);
-INSERT INTO `iam_role_menu` VALUES (1473094793876656130, 1405414804771971072, 'admin', 1450827660459458560);
-INSERT INTO `iam_role_menu` VALUES (1477990982933729280, 1416730722714144768, 'admin', 1414596052497092608);
-INSERT INTO `iam_role_menu` VALUES (1477990982942117888, 1416730722714144768, 'admin', 1414596773275652096);
-INSERT INTO `iam_role_menu` VALUES (1477990982942117889, 1416730722714144768, 'admin', 1452567897717321728);
-INSERT INTO `iam_role_menu` VALUES (1477990982942117890, 1416730722714144768, 'admin', 1435143678721236992);
-INSERT INTO `iam_role_menu` VALUES (1477990982942117891, 1416730722714144768, 'admin', 1435476255797624832);
-INSERT INTO `iam_role_menu` VALUES (1477990982942117892, 1416730722714144768, 'admin', 1452569339987472384);
-INSERT INTO `iam_role_menu` VALUES (1477990982942117893, 1416730722714144768, 'admin', 1414596805538238464);
-INSERT INTO `iam_role_menu` VALUES (1477990982942117894, 1416730722714144768, 'admin', 1431089129232498688);
-INSERT INTO `iam_role_menu` VALUES (1477990982946312192, 1416730722714144768, 'admin', 1474694545336676352);
-INSERT INTO `iam_role_menu` VALUES (1477990982946312193, 1416730722714144768, 'admin', 1452569691537256448);
-INSERT INTO `iam_role_menu` VALUES (1477990982946312194, 1416730722714144768, 'admin', 1414596647509446656);
-INSERT INTO `iam_role_menu` VALUES (1477990982946312195, 1416730722714144768, 'admin', 1414596842322284544);
-INSERT INTO `iam_role_menu` VALUES (1477990982946312196, 1416730722714144768, 'admin', 1431082258161434624);
-INSERT INTO `iam_role_menu` VALUES (1477990982946312197, 1416730722714144768, 'admin', 1450473063320526848);
-INSERT INTO `iam_role_menu` VALUES (1477990982946312198, 1416730722714144768, 'admin', 1452571269199540224);
-INSERT INTO `iam_role_menu` VALUES (1477990982950506496, 1416730722714144768, 'admin', 1414596877617352704);
-INSERT INTO `iam_role_menu` VALUES (1477990982950506497, 1416730722714144768, 'admin', 1431083330909208576);
-INSERT INTO `iam_role_menu` VALUES (1477990982954700800, 1416730722714144768, 'admin', 1450803906215886848);
-INSERT INTO `iam_role_menu` VALUES (1477990982954700801, 1416730722714144768, 'admin', 1452638905302966272);
-INSERT INTO `iam_role_menu` VALUES (1531547077325008896, 1405414804771971072, 'admin', 1495968302034210816);
-INSERT INTO `iam_role_menu` VALUES (1531547077329203200, 1405414804771971072, 'admin', 1495969099987963904);
-INSERT INTO `iam_role_menu` VALUES (1531547077329203201, 1405414804771971072, 'admin', 1496020308992143360);
-INSERT INTO `iam_role_menu` VALUES (1531547077329203202, 1405414804771971072, 'admin', 1507998458886197248);
-INSERT INTO `iam_role_menu` VALUES (1531547077333397504, 1405414804771971072, 'admin', 1509488473583562752);
-INSERT INTO `iam_role_menu` VALUES (1531547077333397505, 1405414804771971072, 'admin', 1530120084482084864);
-INSERT INTO `iam_role_menu` VALUES (1531547077337591808, 1405414804771971072, 'admin', 1506910599819165696);
-INSERT INTO `iam_role_menu` VALUES (1531547077337591809, 1405414804771971072, 'admin', 1506910885463851008);
-INSERT INTO `iam_role_menu` VALUES (1531547077337591810, 1405414804771971072, 'admin', 1506911113394913280);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358272, 1405414804771971072, 'admin', 1414596052497092608);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358273, 1405414804771971072, 'admin', 1414596773275652096);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358274, 1405414804771971072, 'admin', 1431083330909208576);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358275, 1405414804771971072, 'admin', 1452567897717321728);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358276, 1405414804771971072, 'admin', 1435143678721236992);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358277, 1405414804771971072, 'admin', 1435476255797624832);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358278, 1405414804771971072, 'admin', 1480839877352476672);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358279, 1405414804771971072, 'admin', 1452569339987472384);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358280, 1405414804771971072, 'admin', 1414596805538238464);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358281, 1405414804771971072, 'admin', 1431089129232498688);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358282, 1405414804771971072, 'admin', 1474694545336676352);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358283, 1405414804771971072, 'admin', 1452569691537256448);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358284, 1405414804771971072, 'admin', 1414596647509446656);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358285, 1405414804771971072, 'admin', 1414596842322284544);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358286, 1405414804771971072, 'admin', 1431082258161434624);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358287, 1405414804771971072, 'admin', 1450473063320526848);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358288, 1405414804771971072, 'admin', 1452571269199540224);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358289, 1405414804771971072, 'admin', 1414596877617352704);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358290, 1405414804771971072, 'admin', 1450803906215886848);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358291, 1405414804771971072, 'admin', 1452638905302966272);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358292, 1405414804771971072, 'admin', 1490984296616263680);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358293, 1405414804771971072, 'admin', 1495013564652429312);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358294, 1405414804771971072, 'admin', 1431152689832525824);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358295, 1405414804771971072, 'admin', 1431153358157348864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358296, 1405414804771971072, 'admin', 1438061887002759168);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358297, 1405414804771971072, 'admin', 1438072357281542144);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358298, 1405414804771971072, 'admin', 1439196893514031104);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358299, 1405414804771971072, 'admin', 1440216178722050048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358300, 1405414804771971072, 'admin', 1440216612211757056);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358301, 1405414804771971072, 'admin', 1450827660459458560);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358302, 1405414804771971072, 'admin', 1450819607680991232);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358303, 1405414804771971072, 'admin', 1450821723027881984);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358304, 1405414804771971072, 'admin', 1450821877831254016);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358305, 1405414804771971072, 'admin', 1450822511087271936);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358306, 1405414804771971072, 'admin', 1511266086400524288);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358307, 1405414804771971072, 'admin', 1450822842995130368);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358308, 1405414804771971072, 'admin', 1450825488577544192);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358309, 1405414804771971072, 'admin', 1501847310319972352);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358310, 1405414804771971072, 'admin', 1450823960236081152);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358311, 1405414804771971072, 'admin', 1450824117849636864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358312, 1405414804771971072, 'admin', 1450824319868289024);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358313, 1405414804771971072, 'admin', 1450824637876224000);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358314, 1405414804771971072, 'admin', 1450824875198332928);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358315, 1405414804771971072, 'admin', 1450825615857893376);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358316, 1405414804771971072, 'admin', 1450826890318135296);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358317, 1405414804771971072, 'admin', 1450827159626006528);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358318, 1405414804771971072, 'admin', 1450827308515409920);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358319, 1405414804771971072, 'admin', 1450825819436826624);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358320, 1405414804771971072, 'admin', 1501740492360962048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358321, 1405414804771971072, 'admin', 1501742229142556672);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358322, 1405414804771971072, 'admin', 1501742417378725888);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358323, 1405414804771971072, 'admin', 1502926397176242176);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358324, 1405414804771971072, 'admin', 1523860792695283712);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358325, 1405414804771971072, 'admin', 1523941932282114048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358326, 1405414804771971072, 'admin', 1523942130555252736);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358327, 1405414804771971072, 'admin', 1524044195818278912);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358328, 1405414804771971072, 'admin', 1524044395823665152);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358329, 1405414804771971072, 'admin', 1524044678314233856);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358330, 1405414804771971072, 'admin', 1525472571967860736);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358331, 1405414804771971072, 'admin', 1495968302034210816);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358332, 1405414804771971072, 'admin', 1495969099987963904);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358333, 1405414804771971072, 'admin', 1506910599819165696);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358334, 1405414804771971072, 'admin', 1506910885463851008);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358335, 1405414804771971072, 'admin', 1506911113394913280);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358336, 1405414804771971072, 'admin', 1496020308992143360);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358337, 1405414804771971072, 'admin', 1507998458886197248);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358338, 1405414804771971072, 'admin', 1509488473583562752);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358339, 1405414804771971072, 'admin', 1530120084482084864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358340, 1405414804771971072, 'admin', 1414596052497092608);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358341, 1405414804771971072, 'admin', 1414596773275652096);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358342, 1405414804771971072, 'admin', 1431083330909208576);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358343, 1405414804771971072, 'admin', 1452567897717321728);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358344, 1405414804771971072, 'admin', 1435143678721236992);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358345, 1405414804771971072, 'admin', 1435476255797624832);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358346, 1405414804771971072, 'admin', 1480839877352476672);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358347, 1405414804771971072, 'admin', 1452569339987472384);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358348, 1405414804771971072, 'admin', 1414596805538238464);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358349, 1405414804771971072, 'admin', 1431089129232498688);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358350, 1405414804771971072, 'admin', 1474694545336676352);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358351, 1405414804771971072, 'admin', 1452569691537256448);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358352, 1405414804771971072, 'admin', 1414596647509446656);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358353, 1405414804771971072, 'admin', 1414596842322284544);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358354, 1405414804771971072, 'admin', 1431082258161434624);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358355, 1405414804771971072, 'admin', 1450473063320526848);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358356, 1405414804771971072, 'admin', 1452571269199540224);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358357, 1405414804771971072, 'admin', 1414596877617352704);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358358, 1405414804771971072, 'admin', 1450803906215886848);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358359, 1405414804771971072, 'admin', 1452638905302966272);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358360, 1405414804771971072, 'admin', 1490984296616263680);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358361, 1405414804771971072, 'admin', 1495013564652429312);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358362, 1405414804771971072, 'admin', 1431152689832525824);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358363, 1405414804771971072, 'admin', 1431153358157348864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358364, 1405414804771971072, 'admin', 1438061887002759168);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358365, 1405414804771971072, 'admin', 1438072357281542144);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358366, 1405414804771971072, 'admin', 1439196893514031104);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358367, 1405414804771971072, 'admin', 1440216178722050048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358368, 1405414804771971072, 'admin', 1440216612211757056);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358369, 1405414804771971072, 'admin', 1450827660459458560);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358370, 1405414804771971072, 'admin', 1450819607680991232);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358371, 1405414804771971072, 'admin', 1450821723027881984);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358372, 1405414804771971072, 'admin', 1450821877831254016);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358373, 1405414804771971072, 'admin', 1450822511087271936);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358374, 1405414804771971072, 'admin', 1511266086400524288);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358375, 1405414804771971072, 'admin', 1450822842995130368);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358376, 1405414804771971072, 'admin', 1450825488577544192);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358377, 1405414804771971072, 'admin', 1501847310319972352);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358378, 1405414804771971072, 'admin', 1450823960236081152);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358379, 1405414804771971072, 'admin', 1450824117849636864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358380, 1405414804771971072, 'admin', 1450824319868289024);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358381, 1405414804771971072, 'admin', 1450824637876224000);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358382, 1405414804771971072, 'admin', 1450824875198332928);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358383, 1405414804771971072, 'admin', 1450825615857893376);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358384, 1405414804771971072, 'admin', 1450826890318135296);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358385, 1405414804771971072, 'admin', 1450827159626006528);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358386, 1405414804771971072, 'admin', 1450827308515409920);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358387, 1405414804771971072, 'admin', 1450825819436826624);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358388, 1405414804771971072, 'admin', 1501740492360962048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358389, 1405414804771971072, 'admin', 1501742229142556672);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358390, 1405414804771971072, 'admin', 1501742417378725888);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358391, 1405414804771971072, 'admin', 1502926397176242176);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358392, 1405414804771971072, 'admin', 1523860792695283712);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358393, 1405414804771971072, 'admin', 1523941932282114048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358394, 1405414804771971072, 'admin', 1523942130555252736);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358395, 1405414804771971072, 'admin', 1524044195818278912);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358396, 1405414804771971072, 'admin', 1524044395823665152);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358397, 1405414804771971072, 'admin', 1524044678314233856);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358398, 1405414804771971072, 'admin', 1525472571967860736);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358399, 1405414804771971072, 'admin', 1495968302034210816);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358400, 1405414804771971072, 'admin', 1495969099987963904);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358401, 1405414804771971072, 'admin', 1506910599819165696);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358402, 1405414804771971072, 'admin', 1506910885463851008);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358403, 1405414804771971072, 'admin', 1506911113394913280);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358404, 1405414804771971072, 'admin', 1496020308992143360);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358405, 1405414804771971072, 'admin', 1507998458886197248);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358406, 1405414804771971072, 'admin', 1509488473583562752);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358407, 1405414804771971072, 'admin', 1530120084482084864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358408, 1405414804771971072, 'admin', 1414596052497092608);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358409, 1405414804771971072, 'admin', 1414596773275652096);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358410, 1405414804771971072, 'admin', 1431083330909208576);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358411, 1405414804771971072, 'admin', 1452567897717321728);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358412, 1405414804771971072, 'admin', 1435143678721236992);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358413, 1405414804771971072, 'admin', 1435476255797624832);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358414, 1405414804771971072, 'admin', 1480839877352476672);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358415, 1405414804771971072, 'admin', 1452569339987472384);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358416, 1405414804771971072, 'admin', 1414596805538238464);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358417, 1405414804771971072, 'admin', 1431089129232498688);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358418, 1405414804771971072, 'admin', 1474694545336676352);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358419, 1405414804771971072, 'admin', 1452569691537256448);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358420, 1405414804771971072, 'admin', 1414596647509446656);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358421, 1405414804771971072, 'admin', 1414596842322284544);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358422, 1405414804771971072, 'admin', 1431082258161434624);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358423, 1405414804771971072, 'admin', 1450473063320526848);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358424, 1405414804771971072, 'admin', 1452571269199540224);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358425, 1405414804771971072, 'admin', 1414596877617352704);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358426, 1405414804771971072, 'admin', 1450803906215886848);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358427, 1405414804771971072, 'admin', 1452638905302966272);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358428, 1405414804771971072, 'admin', 1490984296616263680);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358429, 1405414804771971072, 'admin', 1495013564652429312);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358430, 1405414804771971072, 'admin', 1431152689832525824);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358431, 1405414804771971072, 'admin', 1431153358157348864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358432, 1405414804771971072, 'admin', 1438061887002759168);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358433, 1405414804771971072, 'admin', 1438072357281542144);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358434, 1405414804771971072, 'admin', 1439196893514031104);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358435, 1405414804771971072, 'admin', 1440216178722050048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358436, 1405414804771971072, 'admin', 1440216612211757056);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358437, 1405414804771971072, 'admin', 1450827660459458560);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358438, 1405414804771971072, 'admin', 1450819607680991232);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358439, 1405414804771971072, 'admin', 1450821723027881984);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358440, 1405414804771971072, 'admin', 1450821877831254016);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358441, 1405414804771971072, 'admin', 1450822511087271936);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358442, 1405414804771971072, 'admin', 1511266086400524288);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358443, 1405414804771971072, 'admin', 1450822842995130368);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358444, 1405414804771971072, 'admin', 1450825488577544192);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358445, 1405414804771971072, 'admin', 1501847310319972352);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358446, 1405414804771971072, 'admin', 1450823960236081152);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358447, 1405414804771971072, 'admin', 1450824117849636864);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358448, 1405414804771971072, 'admin', 1450824319868289024);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358449, 1405414804771971072, 'admin', 1450824637876224000);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358450, 1405414804771971072, 'admin', 1450824875198332928);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358451, 1405414804771971072, 'admin', 1450825615857893376);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358452, 1405414804771971072, 'admin', 1450826890318135296);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358453, 1405414804771971072, 'admin', 1450827159626006528);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358454, 1405414804771971072, 'admin', 1450827308515409920);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358455, 1405414804771971072, 'admin', 1450825819436826624);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358456, 1405414804771971072, 'admin', 1501740492360962048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358457, 1405414804771971072, 'admin', 1501742229142556672);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358458, 1405414804771971072, 'admin', 1501742417378725888);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358459, 1405414804771971072, 'admin', 1502926397176242176);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358460, 1405414804771971072, 'admin', 1523860792695283712);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358461, 1405414804771971072, 'admin', 1523941932282114048);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358462, 1405414804771971072, 'admin', 1523942130555252736);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358463, 1405414804771971072, 'admin', 1524044195818278912);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358464, 1405414804771971072, 'admin', 1524044395823665152);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358465, 1405414804771971072, 'admin', 1524044678314233856);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358466, 1405414804771971072, 'admin', 1525472571967860736);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358467, 1405414804771971072, 'admin', 1495968302034210816);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358468, 1405414804771971072, 'admin', 1495969099987963904);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358469, 1405414804771971072, 'admin', 1506910599819165696);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358470, 1405414804771971072, 'admin', 1506910885463851008);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358471, 1405414804771971072, 'admin', 1506911113394913280);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358472, 1405414804771971072, 'admin', 1496020308992143360);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358473, 1405414804771971072, 'admin', 1507998458886197248);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358474, 1405414804771971072, 'admin', 1509488473583562752);
+INSERT INTO `iam_role_menu` VALUES (1533038290578358475, 1405414804771971072, 'admin', 1530120084482084864);
 
 -- ----------------------------
 -- Table structure for iam_role_path
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_role_path`;
 CREATE TABLE `iam_role_path`  (
-  `id` bigint(20) NOT NULL,
-  `role_id` bigint(20) NOT NULL COMMENT '角色id',
-  `permission_id` bigint(20) NOT NULL COMMENT '请求权限id',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_group_per_id`(`permission_id`) USING BTREE,
-  INDEX `index_group_role_per_id`(`role_id`, `permission_id`) USING BTREE,
-  INDEX `index_group_role_id`(`role_id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `role_id` bigint(20) NOT NULL COMMENT '角色id',
+                                  `permission_id` bigint(20) NOT NULL COMMENT '请求权限id',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `index_group_per_id`(`permission_id`) USING BTREE,
+                                  INDEX `index_group_role_per_id`(`role_id`, `permission_id`) USING BTREE,
+                                  INDEX `index_group_role_id`(`role_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色请求权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_role_path
 -- ----------------------------
-INSERT INTO `iam_role_path` VALUES (1530056088349515776, 1405414804771971072, 1501754047214862336);
-INSERT INTO `iam_role_path` VALUES (1530056088370487296, 1405414804771971072, 1501754047273582592);
-INSERT INTO `iam_role_path` VALUES (1530056088391458818, 1405414804771971072, 1501754047277776896);
-INSERT INTO `iam_role_path` VALUES (1530056088395653123, 1405414804771971072, 1501754047281971200);
-INSERT INTO `iam_role_path` VALUES (1530056088404041729, 1405414804771971072, 1501754047286165504);
-INSERT INTO `iam_role_path` VALUES (1530056088408236032, 1405414804771971072, 1501754047290359808);
-INSERT INTO `iam_role_path` VALUES (1530056088420818944, 1405414804771971072, 1501754047294554112);
-INSERT INTO `iam_role_path` VALUES (1530056088370487297, 1405414804771971072, 1501754047298748416);
-INSERT INTO `iam_role_path` VALUES (1530056088420818946, 1405414804771971072, 1501754047307137024);
-INSERT INTO `iam_role_path` VALUES (1530056088429207553, 1405414804771971072, 1501754047307137025);
-INSERT INTO `iam_role_path` VALUES (1530056088412430336, 1405414804771971072, 1501754047311331328);
-INSERT INTO `iam_role_path` VALUES (1530056088433401858, 1405414804771971072, 1501754047315525632);
-INSERT INTO `iam_role_path` VALUES (1530056088441790465, 1405414804771971072, 1501754047319719936);
-INSERT INTO `iam_role_path` VALUES (1530056088445984770, 1405414804771971072, 1501754047319719937);
-INSERT INTO `iam_role_path` VALUES (1530056088454373378, 1405414804771971072, 1501754047328108544);
-INSERT INTO `iam_role_path` VALUES (1530056088458567683, 1405414804771971072, 1501754047332302848);
-INSERT INTO `iam_role_path` VALUES (1530056088462761985, 1405414804771971072, 1501754047344885760);
-INSERT INTO `iam_role_path` VALUES (1530056088462761987, 1405414804771971072, 1501754047349080064);
-INSERT INTO `iam_role_path` VALUES (1530056088466956291, 1405414804771971072, 1501754047353274368);
-INSERT INTO `iam_role_path` VALUES (1530056088420818945, 1405414804771971072, 1501754047353274369);
-INSERT INTO `iam_role_path` VALUES (1530056088429207554, 1405414804771971072, 1501754047357468672);
-INSERT INTO `iam_role_path` VALUES (1530056088471150595, 1405414804771971072, 1501754047357468673);
-INSERT INTO `iam_role_path` VALUES (1530056088475344897, 1405414804771971072, 1501754047361662976);
-INSERT INTO `iam_role_path` VALUES (1530056088445984771, 1405414804771971072, 1501754047361662977);
-INSERT INTO `iam_role_path` VALUES (1530056088479539201, 1405414804771971072, 1501754047365857280);
-INSERT INTO `iam_role_path` VALUES (1530056088483733504, 1405414804771971072, 1501754047365857281);
-INSERT INTO `iam_role_path` VALUES (1530056088479539202, 1405414804771971072, 1501754047370051584);
-INSERT INTO `iam_role_path` VALUES (1530056088483733509, 1405414804771971072, 1501754047370051585);
-INSERT INTO `iam_role_path` VALUES (1530056088475344898, 1405414804771971072, 1501754047374245888);
-INSERT INTO `iam_role_path` VALUES (1530056088487927808, 1405414804771971072, 1501754047374245889);
-INSERT INTO `iam_role_path` VALUES (1530056088391458819, 1405414804771971072, 1501754047374245890);
-INSERT INTO `iam_role_path` VALUES (1530056088487927813, 1405414804771971072, 1501754047378440192);
-INSERT INTO `iam_role_path` VALUES (1530056088492122115, 1405414804771971072, 1501754047378440193);
-INSERT INTO `iam_role_path` VALUES (1530056088483733505, 1405414804771971072, 1501754047382634496);
-INSERT INTO `iam_role_path` VALUES (1530056088404041730, 1405414804771971072, 1501754047382634497);
-INSERT INTO `iam_role_path` VALUES (1530056088370487298, 1405414804771971072, 1501754047382634498);
-INSERT INTO `iam_role_path` VALUES (1530056088462761986, 1405414804771971072, 1501754047386828800);
-INSERT INTO `iam_role_path` VALUES (1530056088504705024, 1405414804771971072, 1501754047386828801);
-INSERT INTO `iam_role_path` VALUES (1530056088492122116, 1405414804771971072, 1501754047391023104);
-INSERT INTO `iam_role_path` VALUES (1530056088471150596, 1405414804771971072, 1501754047391023105);
-INSERT INTO `iam_role_path` VALUES (1530056088504705026, 1405414804771971072, 1501754047395217408);
-INSERT INTO `iam_role_path` VALUES (1530056088487927809, 1405414804771971072, 1501754047395217409);
-INSERT INTO `iam_role_path` VALUES (1530056088425013248, 1405414804771971072, 1501754047395217410);
-INSERT INTO `iam_role_path` VALUES (1530056088504705028, 1405414804771971072, 1501754047399411712);
-INSERT INTO `iam_role_path` VALUES (1530056088508899334, 1405414804771971072, 1501754047399411713);
-INSERT INTO `iam_role_path` VALUES (1530056088429207555, 1405414804771971072, 1501754047403606016);
-INSERT INTO `iam_role_path` VALUES (1530056088513093632, 1405414804771971072, 1501754047403606017);
-INSERT INTO `iam_role_path` VALUES (1530056088479539203, 1405414804771971072, 1501754047407800320);
-INSERT INTO `iam_role_path` VALUES (1530056088433401859, 1405414804771971072, 1501754047407800321);
-INSERT INTO `iam_role_path` VALUES (1530056088517287939, 1405414804771971072, 1501754047407800322);
-INSERT INTO `iam_role_path` VALUES (1530056088521482242, 1405414804771971072, 1501754047411994624);
-INSERT INTO `iam_role_path` VALUES (1530056088525676545, 1405414804771971072, 1501754047411994625);
-INSERT INTO `iam_role_path` VALUES (1530056088525676548, 1405414804771971072, 1501754047416188928);
-INSERT INTO `iam_role_path` VALUES (1530056088471150597, 1405414804771971072, 1501754047416188929);
-INSERT INTO `iam_role_path` VALUES (1530056088433401860, 1405414804771971072, 1501754047420383232);
-INSERT INTO `iam_role_path` VALUES (1530056088525676546, 1405414804771971072, 1501754047420383233);
-INSERT INTO `iam_role_path` VALUES (1530056088534065152, 1405414804771971072, 1501754047420383234);
-INSERT INTO `iam_role_path` VALUES (1530056088534065158, 1405414804771971072, 1501754047424577536);
-INSERT INTO `iam_role_path` VALUES (1530056088487927810, 1405414804771971072, 1501754047424577537);
-INSERT INTO `iam_role_path` VALUES (1530056088542453760, 1405414804771971072, 1501754047424577538);
-INSERT INTO `iam_role_path` VALUES (1530056088542453766, 1405414804771971072, 1501754047428771840);
-INSERT INTO `iam_role_path` VALUES (1530056088374681600, 1405414804771971072, 1501754047428771841);
-INSERT INTO `iam_role_path` VALUES (1530056088546648066, 1405414804771971072, 1501754047432966144);
-INSERT INTO `iam_role_path` VALUES (1530056088513093633, 1405414804771971072, 1501754047432966145);
-INSERT INTO `iam_role_path` VALUES (1530056088546648064, 1405414804771971072, 1501754047437160448);
-INSERT INTO `iam_role_path` VALUES (1530056088441790466, 1405414804771971072, 1501754047437160449);
-INSERT INTO `iam_role_path` VALUES (1530056088550842369, 1405414804771971072, 1501754047437160450);
-INSERT INTO `iam_role_path` VALUES (1530056088550842372, 1405414804771971072, 1501754047441354752);
-INSERT INTO `iam_role_path` VALUES (1530056088475344899, 1405414804771971072, 1501754047441354753);
-INSERT INTO `iam_role_path` VALUES (1530056088555036672, 1405414804771971072, 1501754047445549056);
-INSERT INTO `iam_role_path` VALUES (1530056088462761988, 1405414804771971072, 1501754047445549057);
-INSERT INTO `iam_role_path` VALUES (1530056088555036674, 1405414804771971072, 1501754047449743360);
-INSERT INTO `iam_role_path` VALUES (1530056088555036676, 1405414804771971072, 1501754047449743361);
-INSERT INTO `iam_role_path` VALUES (1530056088559230976, 1405414804771971072, 1501754047449743362);
-INSERT INTO `iam_role_path` VALUES (1530056088542453761, 1405414804771971072, 1501754047453937664);
-INSERT INTO `iam_role_path` VALUES (1530056088559230982, 1405414804771971072, 1501754047453937665);
-INSERT INTO `iam_role_path` VALUES (1530056088471150598, 1405414804771971072, 1501754047453937666);
-INSERT INTO `iam_role_path` VALUES (1530056088542453762, 1405414804771971072, 1501754047458131968);
-INSERT INTO `iam_role_path` VALUES (1530056088563425281, 1405414804771971072, 1501754047458131969);
-INSERT INTO `iam_role_path` VALUES (1530056088567619584, 1405414804771971072, 1501754047458131970);
-INSERT INTO `iam_role_path` VALUES (1530056088374681601, 1405414804771971072, 1501754047458131971);
-INSERT INTO `iam_role_path` VALUES (1530056088567619590, 1405414804771971072, 1501754047462326272);
-INSERT INTO `iam_role_path` VALUES (1530056088374681602, 1405414804771971072, 1501754047462326273);
-INSERT INTO `iam_role_path` VALUES (1530056088538259456, 1405414804771971072, 1501754047462326274);
-INSERT INTO `iam_role_path` VALUES (1530056088412430337, 1405414804771971072, 1501754047466520576);
-INSERT INTO `iam_role_path` VALUES (1530056088571813888, 1405414804771971072, 1501754047466520577);
-INSERT INTO `iam_role_path` VALUES (1530056088454373379, 1405414804771971072, 1501754047466520578);
-INSERT INTO `iam_role_path` VALUES (1530056088571813894, 1405414804771971072, 1501754047470714880);
-INSERT INTO `iam_role_path` VALUES (1530056088576008198, 1405414804771971072, 1501754047470714881);
-INSERT INTO `iam_role_path` VALUES (1530056088492122117, 1405414804771971072, 1501754047474909184);
-INSERT INTO `iam_role_path` VALUES (1530056088534065153, 1405414804771971072, 1501754047474909185);
-INSERT INTO `iam_role_path` VALUES (1530056088580202496, 1405414804771971072, 1501754047474909186);
-INSERT INTO `iam_role_path` VALUES (1530056088479539204, 1405414804771971072, 1501754047474909187);
-INSERT INTO `iam_role_path` VALUES (1530056088584396801, 1405414804771971072, 1501754047479103488);
-INSERT INTO `iam_role_path` VALUES (1530056088571813889, 1405414804771971072, 1501754047479103489);
-INSERT INTO `iam_role_path` VALUES (1530056088513093634, 1405414804771971072, 1501754047479103490);
-INSERT INTO `iam_role_path` VALUES (1530056088496316416, 1405414804771971072, 1501754047483297792);
-INSERT INTO `iam_role_path` VALUES (1530056088584396803, 1405414804771971072, 1501754047483297793);
-INSERT INTO `iam_role_path` VALUES (1530056088496316417, 1405414804771971072, 1501754047483297794);
-INSERT INTO `iam_role_path` VALUES (1530056088496316418, 1405414804771971072, 1501754047487492096);
-INSERT INTO `iam_role_path` VALUES (1530056088584396804, 1405414804771971072, 1501754047487492097);
-INSERT INTO `iam_role_path` VALUES (1530056088555036677, 1405414804771971072, 1501754047487492098);
-INSERT INTO `iam_role_path` VALUES (1530056088483733510, 1405414804771971072, 1501754047491686400);
-INSERT INTO `iam_role_path` VALUES (1530056088504705025, 1405414804771971072, 1501754047491686401);
-INSERT INTO `iam_role_path` VALUES (1530056088588591109, 1405414804771971072, 1501754047491686402);
-INSERT INTO `iam_role_path` VALUES (1530056088454373380, 1405414804771971072, 1501754047495880704);
-INSERT INTO `iam_role_path` VALUES (1530056088462761989, 1405414804771971072, 1501754047495880705);
-INSERT INTO `iam_role_path` VALUES (1530056088412430338, 1405414804771971072, 1501754047495880706);
-INSERT INTO `iam_role_path` VALUES (1530056088592785408, 1405414804771971072, 1501754047500075008);
-INSERT INTO `iam_role_path` VALUES (1530056088584396805, 1405414804771971072, 1501754047500075009);
-INSERT INTO `iam_role_path` VALUES (1530056088571813890, 1405414804771971072, 1501754047500075010);
-INSERT INTO `iam_role_path` VALUES (1530056088592785411, 1405414804771971072, 1501754047500075011);
-INSERT INTO `iam_role_path` VALUES (1530056088538259457, 1405414804771971072, 1501754047504269312);
-INSERT INTO `iam_role_path` VALUES (1530056088580202497, 1405414804771971072, 1501754047504269313);
-INSERT INTO `iam_role_path` VALUES (1530056088588591104, 1405414804771971072, 1501754047504269314);
-INSERT INTO `iam_role_path` VALUES (1530056088571813895, 1405414804771971072, 1501754047504269315);
-INSERT INTO `iam_role_path` VALUES (1530056088546648067, 1405414804771971072, 1501754047508463616);
-INSERT INTO `iam_role_path` VALUES (1530056088466956292, 1405414804771971072, 1501754047508463617);
-INSERT INTO `iam_role_path` VALUES (1530056088504705029, 1405414804771971072, 1501754047508463618);
-INSERT INTO `iam_role_path` VALUES (1530056088362098688, 1405414804771971072, 1501754047512657920);
-INSERT INTO `iam_role_path` VALUES (1530056088580202498, 1405414804771971072, 1501754047512657921);
-INSERT INTO `iam_role_path` VALUES (1530056088538259458, 1405414804771971072, 1501754047512657922);
-INSERT INTO `iam_role_path` VALUES (1530056088504705027, 1405414804771971072, 1501754047512657923);
-INSERT INTO `iam_role_path` VALUES (1530056088571813896, 1405414804771971072, 1501754047516852224);
-INSERT INTO `iam_role_path` VALUES (1530056088534065154, 1405414804771971072, 1501754047516852225);
-INSERT INTO `iam_role_path` VALUES (1530056088525676549, 1405414804771971072, 1501754047516852226);
-INSERT INTO `iam_role_path` VALUES (1530056088555036675, 1405414804771971072, 1501754047521046528);
-INSERT INTO `iam_role_path` VALUES (1530056088433401861, 1405414804771971072, 1501754047521046529);
-INSERT INTO `iam_role_path` VALUES (1530056088429207556, 1405414804771971072, 1501754047525240832);
-INSERT INTO `iam_role_path` VALUES (1530056088525676547, 1405414804771971072, 1501754047525240833);
-INSERT INTO `iam_role_path` VALUES (1530056088496316419, 1405414804771971072, 1501754047525240834);
-INSERT INTO `iam_role_path` VALUES (1530056088437596160, 1405414804771971072, 1501754047529435136);
-INSERT INTO `iam_role_path` VALUES (1530056088534065155, 1405414804771971072, 1501754047529435137);
-INSERT INTO `iam_role_path` VALUES (1530056088496316420, 1405414804771971072, 1501754047529435138);
-INSERT INTO `iam_role_path` VALUES (1530056088592785412, 1405414804771971072, 1501754047529435139);
-INSERT INTO `iam_role_path` VALUES (1530056088391458820, 1405414804771971072, 1501754047533629440);
-INSERT INTO `iam_role_path` VALUES (1530056088588591105, 1405414804771971072, 1501754047533629441);
-INSERT INTO `iam_role_path` VALUES (1530056088517287940, 1405414804771971072, 1501754047533629442);
-INSERT INTO `iam_role_path` VALUES (1530056088592785409, 1405414804771971072, 1501754047533629443);
-INSERT INTO `iam_role_path` VALUES (1530056088592785410, 1405414804771971072, 1501754047537823744);
-INSERT INTO `iam_role_path` VALUES (1530056088567619585, 1405414804771971072, 1501754047537823745);
-INSERT INTO `iam_role_path` VALUES (1530056088496316421, 1405414804771971072, 1501754047537823746);
-INSERT INTO `iam_role_path` VALUES (1530056088475344900, 1405414804771971072, 1501754047542018048);
-INSERT INTO `iam_role_path` VALUES (1530056088454373381, 1405414804771971072, 1501754047542018049);
-INSERT INTO `iam_role_path` VALUES (1530056088454373382, 1405414804771971072, 1501754047542018050);
-INSERT INTO `iam_role_path` VALUES (1530056088567619586, 1405414804771971072, 1501754047542018051);
-INSERT INTO `iam_role_path` VALUES (1530056088492122112, 1405414804771971072, 1501754047542018052);
-INSERT INTO `iam_role_path` VALUES (1530056088601174018, 1405414804771971072, 1501754047546212352);
-INSERT INTO `iam_role_path` VALUES (1530056088479539205, 1405414804771971072, 1501754047546212353);
-INSERT INTO `iam_role_path` VALUES (1530056088395653124, 1405414804771971072, 1501754047546212354);
-INSERT INTO `iam_role_path` VALUES (1530056088437596161, 1405414804771971072, 1501754047546212355);
-INSERT INTO `iam_role_path` VALUES (1530056088437596162, 1405414804771971072, 1501754047550406656);
-INSERT INTO `iam_role_path` VALUES (1530056088416624640, 1405414804771971072, 1501754047550406657);
-INSERT INTO `iam_role_path` VALUES (1530056088500510720, 1405414804771971072, 1501754047550406658);
-INSERT INTO `iam_role_path` VALUES (1530056088508899328, 1405414804771971072, 1501754047550406659);
-INSERT INTO `iam_role_path` VALUES (1530056088559230977, 1405414804771971072, 1501754047554600960);
-INSERT INTO `iam_role_path` VALUES (1530056088450179072, 1405414804771971072, 1501754047554600961);
-INSERT INTO `iam_role_path` VALUES (1530056088592785413, 1405414804771971072, 1501754047554600962);
-INSERT INTO `iam_role_path` VALUES (1530056088458567684, 1405414804771971072, 1501754047554600963);
-INSERT INTO `iam_role_path` VALUES (1530056088391458821, 1405414804771971072, 1501754047554600964);
-INSERT INTO `iam_role_path` VALUES (1530056088416624641, 1405414804771971072, 1501754047558795264);
-INSERT INTO `iam_role_path` VALUES (1530056088601174020, 1405414804771971072, 1501754047558795265);
-INSERT INTO `iam_role_path` VALUES (1530056088500510721, 1405414804771971072, 1501754047558795266);
-INSERT INTO `iam_role_path` VALUES (1530056088450179073, 1405414804771971072, 1501754047558795267);
-INSERT INTO `iam_role_path` VALUES (1530056088592785414, 1405414804771971072, 1501754047562989568);
-INSERT INTO `iam_role_path` VALUES (1530056088555036673, 1405414804771971072, 1501754047562989569);
-INSERT INTO `iam_role_path` VALUES (1530056088605368320, 1405414804771971072, 1501754047562989570);
-INSERT INTO `iam_role_path` VALUES (1530056088466956288, 1405414804771971072, 1501754047562989571);
-INSERT INTO `iam_role_path` VALUES (1530056088433401856, 1405414804771971072, 1501754047562989572);
-INSERT INTO `iam_role_path` VALUES (1530056088584396802, 1405414804771971072, 1501754047567183872);
-INSERT INTO `iam_role_path` VALUES (1530056088563425282, 1405414804771971072, 1501754047567183873);
-INSERT INTO `iam_role_path` VALUES (1530056088559230978, 1405414804771971072, 1501754047567183874);
-INSERT INTO `iam_role_path` VALUES (1530056088580202499, 1405414804771971072, 1501754047567183875);
-INSERT INTO `iam_role_path` VALUES (1530056088391458822, 1405414804771971072, 1501754047571378176);
-INSERT INTO `iam_role_path` VALUES (1530056088542453763, 1405414804771971072, 1501754047571378177);
-INSERT INTO `iam_role_path` VALUES (1530056088466956289, 1405414804771971072, 1501754047571378178);
-INSERT INTO `iam_role_path` VALUES (1530056088605368321, 1405414804771971072, 1501754047571378179);
-INSERT INTO `iam_role_path` VALUES (1530056088580202500, 1405414804771971072, 1501754047575572480);
-INSERT INTO `iam_role_path` VALUES (1530056088559230979, 1405414804771971072, 1501754047575572481);
-INSERT INTO `iam_role_path` VALUES (1530056088513093635, 1405414804771971072, 1501754047575572482);
-INSERT INTO `iam_role_path` VALUES (1530056088454373383, 1405414804771971072, 1501754047575572483);
-INSERT INTO `iam_role_path` VALUES (1530056088483733506, 1405414804771971072, 1501754047575572484);
-INSERT INTO `iam_role_path` VALUES (1530056088425013249, 1405414804771971072, 1501754047579766784);
-INSERT INTO `iam_role_path` VALUES (1530056088475344901, 1405414804771971072, 1501754047579766785);
-INSERT INTO `iam_role_path` VALUES (1530056088508899329, 1405414804771971072, 1501754047579766786);
-INSERT INTO `iam_role_path` VALUES (1530056088588591106, 1405414804771971072, 1501754047579766787);
-INSERT INTO `iam_role_path` VALUES (1530056088580202501, 1405414804771971072, 1501754047583961088);
-INSERT INTO `iam_role_path` VALUES (1530056088605368323, 1405414804771971072, 1501754047583961089);
-INSERT INTO `iam_role_path` VALUES (1530056088441790467, 1405414804771971072, 1501754047583961090);
-INSERT INTO `iam_role_path` VALUES (1530056088529870848, 1405414804771971072, 1501754047583961091);
-INSERT INTO `iam_role_path` VALUES (1530056088563425280, 1405414804771971072, 1501754047588155392);
-INSERT INTO `iam_role_path` VALUES (1530056088588591110, 1405414804771971072, 1501754047588155393);
-INSERT INTO `iam_role_path` VALUES (1530056088475344902, 1405414804771971072, 1501754047592349696);
-INSERT INTO `iam_role_path` VALUES (1530056088383070208, 1405414804771971072, 1501754047592349697);
-INSERT INTO `iam_role_path` VALUES (1530056088387264512, 1405414804771971072, 1501754047592349698);
-INSERT INTO `iam_role_path` VALUES (1530056088605368324, 1405414804771971072, 1501754047596544000);
-INSERT INTO `iam_role_path` VALUES (1530056088580202502, 1405414804771971072, 1501754047596544001);
-INSERT INTO `iam_role_path` VALUES (1530056088542453764, 1405414804771971072, 1501754047596544002);
-INSERT INTO `iam_role_path` VALUES (1530056088487927811, 1405414804771971072, 1501754047596544003);
-INSERT INTO `iam_role_path` VALUES (1530056088425013250, 1405414804771971072, 1501754047600738304);
-INSERT INTO `iam_role_path` VALUES (1530056088546648068, 1405414804771971072, 1501754047600738305);
-INSERT INTO `iam_role_path` VALUES (1530056088462761984, 1405414804771971072, 1501754047600738306);
-INSERT INTO `iam_role_path` VALUES (1530056088387264513, 1405414804771971072, 1501754047600738307);
-INSERT INTO `iam_role_path` VALUES (1530056088500510722, 1405414804771971072, 1501754047604932608);
-INSERT INTO `iam_role_path` VALUES (1530056088538259459, 1405414804771971072, 1501754047604932609);
-INSERT INTO `iam_role_path` VALUES (1530056088492122113, 1405414804771971072, 1501754047604932610);
-INSERT INTO `iam_role_path` VALUES (1530056088596979712, 1405414804771971072, 1501754047604932611);
-INSERT INTO `iam_role_path` VALUES (1530056088445984768, 1405414804771971072, 1501754047604932612);
-INSERT INTO `iam_role_path` VALUES (1530056088475344903, 1405414804771971072, 1501754047609126912);
-INSERT INTO `iam_role_path` VALUES (1530056088576008192, 1405414804771971072, 1501754047609126913);
-INSERT INTO `iam_role_path` VALUES (1530056088576008193, 1405414804771971072, 1501754047609126914);
-INSERT INTO `iam_role_path` VALUES (1530056088567619587, 1405414804771971072, 1501754047609126915);
-INSERT INTO `iam_role_path` VALUES (1530056088416624642, 1405414804771971072, 1501754047613321216);
-INSERT INTO `iam_role_path` VALUES (1530056088521482243, 1405414804771971072, 1501754047613321217);
-INSERT INTO `iam_role_path` VALUES (1530056088517287941, 1405414804771971072, 1501754047613321218);
-INSERT INTO `iam_role_path` VALUES (1530056088588591107, 1405414804771971072, 1501754047613321219);
-INSERT INTO `iam_role_path` VALUES (1530056088513093636, 1405414804771971072, 1501754047617515520);
-INSERT INTO `iam_role_path` VALUES (1530056088559230980, 1405414804771971072, 1501754047617515521);
-INSERT INTO `iam_role_path` VALUES (1530056088454373384, 1405414804771971072, 1501754047617515522);
-INSERT INTO `iam_role_path` VALUES (1530056088576008194, 1405414804771971072, 1501754047621709824);
-INSERT INTO `iam_role_path` VALUES (1530056088362098689, 1405414804771971072, 1501754047621709825);
-INSERT INTO `iam_role_path` VALUES (1530056088399847424, 1405414804771971072, 1501754047621709826);
-INSERT INTO `iam_role_path` VALUES (1530056088567619588, 1405414804771971072, 1501754047625904128);
-INSERT INTO `iam_role_path` VALUES (1530056088416624643, 1405414804771971072, 1501754047625904129);
-INSERT INTO `iam_role_path` VALUES (1530056088450179074, 1405414804771971072, 1501754047625904130);
-INSERT INTO `iam_role_path` VALUES (1530056088571813891, 1405414804771971072, 1501754047625904131);
-INSERT INTO `iam_role_path` VALUES (1530056088391458816, 1405414804771971072, 1501754047625904132);
-INSERT INTO `iam_role_path` VALUES (1530056088601174019, 1405414804771971072, 1501754047630098432);
-INSERT INTO `iam_role_path` VALUES (1530056088458567680, 1405414804771971072, 1501754047630098433);
-INSERT INTO `iam_role_path` VALUES (1530056088596979713, 1405414804771971072, 1501754047630098434);
-INSERT INTO `iam_role_path` VALUES (1530056088538259460, 1405414804771971072, 1501754047630098435);
-INSERT INTO `iam_role_path` VALUES (1530056088458567681, 1405414804771971072, 1501754047630098436);
-INSERT INTO `iam_role_path` VALUES (1530056088513093637, 1405414804771971072, 1501754047634292736);
-INSERT INTO `iam_role_path` VALUES (1530056088395653120, 1405414804771971072, 1501754047634292737);
-INSERT INTO `iam_role_path` VALUES (1530056088596979714, 1405414804771971072, 1501754047634292738);
-INSERT INTO `iam_role_path` VALUES (1530056088425013251, 1405414804771971072, 1501754047634292739);
-INSERT INTO `iam_role_path` VALUES (1530056088542453765, 1405414804771971072, 1501754047634292740);
-INSERT INTO `iam_role_path` VALUES (1530056088576008195, 1405414804771971072, 1501754047638487040);
-INSERT INTO `iam_role_path` VALUES (1530056088605368325, 1405414804771971072, 1501754047638487041);
-INSERT INTO `iam_role_path` VALUES (1530056088517287942, 1405414804771971072, 1501754047638487042);
-INSERT INTO `iam_role_path` VALUES (1530056088466956293, 1405414804771971072, 1501754047638487043);
-INSERT INTO `iam_role_path` VALUES (1530056088445984769, 1405414804771971072, 1501754047642681344);
-INSERT INTO `iam_role_path` VALUES (1530056088471150592, 1405414804771971072, 1501754047642681345);
-INSERT INTO `iam_role_path` VALUES (1530056088550842373, 1405414804771971072, 1501754047642681346);
-INSERT INTO `iam_role_path` VALUES (1530056088404041731, 1405414804771971072, 1501754047642681347);
-INSERT INTO `iam_role_path` VALUES (1530056088596979715, 1405414804771971072, 1501754047642681348);
-INSERT INTO `iam_role_path` VALUES (1530056088458567682, 1405414804771971072, 1501754047646875648);
-INSERT INTO `iam_role_path` VALUES (1530056088466956290, 1405414804771971072, 1501754047646875649);
-INSERT INTO `iam_role_path` VALUES (1530056088538259461, 1405414804771971072, 1501754047646875650);
-INSERT INTO `iam_role_path` VALUES (1530056088609562624, 1405414804771971072, 1501754047646875651);
-INSERT INTO `iam_role_path` VALUES (1530056088571813892, 1405414804771971072, 1501754047651069952);
-INSERT INTO `iam_role_path` VALUES (1530056088596979716, 1405414804771971072, 1501754047651069953);
-INSERT INTO `iam_role_path` VALUES (1530056088450179075, 1405414804771971072, 1501754047651069954);
-INSERT INTO `iam_role_path` VALUES (1530056088437596163, 1405414804771971072, 1501754047655264256);
-INSERT INTO `iam_role_path` VALUES (1530056088609562626, 1405414804771971072, 1501754047655264257);
-INSERT INTO `iam_role_path` VALUES (1530056088471150593, 1405414804771971072, 1501754047655264258);
-INSERT INTO `iam_role_path` VALUES (1530056088538259462, 1405414804771971072, 1501754047663652864);
-INSERT INTO `iam_role_path` VALUES (1530056088550842370, 1405414804771971072, 1501754047667847168);
-INSERT INTO `iam_role_path` VALUES (1530056088517287943, 1405414804771971072, 1501754047667847169);
-INSERT INTO `iam_role_path` VALUES (1530056088609562629, 1405414804771971072, 1501754047667847170);
-INSERT INTO `iam_role_path` VALUES (1530056088529870849, 1405414804771971072, 1501754047667847171);
-INSERT INTO `iam_role_path` VALUES (1530056088555036678, 1405414804771971072, 1501754047672041472);
-INSERT INTO `iam_role_path` VALUES (1530056088534065156, 1405414804771971072, 1501754047672041473);
-INSERT INTO `iam_role_path` VALUES (1530056088529870850, 1405414804771971072, 1501754047672041474);
-INSERT INTO `iam_role_path` VALUES (1530056088450179076, 1405414804771971072, 1501754047672041475);
-INSERT INTO `iam_role_path` VALUES (1530056088580202503, 1405414804771971072, 1501754047676235776);
-INSERT INTO `iam_role_path` VALUES (1530056088479539206, 1405414804771971072, 1501754047676235777);
-INSERT INTO `iam_role_path` VALUES (1530056088454373376, 1405414804771971072, 1501754047676235778);
-INSERT INTO `iam_role_path` VALUES (1530056088521482240, 1405414804771971072, 1501754047676235779);
-INSERT INTO `iam_role_path` VALUES (1530056088441790464, 1405414804771971072, 1501754047680430080);
-INSERT INTO `iam_role_path` VALUES (1530056088471150594, 1405414804771971072, 1501754047680430081);
-INSERT INTO `iam_role_path` VALUES (1530056088588591108, 1405414804771971072, 1501754047680430082);
-INSERT INTO `iam_role_path` VALUES (1530056088605368326, 1405414804771971072, 1501754047680430083);
-INSERT INTO `iam_role_path` VALUES (1530056088596979717, 1405414804771971072, 1501754047684624384);
-INSERT INTO `iam_role_path` VALUES (1530056088508899330, 1405414804771971072, 1501754047684624385);
-INSERT INTO `iam_role_path` VALUES (1530056088609562630, 1405414804771971072, 1501754047684624386);
-INSERT INTO `iam_role_path` VALUES (1530056088550842368, 1405414804771971072, 1501754047684624387);
-INSERT INTO `iam_role_path` VALUES (1530056088605368322, 1405414804771971072, 1501754047688818688);
-INSERT INTO `iam_role_path` VALUES (1530056088529870851, 1405414804771971072, 1501754047688818689);
-INSERT INTO `iam_role_path` VALUES (1530056088479539207, 1405414804771971072, 1501754047688818690);
-INSERT INTO `iam_role_path` VALUES (1530056088454373377, 1405414804771971072, 1501754047688818691);
-INSERT INTO `iam_role_path` VALUES (1530056088529870852, 1405414804771971072, 1501754047693012992);
-INSERT INTO `iam_role_path` VALUES (1530056088395653121, 1405414804771971072, 1501754047693012993);
-INSERT INTO `iam_role_path` VALUES (1530056088404041732, 1405414804771971072, 1501754047693012994);
-INSERT INTO `iam_role_path` VALUES (1530056088500510723, 1405414804771971072, 1501754047693012995);
-INSERT INTO `iam_role_path` VALUES (1530056088500510724, 1405414804771971072, 1501754047693012996);
-INSERT INTO `iam_role_path` VALUES (1530056088584396800, 1405414804771971072, 1501754047693012997);
-INSERT INTO `iam_role_path` VALUES (1530056088508899331, 1405414804771971072, 1501754047697207296);
-INSERT INTO `iam_role_path` VALUES (1530056088500510725, 1405414804771971072, 1501754047697207297);
-INSERT INTO `iam_role_path` VALUES (1530056088487927812, 1405414804771971072, 1501754047697207298);
-INSERT INTO `iam_role_path` VALUES (1530056088517287936, 1405414804771971072, 1501754047697207299);
-INSERT INTO `iam_role_path` VALUES (1530056088609562627, 1405414804771971072, 1501754047697207300);
-INSERT INTO `iam_role_path` VALUES (1530056088601174016, 1405414804771971072, 1501754047701401600);
-INSERT INTO `iam_role_path` VALUES (1530056088571813893, 1405414804771971072, 1501754047701401601);
-INSERT INTO `iam_role_path` VALUES (1530056088517287937, 1405414804771971072, 1501754047701401602);
-INSERT INTO `iam_role_path` VALUES (1530056088538259463, 1405414804771971072, 1501754047701401603);
-INSERT INTO `iam_role_path` VALUES (1530056088609562628, 1405414804771971072, 1501754047701401604);
-INSERT INTO `iam_role_path` VALUES (1530056088613756928, 1405414804771971072, 1501754047701401605);
-INSERT INTO `iam_role_path` VALUES (1530056088576008196, 1405414804771971072, 1501754047705595904);
-INSERT INTO `iam_role_path` VALUES (1530056088521482241, 1405414804771971072, 1501754047705595905);
-INSERT INTO `iam_role_path` VALUES (1530056088601174017, 1405414804771971072, 1501754047705595906);
-INSERT INTO `iam_role_path` VALUES (1530056088425013252, 1405414804771971072, 1501754047705595907);
-INSERT INTO `iam_role_path` VALUES (1530056088483733507, 1405414804771971072, 1501754047705595908);
-INSERT INTO `iam_role_path` VALUES (1530056088517287938, 1405414804771971072, 1501754047709790208);
-INSERT INTO `iam_role_path` VALUES (1530056088429207552, 1405414804771971072, 1501754047709790209);
-INSERT INTO `iam_role_path` VALUES (1530056088609562625, 1405414804771971072, 1501754047709790210);
-INSERT INTO `iam_role_path` VALUES (1530056088588591111, 1405414804771971072, 1501754047709790211);
-INSERT INTO `iam_role_path` VALUES (1530056088529870853, 1405414804771971072, 1501754047709790212);
-INSERT INTO `iam_role_path` VALUES (1530056088391458817, 1405414804771971072, 1501754047709790213);
-INSERT INTO `iam_role_path` VALUES (1530056088546648065, 1405414804771971072, 1501754047713984512);
-INSERT INTO `iam_role_path` VALUES (1530056088550842371, 1405414804771971072, 1501754047713984513);
-INSERT INTO `iam_role_path` VALUES (1530056088508899332, 1405414804771971072, 1501754047713984514);
-INSERT INTO `iam_role_path` VALUES (1530056088508899333, 1405414804771971072, 1501754047713984515);
-INSERT INTO `iam_role_path` VALUES (1530056088404041728, 1405414804771971072, 1501754047713984516);
-INSERT INTO `iam_role_path` VALUES (1530056088475344896, 1405414804771971072, 1501754047713984517);
-INSERT INTO `iam_role_path` VALUES (1530056088534065157, 1405414804771971072, 1501754047713984518);
-INSERT INTO `iam_role_path` VALUES (1530056088525676544, 1405414804771971072, 1501754047718178816);
-INSERT INTO `iam_role_path` VALUES (1530056088479539200, 1405414804771971072, 1501754047718178817);
-INSERT INTO `iam_role_path` VALUES (1530056088559230981, 1405414804771971072, 1501754047718178819);
-INSERT INTO `iam_role_path` VALUES (1530056088492122114, 1405414804771971072, 1501754047718178820);
-INSERT INTO `iam_role_path` VALUES (1530056088483733508, 1405414804771971072, 1501754047722373120);
-INSERT INTO `iam_role_path` VALUES (1530056088395653122, 1405414804771971072, 1501754047722373121);
-INSERT INTO `iam_role_path` VALUES (1530056088567619589, 1405414804771971072, 1501754047722373122);
-INSERT INTO `iam_role_path` VALUES (1530056088576008197, 1405414804771971072, 1501754047722373123);
-INSERT INTO `iam_role_path` VALUES (1530056088433401857, 1405414804771971072, 1501754047726567424);
-INSERT INTO `iam_role_path` VALUES (1530056088601174021, 1405414804771971072, 1501759344775995392);
+INSERT INTO `iam_role_path` VALUES (1533038257611128832, 1405414804771971072, 1533037132564578304);
+INSERT INTO `iam_role_path` VALUES (1533038257611128840, 1405414804771971072, 1533037132585549824);
+INSERT INTO `iam_role_path` VALUES (1533038257611128843, 1405414804771971072, 1533037132593938432);
+INSERT INTO `iam_role_path` VALUES (1533038257611128850, 1405414804771971072, 1533037132598132736);
+INSERT INTO `iam_role_path` VALUES (1533038257611128861, 1405414804771971072, 1533037132602327040);
+INSERT INTO `iam_role_path` VALUES (1533038257611128869, 1405414804771971072, 1533037132606521344);
+INSERT INTO `iam_role_path` VALUES (1533038257611128875, 1405414804771971072, 1533037132610715648);
+INSERT INTO `iam_role_path` VALUES (1533038257611128881, 1405414804771971072, 1533037132614909952);
+INSERT INTO `iam_role_path` VALUES (1533038257611128876, 1405414804771971072, 1533037132614909953);
+INSERT INTO `iam_role_path` VALUES (1533038257611128890, 1405414804771971072, 1533037132619104256);
+INSERT INTO `iam_role_path` VALUES (1533038257611128891, 1405414804771971072, 1533037132623298560);
+INSERT INTO `iam_role_path` VALUES (1533038257611128903, 1405414804771971072, 1533037132623298561);
+INSERT INTO `iam_role_path` VALUES (1533038257611128907, 1405414804771971072, 1533037132627492864);
+INSERT INTO `iam_role_path` VALUES (1533038257611128915, 1405414804771971072, 1533037132627492865);
+INSERT INTO `iam_role_path` VALUES (1533038257611128930, 1405414804771971072, 1533037132631687168);
+INSERT INTO `iam_role_path` VALUES (1533038257611128938, 1405414804771971072, 1533037132631687169);
+INSERT INTO `iam_role_path` VALUES (1533038257611128948, 1405414804771971072, 1533037132640075776);
+INSERT INTO `iam_role_path` VALUES (1533038257611128959, 1405414804771971072, 1533037132640075777);
+INSERT INTO `iam_role_path` VALUES (1533038257611128908, 1405414804771971072, 1533037132644270080);
+INSERT INTO `iam_role_path` VALUES (1533038257611128844, 1405414804771971072, 1533037132648464384);
+INSERT INTO `iam_role_path` VALUES (1533038257611128970, 1405414804771971072, 1533037132656852992);
+INSERT INTO `iam_role_path` VALUES (1533038257611128892, 1405414804771971072, 1533037132661047296);
+INSERT INTO `iam_role_path` VALUES (1533038257611128893, 1405414804771971072, 1533037132661047297);
+INSERT INTO `iam_role_path` VALUES (1533038257611128980, 1405414804771971072, 1533037132661047298);
+INSERT INTO `iam_role_path` VALUES (1533038257611128949, 1405414804771971072, 1533037132665241600);
+INSERT INTO `iam_role_path` VALUES (1533038257611128845, 1405414804771971072, 1533037132665241601);
+INSERT INTO `iam_role_path` VALUES (1533038257611128916, 1405414804771971072, 1533037132669435904);
+INSERT INTO `iam_role_path` VALUES (1533038257611128950, 1405414804771971072, 1533037132669435905);
+INSERT INTO `iam_role_path` VALUES (1533038257611128877, 1405414804771971072, 1533037132669435906);
+INSERT INTO `iam_role_path` VALUES (1533038257611128931, 1405414804771971072, 1533037132673630208);
+INSERT INTO `iam_role_path` VALUES (1533038257611128986, 1405414804771971072, 1533037132673630209);
+INSERT INTO `iam_role_path` VALUES (1533038257611128994, 1405414804771971072, 1533037132677824512);
+INSERT INTO `iam_role_path` VALUES (1533038257611129004, 1405414804771971072, 1533037132677824513);
+INSERT INTO `iam_role_path` VALUES (1533038257611129005, 1405414804771971072, 1533037132682018816);
+INSERT INTO `iam_role_path` VALUES (1533038257611128833, 1405414804771971072, 1533037132682018817);
+INSERT INTO `iam_role_path` VALUES (1533038257611129009, 1405414804771971072, 1533037132682018818);
+INSERT INTO `iam_role_path` VALUES (1533038257611128939, 1405414804771971072, 1533037132686213120);
+INSERT INTO `iam_role_path` VALUES (1533038257611128851, 1405414804771971072, 1533037132686213121);
+INSERT INTO `iam_role_path` VALUES (1533038257611129018, 1405414804771971072, 1533037132690407424);
+INSERT INTO `iam_role_path` VALUES (1533038257611129027, 1405414804771971072, 1533037132690407425);
+INSERT INTO `iam_role_path` VALUES (1533038257611129032, 1405414804771971072, 1533037132690407426);
+INSERT INTO `iam_role_path` VALUES (1533038257611129035, 1405414804771971072, 1533037132694601728);
+INSERT INTO `iam_role_path` VALUES (1533038257611128995, 1405414804771971072, 1533037132694601729);
+INSERT INTO `iam_role_path` VALUES (1533038257611128951, 1405414804771971072, 1533037132698796032);
+INSERT INTO `iam_role_path` VALUES (1533038257611129019, 1405414804771971072, 1533037132698796033);
+INSERT INTO `iam_role_path` VALUES (1533038257611129038, 1405414804771971072, 1533037132702990336);
+INSERT INTO `iam_role_path` VALUES (1533038257611129042, 1405414804771971072, 1533037132702990337);
+INSERT INTO `iam_role_path` VALUES (1533038257611129049, 1405414804771971072, 1533037132707184640);
+INSERT INTO `iam_role_path` VALUES (1533038257611128981, 1405414804771971072, 1533037132707184641);
+INSERT INTO `iam_role_path` VALUES (1533038257611128852, 1405414804771971072, 1533037132707184642);
+INSERT INTO `iam_role_path` VALUES (1533038257611128971, 1405414804771971072, 1533037132711378944);
+INSERT INTO `iam_role_path` VALUES (1533038257611128917, 1405414804771971072, 1533037132711378945);
+INSERT INTO `iam_role_path` VALUES (1533038257611128894, 1405414804771971072, 1533037132719767552);
+INSERT INTO `iam_role_path` VALUES (1533038257611129050, 1405414804771971072, 1533037132723961856);
+INSERT INTO `iam_role_path` VALUES (1533038257611129058, 1405414804771971072, 1533037132723961857);
+INSERT INTO `iam_role_path` VALUES (1533038257611129064, 1405414804771971072, 1533037132728156160);
+INSERT INTO `iam_role_path` VALUES (1533038257611128882, 1405414804771971072, 1533037132728156161);
+INSERT INTO `iam_role_path` VALUES (1533038257611129043, 1405414804771971072, 1533037132732350464);
+INSERT INTO `iam_role_path` VALUES (1533038257611129071, 1405414804771971072, 1533037132732350465);
+INSERT INTO `iam_role_path` VALUES (1533038257611129073, 1405414804771971072, 1533037132732350466);
+INSERT INTO `iam_role_path` VALUES (1533038257611129076, 1405414804771971072, 1533037132736544768);
+INSERT INTO `iam_role_path` VALUES (1533038257611129080, 1405414804771971072, 1533037132736544769);
+INSERT INTO `iam_role_path` VALUES (1533038257611128996, 1405414804771971072, 1533037132740739072);
+INSERT INTO `iam_role_path` VALUES (1533038257611129082, 1405414804771971072, 1533037132740739073);
+INSERT INTO `iam_role_path` VALUES (1533038257611129085, 1405414804771971072, 1533037132740739074);
+INSERT INTO `iam_role_path` VALUES (1533038257611129059, 1405414804771971072, 1533037132744933376);
+INSERT INTO `iam_role_path` VALUES (1533038257611129092, 1405414804771971072, 1533037132744933377);
+INSERT INTO `iam_role_path` VALUES (1533038257611129044, 1405414804771971072, 1533037132749127680);
+INSERT INTO `iam_role_path` VALUES (1533038257611129093, 1405414804771971072, 1533037132749127681);
+INSERT INTO `iam_role_path` VALUES (1533038257611128878, 1405414804771971072, 1533037132753321984);
+INSERT INTO `iam_role_path` VALUES (1533038257611129051, 1405414804771971072, 1533037132753321985);
+INSERT INTO `iam_role_path` VALUES (1533038257611129010, 1405414804771971072, 1533037132753321986);
+INSERT INTO `iam_role_path` VALUES (1533038257611129101, 1405414804771971072, 1533037132757516288);
+INSERT INTO `iam_role_path` VALUES (1533038257611129107, 1405414804771971072, 1533037132757516289);
+INSERT INTO `iam_role_path` VALUES (1533038257611129111, 1405414804771971072, 1533037132761710592);
+INSERT INTO `iam_role_path` VALUES (1533038257611129114, 1405414804771971072, 1533037132761710593);
+INSERT INTO `iam_role_path` VALUES (1533038257611128972, 1405414804771971072, 1533037132761710594);
+INSERT INTO `iam_role_path` VALUES (1533038257611129118, 1405414804771971072, 1533037132765904896);
+INSERT INTO `iam_role_path` VALUES (1533038257611129020, 1405414804771971072, 1533037132765904897);
+INSERT INTO `iam_role_path` VALUES (1533038257611129120, 1405414804771971072, 1533037132770099200);
+INSERT INTO `iam_role_path` VALUES (1533038257611129125, 1405414804771971072, 1533037132770099201);
+INSERT INTO `iam_role_path` VALUES (1533038257611129028, 1405414804771971072, 1533037132770099202);
+INSERT INTO `iam_role_path` VALUES (1533038257611128862, 1405414804771971072, 1533037132774293504);
+INSERT INTO `iam_role_path` VALUES (1533038257611128918, 1405414804771971072, 1533037132774293505);
+INSERT INTO `iam_role_path` VALUES (1533038257611129011, 1405414804771971072, 1533037132778487808);
+INSERT INTO `iam_role_path` VALUES (1533038257611129086, 1405414804771971072, 1533037132778487809);
+INSERT INTO `iam_role_path` VALUES (1533038257611129130, 1405414804771971072, 1533037132778487810);
+INSERT INTO `iam_role_path` VALUES (1533038257611129045, 1405414804771971072, 1533037132786876416);
+INSERT INTO `iam_role_path` VALUES (1533038257611128960, 1405414804771971072, 1533037132786876417);
+INSERT INTO `iam_role_path` VALUES (1533038257611128982, 1405414804771971072, 1533037132791070720);
+INSERT INTO `iam_role_path` VALUES (1533038257611129012, 1405414804771971072, 1533037132791070721);
+INSERT INTO `iam_role_path` VALUES (1533038257611129029, 1405414804771971072, 1533037132795265024);
+INSERT INTO `iam_role_path` VALUES (1533038257611128932, 1405414804771971072, 1533037132795265025);
+INSERT INTO `iam_role_path` VALUES (1533038257611128961, 1405414804771971072, 1533037132799459328);
+INSERT INTO `iam_role_path` VALUES (1533038257611129136, 1405414804771971072, 1533037132799459329);
+INSERT INTO `iam_role_path` VALUES (1533038257611128870, 1405414804771971072, 1533037132799459330);
+INSERT INTO `iam_role_path` VALUES (1533038257611128987, 1405414804771971072, 1533037132803653632);
+INSERT INTO `iam_role_path` VALUES (1533038257611128962, 1405414804771971072, 1533037132803653633);
+INSERT INTO `iam_role_path` VALUES (1533038257611129139, 1405414804771971072, 1533037132807847936);
+INSERT INTO `iam_role_path` VALUES (1533038257611128952, 1405414804771971072, 1533037132807847937);
+INSERT INTO `iam_role_path` VALUES (1533038257611128895, 1405414804771971072, 1533037132807847938);
+INSERT INTO `iam_role_path` VALUES (1533038257611128909, 1405414804771971072, 1533037132812042240);
+INSERT INTO `iam_role_path` VALUES (1533038257611129131, 1405414804771971072, 1533037132812042241);
+INSERT INTO `iam_role_path` VALUES (1533038257611129144, 1405414804771971072, 1533037132812042242);
+INSERT INTO `iam_role_path` VALUES (1533038257611129126, 1405414804771971072, 1533037132816236544);
+INSERT INTO `iam_role_path` VALUES (1533038257611129147, 1405414804771971072, 1533037132816236545);
+INSERT INTO `iam_role_path` VALUES (1533038257611129021, 1405414804771971072, 1533037132820430848);
+INSERT INTO `iam_role_path` VALUES (1533038257611128896, 1405414804771971072, 1533037132820430849);
+INSERT INTO `iam_role_path` VALUES (1533038257611128988, 1405414804771971072, 1533037132820430850);
+INSERT INTO `iam_role_path` VALUES (1533038257611128910, 1405414804771971072, 1533037132824625152);
+INSERT INTO `iam_role_path` VALUES (1533038257611129132, 1405414804771971072, 1533037132824625153);
+INSERT INTO `iam_role_path` VALUES (1533038257611129149, 1405414804771971072, 1533037132824625154);
+INSERT INTO `iam_role_path` VALUES (1533038257611129155, 1405414804771971072, 1533037132828819456);
+INSERT INTO `iam_role_path` VALUES (1533038257611128933, 1405414804771971072, 1533037132828819457);
+INSERT INTO `iam_role_path` VALUES (1533038257611129158, 1405414804771971072, 1533037132828819458);
+INSERT INTO `iam_role_path` VALUES (1533038257611128919, 1405414804771971072, 1533037132833013760);
+INSERT INTO `iam_role_path` VALUES (1533038257611129160, 1405414804771971072, 1533037132833013761);
+INSERT INTO `iam_role_path` VALUES (1533038257611129083, 1405414804771971072, 1533037132833013762);
+INSERT INTO `iam_role_path` VALUES (1533038257611128904, 1405414804771971072, 1533037132837208064);
+INSERT INTO `iam_role_path` VALUES (1533038257611129052, 1405414804771971072, 1533037132837208065);
+INSERT INTO `iam_role_path` VALUES (1533038257611129162, 1405414804771971072, 1533037132841402368);
+INSERT INTO `iam_role_path` VALUES (1533038257611129036, 1405414804771971072, 1533037132841402369);
+INSERT INTO `iam_role_path` VALUES (1533038257611129022, 1405414804771971072, 1533037132841402370);
+INSERT INTO `iam_role_path` VALUES (1533038257611128863, 1405414804771971072, 1533037132845596672);
+INSERT INTO `iam_role_path` VALUES (1533038257611128897, 1405414804771971072, 1533037132845596673);
+INSERT INTO `iam_role_path` VALUES (1533038257611128963, 1405414804771971072, 1533037132849790976);
+INSERT INTO `iam_role_path` VALUES (1533038257611129163, 1405414804771971072, 1533037132853985280);
+INSERT INTO `iam_role_path` VALUES (1533038257611128920, 1405414804771971072, 1533037132853985281);
+INSERT INTO `iam_role_path` VALUES (1533038257611128883, 1405414804771971072, 1533037132858179584);
+INSERT INTO `iam_role_path` VALUES (1533038257611129094, 1405414804771971072, 1533037132858179585);
+INSERT INTO `iam_role_path` VALUES (1533038257611129150, 1405414804771971072, 1533037132862373888);
+INSERT INTO `iam_role_path` VALUES (1533038257611129170, 1405414804771971072, 1533037132862373889);
+INSERT INTO `iam_role_path` VALUES (1533038257611128864, 1405414804771971072, 1533037132862373890);
+INSERT INTO `iam_role_path` VALUES (1533038257611128997, 1405414804771971072, 1533037132866568192);
+INSERT INTO `iam_role_path` VALUES (1533038257611128865, 1405414804771971072, 1533037132866568193);
+INSERT INTO `iam_role_path` VALUES (1533038257611128846, 1405414804771971072, 1533037132870762496);
+INSERT INTO `iam_role_path` VALUES (1533038257611129013, 1405414804771971072, 1533037132870762497);
+INSERT INTO `iam_role_path` VALUES (1533038257611128921, 1405414804771971072, 1533037132870762498);
+INSERT INTO `iam_role_path` VALUES (1533038257611129171, 1405414804771971072, 1533037132874956800);
+INSERT INTO `iam_role_path` VALUES (1533038257611129077, 1405414804771971072, 1533037132874956801);
+INSERT INTO `iam_role_path` VALUES (1533038257611128834, 1405414804771971072, 1533037132874956802);
+INSERT INTO `iam_role_path` VALUES (1533038257611129053, 1405414804771971072, 1533037132874956803);
+INSERT INTO `iam_role_path` VALUES (1533038257611129173, 1405414804771971072, 1533037132879151104);
+INSERT INTO `iam_role_path` VALUES (1533038257611129102, 1405414804771971072, 1533037132879151105);
+INSERT INTO `iam_role_path` VALUES (1533038257611129115, 1405414804771971072, 1533037132879151106);
+INSERT INTO `iam_role_path` VALUES (1533038257611129151, 1405414804771971072, 1533037132883345408);
+INSERT INTO `iam_role_path` VALUES (1533038257611129175, 1405414804771971072, 1533037132883345409);
+INSERT INTO `iam_role_path` VALUES (1533038257611128922, 1405414804771971072, 1533037132883345410);
+INSERT INTO `iam_role_path` VALUES (1533038257611129178, 1405414804771971072, 1533037132883345411);
+INSERT INTO `iam_role_path` VALUES (1533038257611129014, 1405414804771971072, 1533037132887539712);
+INSERT INTO `iam_role_path` VALUES (1533038257611129137, 1405414804771971072, 1533037132887539713);
+INSERT INTO `iam_role_path` VALUES (1533038257611129095, 1405414804771971072, 1533037132887539714);
+INSERT INTO `iam_role_path` VALUES (1533038257611129065, 1405414804771971072, 1533037132891734016);
+INSERT INTO `iam_role_path` VALUES (1533038257611129184, 1405414804771971072, 1533037132891734017);
+INSERT INTO `iam_role_path` VALUES (1533038257611129186, 1405414804771971072, 1533037132891734018);
+INSERT INTO `iam_role_path` VALUES (1533038257611129037, 1405414804771971072, 1533037132891734019);
+INSERT INTO `iam_role_path` VALUES (1533038257611129193, 1405414804771971072, 1533037132895928320);
+INSERT INTO `iam_role_path` VALUES (1533038257611128871, 1405414804771971072, 1533037132895928321);
+INSERT INTO `iam_role_path` VALUES (1533038257611128953, 1405414804771971072, 1533037132895928322);
+INSERT INTO `iam_role_path` VALUES (1533038257611129087, 1405414804771971072, 1533037132900122624);
+INSERT INTO `iam_role_path` VALUES (1533038257611128879, 1405414804771971072, 1533037132900122625);
+INSERT INTO `iam_role_path` VALUES (1533038257611128853, 1405414804771971072, 1533037132900122626);
+INSERT INTO `iam_role_path` VALUES (1533038257611129127, 1405414804771971072, 1533037132900122627);
+INSERT INTO `iam_role_path` VALUES (1533038257611129103, 1405414804771971072, 1533037132904316928);
+INSERT INTO `iam_role_path` VALUES (1533038257611129054, 1405414804771971072, 1533037132904316929);
+INSERT INTO `iam_role_path` VALUES (1533038257611129104, 1405414804771971072, 1533037132904316930);
+INSERT INTO `iam_role_path` VALUES (1533038257611128964, 1405414804771971072, 1533037132908511232);
+INSERT INTO `iam_role_path` VALUES (1533038257611129030, 1405414804771971072, 1533037132908511233);
+INSERT INTO `iam_role_path` VALUES (1533038257611129195, 1405414804771971072, 1533037132908511234);
+INSERT INTO `iam_role_path` VALUES (1533038257611128954, 1405414804771971072, 1533037132908511235);
+INSERT INTO `iam_role_path` VALUES (1533038257611129066, 1405414804771971072, 1533037132912705536);
+INSERT INTO `iam_role_path` VALUES (1533038257611129096, 1405414804771971072, 1533037132912705537);
+INSERT INTO `iam_role_path` VALUES (1533038257611128973, 1405414804771971072, 1533037132916899840);
+INSERT INTO `iam_role_path` VALUES (1533038257611129196, 1405414804771971072, 1533037132916899841);
+INSERT INTO `iam_role_path` VALUES (1533038257611128965, 1405414804771971072, 1533037132916899842);
+INSERT INTO `iam_role_path` VALUES (1533038257611128911, 1405414804771971072, 1533037132916899843);
+INSERT INTO `iam_role_path` VALUES (1533038257611128835, 1405414804771971072, 1533037132921094144);
+INSERT INTO `iam_role_path` VALUES (1533038257611129179, 1405414804771971072, 1533037132921094145);
+INSERT INTO `iam_role_path` VALUES (1533038257611129023, 1405414804771971072, 1533037132921094146);
+INSERT INTO `iam_role_path` VALUES (1533038257611128866, 1405414804771971072, 1533037132925288448);
+INSERT INTO `iam_role_path` VALUES (1533038257611129006, 1405414804771971072, 1533037132925288449);
+INSERT INTO `iam_role_path` VALUES (1533038257611128847, 1405414804771971072, 1533037132925288450);
+INSERT INTO `iam_role_path` VALUES (1533038257611128923, 1405414804771971072, 1533037132929482752);
+INSERT INTO `iam_role_path` VALUES (1533038257611128966, 1405414804771971072, 1533037132929482753);
+INSERT INTO `iam_role_path` VALUES (1533038257611129031, 1405414804771971072, 1533037132929482754);
+INSERT INTO `iam_role_path` VALUES (1533038257611129112, 1405414804771971072, 1533037132933677056);
+INSERT INTO `iam_role_path` VALUES (1533038257611129072, 1405414804771971072, 1533037132933677057);
+INSERT INTO `iam_role_path` VALUES (1533038257611129156, 1405414804771971072, 1533037132933677058);
+INSERT INTO `iam_role_path` VALUES (1533038257611128940, 1405414804771971072, 1533037132937871360);
+INSERT INTO `iam_role_path` VALUES (1533038257611128841, 1405414804771971072, 1533037132937871361);
+INSERT INTO `iam_role_path` VALUES (1533038257611128848, 1405414804771971072, 1533037132937871362);
+INSERT INTO `iam_role_path` VALUES (1533038257611128983, 1405414804771971072, 1533037132942065664);
+INSERT INTO `iam_role_path` VALUES (1533038257611129074, 1405414804771971072, 1533037132942065665);
+INSERT INTO `iam_role_path` VALUES (1533038257611128984, 1405414804771971072, 1533037132942065666);
+INSERT INTO `iam_role_path` VALUES (1533038257611128854, 1405414804771971072, 1533037132946259968);
+INSERT INTO `iam_role_path` VALUES (1533038257611129113, 1405414804771971072, 1533037132946259969);
+INSERT INTO `iam_role_path` VALUES (1533038257611128941, 1405414804771971072, 1533037132946259970);
+INSERT INTO `iam_role_path` VALUES (1533038257611128934, 1405414804771971072, 1533037132950454272);
+INSERT INTO `iam_role_path` VALUES (1533038257611129198, 1405414804771971072, 1533037132950454273);
+INSERT INTO `iam_role_path` VALUES (1533038257611128924, 1405414804771971072, 1533037132950454274);
+INSERT INTO `iam_role_path` VALUES (1533038257611129200, 1405414804771971072, 1533037132950454275);
+INSERT INTO `iam_role_path` VALUES (1533038257611129075, 1405414804771971072, 1533037132954648576);
+INSERT INTO `iam_role_path` VALUES (1533038257611129133, 1405414804771971072, 1533037132954648577);
+INSERT INTO `iam_role_path` VALUES (1533038257611128942, 1405414804771971072, 1533037132954648578);
+INSERT INTO `iam_role_path` VALUES (1533038257611128989, 1405414804771971072, 1533037132958842880);
+INSERT INTO `iam_role_path` VALUES (1533038257611129055, 1405414804771971072, 1533037132958842881);
+INSERT INTO `iam_role_path` VALUES (1533038257611128905, 1405414804771971072, 1533037132958842882);
+INSERT INTO `iam_role_path` VALUES (1533038257611129164, 1405414804771971072, 1533037132963037184);
+INSERT INTO `iam_role_path` VALUES (1533038257611128836, 1405414804771971072, 1533037132963037185);
+INSERT INTO `iam_role_path` VALUES (1533038257611128974, 1405414804771971072, 1533037132963037186);
+INSERT INTO `iam_role_path` VALUES (1533038257611129172, 1405414804771971072, 1533037132967231488);
+INSERT INTO `iam_role_path` VALUES (1533038257611128837, 1405414804771971072, 1533037132967231489);
+INSERT INTO `iam_role_path` VALUES (1533038257611129202, 1405414804771971072, 1533037132967231490);
+INSERT INTO `iam_role_path` VALUES (1533038257611128935, 1405414804771971072, 1533037132967231491);
+INSERT INTO `iam_role_path` VALUES (1533038257611129024, 1405414804771971072, 1533037132971425792);
+INSERT INTO `iam_role_path` VALUES (1533038257611128998, 1405414804771971072, 1533037132971425793);
+INSERT INTO `iam_role_path` VALUES (1533038257611128999, 1405414804771971072, 1533037132971425794);
+INSERT INTO `iam_role_path` VALUES (1533038257611128975, 1405414804771971072, 1533037132975620096);
+INSERT INTO `iam_role_path` VALUES (1533038257611129088, 1405414804771971072, 1533037132975620097);
+INSERT INTO `iam_role_path` VALUES (1533038257611128880, 1405414804771971072, 1533037132975620098);
+INSERT INTO `iam_role_path` VALUES (1533038257611129187, 1405414804771971072, 1533037132979814400);
+INSERT INTO `iam_role_path` VALUES (1533038257611129089, 1405414804771971072, 1533037132979814401);
+INSERT INTO `iam_role_path` VALUES (1533038257611129015, 1405414804771971072, 1533037132979814402);
+INSERT INTO `iam_role_path` VALUES (1533038257611129188, 1405414804771971072, 1533037132979814403);
+INSERT INTO `iam_role_path` VALUES (1533038257611129046, 1405414804771971072, 1533037132984008704);
+INSERT INTO `iam_role_path` VALUES (1533038257611129205, 1405414804771971072, 1533037132984008705);
+INSERT INTO `iam_role_path` VALUES (1533038257611129039, 1405414804771971072, 1533037132984008706);
+INSERT INTO `iam_role_path` VALUES (1533038257611129097, 1405414804771971072, 1533037132988203008);
+INSERT INTO `iam_role_path` VALUES (1533038257611129025, 1405414804771971072, 1533037132988203009);
+INSERT INTO `iam_role_path` VALUES (1533038257611128936, 1405414804771971072, 1533037132988203010);
+INSERT INTO `iam_role_path` VALUES (1533038257611129000, 1405414804771971072, 1533037132992397312);
+INSERT INTO `iam_role_path` VALUES (1533038257611129152, 1405414804771971072, 1533037132992397313);
+INSERT INTO `iam_role_path` VALUES (1533038257611129180, 1405414804771971072, 1533037132992397314);
+INSERT INTO `iam_role_path` VALUES (1533038257611129056, 1405414804771971072, 1533037132992397315);
+INSERT INTO `iam_role_path` VALUES (1533038257611128955, 1405414804771971072, 1533037132996591616);
+INSERT INTO `iam_role_path` VALUES (1533038257611128925, 1405414804771971072, 1533037132996591617);
+INSERT INTO `iam_role_path` VALUES (1533038257611129033, 1405414804771971072, 1533037132996591618);
+INSERT INTO `iam_role_path` VALUES (1533038257611128985, 1405414804771971072, 1533037133000785920);
+INSERT INTO `iam_role_path` VALUES (1533038257611128912, 1405414804771971072, 1533037133000785921);
+INSERT INTO `iam_role_path` VALUES (1533038257611129203, 1405414804771971072, 1533037133000785922);
+INSERT INTO `iam_role_path` VALUES (1533038257611129001, 1405414804771971072, 1533037133000785923);
+INSERT INTO `iam_role_path` VALUES (1533038257611129026, 1405414804771971072, 1533037133004980224);
+INSERT INTO `iam_role_path` VALUES (1533038257611129161, 1405414804771971072, 1533037133004980225);
+INSERT INTO `iam_role_path` VALUES (1533038257611129007, 1405414804771971072, 1533037133004980226);
+INSERT INTO `iam_role_path` VALUES (1533038257611128943, 1405414804771971072, 1533037133009174528);
+INSERT INTO `iam_role_path` VALUES (1533038257611129140, 1405414804771971072, 1533037133009174529);
+INSERT INTO `iam_role_path` VALUES (1533038257611129067, 1405414804771971072, 1533037133009174530);
+INSERT INTO `iam_role_path` VALUES (1533038257611129141, 1405414804771971072, 1533037133009174531);
+INSERT INTO `iam_role_path` VALUES (1533038257611128872, 1405414804771971072, 1533037133013368832);
+INSERT INTO `iam_role_path` VALUES (1533038257611129153, 1405414804771971072, 1533037133013368833);
+INSERT INTO `iam_role_path` VALUES (1533038257611128967, 1405414804771971072, 1533037133013368834);
+INSERT INTO `iam_role_path` VALUES (1533038257611129197, 1405414804771971072, 1533037133017563136);
+INSERT INTO `iam_role_path` VALUES (1533038257611129060, 1405414804771971072, 1533037133017563137);
+INSERT INTO `iam_role_path` VALUES (1533038257611129116, 1405414804771971072, 1533037133021757440);
+INSERT INTO `iam_role_path` VALUES (1533038257611129207, 1405414804771971072, 1533037133021757441);
+INSERT INTO `iam_role_path` VALUES (1533038257611129098, 1405414804771971072, 1533037133021757442);
+INSERT INTO `iam_role_path` VALUES (1533038257611128956, 1405414804771971072, 1533037133025951744);
+INSERT INTO `iam_role_path` VALUES (1533038257611128926, 1405414804771971072, 1533037133025951745);
+INSERT INTO `iam_role_path` VALUES (1533038257611129117, 1405414804771971072, 1533037133025951746);
+INSERT INTO `iam_role_path` VALUES (1533038257611129061, 1405414804771971072, 1533037133030146048);
+INSERT INTO `iam_role_path` VALUES (1533038257611129078, 1405414804771971072, 1533037133030146049);
+INSERT INTO `iam_role_path` VALUES (1533038257611128855, 1405414804771971072, 1533037133030146050);
+INSERT INTO `iam_role_path` VALUES (1533038257611129209, 1405414804771971072, 1533037133030146051);
+INSERT INTO `iam_role_path` VALUES (1533038257611128913, 1405414804771971072, 1533037133034340352);
+INSERT INTO `iam_role_path` VALUES (1533038257611129185, 1405414804771971072, 1533037133034340353);
+INSERT INTO `iam_role_path` VALUES (1533038257611128976, 1405414804771971072, 1533037133034340354);
+INSERT INTO `iam_role_path` VALUES (1533038257611129154, 1405414804771971072, 1533037133034340355);
+INSERT INTO `iam_role_path` VALUES (1533038257611129119, 1405414804771971072, 1533037133038534656);
+INSERT INTO `iam_role_path` VALUES (1533038257611128990, 1405414804771971072, 1533037133038534657);
+INSERT INTO `iam_role_path` VALUES (1533038257611129057, 1405414804771971072, 1533037133042728960);
+INSERT INTO `iam_role_path` VALUES (1533038257611129081, 1405414804771971072, 1533037133042728961);
+INSERT INTO `iam_role_path` VALUES (1533038257611128898, 1405414804771971072, 1533037133042728962);
+INSERT INTO `iam_role_path` VALUES (1533038257611128899, 1405414804771971072, 1533037133046923264);
+INSERT INTO `iam_role_path` VALUES (1533038257611129206, 1405414804771971072, 1533037133046923265);
+INSERT INTO `iam_role_path` VALUES (1533038257611128856, 1405414804771971072, 1533037133046923266);
+INSERT INTO `iam_role_path` VALUES (1533038257611129062, 1405414804771971072, 1533037133051117568);
+INSERT INTO `iam_role_path` VALUES (1533038257611129079, 1405414804771971072, 1533037133051117569);
+INSERT INTO `iam_role_path` VALUES (1533038257611129142, 1405414804771971072, 1533037133051117570);
+INSERT INTO `iam_role_path` VALUES (1533038257611129090, 1405414804771971072, 1533037133055311872);
+INSERT INTO `iam_role_path` VALUES (1533038257611128867, 1405414804771971072, 1533037133055311873);
+INSERT INTO `iam_role_path` VALUES (1533038257611129128, 1405414804771971072, 1533037133055311874);
+INSERT INTO `iam_role_path` VALUES (1533038257611129181, 1405414804771971072, 1533037133055311875);
+INSERT INTO `iam_role_path` VALUES (1533038257611129174, 1405414804771971072, 1533037133059506176);
+INSERT INTO `iam_role_path` VALUES (1533038257611129129, 1405414804771971072, 1533037133059506177);
+INSERT INTO `iam_role_path` VALUES (1533038257611129105, 1405414804771971072, 1533037133059506178);
+INSERT INTO `iam_role_path` VALUES (1533038257611128906, 1405414804771971072, 1533037133063700480);
+INSERT INTO `iam_role_path` VALUES (1533038257611129121, 1405414804771971072, 1533037133063700481);
+INSERT INTO `iam_role_path` VALUES (1533038257611128900, 1405414804771971072, 1533037133063700482);
+INSERT INTO `iam_role_path` VALUES (1533038257611129068, 1405414804771971072, 1533037133067894784);
+INSERT INTO `iam_role_path` VALUES (1533038257611129040, 1405414804771971072, 1533037133067894785);
+INSERT INTO `iam_role_path` VALUES (1533038257611129208, 1405414804771971072, 1533037133067894786);
+INSERT INTO `iam_role_path` VALUES (1533038257611128901, 1405414804771971072, 1533037133067894787);
+INSERT INTO `iam_role_path` VALUES (1533038257611129145, 1405414804771971072, 1533037133072089088);
+INSERT INTO `iam_role_path` VALUES (1533038257611129099, 1405414804771971072, 1533037133072089089);
+INSERT INTO `iam_role_path` VALUES (1533038257611128857, 1405414804771971072, 1533037133072089090);
+INSERT INTO `iam_role_path` VALUES (1533038257611129189, 1405414804771971072, 1533037133072089091);
+INSERT INTO `iam_role_path` VALUES (1533038257611129159, 1405414804771971072, 1533037133076283392);
+INSERT INTO `iam_role_path` VALUES (1533038257611128884, 1405414804771971072, 1533037133076283393);
+INSERT INTO `iam_role_path` VALUES (1533038257611128914, 1405414804771971072, 1533037133076283394);
+INSERT INTO `iam_role_path` VALUES (1533038257611129108, 1405414804771971072, 1533037133076283395);
+INSERT INTO `iam_role_path` VALUES (1533038257611129002, 1405414804771971072, 1533037133080477696);
+INSERT INTO `iam_role_path` VALUES (1533038257611129165, 1405414804771971072, 1533037133080477697);
+INSERT INTO `iam_role_path` VALUES (1533038257611128977, 1405414804771971072, 1533037133080477698);
+INSERT INTO `iam_role_path` VALUES (1533038257611128838, 1405414804771971072, 1533037133080477699);
+INSERT INTO `iam_role_path` VALUES (1533038257611129166, 1405414804771971072, 1533037133084672000);
+INSERT INTO `iam_role_path` VALUES (1533038257611129122, 1405414804771971072, 1533037133084672001);
+INSERT INTO `iam_role_path` VALUES (1533038257611128978, 1405414804771971072, 1533037133084672002);
+INSERT INTO `iam_role_path` VALUES (1533038257611129109, 1405414804771971072, 1533037133088866304);
+INSERT INTO `iam_role_path` VALUES (1533038257611128885, 1405414804771971072, 1533037133088866305);
+INSERT INTO `iam_role_path` VALUES (1533038257611129063, 1405414804771971072, 1533037133088866306);
+INSERT INTO `iam_role_path` VALUES (1533038257611129190, 1405414804771971072, 1533037133088866307);
+INSERT INTO `iam_role_path` VALUES (1533038257611128927, 1405414804771971072, 1533037133093060608);
+INSERT INTO `iam_role_path` VALUES (1533038257611129176, 1405414804771971072, 1533037133093060609);
+INSERT INTO `iam_role_path` VALUES (1533038257611128944, 1405414804771971072, 1533037133093060610);
+INSERT INTO `iam_role_path` VALUES (1533038257611129194, 1405414804771971072, 1533037133093060611);
+INSERT INTO `iam_role_path` VALUES (1533038257611128886, 1405414804771971072, 1533037133097254912);
+INSERT INTO `iam_role_path` VALUES (1533038257611129069, 1405414804771971072, 1533037133097254913);
+INSERT INTO `iam_role_path` VALUES (1533038257611128887, 1405414804771971072, 1533037133097254914);
+INSERT INTO `iam_role_path` VALUES (1533038257611128957, 1405414804771971072, 1533037133097254915);
+INSERT INTO `iam_role_path` VALUES (1533038257611128888, 1405414804771971072, 1533037133101449216);
+INSERT INTO `iam_role_path` VALUES (1533038257611129016, 1405414804771971072, 1533037133101449217);
+INSERT INTO `iam_role_path` VALUES (1533038257611129041, 1405414804771971072, 1533037133101449218);
+INSERT INTO `iam_role_path` VALUES (1533038257611128991, 1405414804771971072, 1533037133101449219);
+INSERT INTO `iam_role_path` VALUES (1533038257611129003, 1405414804771971072, 1533037133105643520);
+INSERT INTO `iam_role_path` VALUES (1533038257611128945, 1405414804771971072, 1533037133109837824);
+INSERT INTO `iam_role_path` VALUES (1533038257611128928, 1405414804771971072, 1533037133109837825);
+INSERT INTO `iam_role_path` VALUES (1533038257611128929, 1405414804771971072, 1533037133109837826);
+INSERT INTO `iam_role_path` VALUES (1533038257611129182, 1405414804771971072, 1533037133109837827);
+INSERT INTO `iam_role_path` VALUES (1533038257611129138, 1405414804771971072, 1533037133114032128);
+INSERT INTO `iam_role_path` VALUES (1533038257611128902, 1405414804771971072, 1533037133114032129);
+INSERT INTO `iam_role_path` VALUES (1533038257611129091, 1405414804771971072, 1533037133114032130);
+INSERT INTO `iam_role_path` VALUES (1533038257611129167, 1405414804771971072, 1533037133118226432);
+INSERT INTO `iam_role_path` VALUES (1533038257611129100, 1405414804771971072, 1533037133118226433);
+INSERT INTO `iam_role_path` VALUES (1533038257611129199, 1405414804771971072, 1533037133118226434);
+INSERT INTO `iam_role_path` VALUES (1533038257611128889, 1405414804771971072, 1533037133118226435);
+INSERT INTO `iam_role_path` VALUES (1533038257611129123, 1405414804771971072, 1533037133122420736);
+INSERT INTO `iam_role_path` VALUES (1533038257611128979, 1405414804771971072, 1533037133122420737);
+INSERT INTO `iam_role_path` VALUES (1533038257611128992, 1405414804771971072, 1533037133122420738);
+INSERT INTO `iam_role_path` VALUES (1533038257611128873, 1405414804771971072, 1533037133122420739);
+INSERT INTO `iam_role_path` VALUES (1533038257611129168, 1405414804771971072, 1533037133126615040);
+INSERT INTO `iam_role_path` VALUES (1533038257611129034, 1405414804771971072, 1533037133126615041);
+INSERT INTO `iam_role_path` VALUES (1533038257611129169, 1405414804771971072, 1533037133126615042);
+INSERT INTO `iam_role_path` VALUES (1533038257611128849, 1405414804771971072, 1533037133130809344);
+INSERT INTO `iam_role_path` VALUES (1533038257611129047, 1405414804771971072, 1533037133130809345);
+INSERT INTO `iam_role_path` VALUES (1533038257611128993, 1405414804771971072, 1533037133130809346);
+INSERT INTO `iam_role_path` VALUES (1533038257611128946, 1405414804771971072, 1533037133135003648);
+INSERT INTO `iam_role_path` VALUES (1533038257611129210, 1405414804771971072, 1533037133135003649);
+INSERT INTO `iam_role_path` VALUES (1533038257611129157, 1405414804771971072, 1533037133135003650);
+INSERT INTO `iam_role_path` VALUES (1533038257611128958, 1405414804771971072, 1533037133135003651);
+INSERT INTO `iam_role_path` VALUES (1533038257611129110, 1405414804771971072, 1533037133139197952);
+INSERT INTO `iam_role_path` VALUES (1533038257611129148, 1405414804771971072, 1533037133139197953);
+INSERT INTO `iam_role_path` VALUES (1533038257611129146, 1405414804771971072, 1533037133139197954);
+INSERT INTO `iam_role_path` VALUES (1533038257611129017, 1405414804771971072, 1533037133143392256);
+INSERT INTO `iam_role_path` VALUES (1533038257611128868, 1405414804771971072, 1533037133143392257);
+INSERT INTO `iam_role_path` VALUES (1533038257611129048, 1405414804771971072, 1533037133143392258);
+INSERT INTO `iam_role_path` VALUES (1533038257611129134, 1405414804771971072, 1533037133147586560);
+INSERT INTO `iam_role_path` VALUES (1533038257611128839, 1405414804771971072, 1533037133147586561);
+INSERT INTO `iam_role_path` VALUES (1533038257611129124, 1405414804771971072, 1533037133147586562);
+INSERT INTO `iam_role_path` VALUES (1533038257611128937, 1405414804771971072, 1533037133147586563);
+INSERT INTO `iam_role_path` VALUES (1533038257611129177, 1405414804771971072, 1533037133151780864);
+INSERT INTO `iam_role_path` VALUES (1533038257611128858, 1405414804771971072, 1533037133151780865);
+INSERT INTO `iam_role_path` VALUES (1533038257611128968, 1405414804771971072, 1533037133151780866);
+INSERT INTO `iam_role_path` VALUES (1533038257611128859, 1405414804771971072, 1533037133151780867);
+INSERT INTO `iam_role_path` VALUES (1533038257611128860, 1405414804771971072, 1533037133155975168);
+INSERT INTO `iam_role_path` VALUES (1533038257611129143, 1405414804771971072, 1533037133155975169);
+INSERT INTO `iam_role_path` VALUES (1533038257611129201, 1405414804771971072, 1533037133155975170);
+INSERT INTO `iam_role_path` VALUES (1533038257611128947, 1405414804771971072, 1533037133155975171);
+INSERT INTO `iam_role_path` VALUES (1533038257611129204, 1405414804771971072, 1533037133155975172);
+INSERT INTO `iam_role_path` VALUES (1533038257611129191, 1405414804771971072, 1533037133160169472);
+INSERT INTO `iam_role_path` VALUES (1533038257611128842, 1405414804771971072, 1533037133160169473);
+INSERT INTO `iam_role_path` VALUES (1533038257611128874, 1405414804771971072, 1533037133160169474);
+INSERT INTO `iam_role_path` VALUES (1533038257611129070, 1405414804771971072, 1533037133160169475);
+INSERT INTO `iam_role_path` VALUES (1533038257611129008, 1405414804771971072, 1533037133160169476);
+INSERT INTO `iam_role_path` VALUES (1533038257611129106, 1405414804771971072, 1533037133164363776);
+INSERT INTO `iam_role_path` VALUES (1533038257611128969, 1405414804771971072, 1533037133164363777);
+INSERT INTO `iam_role_path` VALUES (1533038257611129135, 1405414804771971072, 1533037133164363778);
+INSERT INTO `iam_role_path` VALUES (1533038257611129192, 1405414804771971072, 1533037133164363779);
+INSERT INTO `iam_role_path` VALUES (1533038257611129084, 1405414804771971072, 1533037133168558080);
+INSERT INTO `iam_role_path` VALUES (1533038257611129183, 1405414804771971072, 1533037133168558081);
 
 -- ----------------------------
 -- Table structure for iam_user_data_scope
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_user_data_scope`;
 CREATE TABLE `iam_user_data_scope`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `data_scope_id` bigint(20) NOT NULL COMMENT '数据权限ID',
-  PRIMARY KEY (`id`) USING BTREE
+                                        `id` bigint(20) NOT NULL COMMENT '主键',
+                                        `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+                                        `data_scope_id` bigint(20) NOT NULL COMMENT '数据权限ID',
+                                        PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户数据范围关系\r\n' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1720,13 +1843,13 @@ INSERT INTO `iam_user_data_scope` VALUES (1477997685993611264, 14779976028625059
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_user_dept`;
 CREATE TABLE `iam_user_dept`  (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `dept_id` bigint(20) NOT NULL COMMENT '部门id',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_group_per_id`(`dept_id`) USING BTREE,
-  INDEX `index_group_role_per_id`(`user_id`, `dept_id`) USING BTREE,
-  INDEX `index_group_role_id`(`user_id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                  `dept_id` bigint(20) NOT NULL COMMENT '部门id',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `index_group_per_id`(`dept_id`) USING BTREE,
+                                  INDEX `index_group_role_per_id`(`user_id`, `dept_id`) USING BTREE,
+                                  INDEX `index_group_role_id`(`user_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户部门关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1745,65 +1868,65 @@ INSERT INTO `iam_user_dept` VALUES (1477997655618461696, 1477997602862505984, 14
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_user_expand_info`;
 CREATE TABLE `iam_user_expand_info`  (
-  `id` bigint(20) NOT NULL,
-  `sex` int(4) NULL DEFAULT NULL COMMENT '性别',
-  `birthday` date NULL DEFAULT NULL COMMENT '生日',
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
-  `last_login_time` datetime(0) NULL DEFAULT NULL COMMENT '上次登录时间',
-  `current_login_time` datetime(0) NULL DEFAULT NULL COMMENT '本次登录时间',
-  `initial_password` bit(1) NOT NULL COMMENT '是否初始密码',
-  `last_change_password_time` datetime(0) NULL DEFAULT NULL COMMENT '上次修改密码时间',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                         `id` bigint(20) NOT NULL,
+                                         `sex` int(4) NULL DEFAULT NULL COMMENT '性别',
+                                         `birthday` date NULL DEFAULT NULL COMMENT '生日',
+                                         `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
+                                         `last_login_time` datetime(0) NULL DEFAULT NULL COMMENT '上次登录时间',
+                                         `current_login_time` datetime(0) NULL DEFAULT NULL COMMENT '本次登录时间',
+                                         `initial_password` bit(1) NOT NULL COMMENT '是否初始密码',
+                                         `last_change_password_time` datetime(0) NULL DEFAULT NULL COMMENT '上次修改密码时间',
+                                         `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                         `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                         `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                         `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                         `version` int(11) NOT NULL COMMENT '版本',
+                                         `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户扩展信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_user_expand_info
 -- ----------------------------
-INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-05-27 13:39:09', '2022-05-31 15:09:14', b'0', '2022-01-09 11:36:05', 1, '2021-06-02 15:04:15', 0, '2022-05-31 15:09:14', 137, 0);
-INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, NULL, '1531892108734099456', '2022-05-27 13:56:02', '2022-06-01 14:51:42', b'0', NULL, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-06-01 14:55:16', 4, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-06-04 18:35:09', '2022-06-04 19:04:49', b'0', '2022-01-09 11:36:05', 1, '2021-06-02 15:04:15', 1399985191002447872, '2022-06-04 19:04:49', 141, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, NULL, '1530065639127871488', NULL, '2022-05-27 13:56:02', b'0', NULL, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-05-27 13:57:32', 2, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435894470432456704, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2021-09-09 17:14:54', 1399985191002447872, '2021-09-09 17:14:54', 0, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435967884114194432, 1, NULL, NULL, NULL, '2022-05-31 15:59:42', b'0', NULL, 1414143554414059520, '2021-09-09 22:06:37', 0, '2022-05-31 15:59:42', 1, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1477990832987361280, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2022-01-03 21:10:49', 1399985191002447872, '2022-01-03 21:10:49', 0, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1477997391729631232, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2022-01-03 21:36:53', 1399985191002447872, '2022-01-03 21:36:53', 0, 0);
-INSERT INTO `iam_user_expand_info` VALUES (1477997602862505984, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2022-01-03 21:37:43', 1399985191002447872, '2022-01-03 21:37:43', 0, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1477997602862505984, 1, NULL, NULL, NULL, '2022-06-01 16:51:46', b'0', NULL, 1399985191002447872, '2022-01-03 21:37:43', 0, '2022-06-01 16:51:46', 1, 0);
 
 -- ----------------------------
 -- Table structure for iam_user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_user_info`;
 CREATE TABLE `iam_user_info`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '账号',
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码',
-  `phone` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '手机号',
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `client_ids` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '关联终端ids',
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
-  `source` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '注册来源',
-  `admin` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否超级管理员',
-  `register_time` datetime(0) NULL DEFAULT NULL COMMENT '注册时间',
-  `status` tinyint(4) NOT NULL COMMENT '账号状态',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+                                  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '账号',
+                                  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码',
+                                  `phone` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '手机号',
+                                  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
+                                  `client_ids` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '关联终端ids',
+                                  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
+                                  `source` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '注册来源',
+                                  `admin` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否超级管理员',
+                                  `register_time` datetime(0) NULL DEFAULT NULL COMMENT '注册时间',
+                                  `status` tinyint(4) NOT NULL COMMENT '账号状态',
+                                  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                  `version` int(11) NOT NULL COMMENT '版本',
+                                  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_user_info
 -- ----------------------------
 INSERT INTO `iam_user_info` VALUES (1399985191002447872, '小小明', 'xxm', 'f52020dca765fd3943ed40a615dc2c5c', '13300000000', 'xxm1995@outlook.com', '', NULL, NULL, b'1', '2021-06-02 15:04:12', 1, 1, '2021-06-02 15:04:15', 1399985191002447872, '2022-05-18 17:16:57', 47, 0);
-INSERT INTO `iam_user_info` VALUES (1414143554414059520, '小小明1995', 'xxm1995', 'f52020dca765fd3943ed40a615dc2c5c', '13000000000', 'xxm1995@foxmail.com', NULL, NULL, NULL, b'1', '2021-07-11 16:44:31', 1, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-06-01 14:55:16', 4, 0);
+INSERT INTO `iam_user_info` VALUES (1414143554414059520, '小小明1995', 'xxm1995', 'f52020dca765fd3943ed40a615dc2c5c', '13000000000', 'xxm1995@foxmail.com', NULL, NULL, NULL, b'1', '2021-07-11 16:44:31', 1, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-05-27 13:57:33', 3, 0);
 INSERT INTO `iam_user_info` VALUES (1435894470432456704, '管理员', 'admin1', 'f52020dca765fd3943ed40a615dc2c5c', '13000001111', 'admin@qq.com', NULL, '', NULL, b'0', '2021-09-09 17:14:52', 1, 1399985191002447872, '2021-09-09 17:14:54', 1399985191002447872, '2021-09-09 17:14:54', 2, 0);
 INSERT INTO `iam_user_info` VALUES (1435967884114194432, '测试', 'test', 'f52020dca765fd3943ed40a615dc2c5c', '13311111111', 'test@qq.com', '1430430071299207168', '', NULL, b'0', '2021-09-09 22:06:37', 1, 1414143554414059520, '2021-09-09 22:06:37', 1399985191002447872, '2022-05-31 15:59:37', 9, 0);
 INSERT INTO `iam_user_info` VALUES (1477990832987361280, '测试用户001', 'test001', 'f52020dca765fd3943ed40a615dc2c5c', '', '', NULL, '', NULL, b'0', '2022-01-03 21:10:49', 1, 1399985191002447872, '2022-01-03 21:10:49', 1399985191002447872, '2022-01-03 21:10:49', 0, 0);
@@ -1815,101 +1938,90 @@ INSERT INTO `iam_user_info` VALUES (1477997602862505984, '测试用户003', 'tes
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_user_role`;
 CREATE TABLE `iam_user_role`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(20) NOT NULL COMMENT '主键',
+                                  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+                                  `role_id` bigint(20) NOT NULL COMMENT '角色ID',
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '用户角色关系\r\n' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_user_role
 -- ----------------------------
-INSERT INTO `iam_user_role` VALUES (1429292064666767360, 1399985191002447872, 1405414804771971072);
-INSERT INTO `iam_user_role` VALUES (1429292064670961664, 1399985191002447872, 1416730722714144768);
-INSERT INTO `iam_user_role` VALUES (1429292082710663168, 1414143554414059520, 1416730722714144768);
-INSERT INTO `iam_user_role` VALUES (1429292082714857472, 1414143554414059520, 1405414804771971072);
-INSERT INTO `iam_user_role` VALUES (1429292082714857473, 1414143554414059520, 1422832797731778562);
-INSERT INTO `iam_user_role` VALUES (1436939898410102784, 1435894470432456704, 1405414804771971072);
-INSERT INTO `iam_user_role` VALUES (1477991072133992448, 1477990832987361280, 1416730722714144768);
-INSERT INTO `iam_user_role` VALUES (1477997420167012352, 1477997391729631232, 1416730722714144768);
-INSERT INTO `iam_user_role` VALUES (1477997628238045184, 1477997602862505984, 1416730722714144768);
-INSERT INTO `iam_user_role` VALUES (1531546151520481280, 1435967884114194432, 1405414804771971072);
+INSERT INTO `iam_user_role` VALUES (1533038443724980224, 1435894470432456704, 1405414804771971072);
 
 -- ----------------------------
 -- Table structure for iam_user_social
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_user_social`;
 CREATE TABLE `iam_user_social`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
-  `we_chat_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信openId',
-  `qq_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'qqId',
-  `weibo_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微博Id',
-  `gitee_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '码云唯一标识',
-  `ding_talk_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉唯一标识',
-  `we_com_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '企业微信唯一标识',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL COMMENT '主键',
+                                    `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
+                                    `we_chat_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信openId',
+                                    `qq_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'qqId',
+                                    `weibo_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微博Id',
+                                    `gitee_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '码云唯一标识',
+                                    `ding_talk_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉唯一标识',
+                                    `we_com_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '企业微信唯一标识',
+                                    `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                    `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                    `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                    `version` int(11) NOT NULL COMMENT '版本',
+                                    `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户三方登录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_user_social
 -- ----------------------------
-INSERT INTO `iam_user_social` VALUES (1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0);
 
 -- ----------------------------
 -- Table structure for nc_mail_config
 -- ----------------------------
 DROP TABLE IF EXISTS `nc_mail_config`;
 CREATE TABLE `nc_mail_config`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编号',
-  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
-  `host` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮箱服务器host',
-  `port` int(5) NOT NULL COMMENT '邮箱服务器 port',
-  `username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮箱服务器 username',
-  `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮箱服务器 password',
-  `sender` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱服务器 sender',
-  `from_` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱服务器 from',
-  `activity` tinyint(1) NULL DEFAULT 0 COMMENT '是否默认配置，0:否。1:是',
-  `security_type` int(2) NULL DEFAULT NULL COMMENT '安全传输方式 1:plain 2:tls 3:ssl',
-  `creator` bigint(18) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(18) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  `version` int(8) NULL DEFAULT NULL COMMENT '版本',
-  PRIMARY KEY (`id`) USING BTREE
+                                   `id` bigint(20) NOT NULL,
+                                   `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编号',
+                                   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
+                                   `host` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮箱服务器host',
+                                   `port` int(5) NOT NULL COMMENT '邮箱服务器 port',
+                                   `username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮箱服务器 username',
+                                   `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '邮箱服务器 password',
+                                   `sender` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱服务器 sender',
+                                   `from_` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱服务器 from',
+                                   `activity` tinyint(1) NULL DEFAULT 0 COMMENT '是否默认配置，0:否。1:是',
+                                   `security_type` int(2) NULL DEFAULT NULL COMMENT '安全传输方式 1:plain 2:tls 3:ssl',
+                                   `creator` bigint(18) NULL DEFAULT NULL COMMENT '创建人',
+                                   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                   `last_modifier` bigint(18) NULL DEFAULT NULL COMMENT '最后修改人',
+                                   `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                   `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                   `version` int(8) NULL DEFAULT NULL COMMENT '版本',
+                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '邮件配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of nc_mail_config
 -- ----------------------------
-INSERT INTO `nc_mail_config` VALUES (180741934821398528, 'fox', 'fox', 'smtp.qq.com', 465, 'xxm1995@foxmail.com', 'urdwlbqjqusubeeh', 'bootx.cn', 'xxm1995@foxmail.com', 1, 3, NULL, '2021-09-15 17:53:10', 1399985191002447872, '2021-09-15 17:53:15', 0, 4);
 
 -- ----------------------------
 -- Table structure for nc_message_template
 -- ----------------------------
 DROP TABLE IF EXISTS `nc_message_template`;
 CREATE TABLE `nc_message_template`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '模板数据',
-  `type` int(11) NULL DEFAULT NULL COMMENT '模板类型',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                        `id` bigint(20) NOT NULL,
+                                        `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
+                                        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                        `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '模板数据',
+                                        `type` int(11) NULL DEFAULT NULL COMMENT '模板类型',
+                                        `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                        `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                        `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                        `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                        `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                        `version` int(11) NOT NULL COMMENT '版本',
+                                        `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                        PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息模板' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1922,23 +2034,23 @@ INSERT INTO `nc_message_template` VALUES (1424936204932169730, 'cs', '测试', '
 -- ----------------------------
 DROP TABLE IF EXISTS `nc_site_message`;
 CREATE TABLE `nc_site_message`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息标题',
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息内容',
-  `sender_id` bigint(20) NULL DEFAULT NULL COMMENT '发送者id',
-  `sender_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发送者姓名',
-  `receive_id` bigint(20) NULL DEFAULT NULL COMMENT '接收者id',
-  `receive_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '接收者姓名',
-  `sender_time` datetime(0) NULL DEFAULT NULL COMMENT '发送时间',
-  `have_read` bit(1) NULL DEFAULT NULL COMMENT '是否已读',
-  `read_time` datetime(0) NULL DEFAULT NULL COMMENT '已读时间',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL COMMENT '主键',
+                                    `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息标题',
+                                    `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息内容',
+                                    `sender_id` bigint(20) NULL DEFAULT NULL COMMENT '发送者id',
+                                    `sender_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发送者姓名',
+                                    `receive_id` bigint(20) NULL DEFAULT NULL COMMENT '接收者id',
+                                    `receive_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '接收者姓名',
+                                    `sender_time` datetime(0) NULL DEFAULT NULL COMMENT '发送时间',
+                                    `have_read` bit(1) NULL DEFAULT NULL COMMENT '是否已读',
+                                    `read_time` datetime(0) NULL DEFAULT NULL COMMENT '已读时间',
+                                    `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                    `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                    `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                    `version` int(11) NOT NULL COMMENT '版本',
+                                    `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '站内信' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1951,25 +2063,25 @@ INSERT INTO `nc_site_message` VALUES (1424212599079161857, '测试消息', '测�
 -- ----------------------------
 DROP TABLE IF EXISTS `nc_sms_config`;
 CREATE TABLE `nc_sms_config`  (
-  `id` bigint(18) NOT NULL,
-  `tid` bigint(18) NOT NULL COMMENT '租户id',
-  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `account_sid` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path_sid` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '发送号码的唯一标识(基于twillio的命名风格)',
-  `auth_token` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `from_num` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_default` tinyint(1) NULL DEFAULT 0 COMMENT '是否默认配置，0:否。1:是',
-  `creator` bigint(18) NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `last_modifier` bigint(18) NULL DEFAULT NULL,
-  `last_modified_time` datetime(0) NULL DEFAULT NULL,
-  `version` int(10) NULL DEFAULT NULL,
-  `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  `secret` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `isp` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `reply_msg` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(18) NOT NULL,
+                                  `tid` bigint(18) NOT NULL COMMENT '租户id',
+                                  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+                                  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+                                  `account_sid` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+                                  `path_sid` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '发送号码的唯一标识(基于twillio的命名风格)',
+                                  `auth_token` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+                                  `from_num` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+                                  `is_default` tinyint(1) NULL DEFAULT 0 COMMENT '是否默认配置，0:否。1:是',
+                                  `creator` bigint(18) NULL DEFAULT NULL,
+                                  `create_time` datetime(0) NULL DEFAULT NULL,
+                                  `last_modifier` bigint(18) NULL DEFAULT NULL,
+                                  `last_modified_time` datetime(0) NULL DEFAULT NULL,
+                                  `version` int(10) NULL DEFAULT NULL,
+                                  `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                  `secret` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+                                  `isp` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+                                  `reply_msg` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '短信配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1981,20 +2093,20 @@ CREATE TABLE `nc_sms_config`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `nc_wechat_config`;
 CREATE TABLE `nc_wechat_config`  (
-  `id` bigint(18) NOT NULL,
-  `tid` bigint(18) NOT NULL COMMENT '租户id',
-  `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `corp_id` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `corp_secret` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_default` tinyint(1) NULL DEFAULT 0 COMMENT '是否默认配置，0:否。1:是',
-  `creator` bigint(18) NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `last_modifier` bigint(18) NULL DEFAULT NULL,
-  `last_modified_time` datetime(0) NULL DEFAULT NULL,
-  `version` int(10) NULL DEFAULT NULL,
-  `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(18) NOT NULL,
+                                     `tid` bigint(18) NOT NULL COMMENT '租户id',
+                                     `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+                                     `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+                                     `corp_id` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+                                     `corp_secret` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+                                     `is_default` tinyint(1) NULL DEFAULT 0 COMMENT '是否默认配置，0:否。1:是',
+                                     `creator` bigint(18) NULL DEFAULT NULL,
+                                     `create_time` datetime(0) NULL DEFAULT NULL,
+                                     `last_modifier` bigint(18) NULL DEFAULT NULL,
+                                     `last_modified_time` datetime(0) NULL DEFAULT NULL,
+                                     `version` int(10) NULL DEFAULT NULL,
+                                     `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '微信消息配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2007,33 +2119,33 @@ INSERT INTO `nc_wechat_config` VALUES (181361815405135421, 0, 'test01', 'test01'
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_order`;
 CREATE TABLE `oc_order`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '编码',
-  `contact_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系人',
-  `contact_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '手机号',
-  `contact_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系邮箱',
-  `channel_id` bigint(20) NULL DEFAULT NULL COMMENT '渠道',
-  `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '购买用户id',
-  `status` int(11) NOT NULL COMMENT '状态',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `type` int(11) NULL DEFAULT NULL COMMENT '类型',
-  `total_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '总金额',
-  `pay_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '实付金额',
-  `coupon_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所用优惠券ids',
-  `address_info` json NULL COMMENT '地址参数',
-  `invoice_info` json NULL COMMENT '发票参数',
-  `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数',
-  `device_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '设备id',
-  `source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '来源',
-  `business_id` bigint(20) NULL DEFAULT NULL COMMENT '业务id',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                             `id` bigint(20) NOT NULL,
+                             `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '编码',
+                             `contact_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系人',
+                             `contact_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '手机号',
+                             `contact_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系邮箱',
+                             `channel_id` bigint(20) NULL DEFAULT NULL COMMENT '渠道',
+                             `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                             `user_id` bigint(20) NULL DEFAULT NULL COMMENT '购买用户id',
+                             `status` int(11) NOT NULL COMMENT '状态',
+                             `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                             `type` int(11) NULL DEFAULT NULL COMMENT '类型',
+                             `total_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '总金额',
+                             `pay_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '实付金额',
+                             `coupon_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '所用优惠券ids',
+                             `address_info` json NULL COMMENT '地址参数',
+                             `invoice_info` json NULL COMMENT '发票参数',
+                             `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数',
+                             `device_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '设备id',
+                             `source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '来源',
+                             `business_id` bigint(20) NULL DEFAULT NULL COMMENT '业务id',
+                             `creator` bigint(20) NULL DEFAULT NULL,
+                             `create_time` datetime(6) NULL DEFAULT NULL,
+                             `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                             `last_modifier` bigint(20) NULL DEFAULT NULL,
+                             `version` int(11) NOT NULL,
+                             `deleted` bit(1) NOT NULL,
+                             PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2045,50 +2157,54 @@ CREATE TABLE `oc_order`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_order_detail`;
 CREATE TABLE `oc_order_detail`  (
-  `id` bigint(20) NOT NULL,
-  `active_id` bigint(20) NULL DEFAULT NULL COMMENT '活动id',
-  `shop_id` bigint(20) NULL DEFAULT NULL COMMENT '店铺id',
-  `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
-  `category_id` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
-  `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '商品id',
-  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT '库存id',
-  `goods_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品名称',
-  `goods_price` decimal(19, 2) NULL DEFAULT NULL COMMENT '商品价格',
-  `num` int(11) NOT NULL COMMENT '数量',
-  `total_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '总价',
-  `pay_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '支付价',
-  `state` int(11) NULL DEFAULT NULL COMMENT '状态',
-  `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL,
+                                    `active_id` bigint(20) NULL DEFAULT NULL COMMENT '活动id',
+                                    `shop_id` bigint(20) NULL DEFAULT NULL COMMENT '店铺id',
+                                    `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
+                                    `category_id` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
+                                    `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '商品id',
+                                    `sku_id` bigint(20) NULL DEFAULT NULL COMMENT '库存id',
+                                    `goods_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商品名称',
+                                    `goods_price` decimal(19, 2) NULL DEFAULT NULL COMMENT '商品价格',
+                                    `num` int(11) NOT NULL COMMENT '数量',
+                                    `total_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '总价',
+                                    `pay_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '支付价',
+                                    `state` int(11) NULL DEFAULT NULL COMMENT '状态',
+                                    `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数',
+                                    `creator` bigint(20) NULL DEFAULT NULL,
+                                    `create_time` datetime(6) NULL DEFAULT NULL,
+                                    `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                    `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                    `version` int(11) NOT NULL,
+                                    `deleted` bit(1) NOT NULL,
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单明细' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of oc_order_detail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for oc_order_strategy_mapping
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_order_strategy_mapping`;
 CREATE TABLE `oc_order_strategy_mapping`  (
-  `id` bigint(20) NOT NULL,
-  `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
-  `order_detail_id` bigint(20) NULL DEFAULT NULL COMMENT '明细id',
-  `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略ID',
-  `strategy_type` int(11) NULL DEFAULT NULL COMMENT '策略类型(普通/优惠券ID)',
-  `strategy_register_id` bigint(20) NULL DEFAULT NULL COMMENT '策略注册ID',
-  `price_change` decimal(19, 2) NULL DEFAULT NULL COMMENT '价格变动',
-  `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注信息',
-  `coupon_id` bigint(20) NULL DEFAULT NULL,
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                              `id` bigint(20) NOT NULL,
+                                              `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
+                                              `order_detail_id` bigint(20) NULL DEFAULT NULL COMMENT '明细id',
+                                              `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略ID',
+                                              `strategy_type` int(11) NULL DEFAULT NULL COMMENT '策略类型(普通/优惠券ID)',
+                                              `strategy_register_id` bigint(20) NULL DEFAULT NULL COMMENT '策略注册ID',
+                                              `price_change` decimal(19, 2) NULL DEFAULT NULL COMMENT '价格变动',
+                                              `desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注信息',
+                                              `coupon_id` bigint(20) NULL DEFAULT NULL,
+                                              `creator` bigint(20) NULL DEFAULT NULL,
+                                              `create_time` datetime(6) NULL DEFAULT NULL,
+                                              `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                              `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                              `version` int(11) NOT NULL,
+                                              `deleted` bit(1) NOT NULL,
+                                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单策略映射' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2100,25 +2216,25 @@ CREATE TABLE `oc_order_strategy_mapping`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_swap_order`;
 CREATE TABLE `oc_swap_order`  (
-  `id` bigint(20) NOT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `tid` bigint(20) NULL DEFAULT NULL,
-  `business_id` bigint(20) NULL DEFAULT NULL,
-  `channel_id` bigint(20) NULL DEFAULT NULL,
-  `device_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `last_order_id` bigint(20) NULL DEFAULT NULL,
-  `origin_order_id` bigint(20) NULL DEFAULT NULL,
-  `pay_amount` decimal(19, 2) NULL DEFAULT NULL,
-  `pay_time` datetime(6) NULL DEFAULT NULL,
-  `state` int(11) NOT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FKrkeu9v5trh3iqe71y9eyq1q0k`(`origin_order_id`) USING BTREE,
-  CONSTRAINT `oc_swap_order_ibfk_1` FOREIGN KEY (`origin_order_id`) REFERENCES `oc_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                  `id` bigint(20) NOT NULL,
+                                  `create_time` datetime(6) NULL DEFAULT NULL,
+                                  `creator` bigint(20) NULL DEFAULT NULL,
+                                  `deleted` bit(1) NOT NULL,
+                                  `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                  `tid` bigint(20) NULL DEFAULT NULL,
+                                  `business_id` bigint(20) NULL DEFAULT NULL,
+                                  `channel_id` bigint(20) NULL DEFAULT NULL,
+                                  `device_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                  `last_order_id` bigint(20) NULL DEFAULT NULL,
+                                  `origin_order_id` bigint(20) NULL DEFAULT NULL,
+                                  `pay_amount` decimal(19, 2) NULL DEFAULT NULL,
+                                  `pay_time` datetime(6) NULL DEFAULT NULL,
+                                  `state` int(11) NOT NULL,
+                                  `version` int(11) NULL DEFAULT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `FKrkeu9v5trh3iqe71y9eyq1q0k`(`origin_order_id`) USING BTREE,
+                                  CONSTRAINT `oc_swap_order_ibfk_1` FOREIGN KEY (`origin_order_id`) REFERENCES `oc_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '换货单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2130,23 +2246,23 @@ CREATE TABLE `oc_swap_order`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `oc_swap_order_detail`;
 CREATE TABLE `oc_swap_order_detail`  (
-  `id` bigint(20) NOT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `tid` bigint(20) NULL DEFAULT NULL,
-  `last_detail_id` bigint(20) NULL DEFAULT NULL,
-  `last_sku_id` bigint(20) NULL DEFAULT NULL,
-  `order_id` bigint(20) NULL DEFAULT NULL,
-  `origin_detail_id` bigint(20) NULL DEFAULT NULL,
-  `pay_amount` decimal(19, 2) NULL DEFAULT NULL,
-  `sku_id` bigint(20) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FKiuo9rwpivhxa4c0fx2ai7uw5n`(`order_id`) USING BTREE,
-  CONSTRAINT `oc_swap_order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `oc_swap_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                         `id` bigint(20) NOT NULL,
+                                         `create_time` datetime(6) NULL DEFAULT NULL,
+                                         `creator` bigint(20) NULL DEFAULT NULL,
+                                         `deleted` bit(1) NOT NULL,
+                                         `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                         `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                         `tid` bigint(20) NULL DEFAULT NULL,
+                                         `last_detail_id` bigint(20) NULL DEFAULT NULL,
+                                         `last_sku_id` bigint(20) NULL DEFAULT NULL,
+                                         `order_id` bigint(20) NULL DEFAULT NULL,
+                                         `origin_detail_id` bigint(20) NULL DEFAULT NULL,
+                                         `pay_amount` decimal(19, 2) NULL DEFAULT NULL,
+                                         `sku_id` bigint(20) NULL DEFAULT NULL,
+                                         `version` int(11) NULL DEFAULT NULL,
+                                         PRIMARY KEY (`id`) USING BTREE,
+                                         INDEX `FKiuo9rwpivhxa4c0fx2ai7uw5n`(`order_id`) USING BTREE,
+                                         CONSTRAINT `oc_swap_order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `oc_swap_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '换货单明细' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2158,33 +2274,33 @@ CREATE TABLE `oc_swap_order_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `old_gc_category_spec`;
 CREATE TABLE `old_gc_category_spec`  (
-  `id` bigint(20) NOT NULL,
-  `cid` bigint(20) NULL DEFAULT NULL COMMENT '所属类目id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `type` int(11) NOT NULL COMMENT '所属类型',
-  `dict_id` bigint(20) NULL DEFAULT NULL COMMENT '数据字典id',
-  `is_sku` bit(1) NOT NULL COMMENT '是否 SKU 属性',
-  `is_display` bit(1) NOT NULL COMMENT '是否显示属性',
-  `is_search` bit(1) NOT NULL COMMENT '是否搜索属性',
-  `is_required` bit(1) NOT NULL COMMENT '是否必须',
-  `is_multiple` bit(1) NOT NULL COMMENT '是否多选',
-  `ordinal` int(11) NOT NULL COMMENT '序号',
-  `state` int(11) NOT NULL COMMENT '状态',
-  `field_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性名称',
-  `field_length` int(11) NULL DEFAULT NULL COMMENT '属性长度',
-  `field_point_length` int(11) NULL DEFAULT NULL COMMENT '小数点长度',
-  `field_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性类型',
-  `field_default` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段默认值',
-  `query_compare_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段查询时的比较方式',
-  `is_key` bit(1) NULL DEFAULT NULL COMMENT '是否主键',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `enum_values` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `display` bit(1) NULL DEFAULT NULL COMMENT '是否显示',
-  `is_multi` bit(1) NULL DEFAULT NULL,
-  `property` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `search` bit(1) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                         `id` bigint(20) NOT NULL,
+                                         `cid` bigint(20) NULL DEFAULT NULL COMMENT '所属类目id',
+                                         `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                         `type` int(11) NOT NULL COMMENT '所属类型',
+                                         `dict_id` bigint(20) NULL DEFAULT NULL COMMENT '数据字典id',
+                                         `is_sku` bit(1) NOT NULL COMMENT '是否 SKU 属性',
+                                         `is_display` bit(1) NOT NULL COMMENT '是否显示属性',
+                                         `is_search` bit(1) NOT NULL COMMENT '是否搜索属性',
+                                         `is_required` bit(1) NOT NULL COMMENT '是否必须',
+                                         `is_multiple` bit(1) NOT NULL COMMENT '是否多选',
+                                         `ordinal` int(11) NOT NULL COMMENT '序号',
+                                         `state` int(11) NOT NULL COMMENT '状态',
+                                         `field_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性名称',
+                                         `field_length` int(11) NULL DEFAULT NULL COMMENT '属性长度',
+                                         `field_point_length` int(11) NULL DEFAULT NULL COMMENT '小数点长度',
+                                         `field_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '属性类型',
+                                         `field_default` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段默认值',
+                                         `query_compare_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字段查询时的比较方式',
+                                         `is_key` bit(1) NULL DEFAULT NULL COMMENT '是否主键',
+                                         `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                         `enum_values` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                         `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                         `display` bit(1) NULL DEFAULT NULL COMMENT '是否显示',
+                                         `is_multi` bit(1) NULL DEFAULT NULL,
+                                         `property` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                         `search` bit(1) NULL DEFAULT NULL,
+                                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目属性定义' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2196,22 +2312,22 @@ CREATE TABLE `old_gc_category_spec`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_ali_payment`;
 CREATE TABLE `pc_ali_payment`  (
-  `id` bigint(20) NOT NULL,
-  `payment_id` bigint(20) NULL DEFAULT NULL COMMENT '交易记录ID',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
-  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '交易金额',
-  `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款余额',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '业务id',
-  `pay_status` int(11) NULL DEFAULT NULL COMMENT '支付状态',
-  `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `trade_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付宝关联流水号',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NULL DEFAULT NULL COMMENT '版本',
-  `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                   `id` bigint(20) NOT NULL,
+                                   `payment_id` bigint(20) NULL DEFAULT NULL COMMENT '交易记录ID',
+                                   `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
+                                   `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '交易金额',
+                                   `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款余额',
+                                   `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '业务id',
+                                   `pay_status` int(11) NULL DEFAULT NULL COMMENT '支付状态',
+                                   `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                                   `trade_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付宝关联流水号',
+                                   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                   `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
+                                   `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                   `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                   `version` int(11) NULL DEFAULT NULL COMMENT '版本',
+                                   `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
+                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付宝支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2223,88 +2339,58 @@ CREATE TABLE `pc_ali_payment`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_alipay_config`;
 CREATE TABLE `pc_alipay_config`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '支付宝商户appId',
-  `notify_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务器异步通知页面路径',
-  `return_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面跳转同步通知页面路径',
-  `server_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求网关地址',
-  `auth_type` int(4) NOT NULL COMMENT '认证方式',
-  `sign_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '签名类型',
-  `alipay_public_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝公钥',
-  `private_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '私钥',
-  `app_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '应用公钥',
-  `alipay_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝公钥证书',
-  `alipay_root_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝CA根证书',
-  `sandbox` bit(1) NOT NULL COMMENT '是否沙箱环境',
-  `expire_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '超时配置',
-  `pay_ways` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支持的支付类型',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `activity` bit(1) NOT NULL COMMENT '是否启用',
-  `state` int(11) NOT NULL COMMENT '状态',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(20) NOT NULL,
+                                     `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+                                     `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '支付宝商户appId',
+                                     `notify_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务器异步通知页面路径',
+                                     `return_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面跳转同步通知页面路径',
+                                     `server_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求网关地址',
+                                     `auth_type` int(4) NOT NULL COMMENT '认证方式',
+                                     `sign_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '签名类型',
+                                     `alipay_public_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝公钥',
+                                     `private_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '私钥',
+                                     `app_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '应用公钥',
+                                     `alipay_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝公钥证书',
+                                     `alipay_root_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝CA根证书',
+                                     `sandbox` bit(1) NOT NULL COMMENT '是否沙箱环境',
+                                     `expire_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '超时配置',
+                                     `pay_ways` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支持的支付类型',
+                                     `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                     `activity` bit(1) NOT NULL COMMENT '是否启用',
+                                     `state` int(11) NOT NULL COMMENT '状态',
+                                     `creator` bigint(20) NULL DEFAULT NULL,
+                                     `create_time` datetime(6) NULL DEFAULT NULL,
+                                     `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                     `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                     `version` int(11) NOT NULL,
+                                     `deleted` bit(1) NOT NULL,
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付宝配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_alipay_config
 -- ----------------------------
-INSERT INTO `pc_alipay_config` VALUES (1451482829502525440, '支付宝沙箱证书配置', '2021000116671599', 'http://pay1.bootx.cn/pay/callback/aliPay', 'http://localhost:8000/cashier', 'https://openapi.alipaydev.com/gateway.do', 2, 'RSA2', NULL, 'wkcwWNqsP1U6PjwR71+sc/4v4ZVqWIsm0FUybaxev6SJkNc8rujLMumYaulnO3l1zqWLUQfJmjjAqeCpT2ytOxQhSeaePgxGedpOy4BBt+E2IFSKr7+icD1AljcdaxP5YyZKMbkiAQyjchJREkQChfymc8Imz5ZRZ7ld7i6zYevo5YcpCZ+uUOPAaDm1AtO+A/EZa37LSNIj+NiI8zqfW1ILq8aiEPpVI2qXr7e91sfHsSDB2OMftMgGrIy2gacST2AWnoUtJgUEJWAbq3r6MWI8hj542vcAMmwGBR3Pv+ymXNapy4KaobJQCsBUb0ARUyJEILoa9VdzHKpf7sP52LHVHsaZRBXXQGmH3MnInLmWHEy50g8CUpxmUhbgwliu3s2ss/fQYE71KEs7sm8HfzZESd2DBwv8IervCxdMse8OVL6iEmmffeYzxDfths6NRC9ALokTRB8Pvpket5XtOzBEt+chLOC2liCJiQv9Q+z0evsrHRObeejWLxBDH3E93RlELeWgQLNS1QrQL5+5numdzJgyLwPVoE/dgSLB2MBlbAXquenfpwiik48vMgKoNZ8NxOZOWh/o42szp+EmM1xCi0AxWDvjYDWRCyG+dbxbtFvAwSKbkCk1drpMNq9X6EPrWjtxebYhVA43Jqc17XkX9PrzuY6qsFy8cDKhDVgWEbxDEaid+ytQXxo6Z6ppXMcXVWbsUp06C2hF8Lje3aFzKiDeR9hVSASuBwEWK3UzTElAz5/nz9G1eNC6D0LWmnBwxo4WvfXN0R4OptRR8t2SkQCysIj7aMUUj7OYel7MAwP6YZ+remW6+ecoH/YhvL/jdVKfxiRVdw4K0YbOmKRdJ+LyZbs7uWytgNJHDlCV+t4iuFUYLPG9sEqqRV2R71BtZA4qn7841mQV7E6pDahhkSUAQhZ4HhBiSipwX51xNf/DWzSyppFgcTlNOeGoYpaMs9BoK27xh5ShX7zs+BH6Aljp8R8+jawCOnu+eD2LoIGVAAv/bEIVepMrRS77ByKC20qg2LdPpZ5+lzIOpvMseD9bvEXbRt9LEyMuDPMx+V1fr5Rt+GFpv5/8SMDAWPu5WfYyLHlMxiPwbB0GPwfZBDElLEYfzxiE/VsBexjfH2xeC7/QuFpjPhnvcGnfCATd1lCbk/szIBrhAxl0a/8cwXJHYmSL9aE2tNEFLPSVxiww90ToeG/Jt6crn5AhOj32UpG7OXfXkJ6+/6K91rJsbN+ZbV0JfBa22EmuKG3iBgZZgblg3ndz/BAmyxOD0xMnYVri8YPAhVGtmoASGdTKW0s5zNJaA711r/YcQ68ctKyWTnddRfKAfyATYeV1cfaWaHdcE/GpnuMi/Q75PPLiTFM3PAPS8IYduzf4/3zuarMlocc47naJHMfPUi2G1NSE+NLXfCtQClMrY59/xSZpBXK68Ub3wGNf68Xt17Uo1MvKjXGWJvOj3SehKYZXq3FiY/mXkvmfGmy2VOeDw4y1fcjEf+5xCtA2kzoKISfnTWy2rZgxFk2P3bmT3NGwS0/dNuc74PiVOQk2jpEZfgJIlfjXQC+4+Ek/dLNdtwYRCfDEsb/U4npDE56kJnIZxEGmsBwBHgNL7eKZb6nIv9D0qdFKwREsKXTFb1EvldW5q5kTwh68lZpNFFlWXUaAqiQZkjdvPAedPmW6lMUM+Lwoc39Bw7O98TQwtyfoavBmUSD4Zm/n0AKUPgVbbVw9xgDM2zZaNVsfeAFl1zO4HbRbiGzjZvNrhsAKfkdvg3ddc1i+Ri0BNaM9MNKf9fhxOQywMCsuW2gwhMutghgeW4eLudlqBf/sp16+rcxc3bULZFDFQzhhzPl37ERVN2BR7/0plzEWfKD4iBh1g5RVlfx8vAHyRHXDgg2kXmgj8jyI00TOvfEgkIzB25zsJrwuADX/Y8+2w5RxjTNBE+Y2eB2LuAPFaPbBJ+9TKCkpsycm9Opo0iOZMZVGlWMGr0syAHLiOKMwWiaa9ShgX9CYZNrr3Z6jHJCXytw1VPHAQVZUBxye2y5zvoajFuezdav/PonQLPVbg+qAuu7AtqzlAn9ZL+5J9sOgReSx9qnExnIG6MeGXK423dhhuvW4hQbNgQ0xyJsIFmQZsc5/xmen9k4tYKKF96KS2qoDzDdvIcfl5MmVwK24VTI7kubgYnws', 'BtSgnloODmz6szHH+rr0p33PRK864B29sX0vH6pVY5/PL3OfFo3pSuup0FNq6Fvv1lsIbXFOL05K67T1+FPJizq+ENHB7VoIZR8Q6Z3gIqvVUpjLr5R4ThSIcwTDDnR1kY+eEFXDA9Pu8E7DRaVAY09PBkbD1kGTQ/fmAtn3btim146/PbcV0cMMHp5RLLPapM6KZe9XdWRb6U+p3V9zvzFAc2O+4V422jlGjkfglCk8I8IVSscnSX7FJq5DEkmAb6oX8XmVIcxgUsVRrwb84YJH+WE0Xe8UIASa2Fp4ej6Pp0lySB8CNLpX7feVhdZCwRxLCV2HAh0b4oh0KkyyQ28Zd9RaLKw9PSGE68rxW2cAi3oYMK3GOySAgh9y7YBCZAOqWAvu6MJ3pb2MOVtKMAkFCpdzM73zneRE7nl3BmqzRW25yc+K7u4Ll+y/8HVIBRdzv0jRCQ+3UB72b2xqEovh/z2r1FOS/N32HM9zd1IIcoAiZObR7b71SJtU5gp9rHCg/Sde6kF+iTy2TPUr7uOlXL8Qkm5iODzQV0LXug8esIUPCJeU8t8Yau7zMjJ7fAo6R/1U/5wD5Xs3lZtJBEcUT5YyIQf/oR2bCiedSYw2ABii9rQtHnZPegkryVJc78l8lQ9j4vAwXZqsieuwYZ1V/eHTMSM7hyilcxRPwXwTweIEIXjtC+W/rvJJmIv8mqs9zE8yRdxqRrvr4BqbYLxHu6K6QdWd/S2PwInNDw0FtnyRfwKOoekrg354EwrA43ymTHzGiv2hi6lWhyUhbbLC4EaniCVUpDf0B9iiq3S7irGS8R12LCz2RGzJhRNZwQDNBlNppSN1hbtVGWO0y5xJFJLCvLGqw8JtZmynASWd6cteNwKKq3bVuWxlTBQyNnuRzQt7qT2/MsdE9T7jqSOUWHa/hQqlKun8kXEnC5IbC1YP9byuQRbWoxwFyf3bA0kYq/5hxH3zTQ3a8UPePU36gKuL6Tsxu3BssUQrNUECWOG+khwbI4XZ0Vtq48BCXfzUGx9wGQWDorIfrbwp4wj5IU56Yqbnk1zsZnc07ZDY5hk9iSFEUltzqgDMGBYWm059m9lRSXBxPPEJWWCLMJVkm4l9IeqVQH0w2wVMr6treusyrmgOgavq906bzK6r7E0e5BzJ3GF1tLAl4tEBmT8TcT+bpBlSwbxF/E/jtESr1Wyy2kHzdiGwGgCVSJoV0xY30rilcR3jgBVB5phqSUnqgyTX293H0KqCEcwKUd/4AkUkpCZm1+MVrw060u436nVnBXBsG3bhrVKIC5zXo9PVR2btstgPwQNTgzxtuSqp2o2Gz6/lQ53KyGHYX/eGQVni0Sbko5FDVNtW30Cp9GCIXK7gKcgzKyjONpHFkYi34SG2edAzcVKA6SqKjdQIuEUIcEkNxyUZphqnN3n3OOpkjZ1AoAmlAVuaz30RyHBsfxDOrfviJmUyHT9wMD6xuYsJlZCy1c1j3rDFHZiidYSuqudBT5IPQLDQCbkVKrqiUzMdlsKW/3kDqV1+7fuBDhCiiYBgb+IQcgFdGbdY/Gi3LEKa/TXMCYcsvcNhOqscurX3QLy0NTO2rzHVFNZPCTe8GSY0QaK0ySVYHMOPxFVrv4LCheZzn4XeHM88P0FF06TigSkxY/hPLs+hBf51PTK7CpFxiRUfE3eT++IQ1Bgi83kxs1Q6hG2wFOMXANxgV7soPq5EIv+w2beofGx7rEXskD5svkGQE+YIg7ANJg==', 'BtSgnloODmz6szHH+rr0p33PRK864B29sX0vH6pVY5/a/1uAWiuziqiXyCixgHvl7H+0HV0ZgC+gs+RrJSnt4Mbyju4RlhuItjP7LcfosGHVUpjLr5R4ThSIcwTDDnR1kY+eEFXDA9Pu8E7DRaVAY09PBkbD1kGTQ/fmAtn3btim146/PbcV0cMMHp5RLLPapM6KZe9XdWRb6U+p3V9zvzFAc2O+4V422jlGjkfglCk8I8IVSscnSX7FJq5DEkmAb6oX8XmVIcxgUsVRrwb84YJH+WE0Xe8UIASa2Fp4ej6Pp0lySB8CNLpX7feVhdZCwRxLCV2HAh0b4oh0KkyyQ28Zd9RaLKw9PSGE68rxW2cAi3oYMK3GOySAgh9y7YBCZAOqWAvu6MJ3pb2MOVtKMO6EwQ3O8OD99XTnpoYGD0/RTRA+ck6Q8dafUmWvWKjTqv8gO4A9ZW/7J0TqoewKGM/F6LZdQvKraCJcRL6uOCo7dPTYtUZVimIl7ZllCE7QdBd8x337dnxV+3HjvYX8vc263kuGN32t/E3ih6YBnCPEb46rDtz/Gb3eZTiFWPYJcQH2EQzK0D2dbErTYFOlhJLlm3p7lSHSB/1Gd/froOZX2p4RSBCoKGTVPFs7+EvkvXk/5DNW4IBMcdOeEvaorIg/CQrpsl3ncJvf/wpBcgkjzo/bzJhIRLo122lTBkFb3FyubPhscQr4H9/Da73/yq/EjCVsommywlRDOtT/7K1+N0ORUqO6Whq8AfwU9eGe8qb++GS5do1fqbHA34M+EPf07F0vQsNT1pbXreh8XCrDowJ9CGQaytoAGgTqatcTl024W7h2oZMvVh/RfuiaLL4fs36uzl69HM69OJtjODiN5XG1iuA4rLm4GyTmrtgknswkwzVMQV7Tri5syUukw7QEZWoM6w5NOvHMWVZAEBH54Zk4ERFwORGky73PIQpW1L70SZypq6qoNbS8uSc3rXE6DEivEZOfTR1nPyjS8kJFzzItI2Qus4T+/mKx4Zq7ULQ+Y0doPKLj9Yru0Zy6TF0xOhnz4pwUCKbJax+tzBMyXl2Jud7EfwJc+gxwnrR0Hk8j9kv7Y+v846THLKRdXVQHe8VNUtaVpfgyavAVxJXb6Zn7Rhe+w0Qcxxl1qFOGUM3GQQ12bHXLfPbxlXkqv5J2MiiWjd2AjEgy2ghrRNucBjnwDd83GPcP3zwOWKSZHKN0pb+nU0oDHgQeG5/d3V5xcelSc9ZS58TD9tBXpIRYMTBqMiTe/OSU9rxsuriba5FpKz6Rp8/8U7H8NiRe6b7nY9mmaEIQuihpMafEuhte4c0TbQNpqpazrR15x7ph80grxjKnS7FQ9hzQTfIPXEOJZGHSKIruFEYINPs3lE6VuuVdDAh8q9bEMM3xDtjMFqBEF0DtX9j0C7I7rZ8MnJ/9eKFUxTJE6HzAXNwuTdEGY2oeJYPEXoqlVeT2IcbJo/LEsYAOtv7pf7rPfdDu7agBfnjkQAOGEMSgfKjdkuywWpCUOdZc4knwFoJYzZPaLzRw4vm9dg/srCg3S0y3H/6IvrIazd3KYwXFOB/sL/2xp+g6iEVwUahhd7q+YZnOLPodnu5mP0n4eng3vxgng0eoOSDJPAOz+lnrc8hh3462OUj03xxex0TJ9wZrDlBcjuX7hDGcsvIjuNdXeXgyYUZMZRD7mLa4VICBW8Lg6uN7tydxCOaHAo6vagmwJGqzJiGrTALozD6EfUZ/nH+ZX2BXuyg+rkQi/7DZt6h8bHud67j7So+XWEMSJ99CzwwD', 'BtSgnloODmz6szHH+rr0p4zeSOUnwdu1qL5OYlBdTlHI4h+7JkPEf4c4W23Z8/zk5bUxgGUnb3UptyQEWTAPu032qNhxqKLD1Ukt++2yH8z4k0uNLeR3BeRfTte3eUH0yzRqykqbNHm7w8tKgIAJ3TgsCvpia2U2z52Z54HKrxhPpLYK55VRCfigUp7YRMYN+mxF3Ji2d/dpqYlQTsvT7WtIO/Ye1n1F4801iXmENZ2N9Sj3CyD9ikGJ1rgpEUnjF+tnUXLf+HnsSa9kYL432PIb8e5vRNMIruOcj0qTeMCDdDiVZfin48piwo0mxICESaF8D+b5LoWG+cNeatbsrm94CJBWD4x+G+esnT/mxl4p+u6vK0/8vuDZs5FX84cHd8HjRhV2fJzmH+Xoi8MbFUduGDOhcwpZQ3Dl6AM0vAAPj2GvUuNzOX7xxl4JODJwcE4uWnd/QLdZpLosneaB8PPWut4yj4/AMCimBC1ECPlYUoHIOLsTCn8HM2nuntLhCoyjEmyYXcnPOI5fwh8nJ8A10O6w5io9uV75j6BcwpNvwG0iYAk4ZQHTv2CxnKuXHiJ0303yR/AKqG7lRTu3S1WUBi4w0KuXHudL6YKL5VWW1YWQItnTo7tTAsCKlj1VCn3kU+kCR5WuxvcU4f9ChZen7qLfr4Ef0in+rjgx3QTb3Z0N6TGf6rwT97iUsY/vbeYbgIjkkc7z/gjapEukxh2NV8wX7JtgxNPYrGfwbD/DzmvvPk1nC9ouLQTr2a0IkR7FRJ1f1iOU239V+opTbk+FpCapenllG2Sa6cg2yr431/bXcAfvCP4fsNvXK9F1JyMAikZsqf4p+YdjUlPwsqhoKdav28Y699Q2z+qTGcwXcltIIGZmH3O56qsZaBCg2k7EQzLAp5pOjUt75NNxS0JxCl67/imGGh8y/zA74oKCm7ITPrvRPieRTbBFfBMpbiLCcE2kd+ezYqHO9o56/J1GC2PsLI/PD/fHXJ9NdhbDbTDRaXqCgCxQfc5uf7sM2NFTdOMTIw+dJj2H8gcdn1Pbg4Q4c6VhBHAr++KgdajhWxn6VMQ6UzmnjQe2DB9dN4WOf1rG6L6zWfxBMiWUzeFo6/ih95y9bwEuIvUnbEkZIgbfvxc2VNockb6Irw64U9601LR9fBAyUCRqQ0Shbra+zkHTquYgZGHIK3Hqcf+vEzwB0Wa3SgI5Lqn5JlQHAj1ch8RimN38b2p+qjGSqI4uonSoZs5dNGESfzG1EwH+pf7EYW6Nye2SanIsAeA+30VHzvXQdob5aGEpl1ZJ/AiofPBm+b/WHDQYM7LxzmEKHmgXTjFd03JFkGzVu3IvEy/E/f6ysVp4qk0QCXljigY52aWuAc7NVL7NguyamPkkN40CMUOM9l5gpGdK8DYqrnCYOpWlXf75QvlF6yt1sEUBH2F3qklCKl7Zo7j5JlruCym6C7izlFwtlKoMm4HOwvDA4ZMuivaSmO9a8SjjHutQ9k2aG/gx23qO3pZdnA5UDhXHG5xZecutEX2MzGAhvd//ASkyd8NqU6cnJc/4N7lhjkwT+nXUAH5/d612TlEeW/2FOZ+uIcq5gEpDlokA6/wCGHo4tnxGu9/2QrlAkh2RJGo6litLyx41SmkT/MLM5mXdjOdtZnoBqlWqM6jkWGiXboz6KTJm0uKy3Sg88tc4mD4aaiC+8U7tE+xviOBElsJKXY9WbbnaNOBtYUjl6b1WzxthMWDqGSTDXigdAVVmmVtJ+vOI511A/2sdwZirmAfAPOKwVMelpSoGKxB6pUco0g45vN4ekV39KsGFQg8YTjahW88acqEPMileh26pWS6wQJGMzaQ+MDQ36wov1HU89QI5hKrU4kOIugT5/wK6Ujqv5f9be/fL26O1kIYEukOhgCsp+65lbE7TaFpeGt5CKUsba4qL6qk1nS5PSncaPS0dFdh2Spf14pIazMB47sEQcJTdapoudpsD/HRp6zuQHvctbm2cTRc0e1bkMtBac6zq1VuPLnw0d65sLhvEY7B1dUliQQpiNm5eNqdH6ZhLLAqpw9hwMjA2Opq38He/SFmH5EH/Oceh3TO22mIA40Bx05+9cIU34bZChkb7p5/DbDI0qAMog0fhQra5znu3Ao2NlYiSO6AnLUbHDPvTEy/bXK8vGCSxzLXEc1ty7HGPwFu33XrwNIxiZyHJtpSLelawd/R2y3SWmDjMBNlV4JcvkW/HWeAhgSJhBCaNBc1ssGPLP9/tol76fvMkBtZKbpLPhDez9gdt945AqitX8sqVqrbcOQ/wn8tHSM7MqbkpZ4Okkz8f8RP1hQr8dApFTuXoYJCMM0fDMjsspCnt7CWDbz7Awlwp5qOMt4blQbHzJlY6mvyb2lEr20dGgfTo92BXp2x3A7n7FksjoEyXO09d+MpnuV0ckRbCkbvybKMcYgpusU0M4tws1xxanweCFVkvqR8MqiTCioCKynMdvxojuE6OlGLdDqsmAig/1hrcL+CGFjCAKGAx7pJd7cusngTzTL8I4cbUjgrHDtP9zewF8djJieiYx8nfCKe5i6l1l0OazQzsHkTpIlqbo8tnp0qWZDgAkPESn53nUSr82Z6v3IcruT4p/5T5b0xrzYkAfFEuHZIVA4qTIkKDufaaTpFWLTT3oud05Cb1VZkraPeA27jtQBGnDTSBfdTWvpGdQVuppYq7A2PKrKRwXpz1F7mPP7NBk3M3hh2m7rmXNA25aBuTvdovgZhA0b4XFyErCK6VnMbVmTu89KJ3GxVSpPro59KlS/8zXYdEK8H6zGm00YEEtB8AAhuQCTRkR8Hp8QGeb0VLTjYjTndH2gAW3JuDcpP8/IJdnSZP8N9F27revvRzavL2fOxUWAVNOL8PW28eEIxjoK9+N3g3XB8PfPj8V+2tuS4utkGjqNWAPYuOVk6m3CyhJdfrooU3pB93LoLKO28Fs0CNQUEil4p+UvmJoNbZVAO5jqrTbduqucRK2H5/at4moixNdorlBt1Vj2Zd4VcuFIwDqSbdR6u+luHZVTpVjbl+fNkO3jACidAZNHib7aJ06vcaqjDGysGJY6dRiRl4hwLmBd+OYHUakPl28NiFn4/SIVPnJCczgtnrzgKFJITTnlAysid+7UQZrhkZrrHqiy2Rx1L1XFarn5XyxBLi6ZOZ0Nc8jZe1lYECXXiCchPbCg6c2fp2mpdu6L29NyeZFnyLVhHFn4zL//G9z/qMytmkBfVRb6UwvbDlBRfpRRuGeto4uLdEYR+EXJYE5Uq1wVistDb9KRNFCc/IiXS1QMXflekWzOvksNS/0I13HNp7KZ2zrMeVG+FquK0+G0ttbtK8+2or5Iqp/3ITPVX2ACFgOkgz1FMzZhs8Y+MAdvUFmJKeBHd5kxzxEPcfQ6/lU0w8ItT/cD9cfsU/vpxixN459C6t2ywSY8ICgM83sv7fUFcDTVdpZbNKnM0HFkSiX6O9qTZCgkFMC8rhgdpYpJ5H8djk+PNg9/fakkDb5rDCedah2JvtIbbOZawBEc78Fqdw05/bwsjuD+A9NJ2pj/QDQpQG1wqkWHZxy6PXFnw6sHlia3SpfMjN7P+4oNGJy3GCgPsgKuD+jigewJJzgDKhL88dVkBSfvi1+UNhPizQEW018uScBtSgnloODmz6szHH+rr0pxLQLHExsoTGceNtY631Hl/j5F7l/hZ5juaWQCUw4TLPVvAa85HFFrrnFfXq02FTh/Wd9eCW28bEiT5narrdCvb4k0uNLeR3BeRfTte3eUH0dnH+xLd8hcLOOuAFe7p+J82ztlMsME4pjiBMA5ICtPGxx5bW27CiY2JIx8kygP1rvW//I93SgWcgRWXharoDyfVFgpsSAe9WyrgoprtjUrzv6MMNMOeqwGhpQK5usUQ82NFTdOMTIw+dJj2H8gcdn6Wy85J1iO8EUZMaQ5JT4GWDjTz+IilYmJKRSc2lkoptT1OltApJCRj3y33QT2HFkHg4gg2zf4zpx7M5mBvsqyGvbaA9QSy7JciJ2CQi1PaugBT3dfPndaJLbN4QOxI8DZLaxaunXpDavFCik+AsFHO4LVW397nF4S2h/fMqnWFSFcCoqhjXCN0Fx974nYrpO4CTGZfyI/4KwnDDtTjL7icEHCmP7K1BR5RTDnbkiMrbIIhqt9a4w3Hwgrt6ehSdFYD2OSIJ5dwE2NjuIVH6yvI8+vja0KJ8VE/B3O/VTnZXeCEw1OC9fd0lcbV8WgK5ArpHuteOwvhlJI5MBU0BdXZ2NdvW7ETivHXVXL6q3S8Wmy0BoIFLdIoqsPbIyIVyeNmpH+aX5FuEO//V1CqSwXe358Q/nReq1ZdmFfSALdFXiKJViB7wecZyi79qEToU9d0SQ4l+JtyQV37WqHvurzfJJcsUCZomztdF4LTo+g4PnrWrsd3Shi2nJ/nGIa5LZzA+6jhkEix+979K1d6jeiQFPggKcO4zIffuzcSPGPjwtN+fEykG+Fr932HSY9vzfiyjjvY5sS6Q7tNppzSigd/anCHEMZuWwKsCsMGbf+DFXRj9rSWYTVPLXL5C2z1rHZc1OAlpzxrble6cgkY7oE40Mza95uoprPF/DaWRxgSev79AuRDKaVCInuvXLiLdznTaqwKsXCyLmhQakWbEv94AgcIvjBBGwRnRn0pwAYbDorefzIc4tUrT+f3dmp36Bqq4CKGGhHa6WAESdJvqwuoureOkELtNikOLanD6OUsjD69PK3H9x9NVF0tBMlzvYKPE+v1p3EmzAJ8fK8W2h0ofKeIKKOaFg9TOOjBSVmRjcBiRF38lksSGmxRF4TCMzTj+eWWVuF7vwBbyfBQ+VaHLv9FEhI8Axhno36iH/tiJJyMAikZsqf4p+YdjUlPwsqhoKdav28Y699Q2z+qTGcwXcltIIGZmH3O56qsZaBCg3AzegpHdcEPUAQ80Wp7Bz/t27VtQvmnQuFmmdmAW8c+Y2pY72Ta/IOACFkNjF96384WuETtSuFOycfhbKp8IGcn8s6hxR3R8k5sp1zmb3PPa5j5izBMoerOQLjGEoAsu41VjVZb3CyE5RDUgOJqA3QwXTMYwM/aFep7w0kVdk64AoHIuxcwIoRuWZtWQSgtfxTjznwmAbrqHT75ZCtlt5BUudkDNdNULiOU5zObExplpo4kBrhxUhVf2uqM+in0RDf3dDMoaC2V7/9ccN4hUHjekaYS1vv2cXcnTMLi9aMPofjpgoX07e3ZOnFmZjjzZ/ZhdOw2iEjnZ81JjBvHoFRWnqWcHOpJz8Z43oxG41SrZrQN6Ev1z4CmRh+ctcjEE+cIZlXtsuDPhzZXD+9BpBSqL2/cRfx5fXj/3jE9UDhpYJcrHFT3to7+cfwBkyMF095vGUjPMxI2OBC0A3BRhbwzz0N2R/VA3JpxXEht6hEerdfyn1it2BODIUNR0aNvTYYt8vf2FR087+Vog5ZReucEDGxjv3C7pZLz8PzHwyaPjo9HPyGfRUf9YLjK3zzVysq+NQUrMi3ElzOCiTb++aZuaee6lGkC4zU+D5nkCjqhxsmT/qhLMjJFmm+9AAmUOkUesTwnYLcETHn4MqhqG0TYqrLFylTgC3eC2uMKy4ERzaa0eHM5GV2mlPEuq+f6P9y9oVUGwEGiL5tk3pISbS3Icy7TC+d9HbDTH2F/FXdEVllDZ27bmXfYRyROYPW34WcLajdl/ocIjLznNSs3WUMQR++YGAIjDlXM1eDbqpmB22urWPmiK3qoztqib38aYLtRQShOMimS1m7dUww/Pz9BwtyVEjv72CC1QvZ+ZgFPcb9AUGEJZKWn1BKjH5maAbPiNKm/WlDZ1CMSu2NhaFs+9BL9hnY5kX48cgezt9YjUr1xHoGl/cpE1VPnpzcW4frln0abyiebi5fbL0/bz8qigA8fIpA2kr8dfLYfKx+sNWKq9hqSx0PE67fXapXMuMVeypktt5HJByBk/JRuWgLJ6rbUAC2tK2RTyW2Xz8tObK5/YDHQhYff3ZifN02+eIDeysWHvniuUHz4dwTd6NoUMd4h1VK5brzuiwsh7cEpD9+31a6gr2V+JcxH1cuFykjI9hVnBL7Zm5GA5WaQY+3WZRmYeX5qWcxzcfyWK+4NDhErFiKsXSk/+tqjz8kxMy8gAwRXiW6l85Ywg8nHls65eH1un/XzkjTSQ74o4xXZ01S+g+jLIPJAvmqSHRpH/SPCl0gzTiw2u2y7TsnHwdIGArcwVgLZzMH68JAmsVRRph83Y+0NDjouY21ZHGJWWlM0AjMSll/F0J6B6xLmlMm4oQj0stoCOxbpe8OJCiOYE+a7xOQ3k3jXa4tk9u4k109e8vOkZI43+eDuRsdfMW0SYE1OUmbTWGnJ+GJtgc9BVmh/i5dolnxbS0CtX8ZodmkA3bSyhXPxTKppCtto8fwx1+mwod58gr/4HNwGa4B+FVUUiJfx5NcKrIXw6SnbghBBmoXc04td2dK+cvO5SEywI6yrIvE2tXrV2qkUT09EegJ8hrVankxMDSKniv1i96mNxGKYiI9BXsyL5aOGBWqiF+g8N3+9Wfda+LgyPbc6Yiw/Jchp9QA7sdcaGCGm0tV4tLk8uKF1OGZ7VZOBtJxlt1xseYNeBRLVmbAaTyEaKoZV4qkUKWSCjp/mP5LfaVpbKqbGChc9mOmcei5iMAFshtoZ0LlFB/CoeQoXjk1gZ3mfmgPKha/tbsZDQjLsGsEscJo2zG4s3U8v8niappA==', b'1', '30m', 'WAP,APP,WEB,QRCODE,BARCODE', '证书方式', b'1', 1, 1399985191002447872, '2021-10-22 17:37:28.457000', 1399985191002447872, '2022-03-02 19:11:58.210000', 18, b'0');
-
--- ----------------------------
--- Table structure for pc_app_channel
--- ----------------------------
-DROP TABLE IF EXISTS `pc_app_channel`;
-CREATE TABLE `pc_app_channel`  (
-  `id` bigint(20) NOT NULL,
-  `app_id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '应用AppId',
-  `no` int(11) NOT NULL COMMENT '支付通道数字编码',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '支付通道字符编码',
-  `state` int(11) NULL DEFAULT NULL COMMENT '状态',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `version` int(11) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商户应用支付渠道' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of pc_app_channel
--- ----------------------------
-INSERT INTO `pc_app_channel` VALUES (1, '1368825551321722880', 1, 'ALI_PAY', 1, 1, '2021-02-26 16:27:02.389000', 1, '2021-02-26 16:27:02.389000', b'0', 0, 10011);
-INSERT INTO `pc_app_channel` VALUES (2, '1368825551321722880', 2, 'WECHAT_APY', 1, 1, '2021-02-26 16:27:02.389000', 1, '2021-02-26 16:27:02.389000', b'0', 0, 10011);
-INSERT INTO `pc_app_channel` VALUES (3, '1368825551321722880', 3, 'CASH', 1, 1, '2021-02-26 16:27:02.389000', 1, '2021-02-26 16:27:02.389000', b'0', 0, 10011);
-INSERT INTO `pc_app_channel` VALUES (4, '1368825551321722880', 4, 'WALLET', 1, 1, '2021-02-26 16:27:02.389000', 1, '2021-02-26 16:27:02.389000', b'0', 0, 10011);
-INSERT INTO `pc_app_channel` VALUES (5, '1368825551321722880', 5, 'POINT', 1, 1, '2021-02-26 16:27:02.389000', 1, '2021-02-26 16:27:02.389000', b'0', 0, 10011);
 
 -- ----------------------------
 -- Table structure for pc_cash_payment
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_cash_payment`;
 CREATE TABLE `pc_cash_payment`  (
-  `id` bigint(20) NOT NULL,
-  `payment_id` bigint(20) NOT NULL COMMENT '支付id',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
-  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
-  `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
-  `pay_status` int(11) NULL DEFAULT NULL COMMENT '支付状态',
-  `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL,
+                                    `payment_id` bigint(20) NOT NULL COMMENT '支付id',
+                                    `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
+                                    `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
+                                    `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
+                                    `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
+                                    `pay_status` int(11) NULL DEFAULT NULL COMMENT '支付状态',
+                                    `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                                    `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                    `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                    `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                    `version` int(11) NOT NULL COMMENT '版本',
+                                    `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '现金交易记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2316,155 +2402,83 @@ CREATE TABLE `pc_cash_payment`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_order_billing`;
 CREATE TABLE `pc_order_billing`  (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
-  `channel_id` bigint(20) NULL DEFAULT NULL COMMENT '渠道id',
-  `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
-  `pay_type` int(11) NOT NULL COMMENT '交易目的',
-  `transaction_purpose` int(11) NOT NULL COMMENT '交易类型',
-  `transaction_type` int(11) NOT NULL COMMENT '支付类型',
-  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
-  `count` int(11) NULL DEFAULT NULL COMMENT '交易数量',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(20) NOT NULL,
+                                     `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
+                                     `channel_id` bigint(20) NULL DEFAULT NULL COMMENT '渠道id',
+                                     `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
+                                     `pay_type` int(11) NOT NULL COMMENT '交易目的',
+                                     `transaction_purpose` int(11) NOT NULL COMMENT '交易类型',
+                                     `transaction_type` int(11) NOT NULL COMMENT '支付类型',
+                                     `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
+                                     `count` int(11) NULL DEFAULT NULL COMMENT '交易数量',
+                                     `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
+                                     `creator` bigint(20) NULL DEFAULT NULL,
+                                     `create_time` datetime(6) NULL DEFAULT NULL,
+                                     `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                     `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                     `version` int(11) NOT NULL,
+                                     `deleted` bit(1) NOT NULL,
+                                     `tid` bigint(20) NOT NULL,
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单账单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_order_billing
 -- ----------------------------
-INSERT INTO `pc_order_billing` VALUES (1409854972862033920, 1001, NULL, 1409821156785152000, 4, 1, 1, 398.00, 0, '1409821156785152000', 1, '2021-06-29 20:43:36.854000', 1, '2021-06-29 20:43:36.854000', 0, b'0', 10011);
-INSERT INTO `pc_order_billing` VALUES (1409854972862033921, 1001, NULL, 1409821156785152000, 3, 1, 1, 598.00, 0, '1409821156785152000', 1, '2021-06-29 20:43:36.854000', 1, '2021-06-29 20:43:36.854000', 0, b'0', 10011);
 
 -- ----------------------------
 -- Table structure for pc_order_item_billing
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_order_item_billing`;
 CREATE TABLE `pc_order_item_billing`  (
-  `id` bigint(20) NOT NULL,
-  `order_billing_id` bigint(20) NULL DEFAULT NULL COMMENT '账单id',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
-  `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
-  `order_item_id` bigint(20) NULL DEFAULT NULL COMMENT '订单项id',
-  `sku_id` bigint(20) NULL DEFAULT NULL COMMENT '订单项目skuId',
-  `transaction_purpose` int(11) NOT NULL COMMENT '交易目的',
-  `transaction_type` int(11) NOT NULL COMMENT '交易类型(名目)',
-  `pay_type` int(11) NOT NULL COMMENT '支付类型',
-  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '支付金额',
-  `count` int(11) NULL DEFAULT NULL COMMENT '使用数量',
-  `bookkeeping_time` bigint(20) NULL DEFAULT NULL COMMENT '入账时间',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  `business_type` int(11) NULL DEFAULT NULL,
-  `source_item_billing_id` bigint(20) NULL DEFAULT NULL,
-  `source_order_item_id` bigint(20) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                          `id` bigint(20) NOT NULL,
+                                          `order_billing_id` bigint(20) NULL DEFAULT NULL COMMENT '账单id',
+                                          `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
+                                          `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
+                                          `order_item_id` bigint(20) NULL DEFAULT NULL COMMENT '订单项id',
+                                          `sku_id` bigint(20) NULL DEFAULT NULL COMMENT '订单项目skuId',
+                                          `transaction_purpose` int(11) NOT NULL COMMENT '交易目的',
+                                          `transaction_type` int(11) NOT NULL COMMENT '交易类型(名目)',
+                                          `pay_type` int(11) NOT NULL COMMENT '支付类型',
+                                          `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '支付金额',
+                                          `count` int(11) NULL DEFAULT NULL COMMENT '使用数量',
+                                          `bookkeeping_time` bigint(20) NULL DEFAULT NULL COMMENT '入账时间',
+                                          `creator` bigint(20) NULL DEFAULT NULL,
+                                          `create_time` datetime(6) NULL DEFAULT NULL,
+                                          `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                          `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                          `version` int(11) NOT NULL,
+                                          `deleted` bit(1) NOT NULL,
+                                          `tid` bigint(20) NOT NULL,
+                                          `business_type` int(11) NULL DEFAULT NULL,
+                                          `source_item_billing_id` bigint(20) NULL DEFAULT NULL,
+                                          `source_order_item_id` bigint(20) NULL DEFAULT NULL,
+                                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单明细账单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_order_item_billing
 -- ----------------------------
-INSERT INTO `pc_order_item_billing` VALUES (1409855068613799936, 1409854972862033920, 1001, 1409821156785152000, 1409821156785152001, 1, 1, 1, 4, 159.05, 0, NULL, 1, '2021-06-29 20:43:36.855000', 1, '2021-06-29 20:43:36.855000', 0, b'0', 10011, NULL, NULL, NULL);
-INSERT INTO `pc_order_item_billing` VALUES (1409855068613799937, 1409854972862033920, 1001, 1409821156785152000, 1409821156793540608, 2, 1, 1, 4, 238.95, 0, NULL, 1, '2021-06-29 20:43:36.855000', 1, '2021-06-29 20:43:36.855000', 0, b'0', 10011, NULL, NULL, NULL);
-INSERT INTO `pc_order_item_billing` VALUES (1409855068617994240, 1409854972862033921, 1001, 1409821156785152000, 1409821156785152001, 1, 1, 1, 3, 238.95, 0, NULL, 1, '2021-06-29 20:43:36.856000', 1, '2021-06-29 20:43:36.856000', 0, b'0', 10011, NULL, NULL, NULL);
-INSERT INTO `pc_order_item_billing` VALUES (1409855068617994241, 1409854972862033921, 1001, 1409821156785152000, 1409821156793540608, 2, 1, 1, 3, 359.05, 0, NULL, 1, '2021-06-29 20:43:36.856000', 1, '2021-06-29 20:43:36.856000', 0, b'0', 10011, NULL, NULL, NULL);
-
--- ----------------------------
--- Table structure for pc_pay_channel
--- ----------------------------
-DROP TABLE IF EXISTS `pc_pay_channel`;
-CREATE TABLE `pc_pay_channel`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '通道代码',
-  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图标',
-  `bg_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '背景色',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `version` int(11) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  `state` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付渠道' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of pc_pay_channel
--- ----------------------------
-INSERT INTO `pc_pay_channel` VALUES (1410927150927867904, '支付宝', 'ALI_PAY', '阿里', '蓝色', '支付宝支付', 1, '2021-07-02 19:43:41.186000', 1, '2021-07-20 17:13:27.669000', b'0', 2, 10011, 1);
-INSERT INTO `pc_pay_channel` VALUES (1410927226240790528, '微信', 'WECHAT_PAY', '微信', '绿色', '微信支付', 1, '2021-07-02 19:43:59.153000', 1, '2021-07-20 17:18:34.937000', b'0', 1, 10011, 1);
-INSERT INTO `pc_pay_channel` VALUES (1410927322395209728, '现金', 'CASH', '', '', '现金支付', 1, '2021-07-02 19:44:22.078000', 1, '2021-07-20 17:21:29.440000', b'0', 1, 10011, 1);
-INSERT INTO `pc_pay_channel` VALUES (1410927406885269504, '个人钱包', 'WALLET', '', '', '个人钱包支付', 1, '2021-07-02 19:44:42.222000', 1, '2021-07-02 19:44:42.222000', b'0', 0, 10011, NULL);
-INSERT INTO `pc_pay_channel` VALUES (1410927501601042432, '积分', 'POINT', '', '', '积分支付', 1, '2021-07-02 19:45:04.804000', 1, '2021-07-20 17:21:35.307000', b'0', 1, 10011, 1);
-
--- ----------------------------
--- Table structure for pc_pay_channel_way
--- ----------------------------
-DROP TABLE IF EXISTS `pc_pay_channel_way`;
-CREATE TABLE `pc_pay_channel_way`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付方式代码',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付方式名称',
-  `channel_id` bigint(20) NULL DEFAULT NULL COMMENT '通道id',
-  `channel_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '通道code',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  `version` int(11) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付方式' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of pc_pay_channel_way
--- ----------------------------
-INSERT INTO `pc_pay_channel_way` VALUES (1410936653601730560, 'wap支付', 'WAP', 1410927150927867904, 'ALI_PAY', NULL, 1, '2021-07-02 20:21:26.798000', 1, '2021-07-02 20:21:26.798000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410936829070438400, '应用支付', 'APP', 1410927150927867904, 'ALI_PAY', NULL, 1, '2021-07-02 20:22:08.646000', 1, '2021-07-02 20:22:08.646000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410936873760747520, 'web支付', 'WEB', 1410927150927867904, 'ALI_PAY', NULL, 1, '2021-07-02 20:22:19.301000', 1, '2021-07-02 20:22:19.301000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410936936549478400, '扫码支付', 'QRCODE', 1410927150927867904, 'ALI_PAY', NULL, 1, '2021-07-02 20:22:34.271000', 1, '2021-07-02 20:22:34.271000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410936970368151552, '付款码支付', 'BARCODE', 1410927150927867904, 'ALI_PAY', NULL, 1, '2021-07-02 20:22:42.334000', 1, '2021-07-02 20:22:42.334000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410939513609547776, 'JSAPI', 'JSAPI', 1410927226240790528, 'WECHAT_PAY', '微信公众号支付或者小程序支付', 1, '2021-07-02 20:32:48.690000', 1, '2021-07-02 20:32:48.690000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410939565245624320, '扫码支付', 'QRCODE', 1410927226240790528, 'WECHAT_PAY', '微信扫码支付', 1, '2021-07-02 20:33:01.001000', 1, '2021-07-02 20:33:01.001000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410939616495824896, 'APP支付', 'APP', 1410927226240790528, 'WECHAT_PAY', NULL, 1, '2021-07-02 20:33:13.220000', 1, '2021-07-02 20:33:13.220000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410939671516704768, '付款码支付', 'BARCODE', 1410927226240790528, 'WECHAT_PAY', NULL, 1, '2021-07-02 20:33:26.337000', 1, '2021-07-02 20:33:26.337000', b'0', 0, 10011);
-INSERT INTO `pc_pay_channel_way` VALUES (1410939710196576256, 'wap支付', 'WAP', 1410927226240790528, 'WECHAT_PAY', NULL, 1, '2021-07-02 20:33:35.560000', 1, '2021-07-02 20:33:35.560000', b'0', 0, 10011);
 
 -- ----------------------------
 -- Table structure for pc_pay_notify_record
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_pay_notify_record`;
 CREATE TABLE `pc_pay_notify_record`  (
-  `id` bigint(20) NOT NULL,
-  `payment_id` bigint(20) NOT NULL COMMENT '支付号',
-  `notify_info` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '通知消息',
-  `pay_channel` int(11) NOT NULL COMMENT '支付通道',
-  `status` int(2) NOT NULL COMMENT '处理状态',
-  `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提示信息',
-  `notify_time` datetime(6) NULL DEFAULT NULL COMMENT '回调时间',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                         `id` bigint(20) NOT NULL,
+                                         `payment_id` bigint(20) NOT NULL COMMENT '支付号',
+                                         `notify_info` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '通知消息',
+                                         `pay_channel` int(11) NOT NULL COMMENT '支付通道',
+                                         `status` int(2) NOT NULL COMMENT '处理状态',
+                                         `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提示信息',
+                                         `notify_time` datetime(6) NULL DEFAULT NULL COMMENT '回调时间',
+                                         `creator` bigint(20) NULL DEFAULT NULL,
+                                         `create_time` datetime(6) NULL DEFAULT NULL,
+                                         `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                         `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                         `version` int(11) NOT NULL,
+                                         `deleted` bit(1) NOT NULL,
+                                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付回调记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2476,18 +2490,18 @@ CREATE TABLE `pc_pay_notify_record`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_pay_order_log`;
 CREATE TABLE `pc_pay_order_log`  (
-  `id` bigint(20) NOT NULL,
-  `payment_id` bigint(20) NOT NULL COMMENT '支付id',
-  `business_pay_param` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '订单扩展业务参数',
-  `pay_order_param` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '订单参数',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(20) NOT NULL,
+                                     `payment_id` bigint(20) NOT NULL COMMENT '支付id',
+                                     `business_pay_param` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '订单扩展业务参数',
+                                     `pay_order_param` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '订单参数',
+                                     `creator` bigint(20) NULL DEFAULT NULL,
+                                     `create_time` datetime(6) NULL DEFAULT NULL,
+                                     `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                     `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                     `version` int(11) NOT NULL,
+                                     `deleted` bit(1) NOT NULL,
+                                     `tid` bigint(20) NOT NULL,
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付关联订单信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2499,61 +2513,57 @@ CREATE TABLE `pc_pay_order_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_payment`;
 CREATE TABLE `pc_payment`  (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '业务id',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `amount` decimal(19, 2) NOT NULL COMMENT '金额',
-  `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款余额',
-  `pay_status` int(11) NOT NULL COMMENT '支付状态',
-  `error_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误码',
-  `error_msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
-  `pay_type_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付信息',
-  `async_pay_mode` bit(1) NOT NULL COMMENT '是否是异步支付',
-  `async_pay_channel` int(11) NULL DEFAULT NULL COMMENT '异步支付方式',
-  `pay_channel_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付通道信息列表',
-  `refundable_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '可退款信息',
-  `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `expired_time` datetime(6) NULL DEFAULT NULL COMMENT '过期时间',
-  `client_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '客户ip',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                               `id` bigint(20) NOT NULL,
+                               `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                               `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '业务id',
+                               `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
+                               `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                               `amount` decimal(19, 2) NOT NULL COMMENT '金额',
+                               `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款余额',
+                               `pay_status` int(11) NOT NULL COMMENT '支付状态',
+                               `error_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误码',
+                               `error_msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
+                               `pay_type_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付信息',
+                               `async_pay_mode` bit(1) NOT NULL COMMENT '是否是异步支付',
+                               `async_pay_channel` int(11) NULL DEFAULT NULL COMMENT '异步支付方式',
+                               `pay_channel_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付通道信息列表',
+                               `refundable_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '可退款信息',
+                               `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                               `expired_time` datetime(6) NULL DEFAULT NULL COMMENT '过期时间',
+                               `client_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '客户ip',
+                               `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                               `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                               `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                               `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                               `version` int(11) NOT NULL COMMENT '版本',
+                               `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                               PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_payment
 -- ----------------------------
-INSERT INTO `pc_payment` VALUES (1521479157047824384, 1399985191002447872, 'P1651583866651', '测试支付订单', NULL, 0.01, 0.01, 1, NULL, NULL, NULL, b'0', NULL, '[{\"amount\":0.01,\"payWay\":4,\"payChannel\":5}]', '[{\"amount\":0.01,\"payChannel\":5}]', '2022-05-03 21:17:54.049000', NULL, '127.0.0.1', 1399985191002447872, '2022-05-03 21:17:53', 1399985191002447872, '2022-05-03 21:17:54', 1, 0);
-INSERT INTO `pc_payment` VALUES (1521479263482482688, 1399985191002447872, 'P1651583874216', '测试支付订单', NULL, 0.01, 0.01, 1, NULL, NULL, NULL, b'0', NULL, '[{\"amount\":0.01,\"payWay\":4,\"payChannel\":5}]', '[{\"amount\":0.01,\"payChannel\":5}]', '2022-05-03 21:18:19.072000', NULL, '127.0.0.1', 1399985191002447872, '2022-05-03 21:18:19', 1399985191002447872, '2022-05-03 21:18:19', 1, 0);
-INSERT INTO `pc_payment` VALUES (1521480615080202240, 1399985191002447872, 'P1651583899190', '测试支付订单', NULL, 0.01, 0.01, 1, NULL, NULL, NULL, b'0', NULL, '[{\"amount\":0.01,\"payWay\":4,\"payChannel\":5}]', '[{\"amount\":0.01,\"payChannel\":5}]', '2022-05-03 21:23:41.506000', NULL, '127.0.0.1', 1399985191002447872, '2022-05-03 21:23:41', 1399985191002447872, '2022-05-03 21:23:42', 1, 0);
-INSERT INTO `pc_payment` VALUES (1521480711863767040, 1399985191002447872, 'P1651584225183', '测试支付订单', NULL, 0.01, 0.01, 1, NULL, NULL, NULL, b'0', NULL, '[{\"amount\":0.01,\"payWay\":4,\"payChannel\":5}]', '[{\"amount\":0.01,\"payChannel\":5}]', '2022-05-03 21:24:04.462000', NULL, '127.0.0.1', 1399985191002447872, '2022-05-03 21:24:04', 1399985191002447872, '2022-05-03 21:24:04', 1, 0);
 
 -- ----------------------------
 -- Table structure for pc_point_config
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_point_config`;
 CREATE TABLE `pc_point_config`  (
-  `id` bigint(20) NOT NULL,
-  `consume_rate` decimal(19, 2) NULL DEFAULT NULL COMMENT '积分抵扣比例',
-  `min_order_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '积分允许使用最低订单金额',
-  `max_point_count` int(11) NULL DEFAULT NULL COMMENT '积分最低允许使用数量',
-  `min_point_count` int(11) NULL DEFAULT NULL COMMENT '积分最高允许使用数量',
-  `allow_partial_pay` bit(1) NULL DEFAULT NULL COMMENT '允许部分积分使用',
-  `status` int(11) NULL DEFAULT NULL COMMENT '0:未激活，1:激活，默认0',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL,
+                                    `consume_rate` decimal(19, 2) NULL DEFAULT NULL COMMENT '积分抵扣比例',
+                                    `min_order_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '积分允许使用最低订单金额',
+                                    `max_point_count` int(11) NULL DEFAULT NULL COMMENT '积分最低允许使用数量',
+                                    `min_point_count` int(11) NULL DEFAULT NULL COMMENT '积分最高允许使用数量',
+                                    `allow_partial_pay` bit(1) NULL DEFAULT NULL COMMENT '允许部分积分使用',
+                                    `status` int(11) NULL DEFAULT NULL COMMENT '0:未激活，1:激活，默认0',
+                                    `creator` bigint(20) NULL DEFAULT NULL,
+                                    `create_time` datetime(6) NULL DEFAULT NULL,
+                                    `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                    `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                    `version` int(11) NOT NULL,
+                                    `deleted` bit(1) NOT NULL,
+                                    `tid` bigint(20) NOT NULL,
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2565,86 +2575,79 @@ CREATE TABLE `pc_point_config`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_point_log`;
 CREATE TABLE `pc_point_log`  (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
-  `points` int(11) NOT NULL COMMENT '积分',
-  `type_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型名称',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                 `id` bigint(20) NOT NULL,
+                                 `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
+                                 `points` int(11) NOT NULL COMMENT '积分',
+                                 `type_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型名称',
+                                 `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                 `creator` bigint(20) NULL DEFAULT NULL,
+                                 `create_time` datetime(6) NULL DEFAULT NULL,
+                                 `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                 `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                 `version` int(11) NOT NULL,
+                                 `deleted` bit(1) NOT NULL,
+                                 `tid` bigint(20) NOT NULL,
+                                 `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                 PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_point_log
 -- ----------------------------
-INSERT INTO `pc_point_log` VALUES (1368825135523590144, 10011, 3, '系统发放', 'two', 1, '2021-03-08 15:25:18.507000', 1, '2021-03-08 15:25:18.507000', 0, b'0', 10011, '999');
-INSERT INTO `pc_point_log` VALUES (1368825551321722880, 10011, 999, '系统发放', 'two', 1, '2021-03-08 15:26:57.641000', 1, '2021-03-08 15:26:57.641000', 0, b'0', 10011, '999');
-INSERT INTO `pc_point_log` VALUES (1368825587640201216, 10011, -10, '购物消费', '购物消费', 1, '2021-03-08 15:27:06.300000', 1, '2021-03-08 15:27:06.300000', 0, b'0', 10011, '1');
-INSERT INTO `pc_point_log` VALUES (1368830279527067648, 10011, 10, '退货返还', '退货返还', 1, '2021-03-08 15:45:44.933000', 1, '2021-03-08 15:45:44.933000', 0, b'0', 10011, '1');
-INSERT INTO `pc_point_log` VALUES (1410989881097875456, 1001, -30, '购物消费', '购物消费', 1, '2021-07-02 23:52:57.235000', 1, '2021-07-02 23:52:57.235000', 0, b'0', 10011, '11');
 
 -- ----------------------------
 -- Table structure for pc_point_record
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_point_record`;
 CREATE TABLE `pc_point_record`  (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
-  `type` int(11) NOT NULL COMMENT '类型',
-  `origin_points` int(11) NOT NULL COMMENT '原始积分',
-  `current_points` int(11) NOT NULL COMMENT '当前积分',
-  `expire_date` datetime(6) NULL DEFAULT NULL COMMENT '到期时间',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
-  `source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '来源',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL,
+                                    `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
+                                    `type` int(11) NOT NULL COMMENT '类型',
+                                    `origin_points` int(11) NOT NULL COMMENT '原始积分',
+                                    `current_points` int(11) NOT NULL COMMENT '当前积分',
+                                    `expire_date` datetime(6) NULL DEFAULT NULL COMMENT '到期时间',
+                                    `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
+                                    `source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '来源',
+                                    `creator` bigint(20) NULL DEFAULT NULL,
+                                    `create_time` datetime(6) NULL DEFAULT NULL,
+                                    `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                    `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                    `version` int(11) NOT NULL,
+                                    `deleted` bit(1) NOT NULL,
+                                    `tid` bigint(20) NOT NULL,
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_point_record
 -- ----------------------------
-INSERT INTO `pc_point_record` VALUES (1368825135439704064, 1001, 2, 3, 0, '2022-03-08 15:25:18.439000', '999', NULL, 1, '2021-03-08 15:25:18.477000', 1, '2021-07-02 23:52:57.054000', 3, b'0', 10011);
-INSERT INTO `pc_point_record` VALUES (1368825551317528576, 1001, 2, 999, 972, '2022-03-08 15:26:57.639000', '999', NULL, 1, '2021-03-08 15:26:57.640000', 1, '2021-07-02 23:52:57.054000', 3, b'0', 10011);
 
 -- ----------------------------
 -- Table structure for pc_refund_record
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_refund_record`;
 CREATE TABLE `pc_refund_record`  (
-  `id` bigint(20) NOT NULL,
-  `payment_id` bigint(20) NOT NULL COMMENT '支付记录id',
-  `business_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关联业务id',
-  `refund_request_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '异步方式关联退款请求号',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
-  `amount` decimal(19, 2) NOT NULL COMMENT '金额',
-  `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '剩余可退款金额',
-  `refundable_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '可退款信息',
-  `refund_status` int(2) NULL DEFAULT NULL COMMENT '退款状态',
-  `refund_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `client_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '客户ip',
-  `error_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误码',
-  `error_msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` bigint(20) NOT NULL,
+                                     `payment_id` bigint(20) NOT NULL COMMENT '支付记录id',
+                                     `business_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关联业务id',
+                                     `refund_request_no` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '异步方式关联退款请求号',
+                                     `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                     `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
+                                     `amount` decimal(19, 2) NOT NULL COMMENT '金额',
+                                     `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '剩余可退款金额',
+                                     `refundable_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '可退款信息',
+                                     `refund_status` int(2) NULL DEFAULT NULL COMMENT '退款状态',
+                                     `refund_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                                     `client_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '客户ip',
+                                     `error_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误码',
+                                     `error_msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
+                                     `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                     `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                     `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                     `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                     `version` int(11) NOT NULL COMMENT '版本',
+                                     `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '退款记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2656,53 +2659,48 @@ CREATE TABLE `pc_refund_record`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_voucher`;
 CREATE TABLE `pc_voucher`  (
-  `id` bigint(20) NOT NULL,
-  `card_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '卡号',
-  `batch_no` bigint(20) NULL DEFAULT NULL COMMENT '批次号',
-  `face_value` decimal(15, 2) NULL DEFAULT NULL COMMENT '面值',
-  `balance` decimal(15, 2) NULL DEFAULT NULL COMMENT '余额',
-  `enduring` bit(1) NOT NULL COMMENT '是否长期有效',
-  `start_time` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
-  `end_time` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
-  `status` int(2) NOT NULL COMMENT '状态',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                               `id` bigint(20) NOT NULL,
+                               `card_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '卡号',
+                               `batch_no` bigint(20) NULL DEFAULT NULL COMMENT '批次号',
+                               `face_value` decimal(15, 2) NULL DEFAULT NULL COMMENT '面值',
+                               `balance` decimal(15, 2) NULL DEFAULT NULL COMMENT '余额',
+                               `enduring` bit(1) NOT NULL COMMENT '是否长期有效',
+                               `start_time` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
+                               `end_time` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
+                               `status` int(2) NOT NULL COMMENT '状态',
+                               `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                               `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                               `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                               `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                               `version` int(11) NOT NULL COMMENT '版本',
+                               `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                               PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '储值卡' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_voucher
 -- ----------------------------
-INSERT INTO `pc_voucher` VALUES (1503347269838016512, 'V1503347269779296257', 1503347269779296256, 1.00, 1.00, b'1', NULL, NULL, 2, 1399985191002447872, '2022-03-14 20:28:15', 1399985191002447872, '2022-03-14 20:28:15', 0, 0);
-INSERT INTO `pc_voucher` VALUES (1503597209029943296, 'V1503597209008971776', 1503597209004777472, 1.00, 1.00, b'0', '2022-03-15 00:00:00', '2022-03-18 00:00:00', 2, 1399985191002447872, '2022-03-15 13:01:25', 1399985191002447872, '2022-03-15 13:01:25', 0, 0);
-INSERT INTO `pc_voucher` VALUES (1504341025932369920, 'V1504341025911398401', 1504341025911398400, 3.00, 3.03, b'0', '2022-03-01 00:00:00', '2022-04-30 23:59:59', 1, 1399985191002447872, '2022-03-17 14:17:05', 1399985191002447872, '2022-03-22 17:24:13', 9, 0);
-INSERT INTO `pc_voucher` VALUES (1504341026100142080, 'V1504341025911398402', 1504341025911398400, 3.00, 1.64, b'0', '2022-03-01 00:00:00', '2022-04-30 23:59:59', 1, 1399985191002447872, '2022-03-17 14:17:05', 1399985191002447872, '2022-03-22 17:24:13', 9, 0);
-INSERT INTO `pc_voucher` VALUES (1504341026104336384, 'V1504341025911398403', 1504341025911398400, 3.00, 4.14, b'0', '2022-03-01 00:00:00', '2022-04-30 23:59:59', 1, 1399985191002447872, '2022-03-17 14:17:05', 1399985191002447872, '2022-03-22 17:38:22', 16, 0);
 
 -- ----------------------------
 -- Table structure for pc_voucher_log
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_voucher_log`;
 CREATE TABLE `pc_voucher_log`  (
-  `id` bigint(20) NOT NULL,
-  `voucher_id` bigint(20) NOT NULL,
-  `voucher_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `amount` decimal(19, 2) NULL DEFAULT NULL,
-  `type` int(5) NOT NULL COMMENT '类型',
-  `payment_id` bigint(20) NULL DEFAULT NULL COMMENT '交易记录ID',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务ID',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                   `id` bigint(20) NOT NULL,
+                                   `voucher_id` bigint(20) NOT NULL,
+                                   `voucher_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                   `amount` decimal(19, 2) NULL DEFAULT NULL,
+                                   `type` int(5) NOT NULL COMMENT '类型',
+                                   `payment_id` bigint(20) NULL DEFAULT NULL COMMENT '交易记录ID',
+                                   `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务ID',
+                                   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                   `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                   `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                   `version` int(11) NOT NULL COMMENT '版本',
+                                   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '储值卡日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2714,50 +2712,45 @@ CREATE TABLE `pc_voucher_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_voucher_payment`;
 CREATE TABLE `pc_voucher_payment`  (
-  `id` bigint(20) NOT NULL,
-  `voucher_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '储值卡id列表',
-  `payment_id` bigint(20) NOT NULL COMMENT '支付id',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
-  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
-  `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
-  `pay_status` int(11) NULL DEFAULT NULL COMMENT '支付状态',
-  `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                       `id` bigint(20) NOT NULL,
+                                       `voucher_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '储值卡id列表',
+                                       `payment_id` bigint(20) NOT NULL COMMENT '支付id',
+                                       `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
+                                       `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
+                                       `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
+                                       `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
+                                       `pay_status` int(11) NULL DEFAULT NULL COMMENT '支付状态',
+                                       `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                                       `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                       `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                       `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                       `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                       `version` int(11) NOT NULL COMMENT '版本',
+                                       `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                       PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '储值卡支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_voucher_payment
 -- ----------------------------
-INSERT INTO `pc_voucher_payment` VALUES (1506194860221120512, '1504341026104336384,1504341025932369920,1504341026100142080', 1506194826553442304, '1122', 0, 8.00, 3.00, 4, '2022-03-22 17:03:33.158000', 0, '2022-03-22 17:03:33', 1399985191002447872, '2022-03-22 17:18:54', 4, 0);
-INSERT INTO `pc_voucher_payment` VALUES (1506199203498405888, '1504341026104336384,1504341025932369920,1504341026100142080', 1506199202508550144, '11222', 0, 8.00, 8.00, 1, '2022-03-22 17:20:48.662000', 0, '2022-03-22 17:20:49', 0, '2022-03-22 17:20:49', 1, 0);
-INSERT INTO `pc_voucher_payment` VALUES (1506199580226596864, '1504341026104336384,1504341025932369920,1504341026100142080', 1506199579152855040, '12222', 0, 8.00, 0.00, 5, '2022-03-22 17:22:18.487000', 0, '2022-03-22 17:22:18', 1399985191002447872, '2022-03-22 17:24:13', 4, 0);
-INSERT INTO `pc_voucher_payment` VALUES (1506202249372610560, '1504341026104336384', 1506202248835739648, 'P1647941551207', 1399985191002447872, 3.00, 0.00, 5, '2022-03-22 17:32:54.845000', 1399985191002447872, '2022-03-22 17:32:55', 1399985191002447872, '2022-03-22 17:34:49', 2, 0);
-INSERT INTO `pc_voucher_payment` VALUES (1506203311462658048, '1504341026104336384', 1506203310892232704, 'P1647941823198', 1399985191002447872, 3.00, 0.00, 5, '2022-03-22 17:37:08.073000', 1399985191002447872, '2022-03-22 17:37:08', 1399985191002447872, '2022-03-22 17:38:23', 3, 0);
 
 -- ----------------------------
 -- Table structure for pc_wallet
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_wallet`;
 CREATE TABLE `pc_wallet`  (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(20) NOT NULL COMMENT '关联用户id',
-  `balance` decimal(19, 2) NOT NULL COMMENT '余额',
-  `status` int(11) NOT NULL COMMENT '状态',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `pk_user_id`(`user_id`) USING BTREE
+                              `id` bigint(20) NOT NULL,
+                              `user_id` bigint(20) NOT NULL COMMENT '关联用户id',
+                              `balance` decimal(19, 2) NOT NULL COMMENT '余额',
+                              `status` int(11) NOT NULL COMMENT '状态',
+                              `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                              `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                              `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                              `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                              `version` int(11) NOT NULL COMMENT '版本',
+                              `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                              PRIMARY KEY (`id`) USING BTREE,
+                              INDEX `pk_user_id`(`user_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钱包' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2772,82 +2765,90 @@ INSERT INTO `pc_wallet` VALUES (1502848353136791552, 1435894470432456704, 100.00
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_wallet_log`;
 CREATE TABLE `pc_wallet_log`  (
-  `id` bigint(20) NOT NULL,
-  `wallet_id` bigint(20) NOT NULL COMMENT '钱包id',
-  `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `type` int(11) NOT NULL COMMENT '类型',
-  `payment_id` bigint(20) NULL DEFAULT NULL COMMENT '交易记录ID',
-  `client_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作终端ip',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务ID',
-  `operation_source` int(11) NOT NULL COMMENT '操作源',
-  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `wallet_id` bigint(20) NOT NULL COMMENT '钱包id',
+                                  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                  `type` int(11) NOT NULL COMMENT '类型',
+                                  `payment_id` bigint(20) NULL DEFAULT NULL COMMENT '交易记录ID',
+                                  `client_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作终端ip',
+                                  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务ID',
+                                  `operation_source` int(11) NOT NULL COMMENT '操作源',
+                                  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '金额',
+                                  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                  `version` int(11) NOT NULL COMMENT '版本',
+                                  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钱包日志' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of pc_wallet_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for pc_wallet_payment
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_wallet_payment`;
 CREATE TABLE `pc_wallet_payment`  (
-  `id` bigint(20) NOT NULL,
-  `payment_id` bigint(20) NOT NULL COMMENT '交易记录ID',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
-  `wallet_id` bigint(20) NULL DEFAULT NULL COMMENT '钱包ID',
-  `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '交易金额',
-  `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
-  `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `pay_status` int(11) NOT NULL COMMENT '支付状态',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                      `id` bigint(20) NOT NULL,
+                                      `payment_id` bigint(20) NOT NULL COMMENT '交易记录ID',
+                                      `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
+                                      `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
+                                      `wallet_id` bigint(20) NULL DEFAULT NULL COMMENT '钱包ID',
+                                      `amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '交易金额',
+                                      `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
+                                      `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                                      `pay_status` int(11) NOT NULL COMMENT '支付状态',
+                                      `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                      `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                      `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                      `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                      `version` int(11) NOT NULL COMMENT '版本',
+                                      `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钱包交易记录表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of pc_wallet_payment
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for pc_wechat_pay_config
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_wechat_pay_config`;
 CREATE TABLE `pc_wechat_pay_config`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信应用AppId',
-  `sl_app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务商应用编号',
-  `api_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 API 密钥',
-  `api_key3` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 APIv3 密钥',
-  `mch_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户号',
-  `sl_mch_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务商商户号',
-  `auth_type` int(3) NULL DEFAULT NULL COMMENT '认证方式',
-  `cert_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 p12',
-  `cert_pem_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 key.pem',
-  `key_pem_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 cert.pem',
-  `domain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '应用域名，回调中会使用此参数',
-  `notify_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务器异步通知页面路径',
-  `return_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面跳转同步通知页面路径',
-  `partner_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '同 apiKey 后续版本会舍弃',
-  `is_default` bit(1) NULL DEFAULT NULL COMMENT '是否默认',
-  `pay_ways` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支持的支付类型',
-  `sandbox` bit(1) NOT NULL COMMENT '是否沙箱环境',
-  `activity` bit(1) NOT NULL COMMENT '是否启用',
-  `state` int(11) NULL DEFAULT NULL COMMENT '状态',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                         `id` bigint(20) NOT NULL,
+                                         `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                         `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                         `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信应用AppId',
+                                         `sl_app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务商应用编号',
+                                         `api_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 API 密钥',
+                                         `api_key3` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 APIv3 密钥',
+                                         `mch_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户号',
+                                         `sl_mch_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务商商户号',
+                                         `auth_type` int(3) NULL DEFAULT NULL COMMENT '认证方式',
+                                         `cert_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 p12',
+                                         `cert_pem_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 key.pem',
+                                         `key_pem_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 cert.pem',
+                                         `domain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '应用域名，回调中会使用此参数',
+                                         `notify_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务器异步通知页面路径',
+                                         `return_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面跳转同步通知页面路径',
+                                         `partner_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '同 apiKey 后续版本会舍弃',
+                                         `is_default` bit(1) NULL DEFAULT NULL COMMENT '是否默认',
+                                         `pay_ways` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支持的支付类型',
+                                         `sandbox` bit(1) NOT NULL COMMENT '是否沙箱环境',
+                                         `activity` bit(1) NOT NULL COMMENT '是否启用',
+                                         `state` int(11) NULL DEFAULT NULL COMMENT '状态',
+                                         `creator` bigint(20) NULL DEFAULT NULL,
+                                         `create_time` datetime(6) NULL DEFAULT NULL,
+                                         `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                         `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                         `version` int(11) NOT NULL,
+                                         `deleted` bit(1) NOT NULL,
+                                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信支付配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2859,45 +2860,41 @@ CREATE TABLE `pc_wechat_pay_config`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pc_wechat_payment`;
 CREATE TABLE `pc_wechat_payment`  (
-  `id` bigint(20) NOT NULL,
-  `payment_id` bigint(20) NOT NULL COMMENT '交易记录ID',
-  `pay_status` int(11) NOT NULL COMMENT '支付状态',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
-  `trade_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信交易号',
-  `amount` decimal(19, 2) NOT NULL COMMENT '交易金额',
-  `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
-  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
-  `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                      `id` bigint(20) NOT NULL,
+                                      `payment_id` bigint(20) NOT NULL COMMENT '交易记录ID',
+                                      `pay_status` int(11) NOT NULL COMMENT '支付状态',
+                                      `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
+                                      `trade_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信交易号',
+                                      `amount` decimal(19, 2) NOT NULL COMMENT '交易金额',
+                                      `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
+                                      `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
+                                      `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
+                                      `creator` bigint(20) NULL DEFAULT NULL,
+                                      `create_time` datetime(6) NULL DEFAULT NULL,
+                                      `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                      `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                      `version` int(11) NOT NULL,
+                                      `deleted` bit(1) NOT NULL,
+                                      `tid` bigint(20) NOT NULL,
+                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pc_wechat_payment
 -- ----------------------------
-INSERT INTO `pc_wechat_payment` VALUES (1406929057056190464, 1406928928664350720, 1, 1001, '1406928928664350720', 0.01, NULL, '4', '2021-06-21 18:56:41.312000', 1, '2021-06-21 18:56:41.337000', 1, '2021-06-21 18:56:41.337000', 0, b'0', 10011);
-INSERT INTO `pc_wechat_payment` VALUES (1406930141317328896, 1406928928664350720, 1, 1001, '1406928928664350720', 0.01, NULL, '4', '2021-06-21 19:00:59.827000', 1, '2021-06-21 19:00:59.845000', 1, '2021-06-21 19:00:59.845000', 0, b'0', 10011);
-INSERT INTO `pc_wechat_payment` VALUES (1407177127203336192, 1407174717839929344, 1, 1001, '1407174717839929344', 0.01, NULL, '5', '2021-06-22 11:22:25.841000', 1, '2021-06-22 11:22:25.868000', 1, '2021-06-22 11:22:25.868000', 0, b'0', 10011);
-INSERT INTO `pc_wechat_payment` VALUES (1407179785276387328, 1407179640077971456, 1, 1001, '1407179640077971456', 0.01, NULL, '6', '2021-06-22 11:32:59.583000', 1, '2021-06-22 11:32:59.603000', 1, '2021-06-22 11:32:59.603000', 0, b'0', 10011);
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
 CREATE TABLE `qrtz_blob_triggers`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `BLOB_DATA` blob NULL,
-  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  INDEX `SCHED_NAME`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                       `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                       `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                       `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                       `BLOB_DATA` blob NULL,
+                                       PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                       INDEX `SCHED_NAME`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                       CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2909,10 +2906,10 @@ CREATE TABLE `qrtz_blob_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_calendars`;
 CREATE TABLE `qrtz_calendars`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `CALENDAR_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `CALENDAR` blob NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE
+                                   `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                   `CALENDAR_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                   `CALENDAR` blob NOT NULL,
+                                   PRIMARY KEY (`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2924,13 +2921,13 @@ CREATE TABLE `qrtz_calendars`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_cron_triggers`;
 CREATE TABLE `qrtz_cron_triggers`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `CRON_EXPRESSION` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                       `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                       `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                       `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                       `CRON_EXPRESSION` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                       `TIME_ZONE_ID` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                       PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                       CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2942,26 +2939,26 @@ CREATE TABLE `qrtz_cron_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE `qrtz_fired_triggers`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ENTRY_ID` varchar(95) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `INSTANCE_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `FIRED_TIME` bigint(13) NOT NULL,
-  `SCHED_TIME` bigint(13) NOT NULL,
-  `PRIORITY` int(11) NOT NULL,
-  `STATE` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `JOB_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `JOB_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE,
-  INDEX `IDX_QRTZ_FT_TRIG_INST_NAME`(`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE,
-  INDEX `IDX_QRTZ_FT_T_G`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_FT_J_G`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY`(`SCHED_NAME`, `INSTANCE_NAME`, `REQUESTS_RECOVERY`) USING BTREE,
-  INDEX `IDX_QRTZ_FT_TG`(`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_FT_JG`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE
+                                        `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                        `ENTRY_ID` varchar(95) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                        `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                        `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                        `INSTANCE_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                        `FIRED_TIME` bigint(13) NOT NULL,
+                                        `SCHED_TIME` bigint(13) NOT NULL,
+                                        `PRIORITY` int(11) NOT NULL,
+                                        `STATE` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                        `JOB_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                        `JOB_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                        `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                        `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                        PRIMARY KEY (`SCHED_NAME`, `ENTRY_ID`) USING BTREE,
+                                        INDEX `IDX_QRTZ_FT_T_G`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                        INDEX `IDX_QRTZ_FT_TRIG_INST_NAME`(`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE,
+                                        INDEX `IDX_QRTZ_FT_J_G`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+                                        INDEX `IDX_QRTZ_FT_INST_JOB_REQ_RCVRY`(`SCHED_NAME`, `INSTANCE_NAME`, `REQUESTS_RECOVERY`) USING BTREE,
+                                        INDEX `IDX_QRTZ_FT_TG`(`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                        INDEX `IDX_QRTZ_FT_JG`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2973,19 +2970,19 @@ CREATE TABLE `qrtz_fired_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_job_details`;
 CREATE TABLE `qrtz_job_details`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `JOB_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `JOB_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `DESCRIPTION` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `JOB_CLASS_NAME` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `IS_DURABLE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `IS_UPDATE_DATA` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `JOB_DATA` blob NULL,
-  PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_J_GRP`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_J_REQ_RECOVERY`(`SCHED_NAME`, `REQUESTS_RECOVERY`) USING BTREE
+                                     `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `JOB_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `JOB_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `DESCRIPTION` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                     `JOB_CLASS_NAME` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `IS_DURABLE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `IS_NONCONCURRENT` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `IS_UPDATE_DATA` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `REQUESTS_RECOVERY` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                     `JOB_DATA` blob NULL,
+                                     PRIMARY KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+                                     INDEX `IDX_QRTZ_J_GRP`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE,
+                                     INDEX `IDX_QRTZ_J_REQ_RECOVERY`(`SCHED_NAME`, `REQUESTS_RECOVERY`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -2997,9 +2994,9 @@ CREATE TABLE `qrtz_job_details`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_locks`;
 CREATE TABLE `qrtz_locks`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `LOCK_NAME` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
+                               `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                               `LOCK_NAME` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                               PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3013,9 +3010,9 @@ INSERT INTO `qrtz_locks` VALUES ('quartzScheduler', 'TRIGGER_ACCESS');
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
 CREATE TABLE `qrtz_paused_trigger_grps`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
+                                             `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                             `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                             PRIMARY KEY (`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3027,11 +3024,11 @@ CREATE TABLE `qrtz_paused_trigger_grps`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_scheduler_state`;
 CREATE TABLE `qrtz_scheduler_state`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `INSTANCE_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
-  `CHECKIN_INTERVAL` bigint(13) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
+                                         `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                         `INSTANCE_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                         `LAST_CHECKIN_TIME` bigint(13) NOT NULL,
+                                         `CHECKIN_INTERVAL` bigint(13) NOT NULL,
+                                         PRIMARY KEY (`SCHED_NAME`, `INSTANCE_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3044,14 +3041,14 @@ INSERT INTO `qrtz_scheduler_state` VALUES ('quartzScheduler', 'xxm1638448483700'
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simple_triggers`;
 CREATE TABLE `qrtz_simple_triggers`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `REPEAT_COUNT` bigint(7) NOT NULL,
-  `REPEAT_INTERVAL` bigint(12) NOT NULL,
-  `TIMES_TRIGGERED` bigint(10) NOT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                         `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                         `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                         `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                         `REPEAT_COUNT` bigint(7) NOT NULL,
+                                         `REPEAT_INTERVAL` bigint(12) NOT NULL,
+                                         `TIMES_TRIGGERED` bigint(10) NOT NULL,
+                                         PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                         CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3063,22 +3060,22 @@ CREATE TABLE `qrtz_simple_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
 CREATE TABLE `qrtz_simprop_triggers`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `STR_PROP_1` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `STR_PROP_2` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `STR_PROP_3` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `INT_PROP_1` int(11) NULL DEFAULT NULL,
-  `INT_PROP_2` int(11) NULL DEFAULT NULL,
-  `LONG_PROP_1` bigint(20) NULL DEFAULT NULL,
-  `LONG_PROP_2` bigint(20) NULL DEFAULT NULL,
-  `DEC_PROP_1` decimal(13, 4) NULL DEFAULT NULL,
-  `DEC_PROP_2` decimal(13, 4) NULL DEFAULT NULL,
-  `BOOL_PROP_1` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `BOOL_PROP_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                          `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                          `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                          `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                          `STR_PROP_1` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                          `STR_PROP_2` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                          `STR_PROP_3` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                          `INT_PROP_1` int(11) NULL DEFAULT NULL,
+                                          `INT_PROP_2` int(11) NULL DEFAULT NULL,
+                                          `LONG_PROP_1` bigint(20) NULL DEFAULT NULL,
+                                          `LONG_PROP_2` bigint(20) NULL DEFAULT NULL,
+                                          `DEC_PROP_1` decimal(13, 4) NULL DEFAULT NULL,
+                                          `DEC_PROP_2` decimal(13, 4) NULL DEFAULT NULL,
+                                          `BOOL_PROP_1` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                          `BOOL_PROP_2` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                          PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                          CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) REFERENCES `qrtz_triggers` (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3090,36 +3087,36 @@ CREATE TABLE `qrtz_simprop_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_triggers`;
 CREATE TABLE `qrtz_triggers`  (
-  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `JOB_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `JOB_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `DESCRIPTION` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `NEXT_FIRE_TIME` bigint(13) NULL DEFAULT NULL,
-  `PREV_FIRE_TIME` bigint(13) NULL DEFAULT NULL,
-  `PRIORITY` int(11) NULL DEFAULT NULL,
-  `TRIGGER_STATE` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `TRIGGER_TYPE` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `START_TIME` bigint(13) NOT NULL,
-  `END_TIME` bigint(13) NULL DEFAULT NULL,
-  `CALENDAR_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `MISFIRE_INSTR` smallint(2) NULL DEFAULT NULL,
-  `JOB_DATA` blob NULL,
-  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_T_NFT_ST`(`SCHED_NAME`, `TRIGGER_STATE`, `NEXT_FIRE_TIME`) USING BTREE,
-  INDEX `IDX_QRTZ_T_N_STATE`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
-  INDEX `IDX_QRTZ_T_NEXT_FIRE_TIME`(`SCHED_NAME`, `NEXT_FIRE_TIME`) USING BTREE,
-  INDEX `IDX_QRTZ_T_C`(`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE,
-  INDEX `IDX_QRTZ_T_NFT_ST_MISFIRE`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`, `TRIGGER_STATE`) USING BTREE,
-  INDEX `IDX_QRTZ_T_G`(`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_T_J`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_T_JG`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE,
-  INDEX `IDX_QRTZ_T_N_G_STATE`(`SCHED_NAME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
-  INDEX `IDX_QRTZ_T_NFT_MISFIRE`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`) USING BTREE,
-  INDEX `IDX_QRTZ_T_STATE`(`SCHED_NAME`, `TRIGGER_STATE`) USING BTREE,
-  INDEX `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
-  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                  `SCHED_NAME` varchar(120) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  `TRIGGER_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  `TRIGGER_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  `JOB_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  `JOB_GROUP` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  `DESCRIPTION` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                  `NEXT_FIRE_TIME` bigint(13) NULL DEFAULT NULL,
+                                  `PREV_FIRE_TIME` bigint(13) NULL DEFAULT NULL,
+                                  `PRIORITY` int(11) NULL DEFAULT NULL,
+                                  `TRIGGER_STATE` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  `TRIGGER_TYPE` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+                                  `START_TIME` bigint(13) NOT NULL,
+                                  `END_TIME` bigint(13) NULL DEFAULT NULL,
+                                  `CALENDAR_NAME` varchar(190) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+                                  `MISFIRE_INSTR` smallint(2) NULL DEFAULT NULL,
+                                  `JOB_DATA` blob NULL,
+                                  PRIMARY KEY (`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_NFT_ST`(`SCHED_NAME`, `TRIGGER_STATE`, `NEXT_FIRE_TIME`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_N_STATE`(`SCHED_NAME`, `TRIGGER_NAME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_NEXT_FIRE_TIME`(`SCHED_NAME`, `NEXT_FIRE_TIME`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_C`(`SCHED_NAME`, `CALENDAR_NAME`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_NFT_ST_MISFIRE`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`, `TRIGGER_STATE`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_G`(`SCHED_NAME`, `TRIGGER_GROUP`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_J`(`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_JG`(`SCHED_NAME`, `JOB_GROUP`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_N_G_STATE`(`SCHED_NAME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_NFT_MISFIRE`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_STATE`(`SCHED_NAME`, `TRIGGER_STATE`) USING BTREE,
+                                  INDEX `IDX_QRTZ_T_NFT_ST_MISFIRE_GRP`(`SCHED_NAME`, `MISFIRE_INSTR`, `NEXT_FIRE_TIME`, `TRIGGER_GROUP`, `TRIGGER_STATE`) USING BTREE,
+                                  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) REFERENCES `qrtz_job_details` (`SCHED_NAME`, `JOB_NAME`, `JOB_GROUP`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3131,21 +3128,21 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_activity`;
 CREATE TABLE `sc_activity`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'name',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `strategy_id` bigint(255) NULL DEFAULT NULL COMMENT '策略id',
-  `strategy_register_id` bigint(20) NOT NULL COMMENT '策略注册id',
-  `activity_mutual` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '活动互斥',
-  `start_time` datetime(6) NOT NULL COMMENT '有效开始时间',
-  `end_time` datetime(6) NOT NULL COMMENT '有效结束时间',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                `id` bigint(20) NOT NULL,
+                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'name',
+                                `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                `strategy_id` bigint(255) NULL DEFAULT NULL COMMENT '策略id',
+                                `strategy_register_id` bigint(20) NOT NULL COMMENT '策略注册id',
+                                `activity_mutual` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '活动互斥',
+                                `start_time` datetime(6) NOT NULL COMMENT '有效开始时间',
+                                `end_time` datetime(6) NOT NULL COMMENT '有效结束时间',
+                                `creator` bigint(20) NULL DEFAULT NULL,
+                                `create_time` datetime(6) NULL DEFAULT NULL,
+                                `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                `version` int(11) NOT NULL,
+                                `deleted` bit(1) NOT NULL,
+                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠活动' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3160,104 +3157,85 @@ INSERT INTO `sc_activity` VALUES (1395308738893729792, '50-20', '50-20活动策�
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_check_rule`;
 CREATE TABLE `sc_check_rule`  (
-  `id` bigint(20) NOT NULL,
-  `strategy_register_id` bigint(20) NOT NULL COMMENT '关联策略注册id',
-  `register_type` int(6) NOT NULL COMMENT '策略类型 策略/优惠券',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则名称',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则code',
-  `rule_type` int(11) NOT NULL COMMENT '规则类型',
-  `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '对应策略id',
-  `addition` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '附加对象 json',
-  `priority` int(11) NULL DEFAULT NULL COMMENT '优先级',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `strategy_register_id` bigint(20) NOT NULL COMMENT '关联策略注册id',
+                                  `register_type` int(6) NOT NULL COMMENT '策略类型 策略/优惠券',
+                                  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则名称',
+                                  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则code',
+                                  `rule_type` int(11) NOT NULL COMMENT '规则类型',
+                                  `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '对应策略id',
+                                  `addition` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '附加对象 json',
+                                  `priority` int(11) NULL DEFAULT NULL COMMENT '优先级',
+                                  `creator` bigint(20) NULL DEFAULT NULL,
+                                  `create_time` datetime(6) NULL DEFAULT NULL,
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                  `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                  `version` int(11) NULL DEFAULT NULL,
+                                  `deleted` bit(1) NOT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '检查规则' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sc_check_rule
 -- ----------------------------
-INSERT INTO `sc_check_rule` VALUES (1394918398978314240, 1394918398827319296, 1, '渠道检查', 'activityCheckChannel', 1, 1394909889247203328, '1,2,3', 0, 1, '2021-05-19 15:30:37.304000', 1, '2021-05-19 15:30:37.304000', 0, b'0');
-INSERT INTO `sc_check_rule` VALUES (1394918398978314241, 1394892919403597824, 1, '渠道检查', 'activityCheckChannel', 1, 1394909889247203328, '2,3,4', 0, 1, '2021-05-19 15:30:37.304000', 1, '2021-05-19 15:30:37.304000', 0, b'0');
-INSERT INTO `sc_check_rule` VALUES (1395284918434680833, 1395284918430486528, 2, '渠道检查', 'couponCheckChannel', 2, 1394909889247203328, '1,2,3', 0, 1, '2021-05-20 15:47:02.352000', 1, '2021-05-20 15:47:02.352000', 0, b'0');
-INSERT INTO `sc_check_rule` VALUES (1395308737580912640, 1395308573587820544, 1, '渠道检查', 'activityCheckChannel', 1, 1394909889247203328, '1,2,3', 0, 1, '2021-05-20 17:21:41.279000', 1, '2021-05-20 17:21:41.279000', 0, b'0');
-INSERT INTO `sc_check_rule` VALUES (1395320422999937024, 1395320422941216768, 2, '渠道检查', 'couponCheckChannel', 2, 1394909889247203328, '1,2,3', 0, 1, '2021-05-20 18:08:07.300000', 1, '2021-05-20 18:08:07.300000', 0, b'0');
-INSERT INTO `sc_check_rule` VALUES (1395320423004131328, 1395320422941216768, 2, '多张领取检查', 'obtainMultiple', 3, 1395320340615417856, '', 0, 1, '2021-05-20 18:08:07.301000', 1, '2021-05-20 18:08:07.301000', 0, b'0');
 
 -- ----------------------------
 -- Table structure for sc_coupon
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_coupon`;
 CREATE TABLE `sc_coupon`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `template_id` bigint(20) NULL DEFAULT NULL COMMENT '模板id',
-  `strategy_register_id` bigint(20) NULL DEFAULT NULL COMMENT '策略注册id',
-  `start_time` datetime(6) NULL DEFAULT NULL COMMENT '有效开始时间',
-  `end_time` datetime(6) NULL DEFAULT NULL COMMENT '有效结束时间',
-  `status` int(6) NOT NULL COMMENT '状态',
-  `obtain_time` datetime(6) NULL DEFAULT NULL COMMENT '领取时间',
-  `used_time` datetime(6) NULL DEFAULT NULL COMMENT '使用时间',
-  `order_id` bigint(20) NULL DEFAULT NULL COMMENT '所用订单Id',
-  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FKi3jmbif27olgivb918r8jbv9j`(`template_id`) USING BTREE,
-  CONSTRAINT `sc_coupon_ibfk_1` FOREIGN KEY (`template_id`) REFERENCES `sc_coupon_template` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                              `id` bigint(20) NOT NULL,
+                              `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                              `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                              `template_id` bigint(20) NULL DEFAULT NULL COMMENT '模板id',
+                              `strategy_register_id` bigint(20) NULL DEFAULT NULL COMMENT '策略注册id',
+                              `start_time` datetime(6) NULL DEFAULT NULL COMMENT '有效开始时间',
+                              `end_time` datetime(6) NULL DEFAULT NULL COMMENT '有效结束时间',
+                              `status` int(6) NOT NULL COMMENT '状态',
+                              `obtain_time` datetime(6) NULL DEFAULT NULL COMMENT '领取时间',
+                              `used_time` datetime(6) NULL DEFAULT NULL COMMENT '使用时间',
+                              `order_id` bigint(20) NULL DEFAULT NULL COMMENT '所用订单Id',
+                              `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
+                              `creator` bigint(20) NULL DEFAULT NULL,
+                              `last_modifier` bigint(20) NULL DEFAULT NULL,
+                              `create_time` datetime(6) NULL DEFAULT NULL,
+                              `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                              `version` int(11) NULL DEFAULT NULL,
+                              `deleted` bit(1) NOT NULL,
+                              PRIMARY KEY (`id`) USING BTREE,
+                              INDEX `FKi3jmbif27olgivb918r8jbv9j`(`template_id`) USING BTREE,
+                              CONSTRAINT `sc_coupon_ibfk_1` FOREIGN KEY (`template_id`) REFERENCES `sc_coupon_template` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠券' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sc_coupon
 -- ----------------------------
-INSERT INTO `sc_coupon` VALUES (1395287722087829504, '100-33', NULL, 1395284918623424512, 1395284918430486528, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 15:58:10.784000', NULL, NULL, 1001, 1, 1, '2021-05-20 15:58:10.795000', '2021-05-20 15:58:10.795000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395320636309655552, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:08:58.150000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:08:58.157000', '2021-05-20 18:08:58.157000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395320641196019712, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:08:59.321000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:08:59.322000', '2021-05-20 18:08:59.322000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395320646048829440, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:09:00.478000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:09:00.479000', '2021-05-20 18:09:00.479000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395321121078923264, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:10:53.734000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:10:53.735000', '2021-05-20 18:10:53.735000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395321173243482112, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:11:06.171000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:11:06.172000', '2021-05-20 18:11:06.172000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395321340222918656, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:11:45.983000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:11:45.983000', '2021-05-20 18:11:45.983000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395321629176909824, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:12:54.874000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:12:54.875000', '2021-05-20 18:12:54.875000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395324987962970112, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:26:15.648000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:26:15.659000', '2021-05-20 18:26:15.659000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395325096905822208, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:26:41.646000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:26:41.646000', '2021-05-20 18:26:41.646000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395325325373755392, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:27:36.117000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:27:36.117000', '2021-05-20 18:27:36.117000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395325385100644352, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:27:50.356000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:27:50.357000', '2021-05-20 18:27:50.357000', 0, b'0');
-INSERT INTO `sc_coupon` VALUES (1395325567074717696, '100-33', NULL, 1395320423364841472, 1395320422941216768, '2021-05-19 16:00:08.000000', '2021-12-20 16:00:11.000000', 1, '2021-05-20 18:28:33.742000', NULL, NULL, 1001, 1, 1, '2021-05-20 18:28:33.743000', '2021-05-20 18:28:33.743000', 0, b'0');
 
 -- ----------------------------
 -- Table structure for sc_coupon_template
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_coupon_template`;
 CREATE TABLE `sc_coupon_template`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `strategy_register_id` bigint(20) NOT NULL COMMENT '策略注册id',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `num` int(11) NOT NULL COMMENT '数量',
-  `channel_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '渠道',
-  `activity_mutual` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '活动互斥',
-  `coupon_mutual` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '优惠券互斥',
-  `effective_type` int(8) NOT NULL COMMENT '有效类型',
-  `time_type` int(8) NULL DEFAULT NULL COMMENT '时间类型',
-  `effective_time` bigint(20) NULL DEFAULT NULL COMMENT '有效时间',
-  `start_time` datetime(6) NULL DEFAULT NULL COMMENT '开始时间',
-  `end_time` datetime(6) NULL DEFAULT NULL COMMENT '结束时间',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                       `id` bigint(20) NOT NULL,
+                                       `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                       `strategy_register_id` bigint(20) NOT NULL COMMENT '策略注册id',
+                                       `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                       `num` int(11) NOT NULL COMMENT '数量',
+                                       `channel_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '渠道',
+                                       `activity_mutual` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '活动互斥',
+                                       `coupon_mutual` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '优惠券互斥',
+                                       `effective_type` int(8) NOT NULL COMMENT '有效类型',
+                                       `time_type` int(8) NULL DEFAULT NULL COMMENT '时间类型',
+                                       `effective_time` bigint(20) NULL DEFAULT NULL COMMENT '有效时间',
+                                       `start_time` datetime(6) NULL DEFAULT NULL COMMENT '开始时间',
+                                       `end_time` datetime(6) NULL DEFAULT NULL COMMENT '结束时间',
+                                       `creator` bigint(20) NULL DEFAULT NULL,
+                                       `create_time` datetime(6) NULL DEFAULT NULL,
+                                       `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                       `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                       `version` int(11) NOT NULL,
+                                       `deleted` bit(1) NOT NULL,
+                                       PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠券模板' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3271,54 +3249,47 @@ INSERT INTO `sc_coupon_template` VALUES (1395320423364841472, '100-33', 13953204
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_match_rule`;
 CREATE TABLE `sc_match_rule`  (
-  `id` bigint(20) NOT NULL,
-  `strategy_register_id` bigint(20) NOT NULL COMMENT '关联策略注册id',
-  `register_type` int(6) NOT NULL COMMENT '策略类型 策略/优惠券',
-  `feature_type` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '特征类型(sku/spu/shop)',
-  `feature_point` varchar(55) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '特征点',
-  `match_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '匹配类型',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `strategy_register_id` bigint(20) NOT NULL COMMENT '关联策略注册id',
+                                  `register_type` int(6) NOT NULL COMMENT '策略类型 策略/优惠券',
+                                  `feature_type` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '特征类型(sku/spu/shop)',
+                                  `feature_point` varchar(55) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '特征点',
+                                  `match_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '匹配类型',
+                                  `creator` bigint(20) NULL DEFAULT NULL,
+                                  `create_time` datetime(6) NULL DEFAULT NULL,
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                  `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                  `version` int(11) NOT NULL,
+                                  `deleted` bit(1) NOT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '匹配检查' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sc_match_rule
 -- ----------------------------
-INSERT INTO `sc_match_rule` VALUES (1394892919483289600, 1394892919403597824, 1, 'skuId', '1001', 'ne', 1, '2021-05-19 13:49:22.519000', 1, '2021-05-19 13:49:22.519000', 0, b'0');
-INSERT INTO `sc_match_rule` VALUES (1394892919483289601, 1394892919403597824, 1, 'goods', '2001', 'eq', 1, '2021-05-19 13:49:22.519000', 1, '2021-05-19 13:49:22.519000', 0, b'0');
-INSERT INTO `sc_match_rule` VALUES (1394918398940565504, 1394918398827319296, 1, 'skuId', '1001', 'ne', 1, '2021-05-19 15:30:37.295000', 1, '2021-05-19 15:30:37.295000', 0, b'0');
-INSERT INTO `sc_match_rule` VALUES (1394918398944759808, 1394918398827319296, 1, 'goods', '2001', 'eq', 1, '2021-05-19 15:30:37.296000', 1, '2021-05-19 15:30:37.296000', 0, b'0');
-INSERT INTO `sc_match_rule` VALUES (1395284918434680832, 1395284918430486528, 2, 'goodsId', '2001', 'eq', 1, '2021-05-20 15:47:02.352000', 1, '2021-05-20 15:47:02.352000', 0, b'0');
-INSERT INTO `sc_match_rule` VALUES (1395308573713649664, 1395308573587820544, 1, 'skuId', '1002', 'eq', 1, '2021-05-20 17:21:02.209000', 1, '2021-05-20 17:21:02.209000', 0, b'0');
-INSERT INTO `sc_match_rule` VALUES (1395320422966382592, 1395320422941216768, 2, 'goodsId', '2001', 'eq', 1, '2021-05-20 18:08:07.292000', 1, '2021-05-20 18:08:07.292000', 0, b'0');
 
 -- ----------------------------
 -- Table structure for sc_strategy
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_strategy`;
 CREATE TABLE `sc_strategy`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '唯一编码',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `engine_type` int(1) NOT NULL COMMENT '引擎类型, java/js/groovy',
-  `target_type` int(11) NOT NULL COMMENT '目标类型',
-  `rule_script` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '规则脚本',
-  `show` int(1) NULL DEFAULT NULL COMMENT '是否展示 0不展示，1展示(default)',
-  `state` int(1) NOT NULL COMMENT '0 可用 1 不可用',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  `tid` bigint(20) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                `id` bigint(20) NOT NULL,
+                                `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '唯一编码',
+                                `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                `engine_type` int(1) NOT NULL COMMENT '引擎类型, java/js/groovy',
+                                `target_type` int(11) NOT NULL COMMENT '目标类型',
+                                `rule_script` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '规则脚本',
+                                `show` int(1) NULL DEFAULT NULL COMMENT '是否展示 0不展示，1展示(default)',
+                                `state` int(1) NOT NULL COMMENT '0 可用 1 不可用',
+                                `creator` bigint(20) NULL DEFAULT NULL,
+                                `create_time` datetime(6) NULL DEFAULT NULL,
+                                `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                `version` int(11) NOT NULL,
+                                `deleted` bit(1) NOT NULL,
+                                `tid` bigint(20) NULL DEFAULT NULL,
+                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3334,19 +3305,19 @@ INSERT INTO `sc_strategy` VALUES (1395320340615417856, 'obtainMultiple', '多张
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_strategy_check_rule`;
 CREATE TABLE `sc_strategy_check_rule`  (
-  `id` bigint(20) NOT NULL,
-  `register_id` bigint(20) NULL DEFAULT NULL COMMENT '模板id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则名称',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则code',
-  `type` int(11) NOT NULL COMMENT '类型',
-  `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数 json',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NULL DEFAULT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                           `id` bigint(20) NOT NULL,
+                                           `register_id` bigint(20) NULL DEFAULT NULL COMMENT '模板id',
+                                           `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则名称',
+                                           `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则code',
+                                           `type` int(11) NOT NULL COMMENT '类型',
+                                           `addition` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '附加参数 json',
+                                           `creator` bigint(20) NULL DEFAULT NULL,
+                                           `create_time` datetime(6) NULL DEFAULT NULL,
+                                           `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                           `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                           `version` int(11) NULL DEFAULT NULL,
+                                           `deleted` bit(1) NOT NULL,
+                                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略规则检查' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3358,19 +3329,19 @@ CREATE TABLE `sc_strategy_check_rule`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_strategy_config`;
 CREATE TABLE `sc_strategy_config`  (
-  `id` bigint(20) NOT NULL,
-  `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数类型',
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方法参数名',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数名称',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
+                                       `id` bigint(20) NOT NULL,
+                                       `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
+                                       `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数类型',
+                                       `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '方法参数名',
+                                       `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数名称',
+                                       `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                       `creator` bigint(20) NULL DEFAULT NULL,
+                                       `create_time` datetime(6) NULL DEFAULT NULL,
+                                       `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                       `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                       `version` int(11) NOT NULL,
+                                       `deleted` bit(1) NOT NULL,
+                                       PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略参数定义' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3385,79 +3356,64 @@ INSERT INTO `sc_strategy_config` VALUES (1382517531788595201, 138251753139852492
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_strategy_config_value`;
 CREATE TABLE `sc_strategy_config_value`  (
-  `id` bigint(20) NOT NULL,
-  `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
-  `strategy_register_id` bigint(20) NULL DEFAULT NULL COMMENT '策略注册id',
-  `strategy_config_id` bigint(20) NULL DEFAULT NULL COMMENT '策略定义id',
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '策略参数key',
-  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数值',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FK8h3jh6yj9o9bgb0gd2noht1mw`(`strategy_config_id`) USING BTREE,
-  CONSTRAINT `sc_strategy_config_value_ibfk_1` FOREIGN KEY (`strategy_config_id`) REFERENCES `sc_strategy_config` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                             `id` bigint(20) NOT NULL,
+                                             `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
+                                             `strategy_register_id` bigint(20) NULL DEFAULT NULL COMMENT '策略注册id',
+                                             `strategy_config_id` bigint(20) NULL DEFAULT NULL COMMENT '策略定义id',
+                                             `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '策略参数key',
+                                             `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数值',
+                                             `creator` bigint(20) NULL DEFAULT NULL,
+                                             `create_time` datetime(6) NULL DEFAULT NULL,
+                                             `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                             `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                             `version` int(11) NOT NULL,
+                                             `deleted` bit(1) NOT NULL,
+                                             PRIMARY KEY (`id`) USING BTREE,
+                                             INDEX `FK8h3jh6yj9o9bgb0gd2noht1mw`(`strategy_config_id`) USING BTREE,
+                                             CONSTRAINT `sc_strategy_config_value_ibfk_1` FOREIGN KEY (`strategy_config_id`) REFERENCES `sc_strategy_config` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略配置参数' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sc_strategy_config_value
 -- ----------------------------
-INSERT INTO `sc_strategy_config_value` VALUES (1394892919680421888, 1382517531398524928, 1394892919403597824, 1382517531788595200, 'satisfy', '100', 1, '2021-05-19 13:49:22.566000', 1, '2021-05-19 13:49:22.566000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1394892919684616192, 1382517531398524928, 1394892919403597824, 1382517531788595201, 'minus', '16', 1, '2021-05-19 13:49:22.567000', 1, '2021-05-19 13:49:22.567000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1394918399292887040, 1382517531398524928, 1394918398827319296, 1382517531788595200, 'satisfy', '100', 1, '2021-05-19 15:30:37.379000', 1, '2021-05-19 15:30:37.379000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1394918399297081344, 1382517531398524928, 1394918398827319296, 1382517531788595201, 'minus', '5', 1, '2021-05-19 15:30:37.380000', 1, '2021-05-19 15:30:37.380000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1395284918615035904, 1382517531398524928, 1395284918430486528, 1382517531788595200, 'satisfy', '100', 1, '2021-05-20 15:47:02.395000', 1, '2021-05-20 15:47:02.395000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1395284918619230208, 1382517531398524928, 1395284918430486528, 1382517531788595201, 'minus', '33', 1, '2021-05-20 15:47:02.395000', 1, '2021-05-20 15:47:02.395000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1395308737903874048, 1382517531398524928, 1395308573587820544, 1382517531788595200, 'satisfy', '50', 1, '2021-05-20 17:21:41.356000', 1, '2021-05-20 17:21:41.356000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1395308737903874049, 1382517531398524928, 1395308573587820544, 1382517531788595201, 'minus', '20', 1, '2021-05-20 17:21:41.356000', 1, '2021-05-20 17:21:41.356000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1395320423310315520, 1382517531398524928, 1395320422941216768, 1382517531788595200, 'satisfy', '100', 1, '2021-05-20 18:08:07.374000', 1, '2021-05-20 18:08:07.374000', 0, b'0');
-INSERT INTO `sc_strategy_config_value` VALUES (1395320423310315521, 1382517531398524928, 1395320422941216768, 1382517531788595201, 'minus', '33', 1, '2021-05-20 18:08:07.374000', 1, '2021-05-20 18:08:07.374000', 0, b'0');
 
 -- ----------------------------
 -- Table structure for sc_strategy_register
 -- ----------------------------
 DROP TABLE IF EXISTS `sc_strategy_register`;
 CREATE TABLE `sc_strategy_register`  (
-  `id` bigint(20) NOT NULL,
-  `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '策略注册名称',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `strategy_type` int(11) NULL DEFAULT NULL COMMENT '策略类型(1活动/2优惠券)',
-  `creator` bigint(20) NULL DEFAULT NULL,
-  `create_time` datetime(6) NULL DEFAULT NULL,
-  `last_modifier` bigint(20) NULL DEFAULT NULL,
-  `last_modified_time` datetime(6) NULL DEFAULT NULL,
-  `version` int(11) NOT NULL,
-  `deleted` bit(1) NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `FK44aox50070g4wqwabx7l75twv`(`strategy_id`) USING BTREE
+                                         `id` bigint(20) NOT NULL,
+                                         `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
+                                         `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '策略注册名称',
+                                         `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                         `strategy_type` int(11) NULL DEFAULT NULL COMMENT '策略类型(1活动/2优惠券)',
+                                         `creator` bigint(20) NULL DEFAULT NULL,
+                                         `create_time` datetime(6) NULL DEFAULT NULL,
+                                         `last_modifier` bigint(20) NULL DEFAULT NULL,
+                                         `last_modified_time` datetime(6) NULL DEFAULT NULL,
+                                         `version` int(11) NOT NULL,
+                                         `deleted` bit(1) NOT NULL,
+                                         PRIMARY KEY (`id`) USING BTREE,
+                                         INDEX `FK44aox50070g4wqwabx7l75twv`(`strategy_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略注册' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sc_strategy_register
 -- ----------------------------
-INSERT INTO `sc_strategy_register` VALUES (1394892919403597824, 1382517531398524928, '100-16', '100-16活动策略2', 1, 1, '2021-05-19 13:49:22.499000', 1, '2021-05-19 13:49:22.499000', 0, b'0');
-INSERT INTO `sc_strategy_register` VALUES (1394918398827319296, 1382517531398524928, '100-5', '100-5活动策略3', 1, 1, '2021-05-19 15:30:37.254000', 1, '2021-05-19 15:30:37.254000', 0, b'0');
-INSERT INTO `sc_strategy_register` VALUES (1395284918430486528, 1382517531398524928, '100-33', '100-33优惠券', 2, 1, '2021-05-20 15:47:02.351000', 1, '2021-05-20 15:47:02.351000', 0, b'0');
-INSERT INTO `sc_strategy_register` VALUES (1395308573587820544, 1382517531398524928, '50-20', '50-20活动策略3', 1, 1, '2021-05-20 17:21:02.166000', 1, '2021-05-20 17:21:02.166000', 0, b'0');
-INSERT INTO `sc_strategy_register` VALUES (1395320422941216768, 1382517531398524928, '100-33', '100-33优惠券', 2, 1, '2021-05-20 18:08:07.285000', 1, '2021-05-20 18:08:07.285000', 0, b'0');
 
 -- ----------------------------
 -- Table structure for starter_data_version
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_data_version`;
 CREATE TABLE `starter_data_version`  (
-  `id` bigint(20) NOT NULL,
-  `data_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '数据名称',
-  `data_id` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '数据主键',
-  `data_content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '数据内容',
-  `version` int(10) NOT NULL COMMENT '版本',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+                                         `id` bigint(20) NOT NULL,
+                                         `data_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '数据名称',
+                                         `data_id` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '数据主键',
+                                         `data_content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '数据内容',
+                                         `version` int(10) NOT NULL COMMENT '版本',
+                                         `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                         `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据版本日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3471,18 +3427,18 @@ INSERT INTO `starter_data_version` VALUES (1480551021779288064, 'client', '1', '
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_login_log`;
 CREATE TABLE `starter_login_log`  (
-  `id` bigint(20) NOT NULL,
-  `user_id` bigint(11) NULL DEFAULT NULL COMMENT '用户id',
-  `account` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名称',
-  `login` bit(1) NULL DEFAULT NULL COMMENT '登录成功状态',
-  `client` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '终端',
-  `ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录IP地址',
-  `login_location` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录地点',
-  `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作系统',
-  `browser` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '浏览器类型',
-  `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提示消息',
-  `login_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
-  PRIMARY KEY (`id`) USING BTREE
+                                      `id` bigint(20) NOT NULL,
+                                      `user_id` bigint(11) NULL DEFAULT NULL COMMENT '用户id',
+                                      `account` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名称',
+                                      `login` bit(1) NULL DEFAULT NULL COMMENT '登录成功状态',
+                                      `client` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '终端',
+                                      `ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录IP地址',
+                                      `login_location` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录地点',
+                                      `os` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作系统',
+                                      `browser` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '浏览器类型',
+                                      `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '提示消息',
+                                      `login_time` datetime(0) NULL DEFAULT NULL COMMENT '访问时间',
+                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '登陆日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3494,22 +3450,22 @@ CREATE TABLE `starter_login_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_operate_log`;
 CREATE TABLE `starter_operate_log`  (
-  `id` bigint(20) NOT NULL,
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作模块',
-  `operate_id` bigint(20) NULL DEFAULT NULL COMMENT '操作人员id',
-  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作人员账号',
-  `business_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务类型',
-  `method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方法',
-  `request_method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方式',
-  `operate_url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求url',
-  `operate_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作ip',
-  `operate_location` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作地点',
-  `operate_param` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求参数',
-  `operate_return` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '返回参数',
-  `success` bit(1) NULL DEFAULT NULL COMMENT '是否成功',
-  `error_msg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '错误提示',
-  `operate_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
-  PRIMARY KEY (`id`) USING BTREE
+                                        `id` bigint(20) NOT NULL,
+                                        `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作模块',
+                                        `operate_id` bigint(20) NULL DEFAULT NULL COMMENT '操作人员id',
+                                        `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作人员账号',
+                                        `business_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务类型',
+                                        `method` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方法',
+                                        `request_method` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求方式',
+                                        `operate_url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求url',
+                                        `operate_ip` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作ip',
+                                        `operate_location` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作地点',
+                                        `operate_param` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '请求参数',
+                                        `operate_return` varchar(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '返回参数',
+                                        `success` bit(1) NULL DEFAULT NULL COMMENT '是否成功',
+                                        `error_msg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '错误提示',
+                                        `operate_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
+                                        PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3521,20 +3477,20 @@ CREATE TABLE `starter_operate_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_quartz_job`;
 CREATE TABLE `starter_quartz_job`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务名称',
-  `job_class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务类名',
-  `cron` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'cron表达式',
-  `parameter` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '参数',
-  `state` int(4) NULL DEFAULT NULL COMMENT '状态',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
+                                       `id` bigint(20) NOT NULL COMMENT '主键',
+                                       `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务名称',
+                                       `job_class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '任务类名',
+                                       `cron` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'cron表达式',
+                                       `parameter` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '参数',
+                                       `state` int(4) NULL DEFAULT NULL COMMENT '状态',
+                                       `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                                       `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                       `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                       `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                       `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                       `version` int(11) NOT NULL COMMENT '版本',
+                                       `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                       PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '定时任务' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3547,39 +3503,38 @@ INSERT INTO `starter_quartz_job` VALUES (1456579473573867520, '测试任务', 'c
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_quartz_job_log`;
 CREATE TABLE `starter_quartz_job_log`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `handler_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '处理器名称',
-  `class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '处理器全限定名',
-  `success` bit(1) NOT NULL COMMENT '是否执行成功',
-  `error_message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
-  `start_time` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
-  `end_time` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
-  `duration` bigint(255) NULL DEFAULT NULL COMMENT '执行时长',
-  `create_time` datetime(0) NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+                                           `id` bigint(20) NOT NULL COMMENT '主键',
+                                           `handler_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '处理器名称',
+                                           `class_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '处理器全限定名',
+                                           `success` bit(1) NOT NULL COMMENT '是否执行成功',
+                                           `error_message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
+                                           `start_time` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
+                                           `end_time` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
+                                           `duration` bigint(255) NULL DEFAULT NULL COMMENT '执行时长',
+                                           `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '任务执行日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of starter_quartz_job_log
 -- ----------------------------
-INSERT INTO `starter_quartz_job_log` VALUES (1531893092927533056, 'TestTask', 'cn.bootx.starter.quartz.task.TestTask', b'1', NULL, '2022-06-01 14:59:04', '2022-06-01 14:59:09', 5004, '2022-06-01 14:59:09');
 
 -- ----------------------------
 -- Table structure for starter_sequence_range
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_sequence_range`;
 CREATE TABLE `starter_sequence_range`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `range_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '区间key',
-  `range_value` bigint(20) NOT NULL COMMENT '区间开始值',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '发号器队列区间管理' ROW_FORMAT = DYNAMIC;
+                                           `id` bigint(20) NOT NULL COMMENT '主键',
+                                           `range_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '区间key',
+                                           `range_value` bigint(20) NOT NULL COMMENT '区间开始值',
+                                           `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                           `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                           `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                           `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                           `version` int(11) NOT NULL COMMENT '版本',
+                                           `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                           PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '序列生成器队列区间管理' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of starter_sequence_range
@@ -3592,16 +3547,16 @@ INSERT INTO `starter_sequence_range` VALUES (1470679955230908416, 'cs', 2020, 0,
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_upload_file`;
 CREATE TABLE `starter_upload_file`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `file_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '存储位置',
-  `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件名称',
-  `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件类型',
-  `file_suffix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件后缀',
-  `file_size` double(8, 0) NULL DEFAULT NULL COMMENT '文件大小',
-  `external_storage_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '外部关联id',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE
+                                        `id` bigint(20) NOT NULL COMMENT '主键',
+                                        `file_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '存储位置',
+                                        `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件名称',
+                                        `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件类型',
+                                        `file_suffix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件后缀',
+                                        `file_size` double(8, 0) NULL DEFAULT NULL COMMENT '文件大小',
+                                        `external_storage_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '外部关联id',
+                                        `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                        `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                        PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '上传文件信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3611,28 +3566,26 @@ INSERT INTO `starter_upload_file` VALUES (1495330622946631680, NULL, 'blob', 'jp
 INSERT INTO `starter_upload_file` VALUES (1495331213525606400, NULL, 'blob', 'jpg', 'jpg', 68, '62120b55efeec06e2275fc54', 1399985191002447872, '2022-02-20 17:35:28');
 INSERT INTO `starter_upload_file` VALUES (1495331812178616320, NULL, 'blob', 'jpg', 'jpg', 74, '62120be4efeec06e2275fc56', 1399985191002447872, '2022-02-20 17:37:43');
 INSERT INTO `starter_upload_file` VALUES (1495331905770315776, NULL, 'blob', 'jpg', 'jpg', 76, '62120bfaefeec06e2275fc58', 1399985191002447872, '2022-02-20 17:38:03');
-INSERT INTO `starter_upload_file` VALUES (1521357479941894144, NULL, 'blob', 'jpg', 'jpg', 29, '6270ba2f800f943e36db7c9d', 1414143554414059520, '2022-05-03 13:14:23');
-INSERT INTO `starter_upload_file` VALUES (1521440818182877184, NULL, 'blob', 'jpg', 'jpg', 15, '627107cc800f943e36db7c9f', 1414143554414059520, '2022-05-03 18:45:33');
-INSERT INTO `starter_upload_file` VALUES (1531892108734099456, NULL, 'blob', 'jpg', 'jpg', 77, '62970d52747b30342ed19ec5', 1414143554414059520, '2022-06-01 14:55:15');
+INSERT INTO `starter_upload_file` VALUES (1530065639127871488, NULL, 'blob', 'jpg', 'jpg', 83, '6290684abf0e90583f414dcf', 1414143554414059520, '2022-05-27 13:57:31');
 
 -- ----------------------------
 -- Table structure for sys_dict
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict`;
 CREATE TABLE `sys_dict`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编码',
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
-  `group_tag` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分类标签',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  `version` int(8) NULL DEFAULT NULL COMMENT '版本',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `name_index`(`name`) USING BTREE
+                             `id` bigint(20) NOT NULL,
+                             `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编码',
+                             `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
+                             `group_tag` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '分类标签',
+                             `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+                             `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                             `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                             `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
+                             `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                             `deleted` tinyint(1) NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                             `version` int(8) NULL DEFAULT NULL COMMENT '版本',
+                             PRIMARY KEY (`id`) USING BTREE,
+                             INDEX `name_index`(`name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '字典' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3665,21 +3618,21 @@ INSERT INTO `sys_dict` VALUES (1524356376518643712, 'GoodsParamType', '参数类
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_item`;
 CREATE TABLE `sys_dict_item`  (
-  `id` bigint(20) NOT NULL,
-  `dict_id` bigint(20) NOT NULL COMMENT '字典id',
-  `dict_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典code',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典项code',
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典项名称',
-  `sort_no` double(8, 2) NOT NULL COMMENT '排序',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  `version` int(8) NOT NULL COMMENT '版本',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `idx_dictionary_id`(`dict_id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `dict_id` bigint(20) NOT NULL COMMENT '字典id',
+                                  `dict_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典code',
+                                  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典项code',
+                                  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典项名称',
+                                  `sort_no` double(8, 2) NOT NULL COMMENT '排序',
+                                  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '备注',
+                                  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
+                                  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                                  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                  `version` int(8) NOT NULL COMMENT '版本',
+                                  PRIMARY KEY (`id`) USING BTREE,
+                                  INDEX `idx_dictionary_id`(`dict_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '字典项' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3771,16 +3724,16 @@ INSERT INTO `sys_dict_item` VALUES (1524356510157557760, 1524356376518643712, 'G
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_key_value`;
 CREATE TABLE `sys_key_value`  (
-  `id` bigint(20) NOT NULL,
-  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数键名',
-  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数值',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  `version` int(8) NOT NULL COMMENT '版本',
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` bigint(20) NOT NULL,
+                                  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数键名',
+                                  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数值',
+                                  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
+                                  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                                  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                  `version` int(8) NOT NULL COMMENT '版本',
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'kv存储' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3792,20 +3745,20 @@ CREATE TABLE `sys_key_value`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_param`;
 CREATE TABLE `sys_param`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数名称',
-  `param_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数键名',
-  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数值',
-  `type` int(4) NULL DEFAULT NULL COMMENT '参数类型',
-  `internal` bit(1) NOT NULL COMMENT '内置参数',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  `version` int(8) NOT NULL COMMENT '版本',
-  PRIMARY KEY (`id`) USING BTREE
+                              `id` bigint(20) NOT NULL,
+                              `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数名称',
+                              `param_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数键名',
+                              `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数值',
+                              `type` int(4) NULL DEFAULT NULL COMMENT '参数类型',
+                              `internal` bit(1) NOT NULL COMMENT '内置参数',
+                              `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+                              `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                              `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                              `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
+                              `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                              `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                              `version` int(8) NOT NULL COMMENT '版本',
+                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统参数配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -3813,7 +3766,7 @@ CREATE TABLE `sys_param`  (
 -- ----------------------------
 INSERT INTO `sys_param` VALUES (1452842684284891136, '测试', 'test.v1', '123', 1, b'0', NULL, 1399985191002447872, '2021-10-26 11:41:03', 1399985191002447872, '2021-10-26 11:41:03', 0, 0);
 INSERT INTO `sys_param` VALUES (1500338438182789120, '结算台聚合支付请求地址', 'CashierAggregateUrl', 'http://pay1.bootx.cn/cashier/aggregatePay?key=', 1, b'1', '', 1399985191002447872, '2022-03-06 13:12:13', 1399985191002447872, '2022-05-01 15:03:03', 0, 3);
-INSERT INTO `sys_param` VALUES (1520668030248361984, '文件服务器地址', 'FileServerUrl', 'http://platform.dev.bootx.cn:8080', 1, b'1', '', 1399985191002447872, '2022-05-01 15:34:46', 1414143554414059520, '2022-06-01 14:53:27', 0, 6);
-INSERT INTO `sys_param` VALUES (1529281530059161600, 'websocket服务器地址', 'WebsocketServerUrl', 'ws://platform.dev.bootx.cn:8080', 1, b'0', '', 1399985191002447872, '2022-05-25 10:01:44', 1414143554414059520, '2022-06-01 14:52:37', 0, 1);
+INSERT INTO `sys_param` VALUES (1520668030248361984, '文件服务器地址', 'FileServerUrl', 'http://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-01 15:34:46', 1399985191002447872, '2022-05-19 12:53:21', 0, 5);
+INSERT INTO `sys_param` VALUES (1529281530059161600, 'websocket服务器地址', 'WebsocketServerUrl', 'ws://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-25 10:01:44', 1399985191002447872, '2022-05-25 10:01:44', 0, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

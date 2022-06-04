@@ -49,14 +49,14 @@ public class TestController {
     }
 
 
-    @Operation(summary = "发号器")
+    @Operation(summary = "序列生成器")
     @GetMapping("/sequence")
     public ResResult<String> sequence(){
         long cs = sequence.next("cs");
         return Res.ok(String.valueOf(cs));
     }
 
-    @Operation(summary = "发号器自定义")
+    @Operation(summary = "序列生成器自定义")
     @GetMapping("/sequenceZdy")
     public ResResult<Long> sequenceZdy(){
         SeqRangeConfig seqRangeConfig = new SeqRangeConfig()

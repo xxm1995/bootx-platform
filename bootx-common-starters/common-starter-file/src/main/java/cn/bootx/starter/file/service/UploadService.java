@@ -1,5 +1,6 @@
 package cn.bootx.starter.file.service;
 
+import cn.bootx.starter.file.code.FileUploadTypeEnum;
 import cn.bootx.starter.file.entity.UpdateFileInfo;
 import cn.bootx.starter.file.entity.UploadFileContext;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +17,7 @@ public interface UploadService {
     /**
      * 判断启用
      */
-    boolean enable(int type);
+    boolean enable(FileUploadTypeEnum type);
     /**
      * 上传文件
      */

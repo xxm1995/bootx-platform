@@ -47,7 +47,7 @@ public class RedisClient {
         stringRedisTemplate.opsForValue().set(keyPrefix+key, "", timeoutMs, TimeUnit.MILLISECONDS);
     }
 
-    /** 是否过期 */
+    /** 是否存在 */
     @SuppressWarnings("all")
     public boolean exists(String key) {
         return stringRedisTemplate.hasKey(key);

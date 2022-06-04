@@ -34,6 +34,13 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/,classpath:/public/
+  # 数据库版本管理
+  flyway:
+    # 如果 flyway_schema_history 不存在自动创建
+    baseline-on-migrate: true
+    # 开发模式开启
+    enabled: true
+  # 定时任务
   quartz:
     # 持久化方式
     job-store-type: jdbc
@@ -59,10 +66,11 @@ logging:
 # 项目配置
 bootx:
   common:
+    # 接口文档
     swagger:
       enabled: true
-      author: xxm
-      version: 1.1.0-alpha-6
+      author: bootx
+      version: 1.1.0-bate-2
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
       # 多模块扫码
@@ -76,27 +84,40 @@ bootx:
         "[订单服务]": cn.bootx.order
         "[演示模块]": cn.bootx.demo
         "[自定义starter组件]": cn.bootx.starter
+    # 缓存
     cache:
       keys-ttl:
         "[iam:user:path]" : 5200
+        "[iam:ignore:path]" : 5200
+    # 序列生成器
     sequence:
       type: jdbc
+    mqtt:
+      url: tcp://127.0.0.1:1883
+      client-id: clientId
+      # 自动追加终端id后缀 client@xxx
+      auto-client-id-suffix: true
   starter:
     auth:
       default-password: 123456
       ignore-urls:
         - '/actuator/**'
-        - '/v2/api-docs'
         - '/v3/api-docs/**'
         - '/doc.html'
         - '/swagger-resources/**'
         - '/token/**'
-        - '/mobile/**'
         - '/webjars/**'
         - '/css/**'
-        - '/**'
+#        - '/**'
+    # 审计日志存储
     audit-log:
       store: mongo
+    # 文件上传
     file-upload:
-      upload-type: 2
+      upload-type: mongo
       server-url: http://127.0.0.1:8080
+      mongo:
+        bucket: fs
+    # 数据权限
+    data-perm:
+      fieldDecryptKey: "UCrtxSCwYZNCIlav"

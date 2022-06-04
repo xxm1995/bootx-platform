@@ -1,7 +1,7 @@
 package cn.bootx.starter.file.service.impl;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.starter.file.code.FileUploadTypeCode;
+import cn.bootx.starter.file.code.FileUploadTypeEnum;
 import cn.bootx.starter.file.configuration.FileUploadProperties;
 import cn.bootx.starter.file.entity.UpdateFileInfo;
 import cn.bootx.starter.file.entity.UploadFileContext;
@@ -36,8 +36,8 @@ public class LocalUploadService implements UploadService {
     private final FileUploadProperties fileUploadProperties;
 
     @Override
-    public boolean enable(int type) {
-        return type == FileUploadTypeCode.LOCAL;
+    public boolean enable(FileUploadTypeEnum type) {
+        return type == FileUploadTypeEnum.LOCAL;
     }
 
     /**
