@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sys_dict_item")
+@TableName("base_dict_item")
 public class DictionaryItem extends MpBaseEntity implements EntityBaseFunction<DictionaryItemDto> {
 
     /** 字典ID */

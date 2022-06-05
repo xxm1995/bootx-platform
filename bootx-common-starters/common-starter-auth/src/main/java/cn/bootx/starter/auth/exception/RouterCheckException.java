@@ -8,6 +8,7 @@ import cn.bootx.common.core.exception.BizException;
 * @date 2021/12/21 
 */
 public class RouterCheckException extends BizException {
+
     public RouterCheckException() {
         super("没有对应请求路径的权限");
     }

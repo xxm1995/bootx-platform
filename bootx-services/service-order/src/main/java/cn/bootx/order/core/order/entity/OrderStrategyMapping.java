@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("oc_order_strategy_mapping")
+@TableName("order_order_strategy_mapping")
 public class OrderStrategyMapping extends MpBaseEntity implements EntityBaseFunction<OrderStrategyMappingDto> {
 
     /** 订单id */

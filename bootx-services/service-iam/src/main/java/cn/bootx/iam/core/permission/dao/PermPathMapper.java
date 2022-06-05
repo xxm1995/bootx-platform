@@ -3,6 +3,9 @@ package cn.bootx.iam.core.permission.dao;
 import cn.bootx.iam.core.permission.entity.PermPath;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 权限
@@ -12,4 +15,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PermPathMapper extends BaseMapper<PermPath> {
 
+    void saveAll(@Param("permPaths") List<PermPath> permPaths);
 }

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_voucher")
+@TableName("pay_voucher")
 public class Voucher extends MpBaseEntity implements EntityBaseFunction<VoucherDto> {
 
     /** 卡号 */

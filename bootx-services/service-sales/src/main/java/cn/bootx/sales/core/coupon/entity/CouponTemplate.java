@@ -24,7 +24,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sc_coupon_template")
+@TableName("sales_coupon_template")
 public class CouponTemplate extends MpBaseEntity implements EntityBaseFunction<CouponTemplateDto> {
 
     /** 模板名称 */

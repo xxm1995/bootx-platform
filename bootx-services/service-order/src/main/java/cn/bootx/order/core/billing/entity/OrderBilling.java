@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_order_billing")
+@TableName("order_order_billing")
 public class OrderBilling extends MpBaseEntity implements EntityBaseFunction<OrderBillingDto> {
 
     /** 用户id */

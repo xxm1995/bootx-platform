@@ -21,7 +21,7 @@ import java.util.List;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName(value = "gc_category_parameter",autoResultMap = true)
+@TableName(value = "goods_category_parameter",autoResultMap = true)
 @Accessors(chain = true)
 public class CategoryParameter extends MpBaseEntity implements EntityBaseFunction<CategoryParameterDto>{
 

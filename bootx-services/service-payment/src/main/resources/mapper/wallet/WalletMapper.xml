@@ -4,7 +4,7 @@
 
     <!--增加余额-->
     <update id="increaseBalance">
-        update pc_wallet
+        update pay_wallet
         set balance = (balance + #{amount}),
             last_modifier = #{operator},
             last_modified_time = #{date},
@@ -13,7 +13,7 @@
     </update>
     <!-- 减少余额 -->
     <update id="reduceBalance">
-        update pc_wallet
+        update pay_wallet
         set balance = (balance - #{amount}),
             last_modifier = #{operator},
             last_modified_time = #{date},
@@ -22,7 +22,7 @@
     </update>
     <!-- 减少余额,允许扣成负数 -->
     <update id="reduceBalanceUnlimited">
-        update pc_wallet
+        update pay_wallet
         set balance = (balance - #{amount}),
             last_modifier = #{operator},
             last_modified_time = #{date},
@@ -39,7 +39,7 @@
         from
             iam_user_info
                 LEFT JOIN
-            pc_wallet AS w
+            pay_wallet AS w
             on
                 iam_user_info.id = w.user_id
         ${ew.customSqlSegment}

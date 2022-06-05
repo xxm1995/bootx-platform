@@ -19,7 +19,7 @@ import org.springframework.beans.BeanUtils;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sc_strategy_config_value")
+@TableName("sales_strategy_config_value")
 public class StrategyConfigValue extends MpBaseEntity implements EntityBaseFunction<StrategyConfigValueDto> {
 
     /** 策略id */

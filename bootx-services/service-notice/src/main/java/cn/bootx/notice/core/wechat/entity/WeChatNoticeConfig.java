@@ -14,6 +14,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("nc_wechat_config")
+@TableName("notice_wechat_config")
 public class WeChatNoticeConfig extends MpBaseEntity {
 }

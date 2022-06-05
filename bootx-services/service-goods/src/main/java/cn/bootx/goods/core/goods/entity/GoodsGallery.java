@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("gc_goods_gallery")
+@TableName("goods_goods_gallery")
 public class GoodsGallery extends MpBaseEntity {
 
     /** 商品id */

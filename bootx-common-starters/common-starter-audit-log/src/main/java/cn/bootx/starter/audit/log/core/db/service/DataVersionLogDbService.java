@@ -1,6 +1,5 @@
 package cn.bootx.starter.audit.log.core.db.service;
 
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -12,7 +11,6 @@ import cn.bootx.starter.audit.log.dto.DataVersionLogDto;
 import cn.bootx.starter.audit.log.param.DataVersionLogParam;
 import cn.bootx.starter.audit.log.service.DataVersionLogService;
 import cn.bootx.starter.auth.util.SecurityUtil;
-import cn.hutool.core.util.DesensitizedUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -44,7 +42,7 @@ public class DataVersionLogDbService implements DataVersionLogService {
                 .setDataName(param.getDataName())
                 .setDataId(param.getDataId())
                 .setDataContent(JacksonUtil.toJson(param))
-                .setCreator(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setCreator(SecurityUtil.getUserIdOrDefaultId())
                 .setCreateTime(LocalDateTime.now())
                 .setVersion(maxVersion+1);
         manager.save(dataVersionLog);

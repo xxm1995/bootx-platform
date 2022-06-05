@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("starter_sequence_range")
+@TableName("common_sequence_range")
 public class SequenceRange extends MpBaseEntity {
 
     /** 区间key */

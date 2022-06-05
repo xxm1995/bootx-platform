@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("pc_cash_payment")
+@TableName("pay_cash_payment")
 @Accessors(chain = true)
 public class CashPayment extends BasePayment {
 }

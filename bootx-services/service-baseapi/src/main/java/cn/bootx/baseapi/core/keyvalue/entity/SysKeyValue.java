@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sys_key_value")
+@TableName("base_key_value")
 public class SysKeyValue extends MpBaseEntity {
 
     /**

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sc_coupon")
+@TableName("sales_coupon")
 public class Coupon extends MpBaseEntity implements EntityBaseFunction<CouponDto> {
 
     /** 名称 */

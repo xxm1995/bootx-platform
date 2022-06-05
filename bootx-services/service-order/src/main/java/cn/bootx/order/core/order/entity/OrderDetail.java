@@ -22,7 +22,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("oc_order_detail")
+@TableName("order_order_detail")
 public class OrderDetail extends MpBaseEntity implements EntityBaseFunction<OrderDetailDto> {
 
     /** 订单id */

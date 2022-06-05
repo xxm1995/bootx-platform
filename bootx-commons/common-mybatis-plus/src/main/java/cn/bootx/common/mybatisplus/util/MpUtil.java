@@ -3,7 +3,10 @@ package cn.bootx.common.mybatisplus.util;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.ColumnCache;
@@ -12,6 +15,7 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -24,24 +28,24 @@ import java.util.stream.Collectors;
  * @date 2020/4/21 10:00
  */
 public class MpUtil {
-	/**
-	 * mp page转换为 PageResult 同时进行dto转换
-	 */
-	public static <T> PageResult<T> convert2DtoPageResult(Page<? extends EntityBaseFunction<T>> page){
-		if (Objects.isNull(page)){
-			return new PageResult<>();
-		}
-		List<T> collect = page.getRecords()
-				.stream()
-				.map(EntityBaseFunction::toDto)
-				.collect(Collectors.toList());
-		// 构造 PageResult 对象
-		return new PageResult<T>()
-				.setSize(page.getSize())
-				.setCurrent(page.getCurrent())
-				.setTotal(page.getTotal())
-				.setRecords(collect);
-	}
+    /**
+     * mp page转换为 PageResult 同时进行dto转换
+     */
+    public static <T> PageResult<T> convert2DtoPageResult(Page<? extends EntityBaseFunction<T>> page){
+        if (Objects.isNull(page)){
+            return new PageResult<>();
+        }
+        List<T> collect = page.getRecords()
+                .stream()
+                .map(EntityBaseFunction::toDto)
+                .collect(Collectors.toList());
+        // 构造 PageResult 对象
+        return new PageResult<T>()
+                .setSize(page.getSize())
+                .setCurrent(page.getCurrent())
+                .setTotal(page.getTotal())
+                .setRecords(collect);
+    }
 
     /**
      * page转换为 PageResult
@@ -93,6 +97,26 @@ public class MpUtil {
             end = Math.min(end + batchSize, saveList.size());
             consumer.accept(list);
         }
+    }
 
+    /**
+     * 初始化数据库Entity
+     * @param entityList 对象列表
+     * @param userId 用户id
+     * @param <T> 泛型 MpIdEntity
+     */
+    public static <T extends MpIdEntity> void initEntityList(List<? extends MpIdEntity> entityList,Long userId){
+        for (MpIdEntity t : entityList) {
+            // 设置id
+            t.setId(IdUtil.getSnowflakeNextId());
+            if (t instanceof MpBaseEntity){
+                MpBaseEntity entity = (MpBaseEntity) t;
+                entity.setCreator(userId);
+                entity.setCreateTime(LocalDateTime.now());
+                entity.setLastModifier(userId);
+                entity.setLastModifiedTime(LocalDateTime.now());
+                entity.setVersion(0);
+            }
+        }
     }
 }

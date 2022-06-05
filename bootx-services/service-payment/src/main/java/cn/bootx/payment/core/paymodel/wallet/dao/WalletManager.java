@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.paymodel.wallet.dao;
 
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
@@ -10,7 +9,6 @@ import cn.bootx.iam.param.user.UserInfoParam;
 import cn.bootx.payment.core.paymodel.wallet.entity.Wallet;
 import cn.bootx.payment.param.paymodel.wallet.WalletPayParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
-import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -41,7 +39,7 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
      * @return 更新数量
      */
     public int increaseBalance(Long walletId, BigDecimal amount) {
-        Long userId = SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId());
+        Long userId = SecurityUtil.getUserIdOrDefaultId();
         return walletMapper.increaseBalance(walletId, amount, userId, LocalDateTime.now());
     }
 
@@ -54,7 +52,7 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
      * @return 操作条数
      */
     public int reduceBalance(Long walletId, BigDecimal amount) {
-        Long userId = SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId());
+        Long userId = SecurityUtil.getUserIdOrDefaultId();
         return walletMapper.reduceBalance(walletId, amount, userId, LocalDateTime.now());
     }
 
@@ -66,7 +64,7 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
      * @return 剩余条数
      */
     public int reduceBalanceUnlimited(Long walletId, BigDecimal amount) {
-        Long userId = SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId());
+        Long userId = SecurityUtil.getUserIdOrDefaultId();
         return walletMapper.reduceBalanceUnlimited(walletId, amount, userId, LocalDateTime.now());
     }
 

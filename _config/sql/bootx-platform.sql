@@ -195,10 +195,10 @@ CREATE TABLE `flyway_schema_history`  (
 INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', 1303985288, 'bootx', '2022-06-04 19:02:37', 64715, 1);
 
 -- ----------------------------
--- Table structure for gc_brand
+-- Table structure for goods_brand
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_brand`;
-CREATE TABLE `gc_brand`  (
+DROP TABLE IF EXISTS `goods_brand`;
+CREATE TABLE `goods_brand`  (
                              `id` bigint(20) NOT NULL,
                              `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌名称',
                              `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '品牌图标',
@@ -214,18 +214,18 @@ CREATE TABLE `gc_brand`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '品牌' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_brand
+-- Records of goods_brand
 -- ----------------------------
-INSERT INTO `gc_brand` VALUES (1524046765181800448, '鸭鸭', '', NULL, '', 1399985191002447872, '2022-05-10 23:20:39', 1399985191002447872, '2022-05-10 23:20:39', 0, 0);
-INSERT INTO `gc_brand` VALUES (1525092807788691456, '微信', '', b'1', '', 1399985191002447872, '2022-05-13 20:37:15', 1399985191002447872, '2022-05-13 20:37:15', 0, 0);
-INSERT INTO `gc_brand` VALUES (1525092835118776320, '舜泰', '', b'1', '', 1399985191002447872, '2022-05-13 20:37:21', 1399985191002447872, '2022-05-13 20:37:21', 0, 0);
-INSERT INTO `gc_brand` VALUES (1525092854139944960, '绿城', '', b'1', '', 1399985191002447872, '2022-05-13 20:37:26', 1399985191002447872, '2022-05-13 20:37:26', 0, 0);
+INSERT INTO `goods_brand` VALUES (1524046765181800448, '鸭鸭', '', NULL, '', 1399985191002447872, '2022-05-10 23:20:39', 1399985191002447872, '2022-05-10 23:20:39', 0, 0);
+INSERT INTO `goods_brand` VALUES (1525092807788691456, '微信', '', b'1', '', 1399985191002447872, '2022-05-13 20:37:15', 1399985191002447872, '2022-05-13 20:37:15', 0, 0);
+INSERT INTO `goods_brand` VALUES (1525092835118776320, '舜泰', '', b'1', '', 1399985191002447872, '2022-05-13 20:37:21', 1399985191002447872, '2022-05-13 20:37:21', 0, 0);
+INSERT INTO `goods_brand` VALUES (1525092854139944960, '绿城', '', b'1', '', 1399985191002447872, '2022-05-13 20:37:26', 1399985191002447872, '2022-05-13 20:37:26', 0, 0);
 
 -- ----------------------------
--- Table structure for gc_category
+-- Table structure for goods_category
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_category`;
-CREATE TABLE `gc_category`  (
+DROP TABLE IF EXISTS `goods_category`;
+CREATE TABLE `goods_category`  (
                                 `id` bigint(20) NOT NULL,
                                 `pid` bigint(20) NULL DEFAULT NULL COMMENT '上级类目id',
                                 `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类目名称',
@@ -244,14 +244,14 @@ CREATE TABLE `gc_category`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_category
+-- Records of goods_category
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_category_brand
+-- Table structure for goods_category_brand
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_category_brand`;
-CREATE TABLE `gc_category_brand`  (
+DROP TABLE IF EXISTS `goods_category_brand`;
+CREATE TABLE `goods_category_brand`  (
                                       `id` bigint(20) NOT NULL,
                                       `category_id` bigint(20) NOT NULL COMMENT '分类id',
                                       `brand_id` bigint(20) NOT NULL COMMENT '品牌id',
@@ -259,14 +259,14 @@ CREATE TABLE `gc_category_brand`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目品牌关联' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_category_brand
+-- Records of goods_category_brand
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_category_parameter
+-- Table structure for goods_category_parameter
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_category_parameter`;
-CREATE TABLE `gc_category_parameter`  (
+DROP TABLE IF EXISTS `goods_category_parameter`;
+CREATE TABLE `goods_category_parameter`  (
                                           `id` bigint(20) NOT NULL,
                                           `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '品牌名称',
                                           `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '类型',
@@ -286,14 +286,14 @@ CREATE TABLE `gc_category_parameter`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目参数' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_category_parameter
+-- Records of goods_category_parameter
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_category_parameter_group
+-- Table structure for goods_category_parameter_group
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_category_parameter_group`;
-CREATE TABLE `gc_category_parameter_group`  (
+DROP TABLE IF EXISTS `goods_category_parameter_group`;
+CREATE TABLE `goods_category_parameter_group`  (
                                                 `id` bigint(20) NOT NULL,
                                                 `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
                                                 `sort_no` double(8, 2) NULL DEFAULT NULL COMMENT '排序',
@@ -309,14 +309,14 @@ CREATE TABLE `gc_category_parameter_group`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目参数组' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_category_parameter_group
+-- Records of goods_category_parameter_group
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_category_specification
+-- Table structure for goods_category_specification
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_category_specification`;
-CREATE TABLE `gc_category_specification`  (
+DROP TABLE IF EXISTS `goods_category_specification`;
+CREATE TABLE `goods_category_specification`  (
                                               `id` bigint(20) NOT NULL,
                                               `category_id` bigint(20) NOT NULL COMMENT '分类id',
                                               `specification_id` bigint(20) NOT NULL COMMENT '规格id',
@@ -324,16 +324,16 @@ CREATE TABLE `gc_category_specification`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目规格关联' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_category_specification
+-- Records of goods_category_specification
 -- ----------------------------
-INSERT INTO `gc_category_specification` VALUES (1525131071690076160, 1523994966466924544, 1524258633343254528);
-INSERT INTO `gc_category_specification` VALUES (1525131071694270464, 1523994966466924544, 1524360756764590080);
+INSERT INTO `goods_category_specification` VALUES (1525131071690076160, 1523994966466924544, 1524258633343254528);
+INSERT INTO `goods_category_specification` VALUES (1525131071694270464, 1523994966466924544, 1524360756764590080);
 
 -- ----------------------------
--- Table structure for gc_goods
+-- Table structure for goods_goods
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_goods`;
-CREATE TABLE `gc_goods`  (
+DROP TABLE IF EXISTS `goods_goods`;
+CREATE TABLE `goods_goods`  (
                              `id` bigint(20) NOT NULL,
                              `cid` bigint(20) NULL DEFAULT NULL COMMENT '类目id',
                              `cname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类目名称',
@@ -367,14 +367,14 @@ CREATE TABLE `gc_goods`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品spu' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_goods
+-- Records of goods_goods
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_goods_packing
+-- Table structure for goods_goods_packing
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_goods_packing`;
-CREATE TABLE `gc_goods_packing`  (
+DROP TABLE IF EXISTS `goods_goods_packing`;
+CREATE TABLE `goods_goods_packing`  (
                                      `id` bigint(20) NOT NULL,
                                      `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '打包品',
                                      `packed_goods_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包品',
@@ -388,14 +388,14 @@ CREATE TABLE `gc_goods_packing`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品打包关系' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_goods_packing
+-- Records of goods_goods_packing
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_goods_sku
+-- Table structure for goods_goods_sku
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_goods_sku`;
-CREATE TABLE `gc_goods_sku`  (
+DROP TABLE IF EXISTS `goods_goods_sku`;
+CREATE TABLE `goods_goods_sku`  (
                                  `id` bigint(20) NOT NULL,
                                  `cid` bigint(20) NULL DEFAULT NULL COMMENT '所属类目id',
                                  `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '所属商品 id',
@@ -431,14 +431,14 @@ CREATE TABLE `gc_goods_sku`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '商品sku' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_goods_sku
+-- Records of goods_goods_sku
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_goods_sku_attr
+-- Table structure for goods_goods_sku_attr
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_goods_sku_attr`;
-CREATE TABLE `gc_goods_sku_attr`  (
+DROP TABLE IF EXISTS `goods_goods_sku_attr`;
+CREATE TABLE `goods_goods_sku_attr`  (
                                       `id` bigint(20) NOT NULL,
                                       `cid` bigint(20) NULL DEFAULT NULL COMMENT '类目 id',
                                       `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '商品 id',
@@ -453,14 +453,14 @@ CREATE TABLE `gc_goods_sku_attr`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku属性' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_goods_sku_attr
+-- Records of goods_goods_sku_attr
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_goods_sku_packing
+-- Table structure for goods_goods_sku_packing
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_goods_sku_packing`;
-CREATE TABLE `gc_goods_sku_packing`  (
+DROP TABLE IF EXISTS `goods_goods_sku_packing`;
+CREATE TABLE `goods_goods_sku_packing`  (
                                          `id` bigint(20) NOT NULL,
                                          `goods_id` bigint(20) NULL DEFAULT NULL COMMENT '打包品',
                                          `packed_goods_id` bigint(20) NULL DEFAULT NULL COMMENT '被打包品',
@@ -477,14 +477,14 @@ CREATE TABLE `gc_goods_sku_packing`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'sku打包关系' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_goods_sku_packing
+-- Records of goods_goods_sku_packing
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for gc_specification
+-- Table structure for goods_specification
 -- ----------------------------
-DROP TABLE IF EXISTS `gc_specification`;
-CREATE TABLE `gc_specification`  (
+DROP TABLE IF EXISTS `goods_specification`;
+CREATE TABLE `goods_specification`  (
                                      `id` bigint(20) NOT NULL,
                                      `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规格名称',
                                      `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型',
@@ -501,7 +501,7 @@ CREATE TABLE `gc_specification`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '规格' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of gc_specification
+-- Records of goods_specification
 -- ----------------------------
 
 -- ----------------------------
@@ -1976,10 +1976,10 @@ CREATE TABLE `iam_user_social`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for nc_mail_config
+-- Table structure for notice_mail_config
 -- ----------------------------
-DROP TABLE IF EXISTS `nc_mail_config`;
-CREATE TABLE `nc_mail_config`  (
+DROP TABLE IF EXISTS `notice_mail_config`;
+CREATE TABLE `notice_mail_config`  (
                                    `id` bigint(20) NOT NULL,
                                    `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '编号',
                                    `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '名称',
@@ -2001,14 +2001,14 @@ CREATE TABLE `nc_mail_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '邮件配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of nc_mail_config
+-- Records of notice_mail_config
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for nc_message_template
+-- Table structure for notice_message_template
 -- ----------------------------
-DROP TABLE IF EXISTS `nc_message_template`;
-CREATE TABLE `nc_message_template`  (
+DROP TABLE IF EXISTS `notice_message_template`;
+CREATE TABLE `notice_message_template`  (
                                         `id` bigint(20) NOT NULL,
                                         `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
                                         `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
@@ -2025,15 +2025,15 @@ CREATE TABLE `nc_message_template`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '消息模板' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of nc_message_template
+-- Records of notice_message_template
 -- ----------------------------
-INSERT INTO `nc_message_template` VALUES (1424936204932169730, 'cs', '测试', 'hello ${msg}6666666666666666666666666666', 1, '测试模板', 0, '2021-08-10 11:30:40', 0, '2021-08-10 11:30:40', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1424936204932169730, 'cs', '测试', 'hello ${msg}6666666666666666666666666666', 1, '测试模板', 0, '2021-08-10 11:30:40', 0, '2021-08-10 11:30:40', 0, 0);
 
 -- ----------------------------
--- Table structure for nc_site_message
+-- Table structure for notice_site_message
 -- ----------------------------
-DROP TABLE IF EXISTS `nc_site_message`;
-CREATE TABLE `nc_site_message`  (
+DROP TABLE IF EXISTS `notice_site_message`;
+CREATE TABLE `notice_site_message`  (
                                     `id` bigint(20) NOT NULL COMMENT '主键',
                                     `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息标题',
                                     `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '消息内容',
@@ -2054,15 +2054,15 @@ CREATE TABLE `nc_site_message`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '站内信' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of nc_site_message
+-- Records of notice_site_message
 -- ----------------------------
-INSERT INTO `nc_site_message` VALUES (1424212599079161857, '测试消息', '测试测试测试', 1399985191002447872, '小小明', 1414143554414059520, 'xxm', '2021-08-08 11:34:11', b'0', NULL, 1399985191002447872, '2021-08-08 11:35:19', 1399985191002447872, '2021-08-08 11:35:19', 0, 0);
+INSERT INTO `notice_site_message` VALUES (1424212599079161857, '测试消息', '测试测试测试', 1399985191002447872, '小小明', 1414143554414059520, 'xxm', '2021-08-08 11:34:11', b'0', NULL, 1399985191002447872, '2021-08-08 11:35:19', 1399985191002447872, '2021-08-08 11:35:19', 0, 0);
 
 -- ----------------------------
--- Table structure for nc_sms_config
+-- Table structure for notice_sms_config
 -- ----------------------------
-DROP TABLE IF EXISTS `nc_sms_config`;
-CREATE TABLE `nc_sms_config`  (
+DROP TABLE IF EXISTS `notice_sms_config`;
+CREATE TABLE `notice_sms_config`  (
                                   `id` bigint(18) NOT NULL,
                                   `tid` bigint(18) NOT NULL COMMENT '租户id',
                                   `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2085,14 +2085,14 @@ CREATE TABLE `nc_sms_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '短信配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of nc_sms_config
+-- Records of notice_sms_config
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for nc_wechat_config
+-- Table structure for notice_wechat_config
 -- ----------------------------
-DROP TABLE IF EXISTS `nc_wechat_config`;
-CREATE TABLE `nc_wechat_config`  (
+DROP TABLE IF EXISTS `notice_wechat_config`;
+CREATE TABLE `notice_wechat_config`  (
                                      `id` bigint(18) NOT NULL,
                                      `tid` bigint(18) NOT NULL COMMENT '租户id',
                                      `code` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2110,15 +2110,15 @@ CREATE TABLE `nc_wechat_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '微信消息配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of nc_wechat_config
+-- Records of notice_wechat_config
 -- ----------------------------
-INSERT INTO `nc_wechat_config` VALUES (181361815405135421, 0, 'test01', 'test01', 'ww9d6247559117d202', '8n6A3SzN-DJNkw8wyCcJnr8-SOjFFWSOlBqZN8vypKM', 1, 1415, '2018-11-20 11:07:07', 1415, '2018-11-20 11:07:07', 0, 0);
+INSERT INTO `notice_wechat_config` VALUES (181361815405135421, 0, 'test01', 'test01', 'ww9d6247559117d202', '8n6A3SzN-DJNkw8wyCcJnr8-SOjFFWSOlBqZN8vypKM', 1, 1415, '2018-11-20 11:07:07', 1415, '2018-11-20 11:07:07', 0, 0);
 
 -- ----------------------------
--- Table structure for oc_order
+-- Table structure for order_order
 -- ----------------------------
-DROP TABLE IF EXISTS `oc_order`;
-CREATE TABLE `oc_order`  (
+DROP TABLE IF EXISTS `order_order`;
+CREATE TABLE `order_order`  (
                              `id` bigint(20) NOT NULL,
                              `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '编码',
                              `contact_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '联系人',
@@ -2149,14 +2149,14 @@ CREATE TABLE `oc_order`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of oc_order
+-- Records of order_order
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for oc_order_detail
+-- Table structure for order_order_detail
 -- ----------------------------
-DROP TABLE IF EXISTS `oc_order_detail`;
-CREATE TABLE `oc_order_detail`  (
+DROP TABLE IF EXISTS `order_order_detail`;
+CREATE TABLE `order_order_detail`  (
                                     `id` bigint(20) NOT NULL,
                                     `active_id` bigint(20) NULL DEFAULT NULL COMMENT '活动id',
                                     `shop_id` bigint(20) NULL DEFAULT NULL COMMENT '店铺id',
@@ -2181,14 +2181,14 @@ CREATE TABLE `oc_order_detail`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单明细' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of oc_order_detail
+-- Records of order_order_detail
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for oc_order_strategy_mapping
+-- Table structure for order_order_strategy_mapping
 -- ----------------------------
-DROP TABLE IF EXISTS `oc_order_strategy_mapping`;
-CREATE TABLE `oc_order_strategy_mapping`  (
+DROP TABLE IF EXISTS `order_order_strategy_mapping`;
+CREATE TABLE `order_order_strategy_mapping`  (
                                               `id` bigint(20) NOT NULL,
                                               `order_id` bigint(20) NULL DEFAULT NULL COMMENT '订单id',
                                               `order_detail_id` bigint(20) NULL DEFAULT NULL COMMENT '明细id',
@@ -2208,14 +2208,14 @@ CREATE TABLE `oc_order_strategy_mapping`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单策略映射' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of oc_order_strategy_mapping
+-- Records of order_order_strategy_mapping
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for oc_swap_order
+-- Table structure for order_swap_order
 -- ----------------------------
-DROP TABLE IF EXISTS `oc_swap_order`;
-CREATE TABLE `oc_swap_order`  (
+DROP TABLE IF EXISTS `order_swap_order`;
+CREATE TABLE `order_swap_order`  (
                                   `id` bigint(20) NOT NULL,
                                   `create_time` datetime(6) NULL DEFAULT NULL,
                                   `creator` bigint(20) NULL DEFAULT NULL,
@@ -2234,18 +2234,18 @@ CREATE TABLE `oc_swap_order`  (
                                   `version` int(11) NULL DEFAULT NULL,
                                   PRIMARY KEY (`id`) USING BTREE,
                                   INDEX `FKrkeu9v5trh3iqe71y9eyq1q0k`(`origin_order_id`) USING BTREE,
-                                  CONSTRAINT `oc_swap_order_ibfk_1` FOREIGN KEY (`origin_order_id`) REFERENCES `oc_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                  CONSTRAINT `order_swap_order_ibfk_1` FOREIGN KEY (`origin_order_id`) REFERENCES `order_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '换货单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of oc_swap_order
+-- Records of order_swap_order
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for oc_swap_order_detail
+-- Table structure for order_swap_order_detail
 -- ----------------------------
-DROP TABLE IF EXISTS `oc_swap_order_detail`;
-CREATE TABLE `oc_swap_order_detail`  (
+DROP TABLE IF EXISTS `order_swap_order_detail`;
+CREATE TABLE `order_swap_order_detail`  (
                                          `id` bigint(20) NOT NULL,
                                          `create_time` datetime(6) NULL DEFAULT NULL,
                                          `creator` bigint(20) NULL DEFAULT NULL,
@@ -2262,18 +2262,18 @@ CREATE TABLE `oc_swap_order_detail`  (
                                          `version` int(11) NULL DEFAULT NULL,
                                          PRIMARY KEY (`id`) USING BTREE,
                                          INDEX `FKiuo9rwpivhxa4c0fx2ai7uw5n`(`order_id`) USING BTREE,
-                                         CONSTRAINT `oc_swap_order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `oc_swap_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                         CONSTRAINT `order_swap_order_detail_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order_swap_order` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '换货单明细' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of oc_swap_order_detail
+-- Records of order_swap_order_detail
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for old_gc_category_spec
+-- Table structure for old_goods_category_spec
 -- ----------------------------
-DROP TABLE IF EXISTS `old_gc_category_spec`;
-CREATE TABLE `old_gc_category_spec`  (
+DROP TABLE IF EXISTS `old_goods_category_spec`;
+CREATE TABLE `old_goods_category_spec`  (
                                          `id` bigint(20) NOT NULL,
                                          `cid` bigint(20) NULL DEFAULT NULL COMMENT '所属类目id',
                                          `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
@@ -2304,14 +2304,14 @@ CREATE TABLE `old_gc_category_spec`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '类目属性定义' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of old_gc_category_spec
+-- Records of old_goods_category_spec
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_ali_payment
+-- Table structure for pay_ali_payment
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_ali_payment`;
-CREATE TABLE `pc_ali_payment`  (
+DROP TABLE IF EXISTS `pay_ali_payment`;
+CREATE TABLE `pay_ali_payment`  (
                                    `id` bigint(20) NOT NULL,
                                    `payment_id` bigint(20) NULL DEFAULT NULL COMMENT '交易记录ID',
                                    `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户ID',
@@ -2331,14 +2331,14 @@ CREATE TABLE `pc_ali_payment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付宝支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_ali_payment
+-- Records of pay_ali_payment
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_alipay_config
+-- Table structure for pay_alipay_config
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_alipay_config`;
-CREATE TABLE `pc_alipay_config`  (
+DROP TABLE IF EXISTS `pay_alipay_config`;
+CREATE TABLE `pay_alipay_config`  (
                                      `id` bigint(20) NOT NULL,
                                      `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
                                      `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '支付宝商户appId',
@@ -2368,14 +2368,14 @@ CREATE TABLE `pc_alipay_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付宝配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_alipay_config
+-- Records of pay_alipay_config
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_cash_payment
+-- Table structure for pay_cash_payment
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_cash_payment`;
-CREATE TABLE `pc_cash_payment`  (
+DROP TABLE IF EXISTS `pay_cash_payment`;
+CREATE TABLE `pay_cash_payment`  (
                                     `id` bigint(20) NOT NULL,
                                     `payment_id` bigint(20) NOT NULL COMMENT '支付id',
                                     `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
@@ -2394,14 +2394,14 @@ CREATE TABLE `pc_cash_payment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '现金交易记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_cash_payment
+-- Records of pay_cash_payment
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_order_billing
+-- Table structure for order_order_billing
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_order_billing`;
-CREATE TABLE `pc_order_billing`  (
+DROP TABLE IF EXISTS `order_order_billing`;
+CREATE TABLE `order_order_billing`  (
                                      `id` bigint(20) NOT NULL,
                                      `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
                                      `channel_id` bigint(20) NULL DEFAULT NULL COMMENT '渠道id',
@@ -2423,14 +2423,14 @@ CREATE TABLE `pc_order_billing`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单账单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_order_billing
+-- Records of order_order_billing
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_order_item_billing
+-- Table structure for order_order_item_billing
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_order_item_billing`;
-CREATE TABLE `pc_order_item_billing`  (
+DROP TABLE IF EXISTS `order_order_item_billing`;
+CREATE TABLE `order_order_item_billing`  (
                                           `id` bigint(20) NOT NULL,
                                           `order_billing_id` bigint(20) NULL DEFAULT NULL COMMENT '账单id',
                                           `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
@@ -2457,14 +2457,14 @@ CREATE TABLE `pc_order_item_billing`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '订单明细账单' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_order_item_billing
+-- Records of order_order_item_billing
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_pay_notify_record
+-- Table structure for pay_pay_notify_record
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_pay_notify_record`;
-CREATE TABLE `pc_pay_notify_record`  (
+DROP TABLE IF EXISTS `pay_pay_notify_record`;
+CREATE TABLE `pay_pay_notify_record`  (
                                          `id` bigint(20) NOT NULL,
                                          `payment_id` bigint(20) NOT NULL COMMENT '支付号',
                                          `notify_info` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '通知消息',
@@ -2482,14 +2482,14 @@ CREATE TABLE `pc_pay_notify_record`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付回调记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_pay_notify_record
+-- Records of pay_pay_notify_record
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_pay_order_log
+-- Table structure for pay_pay_order_log
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_pay_order_log`;
-CREATE TABLE `pc_pay_order_log`  (
+DROP TABLE IF EXISTS `pay_pay_order_log`;
+CREATE TABLE `pay_pay_order_log`  (
                                      `id` bigint(20) NOT NULL,
                                      `payment_id` bigint(20) NOT NULL COMMENT '支付id',
                                      `business_pay_param` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '订单扩展业务参数',
@@ -2505,14 +2505,14 @@ CREATE TABLE `pc_pay_order_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付关联订单信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_pay_order_log
+-- Records of pay_pay_order_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_payment
+-- Table structure for pay_payment
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_payment`;
-CREATE TABLE `pc_payment`  (
+DROP TABLE IF EXISTS `pay_payment`;
+CREATE TABLE `pay_payment`  (
                                `id` bigint(20) NOT NULL,
                                `user_id` bigint(20) NOT NULL COMMENT '用户id',
                                `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '业务id',
@@ -2524,8 +2524,8 @@ CREATE TABLE `pc_payment`  (
                                `error_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误码',
                                `error_msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
                                `pay_type_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付信息',
-                               `async_pay_mode` bit(1) NOT NULL COMMENT '是否是异步支付',
-                               `async_pay_channel` int(11) NULL DEFAULT NULL COMMENT '异步支付方式',
+                               `asynotice_pay_mode` bit(1) NOT NULL COMMENT '是否是异步支付',
+                               `asynotice_pay_channel` int(11) NULL DEFAULT NULL COMMENT '异步支付方式',
                                `pay_channel_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付通道信息列表',
                                `refundable_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '可退款信息',
                                `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
@@ -2541,14 +2541,14 @@ CREATE TABLE `pc_payment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_payment
+-- Records of pay_payment
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_point_config
+-- Table structure for pay_point_config
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_point_config`;
-CREATE TABLE `pc_point_config`  (
+DROP TABLE IF EXISTS `pay_point_config`;
+CREATE TABLE `pay_point_config`  (
                                     `id` bigint(20) NOT NULL,
                                     `consume_rate` decimal(19, 2) NULL DEFAULT NULL COMMENT '积分抵扣比例',
                                     `min_order_amount` decimal(19, 2) NULL DEFAULT NULL COMMENT '积分允许使用最低订单金额',
@@ -2567,14 +2567,14 @@ CREATE TABLE `pc_point_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_point_config
+-- Records of pay_point_config
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_point_log
+-- Table structure for pay_point_log
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_point_log`;
-CREATE TABLE `pc_point_log`  (
+DROP TABLE IF EXISTS `pay_point_log`;
+CREATE TABLE `pay_point_log`  (
                                  `id` bigint(20) NOT NULL,
                                  `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
                                  `points` int(11) NOT NULL COMMENT '积分',
@@ -2592,14 +2592,14 @@ CREATE TABLE `pc_point_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_point_log
+-- Records of pay_point_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_point_record
+-- Table structure for pay_point_record
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_point_record`;
-CREATE TABLE `pc_point_record`  (
+DROP TABLE IF EXISTS `pay_point_record`;
+CREATE TABLE `pay_point_record`  (
                                     `id` bigint(20) NOT NULL,
                                     `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
                                     `type` int(11) NOT NULL COMMENT '类型',
@@ -2619,14 +2619,14 @@ CREATE TABLE `pc_point_record`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '积分记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_point_record
+-- Records of pay_point_record
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_refund_record
+-- Table structure for pay_refund_record
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_refund_record`;
-CREATE TABLE `pc_refund_record`  (
+DROP TABLE IF EXISTS `pay_refund_record`;
+CREATE TABLE `pay_refund_record`  (
                                      `id` bigint(20) NOT NULL,
                                      `payment_id` bigint(20) NOT NULL COMMENT '支付记录id',
                                      `business_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关联业务id',
@@ -2651,14 +2651,14 @@ CREATE TABLE `pc_refund_record`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '退款记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_refund_record
+-- Records of pay_refund_record
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_voucher
+-- Table structure for pay_voucher
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_voucher`;
-CREATE TABLE `pc_voucher`  (
+DROP TABLE IF EXISTS `pay_voucher`;
+CREATE TABLE `pay_voucher`  (
                                `id` bigint(20) NOT NULL,
                                `card_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '卡号',
                                `batch_no` bigint(20) NULL DEFAULT NULL COMMENT '批次号',
@@ -2678,14 +2678,14 @@ CREATE TABLE `pc_voucher`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '储值卡' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_voucher
+-- Records of pay_voucher
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_voucher_log
+-- Table structure for pay_voucher_log
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_voucher_log`;
-CREATE TABLE `pc_voucher_log`  (
+DROP TABLE IF EXISTS `pay_voucher_log`;
+CREATE TABLE `pay_voucher_log`  (
                                    `id` bigint(20) NOT NULL,
                                    `voucher_id` bigint(20) NOT NULL,
                                    `voucher_no` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
@@ -2704,14 +2704,14 @@ CREATE TABLE `pc_voucher_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '储值卡日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_voucher_log
+-- Records of pay_voucher_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_voucher_payment
+-- Table structure for pay_voucher_payment
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_voucher_payment`;
-CREATE TABLE `pc_voucher_payment`  (
+DROP TABLE IF EXISTS `pay_voucher_payment`;
+CREATE TABLE `pay_voucher_payment`  (
                                        `id` bigint(20) NOT NULL,
                                        `voucher_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '储值卡id列表',
                                        `payment_id` bigint(20) NOT NULL COMMENT '支付id',
@@ -2731,14 +2731,14 @@ CREATE TABLE `pc_voucher_payment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '储值卡支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_voucher_payment
+-- Records of pay_voucher_payment
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_wallet
+-- Table structure for pay_wallet
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_wallet`;
-CREATE TABLE `pc_wallet`  (
+DROP TABLE IF EXISTS `pay_wallet`;
+CREATE TABLE `pay_wallet`  (
                               `id` bigint(20) NOT NULL,
                               `user_id` bigint(20) NOT NULL COMMENT '关联用户id',
                               `balance` decimal(19, 2) NOT NULL COMMENT '余额',
@@ -2754,17 +2754,17 @@ CREATE TABLE `pc_wallet`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钱包' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_wallet
+-- Records of pay_wallet
 -- ----------------------------
-INSERT INTO `pc_wallet` VALUES (1336489524259352576, 1399985191002447872, 999982.96, 1, NULL, '2022-03-11 21:37:33', 1399985191002447872, '2022-05-03 21:24:04', 29, 0);
-INSERT INTO `pc_wallet` VALUES (1502554238582968320, 1414143554414059520, 1019.00, 1, 1399985191002447872, '2022-03-12 15:57:01', 1399985191002447872, '2022-03-13 11:21:10', 2, 0);
-INSERT INTO `pc_wallet` VALUES (1502848353136791552, 1435894470432456704, 100.00, 1, 1399985191002447872, '2022-03-13 11:25:44', 1399985191002447872, '2022-03-24 13:22:37', 1, 0);
+INSERT INTO `pay_wallet` VALUES (1336489524259352576, 1399985191002447872, 999982.96, 1, NULL, '2022-03-11 21:37:33', 1399985191002447872, '2022-05-03 21:24:04', 29, 0);
+INSERT INTO `pay_wallet` VALUES (1502554238582968320, 1414143554414059520, 1019.00, 1, 1399985191002447872, '2022-03-12 15:57:01', 1399985191002447872, '2022-03-13 11:21:10', 2, 0);
+INSERT INTO `pay_wallet` VALUES (1502848353136791552, 1435894470432456704, 100.00, 1, 1399985191002447872, '2022-03-13 11:25:44', 1399985191002447872, '2022-03-24 13:22:37', 1, 0);
 
 -- ----------------------------
--- Table structure for pc_wallet_log
+-- Table structure for pay_wallet_log
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_wallet_log`;
-CREATE TABLE `pc_wallet_log`  (
+DROP TABLE IF EXISTS `pay_wallet_log`;
+CREATE TABLE `pay_wallet_log`  (
                                   `id` bigint(20) NOT NULL,
                                   `wallet_id` bigint(20) NOT NULL COMMENT '钱包id',
                                   `user_id` bigint(20) NOT NULL COMMENT '用户id',
@@ -2785,14 +2785,14 @@ CREATE TABLE `pc_wallet_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钱包日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_wallet_log
+-- Records of pay_wallet_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_wallet_payment
+-- Table structure for pay_wallet_payment
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_wallet_payment`;
-CREATE TABLE `pc_wallet_payment`  (
+DROP TABLE IF EXISTS `pay_wallet_payment`;
+CREATE TABLE `pay_wallet_payment`  (
                                       `id` bigint(20) NOT NULL,
                                       `payment_id` bigint(20) NOT NULL COMMENT '交易记录ID',
                                       `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
@@ -2812,14 +2812,14 @@ CREATE TABLE `pc_wallet_payment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钱包交易记录表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_wallet_payment
+-- Records of pay_wallet_payment
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_wechat_pay_config
+-- Table structure for pay_wechat_pay_config
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_wechat_pay_config`;
-CREATE TABLE `pc_wechat_pay_config`  (
+DROP TABLE IF EXISTS `pay_wechat_pay_config`;
+CREATE TABLE `pay_wechat_pay_config`  (
                                          `id` bigint(20) NOT NULL,
                                          `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
                                          `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
@@ -2852,14 +2852,14 @@ CREATE TABLE `pc_wechat_pay_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信支付配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_wechat_pay_config
+-- Records of pay_wechat_pay_config
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for pc_wechat_payment
+-- Table structure for pay_wechat_payment
 -- ----------------------------
-DROP TABLE IF EXISTS `pc_wechat_payment`;
-CREATE TABLE `pc_wechat_payment`  (
+DROP TABLE IF EXISTS `pay_wechat_payment`;
+CREATE TABLE `pay_wechat_payment`  (
                                       `id` bigint(20) NOT NULL,
                                       `payment_id` bigint(20) NOT NULL COMMENT '交易记录ID',
                                       `pay_status` int(11) NOT NULL COMMENT '支付状态',
@@ -2880,7 +2880,7 @@ CREATE TABLE `pc_wechat_payment`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of pc_wechat_payment
+-- Records of pay_wechat_payment
 -- ----------------------------
 
 -- ----------------------------
@@ -3124,10 +3124,10 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sc_activity
+-- Table structure for sales_activity
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_activity`;
-CREATE TABLE `sc_activity`  (
+DROP TABLE IF EXISTS `sales_activity`;
+CREATE TABLE `sales_activity`  (
                                 `id` bigint(20) NOT NULL,
                                 `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'name',
                                 `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
@@ -3146,17 +3146,17 @@ CREATE TABLE `sc_activity`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠活动' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_activity
+-- Records of sales_activity
 -- ----------------------------
-INSERT INTO `sc_activity` VALUES (1394892920481533952, '100-16', '100-16活动策略2', NULL, 1394892919403597824, '', '2021-05-18 17:43:59.000000', '2021-07-01 17:44:02.000000', 1, '2021-05-19 13:49:22.757000', 1, '2021-05-19 13:49:22.757000', 0, b'0');
-INSERT INTO `sc_activity` VALUES (1394918400265965568, '100-5', '100-5活动策略3', NULL, 1394918398827319296, '', '2021-05-18 17:43:59.000000', '2021-07-01 17:44:02.000000', 1, '2021-05-19 15:30:37.611000', 1, '2021-05-19 15:30:37.611000', 0, b'0');
-INSERT INTO `sc_activity` VALUES (1395308738893729792, '50-20', '50-20活动策略3', 1382517531398524928, 1395308573587820544, '', '2021-05-18 17:43:59.000000', '2021-07-01 17:44:02.000000', 1, '2021-05-20 17:21:41.592000', 1, '2021-05-20 17:21:41.592000', 0, b'0');
+INSERT INTO `sales_activity` VALUES (1394892920481533952, '100-16', '100-16活动策略2', NULL, 1394892919403597824, '', '2021-05-18 17:43:59.000000', '2021-07-01 17:44:02.000000', 1, '2021-05-19 13:49:22.757000', 1, '2021-05-19 13:49:22.757000', 0, b'0');
+INSERT INTO `sales_activity` VALUES (1394918400265965568, '100-5', '100-5活动策略3', NULL, 1394918398827319296, '', '2021-05-18 17:43:59.000000', '2021-07-01 17:44:02.000000', 1, '2021-05-19 15:30:37.611000', 1, '2021-05-19 15:30:37.611000', 0, b'0');
+INSERT INTO `sales_activity` VALUES (1395308738893729792, '50-20', '50-20活动策略3', 1382517531398524928, 1395308573587820544, '', '2021-05-18 17:43:59.000000', '2021-07-01 17:44:02.000000', 1, '2021-05-20 17:21:41.592000', 1, '2021-05-20 17:21:41.592000', 0, b'0');
 
 -- ----------------------------
--- Table structure for sc_check_rule
+-- Table structure for sales_check_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_check_rule`;
-CREATE TABLE `sc_check_rule`  (
+DROP TABLE IF EXISTS `sales_check_rule`;
+CREATE TABLE `sales_check_rule`  (
                                   `id` bigint(20) NOT NULL,
                                   `strategy_register_id` bigint(20) NOT NULL COMMENT '关联策略注册id',
                                   `register_type` int(6) NOT NULL COMMENT '策略类型 策略/优惠券',
@@ -3176,14 +3176,14 @@ CREATE TABLE `sc_check_rule`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '检查规则' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_check_rule
+-- Records of sales_check_rule
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sc_coupon
+-- Table structure for sales_coupon
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_coupon`;
-CREATE TABLE `sc_coupon`  (
+DROP TABLE IF EXISTS `sales_coupon`;
+CREATE TABLE `sales_coupon`  (
                               `id` bigint(20) NOT NULL,
                               `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
                               `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
@@ -3204,18 +3204,18 @@ CREATE TABLE `sc_coupon`  (
                               `deleted` bit(1) NOT NULL,
                               PRIMARY KEY (`id`) USING BTREE,
                               INDEX `FKi3jmbif27olgivb918r8jbv9j`(`template_id`) USING BTREE,
-                              CONSTRAINT `sc_coupon_ibfk_1` FOREIGN KEY (`template_id`) REFERENCES `sc_coupon_template` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                              CONSTRAINT `sales_coupon_ibfk_1` FOREIGN KEY (`template_id`) REFERENCES `sales_coupon_template` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠券' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_coupon
+-- Records of sales_coupon
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sc_coupon_template
+-- Table structure for sales_coupon_template
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_coupon_template`;
-CREATE TABLE `sc_coupon_template`  (
+DROP TABLE IF EXISTS `sales_coupon_template`;
+CREATE TABLE `sales_coupon_template`  (
                                        `id` bigint(20) NOT NULL,
                                        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
                                        `strategy_register_id` bigint(20) NOT NULL COMMENT '策略注册id',
@@ -3239,16 +3239,16 @@ CREATE TABLE `sc_coupon_template`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '优惠券模板' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_coupon_template
+-- Records of sales_coupon_template
 -- ----------------------------
-INSERT INTO `sc_coupon_template` VALUES (1395284918623424512, '100-33', 1395284918430486528, '100-33优惠券', 999, NULL, '', '', 0, 1, NULL, NULL, NULL, 1, '2021-05-20 15:47:02.397000', 1, '2021-05-20 15:58:10.795000', 1, b'0');
-INSERT INTO `sc_coupon_template` VALUES (1395320423364841472, '100-33', 1395320422941216768, '100-33优惠券', 988, NULL, '', '', 0, 1, NULL, NULL, NULL, 1, '2021-05-20 18:08:07.387000', 1, '2021-05-20 18:28:33.743000', 12, b'0');
+INSERT INTO `sales_coupon_template` VALUES (1395284918623424512, '100-33', 1395284918430486528, '100-33优惠券', 999, NULL, '', '', 0, 1, NULL, NULL, NULL, 1, '2021-05-20 15:47:02.397000', 1, '2021-05-20 15:58:10.795000', 1, b'0');
+INSERT INTO `sales_coupon_template` VALUES (1395320423364841472, '100-33', 1395320422941216768, '100-33优惠券', 988, NULL, '', '', 0, 1, NULL, NULL, NULL, 1, '2021-05-20 18:08:07.387000', 1, '2021-05-20 18:28:33.743000', 12, b'0');
 
 -- ----------------------------
--- Table structure for sc_match_rule
+-- Table structure for sales_match_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_match_rule`;
-CREATE TABLE `sc_match_rule`  (
+DROP TABLE IF EXISTS `sales_match_rule`;
+CREATE TABLE `sales_match_rule`  (
                                   `id` bigint(20) NOT NULL,
                                   `strategy_register_id` bigint(20) NOT NULL COMMENT '关联策略注册id',
                                   `register_type` int(6) NOT NULL COMMENT '策略类型 策略/优惠券',
@@ -3265,14 +3265,14 @@ CREATE TABLE `sc_match_rule`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '匹配检查' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_match_rule
+-- Records of sales_match_rule
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sc_strategy
+-- Table structure for sales_strategy
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_strategy`;
-CREATE TABLE `sc_strategy`  (
+DROP TABLE IF EXISTS `sales_strategy`;
+CREATE TABLE `sales_strategy`  (
                                 `id` bigint(20) NOT NULL,
                                 `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '唯一编码',
                                 `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
@@ -3293,18 +3293,18 @@ CREATE TABLE `sc_strategy`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_strategy
+-- Records of sales_strategy
 -- ----------------------------
-INSERT INTO `sc_strategy` VALUES (1382516141636866048, 'instantReduction', '立减策略', '立减指定的金额', 1, 1, NULL, 1, 1, 1, '2021-04-15 10:08:28.720000', 1, '2021-04-15 10:08:28.720000', 0, b'0', 10011);
-INSERT INTO `sc_strategy` VALUES (1382517531398524928, 'fullReduction', '满减策略', '满减策略', 1, 1, NULL, 1, 1, 1, '2021-04-15 10:14:00.075000', 1, '2021-04-15 10:14:00.075000', 0, b'0', 10011);
-INSERT INTO `sc_strategy` VALUES (1394909889247203328, 'channelCheck', '渠道检查', '渠道检查', 1, 2, NULL, 1, 1, 1, '2021-05-19 14:56:48.426000', 1, '2021-05-19 14:56:48.426000', 0, b'0', 10011);
-INSERT INTO `sc_strategy` VALUES (1395320340615417856, 'obtainMultiple', '多张领取检查', '多张领取检查', 1, 3, '', NULL, 1, 1, '2021-05-20 18:07:47.642000', 1, '2021-05-20 18:07:47.642000', 0, b'0', 10011);
+INSERT INTO `sales_strategy` VALUES (1382516141636866048, 'instantReduction', '立减策略', '立减指定的金额', 1, 1, NULL, 1, 1, 1, '2021-04-15 10:08:28.720000', 1, '2021-04-15 10:08:28.720000', 0, b'0', 10011);
+INSERT INTO `sales_strategy` VALUES (1382517531398524928, 'fullReduction', '满减策略', '满减策略', 1, 1, NULL, 1, 1, 1, '2021-04-15 10:14:00.075000', 1, '2021-04-15 10:14:00.075000', 0, b'0', 10011);
+INSERT INTO `sales_strategy` VALUES (1394909889247203328, 'channelCheck', '渠道检查', '渠道检查', 1, 2, NULL, 1, 1, 1, '2021-05-19 14:56:48.426000', 1, '2021-05-19 14:56:48.426000', 0, b'0', 10011);
+INSERT INTO `sales_strategy` VALUES (1395320340615417856, 'obtainMultiple', '多张领取检查', '多张领取检查', 1, 3, '', NULL, 1, 1, '2021-05-20 18:07:47.642000', 1, '2021-05-20 18:07:47.642000', 0, b'0', 10011);
 
 -- ----------------------------
--- Table structure for sc_strategy_check_rule
+-- Table structure for sales_strategy_check_rule
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_strategy_check_rule`;
-CREATE TABLE `sc_strategy_check_rule`  (
+DROP TABLE IF EXISTS `sales_strategy_check_rule`;
+CREATE TABLE `sales_strategy_check_rule`  (
                                            `id` bigint(20) NOT NULL,
                                            `register_id` bigint(20) NULL DEFAULT NULL COMMENT '模板id',
                                            `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '规则名称',
@@ -3321,14 +3321,14 @@ CREATE TABLE `sc_strategy_check_rule`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略规则检查' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_strategy_check_rule
+-- Records of sales_strategy_check_rule
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sc_strategy_config
+-- Table structure for sales_strategy_config
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_strategy_config`;
-CREATE TABLE `sc_strategy_config`  (
+DROP TABLE IF EXISTS `sales_strategy_config`;
+CREATE TABLE `sales_strategy_config`  (
                                        `id` bigint(20) NOT NULL,
                                        `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
                                        `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数类型',
@@ -3345,17 +3345,17 @@ CREATE TABLE `sc_strategy_config`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略参数定义' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_strategy_config
+-- Records of sales_strategy_config
 -- ----------------------------
-INSERT INTO `sc_strategy_config` VALUES (1382517531788595199, 1382516141636866048, 'BigDecimal', 'amount', '立减金额', '立减金额', 1, '2021-04-15 10:08:28.873000', 1, '2021-04-15 10:08:28.873000', 0, b'0');
-INSERT INTO `sc_strategy_config` VALUES (1382517531788595200, 1382517531398524928, 'BigDecimal', 'satisfy', '满多少', '配置满多少的字段', 1, '2021-04-15 10:14:00.169000', 1, '2021-04-15 10:14:00.169000', 0, b'0');
-INSERT INTO `sc_strategy_config` VALUES (1382517531788595201, 1382517531398524928, 'BigDecimal', 'minus', '减多少', '配置减多少的字段', 1, '2021-04-15 10:14:00.169000', 1, '2021-04-15 10:14:00.169000', 0, b'0');
+INSERT INTO `sales_strategy_config` VALUES (1382517531788595199, 1382516141636866048, 'BigDecimal', 'amount', '立减金额', '立减金额', 1, '2021-04-15 10:08:28.873000', 1, '2021-04-15 10:08:28.873000', 0, b'0');
+INSERT INTO `sales_strategy_config` VALUES (1382517531788595200, 1382517531398524928, 'BigDecimal', 'satisfy', '满多少', '配置满多少的字段', 1, '2021-04-15 10:14:00.169000', 1, '2021-04-15 10:14:00.169000', 0, b'0');
+INSERT INTO `sales_strategy_config` VALUES (1382517531788595201, 1382517531398524928, 'BigDecimal', 'minus', '减多少', '配置减多少的字段', 1, '2021-04-15 10:14:00.169000', 1, '2021-04-15 10:14:00.169000', 0, b'0');
 
 -- ----------------------------
--- Table structure for sc_strategy_config_value
+-- Table structure for sales_strategy_config_value
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_strategy_config_value`;
-CREATE TABLE `sc_strategy_config_value`  (
+DROP TABLE IF EXISTS `sales_strategy_config_value`;
+CREATE TABLE `sales_strategy_config_value`  (
                                              `id` bigint(20) NOT NULL,
                                              `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
                                              `strategy_register_id` bigint(20) NULL DEFAULT NULL COMMENT '策略注册id',
@@ -3370,18 +3370,18 @@ CREATE TABLE `sc_strategy_config_value`  (
                                              `deleted` bit(1) NOT NULL,
                                              PRIMARY KEY (`id`) USING BTREE,
                                              INDEX `FK8h3jh6yj9o9bgb0gd2noht1mw`(`strategy_config_id`) USING BTREE,
-                                             CONSTRAINT `sc_strategy_config_value_ibfk_1` FOREIGN KEY (`strategy_config_id`) REFERENCES `sc_strategy_config` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+                                             CONSTRAINT `sales_strategy_config_value_ibfk_1` FOREIGN KEY (`strategy_config_id`) REFERENCES `sales_strategy_config` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略配置参数' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_strategy_config_value
+-- Records of sales_strategy_config_value
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sc_strategy_register
+-- Table structure for sales_strategy_register
 -- ----------------------------
-DROP TABLE IF EXISTS `sc_strategy_register`;
-CREATE TABLE `sc_strategy_register`  (
+DROP TABLE IF EXISTS `sales_strategy_register`;
+CREATE TABLE `sales_strategy_register`  (
                                          `id` bigint(20) NOT NULL,
                                          `strategy_id` bigint(20) NULL DEFAULT NULL COMMENT '策略id',
                                          `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '策略注册名称',
@@ -3398,14 +3398,14 @@ CREATE TABLE `sc_strategy_register`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '策略注册' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sc_strategy_register
+-- Records of sales_strategy_register
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for starter_data_version
+-- Table structure for starter_audit_data_version
 -- ----------------------------
-DROP TABLE IF EXISTS `starter_data_version`;
-CREATE TABLE `starter_data_version`  (
+DROP TABLE IF EXISTS `starter_audit_data_version`;
+CREATE TABLE `starter_audit_data_version`  (
                                          `id` bigint(20) NOT NULL,
                                          `data_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '数据名称',
                                          `data_id` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '数据主键',
@@ -3417,16 +3417,16 @@ CREATE TABLE `starter_data_version`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '数据版本日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of starter_data_version
+-- Records of starter_audit_data_version
 -- ----------------------------
-INSERT INTO `starter_data_version` VALUES (1480550993828446208, 'client', '1', '{\"dataName\":\"client\",\"dataId\":\"1\",\"dataContent\":{\"id\":\"1\",\"creator\":null,\"createTime\":\"2022-01-10 22:43:58\",\"lastModifier\":null,\"lastModifiedTime\":null,\"deleted\":false,\"version\":0,\"code\":null,\"name\":null,\"timeout\":null,\"captcha\":false,\"enable\":false,\"description\":null}}', 1, 0, '2022-01-10 22:43:59');
-INSERT INTO `starter_data_version` VALUES (1480551021779288064, 'client', '1', '{\"dataName\":\"client\",\"dataId\":\"1\",\"dataContent\":{\"id\":\"1\",\"creator\":null,\"createTime\":\"2022-01-10 22:44:05\",\"lastModifier\":null,\"lastModifiedTime\":null,\"deleted\":false,\"version\":0,\"code\":null,\"name\":null,\"timeout\":null,\"captcha\":false,\"enable\":false,\"description\":null}}', 2, 0, '2022-01-10 22:44:06');
+INSERT INTO `starter_audit_data_version` VALUES (1480550993828446208, 'client', '1', '{\"dataName\":\"client\",\"dataId\":\"1\",\"dataContent\":{\"id\":\"1\",\"creator\":null,\"createTime\":\"2022-01-10 22:43:58\",\"lastModifier\":null,\"lastModifiedTime\":null,\"deleted\":false,\"version\":0,\"code\":null,\"name\":null,\"timeout\":null,\"captcha\":false,\"enable\":false,\"description\":null}}', 1, 0, '2022-01-10 22:43:59');
+INSERT INTO `starter_audit_data_version` VALUES (1480551021779288064, 'client', '1', '{\"dataName\":\"client\",\"dataId\":\"1\",\"dataContent\":{\"id\":\"1\",\"creator\":null,\"createTime\":\"2022-01-10 22:44:05\",\"lastModifier\":null,\"lastModifiedTime\":null,\"deleted\":false,\"version\":0,\"code\":null,\"name\":null,\"timeout\":null,\"captcha\":false,\"enable\":false,\"description\":null}}', 2, 0, '2022-01-10 22:44:06');
 
 -- ----------------------------
--- Table structure for starter_login_log
+-- Table structure for starter_audit_login_log
 -- ----------------------------
-DROP TABLE IF EXISTS `starter_login_log`;
-CREATE TABLE `starter_login_log`  (
+DROP TABLE IF EXISTS `starter_audit_login_log`;
+CREATE TABLE `starter_audit_login_log`  (
                                       `id` bigint(20) NOT NULL,
                                       `user_id` bigint(11) NULL DEFAULT NULL COMMENT '用户id',
                                       `account` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户名称',
@@ -3442,14 +3442,14 @@ CREATE TABLE `starter_login_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '登陆日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of starter_login_log
+-- Records of starter_audit_login_log
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for starter_operate_log
+-- Table structure for starter_audit_operate_log
 -- ----------------------------
-DROP TABLE IF EXISTS `starter_operate_log`;
-CREATE TABLE `starter_operate_log`  (
+DROP TABLE IF EXISTS `starter_audit_operate_log`;
+CREATE TABLE `starter_audit_operate_log`  (
                                         `id` bigint(20) NOT NULL,
                                         `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '操作模块',
                                         `operate_id` bigint(20) NULL DEFAULT NULL COMMENT '操作人员id',
@@ -3469,7 +3469,7 @@ CREATE TABLE `starter_operate_log`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '操作日志' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of starter_operate_log
+-- Records of starter_audit_operate_log
 -- ----------------------------
 
 -- ----------------------------
@@ -3543,10 +3543,10 @@ INSERT INTO `starter_sequence_range` VALUES (1470679520373862400, 'Sequence:cs',
 INSERT INTO `starter_sequence_range` VALUES (1470679955230908416, 'cs', 2020, 0, '2021-12-14 17:00:00', 0, '2021-12-14 17:00:00', 13, 0);
 
 -- ----------------------------
--- Table structure for starter_upload_file
+-- Table structure for starter_file_upload_info
 -- ----------------------------
-DROP TABLE IF EXISTS `starter_upload_file`;
-CREATE TABLE `starter_upload_file`  (
+DROP TABLE IF EXISTS `starter_file_upload_info`;
+CREATE TABLE `starter_file_upload_info`  (
                                         `id` bigint(20) NOT NULL COMMENT '主键',
                                         `file_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '存储位置',
                                         `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件名称',
@@ -3560,19 +3560,19 @@ CREATE TABLE `starter_upload_file`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '上传文件信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of starter_upload_file
+-- Records of starter_file_upload_info
 -- ----------------------------
-INSERT INTO `starter_upload_file` VALUES (1495330622946631680, NULL, 'blob', 'jpg', 'jpg', 68, '62120ac9efeec06e2275fc52', 1399985191002447872, '2022-02-20 17:32:57');
-INSERT INTO `starter_upload_file` VALUES (1495331213525606400, NULL, 'blob', 'jpg', 'jpg', 68, '62120b55efeec06e2275fc54', 1399985191002447872, '2022-02-20 17:35:28');
-INSERT INTO `starter_upload_file` VALUES (1495331812178616320, NULL, 'blob', 'jpg', 'jpg', 74, '62120be4efeec06e2275fc56', 1399985191002447872, '2022-02-20 17:37:43');
-INSERT INTO `starter_upload_file` VALUES (1495331905770315776, NULL, 'blob', 'jpg', 'jpg', 76, '62120bfaefeec06e2275fc58', 1399985191002447872, '2022-02-20 17:38:03');
-INSERT INTO `starter_upload_file` VALUES (1530065639127871488, NULL, 'blob', 'jpg', 'jpg', 83, '6290684abf0e90583f414dcf', 1414143554414059520, '2022-05-27 13:57:31');
+INSERT INTO `starter_file_upload_info` VALUES (1495330622946631680, NULL, 'blob', 'jpg', 'jpg', 68, '62120ac9efeec06e2275fc52', 1399985191002447872, '2022-02-20 17:32:57');
+INSERT INTO `starter_file_upload_info` VALUES (1495331213525606400, NULL, 'blob', 'jpg', 'jpg', 68, '62120b55efeec06e2275fc54', 1399985191002447872, '2022-02-20 17:35:28');
+INSERT INTO `starter_file_upload_info` VALUES (1495331812178616320, NULL, 'blob', 'jpg', 'jpg', 74, '62120be4efeec06e2275fc56', 1399985191002447872, '2022-02-20 17:37:43');
+INSERT INTO `starter_file_upload_info` VALUES (1495331905770315776, NULL, 'blob', 'jpg', 'jpg', 76, '62120bfaefeec06e2275fc58', 1399985191002447872, '2022-02-20 17:38:03');
+INSERT INTO `starter_file_upload_info` VALUES (1530065639127871488, NULL, 'blob', 'jpg', 'jpg', 83, '6290684abf0e90583f414dcf', 1414143554414059520, '2022-05-27 13:57:31');
 
 -- ----------------------------
--- Table structure for sys_dict
+-- Table structure for base_dict
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dict`;
-CREATE TABLE `sys_dict`  (
+DROP TABLE IF EXISTS `base_dict`;
+CREATE TABLE `base_dict`  (
                              `id` bigint(20) NOT NULL,
                              `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '编码',
                              `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '名称',
@@ -3589,35 +3589,35 @@ CREATE TABLE `sys_dict`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '字典' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sys_dict
+-- Records of base_dict
 -- ----------------------------
-INSERT INTO `sys_dict` VALUES (1422929378374828033, 'Sex', '性别', '基础属性', '性别', 0, '2021-08-04 22:36:15', 1399985191002447872, '2022-05-11 19:48:40', 0, 6);
-INSERT INTO `sys_dict` VALUES (1425744045414772737, 'MenuType', '菜单类型', '系统属性', '菜单类型', 0, '2021-08-12 17:00:44', 1399985191002447872, '2022-05-11 19:48:44', 0, 4);
-INSERT INTO `sys_dict` VALUES (1430063572491411456, 'loginType', '字典类型', NULL, '字典类型', 1399985191002447872, '2021-08-24 15:05:00', 1399985191002447872, '2021-08-24 15:05:00', 1, 2);
-INSERT INTO `sys_dict` VALUES (1435829999592759296, 'UserStatusCode', '用户状态码', '系统属性', '用户状态码', 1399985191002447872, '2021-09-09 12:58:43', 1399985191002447872, '2022-05-11 19:48:56', 0, 2);
-INSERT INTO `sys_dict` VALUES (1435838066191458304, 'LogBusinessType', '业务操作类型', '系统属性', '操作日志记录的业务操作类型', 1399985191002447872, '2021-09-09 13:30:46', 1399985191002447872, '2022-05-11 19:49:00', 0, 2);
-INSERT INTO `sys_dict` VALUES (1438078864509317120, 'MailSecurityCode', '邮箱安全方式编码', '消息服务', '邮箱安全方式编码', 1399985191002447872, '2021-09-15 17:54:54', 1399985191002447872, '2022-05-11 19:49:06', 0, 2);
-INSERT INTO `sys_dict` VALUES (1439961232651034624, 'MessageTemplateCode', '消息模板类型', '消息服务', '消息模板类型', 1399985191002447872, '2021-09-20 22:34:46', 1399985191002447872, '2022-05-11 19:48:34', 0, 1);
-INSERT INTO `sys_dict` VALUES (1452836604783845376, 'SocialType', '三方系统类型', '系统属性', '三方系统类型', 1399985191002447872, '2021-10-26 11:16:54', 1399985191002447872, '2022-05-11 19:48:28', 0, 3);
-INSERT INTO `sys_dict` VALUES (1452843488735621120, 'ParamType', '参数类型', '系统属性', '参数类型', 1399985191002447872, '2021-10-26 11:44:15', 1399985191002447872, '2022-05-11 19:48:21', 0, 2);
-INSERT INTO `sys_dict` VALUES (1496024933900169216, 'Political', '政治面貌', '基础数据', '政治面貌', 1399985191002447872, '2022-02-22 15:31:54', 1399985191002447872, '2022-05-11 19:48:04', 0, 1);
-INSERT INTO `sys_dict` VALUES (1496722894707728384, 'PayChannel', '支付通道', '支付服务', '支付宝, 微信, 云闪付等', 1399985191002447872, '2022-02-24 13:45:21', 1399985191002447872, '2022-05-11 19:47:51', 0, 1);
-INSERT INTO `sys_dict` VALUES (1496723207565058048, 'PayWay', '支付方式', '支付服务', '扫码支付、Wap、App支付等', 1399985191002447872, '2022-02-24 13:46:35', 1399985191002447872, '2022-05-11 19:47:46', 0, 1);
-INSERT INTO `sys_dict` VALUES (1497140849954185216, 'PayStatus', '支付状态', '支付服务', '支付中,成功,失败等', 1399985191002447872, '2022-02-25 17:26:09', 1399985191002447872, '2022-05-11 19:47:40', 0, 2);
-INSERT INTO `sys_dict` VALUES (1501031423232937984, 'AsyncPayChannel', '异步支付通道', '支付服务', '如微信支付宝云闪付等第三方支付', 1399985191002447872, '2022-03-08 11:05:54', 1399985191002447872, '2022-05-11 19:47:37', 0, 1);
-INSERT INTO `sys_dict` VALUES (1502276739978473472, 'WalletStatus', '钱包状态', '支付服务', '钱包状态', 1399985191002447872, '2022-03-11 21:34:20', 1399985191002447872, '2022-05-11 19:47:33', 0, 2);
-INSERT INTO `sys_dict` VALUES (1502624342339448832, 'WalletOperation', '钱包日志操作类型', NULL, '', 1399985191002447872, '2022-03-12 20:35:35', 1399985191002447872, '2022-03-12 20:35:35', 1, 0);
-INSERT INTO `sys_dict` VALUES (1502624515799085056, 'WalletLogType', '钱包日志类型', '支付服务', '钱包日志类型', 1399985191002447872, '2022-03-12 20:36:17', 1399985191002447872, '2022-05-11 19:47:29', 0, 1);
-INSERT INTO `sys_dict` VALUES (1502624632392347648, 'WalletLogOperation', '钱包日志操作类型', '支付服务', '钱包日志操作类型', 1399985191002447872, '2022-03-12 20:36:44', 1399985191002447872, '2022-05-11 19:47:21', 0, 1);
-INSERT INTO `sys_dict` VALUES (1503340128037212160, 'VoucherStatus', '储值卡状态', '支付服务', '储值卡状态', 1399985191002447872, '2022-03-14 19:59:52', 1399985191002447872, '2022-05-11 19:47:12', 0, 1);
-INSERT INTO `sys_dict` VALUES (1524356168611188736, 'input', '手工输入', '商品服务', '', 1399985191002447872, '2022-05-11 19:50:06', 1399985191002447872, '2022-05-11 19:50:06', 1, 0);
-INSERT INTO `sys_dict` VALUES (1524356376518643712, 'GoodsParamType', '参数类型', '商品服务', '列表/手动输入', 1399985191002447872, '2022-05-11 19:50:56', 1399985191002447872, '2022-05-14 23:05:41', 0, 1);
+INSERT INTO `base_dict` VALUES (1422929378374828033, 'Sex', '性别', '基础属性', '性别', 0, '2021-08-04 22:36:15', 1399985191002447872, '2022-05-11 19:48:40', 0, 6);
+INSERT INTO `base_dict` VALUES (1425744045414772737, 'MenuType', '菜单类型', '系统属性', '菜单类型', 0, '2021-08-12 17:00:44', 1399985191002447872, '2022-05-11 19:48:44', 0, 4);
+INSERT INTO `base_dict` VALUES (1430063572491411456, 'loginType', '字典类型', NULL, '字典类型', 1399985191002447872, '2021-08-24 15:05:00', 1399985191002447872, '2021-08-24 15:05:00', 1, 2);
+INSERT INTO `base_dict` VALUES (1435829999592759296, 'UserStatusCode', '用户状态码', '系统属性', '用户状态码', 1399985191002447872, '2021-09-09 12:58:43', 1399985191002447872, '2022-05-11 19:48:56', 0, 2);
+INSERT INTO `base_dict` VALUES (1435838066191458304, 'LogBusinessType', '业务操作类型', '系统属性', '操作日志记录的业务操作类型', 1399985191002447872, '2021-09-09 13:30:46', 1399985191002447872, '2022-05-11 19:49:00', 0, 2);
+INSERT INTO `base_dict` VALUES (1438078864509317120, 'MailSecurityCode', '邮箱安全方式编码', '消息服务', '邮箱安全方式编码', 1399985191002447872, '2021-09-15 17:54:54', 1399985191002447872, '2022-05-11 19:49:06', 0, 2);
+INSERT INTO `base_dict` VALUES (1439961232651034624, 'MessageTemplateCode', '消息模板类型', '消息服务', '消息模板类型', 1399985191002447872, '2021-09-20 22:34:46', 1399985191002447872, '2022-05-11 19:48:34', 0, 1);
+INSERT INTO `base_dict` VALUES (1452836604783845376, 'SocialType', '三方系统类型', '系统属性', '三方系统类型', 1399985191002447872, '2021-10-26 11:16:54', 1399985191002447872, '2022-05-11 19:48:28', 0, 3);
+INSERT INTO `base_dict` VALUES (1452843488735621120, 'ParamType', '参数类型', '系统属性', '参数类型', 1399985191002447872, '2021-10-26 11:44:15', 1399985191002447872, '2022-05-11 19:48:21', 0, 2);
+INSERT INTO `base_dict` VALUES (1496024933900169216, 'Political', '政治面貌', '基础数据', '政治面貌', 1399985191002447872, '2022-02-22 15:31:54', 1399985191002447872, '2022-05-11 19:48:04', 0, 1);
+INSERT INTO `base_dict` VALUES (1496722894707728384, 'PayChannel', '支付通道', '支付服务', '支付宝, 微信, 云闪付等', 1399985191002447872, '2022-02-24 13:45:21', 1399985191002447872, '2022-05-11 19:47:51', 0, 1);
+INSERT INTO `base_dict` VALUES (1496723207565058048, 'PayWay', '支付方式', '支付服务', '扫码支付、Wap、App支付等', 1399985191002447872, '2022-02-24 13:46:35', 1399985191002447872, '2022-05-11 19:47:46', 0, 1);
+INSERT INTO `base_dict` VALUES (1497140849954185216, 'PayStatus', '支付状态', '支付服务', '支付中,成功,失败等', 1399985191002447872, '2022-02-25 17:26:09', 1399985191002447872, '2022-05-11 19:47:40', 0, 2);
+INSERT INTO `base_dict` VALUES (1501031423232937984, 'AsyncPayChannel', '异步支付通道', '支付服务', '如微信支付宝云闪付等第三方支付', 1399985191002447872, '2022-03-08 11:05:54', 1399985191002447872, '2022-05-11 19:47:37', 0, 1);
+INSERT INTO `base_dict` VALUES (1502276739978473472, 'WalletStatus', '钱包状态', '支付服务', '钱包状态', 1399985191002447872, '2022-03-11 21:34:20', 1399985191002447872, '2022-05-11 19:47:33', 0, 2);
+INSERT INTO `base_dict` VALUES (1502624342339448832, 'WalletOperation', '钱包日志操作类型', NULL, '', 1399985191002447872, '2022-03-12 20:35:35', 1399985191002447872, '2022-03-12 20:35:35', 1, 0);
+INSERT INTO `base_dict` VALUES (1502624515799085056, 'WalletLogType', '钱包日志类型', '支付服务', '钱包日志类型', 1399985191002447872, '2022-03-12 20:36:17', 1399985191002447872, '2022-05-11 19:47:29', 0, 1);
+INSERT INTO `base_dict` VALUES (1502624632392347648, 'WalletLogOperation', '钱包日志操作类型', '支付服务', '钱包日志操作类型', 1399985191002447872, '2022-03-12 20:36:44', 1399985191002447872, '2022-05-11 19:47:21', 0, 1);
+INSERT INTO `base_dict` VALUES (1503340128037212160, 'VoucherStatus', '储值卡状态', '支付服务', '储值卡状态', 1399985191002447872, '2022-03-14 19:59:52', 1399985191002447872, '2022-05-11 19:47:12', 0, 1);
+INSERT INTO `base_dict` VALUES (1524356168611188736, 'input', '手工输入', '商品服务', '', 1399985191002447872, '2022-05-11 19:50:06', 1399985191002447872, '2022-05-11 19:50:06', 1, 0);
+INSERT INTO `base_dict` VALUES (1524356376518643712, 'GoodsParamType', '参数类型', '商品服务', '列表/手动输入', 1399985191002447872, '2022-05-11 19:50:56', 1399985191002447872, '2022-05-14 23:05:41', 0, 1);
 
 -- ----------------------------
--- Table structure for sys_dict_item
+-- Table structure for base_dict_item
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dict_item`;
-CREATE TABLE `sys_dict_item`  (
+DROP TABLE IF EXISTS `base_dict_item`;
+CREATE TABLE `base_dict_item`  (
                                   `id` bigint(20) NOT NULL,
                                   `dict_id` bigint(20) NOT NULL COMMENT '字典id',
                                   `dict_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '字典code',
@@ -3636,94 +3636,94 @@ CREATE TABLE `sys_dict_item`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '字典项' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sys_dict_item
+-- Records of base_dict_item
 -- ----------------------------
-INSERT INTO `sys_dict_item` VALUES (1422931375807242241, 1422929378374828033, 'Sex', '1', '男', 0.00, '男性', 0, '2021-08-04 22:44:11', 0, '2021-08-04 22:44:11', 0, 2);
-INSERT INTO `sys_dict_item` VALUES (1425729455402401794, 1422929378374828033, 'Sex', '2', '女', 0.00, '女性', 0, '2021-08-12 16:02:46', 0, '2021-08-12 16:02:46', 0, 1);
-INSERT INTO `sys_dict_item` VALUES (1425744258544136194, 1425744045414772737, 'MenuType', '0', '顶级菜单', 0.00, '顶级菜单', 0, '2021-08-12 17:01:35', 0, '2021-08-12 17:01:35', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1425744436592340993, 1425744045414772737, 'MenuType', '1', '子菜单', 0.00, '子菜单', 0, '2021-08-12 17:02:17', 0, '2021-08-12 17:02:17', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1425744470582980610, 1425744045414772737, 'MenuType', '2', '按钮权限', 0.00, '按钮权限', 0, '2021-08-12 17:02:26', 0, '2021-08-12 17:02:26', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1430094707250413568, 1422929378374828033, 'Sex', '0', '未知', 0.00, '不确定性别', 1399985191002447872, '2021-08-24 17:08:43', 1399985191002447872, '2021-08-24 17:08:43', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435830086406463488, 1435829999592759296, 'UserStatusCode', '1', '正常', 0.00, 'NORMAL', 1399985191002447872, '2021-09-09 12:59:04', 1399985191002447872, '2021-09-09 12:59:04', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435830141855162368, 1435829999592759296, 'UserStatusCode', '2', '锁定', 0.00, 'LOCK, 多次登录失败被锁定', 1399985191002447872, '2021-09-09 12:59:17', 1399985191002447872, '2021-09-09 12:59:17', 0, 1);
-INSERT INTO `sys_dict_item` VALUES (1435830260503633920, 1435829999592759296, 'UserStatusCode', '3', '封禁', 0.00, 'BAN', 1399985191002447872, '2021-09-09 12:59:45', 1399985191002447872, '2021-09-09 12:59:45', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838374749626368, 1435838066191458304, 'LogBusinessType', 'other', '其它', 0.00, '', 1399985191002447872, '2021-09-09 13:32:00', 1399985191002447872, '2021-09-09 13:32:00', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838414436130816, 1435838066191458304, 'LogBusinessType', 'insert', '新增', 0.00, '', 1399985191002447872, '2021-09-09 13:32:09', 1399985191002447872, '2021-09-09 13:32:09', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838467624099840, 1435838066191458304, 'LogBusinessType', 'update', '修改', 0.00, '', 1399985191002447872, '2021-09-09 13:32:22', 1399985191002447872, '2021-09-09 13:32:22', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838502755590144, 1435838066191458304, 'LogBusinessType', 'delete', '删除', 0.00, '', 1399985191002447872, '2021-09-09 13:32:30', 1399985191002447872, '2021-09-09 13:32:30', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838546934194176, 1435838066191458304, 'LogBusinessType', 'grant', '授权', 0.00, '', 1399985191002447872, '2021-09-09 13:32:41', 1399985191002447872, '2021-09-09 13:32:41', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838605537009664, 1435838066191458304, 'LogBusinessType', 'export', '导出', 0.00, '', 1399985191002447872, '2021-09-09 13:32:55', 1399985191002447872, '2021-09-09 13:32:55', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838705457913856, 1435838066191458304, 'LogBusinessType', 'import', '导入', 0.00, '', 1399985191002447872, '2021-09-09 13:33:19', 1399985191002447872, '2021-09-09 13:33:19', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838745861644288, 1435838066191458304, 'LogBusinessType', 'force', '强退', 0.00, '', 1399985191002447872, '2021-09-09 13:33:28', 1399985191002447872, '2021-09-09 13:33:28', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1435838786273763328, 1435838066191458304, 'LogBusinessType', 'clean', '清空数据', 0.00, '', 1399985191002447872, '2021-09-09 13:33:38', 1399985191002447872, '2021-09-09 13:33:38', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1438079113630003200, 1438078864509317120, 'MailSecurityCode', '1', '普通方式', 0.00, 'SECURITY_TYPE_PLAIN', 1399985191002447872, '2021-09-15 17:55:54', 1399985191002447872, '2021-09-15 17:55:54', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1438080323061755904, 1438078864509317120, 'MailSecurityCode', '2', 'TLS方式', 0.00, 'SECURITY_TYPE_TLS', 1399985191002447872, '2021-09-15 18:00:42', 1399985191002447872, '2021-09-15 18:00:42', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1438080372231581696, 1438078864509317120, 'MailSecurityCode', '3', 'SSL方式', 0.00, 'SECURITY_TYPE_SSL', 1399985191002447872, '2021-09-15 18:00:54', 1399985191002447872, '2021-09-15 18:00:54', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1439961603914047488, 1439961232651034624, 'MessageTemplateCode', '5', '微信', -10.00, 'WECHAT', 1399985191002447872, '2021-09-20 22:36:14', 1399985191002447872, '2021-09-20 22:36:14', 0, 1);
-INSERT INTO `sys_dict_item` VALUES (1439961704321490944, 1439961232651034624, 'MessageTemplateCode', '4', 'Email', 0.00, 'EMAIL', 1399985191002447872, '2021-09-20 22:36:38', 1399985191002447872, '2021-09-20 22:36:38', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1439962132744478720, 1439961232651034624, 'MessageTemplateCode', '3', '短信', 0.00, 'SMS', 1399985191002447872, '2021-09-20 22:38:20', 1399985191002447872, '2021-09-20 22:38:20', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1439962205578567680, 1439961232651034624, 'MessageTemplateCode', '2', '钉钉机器人', 0.00, 'DING_TALK_ROBOT', 1399985191002447872, '2021-09-20 22:38:38', 1399985191002447872, '2021-09-20 22:38:38', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1439962267511660544, 1439961232651034624, 'MessageTemplateCode', '1', '钉钉', 0.00, 'DING_TALK', 1399985191002447872, '2021-09-20 22:38:52', 1399985191002447872, '2021-09-20 22:38:52', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1452836696873984000, 1452836604783845376, 'SocialType', 'WeChat', '微信', 0.00, '', 1399985191002447872, '2021-10-26 11:17:16', 1399985191002447872, '2021-10-26 11:17:16', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1452837435482529792, 1452836604783845376, 'SocialType', 'QQ', 'QQ', 0.00, '', 1399985191002447872, '2021-10-26 11:20:12', 1399985191002447872, '2021-10-26 11:20:12', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1452837523030237184, 1452836604783845376, 'SocialType', 'DingTalk', '钉钉', 0.00, '', 1399985191002447872, '2021-10-26 11:20:33', 1399985191002447872, '2021-10-26 11:20:33', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1452844537911406592, 1452843488735621120, 'ParamType', '1', '系统参数', 0.00, '', 1399985191002447872, '2021-10-26 11:48:25', 1399985191002447872, '2021-10-26 11:48:25', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1452844565031776256, 1452843488735621120, 'ParamType', '2', '用户参数', 0.00, '', 1399985191002447872, '2021-10-26 11:48:32', 1399985191002447872, '2021-10-26 11:48:32', 0, 2);
-INSERT INTO `sys_dict_item` VALUES (1496026946344005632, 1496024933900169216, 'Political', '1', '中共党员', 1.00, '', 1399985191002447872, '2022-02-22 15:39:54', 1399985191002447872, '2022-02-22 15:39:54', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027004560945152, 1496024933900169216, 'Political', '2', '中共预备党员', 2.00, '', 1399985191002447872, '2022-02-22 15:40:07', 1399985191002447872, '2022-02-22 15:40:07', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027039264616448, 1496024933900169216, 'Political', '3', '共青团员', 3.00, '', 1399985191002447872, '2022-02-22 15:40:16', 1399985191002447872, '2022-02-22 15:40:16', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027077550223360, 1496024933900169216, 'Political', '4', '民革党员', 4.00, '', 1399985191002447872, '2022-02-22 15:40:25', 1399985191002447872, '2022-02-22 15:40:25', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027123461074944, 1496024933900169216, 'Political', '5', '民盟盟员', 5.00, '', 1399985191002447872, '2022-02-22 15:40:36', 1399985191002447872, '2022-02-22 15:40:36', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027197566038016, 1496024933900169216, 'Political', '6', '民建会员', 6.00, '', 1399985191002447872, '2022-02-22 15:40:53', 1399985191002447872, '2022-02-22 15:40:53', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027234803068928, 1496024933900169216, 'Political', '7', '民进会员', 7.00, '', 1399985191002447872, '2022-02-22 15:41:02', 1399985191002447872, '2022-02-22 15:41:02', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027272941875200, 1496024933900169216, 'Political', '8', '农工党党员', 8.00, '', 1399985191002447872, '2022-02-22 15:41:11', 1399985191002447872, '2022-02-22 15:41:11', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027306634719232, 1496024933900169216, 'Political', '9', '致公党党员', 9.00, '', 1399985191002447872, '2022-02-22 15:41:19', 1399985191002447872, '2022-02-22 15:41:19', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027369796743168, 1496024933900169216, 'Political', '10', '九三学社社员', 10.00, '', 1399985191002447872, '2022-02-22 15:41:34', 1399985191002447872, '2022-02-22 15:41:35', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027408141070336, 1496024933900169216, 'Political', '11', '台盟盟员', 11.00, '', 1399985191002447872, '2022-02-22 15:41:44', 1399985191002447872, '2022-02-22 15:41:44', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027456849522688, 1496024933900169216, 'Political', '12', '无党派人士', 12.00, '', 1399985191002447872, '2022-02-22 15:41:55', 1399985191002447872, '2022-02-22 15:41:55', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496027516639326208, 1496024933900169216, 'Political', '13', '群众', 13.00, '', 1399985191002447872, '2022-02-22 15:42:09', 1399985191002447872, '2022-02-22 15:42:10', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496780500696539136, 1496722894707728384, 'PayChannel', '1', '支付宝', 1.00, '', 1399985191002447872, '2022-02-24 17:34:15', 1399985191002447872, '2022-03-08 11:02:59', 0, 3);
-INSERT INTO `sys_dict_item` VALUES (1496780576818962432, 1496722894707728384, 'PayChannel', '2', '微信', 2.00, '', 1399985191002447872, '2022-02-24 17:34:33', 1399985191002447872, '2022-03-08 11:04:00', 0, 2);
-INSERT INTO `sys_dict_item` VALUES (1496780712492113920, 1496723207565058048, 'PayWay', '1', 'wap支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:05', 1399985191002447872, '2022-02-24 17:35:05', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496780757647990784, 1496723207565058048, 'PayWay', '2', '应用支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:16', 1399985191002447872, '2022-02-24 17:35:16', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496780799691694080, 1496723207565058048, 'PayWay', '3', 'web支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:26', 1399985191002447872, '2022-02-24 17:35:26', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496780838451257344, 1496723207565058048, 'PayWay', '4', '二维码扫码支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:35', 1399985191002447872, '2022-02-24 17:35:35', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1496780876388737024, 1496723207565058048, 'PayWay', '5', '付款码支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:44', 1399985191002447872, '2022-02-24 17:35:44', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1497141630803566592, 1497140849954185216, 'PayStatus', '3', '支付取消', 0.00, '', 1399985191002447872, '2022-02-25 17:29:15', 1399985191002447872, '2022-02-25 17:29:15', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1497141652379066368, 1497140849954185216, 'PayStatus', '2', '失败', 0.00, '', 1399985191002447872, '2022-02-25 17:29:20', 1399985191002447872, '2022-02-25 17:29:20', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1497141681915355136, 1497140849954185216, 'PayStatus', '1', '成功', 0.00, '', 1399985191002447872, '2022-02-25 17:29:27', 1399985191002447872, '2022-02-25 17:29:27', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1497141712743489536, 1497140849954185216, 'PayStatus', '0', '支付中', 0.00, '', 1399985191002447872, '2022-02-25 17:29:35', 1399985191002447872, '2022-02-25 17:29:35', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1497506810439892992, 1497140849954185216, 'PayStatus', '4', '部分退款', 1.00, '部分退款', 1399985191002447872, '2022-02-26 17:40:21', 1399985191002447872, '2022-03-04 21:22:46', 0, 7);
-INSERT INTO `sys_dict_item` VALUES (1499367587857694720, 1497140849954185216, 'PayStatus', '5', '已退款', 2.00, '完全退款', 1399985191002447872, '2022-03-03 20:54:25', 1399985191002447872, '2022-03-04 21:22:49', 0, 3);
-INSERT INTO `sys_dict_item` VALUES (1501030031432847360, 1496722894707728384, 'PayChannel', '3', '云闪付', 3.00, '', 1399985191002447872, '2022-03-08 11:00:22', 1399985191002447872, '2022-03-08 11:04:07', 0, 2);
-INSERT INTO `sys_dict_item` VALUES (1501030073489133568, 1496722894707728384, 'PayChannel', '4', '现金', 4.00, '', 1399985191002447872, '2022-03-08 11:00:32', 1399985191002447872, '2022-03-08 11:04:10', 0, 2);
-INSERT INTO `sys_dict_item` VALUES (1501030108314439680, 1496722894707728384, 'PayChannel', '5', '钱包', 5.00, '', 1399985191002447872, '2022-03-08 11:00:40', 1399985191002447872, '2022-03-08 11:04:14', 0, 2);
-INSERT INTO `sys_dict_item` VALUES (1501031490513768448, 1501031423232937984, 'AsyncPayChannel', '3', '云闪付', 0.00, '', 1399985191002447872, '2022-03-08 11:06:10', 1399985191002447872, '2022-03-08 11:06:10', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1501031518208757760, 1501031423232937984, 'AsyncPayChannel', '2', '微信', 0.00, '', 1399985191002447872, '2022-03-08 11:06:16', 1399985191002447872, '2022-03-08 11:06:16', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1501031544360243200, 1501031423232937984, 'AsyncPayChannel', '1', '支付宝', 0.00, '', 1399985191002447872, '2022-03-08 11:06:23', 1399985191002447872, '2022-03-08 11:06:23', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502276841057005568, 1502276739978473472, 'WalletStatus', '2', '禁用', 0.00, '', 1399985191002447872, '2022-03-11 21:34:45', 1399985191002447872, '2022-03-11 21:34:45', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502276862108217344, 1502276739978473472, 'WalletStatus', '1', '正常', 0.00, '', 1399985191002447872, '2022-03-11 21:34:50', 1399985191002447872, '2022-03-11 21:34:50', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502624716257456128, 1502624515799085056, 'WalletLogType', '1', '开通', 0.00, '', 1399985191002447872, '2022-03-12 20:37:04', 1399985191002447872, '2022-03-12 20:37:04', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502624931978899456, 1502624515799085056, 'WalletLogType', '2', '主动充值', 0.00, '', 1399985191002447872, '2022-03-12 20:37:56', 1399985191002447872, '2022-03-12 20:37:56', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502624956209393664, 1502624515799085056, 'WalletLogType', '3', '自动充值', 0.00, '', 1399985191002447872, '2022-03-12 20:38:02', 1399985191002447872, '2022-03-12 20:38:02', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502625014719934464, 1502624515799085056, 'WalletLogType', '4', '余额变动', 0.00, '', 1399985191002447872, '2022-03-12 20:38:16', 1399985191002447872, '2022-03-12 20:38:16', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502625053097816064, 1502624515799085056, 'WalletLogType', '5', '支付', 0.00, '', 1399985191002447872, '2022-03-12 20:38:25', 1399985191002447872, '2022-03-12 20:38:25', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502625091639275520, 1502624515799085056, 'WalletLogType', '6', '系统扣除余额', 0.00, '', 1399985191002447872, '2022-03-12 20:38:34', 1399985191002447872, '2022-03-12 20:38:34', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502625123725701120, 1502624515799085056, 'WalletLogType', '7', '退款', 0.00, '', 1399985191002447872, '2022-03-12 20:38:42', 1399985191002447872, '2022-03-12 20:38:42', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502625783145787392, 1502624632392347648, 'WalletLogOperation', '1', '系统操作', 0.00, '', 1399985191002447872, '2022-03-12 20:41:19', 1399985191002447872, '2022-03-12 20:41:19', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502625814837948416, 1502624632392347648, 'WalletLogOperation', '2', '管理员操作', 0.00, '', 1399985191002447872, '2022-03-12 20:41:26', 1399985191002447872, '2022-03-12 20:41:26', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1502625850355314688, 1502624632392347648, 'WalletLogOperation', '3', '用户操作', 0.00, '', 1399985191002447872, '2022-03-12 20:41:35', 1399985191002447872, '2022-03-12 20:41:35', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1503340241493135360, 1503340128037212160, 'VoucherStatus', '1', '启用', 0.00, '', 1399985191002447872, '2022-03-14 20:00:19', 1399985191002447872, '2022-03-14 20:00:19', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1503340326645895168, 1503340128037212160, 'VoucherStatus', '2', '停用', 0.00, '', 1399985191002447872, '2022-03-14 20:00:39', 1399985191002447872, '2022-03-14 20:00:39', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1505112357976612864, 1496722894707728384, 'PayChannel', '6', '储值卡', 0.00, '', 1399985191002447872, '2022-03-19 17:22:04', 1399985191002447872, '2022-03-19 17:22:04', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1524356452720758784, 1524356376518643712, 'GoodsParamType', 'input', '手工录入', 0.00, '', 1399985191002447872, '2022-05-11 19:51:14', 1399985191002447872, '2022-05-11 19:51:14', 0, 0);
-INSERT INTO `sys_dict_item` VALUES (1524356510157557760, 1524356376518643712, 'GoodsParamType', 'select', '列表选择', 0.00, '', 1399985191002447872, '2022-05-11 19:51:28', 1399985191002447872, '2022-05-11 19:51:28', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1422931375807242241, 1422929378374828033, 'Sex', '1', '男', 0.00, '男性', 0, '2021-08-04 22:44:11', 0, '2021-08-04 22:44:11', 0, 2);
+INSERT INTO `base_dict_item` VALUES (1425729455402401794, 1422929378374828033, 'Sex', '2', '女', 0.00, '女性', 0, '2021-08-12 16:02:46', 0, '2021-08-12 16:02:46', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1425744258544136194, 1425744045414772737, 'MenuType', '0', '顶级菜单', 0.00, '顶级菜单', 0, '2021-08-12 17:01:35', 0, '2021-08-12 17:01:35', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1425744436592340993, 1425744045414772737, 'MenuType', '1', '子菜单', 0.00, '子菜单', 0, '2021-08-12 17:02:17', 0, '2021-08-12 17:02:17', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1425744470582980610, 1425744045414772737, 'MenuType', '2', '按钮权限', 0.00, '按钮权限', 0, '2021-08-12 17:02:26', 0, '2021-08-12 17:02:26', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1430094707250413568, 1422929378374828033, 'Sex', '0', '未知', 0.00, '不确定性别', 1399985191002447872, '2021-08-24 17:08:43', 1399985191002447872, '2021-08-24 17:08:43', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435830086406463488, 1435829999592759296, 'UserStatusCode', '1', '正常', 0.00, 'NORMAL', 1399985191002447872, '2021-09-09 12:59:04', 1399985191002447872, '2021-09-09 12:59:04', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435830141855162368, 1435829999592759296, 'UserStatusCode', '2', '锁定', 0.00, 'LOCK, 多次登录失败被锁定', 1399985191002447872, '2021-09-09 12:59:17', 1399985191002447872, '2021-09-09 12:59:17', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1435830260503633920, 1435829999592759296, 'UserStatusCode', '3', '封禁', 0.00, 'BAN', 1399985191002447872, '2021-09-09 12:59:45', 1399985191002447872, '2021-09-09 12:59:45', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838374749626368, 1435838066191458304, 'LogBusinessType', 'other', '其它', 0.00, '', 1399985191002447872, '2021-09-09 13:32:00', 1399985191002447872, '2021-09-09 13:32:00', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838414436130816, 1435838066191458304, 'LogBusinessType', 'insert', '新增', 0.00, '', 1399985191002447872, '2021-09-09 13:32:09', 1399985191002447872, '2021-09-09 13:32:09', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838467624099840, 1435838066191458304, 'LogBusinessType', 'update', '修改', 0.00, '', 1399985191002447872, '2021-09-09 13:32:22', 1399985191002447872, '2021-09-09 13:32:22', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838502755590144, 1435838066191458304, 'LogBusinessType', 'delete', '删除', 0.00, '', 1399985191002447872, '2021-09-09 13:32:30', 1399985191002447872, '2021-09-09 13:32:30', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838546934194176, 1435838066191458304, 'LogBusinessType', 'grant', '授权', 0.00, '', 1399985191002447872, '2021-09-09 13:32:41', 1399985191002447872, '2021-09-09 13:32:41', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838605537009664, 1435838066191458304, 'LogBusinessType', 'export', '导出', 0.00, '', 1399985191002447872, '2021-09-09 13:32:55', 1399985191002447872, '2021-09-09 13:32:55', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838705457913856, 1435838066191458304, 'LogBusinessType', 'import', '导入', 0.00, '', 1399985191002447872, '2021-09-09 13:33:19', 1399985191002447872, '2021-09-09 13:33:19', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838745861644288, 1435838066191458304, 'LogBusinessType', 'force', '强退', 0.00, '', 1399985191002447872, '2021-09-09 13:33:28', 1399985191002447872, '2021-09-09 13:33:28', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1435838786273763328, 1435838066191458304, 'LogBusinessType', 'clean', '清空数据', 0.00, '', 1399985191002447872, '2021-09-09 13:33:38', 1399985191002447872, '2021-09-09 13:33:38', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1438079113630003200, 1438078864509317120, 'MailSecurityCode', '1', '普通方式', 0.00, 'SECURITY_TYPE_PLAIN', 1399985191002447872, '2021-09-15 17:55:54', 1399985191002447872, '2021-09-15 17:55:54', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1438080323061755904, 1438078864509317120, 'MailSecurityCode', '2', 'TLS方式', 0.00, 'SECURITY_TYPE_TLS', 1399985191002447872, '2021-09-15 18:00:42', 1399985191002447872, '2021-09-15 18:00:42', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1438080372231581696, 1438078864509317120, 'MailSecurityCode', '3', 'SSL方式', 0.00, 'SECURITY_TYPE_SSL', 1399985191002447872, '2021-09-15 18:00:54', 1399985191002447872, '2021-09-15 18:00:54', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1439961603914047488, 1439961232651034624, 'MessageTemplateCode', '5', '微信', -10.00, 'WECHAT', 1399985191002447872, '2021-09-20 22:36:14', 1399985191002447872, '2021-09-20 22:36:14', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1439961704321490944, 1439961232651034624, 'MessageTemplateCode', '4', 'Email', 0.00, 'EMAIL', 1399985191002447872, '2021-09-20 22:36:38', 1399985191002447872, '2021-09-20 22:36:38', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1439962132744478720, 1439961232651034624, 'MessageTemplateCode', '3', '短信', 0.00, 'SMS', 1399985191002447872, '2021-09-20 22:38:20', 1399985191002447872, '2021-09-20 22:38:20', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1439962205578567680, 1439961232651034624, 'MessageTemplateCode', '2', '钉钉机器人', 0.00, 'DING_TALK_ROBOT', 1399985191002447872, '2021-09-20 22:38:38', 1399985191002447872, '2021-09-20 22:38:38', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1439962267511660544, 1439961232651034624, 'MessageTemplateCode', '1', '钉钉', 0.00, 'DING_TALK', 1399985191002447872, '2021-09-20 22:38:52', 1399985191002447872, '2021-09-20 22:38:52', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1452836696873984000, 1452836604783845376, 'SocialType', 'WeChat', '微信', 0.00, '', 1399985191002447872, '2021-10-26 11:17:16', 1399985191002447872, '2021-10-26 11:17:16', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1452837435482529792, 1452836604783845376, 'SocialType', 'QQ', 'QQ', 0.00, '', 1399985191002447872, '2021-10-26 11:20:12', 1399985191002447872, '2021-10-26 11:20:12', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1452837523030237184, 1452836604783845376, 'SocialType', 'DingTalk', '钉钉', 0.00, '', 1399985191002447872, '2021-10-26 11:20:33', 1399985191002447872, '2021-10-26 11:20:33', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1452844537911406592, 1452843488735621120, 'ParamType', '1', '系统参数', 0.00, '', 1399985191002447872, '2021-10-26 11:48:25', 1399985191002447872, '2021-10-26 11:48:25', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1452844565031776256, 1452843488735621120, 'ParamType', '2', '用户参数', 0.00, '', 1399985191002447872, '2021-10-26 11:48:32', 1399985191002447872, '2021-10-26 11:48:32', 0, 2);
+INSERT INTO `base_dict_item` VALUES (1496026946344005632, 1496024933900169216, 'Political', '1', '中共党员', 1.00, '', 1399985191002447872, '2022-02-22 15:39:54', 1399985191002447872, '2022-02-22 15:39:54', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027004560945152, 1496024933900169216, 'Political', '2', '中共预备党员', 2.00, '', 1399985191002447872, '2022-02-22 15:40:07', 1399985191002447872, '2022-02-22 15:40:07', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027039264616448, 1496024933900169216, 'Political', '3', '共青团员', 3.00, '', 1399985191002447872, '2022-02-22 15:40:16', 1399985191002447872, '2022-02-22 15:40:16', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027077550223360, 1496024933900169216, 'Political', '4', '民革党员', 4.00, '', 1399985191002447872, '2022-02-22 15:40:25', 1399985191002447872, '2022-02-22 15:40:25', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027123461074944, 1496024933900169216, 'Political', '5', '民盟盟员', 5.00, '', 1399985191002447872, '2022-02-22 15:40:36', 1399985191002447872, '2022-02-22 15:40:36', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027197566038016, 1496024933900169216, 'Political', '6', '民建会员', 6.00, '', 1399985191002447872, '2022-02-22 15:40:53', 1399985191002447872, '2022-02-22 15:40:53', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027234803068928, 1496024933900169216, 'Political', '7', '民进会员', 7.00, '', 1399985191002447872, '2022-02-22 15:41:02', 1399985191002447872, '2022-02-22 15:41:02', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027272941875200, 1496024933900169216, 'Political', '8', '农工党党员', 8.00, '', 1399985191002447872, '2022-02-22 15:41:11', 1399985191002447872, '2022-02-22 15:41:11', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027306634719232, 1496024933900169216, 'Political', '9', '致公党党员', 9.00, '', 1399985191002447872, '2022-02-22 15:41:19', 1399985191002447872, '2022-02-22 15:41:19', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027369796743168, 1496024933900169216, 'Political', '10', '九三学社社员', 10.00, '', 1399985191002447872, '2022-02-22 15:41:34', 1399985191002447872, '2022-02-22 15:41:35', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027408141070336, 1496024933900169216, 'Political', '11', '台盟盟员', 11.00, '', 1399985191002447872, '2022-02-22 15:41:44', 1399985191002447872, '2022-02-22 15:41:44', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027456849522688, 1496024933900169216, 'Political', '12', '无党派人士', 12.00, '', 1399985191002447872, '2022-02-22 15:41:55', 1399985191002447872, '2022-02-22 15:41:55', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496027516639326208, 1496024933900169216, 'Political', '13', '群众', 13.00, '', 1399985191002447872, '2022-02-22 15:42:09', 1399985191002447872, '2022-02-22 15:42:10', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496780500696539136, 1496722894707728384, 'PayChannel', '1', '支付宝', 1.00, '', 1399985191002447872, '2022-02-24 17:34:15', 1399985191002447872, '2022-03-08 11:02:59', 0, 3);
+INSERT INTO `base_dict_item` VALUES (1496780576818962432, 1496722894707728384, 'PayChannel', '2', '微信', 2.00, '', 1399985191002447872, '2022-02-24 17:34:33', 1399985191002447872, '2022-03-08 11:04:00', 0, 2);
+INSERT INTO `base_dict_item` VALUES (1496780712492113920, 1496723207565058048, 'PayWay', '1', 'wap支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:05', 1399985191002447872, '2022-02-24 17:35:05', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496780757647990784, 1496723207565058048, 'PayWay', '2', '应用支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:16', 1399985191002447872, '2022-02-24 17:35:16', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496780799691694080, 1496723207565058048, 'PayWay', '3', 'web支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:26', 1399985191002447872, '2022-02-24 17:35:26', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496780838451257344, 1496723207565058048, 'PayWay', '4', '二维码扫码支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:35', 1399985191002447872, '2022-02-24 17:35:35', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1496780876388737024, 1496723207565058048, 'PayWay', '5', '付款码支付', 0.00, '', 1399985191002447872, '2022-02-24 17:35:44', 1399985191002447872, '2022-02-24 17:35:44', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1497141630803566592, 1497140849954185216, 'PayStatus', '3', '支付取消', 0.00, '', 1399985191002447872, '2022-02-25 17:29:15', 1399985191002447872, '2022-02-25 17:29:15', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1497141652379066368, 1497140849954185216, 'PayStatus', '2', '失败', 0.00, '', 1399985191002447872, '2022-02-25 17:29:20', 1399985191002447872, '2022-02-25 17:29:20', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1497141681915355136, 1497140849954185216, 'PayStatus', '1', '成功', 0.00, '', 1399985191002447872, '2022-02-25 17:29:27', 1399985191002447872, '2022-02-25 17:29:27', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1497141712743489536, 1497140849954185216, 'PayStatus', '0', '支付中', 0.00, '', 1399985191002447872, '2022-02-25 17:29:35', 1399985191002447872, '2022-02-25 17:29:35', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1497506810439892992, 1497140849954185216, 'PayStatus', '4', '部分退款', 1.00, '部分退款', 1399985191002447872, '2022-02-26 17:40:21', 1399985191002447872, '2022-03-04 21:22:46', 0, 7);
+INSERT INTO `base_dict_item` VALUES (1499367587857694720, 1497140849954185216, 'PayStatus', '5', '已退款', 2.00, '完全退款', 1399985191002447872, '2022-03-03 20:54:25', 1399985191002447872, '2022-03-04 21:22:49', 0, 3);
+INSERT INTO `base_dict_item` VALUES (1501030031432847360, 1496722894707728384, 'PayChannel', '3', '云闪付', 3.00, '', 1399985191002447872, '2022-03-08 11:00:22', 1399985191002447872, '2022-03-08 11:04:07', 0, 2);
+INSERT INTO `base_dict_item` VALUES (1501030073489133568, 1496722894707728384, 'PayChannel', '4', '现金', 4.00, '', 1399985191002447872, '2022-03-08 11:00:32', 1399985191002447872, '2022-03-08 11:04:10', 0, 2);
+INSERT INTO `base_dict_item` VALUES (1501030108314439680, 1496722894707728384, 'PayChannel', '5', '钱包', 5.00, '', 1399985191002447872, '2022-03-08 11:00:40', 1399985191002447872, '2022-03-08 11:04:14', 0, 2);
+INSERT INTO `base_dict_item` VALUES (1501031490513768448, 1501031423232937984, 'AsyncPayChannel', '3', '云闪付', 0.00, '', 1399985191002447872, '2022-03-08 11:06:10', 1399985191002447872, '2022-03-08 11:06:10', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1501031518208757760, 1501031423232937984, 'AsyncPayChannel', '2', '微信', 0.00, '', 1399985191002447872, '2022-03-08 11:06:16', 1399985191002447872, '2022-03-08 11:06:16', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1501031544360243200, 1501031423232937984, 'AsyncPayChannel', '1', '支付宝', 0.00, '', 1399985191002447872, '2022-03-08 11:06:23', 1399985191002447872, '2022-03-08 11:06:23', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502276841057005568, 1502276739978473472, 'WalletStatus', '2', '禁用', 0.00, '', 1399985191002447872, '2022-03-11 21:34:45', 1399985191002447872, '2022-03-11 21:34:45', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502276862108217344, 1502276739978473472, 'WalletStatus', '1', '正常', 0.00, '', 1399985191002447872, '2022-03-11 21:34:50', 1399985191002447872, '2022-03-11 21:34:50', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502624716257456128, 1502624515799085056, 'WalletLogType', '1', '开通', 0.00, '', 1399985191002447872, '2022-03-12 20:37:04', 1399985191002447872, '2022-03-12 20:37:04', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502624931978899456, 1502624515799085056, 'WalletLogType', '2', '主动充值', 0.00, '', 1399985191002447872, '2022-03-12 20:37:56', 1399985191002447872, '2022-03-12 20:37:56', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502624956209393664, 1502624515799085056, 'WalletLogType', '3', '自动充值', 0.00, '', 1399985191002447872, '2022-03-12 20:38:02', 1399985191002447872, '2022-03-12 20:38:02', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502625014719934464, 1502624515799085056, 'WalletLogType', '4', '余额变动', 0.00, '', 1399985191002447872, '2022-03-12 20:38:16', 1399985191002447872, '2022-03-12 20:38:16', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502625053097816064, 1502624515799085056, 'WalletLogType', '5', '支付', 0.00, '', 1399985191002447872, '2022-03-12 20:38:25', 1399985191002447872, '2022-03-12 20:38:25', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502625091639275520, 1502624515799085056, 'WalletLogType', '6', '系统扣除余额', 0.00, '', 1399985191002447872, '2022-03-12 20:38:34', 1399985191002447872, '2022-03-12 20:38:34', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502625123725701120, 1502624515799085056, 'WalletLogType', '7', '退款', 0.00, '', 1399985191002447872, '2022-03-12 20:38:42', 1399985191002447872, '2022-03-12 20:38:42', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502625783145787392, 1502624632392347648, 'WalletLogOperation', '1', '系统操作', 0.00, '', 1399985191002447872, '2022-03-12 20:41:19', 1399985191002447872, '2022-03-12 20:41:19', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502625814837948416, 1502624632392347648, 'WalletLogOperation', '2', '管理员操作', 0.00, '', 1399985191002447872, '2022-03-12 20:41:26', 1399985191002447872, '2022-03-12 20:41:26', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1502625850355314688, 1502624632392347648, 'WalletLogOperation', '3', '用户操作', 0.00, '', 1399985191002447872, '2022-03-12 20:41:35', 1399985191002447872, '2022-03-12 20:41:35', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1503340241493135360, 1503340128037212160, 'VoucherStatus', '1', '启用', 0.00, '', 1399985191002447872, '2022-03-14 20:00:19', 1399985191002447872, '2022-03-14 20:00:19', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1503340326645895168, 1503340128037212160, 'VoucherStatus', '2', '停用', 0.00, '', 1399985191002447872, '2022-03-14 20:00:39', 1399985191002447872, '2022-03-14 20:00:39', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1505112357976612864, 1496722894707728384, 'PayChannel', '6', '储值卡', 0.00, '', 1399985191002447872, '2022-03-19 17:22:04', 1399985191002447872, '2022-03-19 17:22:04', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1524356452720758784, 1524356376518643712, 'GoodsParamType', 'input', '手工录入', 0.00, '', 1399985191002447872, '2022-05-11 19:51:14', 1399985191002447872, '2022-05-11 19:51:14', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1524356510157557760, 1524356376518643712, 'GoodsParamType', 'select', '列表选择', 0.00, '', 1399985191002447872, '2022-05-11 19:51:28', 1399985191002447872, '2022-05-11 19:51:28', 0, 0);
 
 -- ----------------------------
--- Table structure for sys_key_value
+-- Table structure for base_key_value
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_key_value`;
-CREATE TABLE `sys_key_value`  (
+DROP TABLE IF EXISTS `base_key_value`;
+CREATE TABLE `base_key_value`  (
                                   `id` bigint(20) NOT NULL,
                                   `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数键名',
                                   `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数值',
@@ -3737,14 +3737,14 @@ CREATE TABLE `sys_key_value`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'kv存储' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sys_key_value
+-- Records of base_key_value
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sys_param
+-- Table structure for base_param
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_param`;
-CREATE TABLE `sys_param`  (
+DROP TABLE IF EXISTS `base_param`;
+CREATE TABLE `base_param`  (
                               `id` bigint(20) NOT NULL,
                               `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '参数名称',
                               `param_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数键名',
@@ -3762,11 +3762,11 @@ CREATE TABLE `sys_param`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统参数配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of sys_param
+-- Records of base_param
 -- ----------------------------
-INSERT INTO `sys_param` VALUES (1452842684284891136, '测试', 'test.v1', '123', 1, b'0', NULL, 1399985191002447872, '2021-10-26 11:41:03', 1399985191002447872, '2021-10-26 11:41:03', 0, 0);
-INSERT INTO `sys_param` VALUES (1500338438182789120, '结算台聚合支付请求地址', 'CashierAggregateUrl', 'http://pay1.bootx.cn/cashier/aggregatePay?key=', 1, b'1', '', 1399985191002447872, '2022-03-06 13:12:13', 1399985191002447872, '2022-05-01 15:03:03', 0, 3);
-INSERT INTO `sys_param` VALUES (1520668030248361984, '文件服务器地址', 'FileServerUrl', 'http://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-01 15:34:46', 1399985191002447872, '2022-05-19 12:53:21', 0, 5);
-INSERT INTO `sys_param` VALUES (1529281530059161600, 'websocket服务器地址', 'WebsocketServerUrl', 'ws://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-25 10:01:44', 1399985191002447872, '2022-05-25 10:01:44', 0, 0);
+INSERT INTO `base_param` VALUES (1452842684284891136, '测试', 'test.v1', '123', 1, b'0', NULL, 1399985191002447872, '2021-10-26 11:41:03', 1399985191002447872, '2021-10-26 11:41:03', 0, 0);
+INSERT INTO `base_param` VALUES (1500338438182789120, '结算台聚合支付请求地址', 'CashierAggregateUrl', 'http://pay1.bootx.cn/cashier/aggregatePay?key=', 1, b'1', '', 1399985191002447872, '2022-03-06 13:12:13', 1399985191002447872, '2022-05-01 15:03:03', 0, 3);
+INSERT INTO `base_param` VALUES (1520668030248361984, '文件服务器地址', 'FileServerUrl', 'http://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-01 15:34:46', 1399985191002447872, '2022-05-19 12:53:21', 0, 5);
+INSERT INTO `base_param` VALUES (1529281530059161600, 'websocket服务器地址', 'WebsocketServerUrl', 'ws://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-25 10:01:44', 1399985191002447872, '2022-05-25 10:01:44', 0, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -19,7 +19,7 @@
 ```java
 @Data
 @Accessors(chain = true)
-@TableName("pc_alipay_config")
+@TableName("pay_alipay_config")
 public class AlipayConfig {
 
     /** 私钥 字段进行加密保存 */

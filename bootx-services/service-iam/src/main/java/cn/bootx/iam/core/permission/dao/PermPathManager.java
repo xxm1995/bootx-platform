@@ -6,6 +6,7 @@ import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.permission.entity.PermPath;
 import cn.bootx.iam.param.permission.PermPathParam;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,15 @@ public class PermPathManager extends BaseManager<PermPathMapper, PermPath> {
                 .eq(PermPath::isEnable,false)
                 .eq(PermPath::getRequestType,requestType)
                 .list();
+    }
+
+    /**
+     * 新增
+     */
+    @Override
+    public List<PermPath> saveAll(List<PermPath> permPaths){
+        MpUtil.initEntityList(permPaths,SecurityUtil.getUserIdOrDefaultId());
+        MpUtil.executeBatch(permPaths,baseMapper::saveAll,this.DEFAULT_BATCH_SIZE);
+        return permPaths;
     }
 }

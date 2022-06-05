@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("gc_goods")
+@TableName("goods_goods")
 public class Goods extends MpBaseEntity implements EntityBaseFunction<GoodsDto> {
 
     /** 所属类目id */

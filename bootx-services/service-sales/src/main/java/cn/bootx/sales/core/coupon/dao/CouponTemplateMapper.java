@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 @Mapper
 public interface CouponTemplateMapper extends BaseMapper<CouponTemplate> {
 
-    @Update("update sc_coupon_template " +
+    @Update("update sales_coupon_template " +
             "set num = (num-${count}),version = (version + 1) " +
             "where id = #{couponTemplateId} and (num - ${count}) >= 0")
     int reduceCoupons(@Param("couponTemplateId") Long couponTemplateId, @Param("count")int count);

@@ -1,4 +1,4 @@
-package cn.bootx.order.core.billing.entity;
+package cn.bootx.order.core.billing.context;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

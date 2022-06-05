@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_wallet_log")
+@TableName("pay_wallet_log")
 public class WalletLog extends MpBaseEntity implements EntityBaseFunction<WalletLogDto> {
 
     /** 钱包id */

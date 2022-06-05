@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_ali_payment")
+@TableName("pay_ali_payment")
 public class AliPayment extends BasePayment implements EntityBaseFunction<AliPaymentDto> {
 
     /** 支付宝交易号 */

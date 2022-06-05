@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("gc_category_specification")
+@TableName("goods_category_specification")
 public class CategorySpecification extends MpIdEntity {
 
     /** 类目id */

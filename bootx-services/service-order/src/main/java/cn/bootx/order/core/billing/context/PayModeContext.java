@@ -1,4 +1,4 @@
-package cn.bootx.order.core.billing.entity;
+package cn.bootx.order.core.billing.context;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

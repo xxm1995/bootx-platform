@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
-@Document("starter_data_version")
+@Document("starter_audit_data_version")
 public class DataVersionLogMongo extends MpIdEntity implements EntityBaseFunction<DataVersionLogDto> {
 
     @Schema(description = "数据名称")

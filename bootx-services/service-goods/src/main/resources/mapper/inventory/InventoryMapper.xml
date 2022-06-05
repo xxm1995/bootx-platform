@@ -4,15 +4,15 @@
 
     <!-- 锁定库存 -->
     <update id="lockInventory">
-        update gc_goods_sku
+        update goods_goods_sku
         set available = (available - #{count}),
             locked = (locked + #{count}),
             version = (version + 1)
-        whereid = #{id}and (available - #{count}) >= 0
+        where id = #{id} and (available - #{count}) >= 0
     </update>
     <!-- 解锁库存 -->
     <update id="unlockInventory">
-        update gc_goods_sku
+        update goods_goods_sku
         set available = (available + #{count}),
             locked = (locked - #{count}),
             version = (version + 1)
@@ -20,7 +20,7 @@
     </update>
     <!-- 减少库存 -->
     <update id="reduceInventory">
-        update gc_goods_sku
+        update goods_goods_sku
         set locked = (locked - #{count}),
             sold = (sold + #{count}),
             version = (version + 1)
@@ -28,7 +28,7 @@
     </update>
     <!-- 增补指定 SKU 的可售库存， 扣减对应售出 -->
     <update id="increaseInventory">
-        update gc_goods_sku
+        update goods_goods_sku
         set available = (available + #{count}),
             sold = (sold - #{count}),
             version = (version + 1)
@@ -36,7 +36,7 @@
     </update>
     <!-- 增补指定 SKU 的可售库存 -->
     <update id="increaseAvailable">
-        update gc_goods_sku
+        update goods_goods_sku
         set available = (available + #{count}),
             capacity = (capacity + #{count}),
             version = (version + 1)
@@ -44,7 +44,7 @@
     </update>
     <!-- 扣减指定 SKU 的预占库存并减少总库存 -->
     <update id="reduceLockedAndCapacity">
-        update gc_goods_sku
+        update goods_goods_sku
         set locked = (locked - #{count}),
             capacity = (capacity - #{count}),
             version = (version + 1)
@@ -52,7 +52,7 @@
     </update>
     <!-- 扣减指定 SKU 的售出库存并减少总库存 -->
     <update id="reduceSoldAndCapacity">
-        update gc_goods_sku
+        update goods_goods_sku
         set sold = (sold - #{count}),
             capacity = (capacity - #{count}),
             version = (version + 1)

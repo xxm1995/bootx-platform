@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("starter_upload_file")
+@TableName("starter_file_upload_info")
 public class UpdateFileInfo extends MpIdEntity implements EntityBaseFunction<UpdateFileDto> {
 
     /** 存储位置 */

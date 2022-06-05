@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sc_strategy")
+@TableName("sales_strategy")
 public class Strategy extends MpBaseEntity implements EntityBaseFunction<StrategyDto> {
 
     /** 策略名称 */

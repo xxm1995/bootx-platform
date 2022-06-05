@@ -222,7 +222,7 @@ public class PayRefundService {
                 .setClientIp(ip)
                 .setPaymentId(payment.getId())
                 .setBusinessId(payment.getBusinessId())
-                .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setUserId(SecurityUtil.getUserIdOrDefaultId())
                 .setRefundTime(LocalDateTime.now())
                 .setTitle(payment.getTitle())
                 .setErrorMsg(AsyncRefundLocal.getErrorMsg())

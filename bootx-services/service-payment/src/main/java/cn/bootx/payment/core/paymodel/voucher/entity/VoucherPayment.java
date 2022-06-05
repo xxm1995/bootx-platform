@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_voucher_payment")
+@TableName("pay_voucher_payment")
 public class VoucherPayment extends BasePayment implements EntityBaseFunction<VoucherPaymentDto> {
 
     /** 储值卡id列表 */

@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("nc_mail_config")
+@TableName("notice_mail_config")
 public class MailConfig extends MpBaseEntity implements EntityBaseFunction<MailConfigDto> {
 
     /** 编号 */

@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("gc_category")
+@TableName("goods_category")
 @Accessors(chain = true)
 public class Category extends MpBaseEntity implements EntityBaseFunction<CategoryDto> {
     private static final long serialVersionUID = -3604408346443111551L;

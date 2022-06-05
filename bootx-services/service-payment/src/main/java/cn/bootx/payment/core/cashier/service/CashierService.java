@@ -70,7 +70,7 @@ public class CashierService {
         PayParam payParam = new PayParam()
                 .setTitle(param.getTitle())
                 .setBusinessId(param.getBusinessId())
-                .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setUserId(SecurityUtil.getUserIdOrDefaultId())
                 .setPayModeList(Collections.singletonList(payModeParam));
         PayResult payResult = payService.pay(payParam);
 
@@ -120,7 +120,7 @@ public class CashierService {
         PayParam payParam = new PayParam()
                 .setTitle(param.getTitle())
                 .setBusinessId(param.getBusinessId())
-                .setUserId(SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setUserId(SecurityUtil.getUserIdOrDefaultId())
                 .setPayModeList(param.getPayModeList());
         PayResult payResult = payService.pay(payParam);
 

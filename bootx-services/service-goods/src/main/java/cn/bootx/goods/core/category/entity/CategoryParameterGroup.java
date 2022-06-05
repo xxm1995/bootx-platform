@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("gc_category_parameter_group")
+@TableName("goods_category_parameter_group")
 @Accessors(chain = true)
 public class CategoryParameterGroup extends MpBaseEntity implements EntityBaseFunction<CategoryParameterGroupDto>{
 

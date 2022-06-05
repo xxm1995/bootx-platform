@@ -26,7 +26,11 @@ public class DemoMqttConfiguration {
     @PostConstruct
     public void listener(){
         try {
-            mqttClient.subscribe("demo", iotMessageListener);
+            if (mqttClient.isConnected()){
+                mqttClient.subscribe("demo", iotMessageListener);
+            } else {
+                log.warn("服务器未连接，MQTT添加监听器失败");
+            }
         } catch (MqttException e) {
             log.error("MQTT添加监听器失败",e);
         }

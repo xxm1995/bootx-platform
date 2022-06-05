@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("starter_data_version")
+@TableName("starter_audit_data_version")
 public class DataVersionLogDb extends MpIdEntity implements EntityBaseFunction<DataVersionLogDto> {
 
     @Schema(description = "数据名称")

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 */
 @Data
 @Accessors(chain = true)
-@Document(collection="starter_login_log")
+@Document(collection="starter_audit_login_log")
 public class LoginLogMongo implements EntityBaseFunction<LoginLogDto> {
 
     @Id

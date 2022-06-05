@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sys_dict")
+@TableName("base_dict")
 public class Dictionary extends MpBaseEntity implements EntityBaseFunction<DictionaryDto> {
 
 	/** 名称 */

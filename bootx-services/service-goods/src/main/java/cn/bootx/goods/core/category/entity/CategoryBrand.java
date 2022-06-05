@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("gc_category_brand")
+@TableName("goods_category_brand")
 public class CategoryBrand extends MpIdEntity {
 
     /** 分类id */

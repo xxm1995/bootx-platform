@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("starter_login_log")
+@TableName("starter_audit_login_log")
 public class LoginLogDb extends MpIdEntity implements EntityBaseFunction<LoginLogDto> {
 
     /** 用户账号id */

@@ -14,6 +14,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface DataVersionLogDbMapper extends BaseMapper<DataVersionLogDb> {
 
-    @Select("Select max(version) from starter_data_version where data_Name = #{dataName} and data_id =#{dataId}")
+    @Select("Select max(version) from starter_audit_data_version where data_Name = #{dataName} and data_id =#{dataId}")
     Integer getMaxVersion(@Param("dataName") String dataName, @Param("dataId") String dataId);
 }

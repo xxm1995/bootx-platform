@@ -6,6 +6,7 @@ import cn.bootx.starter.auth.cache.SessionCacheLocal;
 import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.lang.Nullable;
 
@@ -29,8 +30,18 @@ public class SecurityUtil {
         return getCurrentUser0();
     }
 
+
+    /**
+     * 获取当前用户,无异常
+     * @return 当前登录用户的id,如未登录
+     */
+    public Long getUserIdOrDefaultId() {
+        return getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId());
+    }
+
     /**
      * 获取用户id
+     * @throws NotLoginException 未登录异常
      */
     public Long getUserId(){
         return getCurrentUser().map(UserDetail::getId).orElseThrow(NotLoginException::new);
@@ -38,13 +49,14 @@ public class SecurityUtil {
 
     /**
      * 获取用户
+     * @throws NotLoginException 未登录异常
      */
     public UserDetail getUser(){
         return getCurrentUser().orElseThrow(NotLoginException::new);
     }
 
     /**
-     * 获取登录方式
+     * 获取登录方式 异步环境中获取会有问题
      */
     @Nullable
     public String getClientType(HttpServletRequest request) {

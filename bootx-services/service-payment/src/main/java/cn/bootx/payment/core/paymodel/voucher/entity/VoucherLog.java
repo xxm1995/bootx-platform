@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_voucher_log")
+@TableName("pay_voucher_log")
 public class VoucherLog extends MpBaseEntity {
 
     /** 储值卡id */

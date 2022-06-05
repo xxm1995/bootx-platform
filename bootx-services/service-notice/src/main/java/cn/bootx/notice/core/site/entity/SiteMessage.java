@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("nc_site_message")
+@TableName("notice_site_message")
 public class SiteMessage extends MpBaseEntity implements EntityBaseFunction<SiteMessageDto> {
 
     /**消息标题*/

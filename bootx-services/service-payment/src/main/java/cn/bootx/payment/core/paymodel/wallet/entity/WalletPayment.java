@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_wallet_payment")
+@TableName("pay_wallet_payment")
 public class WalletPayment extends BasePayment implements EntityBaseFunction<WalletPaymentDto> {
 
     /** 钱包ID */

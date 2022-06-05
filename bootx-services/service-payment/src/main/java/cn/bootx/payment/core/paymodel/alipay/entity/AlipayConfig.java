@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_alipay_config")
+@TableName("pay_alipay_config")
 public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<AlipayConfigDto> {
 
     /** 名称 */

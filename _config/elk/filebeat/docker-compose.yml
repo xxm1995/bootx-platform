@@ -2,7 +2,9 @@ version: '3'
 services:
   # 日志收集
   filebeat:
-    image: filebeat
+    image: docker.elastic.co/beats/filebeat:7.13.2
     restart: always
     volumes:
       - /data/logs:/data/logs
+    command:
+      - filebeat /usr/share/filebeat/filebeat.yml

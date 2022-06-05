@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sys_param")
+@TableName("base_param")
 public class SystemParameter extends MpBaseEntity implements EntityBaseFunction<SystemParameterDto> {
 
     /** 参数名称 */

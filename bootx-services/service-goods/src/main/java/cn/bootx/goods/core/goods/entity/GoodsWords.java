@@ -11,6 +11,6 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@TableName("gc_goods_words")
+@TableName("goods_goods_words")
 public class GoodsWords {
 }

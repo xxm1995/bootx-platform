@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_wechat_payment")
+@TableName("pay_wechat_payment")
 public class WeChatPayment extends BasePayment implements EntityBaseFunction<WeChatPaymentDto> {
 
     /**

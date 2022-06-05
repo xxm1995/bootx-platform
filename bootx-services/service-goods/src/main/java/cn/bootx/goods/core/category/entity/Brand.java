@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("gc_brand")
+@TableName("goods_brand")
 @Accessors(chain = true)
 public class Brand extends MpBaseEntity implements EntityBaseFunction<BrandDto>{
 

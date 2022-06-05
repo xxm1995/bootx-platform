@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sc_match_rule")
+@TableName("sales_match_rule")
 public class MatchRuleConfig extends MpBaseEntity implements EntityBaseFunction<MatchRuleDto> {
 
     /** 策略注册id */

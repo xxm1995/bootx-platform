@@ -26,7 +26,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_refund_record")
+@TableName("pay_refund_record")
 public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<RefundRecordDto>{
 
     /** 支付单号 */

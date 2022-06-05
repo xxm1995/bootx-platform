@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("oc_order")
+@TableName("order_order")
 public class Order extends MpBaseEntity implements EntityBaseFunction<OrderDto> {
 
     /** 编码 */

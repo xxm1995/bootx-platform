@@ -30,7 +30,7 @@ import java.util.List;
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
-@TableName("pc_payment")
+@TableName("pay_payment")
 public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentDto> {
 
     /** 关联的业务id */

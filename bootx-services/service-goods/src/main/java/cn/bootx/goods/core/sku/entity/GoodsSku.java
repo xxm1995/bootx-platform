@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("gc_goods_sku")
+@TableName("goods_goods_sku")
 public class GoodsSku extends MpBaseEntity implements EntityBaseFunction<GoodsSkuDto> {
 
     /**  所属类目id */

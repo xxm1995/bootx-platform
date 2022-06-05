@@ -1,10 +1,12 @@
 package cn.bootx.starter.auth.handler;
 
+import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.starter.auth.authentication.RouterCheck;
 import cn.bootx.starter.auth.exception.RouterCheckException;
 import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.router.SaRouter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +18,7 @@ import java.util.List;
  * @author xxm
  * @date 2021/8/2
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class SaRouteHandler implements InitializingBean {
@@ -37,6 +40,7 @@ public class SaRouteHandler implements InitializingBean {
             if (check) {
                 SaRouter.stop();
             } else {
+                log.warn("{} 没有对应的权限", WebServletUtil.getPath());
                 throw new RouterCheckException();
             }
         };

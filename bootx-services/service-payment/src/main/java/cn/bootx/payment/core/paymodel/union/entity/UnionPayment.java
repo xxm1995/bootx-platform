@@ -14,6 +14,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("pc_union_payment")
+@TableName("pay_union_payment")
 public class UnionPayment extends BasePayment {
 }

@@ -25,7 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sc_activity")
+@TableName("sales_activity")
 public class Activity extends MpBaseEntity implements EntityBaseFunction<ActivityDto> {
 
     /** 名称 */

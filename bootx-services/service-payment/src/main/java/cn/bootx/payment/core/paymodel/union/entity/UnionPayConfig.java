@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
-@TableName("pc_union_pay_config")
+@TableName("pay_union_pay_config")
 public class UnionPayConfig extends MpBaseEntity implements EntityBaseFunction<UnionPayConfigDto> {
     @Override
     public UnionPayConfigDto toDto() {

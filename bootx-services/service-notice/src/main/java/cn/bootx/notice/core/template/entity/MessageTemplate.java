@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("nc_message_template")
+@TableName("notice_message_template")
 @Accessors(chain = true)
 public class MessageTemplate extends MpBaseEntity implements EntityBaseFunction<MessageTemplateDto> {
 

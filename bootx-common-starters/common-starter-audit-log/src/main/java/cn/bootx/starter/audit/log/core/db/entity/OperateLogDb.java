@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("starter_operate_log")
+@TableName("starter_audit_operate_log")
 public class OperateLogDb extends MpIdEntity implements EntityBaseFunction<OperateLogDto> {
 
     /** 操作模块 */

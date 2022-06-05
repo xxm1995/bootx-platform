@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("sc_check_rule")
+@TableName("sales_check_rule")
 public class CheckRuleConfig extends MpBaseEntity implements EntityBaseFunction<CheckRuleDto>,Comparable<CheckRuleConfig> {
 
     /** 策略注册id */

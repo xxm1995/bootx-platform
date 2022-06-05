@@ -25,7 +25,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName(value = "gc_specification",autoResultMap = true)
+@TableName(value = "goods_specification",autoResultMap = true)
 public class Specification extends MpBaseEntity implements EntityBaseFunction<SpecificationDto>{
 
     /** 规格名称 */
