@@ -13,14 +13,19 @@ import cn.bootx.iam.param.user.UserInfoParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
 * @author xxm
 * @date 2021/9/6
 */
+@Validated
 @Tag(name ="管理用户(管理员级别)")
 @RestController
 @RequestMapping("/user/admin")
@@ -70,24 +75,40 @@ public class UserAdminController {
     @Operation(summary = "重置密码")
     @OperateLog(title = "重置密码",businessType= BusinessType.UPDATE, saveParam = true)
     @PostMapping("/restartPassword")
-    public ResResult<Void> restartPassword(Long userId,@NotBlank(message = "新密码不能为空") String newPassword){
+    public ResResult<Void> restartPassword(@NotNull(message = "用户不可为空") Long userId,
+                                           @NotBlank(message = "新密码不能为空") String newPassword){
         userAdminService.restartPassword(userId,newPassword);
         return Res.ok();
     }
 
-    @Operation(summary = "锁定用户")
     @OperateLog(title = "锁定用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @Operation(summary = "锁定用户")
     @PostMapping("/lock")
     public ResResult<Void> lock(Long userId){
         userAdminService.lock(userId);
         return Res.ok();
     }
 
-    @Operation(summary = "解锁用户")
+    @OperateLog(title = "批量锁定用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @Operation(summary = "批量锁定用户")
+    @PostMapping("/lockBatch")
+    public ResResult<Void> lockBatch(@NotEmpty(message = "用户集合不可为空") List<Long> userIds){
+        userAdminService.lockBatch(userIds);
+        return Res.ok();
+    }
+
     @OperateLog(title = "解锁用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @Operation(summary = "解锁用户")
     @PostMapping("/unlock")
-    public ResResult<Void> unlock(Long userId){
+    public ResResult<Void> unlock(@NotNull(message = "用户不可为空") Long userId){
         userAdminService.unlock(userId);
+        return Res.ok();
+    }
+    @OperateLog(title = "批量解锁用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @Operation(summary = "批量解锁用户")
+    @PostMapping("/unlockBatch")
+    public ResResult<Void> unlockBatch(@NotEmpty(message = "用户集合不可为空") List<Long> userIds){
+        userAdminService.unlockBatch(userIds);
         return Res.ok();
     }
 

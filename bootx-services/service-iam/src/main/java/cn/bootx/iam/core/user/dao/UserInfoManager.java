@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**   
@@ -70,6 +71,15 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
 
     public void setUpStatus(Long userId, int status) {
         lambdaUpdate().eq(MpBaseEntity::getId,userId)
+                .set(UserInfo::getStatus,status)
+                .update();
+    }
+
+    /**
+     * 批量更新用户状态
+     */
+    public void setUpStatusBatch(List<Long> userIds, int status) {
+        lambdaUpdate().in(MpBaseEntity::getId,userIds)
                 .set(UserInfo::getStatus,status)
                 .update();
     }

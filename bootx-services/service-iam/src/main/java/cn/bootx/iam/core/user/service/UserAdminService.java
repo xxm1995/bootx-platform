@@ -82,11 +82,26 @@ public class UserAdminService {
         userInfoManager.setUpStatus(userId,UserStatusCode.BAN);
     }
 
+
+    /**
+     * 批量锁定用户
+     */
+    public void lockBatch(List<Long> userIds){
+        userInfoManager.setUpStatusBatch(userIds,UserStatusCode.BAN);
+    }
+
     /**
      * 解锁用户
      */
     public void unlock(Long userId){
         userInfoManager.setUpStatus(userId,UserStatusCode.NORMAL);
+    }
+
+    /**
+     * 批量解锁用户
+     */
+    public void unlockBatch(List<Long> userIds){
+        userInfoManager.setUpStatusBatch(userIds,UserStatusCode.NORMAL);
     }
 
     /**

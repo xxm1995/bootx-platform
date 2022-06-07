@@ -33,7 +33,7 @@ public class UserDataScopeController {
         return Res.ok();
     }
 
-    @Operation(summary = "给用户分配权限")
+    @Operation(summary = "给用户分配权限(批量)")
     @PostMapping("/saveAssignBatch")
     public ResResult<Void> saveAssignBatch(@RequestBody UserDataScopeBatchParam param){
         dataScopeService.saveAssignBatch(param.getUserIds(), param.getDataScopeId());

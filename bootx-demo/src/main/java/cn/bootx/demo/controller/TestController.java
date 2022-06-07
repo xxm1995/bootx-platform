@@ -1,26 +1,28 @@
 package cn.bootx.demo.controller;
 
 import cn.bootx.common.core.annotation.Idempotent;
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.common.core.rest.dto.KeyValue;
-import cn.bootx.common.redis.code.RedisCode;
 import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRangeManager;
-import cn.bootx.demo.ws.WebSocketDemo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+@Validated
+@IgnoreAuth
 @Slf4j
 @Tag(name ="测试控制器")
 @RestController
@@ -28,9 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TestController {
     private final Sequence sequence;
-    private final WebSocketDemo webSocketDemo;
     private final SeqRangeManager seqRangeManager;
-    private final RedisTemplate<String,Object> redisTemplate;
 
     @OperateLog(title = "测试日志")
     @OperateLog(title = "测试重复日志")
@@ -67,29 +67,9 @@ public class TestController {
         return Res.ok(defaultRangeSequence.next("aa"));
     }
 
-    @Operation(summary = "redis消息队列发布")
-    @GetMapping("/redisPub")
-    public ResResult<Void> redisPub(){
-//        redisClient.convertAndSend("t1","aaass");
-//        redisClient.convertAndSend("t2",new KeyValue("aa","bbb"));
-        redisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+"t1","aaass");
-        redisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+"t2",new KeyValue("aa","bbb"));
-//        stringRedisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+"t1","aaass");
-//        stringRedisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+"t2",new KeyValue("aa","bbb"));
-        return Res.ok();
-    }
-
-    @Operation(summary = "发送ws消息")
-    @PostMapping("/sendWsByUserId")
-    public ResResult<Void> sendWsByUserId(Long userId,String msg){
-        webSocketDemo.sendMessage(msg,userId);
-        return Res.ok();
-    }
-
-    @Operation(summary = "发送ws消息(全部用户)")
-    @PostMapping("/sendWsByAll")
-    public ResResult<Void> sendWsByUserId(String msg){
-        webSocketDemo.sendMessage(msg);
+    @Operation(summary = "校验测试")
+    @GetMapping("/validation")
+    public ResResult<Void> validation(@NotBlank(message = "校验测试") String msg, @NotNull(message = "不为空") Integer a){
         return Res.ok();
     }
 }

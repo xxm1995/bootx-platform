@@ -34,7 +34,7 @@ public class UserRoleController {
         return Res.ok();
     }
 
-    @Operation( summary = "批量用户分配角色")
+    @Operation( summary = "给用户分配角色(批量)")
     @PostMapping(value = "/saveAssignBatch")
     public ResResult<Void> saveAssignBatch(@RequestBody UserRoleBatchParam param) {
         ValidationUtil.validateParam(param);

@@ -16,11 +16,17 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**   
-* Web 项目异常处理
-* @author xxm  
-* @date 2020/5/8 15:30 
-*/
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
+
+import static cn.bootx.common.core.code.CommonErrorCode.VALIDATE_PARAMETERS_ERROR;
+
+/**
+ * Web 项目异常处理
+ * @author xxm
+ * @date 2020/5/8 15:30
+ */
 @Slf4j
 @RestControllerAdvice
 @EnableConfigurationProperties(ExceptionHandlerProperties.class)
@@ -35,6 +41,28 @@ public class RestExceptionHandler {
     public ResResult<Void> handleBusinessException(BizException ex) {
         log.info(ex.getMessage(), ex);
         return Res.response(ex.getCode(),ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+    }
+
+    /**
+     * 请求参数校验未通过
+     */
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResResult<Void> handleBusinessException(ConstraintViolationException ex) {
+        log.info(ex.getMessage(), ex);
+        StringBuilder message = new StringBuilder();
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            message.append(violation.getMessage()).append(System.lineSeparator());
+        }
+        return Res.response(VALIDATE_PARAMETERS_ERROR,message.toString(),MDC.get(CommonCode.TRACE_ID));
+    }
+
+    /**
+     * 请求参数校验未通过
+     */
+    @ExceptionHandler({ValidationException.class})
+    public ResResult<Void> handleBusinessException(ValidationException ex) {
+        log.info(ex.getMessage(), ex);
+        return Res.response(VALIDATE_PARAMETERS_ERROR,ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -113,5 +141,5 @@ public class RestExceptionHandler {
         log.error("系统错误 " + ex.getMessage(), ex);
         return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));
     }
-    
+
 }

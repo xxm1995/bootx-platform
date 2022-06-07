@@ -89,6 +89,7 @@ bootx:
         - '/token/**'
         - '/webjars/**'
         - '/css/**'
+        - '/favicon.ico'
         - '/error'
     # 审计日志存储
     audit-log:

@@ -13,7 +13,7 @@
     <include resource="cn/bootx/common/log/logback-elk.xml"/>
     <include resource="cn/bootx/common/log/logback-plumelog.xml"/>
 
-    <!-- 开发级别 -->
+    <!-- 开发输出级别 -->
     <root level="INFO">
         <appender-ref ref="console"/>
         <appender-ref ref="fileInfoLog"/>

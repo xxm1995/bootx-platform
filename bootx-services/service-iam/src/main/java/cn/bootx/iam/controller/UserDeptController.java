@@ -33,7 +33,7 @@ public class UserDeptController {
         return Res.ok();
     }
 
-    @Operation(summary = "给用多个户分配部门")
+    @Operation(summary = "给用户分配部门(批量)")
     @PostMapping("/saveAssignBatch")
     public ResResult<Void> saveAssignBatch(@RequestBody UserDeptBatchParam param){
         ValidationUtil.validateParam(param);

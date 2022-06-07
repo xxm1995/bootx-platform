@@ -45,7 +45,6 @@ public class UserDeptService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void saveAssignBatch(List<Long> userIds, List<Long> deptIds){
-
         // 先删除用户拥有的部门
         userDeptManager.deleteByUsers(userIds);
         // 然后给用户添加部门
@@ -86,7 +85,7 @@ public class UserDeptService {
      */
     private List<UserDept> createUserDepots(Long userId, List<Long> deptIds){
         return deptIds.stream()
-                .map(deptId -> new UserDept(deptId,userId))
+                .map(deptId -> new UserDept(userId,deptId))
                 .collect(Collectors.toList());
     }
 

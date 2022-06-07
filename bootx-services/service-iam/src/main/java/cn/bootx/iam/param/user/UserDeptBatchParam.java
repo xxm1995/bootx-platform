@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -17,7 +17,7 @@ import java.util.List;
 public class UserDeptBatchParam {
 
     @Schema(description= "用户id")
-    @NotNull(message = "用户id不可为空")
+    @NotEmpty(message = "用户id不可为空")
     private List<Long> userIds;
 
     @Schema(description= "部门id集合")
