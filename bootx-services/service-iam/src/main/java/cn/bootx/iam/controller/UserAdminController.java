@@ -96,4 +96,5 @@ public class UserAdminController {
     public ResResult<PageResult<UserInfoDto>> page(PageParam pageParam, UserInfoParam userInfoParam){
         return Res.ok(userAdminService.page(pageParam,userInfoParam));
     }
+
 }

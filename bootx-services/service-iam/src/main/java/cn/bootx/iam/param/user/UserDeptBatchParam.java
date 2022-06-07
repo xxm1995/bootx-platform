@@ -13,12 +13,12 @@ import java.util.List;
 */
 @Data
 @Accessors(chain = true)
-@Schema(title = "用户部门关联")
-public class UserDeptParam {
+@Schema(title = "用户部门批量关联")
+public class UserDeptBatchParam {
 
     @Schema(description= "用户id")
     @NotNull(message = "用户id不可为空")
-    private Long userId;
+    private List<Long> userIds;
 
     @Schema(description= "部门id集合")
     private List<Long> deptIds;

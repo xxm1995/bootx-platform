@@ -6,5 +6,4 @@ services:
     restart: always
     volumes:
       - /data/logs:/data/logs
-    command:
-      - filebeat /usr/share/filebeat/filebeat.yml
+    command: filebeat /usr/share/filebeat/filebeat.yml

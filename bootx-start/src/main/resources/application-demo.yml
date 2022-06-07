@@ -89,7 +89,7 @@ bootx:
         - '/token/**'
         - '/webjars/**'
         - '/css/**'
-    #        - '/**'
+        - '/error'
     # 审计日志存储
     audit-log:
       store: mongo

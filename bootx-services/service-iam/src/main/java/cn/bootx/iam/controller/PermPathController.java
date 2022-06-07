@@ -4,8 +4,10 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.iam.core.permission.service.PermPathService;
 import cn.bootx.iam.dto.permission.PermPathDto;
+import cn.bootx.iam.param.permission.PermPathBatchEnableParam;
 import cn.bootx.iam.param.permission.PermPathParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,13 +30,23 @@ public class PermPathController {
     @Operation(summary = "添加权限")
     @PostMapping("/add")
     public ResResult<PermPathDto> add(@RequestBody PermPathParam param){
-        return Res.ok(pathService.add(param));
+        pathService.add(param);
+        return Res.ok();
     }
 
     @Operation(summary = "更新权限")
     @PostMapping("/update")
     public ResResult<PermPathDto> update(@RequestBody PermPathParam param){
-        return Res.ok(pathService.update(param));
+        pathService.update(param);
+        return Res.ok();
+    }
+
+    @Operation(summary = "批量更新状态")
+    @PostMapping("/batchUpdateEnable")
+    public ResResult<PermPathDto> batchUpdateEnable(@RequestBody PermPathBatchEnableParam param){
+        ValidationUtil.validateParam(param);
+        pathService.batchUpdateEnable(param);
+        return Res.ok();
     }
 
     @Operation(summary = "删除权限")

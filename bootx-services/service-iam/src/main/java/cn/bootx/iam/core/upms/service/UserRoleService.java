@@ -1,9 +1,12 @@
 package cn.bootx.iam.core.upms.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.iam.core.role.dao.RoleManager;
 import cn.bootx.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.iam.core.upms.entity.UserRole;
+import cn.bootx.iam.core.user.dao.UserInfoManager;
+import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.role.RoleDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +14,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +31,7 @@ import static cn.bootx.iam.code.CachingCode.USER_PATH;
 public class UserRoleService {
 
     private final RoleManager roleManager;
+    private final UserInfoManager userInfoManager;
     private final UserRoleManager userRoleManager;
 
     /**
@@ -34,12 +39,28 @@ public class UserRoleService {
      */
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = {USER_PATH},allEntries = true)
-    public void saveAndUpdate(Long userId, List<Long> roleIds){
+    public void saveAssign(Long userId, List<Long> roleIds){
         // 先删除用户拥有的角色
         userRoleManager.deleteByUser(userId);
         // 然后给用户添加角色
-        List<UserRole> userRoles = roleIds.stream()
-                .map(roleId -> new UserRole().setRoleId(roleId).setUserId(userId))
+        List<UserRole> userRoles = this.createUserRoles(userId,roleIds);
+        userRoleManager.saveAll(userRoles);
+    }
+
+    /**
+     * 给用户分配角色
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {USER_PATH},allEntries = true)
+    public void saveAssignBatch(List<Long> userIds, List<Long> roleIds){
+        List<UserInfo> userInfos = userInfoManager.findAllByIds(userIds);
+        if (userInfos.size()!=userIds.size()){
+            throw new BizException("用户数据有问题");
+        }
+        userRoleManager.deleteByUsers(userIds);
+        List<UserRole> userRoles = userIds.stream()
+                .map(userId -> this.createUserRoles(userId, roleIds))
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         userRoleManager.saveAll(userRoles);
     }
@@ -54,12 +75,21 @@ public class UserRoleService {
                 .collect(Collectors.toList());
     }
 
-
     /**
      * 查询用户所对应的角色
      */
     public List<RoleDto> findRolesByUser(Long userId){
         return ResultConvertUtil.dtoListConvert(roleManager.findAllByIds(this.findRoleIdsByUser(userId)));
+    }
+
+
+    /**
+     * 创建用户角色关联
+     */
+    private List<UserRole> createUserRoles(Long userId, List<Long> roleIds){
+        return roleIds.stream()
+                .map(roleId -> new UserRole().setRoleId(roleId).setUserId(userId))
+                .collect(Collectors.toList());
     }
 
 }

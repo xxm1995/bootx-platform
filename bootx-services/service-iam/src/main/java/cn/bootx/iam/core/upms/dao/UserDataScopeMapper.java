@@ -3,6 +3,9 @@ package cn.bootx.iam.core.upms.dao;
 import cn.bootx.iam.core.upms.entity.UserDataScope;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**   
 *
@@ -11,4 +14,5 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface UserDataScopeMapper extends BaseMapper<UserDataScope> {
+    void saveAll(@Param("userDataScopes") List<UserDataScope> userDataScopes);
 }

@@ -12,6 +12,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,13 +32,26 @@ public class UserDeptService {
      * 给用户分配部门
      */
     @Transactional(rollbackFor = Exception.class)
-    public void saveAndUpdate(Long userId, List<Long> deptIds){
+    public void saveAssign(Long userId, List<Long> deptIds){
 
         // 先删除用户拥有的部门
         userDeptManager.deleteByUser(userId);
         // 然后给用户添加部门
-        List<UserDept> userDeptList = deptIds.stream()
-                .map(roleId -> new UserDept().setDeptId(roleId).setUserId(userId))
+        List<UserDept> userDeptList = this.createUserDepots(userId,deptIds);
+        userDeptManager.saveAll(userDeptList);
+    }
+    /**
+     * 给用户分配部门 批量
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void saveAssignBatch(List<Long> userIds, List<Long> deptIds){
+
+        // 先删除用户拥有的部门
+        userDeptManager.deleteByUsers(userIds);
+        // 然后给用户添加部门
+        List<UserDept> userDeptList = userIds.stream()
+                .map(userId -> this.createUserDepots(userId,deptIds))
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
         userDeptManager.saveAll(userDeptList);
     }
@@ -65,6 +79,15 @@ public class UserDeptService {
     @EventListener
     public void DeptDeleteEventListener(DeptDeleteEvent event){
         userDeptManager.deleteByDeptIds(event.getDeptIds());
+    }
+
+    /**
+     * 创建用户部门关联
+     */
+    private List<UserDept> createUserDepots(Long userId, List<Long> deptIds){
+        return deptIds.stream()
+                .map(deptId -> new UserDept(deptId,userId))
+                .collect(Collectors.toList());
     }
 
 }

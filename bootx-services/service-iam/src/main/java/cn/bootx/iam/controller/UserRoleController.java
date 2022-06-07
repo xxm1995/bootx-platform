@@ -5,6 +5,7 @@ import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.dto.role.RoleDto;
+import cn.bootx.iam.param.upms.UserRoleBatchParam;
 import cn.bootx.iam.param.upms.UserRoleParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,11 +27,19 @@ public class UserRoleController {
     private final UserRoleService userRoleService;
 
     @Operation( summary = "给用户分配角色")
-    @PostMapping(value = "/saveAndUpdate")
-    public ResResult<Boolean> saveAndUpdate(@RequestBody UserRoleParam param) {
+    @PostMapping(value = "/saveAssign")
+    public ResResult<Void> saveAssign(@RequestBody UserRoleParam param) {
         ValidationUtil.validateParam(param);
-        userRoleService.saveAndUpdate(param.getUserId(), param.getRoleIds());
-        return Res.ok(true);
+        userRoleService.saveAssign(param.getUserId(), param.getRoleIds());
+        return Res.ok();
+    }
+
+    @Operation( summary = "批量用户分配角色")
+    @PostMapping(value = "/saveAssignBatch")
+    public ResResult<Void> saveAssignBatch(@RequestBody UserRoleBatchParam param) {
+        ValidationUtil.validateParam(param);
+        userRoleService.saveAssignBatch(param.getUserIds(), param.getRoleIds());
+        return Res.ok();
     }
 
     @Operation( summary = "根据用户ID获取到角色集合")

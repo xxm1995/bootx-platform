@@ -2,8 +2,10 @@ package cn.bootx.iam.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.iam.core.user.service.UserDeptService;
 import cn.bootx.iam.dto.dept.DeptDto;
+import cn.bootx.iam.param.user.UserDeptBatchParam;
 import cn.bootx.iam.param.user.UserDeptParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,9 +26,18 @@ public class UserDeptController {
     private final UserDeptService userDeptService;
 
     @Operation(summary = "给用户分配部门")
-    @PostMapping("/saveAndUpdate")
-    public ResResult<Void> saveAndUpdate(@RequestBody UserDeptParam userDeptParam){
-        userDeptService.saveAndUpdate(userDeptParam.getUserId(), userDeptParam.getDeptIds());
+    @PostMapping("/saveAssign")
+    public ResResult<Void> saveAssign(@RequestBody UserDeptParam param){
+        ValidationUtil.validateParam(param);
+        userDeptService.saveAssign(param.getUserId(), param.getDeptIds());
+        return Res.ok();
+    }
+
+    @Operation(summary = "给用多个户分配部门")
+    @PostMapping("/saveAssignBatch")
+    public ResResult<Void> saveAssignBatch(@RequestBody UserDeptBatchParam param){
+        ValidationUtil.validateParam(param);
+        userDeptService.saveAssignBatch(param.getUserIds(), param.getDeptIds());
         return Res.ok();
     }
 

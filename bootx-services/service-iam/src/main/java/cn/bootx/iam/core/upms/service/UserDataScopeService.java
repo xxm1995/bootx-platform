@@ -58,12 +58,26 @@ public class UserDataScopeService {
      */
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = {USER_DATA_SCOPE},key = "#userId")
-    public void saveAndUpdate(Long userId, Long dataScopeId){
+    public void saveAssign(Long userId, Long dataScopeId){
         // 先删除用户拥有的数据权限
         userDataScopeManager.deleteByUser(userId);
         if (Objects.nonNull(dataScopeId)){
             userDataScopeManager.save(new UserDataScope(userId,dataScopeId));
         }
+    }
+
+    /**
+     * 给用户数据权限关联关系
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {USER_DATA_SCOPE},key = "#userIds")
+    public void saveAssignBatch(List<Long> userIds, Long dataScopeId){
+        // 先删除用户拥有的数据权限
+        userDataScopeManager.deleteByUsers(userIds);
+        List<UserDataScope> userDataScopes = userIds.stream()
+                .map(userId -> new UserDataScope(userId, dataScopeId))
+                .collect(Collectors.toList());
+        userDataScopeManager.saveAll(userDataScopes);
     }
 
     /**

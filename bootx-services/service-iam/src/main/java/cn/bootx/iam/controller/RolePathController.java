@@ -2,6 +2,7 @@ package cn.bootx.iam.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.iam.core.upms.service.RolePathService;
 import cn.bootx.iam.dto.permission.PermPathDto;
 import cn.bootx.iam.param.upms.RolePermissionParam;
@@ -26,6 +27,7 @@ public class RolePathController {
     @Operation(summary = "保存角色权限关联关系")
     @PostMapping("/save")
     public ResResult<Void> save(@RequestBody RolePermissionParam param){
+        ValidationUtil.validateParam(param);
         rolePathService.addRolePath(param.getRoleId(),param.getPermissionIds());
         return Res.ok();
     }

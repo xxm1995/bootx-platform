@@ -2,8 +2,10 @@ package cn.bootx.iam.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.iam.core.upms.service.UserDataScopeService;
 import cn.bootx.iam.dto.scope.DataScopeDto;
+import cn.bootx.iam.param.upms.UserDataScopeBatchParam;
 import cn.bootx.iam.param.upms.UserDataScopeParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,8 +27,16 @@ public class UserDataScopeController {
 
     @Operation(summary = "给用户分配权限")
     @PostMapping("/saveAssign")
-    public ResResult<Void> saveAssign(@RequestBody UserDataScopeParam userDataScopeParam){
-        dataScopeService.saveAndUpdate(userDataScopeParam.getUserId(), userDataScopeParam.getDataScopeId());
+    public ResResult<Void> saveAssign(@RequestBody UserDataScopeParam param){
+        ValidationUtil.validateParam(param);
+        dataScopeService.saveAssign(param.getUserId(), param.getDataScopeId());
+        return Res.ok();
+    }
+
+    @Operation(summary = "给用户分配权限")
+    @PostMapping("/saveAssignBatch")
+    public ResResult<Void> saveAssignBatch(@RequestBody UserDataScopeBatchParam param){
+        dataScopeService.saveAssignBatch(param.getUserIds(), param.getDataScopeId());
         return Res.ok();
     }
 

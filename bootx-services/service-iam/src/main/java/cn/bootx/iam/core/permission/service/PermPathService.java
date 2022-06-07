@@ -14,6 +14,7 @@ import cn.bootx.iam.core.permission.entity.PermPath;
 import cn.bootx.iam.core.permission.entity.RequestPath;
 import cn.bootx.iam.core.upms.dao.RolePathManager;
 import cn.bootx.iam.dto.permission.PermPathDto;
+import cn.bootx.iam.param.permission.PermPathBatchEnableParam;
 import cn.bootx.iam.param.permission.PermPathParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -49,22 +50,33 @@ public class PermPathService {
     /**
      * 添加权限信息
      */
-    public PermPathDto add(PermPathParam param){
+    public void add(PermPathParam param){
         PermPath permPath = PermPath.init(param);
-        return permPathManager.save(permPath).toDto();
+        permPathManager.save(permPath);
     }
 
     /**
      * 更新权限信息
      */
     @CacheEvict(value = {USER_PATH,IGNORE_PATH},allEntries = true)
-    public PermPathDto update(PermPathParam param){
+    public void update(PermPathParam param){
         PermPath permPath = permPathManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("信息不存在"));
         BeanUtil.copyProperties(param, permPath,CopyOptions.create().ignoreNullValue());
         // 编辑过的信息不再作为系统生成的
         permPath.setGenerate(false);
-        return permPathManager.updateById(permPath).toDto();
+        permPathManager.updateById(permPath);
+    }
+
+    /**
+     * 批量更新状态
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {USER_PATH,IGNORE_PATH},allEntries = true)
+    public void batchUpdateEnable(PermPathBatchEnableParam param){
+        List<PermPath> permPaths = permPathManager.findAllByIds(param.getPermPathIds());
+        permPaths.forEach(permPath -> permPath.setEnable(param.isEnable()).setGenerate(false));
+        permPathManager.updateAllById(permPaths);
     }
 
     /**

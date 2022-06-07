@@ -38,6 +38,7 @@
         <ttl.version>2.12.6</ttl.version>
         <flyway.version>7.15.0</flyway.version>
         <logback-classic.version>1.2.11</logback-classic.version>
+        <plumelog.version>3.5.2</plumelog.version>
         <xxl-job.version>2.3.0</xxl-job.version>
         <sa-token.version>1.30.0</sa-token.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
@@ -67,6 +68,19 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback-classic.version}</version>
+            </dependency>
+
+            <!-- plumelog lite 单机版 -->
+            <dependency>
+                <groupId>com.plumelog</groupId>
+                <artifactId>plumelog-lite-spring-boot-starter</artifactId>
+                <version>${plumelog.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.plumelog</groupId>
+                <artifactId>plumelog-trace</artifactId>
+                <version>${plumelog.version}</version>
             </dependency>
 
             <!-- mp -->

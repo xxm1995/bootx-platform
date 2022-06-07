@@ -10,7 +10,6 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 1
-
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -40,7 +39,7 @@ spring:
     # 如果 flyway_schema_history 不存在自动创建
     baseline-on-migrate: true
     # 开发模式开启
-    enabled: false
+    enabled: true
   # 定时任务
   quartz:
     # 持久化方式
@@ -107,8 +106,10 @@ bootx:
         - '/doc.html'
         - '/swagger-resources/**'
         - '/token/**'
+        - "/plumelog/**"
         - '/webjars/**'
         - '/css/**'
+        - '/error'
 #        - '/**'
     # 审计日志存储
     audit-log:

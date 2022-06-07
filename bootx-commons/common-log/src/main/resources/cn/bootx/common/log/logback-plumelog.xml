@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <appender name="plumelog" class="com.plumelog.lite.logback.appender.LiteAppender">
+        <appName>${appname}</appName>
+        <!-- 日志存储位置 -->
+        <logPath>${logdir}/plumelog</logPath>
+        <!-- 日志保留天数 -->
+        <keepDay>30</keepDay>
+    </appender>
+</included>

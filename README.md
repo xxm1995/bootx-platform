@@ -17,16 +17,16 @@
 
 ## 🍒文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) 
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) 
-- ELK日志收集：[Kibana](http://elk.dev.bootx.cn:5601/app/discove)
+- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)
+- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)
+- 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove) [PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 
 ## 🚩特色功能演示
 
 ### 结算台支付演示
-> 
+>
 > - [结算台支付演示地址](http://web.platform.bootx.cn/cashier ) 对当前的支付功能做了一个结算台的DEMO，方便进行演示和测试，支持微信、支付宝、聚合支付等方式
 > - [支付记录列表](http://web.platform.bootx.cn/payment/order/payment) 支付记录列表支持关闭支付记录、退款、手动同步支付状态等功能
 > - 因为当前没有对应的支付宝和微信支付的资质，所以支付宝使用的账号是沙箱账号，而微信暂时没有账号，现在只能测试支付宝和聚合支付相关的功能。
@@ -47,7 +47,7 @@
 - 支持嵌套查询的超级查询构造器，自动生成对应条件SQL语句
 - 提供项目对应的代码生成器，方便开发
 - 定制Mybatis Plus组件和插件，更方便开发
-- 支持通过ELK来管理项目日志
+- 支持通过ELK或者轻量级PlumeLog来管理项目日志
 
 ## 🥞项目整体结构
 ```lua
@@ -163,12 +163,17 @@ QQ扫码加入QQ交流群
 <img src="https://oscimg.oschina.net/oscnet/up-ac1a8f8221203de2b5cbc6a461a26199b95.jpg" width = "330" height = "500"/>
 </p>
 
+## 🍻 鸣谢
+感谢 JetBrains 提供的免费开源 License：
+
+[![JetBrains](https://oscimg.oschina.net/oscnet/up-4aab9fa8bc769295b48c888d93e71320d93.png)](https://www.jetbrains.com/?from=bootx)
+
 ## 🍷License
 
 Apache License Version 2.0
 
 ## 🥂其他
 
-- star趋势 
+- star趋势
 
 [![Stargazers over time](https://whnb.wang/stars/bootx/bootx-platform)](https://whnb.wang)

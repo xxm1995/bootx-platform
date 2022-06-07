@@ -1,7 +1,9 @@
 package cn.bootx.iam.core.user.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.user.entity.UserDept;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -25,6 +27,13 @@ public class UserDeptManager extends BaseManager<UserDeptMapper, UserDept> {
     }
 
     /**
+     * 根据用户id集合删除关联关系
+     */
+    public void deleteByUsers(List<Long> userIds) {
+        this.deleteByFields(UserDept::getUserId,userIds);
+    }
+
+    /**
      * 根据部门id集合删除
      */
     public void deleteByDeptIds(List<Long> deptIds) {
@@ -36,5 +45,15 @@ public class UserDeptManager extends BaseManager<UserDeptMapper, UserDept> {
      */
     public List<UserDept> findDeptIdsByUser(Long userId) {
         return findAllByField(UserDept::getUserId,userId);
+    }
+
+    /**
+     * 批量保存
+     */
+    @Override
+    public List<UserDept> saveAll(List<UserDept> list) {
+        MpUtil.initEntityList(list, SecurityUtil.getUserIdOrDefaultId());
+        MpUtil.executeBatch(list,baseMapper::saveAll,this.DEFAULT_BATCH_SIZE);
+        return list;
     }
 }

@@ -31,6 +31,9 @@ public class ValidationUtil {
         }
     }
 
+    /**
+     * 提取校验失败的消息
+     */
     private String extractMessages(Set<ConstraintViolation<Object>> violations) {
         StringBuilder message = new StringBuilder();
         for (ConstraintViolation<Object> violation : violations) {

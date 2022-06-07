@@ -1,7 +1,9 @@
 package cn.bootx.iam.core.upms.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.upms.entity.UserRole;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -25,8 +27,21 @@ public class UserRoleManager extends BaseManager<UserRoleMapper,UserRole> {
     public void deleteByUser(Long userId) {
         deleteByField(UserRole::getUserId,userId);
     }
+    public void deleteByUsers(List<Long> userIds) {
+        deleteByFields(UserRole::getUserId,userIds);
+    }
 
     public List<UserRole> findRoleIdsByUser(Long userId) {
         return findAllByField(UserRole::getUserId,userId);
     }
+
+    /**
+     * 批量保存
+     */
+    public List<UserRole> saveAll(List<UserRole> userRoles){
+        MpUtil.initEntityList(userRoles, SecurityUtil.getUserIdOrDefaultId());
+        MpUtil.executeBatch(userRoles,baseMapper::saveAll,this.DEFAULT_BATCH_SIZE);
+        return userRoles;
+    }
+
 }

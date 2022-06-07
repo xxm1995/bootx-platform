@@ -3,6 +3,8 @@ package cn.bootx.iam.controller;
 import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.util.ValidationUtil;
+import cn.bootx.iam.core.permission.entity.PermMenu;
 import cn.bootx.iam.core.upms.service.RoleMenuService;
 import cn.bootx.iam.dto.upms.MenuAndResourceDto;
 import cn.bootx.iam.param.upms.RolePermissionParam;
@@ -28,6 +30,7 @@ public class RoleMenuController {
     @Operation(summary = "保存请求权限关系")
     @PostMapping("/save")
     public ResResult<Boolean> save(@RequestBody RolePermissionParam param){
+        ValidationUtil.validateParam(param, PermMenu.class);
         roleMenuService.save(param.getRoleId(),param.getClientCode(),param.getPermissionIds());
         return Res.ok(true);
     }

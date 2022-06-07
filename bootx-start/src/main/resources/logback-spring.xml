@@ -5,6 +5,19 @@
     <property name="appname" value="bootx-platform"/>
     <!--日志位置-->
     <property name="logdir" value="logs"/>
-    <!-- 这个要放下面 -->
-    <include resource="cn/bootx/common/log/logback-bootx-common.xml"/>
+
+    <!-- 导入 -->
+    <include resource="cn/bootx/common/log/logback-sensitive.xml"/>
+    <include resource="cn/bootx/common/log/logback-console.xml"/>
+    <include resource="cn/bootx/common/log/logback-log-file.xml"/>
+    <include resource="cn/bootx/common/log/logback-elk.xml"/>
+    <include resource="cn/bootx/common/log/logback-plumelog.xml"/>
+
+    <!-- 开发级别 -->
+    <root level="INFO">
+        <appender-ref ref="console"/>
+        <appender-ref ref="fileInfoLog"/>
+        <appender-ref ref="elk"/>
+        <appender-ref ref="plumelog"/>
+    </root>
 </configuration>
