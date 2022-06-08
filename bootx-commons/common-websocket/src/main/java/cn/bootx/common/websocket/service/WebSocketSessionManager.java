@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
-* websocket抽象类
+* websocket管理器
 * @author xxm
 * @date 2022/5/27
 */

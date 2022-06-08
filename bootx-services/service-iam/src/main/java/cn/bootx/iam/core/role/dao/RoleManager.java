@@ -32,7 +32,6 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
 
     public boolean existsByCode(String code, Long id) {
         return existedByField(Role::getCode,code,id);
-
     }
 
     public boolean existsByName(String name) {

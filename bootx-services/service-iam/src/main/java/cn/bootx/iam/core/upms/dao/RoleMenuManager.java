@@ -24,6 +24,10 @@ public class RoleMenuManager extends BaseManager<RoleMenuMapper, RoleMenu> {
         deleteByField(RoleMenu::getPermissionId,permissionId);
     }
 
+    public void deleteByRole(Long roleId){
+        this.deleteByField(RoleMenu::getRoleId,roleId);
+    }
+
     public List<RoleMenu> findAllByRoles(List<Long> roleIds) {
         return findAllByFields(RoleMenu::getRoleId,roleIds);
     }

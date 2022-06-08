@@ -90,6 +90,15 @@ public class PermPathService {
     }
 
     /**
+     * 批量删除
+     */
+    @CacheEvict(value = {USER_PATH,IGNORE_PATH},allEntries = true)
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatch(List<Long> ids) {
+        rolePathManager.deleteByPermissions(ids);
+        permPathManager.deleteByIds(ids);
+    }
+    /**
      * 获取指请求定类型未启用访问控制的请求路径
      */
     @Cacheable(value = {IGNORE_PATH}, key = "#requestType")

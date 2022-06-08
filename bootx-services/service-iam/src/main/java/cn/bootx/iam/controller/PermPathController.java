@@ -12,14 +12,18 @@ import cn.bootx.iam.param.permission.PermPathParam;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
 * @author xxm
 * @date 2020/5/11 9:36
 */
+@Validated
 @Tag(name ="请求权限资源")
 @RestController
 @RequestMapping("/perm/path")
@@ -51,8 +55,15 @@ public class PermPathController {
 
     @Operation(summary = "删除权限")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(@NotNull(message = "id不可为空") Long id){
         pathService.delete(id);
+        return Res.ok();
+    }
+
+    @Operation(summary = "批量删除")
+    @DeleteMapping("/deleteBatch")
+    public ResResult<Void> deleteBatch(@RequestBody @NotEmpty(message = "id集合不可为空") List<Long> ids){
+        pathService.deleteBatch(ids);
         return Res.ok();
     }
 

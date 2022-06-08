@@ -6,8 +6,10 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.role.dao.RoleManager;
-import cn.bootx.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.iam.core.role.entity.Role;
+import cn.bootx.iam.core.upms.dao.RoleMenuManager;
+import cn.bootx.iam.core.upms.dao.RolePathManager;
+import cn.bootx.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.iam.dto.role.RoleDto;
 import cn.bootx.iam.exception.role.RoleAlreadyExistedException;
 import cn.bootx.iam.exception.role.RoleAlreadyUsedException;
@@ -17,11 +19,14 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+
+import static cn.bootx.iam.code.CachingCode.USER_PATH;
 
 /**   
 * 角色
@@ -34,6 +39,8 @@ import java.util.Objects;
 public class RoleService {
     private final RoleManager roleManager;
     private final UserRoleManager userRoleManager;
+    private final RolePathManager rolePathManager;
+    private final RoleMenuManager roleMenuManager;
 
     /**
      * 添加
@@ -58,7 +65,7 @@ public class RoleService {
     public RoleDto update(RoleParam roleParam){
         Long id = roleParam.getId();
 
-        //name和code唯一性校验（同一个租户下名称code不能相同）
+        //name和code唯一性校验
         if (roleManager.existsByCode(roleParam.getCode(),id)){
             throw new RoleAlreadyExistedException();
         }
@@ -76,6 +83,7 @@ public class RoleService {
      * 删除
      */
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = {USER_PATH},allEntries = true)
     public void delete(Long roleId){
         if (Objects.isNull(roleId) || !roleManager.existsById(roleId)){
             throw new RoleNotExistedException();
@@ -86,6 +94,9 @@ public class RoleService {
         }
         // 删除角色信息
         roleManager.deleteById(roleId);
+        // 删除关联的请求和菜单权限
+        rolePathManager.deleteByRole(roleId);
+        roleMenuManager.deleteByRole(roleId);
     }
 
     /**

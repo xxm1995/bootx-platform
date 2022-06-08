@@ -92,7 +92,7 @@ public class UserAdminController {
     @OperateLog(title = "批量锁定用户",businessType= BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "批量锁定用户")
     @PostMapping("/lockBatch")
-    public ResResult<Void> lockBatch(@NotEmpty(message = "用户集合不可为空") List<Long> userIds){
+    public ResResult<Void> lockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds){
         userAdminService.lockBatch(userIds);
         return Res.ok();
     }
@@ -104,10 +104,11 @@ public class UserAdminController {
         userAdminService.unlock(userId);
         return Res.ok();
     }
+
     @OperateLog(title = "批量解锁用户",businessType= BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "批量解锁用户")
     @PostMapping("/unlockBatch")
-    public ResResult<Void> unlockBatch(@NotEmpty(message = "用户集合不可为空") List<Long> userIds){
+    public ResResult<Void> unlockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds){
         userAdminService.unlockBatch(userIds);
         return Res.ok();
     }

@@ -33,7 +33,10 @@ public class RolePathManager extends BaseManager<RolePathMapper,RolePath> {
 
     public void deleteByPermission(Long permissionId){
         deleteByField(RolePath::getPermissionId,permissionId);
+    }
 
+    public void deleteByPermissions(List<Long> permissionIds){
+        deleteByFields(RolePath::getPermissionId,permissionIds);
     }
 
     /**
