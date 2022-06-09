@@ -8,6 +8,11 @@ import cn.bootx.common.core.exception.BizException;
 * @date 2021/12/22
 */
 public class NotLoginException extends BizException {
+
+    public NotLoginException(String msg){
+        super(msg);
+    }
+
     public NotLoginException() {
         super("未登录");
     }

@@ -49,5 +49,11 @@
             <artifactId>service-baseapi</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+
+        <!-- ws -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-websocket</artifactId>
+        </dependency>
     </dependencies>
 </project>

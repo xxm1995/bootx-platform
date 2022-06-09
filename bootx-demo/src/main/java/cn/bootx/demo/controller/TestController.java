@@ -9,6 +9,9 @@ import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRangeManager;
+import cn.bootx.common.websocket.entity.WsRes;
+import cn.bootx.common.websocket.entity.WsResult;
+import cn.bootx.common.websocket.service.UserWsNoticeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ import javax.validation.constraints.NotNull;
 public class TestController {
     private final Sequence sequence;
     private final SeqRangeManager seqRangeManager;
+    private final UserWsNoticeService userWsNoticeService;
 
     @OperateLog(title = "测试日志")
     @OperateLog(title = "测试重复日志")
@@ -70,6 +74,20 @@ public class TestController {
     @Operation(summary = "校验测试")
     @GetMapping("/validation")
     public ResResult<Void> validation(@NotBlank(message = "校验测试") String msg, @NotNull(message = "不为空") Integer a){
+        return Res.ok();
+    }
+
+    @Operation(summary = "用户全局ws消息通知测试")
+    @GetMapping("/userNotice")
+    public ResResult<Void> userNotice(Long id){
+
+        // 推送消息通知框
+        WsResult<String> result = WsRes.notificationError("警告");
+        userWsNoticeService.sendMessageByUser(result,id);
+
+        // 推送消息事件(通常由指定页面进行监听)
+        result = WsRes.eventNotice("hello", "cs");
+        userWsNoticeService.sendMessageByUser(result,id);
         return Res.ok();
     }
 }

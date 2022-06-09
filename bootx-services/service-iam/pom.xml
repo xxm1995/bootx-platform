@@ -53,6 +53,11 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-lock</artifactId>
         </dependency>
+        <!-- websocket -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-websocket</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

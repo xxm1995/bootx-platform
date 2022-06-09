@@ -18,5 +18,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
+
+        <!-- json -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-jackson</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -106,6 +106,7 @@ bootx:
         - '/doc.html'
         - '/swagger-resources/**'
         - '/token/**'
+        - '/ws/**'
         - "/plumelog/**"
         - '/webjars/**'
         - '/css/**'

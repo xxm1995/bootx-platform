@@ -49,13 +49,11 @@ public interface CommonCode {
 
     String USER = "user";
 
-    String USER_ID = "user_id";
+    String USER_ID = "userId";
 
     String DEPT_ID = "dept_id";
 
     String ID = "id";
-
-    String TID = "tid";
 
     String CREATOR = "creator";
 

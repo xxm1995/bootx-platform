@@ -1,21 +1,35 @@
 package cn.bootx.common.websocket.entity;
 
 import cn.bootx.common.core.code.CommonCode;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 /**
-*
+* websocket响应消息类
 * @author xxm
-* @date 2022/5/25
+* @date 2022/6/9
 */
-@Data
-@Accessors(chain = true)
-public class WsResult implements Serializable {
-    private static final long serialVersionUID = 2643141359685957800L;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class WsResult<T> implements Serializable {
+    private static final long serialVersionUID = -3260481389997567266L;
+    /** 类型编码 */
+    private int type = CommonCode.SUCCESS_CODE;
 
-    private int code = CommonCode.SUCCESS_CODE;
-    private String data;
+    /** 数据体 */
+    private T data;
+
+    /** 事件编码 */
+    private String eventCode;
+
+    public WsResult(int type,T data){
+        this.type = type;
+        this.data = data;
+    }
 }

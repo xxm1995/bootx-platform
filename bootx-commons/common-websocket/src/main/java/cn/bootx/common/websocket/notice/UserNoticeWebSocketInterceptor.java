@@ -1,0 +1,41 @@
+package cn.bootx.common.websocket.notice;
+
+import cn.bootx.common.websocket.func.WsUserAuthService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.server.HandshakeInterceptor;
+
+import java.util.Map;
+
+import static cn.bootx.common.core.code.CommonCode.USER_ID;
+import static cn.bootx.common.core.code.WebHeaderCode.ACCESS_TOKEN;
+
+/**   
+* 全局用户WS通知拦截鉴权
+* @author xxm  
+* @date 2022/6/9 
+*/
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class UserNoticeWebSocketInterceptor implements HandshakeInterceptor {
+    private final WsUserAuthService wsUserAuthService;
+
+    @Override
+    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+        String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter(ACCESS_TOKEN);
+        Long userId = wsUserAuthService.getUserIdByToken(token);
+        attributes.put(USER_ID,userId);
+        return true;
+    }
+
+    @Override
+    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
+
+    }
+}

@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.permission.service;
 
 import cn.bootx.common.core.annotation.OperateLog;
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
@@ -8,6 +9,8 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.common.websocket.entity.WsRes;
+import cn.bootx.common.websocket.service.UserWsNoticeService;
 import cn.bootx.iam.core.permission.convert.PermConvert;
 import cn.bootx.iam.core.permission.dao.PermPathManager;
 import cn.bootx.iam.core.permission.entity.PermPath;
@@ -16,6 +19,7 @@ import cn.bootx.iam.core.upms.dao.RolePathManager;
 import cn.bootx.iam.dto.permission.PermPathDto;
 import cn.bootx.iam.param.permission.PermPathBatchEnableParam;
 import cn.bootx.iam.param.permission.PermPathParam;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.StrUtil;
@@ -27,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -46,6 +51,7 @@ public class PermPathService {
     private final RolePathManager rolePathManager;
 
     private final RequestPathService requestPathService;
+    private final UserWsNoticeService userWsNoticeService;
 
     /**
      * 添加权限信息
@@ -168,6 +174,9 @@ public class PermPathService {
                 }).collect(Collectors.toList());
         // 增量更新
         this.incrementUpdate(permPaths);
+        // 更新成功通知
+        Optional<UserDetail> currentUser = SecurityUtil.getCurrentUser();
+        currentUser.ifPresent(userDetail -> userWsNoticeService.sendMessageByUser(WsRes.notificationInfo("请求资源同步完成"),userDetail.getId()));
     }
 
     /**

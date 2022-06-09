@@ -1,21 +1,16 @@
-package cn.bootx.common.websocket.service;
+package cn.bootx.common.websocket.manager;
 
 import cn.hutool.core.collection.ListUtil;
+import org.springframework.web.socket.WebSocketSession;
 
-import javax.websocket.Session;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-/**
-* websocket管理器
-* @author xxm
-* @date 2022/5/27
-*/
-public class WebSocketSessionManager {
+public class SpringWebSocketSessionManager {
     // session缓存
-    protected static final Map<String, Session> sessionPool = new ConcurrentHashMap<>();
+    protected static final Map<String, WebSocketSession> sessionPool = new ConcurrentHashMap<>();
     // sessionId 与 连接id 的映射关系 n:1
     protected static final Map<String, String> sid2id = new ConcurrentHashMap<>();
     // 连接id 与 sessionId 的映射关系 1:n
@@ -24,7 +19,7 @@ public class WebSocketSessionManager {
     /**
      * 添加会话session关联
      */
-    public void addSession(String id, Session session) {
+    public void addSession(String id, WebSocketSession session) {
         try {
             sid2id.put(session.getId(),id);
             sessionPool.put(session.getId(),session);
@@ -39,7 +34,7 @@ public class WebSocketSessionManager {
     /**
      * 删掉 连接Session
      */
-    public void removeSession(Session session) {
+    public void removeSession(WebSocketSession session) {
         sessionPool.remove(session.getId());
         String id = sid2id.remove(session.getId());
         Optional.ofNullable(id2sid.get(id))
@@ -58,7 +53,7 @@ public class WebSocketSessionManager {
     /**
      * 根据id获取关联的session列表
      */
-    public List<Session> getSessionsById(String id){
+    public List<WebSocketSession> getSessionsById(String id){
         List<String> sessionIds = id2sid.get(id);
         return sessionIds.stream().map(sessionPool::get)
                 .collect(Collectors.toList());
@@ -67,7 +62,7 @@ public class WebSocketSessionManager {
     /**
      * 获取所有连接session
      */
-    public ArrayList<Session> getSessions(){
+    public ArrayList<WebSocketSession> getSessions(){
         return ListUtil.toList(sessionPool.values());
     }
 
@@ -75,7 +70,7 @@ public class WebSocketSessionManager {
     /**
      * 根据session获取连接id
      */
-    public String getIdBySession(Session session){
+    public String getIdBySession(WebSocketSession session){
         return sid2id.get(session.getId());
     }
 

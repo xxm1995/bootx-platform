@@ -1,6 +1,6 @@
 package cn.bootx.demo.ws;
 
-import cn.bootx.common.websocket.service.WebSocketSessionManager;
+import cn.bootx.common.websocket.manager.WebSocketSessionManager;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
