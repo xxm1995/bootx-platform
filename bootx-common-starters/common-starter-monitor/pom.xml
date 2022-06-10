@@ -8,21 +8,8 @@
         <version>1.1.0-beta-3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>common-websocket</artifactId>
     <packaging>jar</packaging>
 
-    <dependencies>
-        <!-- websocket -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
+    <artifactId>common-starter-monitor</artifactId>
 
-        <!-- json -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-jackson</artifactId>
-        </dependency>
-    </dependencies>
 </project>

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>bootx-platform</artifactId>
         <groupId>cn.bootx.platform</groupId>
-        <version>1.1.0-beta-1-SNAPSHOT</version>
+        <version>1.1.0-beta-3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,6 +20,7 @@
         <module>common-starter-file</module>
         <module>common-starter-code-gen</module>
         <module>common-starter-dingtalk</module>
+        <module>common-starter-monitor</module>
     </modules>
 
     <dependencies>
