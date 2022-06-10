@@ -137,7 +137,7 @@ public class PermPathService {
     }
 
     /**
-     * 权限分页
+     * 分页
      */
     public PageResult<PermPathDto> page(PageParam pageParam, PermPathParam param){
         return MpUtil.convert2DtoPageResult(permPathManager.page(pageParam,param));

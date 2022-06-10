@@ -107,6 +107,8 @@ bootx:
         - '/swagger-resources/**'
         - '/token/**'
         - '/ws/**'
+        - '/demo/**'
+        - '/test/**'
         - "/plumelog/**"
         - '/webjars/**'
         - '/css/**'

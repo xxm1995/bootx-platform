@@ -64,7 +64,7 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
      * 错误
      */
     @Override
-    public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+    public void handleTransportError(WebSocketSession session, Throwable exception) {
         log.error("{} 发生错误",session.getId());
     }
 
