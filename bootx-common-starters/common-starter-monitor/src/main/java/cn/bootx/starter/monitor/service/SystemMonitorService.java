@@ -1,18 +1,26 @@
 package cn.bootx.starter.monitor.service;
 
 import cn.bootx.starter.monitor.entity.SystemMonitorResult;
+import cn.bootx.starter.monitor.entity.SystemMonitorResult.*;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.system.*;
+import cn.hutool.system.oshi.CpuInfo;
+import cn.hutool.system.oshi.OshiUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import oshi.hardware.GlobalMemory;
 
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
-*
+* 系统信息
 * @author xxm
 * @date 2022/6/10
 */
@@ -21,39 +29,59 @@ import java.text.DecimalFormat;
 @RequiredArgsConstructor
 public class SystemMonitorService {
 
-
     /**
-     * 获取系统信息
+     * 获取系统监控信息
      */
     public SystemMonitorResult getSystemInfo(){
         //系统属性结果集
         SystemMonitorResult result = new SystemMonitorResult();
-        JvmInfo jvmInfo = SystemUtil.getJvmInfo();
-        JavaRuntimeInfo javaRuntimeInfo = SystemUtil.getJavaRuntimeInfo();
+        result.setSysOsInfo(getSysOsInfo());
+        result.setSysJavaInfo(getSysJavaInfo());
+        result.setSysJvmMemInfo(getSysJvmMemInfo());
+        result.setSysDiskInfos(getDiskInfos());
+        result.setHardwareInfo(getHardwareInfo());
+        return result;
+    }
+
+    /**
+     * 系统信息
+     */
+    private SysOsInfo getSysOsInfo(){
         OsInfo osInfo = SystemUtil.getOsInfo();
         HostInfo hostInfo = SystemUtil.getHostInfo();
-        RuntimeInfo runtimeInfo = SystemUtil.getRuntimeInfo();
 
-        // 系统信息
-        SystemMonitorResult.SysOsInfo sysOsInfo = new SystemMonitorResult.SysOsInfo();
+        SysOsInfo sysOsInfo = new SysOsInfo();
         sysOsInfo.setOsName(osInfo.getName());
         sysOsInfo.setOsArch(osInfo.getArch());
         sysOsInfo.setOsVersion(osInfo.getVersion());
         sysOsInfo.setOsHostName(hostInfo.getName());
         sysOsInfo.setOsHostAddress(hostInfo.getAddress());
-        result.setSysOsInfo(sysOsInfo);
+        return sysOsInfo;
+    }
 
-        // Java信息
-        SystemMonitorResult.SysJavaInfo sysJavaInfo = new SystemMonitorResult.SysJavaInfo();
+    /**
+     * Java信息
+     */
+    public SysJavaInfo getSysJavaInfo(){
+        JvmInfo jvmInfo = SystemUtil.getJvmInfo();
+        JavaRuntimeInfo javaRuntimeInfo = SystemUtil.getJavaRuntimeInfo();
+
+        SysJavaInfo sysJavaInfo = new SysJavaInfo();
         sysJavaInfo.setJvmName(jvmInfo.getName());
         sysJavaInfo.setJvmVersion(jvmInfo.getVersion());
         sysJavaInfo.setJvmVendor(jvmInfo.getVendor());
         sysJavaInfo.setJavaName(javaRuntimeInfo.getName());
         sysJavaInfo.setJavaVersion(javaRuntimeInfo.getVersion());
-        result.setSysJavaInfo(sysJavaInfo);
+        return sysJavaInfo;
+    }
 
-        // jvm内存信息
-        SystemMonitorResult.SysJvmMemInfo sysJvmMemInfo = new SystemMonitorResult.SysJvmMemInfo();
+    /**
+     * jvm内存信息
+     */
+    private SysJvmMemInfo getSysJvmMemInfo(){
+        RuntimeInfo runtimeInfo = SystemUtil.getRuntimeInfo();
+
+        SysJvmMemInfo sysJvmMemInfo = new SysJvmMemInfo();
         sysJvmMemInfo.setJvmMaxMemory(FileUtil.readableFileSize(runtimeInfo.getMaxMemory()));
         sysJvmMemInfo.setJvmUsableMemory(FileUtil.readableFileSize(runtimeInfo.getUsableMemory()));
         sysJvmMemInfo.setJvmTotalMemory(FileUtil.readableFileSize(runtimeInfo.getTotalMemory()));
@@ -63,8 +91,57 @@ public class SystemMonitorService {
         BigDecimal rate = NumberUtil.div(usedMemory, runtimeInfo.getTotalMemory());
         String usedRate = new DecimalFormat("#.00").format(NumberUtil.mul(rate, 100)) + "%";
         sysJvmMemInfo.setJvmMemoryUsedRate(usedRate);
-        result.setSysJvmMemInfo(sysJvmMemInfo);
+        return sysJvmMemInfo;
+    }
 
-        return result;
+    /**
+     * 获取硬件信息
+     */
+    private HardwareInfo getHardwareInfo(){
+        // 内存
+        GlobalMemory memory = OshiUtil.getMemory();
+        HardwareInfo hardwareInfo = new HardwareInfo();
+        long memoryTotal = memory.getTotal();
+        long memoryAvailable = memory.getAvailable();
+        hardwareInfo.setTotalMemory(FileUtil.readableFileSize(memoryTotal));
+        hardwareInfo.setFreeMemory(FileUtil.readableFileSize(memoryAvailable));
+        long memoryUsed = memoryTotal - memoryAvailable;
+        hardwareInfo.setUsedMemory(FileUtil.readableFileSize(memoryUsed));
+        double memoryUsedRate = memoryUsed * 100.0 / memoryTotal;
+        String memoryUsedRateStr = new DecimalFormat("#.00").format(memoryUsedRate) + "%";
+        hardwareInfo.setUsedRateMemory(memoryUsedRateStr);
+
+        // cpu
+        CpuInfo cpuInfo = OshiUtil.getCpuInfo(1);
+        hardwareInfo.setCpuModel(cpuInfo.getCpuModel());
+        hardwareInfo.setCpuNum(cpuInfo.getCpuNum());
+        return hardwareInfo;
+    }
+
+    /**
+     * 获取磁盘信息
+     */
+    private List<SysDiskInfo> getDiskInfos(){
+        List<SysDiskInfo> list = new ArrayList<>();
+        // 当前文件系统类
+        FileSystemView fsv = FileSystemView.getFileSystemView();
+        // 列出所有windows 磁盘
+        File[] fs = File.listRoots();
+        for (File f : fs) {
+            if (f.getTotalSpace() == 0) {
+                continue;
+            }
+            SysDiskInfo sysDiskInfo = new SysDiskInfo();
+            sysDiskInfo.setName(fsv.getSystemDisplayName(f));
+            sysDiskInfo.setTotalSpace( FileUtil.readableFileSize((f.getTotalSpace())));
+            sysDiskInfo.setFreeSpace( FileUtil.readableFileSize(f.getFreeSpace()));
+            long used = f.getTotalSpace() - f.getFreeSpace();
+            sysDiskInfo.setUsedSpace( FileUtil.readableFileSize(used));
+            double restPpt = used * 100.0 / f.getTotalSpace();
+            String usedRate = new DecimalFormat("#.00").format(restPpt) + "%";
+            sysDiskInfo.setUsedRate(usedRate);
+            list.add(sysDiskInfo);
+        }
+        return list;
     }
 }

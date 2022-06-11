@@ -62,6 +62,7 @@ bootx-platform
        ├── common-starter-code-gen -- 代码生成模块
        ├── common-starter-data-perm -- 数据权限模块
        ├── common-starter-file -- 文件管理模块
+       ├── common-starter-monitor  系统监控
        ├── common-starter-quartz -- Quartz定时任务模块
     ├── bootx-commons -- commons工具配置封装
        ├── common-cache -- 缓存配置
@@ -69,6 +70,7 @@ bootx-platform
        ├── common-header-holder -- 请求头获取工具
        ├── common-idempotency -- 幂等控制组件
        ├── common-jackson -- Json序列化配置
+       ├── common-lock 分布式锁
        ├── common-log -- 日志配置
        ├── common-mongo -- MongoDB配置
        ├── common-mqtt -- mqtt配置
@@ -86,7 +88,7 @@ bootx-platform
        ├── eshop -- 网上商城
     ├── bootx-services -- 业务服务模块
        ├── service-baseapi -- 基础api功能服务
-       ├── service-goods -- 商品中心服务(未完成)
+       ├── service-goods -- 商品中心服务(进行中)
        ├── service-iam -- 身份识别与访问管理
        ├── service-notice -- 消息通知服务(未完成)
        ├── service-office -- 办公服务(未开始)
@@ -167,6 +169,11 @@ QQ扫码加入QQ交流群
 感谢 JetBrains 提供的免费开源 License：
 
 [![JetBrains](https://oscimg.oschina.net/oscnet/up-4aab9fa8bc769295b48c888d93e71320d93.png)](https://www.jetbrains.com/?from=bootx)
+
+感谢其他提供灵感和思路的开源项目
+
+[借鉴和部分参考的开源项目和开源许可列表](./_license/LICENSE.md)
+
 
 ## 🍷License
 

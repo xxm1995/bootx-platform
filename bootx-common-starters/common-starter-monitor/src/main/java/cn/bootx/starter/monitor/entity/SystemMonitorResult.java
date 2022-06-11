@@ -28,6 +28,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**   
 * 系统属性结果
@@ -38,18 +39,19 @@ import java.io.Serializable;
 @Schema(title = "系统属性结果")
 public class SystemMonitorResult implements Serializable {
     private static final long serialVersionUID = 7229392877839912411L;
-
     @Schema(description = "系统信息")
     private SysOsInfo sysOsInfo;
+    @Schema(description = "系统磁盘信息")
+    private List<SysDiskInfo> sysDiskInfos;
     @Schema(description = "Java信息")
     private SysJavaInfo sysJavaInfo;
     @Schema(description = "JVM内存信息")
     private SysJvmMemInfo sysJvmMemInfo;
+    @Schema(description = "硬件信息")
+    private HardwareInfo hardwareInfo;
 
     /**   
     * 系统信息内部类
-    * @author xxm  
-    * @date 2022/6/10 
     */
     @Data
     @Schema(title = "系统信息")
@@ -74,8 +76,6 @@ public class SystemMonitorResult implements Serializable {
 
     /**   
     * JVM信息内部类
-    * @author xxm  
-    * @date 2022/6/10 
     */
     @Data
     @Schema(title = "JVM信息内部类")
@@ -100,8 +100,6 @@ public class SystemMonitorResult implements Serializable {
 
     /**   
     * JVM内存信息
-    * @author xxm  
-    * @date 2022/6/10 
     */
     @Data
     @Schema(title = "JVM内存信息")
@@ -124,5 +122,56 @@ public class SystemMonitorResult implements Serializable {
 
         @Schema(description = "使用率")
         private String jvmMemoryUsedRate;
+    }
+
+    /**
+     * 硬件信息
+     */
+    @Data
+    @Schema(title = "系统内存信息")
+    public static class HardwareInfo {
+
+        @Schema(description = "总内存")
+        private String totalMemory;
+
+        @Schema(description = "已使用内存")
+        private String usedMemory;
+
+        @Schema(description = "空余内存")
+        private String freeMemory;
+
+        @Schema(description = "内存使用率")
+        private String usedRateMemory;
+
+        @Schema(description = "CPU型号")
+        private String cpuModel;
+
+        @Schema(description = "CPU核心数")
+        private Integer cpuNum;
+
+    }
+
+    /**
+     * 系统磁盘内部类
+     */
+    @Data
+    @Schema(title = "系统磁盘信息")
+    public static class SysDiskInfo {
+
+        @Schema(description = "名称")
+        private String name;
+
+        @Schema(description = "总容量")
+        private String totalSpace;
+
+        @Schema(description = "已用容量")
+        private String usedSpace;
+
+        @Schema(description = "可用容量")
+        private String freeSpace;
+
+        @Schema(description = "使用率")
+        private String usedRate;
+
     }
 }

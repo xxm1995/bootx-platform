@@ -12,4 +12,11 @@
 
     <artifactId>common-starter-monitor</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+    </dependencies>
 </project>
