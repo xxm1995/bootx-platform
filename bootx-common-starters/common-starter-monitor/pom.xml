@@ -16,7 +16,11 @@
         <dependency>
             <groupId>com.github.oshi</groupId>
             <artifactId>oshi-core</artifactId>
-            <version>${hutool.version}</version>
+            <version>${oshi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-mongo</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -9,6 +9,7 @@ import cn.hutool.system.oshi.CpuInfo;
 import cn.hutool.system.oshi.OshiUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import oshi.hardware.GlobalMemory;
 
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
 * 系统信息
@@ -28,6 +30,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SystemMonitorService {
+    private final ThreadPoolTaskExecutor springRawExecutor;
 
     /**
      * 获取系统监控信息
@@ -40,6 +43,7 @@ public class SystemMonitorService {
         result.setSysJvmMemInfo(getSysJvmMemInfo());
         result.setSysDiskInfos(getDiskInfos());
         result.setHardwareInfo(getHardwareInfo());
+        result.setThreadPoolInfo(getThreadPoolInfo());
         return result;
     }
 
@@ -143,5 +147,22 @@ public class SystemMonitorService {
             list.add(sysDiskInfo);
         }
         return list;
+    }
+
+    /**
+     * 获取线程池信息
+     */
+    public ThreadPoolInfo getThreadPoolInfo(){
+        ThreadPoolInfo threadPoolInfo = new ThreadPoolInfo();
+
+        ThreadPoolExecutor threadPoolExecutor = springRawExecutor.getThreadPoolExecutor();
+
+        threadPoolInfo.setPoolSize(springRawExecutor.getPoolSize());
+        threadPoolInfo.setPoolSize(springRawExecutor.getCorePoolSize());
+        threadPoolInfo.setPoolSize(springRawExecutor.getMaxPoolSize());
+        threadPoolInfo.setActiveCount(springRawExecutor.getActiveCount());
+        threadPoolInfo.setQueueSize(threadPoolExecutor.getQueue().size());
+        threadPoolInfo.setCompletedTaskCount(springRawExecutor.getCorePoolSize());
+        return threadPoolInfo;
     }
 }

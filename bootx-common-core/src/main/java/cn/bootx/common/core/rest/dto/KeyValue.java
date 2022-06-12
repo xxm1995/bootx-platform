@@ -16,6 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Accessors(chain = true)
 @Schema(title = "kv键值对象")
 public class KeyValue implements Serializable {
     private static final long serialVersionUID = 3427649251589010105L;

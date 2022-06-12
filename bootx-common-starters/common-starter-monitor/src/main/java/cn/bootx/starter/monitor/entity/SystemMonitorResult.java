@@ -49,6 +49,8 @@ public class SystemMonitorResult implements Serializable {
     private SysJvmMemInfo sysJvmMemInfo;
     @Schema(description = "硬件信息")
     private HardwareInfo hardwareInfo;
+    @Schema(description = "线程池信息")
+    private ThreadPoolInfo threadPoolInfo;
 
     /**   
     * 系统信息内部类
@@ -173,5 +175,31 @@ public class SystemMonitorResult implements Serializable {
         @Schema(description = "使用率")
         private String usedRate;
 
+    }
+
+    /**
+     * 线程池
+     */
+    @Data
+    @Schema(title = "系统磁盘信息")
+    public static class ThreadPoolInfo{
+
+        @Schema(description = "线程池大小")
+        private int poolSize;
+
+        @Schema(description = "核心池大小")
+        private int corePoolSize;
+
+        @Schema(description = "线程池最大数")
+        private int maxPoolSize;
+
+        @Schema(description = "活跃数量")
+        private int activeCount;
+
+        @Schema(description = "任务队列数")
+        private int queueSize;
+
+        @Schema(description = "使用率")
+        private int completedTaskCount;
     }
 }
