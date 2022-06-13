@@ -149,8 +149,15 @@ public class CodeGeneratorService {
     /**
      * 表名转换成Java类名 大驼峰
      */
-    public static String tableToJava(String tableName) {
+    private String tableToJava(String tableName) {
         // 自动去除表前缀
         return NamingCase.toPascalCase(tableName.substring(tableName.indexOf("_") + 1));
+    }
+
+    /**
+     * 获取代码生成参数
+     */
+    public void getCodeGenConfig(){
+
     }
 }

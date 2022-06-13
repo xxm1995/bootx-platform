@@ -1,5 +1,6 @@
 package cn.bootx.starter.code.gen.controller;
 
+import cn.bootx.common.core.function.SystemKeyValueService;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.starter.code.gen.dto.CodeGenPreview;
@@ -9,7 +10,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -24,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CodeGeneratorController {
     private final CodeGeneratorService generatorService;
+    private final SystemKeyValueService systemKeyValueService;
 
     @Operation(summary = "预览生成代码")
     @PostMapping("/codeGenPreview")
@@ -36,4 +41,6 @@ public class CodeGeneratorController {
     public ResponseEntity<byte[]> genCodeZip(@RequestBody CodeGenParam param){
         return generatorService.genCodeZip(param);
     }
+
+
 }

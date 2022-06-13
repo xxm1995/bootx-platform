@@ -1,9 +1,12 @@
 package cn.bootx.baseapi.core.keyvalue.entity;
 
+import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -13,6 +16,8 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
 @TableName("base_key_value")
 public class SysKeyValue extends MpBaseEntity {
@@ -26,4 +31,18 @@ public class SysKeyValue extends MpBaseEntity {
      * value值
      */
     private String value;
+
+    /**
+     * 转换成系统的 KayValue 对象
+     */
+    public KeyValue toKeyValue(){
+        return new KeyValue(key,value);
+    }
+
+    /**
+     * 从 KayValue 转换
+     */
+    public static SysKeyValue init(KeyValue keyValue){
+        return new SysKeyValue(keyValue.getKey(),keyValue.getValue());
+    }
 }
