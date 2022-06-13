@@ -24,16 +24,16 @@ public class DictionaryParam implements Serializable {
 
 	private static final long serialVersionUID = 8185789462442511856L;
 
-    @Null(groups = add.class)
-    @NotNull(groups = edit.class)
+    @Null(message = "Id需要为空",groups = add.class)
+    @NotNull(message = "Id不可为空",groups = edit.class)
     @Schema(description= "主键")
     private Long id;
 
-    @NotEmpty
+    @NotEmpty(message = "编码不可以为空",groups = add.class)
     @Schema(description= "编码")
 	private String code;
 
-    @NotEmpty
+    @NotEmpty(message = "编码不可以为空",groups = add.class)
     @Schema(description= "名称")
 	private String name;
 

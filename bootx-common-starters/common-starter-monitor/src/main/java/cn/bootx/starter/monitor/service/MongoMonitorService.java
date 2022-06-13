@@ -1,7 +1,6 @@
 package cn.bootx.starter.monitor.service;
 
 import cn.bootx.starter.monitor.entity.MongoMonitorResult;
-import com.mongodb.client.MongoDatabase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -23,8 +22,6 @@ public class MongoMonitorService {
      */
     public MongoMonitorResult getMongoInfo(){
         MongoMonitorResult result = new MongoMonitorResult();
-        MongoDatabase db = mongoTemplate.getDb();
-
         return result;
     }
 }

@@ -47,6 +47,24 @@
 - 支持嵌套查询的超级查询构造器，自动生成对应条件SQL语句
 - 支持通过ELK和轻量级PlumeLog来管理项目日志,以适应不同的场景
 
+## 🥂 Quick Start
+
+- 下载项目并导入IDEA中，下载对应的Maven依赖
+- 配置好各种必要的数据库中间件地址(见下方中间表)，直接启动项目。注：不需要导入Sql脚本到数据库中，默认启用`flyway`会自动对数据库进行初始化
+- 如果使用`_config/sql`导入到数据库中的方式，则需要在项目启动前将`spring.flyway.enabled`设为`false`后启动项目，推荐使用`flyway`对数据库进行数据管理
+- 启动成功，
+
+**中间件配置**
+
+| 备备注注组件 | 是否必须配置 | 备注                                                         |
+| ------------ | ------------ | ------------------------------------------------------------ |
+| MySQL        | 是           | 不设置无法启动                                               |
+| Redis        | 是           | 不设置无法启动                                               |
+| RabbitMQ     | 否           | 支付消息通知在使用                                           |
+| MongoDB      | 否           | 默认审计日志和文件管理使用持久化方式为Mono，可通过配置切换成其他的 |
+| MQTT         | 否           |                                                              |
+| plumelog     | 是           | 默认项目自带lite版plumelog，不需要额外配置中间件             |
+
 ## 🥞项目整体结构
 ```lua
 bootx-platform 
@@ -176,9 +194,3 @@ QQ扫码加入QQ交流群
 ## 🍷License
 
 Apache License Version 2.0
-
-## 🥂其他
-
-- star趋势
-
-[![Stargazers over time](https://whnb.wang/stars/bootx/bootx-platform)](https://whnb.wang)

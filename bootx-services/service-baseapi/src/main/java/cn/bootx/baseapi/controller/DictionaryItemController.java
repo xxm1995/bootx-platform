@@ -10,6 +10,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ValidationUtil;
+import cn.bootx.common.core.validation.ValidationGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,14 +34,14 @@ public class DictionaryItemController {
     @Operation( summary = "添加字典项（返回字典项对象）")
     @PostMapping("/add")
     public ResResult<DictionaryItemDto> add(@RequestBody DictionaryItemParam param) {
-        ValidationUtil.validateParam(param);
+        ValidationUtil.validateParam(param, ValidationGroup.add.class);
         return Res.ok(dictionaryItemService.add(param));
     }
 
     @Operation( summary = "修改字典项（返回字典项对象）")
     @PostMapping(value = "/update")
     public ResResult<DictionaryItemDto> update(@RequestBody DictionaryItemParam param) {
-        ValidationUtil.validateParam(param);
+        ValidationUtil.validateParam(param,ValidationGroup.edit.class);
         return Res.ok( dictionaryItemService.update(param));
     }
 

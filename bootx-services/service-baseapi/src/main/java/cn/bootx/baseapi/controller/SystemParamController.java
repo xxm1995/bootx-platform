@@ -7,6 +7,8 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.ValidationUtil;
+import cn.bootx.common.core.validation.ValidationGroup;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,12 +31,14 @@ public class SystemParamController {
     @Operation(summary = "添加")
     @PostMapping("/add")
     public ResResult<Void> add(@RequestBody SystemParameterParam param){
+        ValidationUtil.validateParam(param, ValidationGroup.add.class);
         systemParamService.add(param);
         return Res.ok();
     }
     @Operation(summary = "更新")
     @PostMapping("/update")
     public ResResult<Void> update(@RequestBody SystemParameterParam param){
+        ValidationUtil.validateParam(param, ValidationGroup.edit.class);
         systemParamService.update(param);
         return Res.ok();
     }

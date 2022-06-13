@@ -7,8 +7,10 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.ValidationUtil;
+import cn.bootx.common.core.validation.ValidationGroup.add;
+import cn.bootx.common.core.validation.ValidationGroup.edit;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ public class DictionaryController {
     @Operation(summary = "添加")
     @PostMapping("/add")
     public ResResult<DictionaryDto> add(@RequestBody DictionaryParam param) {
+        ValidationUtil.validateParam(param, add.class);
         return Res.ok(dictionaryService.add(param));
     }
 
@@ -43,6 +46,7 @@ public class DictionaryController {
     @Operation(summary = "更新")
     @PostMapping("/update")
     public ResResult<DictionaryDto> update(@RequestBody DictionaryParam param) {
+        ValidationUtil.validateParam(param, edit.class);
         return Res.ok(dictionaryService.update(param));
     }
 

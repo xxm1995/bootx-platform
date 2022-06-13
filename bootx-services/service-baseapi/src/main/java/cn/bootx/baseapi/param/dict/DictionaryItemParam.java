@@ -22,24 +22,23 @@ import java.io.Serializable;
 public class DictionaryItemParam implements Serializable {
     private static final long serialVersionUID = -6847496213782805488L;
 
-    @Null(groups = add.class)
-    @NotNull(groups = edit.class)
+    @Null(message = "Id需要为空",groups = add.class)
+    @NotNull(message = "Id不可为空",groups = edit.class)
     @Schema(description= "主键")
     private Long id;
 
-    @NotNull
+    @NotNull(message = "字典ID不可为空")
     @Schema(description= "字典ID")
     private Long dictId;
 
-    @NotEmpty
     @Schema(description= "字典编码")
     private String dictCode;
 
-    @NotEmpty
+    @NotEmpty(message = "字典项编码不可为空",groups = add.class)
     @Schema(description= "字典项编码")
     private String code;
 
-    @NotEmpty
+    @NotEmpty(message = "字典项编码不可为空",groups = add.class)
     @Schema(description= "名称")
     private String name;
 

@@ -12,3 +12,4 @@ bin/
 out/
 target/
 build/
+logs/

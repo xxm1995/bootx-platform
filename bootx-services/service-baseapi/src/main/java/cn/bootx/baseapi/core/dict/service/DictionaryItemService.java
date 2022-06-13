@@ -65,7 +65,7 @@ public class DictionaryItemService {
                 .orElseThrow(DictItemNotExistedException::new);
 
         // 判断是否有重复code的Item
-        if (dictionaryItemManager.existsByCode(param.getCode(),param.getDictId(),param.getId())) {
+        if (dictionaryItemManager.existsByCode(dictionaryItem.getDictCode(),param.getDictId(),param.getId())) {
             throw new DictItemAlreadyExistedException();
         }
         BeanUtil.copyProperties(param,dictionaryItem, CopyOptions.create().ignoreNullValue());
