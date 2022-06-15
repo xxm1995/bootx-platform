@@ -6,6 +6,11 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/bootx-platform?serverTimezone=GMT%2B8&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
     username: root
     password: root
+    hikari:
+      # 30 秒, 心跳检测
+      keepalive-time: 30000
+      # 300 分钟, 连接最大存活时间
+      max-lifetime: 18000000
   redis:
     host: 127.0.0.1
     port: 6379
