@@ -19,25 +19,25 @@ import java.time.LocalDateTime;
 @Schema(title = "站内信")
 public class SiteMessageDto extends BaseDto {
 
-    /**消息标题*/
+    @Schema(description= "消息标题")
     private String title;
 
-    /**消息内容*/
+    @Schema(description= "消息内容")
     private String content;
 
-    /**发送者id*/
+    @Schema(description= "发送者id")
     private Long senderId;
 
-    /**发送者姓名*/
+    @Schema(description= "发送者姓名")
     private String senderName;
 
-    /**接收者id*/
+    @Schema(description= "接收者id")
     private Long receiveId;
 
-    /**接收者姓名*/
+    @Schema(description= "接收者姓名")
     private String receiveName;
 
-    /**发送时间*/
+    @Schema(description= "发送时间")
     private LocalDateTime senderTime;
 
     @Schema(description= "已读")

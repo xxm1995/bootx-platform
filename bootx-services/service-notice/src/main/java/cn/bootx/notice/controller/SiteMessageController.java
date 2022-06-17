@@ -43,7 +43,6 @@ public class SiteMessageController {
         return Res.ok(siteMessageService.getReceiveCount(haveRead));
     }
 
-
     @Operation(summary = "获取发送消息条数")
     @GetMapping("/getSenderCount")
     public ResResult<Long> getSenderCount(Boolean haveRead){

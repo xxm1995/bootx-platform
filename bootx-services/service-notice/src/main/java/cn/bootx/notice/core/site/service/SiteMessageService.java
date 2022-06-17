@@ -31,7 +31,7 @@ public class SiteMessageService {
     private final SiteMessageManager siteMessageManager;
 
     /**
-     * 发送消息
+     * 站内信发送消息
      */
     @Transactional(rollbackFor = Exception.class)
     public void send(SendSiteMessageParam param){
@@ -79,6 +79,13 @@ public class SiteMessageService {
     public PageResult<SiteMessageDto> pageBySender(PageParam pageParam,Boolean haveRead){
         Long userId = SecurityUtil.getUserId();
         return MpUtil.convert2DtoPageResult(siteMessageManager.pageBySender(pageParam,userId,haveRead));
+    }
+
+    /**
+     * 获取最新的几条消息(未读的在最上面)
+     */
+    public void getLatest(){
+
     }
 
     /**
