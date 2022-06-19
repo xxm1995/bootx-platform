@@ -7,6 +7,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.iam.core.user.service.UserAdminService;
+import cn.bootx.iam.core.user.service.UserQueryService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.dto.user.UserInfoWhole;
 import cn.bootx.iam.param.user.UserInfoParam;
@@ -31,13 +32,13 @@ import java.util.List;
 @RequestMapping("/user/admin")
 @RequiredArgsConstructor
 public class UserAdminController {
-
     private final UserAdminService userAdminService;
+    private final UserQueryService userQueryService;
 
     @Operation( summary = "根据用户id查询用户")
     @GetMapping("/findById")
     public ResResult<UserInfoDto> findById(Long id) {
-        return Res.ok(userAdminService.findById(id));
+        return Res.ok(userQueryService.findById(id));
     }
 
     @Operation( summary = "查询用户详情")
@@ -49,13 +50,13 @@ public class UserAdminController {
     @Operation( summary = "根据邮箱查询用户")
     @GetMapping("/getByEmail")
     public ResResult<UserInfoDto> getByEmail(String email) {
-        return Res.ok(userAdminService.findByEmail(email));
+        return Res.ok(userQueryService.findByEmail(email));
     }
 
     @Operation( summary = "根据手机号查询用户")
     @GetMapping("/getByPhone")
     public ResResult<UserInfoDto> getByPhone(String phone) {
-        return Res.ok(userAdminService.findByPhone(phone));
+        return Res.ok(userQueryService.findByPhone(phone));
     }
 
     @Operation(summary = "添加用户")

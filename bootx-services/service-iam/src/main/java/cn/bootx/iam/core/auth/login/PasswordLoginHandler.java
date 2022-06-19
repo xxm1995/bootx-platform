@@ -6,6 +6,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.RegexUtil;
 import cn.bootx.iam.code.UserStatusCode;
 import cn.bootx.iam.core.user.service.UserAdminService;
+import cn.bootx.iam.core.user.service.UserQueryService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
@@ -44,6 +45,7 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
 
     private final PasswordEncoder passwordEncoder;
     private final UserAdminService userAdminService;
+    private final UserQueryService userQueryService;
     private final CaptchaService captchaService;
 
     /**
@@ -112,13 +114,13 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         // 1. 获取账号密码
         if (RegexUtil.isEmailPattern(username)) {
             // 根据 Email 获取用户信息
-            userInfoDto = userAdminService.findByEmail(username);
+            userInfoDto = userQueryService.findByEmail(username);
         } else if (RegexUtil.isPhonePattern(username)) {
             // 根据 手机号 获取用户信息
-            userInfoDto = userAdminService.findByPhone(username);
+            userInfoDto = userQueryService.findByPhone(username);
         } else {
             // 根据 账号 获取账户信息
-            userInfoDto = userAdminService.findByAccount(username);
+            userInfoDto = userQueryService.findByAccount(username);
         }
         if (Objects.isNull(userInfoDto)){
             throw new UserNotFoundException(username);

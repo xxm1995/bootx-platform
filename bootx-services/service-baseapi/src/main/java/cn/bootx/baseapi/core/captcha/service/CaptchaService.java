@@ -2,6 +2,7 @@ package cn.bootx.baseapi.core.captcha.service;
 
 import cn.bootx.baseapi.dto.captcha.CaptchaDataResult;
 import cn.bootx.common.redis.RedisClient;
+import cn.bootx.common.websocket.service.UserWsNoticeService;
 import cn.hutool.core.util.RandomUtil;
 import com.wf.captcha.ArithmeticCaptcha;
 import lombok.RequiredArgsConstructor;
@@ -10,19 +11,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-/**   
-* 验证码服务
-* @author xxm  
-* @date 2021/8/2 
-*/
+/**
+ * 验证码服务
+ * @author xxm
+ * @date 2021/8/2
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CaptchaService {
-    // redis key前缀
-    private final String smsCaptchaPrefix = "login:captcha:sms";
+    /** redis key前缀 */
     private final String imgCaptchaPrefix = "login:captcha:img";
+    /** 手机验证码前缀 */
+    private final String smsCaptchaPrefix = "phone:captcha:";
+    /** 邮箱验证码前缀 */
+    private final String emailCaptchaPrefix = "email:captcha:";
 
+    private final UserWsNoticeService userWsNoticeService;
     private final RedisClient redisClient;
 
     /**
@@ -60,26 +65,81 @@ public class CaptchaService {
     /**
      * 发送手机验证码
      */
-    public int sendSmsCaptcha(String phone,long timeoutSec){
+    public int sendSmsCaptcha(String phone,long timeoutSec,String type){
         int captcha = RandomUtil.randomInt(100000, 1000000);
         log.info("短信验证码: {}",captcha);
-        redisClient.setWithTimeout(smsCaptchaPrefix+phone, String.valueOf(captcha),timeoutSec*1000);
+        redisClient.setWithTimeout(getSmsCaptchaPrefix(type)+phone, String.valueOf(captcha),timeoutSec*1000);
         return captcha;
+    }
+
+    /**
+     * 手机发送的验证码是否还有效
+     */
+    public boolean existsSmsCaptcha(String phone, String type){
+        return redisClient.exists(getSmsCaptchaPrefix(type)+phone);
     }
 
     /**
      * 校验手机验证码
      */
-    public boolean validateSmsCaptcha(String phone, String captcha){
+    public boolean validateSmsCaptcha(String phone, String captcha,String type){
         // 比较验证码是否正确
-        String captchaByRedis = redisClient.get(smsCaptchaPrefix+phone);
+        String captchaByRedis = redisClient.get(getSmsCaptchaPrefix(type)+phone);
         return Objects.equals(captcha,captchaByRedis);
     }
 
     /**
      * 失效手机验证码
      */
-    public void deleteSmsCaptcha(String phone){
-        redisClient.deleteKey(smsCaptchaPrefix+phone);
+    public void deleteSmsCaptcha(String phone,String type){
+        redisClient.deleteKey(getSmsCaptchaPrefix(type)+phone);
     }
+
+    /**
+     * 获取手机验证码前缀
+     */
+    private String getSmsCaptchaPrefix(String type){
+        return smsCaptchaPrefix+type+":";
+    }
+
+    /**
+     * 发送邮箱验证码
+     */
+    public int sendEmailCaptcha(String email,long timeoutSec,String type){
+        int captcha = RandomUtil.randomInt(100000, 1000000);
+        log.info("邮箱验证码: {}",captcha);
+        redisClient.setWithTimeout(getEmailCaptchaPrefix(type)+email, String.valueOf(captcha),timeoutSec*1000);
+        return captcha;
+    }
+
+    /**
+     * 邮箱发送的验证码是否还有效
+     */
+    public boolean existsEmailCaptcha(String email, String type){
+        return redisClient.exists(getEmailCaptchaPrefix(type)+email);
+    }
+
+    /**
+     * 校验邮箱验证码
+     */
+    public boolean validateEmailCaptcha(String email, String captcha,String type){
+        // 比较验证码是否正确
+        String captchaByRedis = redisClient.get(getEmailCaptchaPrefix(type)+email);
+        return Objects.equals(captcha,captchaByRedis);
+    }
+
+    /**
+     * 失效邮箱验证码
+     */
+    public void deleteEmailCaptcha(String email,String type){
+        redisClient.deleteKey(getEmailCaptchaPrefix(type)+email);
+    }
+
+    /**
+     * 获取邮箱验证码前缀
+     */
+    private String getEmailCaptchaPrefix(String type){
+        return emailCaptchaPrefix+type+":";
+    }
+    
 }

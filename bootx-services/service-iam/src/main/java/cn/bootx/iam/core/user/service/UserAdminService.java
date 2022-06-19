@@ -1,7 +1,6 @@
 package cn.bootx.iam.core.user.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -46,33 +45,13 @@ public class UserAdminService {
     private final UserRoleService userRoleService;
     private final UserDeptService userDeptService;
     private final PasswordEncoder passwordEncoder;
-    private final UserInfoService userInfoService;
+    private final UserQueryService userQueryService;
 
     /**
-     * 根据用户id 获取 UserInfo
+     * 分页查询
      */
-    public UserInfoDto findById(Long id){
-        return userInfoManager.findById(id).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
-    }
-
-    /**
-     * 根据账号查询用户
-     */
-    public UserInfoDto findByAccount(String account) {
-        return userInfoManager.findByUsername(account).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
-    }
-    /**
-     * 根据邮箱查询用户
-     */
-    public UserInfoDto findByEmail(String email) {
-        return userInfoManager.findByEmail(email).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
-    }
-
-    /**
-     * 根据手机号查询用户
-     */
-    public UserInfoDto findByPhone(String phone) {
-        return userInfoManager.findByPhone(phone).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
+    public PageResult<UserInfoDto> page(PageParam pageParam, UserInfoParam userInfoParam){
+        return MpUtil.convert2DtoPageResult(userInfoManager.page(pageParam,userInfoParam));
     }
 
     /**
@@ -113,13 +92,13 @@ public class UserAdminService {
         if (Objects.isNull(userInfoParam.getPhone()) && Objects.isNull(userInfoParam.getEmail())) {
             throw new UserNonePhoneAndEmailException();
         }
-        if (userInfoService.existsUsername(userInfoParam.getUsername())){
+        if (userQueryService.existsUsername(userInfoParam.getUsername())){
             throw new BizException("账号已存在");
         }
-        if (userInfoService.existsEmail(userInfoParam.getEmail())) {
+        if (userQueryService.existsEmail(userInfoParam.getEmail())) {
             throw new BizException("邮箱已存在");
         }
-        if (userInfoService.existsPhone(userInfoParam.getPhone())) {
+        if (userQueryService.existsPhone(userInfoParam.getPhone())) {
             throw new BizException("手机号已存在");
         }
         // 注册时间
@@ -135,12 +114,6 @@ public class UserAdminService {
         userExpandInfoManager.save(userExpandInfo);
     }
 
-    /**
-     * 分页查询
-     */
-    public PageResult<UserInfoDto> page(PageParam pageParam, UserInfoParam userInfoParam){
-        return MpUtil.convert2DtoPageResult(userInfoManager.page(pageParam,userInfoParam));
-    }
 
     /**
      * 重置密码

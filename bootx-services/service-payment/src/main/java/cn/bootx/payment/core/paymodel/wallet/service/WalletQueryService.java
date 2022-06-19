@@ -4,7 +4,7 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.iam.core.user.service.UserAdminService;
+import cn.bootx.iam.core.user.service.UserQueryService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.param.user.UserInfoParam;
 import cn.bootx.payment.core.paymodel.wallet.dao.WalletManager;
@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WalletQueryService {
     private final WalletManager walletManager;
-    private final UserAdminService userAdminService;
+    private final UserQueryService userQueryService;
 
     /**
      * 根据ID查询Wallet
@@ -50,7 +50,7 @@ public class WalletQueryService {
      */
     public WalletInfoDto getWalletInfo(Long walletId){
         Wallet wallet = walletManager.findById(walletId).orElseThrow(DataNotExistException::new);
-        UserInfoDto userInfoDto = userAdminService.findById(wallet.getUserId());
+        UserInfoDto userInfoDto = userQueryService.findById(wallet.getUserId());
         WalletInfoDto walletInfoDto = new WalletInfoDto();
         BeanUtil.copyProperties(wallet,walletInfoDto);
         walletInfoDto.setUserName(userInfoDto.getName());

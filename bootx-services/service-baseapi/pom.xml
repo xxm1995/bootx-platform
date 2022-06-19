@@ -35,6 +35,11 @@
             <artifactId>common-starter-auth</artifactId>
         </dependency>
 
+        <!-- ws -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-websocket</artifactId>
+        </dependency>
         <!--数学验证码-->
         <dependency>
             <groupId>com.github.whvcse</groupId>

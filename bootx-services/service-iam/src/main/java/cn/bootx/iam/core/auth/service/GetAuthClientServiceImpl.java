@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 public class GetAuthClientServiceImpl implements GetAuthClientService {
     private final ClientManager clientManager;
 
+    /**
+     * 获取认证终端信息
+     */
     @Override
     public AuthClient getAuthClient(String authClientCode) {
         Client client = clientManager.findByCode(authClientCode).orElseThrow(ClientNotFoundException::new);

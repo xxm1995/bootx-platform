@@ -1,6 +1,7 @@
 package cn.bootx.common.websocket.manager;
 
 import cn.hutool.core.collection.ListUtil;
+import com.google.common.collect.Lists;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.*;
@@ -44,7 +45,7 @@ public class SpringWebSocketSessionManager {
      * 删除
      */
     public void removeSessionById(String id){
-        List<String> sessionIds = id2sid.get(id);
+        List<String> sessionIds = Optional.ofNullable(id2sid.get(id)).orElse(Lists.newArrayList());
         sessionIds.forEach(sessionPool::remove);
         sessionIds.forEach(sid2id::remove);
         id2sid.remove(id);
@@ -54,7 +55,7 @@ public class SpringWebSocketSessionManager {
      * 根据id获取关联的session列表
      */
     public List<WebSocketSession> getSessionsById(String id){
-        List<String> sessionIds = id2sid.get(id);
+        List<String> sessionIds = Optional.ofNullable(id2sid.get(id)).orElse(Lists.newArrayList());
         return sessionIds.stream().map(sessionPool::get)
                 .collect(Collectors.toList());
     }

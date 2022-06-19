@@ -14,7 +14,6 @@ import cn.bootx.starter.auth.util.PasswordEncoder;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,32 +30,10 @@ import java.time.LocalDateTime;
 public class UserInfoService {
 
     private final UserInfoManager userInfoManager;
+    private final UserQueryService userQueryService;
+    private final UserAssistService userAssistService;
     private final UserExpandInfoManager userExpandInfoManager;
     private final PasswordEncoder passwordEncoder;
-
-    /**
-     * 修改密码
-     * @param password      原密码
-     * @param newPassword   新密码
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void updatePassword(String password, String newPassword) {
-        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
-        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
-        // 新密码进行加密
-        newPassword = passwordEncoder.encode(newPassword);
-
-        // 判断原有密码是否相同
-        if (passwordEncoder.matches(password,userInfo.getPassword())){
-            throw new BizException("旧密码错误");
-        }
-        userInfo.setPassword(newPassword);
-        userInfoManager.updateById(userInfo);
-        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now());
-        userExpandInfoManager.updateById(userExpandInfo);
-    }
 
     /**
      * 登录后获取用户信息
@@ -114,54 +91,76 @@ public class UserInfoService {
     }
 
     /**
-     * 账号是否存在
+     * 修改密码
+     * @param password      原密码
+     * @param newPassword   新密码
      */
-    public boolean existsUsername(String username) {
-        if (StrUtil.isBlank(username)) {
-            return false;
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePassword(String password, String newPassword) {
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        // 新密码进行加密
+        newPassword = passwordEncoder.encode(newPassword);
+
+        // 判断原有密码是否相同
+        if (passwordEncoder.matches(password,userInfo.getPassword())){
+            throw new BizException("旧密码错误");
         }
-        return userInfoManager.existsByUsername(username.trim());
+        userInfo.setPassword(newPassword);
+        userInfoManager.updateById(userInfo);
+        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now());
+        userExpandInfoManager.updateById(userExpandInfo);
     }
 
-    /**
-     * 账号是否存在
-     */
-    public boolean existsUsername(String username,Long id) {
-        return userInfoManager.existsByUsername(username.trim(),id);
-    }
 
     /**
-     * 邮箱是否存在
+     * 修改手机号
+     * @param phone 要更更换的手机号
+     * @param oldCaptcha 旧手机号的验证码
+     * @param newCaptcha 新手机的验证码
      */
-    public boolean existsEmail(String email) {
-        if (StrUtil.isBlank(email)) {
-            return false;
+    public void updatePhone(String phone,String oldCaptcha,String newCaptcha){
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        // 判断旧手机的验证码是否正常
+        if (!userAssistService.validatePhoneCaptcha(userInfo.getPhone(),oldCaptcha)){
+            throw new BizException("短信验证码不正确");
         }
-        return userInfoManager.existsByEmail(email.trim());
-    }
-
-    /**
-     * 邮箱是否存在
-     */
-    public boolean existsEmail(String email,Long id) {
-        return userInfoManager.existsByEmail(email.trim(),id);
-    }
-
-    /**
-     * 手机是否存在
-     */
-    public boolean existsPhone(String phone) {
-        if (StrUtil.isBlank(phone)) {
-            return false;
+        // 判断新手机验证码是否正常
+        if (!userAssistService.validatePhoneCaptcha(phone,newCaptcha)){
+            throw new BizException("短信验证码不正确");
         }
-        return userInfoManager.existsByPhone(phone);
+        // 手机号是否已经存在
+        if (userQueryService.existsPhone(phone)){
+            throw new BizException("该手机号已经被使用");
+        }
+        userInfo.setPhone(phone);
+        userInfoManager.updateById(userInfo);
+        userAssistService.deleteSmsCaptcha(phone);
     }
 
     /**
-     * 手机是否存在
+     * 更改邮箱
      */
-    public boolean existsPhone(String phone,Long id) {
-        return userInfoManager.existsByPhone(phone.trim(),id);
+    public void updateEmail(String email,String oldCaptcha,String newCaptcha) {
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        // 判断旧手机的验证码是否正常
+        if (!userAssistService.validatePhoneCaptcha(userInfo.getPhone(),oldCaptcha)){
+            throw new BizException("短信验证码不正确");
+        }
+        // 判断新邮箱验证码是否正常
+        if (!userAssistService.validatePhoneCaptcha(email,newCaptcha)){
+            throw new BizException("短信验证码不正确");
+        }
+        // 邮箱是否已经存在
+        if (!userQueryService.existsPhone(email)){
+            throw new BizException("该邮箱已经被使用");
+        }
+        userInfo.setEmail(email);
+        userInfoManager.updateById(userInfo);
     }
 
 }

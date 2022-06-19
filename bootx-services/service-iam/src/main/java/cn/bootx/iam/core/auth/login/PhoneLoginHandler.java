@@ -27,6 +27,8 @@ public class PhoneLoginHandler implements OpenIdAuthentication {
     private final String phoneParameter = "phone";
     // 短信验证码
     private final String captchaParameter = "smsCaptcha";
+    // 手机验证码类型
+    private final String smsCaptchaType = "login";
 
     private final UserInfoManager userInfoManager;
     private final CaptchaService captchaService;
@@ -46,14 +48,14 @@ public class PhoneLoginHandler implements OpenIdAuthentication {
         String captcha = request.getParameter(captchaParameter);
 
         // 比较验证码是否正确
-        if (!captchaService.validateSmsCaptcha(phone,captcha)){
+        if (!captchaService.validateSmsCaptcha(phone,captcha,smsCaptchaType)){
             throw new LoginFailureException(phone,"短信验证码不正确");
         }
         // 获取用户信息
         UserInfo userInfo = userInfoManager.findByPhone(phone)
                 .orElseThrow(() -> new LoginFailureException(phone,"手机号不存在"));
 
-        captchaService.deleteSmsCaptcha(phone);
+        captchaService.deleteSmsCaptcha(phone,smsCaptchaType);
         return new AuthInfoResult()
                 .setUserDetail(userInfo.toUserDetail())
                 .setId(userInfo.getId());
