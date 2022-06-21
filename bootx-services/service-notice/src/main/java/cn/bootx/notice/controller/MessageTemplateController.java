@@ -70,8 +70,8 @@ public class MessageTemplateController {
     }
 
     @Operation(summary = "渲染模板")
-    @GetMapping("/rendering")
-    public ResResult<String> rendering(@RequestParam String code, @RequestBody Map<String,String> paramMap){
+    @PostMapping("/rendering")
+    public ResResult<String> rendering(@RequestParam String code, @RequestBody Map<String,Object> paramMap){
         return Res.ok(messageTemplateService.rendering(code,paramMap));
     }
 }

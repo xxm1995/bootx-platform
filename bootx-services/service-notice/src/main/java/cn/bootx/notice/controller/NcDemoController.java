@@ -26,7 +26,7 @@ public class NcDemoController {
     @GetMapping("/sendMsg")
     public ResResult<Void> sendMsg(){
         // 传入模板code和参数
-        Map<String,String> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<>();
         String data = messageTemplateService.rendering("code", map);
         // 调用发送
         mailSendService.sentSimpleMail("xxm@bootx.cn","测试邮件",data);

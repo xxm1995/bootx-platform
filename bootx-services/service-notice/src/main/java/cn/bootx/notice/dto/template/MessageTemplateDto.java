@@ -20,24 +20,16 @@ import java.io.Serializable;
 public class MessageTemplateDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = -1377790220501836009L;
 
-    /**
-     * 编码
-     */
+    /** 编码 */
     private String code;
 
-    /**
-     * 名称
-     */
+    /** 名称 */
     private String name;
 
-    /**
-     * 内容
-     */
+    /** 内容 */
     private String data;
 
-    /**
-     * 备注
-     */
+    /** 备注 */
     private String remark;
 
     /**

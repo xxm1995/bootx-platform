@@ -86,6 +86,9 @@ public class MessageTemplateService {
         return messageTemplateManager.existsByCode(code,id);
     }
 
+    /**
+     * 删除
+     */
     public void delete(Long id){
         messageTemplateManager.deleteById(id);
     }
@@ -93,7 +96,7 @@ public class MessageTemplateService {
     /**
      * 渲染
      */
-    public String rendering(String code, Map<String,String> paramMap){
+    public String rendering(String code, Map<String,Object> paramMap){
         MessageTemplate messageTemplate = messageTemplateManager.findByCode(code)
                 .orElseThrow(() -> new BizException("消息模板不存在"));
         String date = messageTemplate.getData();

@@ -17,24 +17,16 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class MessageTemplate extends MpBaseEntity implements EntityBaseFunction<MessageTemplateDto> {
 
-    /**
-     * 编码
-     */
+    /** 编码 */
     private String code;
 
-    /**
-     * 名称
-     */
+    /** 名称 */
     private String name;
 
-    /**
-     * 内容
-     */
+    /** 内容 */
     private String data;
 
-    /**
-     * 备注
-     */
+    /** 备注 */
     private String remark;
 
     /**
