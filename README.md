@@ -1,8 +1,8 @@
-# Bootx-Platform (v1.1.0-beta-2)
+# Bootx-Platform (v1.1.0-beta-3)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.beta.2-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.beta.3-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Spring%20Boot-2.7.0-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
@@ -188,7 +188,7 @@ QQ扫码加入QQ交流群
 
 感谢其他提供灵感和思路的开源项目
 
-[借鉴和部分参考的开源项目和开源许可列表](./_license/LICENSE.md)
+[部分参考的开源项目和开源许可列表](./_license/LICENSE.md)
 
 
 ## 🍷License

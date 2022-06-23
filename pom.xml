@@ -51,10 +51,10 @@
         <plumelog.version>3.5.2</plumelog.version>
         <xxl-job.version>2.3.0</xxl-job.version>
         <sa-token.version>1.30.0</sa-token.version>
-        <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <swagger-annotations.version>2.2.0</swagger-annotations.version>
-        <springdoc.version>1.6.8</springdoc.version>
-        <redisson.version>3.17.1</redisson.version>
+        <springdoc.version>1.6.9</springdoc.version>
+        <redisson.version>3.17.3</redisson.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <velocity.version>2.3</velocity.version>

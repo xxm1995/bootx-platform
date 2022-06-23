@@ -1,15 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : bootx
+ Source Server         : 阿里
  Source Server Type    : MySQL
  Source Server Version : 50735
+ Source Host           : mysql.dev.bootx.cn:3306
+ Source Schema         : bootx-flyway
 
  Target Server Type    : MySQL
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 23/06/2022 22:47:26
+ Date: 10/06/2022 13:50:58
 */
 
 SET NAMES utf8mb4;
@@ -172,7 +174,7 @@ DROP TABLE IF EXISTS `base_key_value`;
 CREATE TABLE `base_key_value`  (
   `id` bigint(20) NOT NULL,
   `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数键名',
-  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数值',
+  `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '参数值',
   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
@@ -416,13 +418,12 @@ CREATE TABLE `flyway_schema_history`  (
   `success` tinyint(1) NOT NULL,
   PRIMARY KEY (`installed_rank`) USING BTREE,
   INDEX `flyway_schema_history_s_idx`(`success`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
 INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-06-10 13:49:23', 71976, 1);
-INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-06-23 22:45:20', 730, 1);
 
 -- ----------------------------
 -- Table structure for goods_brand
@@ -923,7 +924,7 @@ INSERT INTO `iam_perm_menu` VALUES (1414596877617352704, 'admin', 14525712691995
 INSERT INTO `iam_perm_menu` VALUES (1431082258161434624, 'admin', 1452569691537256448, '在线用户管理', 'OnlineUser', '', NULL, '', b'0', b'0', 'system/online/OnlineUserList', NULL, '/system/userAuth/online', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:32:53', 1399985191002447872, '2021-08-27 10:32:53', 6, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431083330909208576, 'admin', 1414596052497092608, '终端管理', 'Client', '', b'0', '', b'0', b'0', 'system/client/ClientList', NULL, '/system/config/client', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:09', 1399985191002447872, '2022-05-19 09:04:25', 6, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431089129232498688, 'admin', 1452569339987472384, '请求权限管理', 'Path', '', NULL, '', b'0', b'0', 'system/path/PathList', NULL, '/system/permission/path', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 11:00:11', 1399985191002447872, '2021-08-27 11:00:11', 2, 0);
-INSERT INTO `iam_perm_menu` VALUES (1431152689832525824, 'admin', NULL, '系统监控', 'monitor', '', b'0', 'radar-chart', b'0', b'0', 'RouteView', NULL, '/monitor', '', 0, 0, b'1', b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2021-08-27 15:12:45', 1399985191002447872, '2022-06-17 17:57:30', 21, 0);
+INSERT INTO `iam_perm_menu` VALUES (1431152689832525824, 'admin', NULL, '系统监控', 'monitor', '', b'0', 'radar-chart', b'0', b'0', 'RouteView', NULL, '/monitor', '', 0, 0, b'1', b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2021-08-27 15:12:45', 1399985191002447872, '2022-06-07 10:30:49', 18, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431153358157348864, 'admin', 1431152689832525824, '接口文档', 'ApiSwagger', '', b'0', '', b'0', b'0', '', NULL, 'http://127.0.0.1:9999/doc.html', '', 0, 1, b'1', b'1', b'1', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 15:15:25', 1399985191002447872, '2022-06-07 11:06:52', 15, 0);
 INSERT INTO `iam_perm_menu` VALUES (1435143678721236992, 'admin', 1452567897717321728, '登录日志', 'LoginLog', '', NULL, '', b'0', b'0', 'starter/log/LoginLogList', NULL, '/system/log/loginLog', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-07 15:31:31', 1399985191002447872, '2021-09-07 15:31:31', 5, 0);
 INSERT INTO `iam_perm_menu` VALUES (1435476255797624832, 'admin', 1452567897717321728, '操作日志', 'OperateLog', '', NULL, '', b'0', b'0', 'starter/log/OperateLogList', NULL, '/system/log/OperateLog', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-08 13:33:04', 1399985191002447872, '2021-09-08 13:33:04', 7, 0);
@@ -950,7 +951,7 @@ INSERT INTO `iam_perm_menu` VALUES (1450825819436826624, 'admin', 14508228429951
 INSERT INTO `iam_perm_menu` VALUES (1450826890318135296, 'admin', 1450825615857893376, '支付订单', 'PaymentOrder', '', b'0', '', b'0', b'0', 'payment/order/payment/PaymentList', NULL, '/payment/order/payment', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:11:00', 1399985191002447872, '2022-02-25 15:17:07', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450827159626006528, 'admin', 1450825615857893376, '退款订单', 'ReturnOrder', '', b'0', '', b'0', b'0', 'payment/order/refund/RefundRecordList', NULL, '/payment/order/return', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:12:05', 1399985191002447872, '2022-03-04 15:44:06', 4, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450827308515409920, 'admin', 1450825615857893376, '转账订单', 'TransferOrder', '', b'0', '', b'1', b'0', 'payment/order/transfer/TransferList', NULL, '/payment/order/transfer', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:12:40', 1399985191002447872, '2022-03-04 15:33:31', 3, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450827660459458560, 'admin', 1438061887002759168, '微信', 'NoticeWeChat', '', b'0', '', b'0', b'0', 'Dev', NULL, '/notice/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:14:04', 1399985191002447872, '2022-06-21 20:53:04', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450827660459458560, 'admin', 1438061887002759168, '微信', 'NoticeWeChat', '', NULL, '', b'0', b'0', '', NULL, '/notice/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:14:04', 1399985191002447872, '2021-10-20 22:14:04', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452567897717321728, 'admin', 1414596052497092608, '审计日志', 'auditLog', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/log', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:29:09', 1399985191002447872, '2021-10-25 17:29:09', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452569339987472384, 'admin', 1414596052497092608, '权限管理', 'permission', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/permission', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:34:53', 1399985191002447872, '2021-10-25 17:34:53', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452569691537256448, 'admin', 1414596052497092608, '用户信息', 'userAuth', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/userAuth', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:36:17', 1399985191002447872, '2021-10-25 17:36:17', 2, 0);
@@ -989,13 +990,6 @@ INSERT INTO `iam_perm_menu` VALUES (1530120684645044224, 'admin', 15301200844820
 INSERT INTO `iam_perm_menu` VALUES (1530120821144473600, 'admin', 1530120084482084864, 'RabbitMQ', 'RabbitDemo', NULL, b'0', '', b'0', b'0', '', NULL, '/demo/mq/rabbit', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-27 17:36:47', 1399985191002447872, '2022-05-27 17:36:47', 0, 1);
 INSERT INTO `iam_perm_menu` VALUES (1534000136370204672, 'admin', 1431152689832525824, 'ELK日志', 'ELK', '', b'0', '', b'0', b'0', '', NULL, 'http://elk.dev.bootx.cn:5601/app/discover', '', 0, 1, NULL, b'1', b'1', b'0', b'0', NULL, 1399985191002447872, '2022-06-07 10:31:48', 1399985191002447872, '2022-06-07 10:31:48', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1534008203006652416, 'admin', 1431152689832525824, 'PlumeLog日志', 'PlumeLog', '', b'0', '', b'0', b'0', '', NULL, 'http://127.0.0.1:9999/plumelog/#/', '', 0, 1, NULL, b'1', b'1', b'0', b'0', NULL, 1399985191002447872, '2022-06-07 11:03:51', 1399985191002447872, '2022-06-07 11:06:13', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1535451167008436224, 'admin', 1431152689832525824, '系统信息', 'SysInfo', NULL, b'0', '', b'0', b'0', 'starter/monitor/SystemInfoMonitor', NULL, '/monitor/sysinfo', '', 0, 1, NULL, b'0', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-11 10:37:40', 1399985191002447872, '2022-06-13 13:07:46', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1535965936371085312, 'admin', 1431152689832525824, 'Redis监控', 'RedisInfoMonitor', NULL, b'0', '', b'0', b'0', 'starter/monitor/RedisInfoMonitor', NULL, '/monitor/redis', '', 0, 1, NULL, b'0', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-12 20:43:11', 1399985191002447872, '2022-06-13 13:07:38', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1537730140522348544, 'admin', 1438061887002759168, '站内信', 'SiteMessage', '', b'0', '', b'0', b'0', 'notice/site/SiteMessage', NULL, '/notice/siteMessage', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:33:30', 1399985191002447872, '2022-06-17 17:33:30', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1537732440632524800, 'admin', NULL, '个人办公', 'person', '', b'0', 'user', b'0', b'0', 'RouteView', NULL, '/person', '', -99, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:42:38', 1399985191002447872, '2022-06-17 17:45:24', 2, 0);
-INSERT INTO `iam_perm_menu` VALUES (1537733801860333568, 'admin', 1537732440632524800, '我的消息', 'PersonSiteMessage', NULL, b'0', '', b'0', b'0', 'Dev', NULL, '/person/siteMessage', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:48:03', 1399985191002447872, '2022-06-21 20:52:50', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1537735851818024960, 'admin', 1537732440632524800, '待办任务', 'PersonTaskList', NULL, b'0', '', b'0', b'0', 'Dev', NULL, '/person/taskList', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:56:11', 1399985191002447872, '2022-06-21 20:52:42', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1538160478872625152, 'admin', 1495968302034210816, '富文本编辑', 'WangEditorDemo', NULL, b'0', '', b'0', b'0', 'demo/wangeditor/WangEditorDemo', NULL, '/demo/wangEditor', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-18 22:03:30', 1399985191002447872, '2022-06-18 22:03:31', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -2151,7 +2145,7 @@ CREATE TABLE `iam_user_expand_info`  (
 -- ----------------------------
 -- Records of iam_user_expand_info
 -- ----------------------------
-INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-06-22 00:27:07', '2022-06-22 00:51:30', b'0', '2022-06-19 21:25:00', 1, '2021-06-02 15:04:15', 0, '2022-06-22 00:51:30', 180, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-06-04 17:42:28', '2022-06-04 18:35:09', b'0', '2022-01-09 11:36:05', 1, '2021-06-02 15:04:15', 0, '2022-06-04 18:35:09', 140, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, NULL, '1530065639127871488', NULL, '2022-05-27 13:56:02', b'0', NULL, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-05-27 13:57:32', 2, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435894470432456704, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2021-09-09 17:14:54', 1399985191002447872, '2021-09-09 17:14:54', 0, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435967884114194432, 1, NULL, NULL, NULL, '2022-05-31 15:59:42', b'0', NULL, 1414143554414059520, '2021-09-09 22:06:37', 0, '2022-05-31 15:59:42', 1, 0);
@@ -3606,7 +3600,7 @@ CREATE TABLE `starter_quartz_job`  (
 -- ----------------------------
 -- Records of starter_quartz_job
 -- ----------------------------
-INSERT INTO `starter_quartz_job` VALUES (1456579473573867520, '测试任务', 'cn.bootx.starter.quartz.task.TestTask', '50 0 * * * ? *', '{\"aaa\":\"5255\"}', 0, '测试任务', 1399985191002447872, '2021-11-05 19:09:43', 1399985191002447872, '2022-06-22 00:37:48', 25, 0);
+INSERT INTO `starter_quartz_job` VALUES (1456579473573867520, '测试任务', 'cn.bootx.starter.quartz.task.TestTask', '* * * * * ?', '{\"aaa\":\"5255\"}', 0, '测试任务', 1399985191002447872, '2021-11-05 19:09:43', 1399985191002447872, '2022-05-26 15:37:35', 22, 0);
 
 -- ----------------------------
 -- Table structure for starter_quartz_job_log
