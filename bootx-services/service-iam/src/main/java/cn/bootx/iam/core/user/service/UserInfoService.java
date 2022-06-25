@@ -121,21 +121,23 @@ public class UserInfoService {
      * @param oldCaptcha 旧手机号的验证码
      * @param newCaptcha 新手机的验证码
      */
+    @Transactional(rollbackFor = Exception.class)
     public void updatePhone(String phone,String oldCaptcha,String newCaptcha){
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
                 .orElseThrow(UserInfoNotExistsException::new);
         // 判断旧手机的验证码是否正常
-        if (!userAssistService.validatePhoneCaptcha(userInfo.getPhone(),oldCaptcha)){
+        if (!userAssistService.validatePhoneChangeCaptcha(userInfo.getPhone(),oldCaptcha)){
             throw new BizException("短信验证码不正确");
         }
         // 判断新手机验证码是否正常
-        if (!userAssistService.validatePhoneCaptcha(phone,newCaptcha)){
+        if (!userAssistService.validatePhoneChangeCaptcha(phone,newCaptcha)){
             throw new BizException("短信验证码不正确");
         }
         // 手机号是否已经存在
         if (userQueryService.existsPhone(phone)){
             throw new BizException("该手机号已经被使用");
         }
+        userAssistService.deleteSmsCaptcha(userInfo.getPhone());
         userInfo.setPhone(phone);
         userInfoManager.updateById(userInfo);
         userAssistService.deleteSmsCaptcha(phone);
@@ -144,23 +146,27 @@ public class UserInfoService {
     /**
      * 更改邮箱
      */
+    @Transactional(rollbackFor = Exception.class)
     public void updateEmail(String email,String oldCaptcha,String newCaptcha) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
                 .orElseThrow(UserInfoNotExistsException::new);
         // 判断旧手机的验证码是否正常
-        if (!userAssistService.validatePhoneCaptcha(userInfo.getPhone(),oldCaptcha)){
+        if (!userAssistService.validatePhoneChangeCaptcha(userInfo.getPhone(),oldCaptcha)){
             throw new BizException("短信验证码不正确");
         }
         // 判断新邮箱验证码是否正常
-        if (!userAssistService.validatePhoneCaptcha(email,newCaptcha)){
+        if (!userAssistService.validatePhoneChangeCaptcha(email,newCaptcha)){
             throw new BizException("短信验证码不正确");
         }
         // 邮箱是否已经存在
         if (!userQueryService.existsPhone(email)){
             throw new BizException("该邮箱已经被使用");
         }
+        userAssistService.deleteSmsCaptcha(userInfo.getEmail());
         userInfo.setEmail(email);
         userInfoManager.updateById(userInfo);
+        userAssistService.deleteSmsCaptcha(email);
+
     }
 
 }

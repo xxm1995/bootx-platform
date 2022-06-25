@@ -18,10 +18,8 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayResponse;
 import com.alipay.api.domain.*;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.alipay.api.response.AlipayTradeAppPayResponse;
-import com.alipay.api.response.AlipayTradePagePayResponse;
-import com.alipay.api.response.AlipayTradePayResponse;
-import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.alipay.api.response.*;
 import com.ijpay.alipay.AliPayApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -105,18 +103,18 @@ public class AliPayService {
         model.setOutTradeNo(String.valueOf(payment.getId()));
         model.setTotalAmount(amount.toPlainString());
         // 过期时间
-//        model.setTimeoutExpress(alipayConfig.getExpireTime());
+        model.setTimeoutExpress(alipayConfig.getExpireTime());
         model.setProductCode(AliPayCode.QUICK_WAP_PAY);
-//        model.setQuitUrl(aliPayParam.getReturnUrl());
+        model.setQuitUrl(aliPayParam.getReturnUrl());
 
-        AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+        AlipayTradeWapPayRequest request = new AlipayTradeWapPayRequest();
         request.setBizModel(model);
         request.setNotifyUrl(alipayConfig.getNotifyUrl());
         request.setReturnUrl(aliPayParam.getReturnUrl());
 
         try {
             // 通过GET方式的请求, 返回URL的响应, 默认是POST方式的请求, 返回的是表单响应
-            AlipayTradePagePayResponse response = AliPayApi.pageExecute(request, Method.GET.name());
+            AlipayTradeWapPayResponse response = AliPayApi.pageExecute(request, Method.GET.name());
             return response.getBody();
         }
         catch (AlipayApiException e) {

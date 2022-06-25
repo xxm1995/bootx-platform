@@ -29,24 +29,24 @@ public class UserAssistService {
     /**
      * 给当前用户发送更改手机号验证码
      */
-    public void sendCurrentPhoneCaptcha(){
+    public void sendCurrentPhoneChangeCaptcha(){
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId()).orElseThrow(UserInfoNotExistsException::new);
-        this.sendPhoneCaptcha(userInfo.getPhone());
+        this.sendPhoneChangeCaptcha(userInfo.getPhone());
     }
 
 
     /**
      * 验证当前用户发送更改手机号验证码
      */
-    public boolean validateCurrentPhoneCaptcha(String captcha){
+    public boolean validateCurrentPhoneChangeCaptcha(String captcha){
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId()).orElseThrow(UserInfoNotExistsException::new);
-        return this.validatePhoneCaptcha(userInfo.getPhone(),captcha);
+        return this.validatePhoneChangeCaptcha(userInfo.getPhone(),captcha);
     }
 
     /**
      * 发送更改手机号验证码
      */
-    public void sendPhoneCaptcha(String phone){
+    public void sendPhoneChangeCaptcha(String phone){
         int captcha = captchaService.sendSmsCaptcha(phone, 15 * 60, changePhoneType);
         userWsNoticeService.sendMessageByUser(WsRes.notificationInfo("(开发模式)短信验证码 : "+captcha),SecurityUtil.getUserIdOrDefaultId());
     }
@@ -54,7 +54,7 @@ public class UserAssistService {
     /**
      * 验证改手机验证码
      */
-    public boolean validatePhoneCaptcha(String phone, String captcha){
+    public boolean validatePhoneChangeCaptcha(String phone, String captcha){
         return captchaService.validateSmsCaptcha(phone,captcha,changePhoneType);
     }
 
@@ -68,23 +68,23 @@ public class UserAssistService {
     /**
      * 给当前用户发送更改邮箱验证码
      */
-    public void sendCurrentEmailCaptcha(){
+    public void sendCurrentEmailChangeCaptcha(){
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId()).orElseThrow(UserInfoNotExistsException::new);
-        this.sendEmailCaptcha(userInfo.getEmail());
+        this.sendEmailChangeCaptcha(userInfo.getEmail());
     }
 
     /**
      * 验证当前用户发送更改邮箱验证码
      */
-    public boolean validateCurrentEmailCaptcha(String captcha){
+    public boolean validateCurrentChangeEmailCaptcha(String captcha){
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId()).orElseThrow(UserInfoNotExistsException::new);
-        return this.validateEmailCaptcha(userInfo.getEmail(),captcha);
+        return this.validateEmailChangeCaptcha(userInfo.getEmail(),captcha);
     }
 
     /**
      * 发送更改邮箱验证码
      */
-    public void sendEmailCaptcha(String email){
+    public void sendEmailChangeCaptcha(String email){
         int captcha = captchaService.sendEmailCaptcha(email, 15 * 60, changeEmailType);
         userWsNoticeService.sendMessageByUser(WsRes.notificationInfo("(开发模式)邮件验证码 : "+captcha),SecurityUtil.getUserIdOrDefaultId());
     }
@@ -92,7 +92,7 @@ public class UserAssistService {
     /**
      * 验证改邮箱验证码
      */
-    public boolean validateEmailCaptcha(String email, String captcha){
+    public boolean validateEmailChangeCaptcha(String email, String captcha){
         return captchaService.validateEmailCaptcha(email,captcha,changeEmailType);
     }
 

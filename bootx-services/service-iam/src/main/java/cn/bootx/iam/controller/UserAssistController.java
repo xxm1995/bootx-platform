@@ -29,50 +29,50 @@ public class UserAssistController {
     private final UserAssistService userAssistService;
 
     @Operation(summary = "给当前用户发送更改手机号验证码")
-    @PostMapping("/sendCurrentPhoneCaptcha")
-    public ResResult<Void> sendCurrentPhoneCaptcha(){
-        userAssistService.sendCurrentPhoneCaptcha();
+    @PostMapping("/sendCurrentPhoneChangeCaptcha")
+    public ResResult<Void> sendCurrentPhoneChangeCaptcha(){
+        userAssistService.sendCurrentPhoneChangeCaptcha();
         return Res.ok();
     }
 
     @Operation(summary = "验证当前用户发送更改手机号验证码")
-    @GetMapping("/validateCurrentPhoneCaptcha")
-    public ResResult<Boolean> validateCurrentPhoneCaptcha(@NotBlank(message = "验证码不可为空") String captcha){
-        return Res.ok(userAssistService.validateCurrentPhoneCaptcha(captcha));
+    @GetMapping("/validateCurrentPhoneChangeCaptcha")
+    public ResResult<Boolean> validateCurrentPhoneChangeCaptcha(@NotBlank(message = "验证码不可为空") String captcha){
+        return Res.ok(userAssistService.validateCurrentPhoneChangeCaptcha(captcha));
     }
 
     @Operation(summary = "发送更改手机号验证码")
-    @PostMapping("/sendPhoneCaptcha")
-    public ResResult<Void> sendPhoneCaptcha(@NotBlank(message = "手机号不可为空") String phone){
-        userAssistService.sendPhoneCaptcha(phone);
+    @PostMapping("/sendPhoneChangeCaptcha")
+    public ResResult<Void> sendPhoneChangeCaptcha(@NotBlank(message = "手机号不可为空") String phone){
+        userAssistService.sendPhoneChangeCaptcha(phone);
         return Res.ok();
     }
 
     @Operation(summary = "验证改手机验证码")
-    @GetMapping("/validatePhoneCaptcha")
-    public ResResult<Boolean> validatePhoneCaptcha(
+    @GetMapping("/validatePhoneChangeCaptcha")
+    public ResResult<Boolean> validatePhoneChangeCaptcha(
             @NotBlank(message = "手机号不可为空") String phone,
             @NotBlank(message = "验证码不可为空") String captcha){
-        return Res.ok(userAssistService.validatePhoneCaptcha(phone,captcha));
+        return Res.ok(userAssistService.validatePhoneChangeCaptcha(phone,captcha));
     }
 
     @Operation(summary = "给当前用户发送更改邮箱验证码")
-    @PostMapping("/sendCurrentEmailCaptcha")
-    public ResResult<Void> sendCurrentEmailCaptcha(){
-        userAssistService.sendCurrentEmailCaptcha();
+    @PostMapping("/sendCurrentEmailChangeCaptcha")
+    public ResResult<Void> sendCurrentEmailChangeCaptcha(){
+        userAssistService.sendCurrentEmailChangeCaptcha();
         return Res.ok();
     }
 
     @Operation(summary = "验证当前用户发送更改邮箱验证码")
-    @GetMapping("/validateCurrentEmailCaptcha")
-    public ResResult<Boolean> validateCurrentEmailCaptcha(@NotBlank(message = "验证码不可为空") String captcha){
-        return Res.ok(userAssistService.validateCurrentEmailCaptcha(captcha));
+    @GetMapping("/validateCurrentChangeEmailCaptcha")
+    public ResResult<Boolean> validateCurrentChangeEmailCaptcha(@NotBlank(message = "验证码不可为空") String captcha){
+        return Res.ok(userAssistService.validateCurrentChangeEmailCaptcha(captcha));
     }
 
     @Operation(summary = "发送更改邮箱验证码")
-    @PostMapping("/sendEmailCaptcha")
-    public ResResult<Void> sendEmailCaptcha(@NotBlank(message = "邮箱不可为空")@Email String email){
-        userAssistService.sendEmailCaptcha(email);
+    @PostMapping("/sendEmailChangeCaptcha")
+    public ResResult<Void> sendEmailChangeCaptcha(@NotBlank(message = "邮箱不可为空")@Email String email){
+        userAssistService.sendEmailChangeCaptcha(email);
         return Res.ok();
     }
 
@@ -81,7 +81,7 @@ public class UserAssistController {
     public ResResult<Boolean> validateEmailCaptcha(
             @NotBlank(message = "验证码不可为空") String email,
             @NotBlank(message = "验证码不可为空") String captcha){
-        return Res.ok(userAssistService.validateEmailCaptcha(email,captcha));
+        return Res.ok(userAssistService.validateEmailChangeCaptcha(email,captcha));
     }
 
 }

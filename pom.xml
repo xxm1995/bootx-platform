@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
+        <version>2.7.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -15,7 +15,7 @@
     <groupId>cn.bootx.platform</groupId>
     <artifactId>bootx-platform</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0-beta-3-SNAPSHOT</version>
+    <version>1.1.0-beta-4-SNAPSHOT</version>
 
     <modules>
         <module>bootx-common-core</module>
@@ -33,7 +33,7 @@
         <java.version>1.8</java.version>
 
         <!-- 二方库版本 -->
-        <bootx-platform.version>1.1.0-beta-3-SNAPSHOT</bootx-platform.version>
+        <bootx-platform.version>1.1.0-beta-4-SNAPSHOT</bootx-platform.version>
         <!-- 三方库 -->
         <hutool.version>5.8.1</hutool.version>
         <oshi.version>6.1.6</oshi.version>
@@ -49,8 +49,9 @@
         <flyway.version>7.15.0</flyway.version>
         <logback-classic.version>1.2.11</logback-classic.version>
         <plumelog.version>3.5.2</plumelog.version>
-        <xxl-job.version>2.3.0</xxl-job.version>
+        <xxl-job.version>2.3.1</xxl-job.version>
         <sa-token.version>1.30.0</sa-token.version>
+        <justauth.version>1.4.0</justauth.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <swagger-annotations.version>2.2.0</swagger-annotations.version>
         <springdoc.version>1.6.9</springdoc.version>
@@ -58,7 +59,7 @@
         <mapstruct.version>1.4.2.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <velocity.version>2.3</velocity.version>
-        <wxjava.version>4.1.0</wxjava.version>
+        <wxjava.version>4.3.0</wxjava.version>
     </properties>
 
     <!-- 项目依赖版本管理 -->
