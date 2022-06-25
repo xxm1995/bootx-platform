@@ -5,6 +5,7 @@ import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.iam.core.client.convert.ClientConvert;
 import cn.bootx.iam.dto.client.ClientDto;
 import cn.bootx.iam.param.client.ClientParam;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,6 +38,7 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     private boolean captcha;
 
     /** 是否系统内置 */
+    @TableField("`system`")
     private boolean system;
 
     /** 密码错误几次冻结 -1表示不限制 */
