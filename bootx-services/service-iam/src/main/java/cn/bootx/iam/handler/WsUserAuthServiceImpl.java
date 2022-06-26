@@ -1,7 +1,6 @@
 package cn.bootx.iam.handler;
 
 import cn.bootx.common.websocket.func.WsUserAuthService;
-import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +23,6 @@ public class WsUserAuthServiceImpl implements WsUserAuthService {
         return Optional.ofNullable(StpUtil.getLoginIdByToken(token))
                 .map(id->(String)id)
                 .map(Long::valueOf)
-                .orElseThrow(NotLoginException::new);
+                .orElse(null);
     }
 }

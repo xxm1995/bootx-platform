@@ -137,10 +137,10 @@ public class UserInfoService {
         if (userQueryService.existsPhone(phone)){
             throw new BizException("该手机号已经被使用");
         }
-        userAssistService.deleteSmsCaptcha(userInfo.getPhone());
+        userAssistService.deletePhoneChangeCaptcha(userInfo.getPhone());
         userInfo.setPhone(phone);
         userInfoManager.updateById(userInfo);
-        userAssistService.deleteSmsCaptcha(phone);
+        userAssistService.deletePhoneChangeCaptcha(phone);
     }
 
     /**
@@ -162,11 +162,49 @@ public class UserInfoService {
         if (!userQueryService.existsPhone(email)){
             throw new BizException("该邮箱已经被使用");
         }
-        userAssistService.deleteSmsCaptcha(userInfo.getEmail());
+        userAssistService.deleteEmailChangeCaptcha(userInfo.getEmail());
         userInfo.setEmail(email);
         userInfoManager.updateById(userInfo);
-        userAssistService.deleteSmsCaptcha(email);
+        userAssistService.deleteEmailChangeCaptcha(email);
+    }
 
+    /**
+     * 找回密码 手机
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void forgetPasswordByPhone(String phone,String captcha,String password) {
+        if (!userAssistService.validatePhoneForgetCaptcha(phone, captcha)) {
+            throw new BizException("短信验证码不正确");
+        }
+        UserInfo userInfo = userInfoManager.findByPhone(phone)
+                .orElseThrow(UserInfoNotExistsException::new);
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        userInfo.setPassword(passwordEncoder.encode(password));
+        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now())
+                .setInitialPassword(false);
+        userInfoManager.updateById(userInfo);
+        userExpandInfoManager.updateById(userExpandInfo);
+        userAssistService.deletePhoneForgetCaptcha(phone);
+    }
+
+    /**
+     * 找回密码 邮箱
+     */
+    public void forgetPasswordByEmail(String email,String captcha,String password) {
+        if (!userAssistService.validateEmailForgetCaptcha(email, captcha)) {
+            throw new BizException("短信验证码不正确");
+        }
+        UserInfo userInfo = userInfoManager.findByEmail(email)
+                .orElseThrow(UserInfoNotExistsException::new);
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        userInfo.setPassword(passwordEncoder.encode(password));
+        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now())
+                .setInitialPassword(false);
+        userInfoManager.updateById(userInfo);
+        userExpandInfoManager.updateById(userExpandInfo);
+        userAssistService.deleteEmailForgetCaptcha(email);
     }
 
 }

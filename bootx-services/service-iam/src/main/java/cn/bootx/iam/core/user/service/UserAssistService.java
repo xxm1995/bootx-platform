@@ -25,6 +25,8 @@ public class UserAssistService {
     private final UserWsNoticeService userWsNoticeService;
     private final String changePhoneType = "change:phone";
     private final String changeEmailType = "change:email";
+    private final String forgetPhoneType = "forget:phone";
+    private final String forgetEmailType = "forget:email";
 
     /**
      * 给当前用户发送更改手机号验证码
@@ -61,7 +63,7 @@ public class UserAssistService {
     /**
      * 删除手机验证码
      */
-    public void deleteSmsCaptcha(String phone){
+    public void deletePhoneChangeCaptcha(String phone){
         captchaService.deleteSmsCaptcha(phone,changePhoneType);
     }
 
@@ -99,7 +101,56 @@ public class UserAssistService {
     /**
      * 删除邮箱验证码
      */
-    public void deleteEmailCaptcha(String email){
+    public void deleteEmailChangeCaptcha(String email){
         captchaService.deleteEmailCaptcha(email,changeEmailType);
     }
+
+    /**
+     * 发送忘记密码手机验证码
+     */
+    public void sendPhoneForgetCaptcha(String phone){
+        UserInfo userInfo = userInfoManager.findByPhone(phone).orElseThrow(UserInfoNotExistsException::new);
+        int captcha = captchaService.sendSmsCaptcha(userInfo.getPhone(), 15 * 60, forgetPhoneType);
+        log.info("忘记密码手机验证码: {}", captcha);
+
+    }
+
+    /**
+     * 验证忘记密码手机验证码
+     */
+    public boolean validatePhoneForgetCaptcha(String phone, String captcha){
+        return captchaService.validateSmsCaptcha(phone,captcha,forgetPhoneType);
+    }
+
+    /**
+     * 删除手机验证码
+     */
+    public void deletePhoneForgetCaptcha(String phone){
+        captchaService.deleteSmsCaptcha(phone,forgetPhoneType);
+    }
+
+    /**
+     * 发送忘记密码邮件验证码
+     */
+    public void sendEmailForgetCaptcha(String email){
+        UserInfo userInfo = userInfoManager.findByEmail(email)
+                .orElseThrow(UserInfoNotExistsException::new);
+        int captcha = captchaService.sendEmailCaptcha(userInfo.getEmail(), 15 * 60, forgetEmailType);
+        log.info("忘记密码邮件验证码: {}", captcha);
+    }
+
+    /**
+     * 验证忘记密码邮箱验证码
+     */
+    public boolean validateEmailForgetCaptcha(String email, String captcha){
+        return captchaService.validateEmailCaptcha(email,captcha,forgetEmailType);
+    }
+
+    /**
+     * 删除邮箱验证码
+     */
+    public void deleteEmailForgetCaptcha(String email){
+        captchaService.deleteEmailCaptcha(email,forgetEmailType);
+    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static cn.bootx.common.core.code.CommonCode.USER_ID;
 import static cn.bootx.common.core.code.WebHeaderCode.ACCESS_TOKEN;
@@ -30,6 +31,9 @@ public class UserNoticeWebSocketInterceptor implements HandshakeInterceptor {
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
         String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter(ACCESS_TOKEN);
         Long userId = wsUserAuthService.getUserIdByToken(token);
+        if (Objects.isNull(userId)){
+            return false;
+        }
         attributes.put(USER_ID,userId);
         return true;
     }

@@ -1,10 +1,12 @@
 package cn.bootx.iam.core.user.service;
 
+import cn.bootx.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.code.UserStatusCode;
+import cn.bootx.iam.core.client.dao.ClientManager;
 import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
@@ -15,8 +17,8 @@ import cn.bootx.iam.dto.role.RoleDto;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.dto.user.UserInfoWhole;
 import cn.bootx.iam.exception.user.UserInfoNotExistsException;
-import cn.bootx.iam.exception.user.UserNonePhoneAndEmailException;
 import cn.bootx.iam.param.user.UserInfoParam;
+import cn.bootx.iam.param.user.UserRegisterParam;
 import cn.bootx.starter.auth.util.PasswordEncoder;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -29,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 超级管理员操作类
@@ -46,6 +47,8 @@ public class UserAdminService {
     private final UserDeptService userDeptService;
     private final PasswordEncoder passwordEncoder;
     private final UserQueryService userQueryService;
+    private final ClientManager clientManager;
+    private final CaptchaService captchaService;
 
     /**
      * 分页查询
@@ -84,14 +87,25 @@ public class UserAdminService {
     }
 
     /**
-     * 注册新用户 返回添加后用户信息, 已经存在则直接返回
+     * 注册新用户
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void register(UserRegisterParam param){
+        // 验证
+        if (!captchaService.validateImgCaptcha(param.getCaptchaKey(),param.getCaptcha())){
+            throw new BizException("验证码错误");
+        }
+        UserInfoParam userInfoParam = new UserInfoParam();
+        BeanUtil.copyProperties(param,userInfoParam);
+        userInfoParam.setName(param.getUsername());
+        this.add(userInfoParam);
+    }
+
+    /**
+     * 添加新用户
      */
     @Transactional(rollbackFor = Exception.class)
     public void add(UserInfoParam userInfoParam){
-        // 如果用户的手机号和邮箱都不存在则抛出异常, 第三方登录除外
-        if (Objects.isNull(userInfoParam.getPhone()) && Objects.isNull(userInfoParam.getEmail())) {
-            throw new UserNonePhoneAndEmailException();
-        }
         if (userQueryService.existsUsername(userInfoParam.getUsername())){
             throw new BizException("账号已存在");
         }
@@ -110,10 +124,12 @@ public class UserAdminService {
         userInfoManager.save(userInfo);
         // 扩展信息
         UserExpandInfo userExpandInfo = new UserExpandInfo();
-        userExpandInfo.setId(userInfo.getId());
+        userExpandInfo
+                .setInitialPassword(true)
+                .setId(userInfo.getId());
         userExpandInfoManager.save(userExpandInfo);
+        // TODO 发送用户注册事件
     }
-
 
     /**
      * 重置密码

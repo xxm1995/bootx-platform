@@ -4,14 +4,13 @@ import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.util.ValidationUtil;
+import cn.bootx.iam.core.user.service.UserAdminService;
 import cn.bootx.iam.core.user.service.UserInfoService;
 import cn.bootx.iam.core.user.service.UserQueryService;
 import cn.bootx.iam.dto.user.LoginAfterUserInfo;
 import cn.bootx.iam.dto.user.UserBaseInfoDto;
 import cn.bootx.iam.dto.user.UserInfoDto;
-import cn.bootx.iam.param.user.UserBaseInfoParam;
-import cn.bootx.iam.param.user.UserChangeEmailParam;
-import cn.bootx.iam.param.user.UserChangePhoneParam;
+import cn.bootx.iam.param.user.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -23,6 +22,7 @@ import javax.validation.constraints.NotBlank;
 * @author xxm
 * @date 2020/4/25 20:02
 */
+@IgnoreAuth
 @Tag(name ="用户管理")
 @RestController
 @RequestMapping("/user")
@@ -30,6 +30,7 @@ import javax.validation.constraints.NotBlank;
 public class UserInfoController {
 	private final UserInfoService userInfoService;
     private final UserQueryService userQueryService;
+    private final UserAdminService userAdminService;
 
     @Operation( summary = "账号是否被使用")
     @GetMapping("/existsUsername")
@@ -67,6 +68,15 @@ public class UserInfoController {
         return Res.ok(userQueryService.existsEmail(email,id));
     }
 
+    @Operation(summary = "注册账号")
+    @PostMapping("/register")
+    public ResResult<Void> register(@RequestBody UserRegisterParam param){
+        ValidationUtil.validateParam(param);
+        userAdminService.register(param);
+        return Res.ok();
+    }
+
+
     @Operation(summary = "修改密码")
     @PostMapping("/updatePassword")
     public ResResult<Void> updatePassword(@NotBlank(message = "旧密码不能为空") String password,
@@ -88,6 +98,22 @@ public class UserInfoController {
     public ResResult<Void> updateEmail(@RequestBody UserChangeEmailParam param){
         ValidationUtil.validateParam(param);
         userInfoService.updateEmail(param.getEmail(),param.getOldCaptcha(),param.getNewCaptcha());
+        return Res.ok();
+    }
+
+    @Operation(summary = "通过手机号重置密码")
+    @PostMapping("/forgetPasswordByPhone")
+    public ResResult<Void> forgetPasswordByPhone(@RequestBody UserForgetPhoneParam param){
+        ValidationUtil.validateParam(param);
+        userInfoService.forgetPasswordByPhone(param.getPhone(),param.getCaptcha(),param.getCaptcha());
+        return Res.ok();
+    }
+
+    @Operation(summary = "通过邮箱重置密码")
+    @PostMapping("/forgetPasswordByEmail")
+    public ResResult<Void> forgetPasswordByEmail(@RequestBody UserForgetEmailParam param){
+        ValidationUtil.validateParam(param);
+        userInfoService.forgetPasswordByEmail(param.getEmail(),param.getCaptcha(),param.getCaptcha());
         return Res.ok();
     }
 

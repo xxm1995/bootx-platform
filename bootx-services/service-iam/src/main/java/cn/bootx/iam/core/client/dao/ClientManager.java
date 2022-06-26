@@ -52,6 +52,11 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
         return findAllByField(Client::isAlonePrem,true);
     }
 
+    @Permission(dataScope = false,selectField = false)
+    public List<Client> findAllByNotAlonePrem(){
+        return findAllByField(Client::isAlonePrem,false);
+    }
+
     /**
      * 超级查询
      */

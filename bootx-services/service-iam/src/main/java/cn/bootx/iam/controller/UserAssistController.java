@@ -79,9 +79,39 @@ public class UserAssistController {
     @Operation(summary = "验证更改邮箱验证码")
     @GetMapping("/validateEmailCaptcha")
     public ResResult<Boolean> validateEmailCaptcha(
-            @NotBlank(message = "验证码不可为空") String email,
+            @NotBlank(message = "邮箱不可为空")@Email(message = "请输入正确的邮箱") String email,
             @NotBlank(message = "验证码不可为空") String captcha){
         return Res.ok(userAssistService.validateEmailChangeCaptcha(email,captcha));
     }
 
+    @Operation(summary = "发送找回密码手机验证码")
+    @PostMapping("/sendPhoneForgetCaptcha")
+    public ResResult<Void> sendPhoneForgetCaptcha(@NotBlank(message = "手机号不可为空") String phone){
+        userAssistService.sendPhoneForgetCaptcha(phone);
+        return Res.ok();
+    }
+
+
+    @Operation(summary = "验证找回密码手机验证码")
+    @GetMapping("/validatePhoneForgetCaptcha")
+    public ResResult<Boolean> validatePhoneForgetCaptcha(
+            @NotBlank(message = "手机号不可为空") String phone,
+            @NotBlank(message = "验证码不可为空") String captcha){
+        return Res.ok(userAssistService.validatePhoneForgetCaptcha(phone,captcha));
+    }
+
+    @Operation(summary = "发送找回密码邮箱验证码")
+    @PostMapping("/sendEmailForgetCaptcha")
+    public ResResult<Void> sendEmailForgetCaptcha(@NotBlank(message = "邮箱不可为空")@Email String email){
+        userAssistService.sendEmailForgetCaptcha(email);
+        return Res.ok();
+    }
+
+    @Operation(summary = "验证找回密码邮箱验证码")
+    @GetMapping("/validateEmailForgetCaptcha")
+    public ResResult<Boolean> validateEmailForgetCaptcha(
+            @NotBlank(message = "邮箱不可为空")@Email(message = "请输入正确的邮箱") String email,
+            @NotBlank(message = "验证码不可为空") String captcha){
+        return Res.ok(userAssistService.validateEmailForgetCaptcha(email,captcha));
+    }
 }

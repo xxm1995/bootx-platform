@@ -33,7 +33,7 @@ public class IgnoreAnnotationRouterCheck implements RouterCheck {
                 // controller和方法上都加了跳过鉴权注解,以方法上为准
                 IgnoreAuth annotation = handlerMethod.getMethodAnnotation(IgnoreAuth.class);
                 if (Objects.nonNull(annotation) ){
-                    return !ignoreAuth.ignore();
+                    return ignoreAuth.ignore();
                 }
             }
             return Objects.nonNull(ignoreAuth) && ignoreAuth.ignore();
