@@ -31,9 +31,6 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     /** 在线时长 分钟 */
     private Long timeout;
 
-    /** 是否有独立菜单和权限 独立应用/登录方式 */
-    private boolean alonePrem;
-
     /** 是否需要验证码 */
     private boolean captcha;
 

@@ -1,7 +1,7 @@
 package cn.bootx.iam.param.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -34,7 +34,7 @@ public class UserInfoParam implements Serializable {
     private String email;
 
     @Schema(description= "终端id列表")
-    private List<String> clientIdList;
+    private List<String> appIdList;
 
     @Schema(description= "头像")
     private String avatar;

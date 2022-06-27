@@ -151,10 +151,10 @@ public class UserAdminService {
         UserInfo userInfo = userInfoManager.findById(userInfoParam.getId()).orElseThrow(UserInfoNotExistsException::new);
         userInfoParam.setPassword(null);
         BeanUtil.copyProperties(userInfoParam,userInfo, CopyOptions.create().ignoreNullValue());
-        if (CollUtil.isNotEmpty(userInfoParam.getClientIdList())){
-            userInfo.setClientIds(String.join(",",userInfoParam.getClientIdList()));
+        if (CollUtil.isNotEmpty(userInfoParam.getAppIdList())){
+            userInfo.setAppIds(String.join(",",userInfoParam.getAppIdList()));
         } else {
-            userInfo.setClientIds("");
+            userInfo.setAppIds("");
         }
         return userInfoManager.updateById(userInfo).toDto();
     }

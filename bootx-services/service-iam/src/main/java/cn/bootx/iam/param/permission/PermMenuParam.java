@@ -30,8 +30,8 @@ public class PermMenuParam implements Serializable {
     private Long parentId;
 
     @NotEmpty(groups = {ValidationGroup.add.class, edit.class})
-    @Schema(description = "关联终端code")
-    private String clientCode;
+    @Schema(description = "关联应用code")
+    private String appCode;
 
     @Schema(description = "菜单标题")
     private String title;

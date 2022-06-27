@@ -34,7 +34,7 @@ public class PhoneLoginHandler implements OpenIdAuthentication {
     private final CaptchaService captchaService;
 
     @Override
-    public String getOpenIdType() {
+    public String getClientCode() {
         return OpenIdLoginType.PHONE;
     }
 

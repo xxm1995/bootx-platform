@@ -29,6 +29,10 @@ public class LoginAuthContext {
     @NotNull
     private HttpServletResponse response;
 
+    /** 认证应用 */
+    @NotNull
+    private AuthApplication authApplication;
+
     /** 认证终端信息 */
     @NotNull
     private AuthClient authClient;

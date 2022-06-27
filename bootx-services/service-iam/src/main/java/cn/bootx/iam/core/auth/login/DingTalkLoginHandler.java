@@ -31,7 +31,7 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
      * 钉钉登录
      */
     @Override
-    public String getOpenIdType() {
+    public String getClientCode() {
         return DING_TALK;
     }
 

@@ -25,9 +25,6 @@ public class AuthClient {
     /** 在线时长 分钟 */
     private long timeout;
 
-    /** 是否有独立菜单和权限 */
-    private boolean alonePrem;
-
     /** 是否可用 */
     private boolean enable;
 

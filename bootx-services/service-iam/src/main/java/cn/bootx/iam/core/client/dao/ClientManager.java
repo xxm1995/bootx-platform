@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,16 +44,6 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
                 .like(StrUtil.isNotBlank(clientParam.getName()),Client::getName,clientParam.getName())
                 .like(StrUtil.isNotBlank(clientParam.getCode()),Client::getCode,clientParam.getCode())
                 .page(mpPage);
-    }
-
-    @Permission(dataScope = false,selectField = false)
-    public List<Client> findAllByAlonePrem(){
-        return findAllByField(Client::isAlonePrem,true);
-    }
-
-    @Permission(dataScope = false,selectField = false)
-    public List<Client> findAllByNotAlonePrem(){
-        return findAllByField(Client::isAlonePrem,false);
     }
 
     /**

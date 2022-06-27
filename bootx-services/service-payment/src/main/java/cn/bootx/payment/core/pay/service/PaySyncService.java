@@ -116,7 +116,7 @@ public class PaySyncService {
             strategyList.forEach(AbsPayStrategy::doCloseHandler);
             // 修改payment支付状态为取消
             payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
-            paymentManager.save(payment);
+            paymentManager.updateById(payment);
         });
     }
 

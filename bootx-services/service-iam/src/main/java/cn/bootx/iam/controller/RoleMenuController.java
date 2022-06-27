@@ -31,26 +31,26 @@ public class RoleMenuController {
     @PostMapping("/save")
     public ResResult<Boolean> save(@RequestBody RolePermissionParam param){
         ValidationUtil.validateParam(param, PermMenu.class);
-        roleMenuService.save(param.getRoleId(),param.getClientCode(),param.getPermissionIds());
+        roleMenuService.save(param.getRoleId(),param.getAppCode(),param.getPermissionIds());
         return Res.ok(true);
     }
 
     @Operation(summary = "获取权限菜单id列表,不包含资源权限")
     @GetMapping("/findMenuIds")
-    public ResResult<List<Long>> findMenuIds(String clientCode){
-        return Res.ok(roleMenuService.findMenuIds(clientCode));
+    public ResResult<List<Long>> findMenuIds(String appCode){
+        return Res.ok(roleMenuService.findMenuIds(appCode));
     }
 
     @Operation(summary = "根据角色id获取关联权限id集合(包含资源和菜单)")
     @GetMapping("/findPermissionIdsByRole")
-    public ResResult<List<Long>> findPermissionIdsByRole(Long roleId,String clientCode){
-        return Res.ok(roleMenuService.findPermissionIdsByRole(roleId,clientCode));
+    public ResResult<List<Long>> findPermissionIdsByRole(Long roleId,String appCode){
+        return Res.ok(roleMenuService.findPermissionIdsByRole(roleId,appCode));
     }
 
     @IgnoreAuth
     @Operation(summary = "获取菜单和资源权限")
     @GetMapping("/getPermissions")
-    public ResResult<MenuAndResourceDto> getPermissions(String clientCode){
-        return Res.ok(roleMenuService.getPermissions(clientCode));
+    public ResResult<MenuAndResourceDto> getPermissions(String appCode){
+        return Res.ok(roleMenuService.getPermissions(appCode));
     }
 }

@@ -4,13 +4,13 @@
 
     <insert id="saveAll">
         INSERT INTO  iam_role_menu
-        (id, role_id, client_code, permission_id)
+        (id, role_id, app_code, permission_id)
         values
         <foreach collection ="roleMenus" item="o" index= "index" separator =",">
             (
             #{o.id},
             #{o.roleId},
-            #{o.clientCode},
+            #{o.appCode},
             #{o.permissionId}
             )
         </foreach>

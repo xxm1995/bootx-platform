@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class WeChatLoginHandler implements OpenIdAuthentication {
 
     @Override
-    public String getOpenIdType() {
+    public String getClientCode() {
         return OpenIdLoginType.WE_CHAT;
     }
 

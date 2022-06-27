@@ -33,11 +33,6 @@ public class AuthProperties {
     private String defaultPassword = "123456";
 
     /**
-     * openId类型参数名称(第三方登录传入的参数名)
-     */
-    private String openIdTypeParameter = "openIdType";
-
-    /**
      * 开启超级管理员(生产模式推荐关闭)
      */
     private boolean enableAdmin = true;

@@ -95,13 +95,6 @@ public class ClientService {
     }
 
     /**
-     * 查询有独立菜单和权限的终端列表
-     */
-    public List<ClientDto> findAllByAlonePrem(){
-        return ResultConvertUtil.dtoListConvert(clientManager.findAllByAlonePrem());
-    }
-
-    /**
      * 删除
      */
     public void delete(Long id) {

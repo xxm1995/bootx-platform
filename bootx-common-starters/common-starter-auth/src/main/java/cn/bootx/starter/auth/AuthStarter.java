@@ -10,5 +10,5 @@ import org.springframework.context.annotation.ComponentScan;
 */
 @ComponentScan
 @ConfigurationPropertiesScan
-public class AuthApplication {
+public class AuthStarter {
 }

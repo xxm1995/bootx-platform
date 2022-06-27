@@ -2,15 +2,12 @@ package cn.bootx.starter.auth.handler;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
-import cn.bootx.starter.auth.config.AuthProperties;
-import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -24,25 +21,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OpenIdAuthenticationHandler {
     private final List<OpenIdAuthentication> openIdAuthentications;
-    private final AuthProperties authProperties;
 
     /**
      * 认证
      */
     public @NotNull AuthInfoResult authentication(LoginAuthContext context){
-        String obtainOpenIdType = obtainOpenIdType(context.getRequest());
+        String clientCode = context.getAuthClient().getCode();
         for (OpenIdAuthentication openIdAuthentication : openIdAuthentications) {
-            if (openIdAuthentication.adaptation(obtainOpenIdType)){
+            if (openIdAuthentication.adaptation(clientCode)){
                 return openIdAuthentication.authentication(context);
             }
         }
         throw new BizException("未找到对应的OpenId认证器");
-    }
-
-
-    @Nullable
-    protected String obtainOpenIdType(HttpServletRequest request) {
-        return request.getParameter(authProperties.getOpenIdTypeParameter());
     }
 
 }

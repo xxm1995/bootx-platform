@@ -2,7 +2,7 @@ package cn.bootx.starter.auth.authentication;
 
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.config.AuthProperties;
-import cn.bootx.starter.auth.entity.AuthClient;
+import cn.bootx.starter.auth.entity.AuthApplication;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
@@ -42,7 +42,7 @@ public interface AbstractAuthentication {
         this.authenticationBefore(context);
         // 认证逻辑
         AuthInfoResult authInfoResult = this.attemptAuthentication(context);
-        AuthClient authClient = context.getAuthClient();
+        AuthApplication authApplication = context.getAuthApplication();
         // 添加用户信息到上下文中
         UserDetail userDetail = authInfoResult.getUserDetail();
         context.setUserDetail(userDetail);
@@ -54,8 +54,8 @@ public interface AbstractAuthentication {
         }
         // 管理员跳过各种限制
         if (!userDetail.isAdmin()){
-            // 在终端有独立权限控制的情况下, 判断用户是否拥有终端的权限
-            if (authClient.isAlonePrem() && !userDetail.getClientIds().contains(authClient.getId())){
+            // 判断用户是否拥有认证应用的权限
+            if (!userDetail.getAppIds().contains(authApplication.getId())){
                 throw new LoginFailureException("该用户不拥有该终端的权限");
             }
         }

@@ -39,14 +39,14 @@ public class PermMenuController {
 
     @Operation(summary = "获取菜单树")
     @GetMapping("/menuTree")
-    public ResResult<List<PermMenuDto>> menuTree(String clientCode){
-        return Res.ok(rolePermissionService.findMenuTree(clientCode));
+    public ResResult<List<PermMenuDto>> menuTree(String appCode){
+        return Res.ok(rolePermissionService.findMenuTree(appCode));
     }
 
     @Operation(summary = "获取全部树")
     @GetMapping("/allTree")
-    public ResResult<List<PermMenuDto>> allTree(String clientCode){
-        return Res.ok(rolePermissionService.findAllTree(clientCode));
+    public ResResult<List<PermMenuDto>> allTree(String appCode){
+        return Res.ok(rolePermissionService.findAllTree(appCode));
     }
 
     @Operation(summary = "资源列表")

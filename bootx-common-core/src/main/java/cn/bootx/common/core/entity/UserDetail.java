@@ -29,8 +29,8 @@ public class UserDetail{
     @JsonIgnore
     private transient String password;
 
-    /** 拥有终端列表 */
-    private List<Long> clientIds;
+    /** 拥有权限的应用列表 */
+    private List<Long> appIds;
 
     /** 是否管理员 */
     private boolean admin;

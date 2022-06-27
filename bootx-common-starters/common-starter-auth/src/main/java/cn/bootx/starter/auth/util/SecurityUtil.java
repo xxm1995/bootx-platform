@@ -21,6 +21,7 @@ import java.util.Optional;
 @UtilityClass
 public class SecurityUtil {
     private final String CLIENT_PARAMETER = "client";
+    private final String APPLICATION_PARAMETER = "application";
 
     /**
      * 获取当前用户,无异常
@@ -61,6 +62,14 @@ public class SecurityUtil {
     @Nullable
     public String getClientType(HttpServletRequest request) {
         return request.getParameter(CLIENT_PARAMETER);
+    }
+
+    /**
+     * 获取认证应用参数 异步环境中获取会有问题
+     */
+    @Nullable
+    public String getApplication(HttpServletRequest request) {
+        return request.getParameter(APPLICATION_PARAMETER);
     }
 
     /**
