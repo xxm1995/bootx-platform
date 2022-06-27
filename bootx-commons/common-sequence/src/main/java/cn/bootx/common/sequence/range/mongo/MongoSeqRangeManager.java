@@ -9,23 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
-/**   
-* 区间管理器MongoDB数据库方式实现
-* @author xxm  
-* @date 2022/1/21 
-*/
+/**
+ * 区间管理器MongoDB数据库方式实现
+ * @author xxm
+ * @date 2022/1/21
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(prefix = "bootx.common.sequence", value = "type", havingValue = "mongo")
 public class MongoSeqRangeManager implements SeqRangeManager {
     private final MongoRangeHandler mongoRangeHandler;
-
-    /**
-     * 标记业务key是否存在，如果false，在取nextRange时，会取check一把
-     * 这个boolean只为提高性能，不用每次都 check
-     */
-    private volatile boolean keyAlreadyExist;
 
     /**
      * 获取指定区间名的下一个区间
@@ -37,11 +31,8 @@ public class MongoSeqRangeManager implements SeqRangeManager {
      */
     @Override
     public SeqRange nextRange(String name, SeqRangeConfig seqRangeConfig) throws SeqException {
-        if (!keyAlreadyExist) {
-            //第一次不存在，进行初始化,不存在就set，存在就忽略
-            mongoRangeHandler.setIfAbsentRange(name, seqRangeConfig.getRangeStart());
-            keyAlreadyExist = true;
-        }
+        //第一次不存在，进行初始化,不存在就set，存在就忽略
+        mongoRangeHandler.setIfAbsentRange(name, seqRangeConfig.getRangeStart());
         int rangeStep = seqRangeConfig.getRangeStep();
         Long max = mongoRangeHandler.incrementRange(name, rangeStep);
         long min = max - rangeStep;

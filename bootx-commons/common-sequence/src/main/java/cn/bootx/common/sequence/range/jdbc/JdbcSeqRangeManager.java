@@ -22,12 +22,6 @@ public class JdbcSeqRangeManager implements SeqRangeManager {
     private final JdbcRangeHandler jdbcRangeHandler;
 
     /**
-     * 标记业务key是否存在，如果false，在取nextRange时，会取check一把
-     * 这个boolean只为提高性能，不用每次都 check
-     */
-    private volatile boolean keyAlreadyExist;
-
-    /**
      * 获取指定区间名的下一个区间
      *
      * @param name 区间名
@@ -37,11 +31,8 @@ public class JdbcSeqRangeManager implements SeqRangeManager {
      */
     @Override
     public SeqRange nextRange(String name, SeqRangeConfig seqRangeConfig) throws SeqException {
-        if (!keyAlreadyExist) {
-            //第一次不存在，进行初始化,不存在就set，存在就忽略
-            jdbcRangeHandler.setIfAbsentRange(name, seqRangeConfig.getRangeStart());
-            keyAlreadyExist = true;
-        }
+        //第一次不存在，进行初始化,不存在就set，存在就忽略
+        jdbcRangeHandler.setIfAbsentRange(name, seqRangeConfig.getRangeStart());
         int rangeStep = seqRangeConfig.getRangeStep();
         Long max = jdbcRangeHandler.incrementRange(name, rangeStep);
         long min = max - rangeStep;
