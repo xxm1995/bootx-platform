@@ -73,4 +73,20 @@ public class ApplicationService {
     public void delete(Long id){
         applicationManager.deleteById(id);
     }
+
+
+    /**
+     * 编码是否已经存在
+     */
+    public boolean existsByCode(String code){
+        return applicationManager.existsByCode(code);
+    }
+
+    /**
+     * 编码是否已经存在(不包含自身)
+     */
+    public boolean existsByCode(String code,Long id){
+        return applicationManager.existsByCode(code,id);
+    }
+
 }

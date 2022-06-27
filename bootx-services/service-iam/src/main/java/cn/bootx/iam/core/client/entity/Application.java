@@ -7,6 +7,7 @@ import cn.bootx.iam.dto.client.ApplicationDto;
 import cn.bootx.iam.param.client.ApplicationParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,6 +33,7 @@ public class Application extends MpBaseEntity implements EntityBaseFunction<Appl
     /** 名称 */
     private String name;
     /** 是否系统内置 */
+    @TableField("`system`")
     private boolean system;
     /** 是否可用 */
     private boolean enable;

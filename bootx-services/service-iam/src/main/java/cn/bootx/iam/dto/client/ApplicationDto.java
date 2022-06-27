@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class ApplicationDto extends BaseDto {
     @Schema(description = "是否可用")
     private Boolean enable;
     @Schema(description = "关联终端")
-    private List<String> clientIdList;
+    private List<String> clientIdList = new ArrayList<>();
     @Schema(description = "描述")
     private String description;
 

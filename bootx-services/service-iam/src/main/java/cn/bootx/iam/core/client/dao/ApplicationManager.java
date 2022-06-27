@@ -33,4 +33,12 @@ public class ApplicationManager extends BaseManager<ApplicationMapper, Applicati
     public Optional<Application> findByCode(String code) {
         return findByField(Application::getCode,code);
     }
+
+    public boolean existsByCode(String code) {
+        return existedByField(Application::getCode,code);
+    }
+
+    public boolean existsByCode(String code,Long id) {
+        return existedByField(Application::getCode,code,id);
+    }
 }

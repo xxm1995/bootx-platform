@@ -64,4 +64,17 @@ public class ApplicationController {
     public ResResult<PageResult<ApplicationDto>> page(PageParam pageParam, ApplicationParam applicationParam){
         return Res.ok(applicationService.page(pageParam,applicationParam));
     }
+
+    @Operation( summary = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code) {
+        return Res.ok(applicationService.existsByCode(code));
+    }
+
+    @Operation( summary = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long id) {
+        return Res.ok(applicationService.existsByCode(code,id));
+    }
+
 }

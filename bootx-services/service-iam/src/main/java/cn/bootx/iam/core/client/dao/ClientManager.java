@@ -1,6 +1,5 @@
 package cn.bootx.iam.core.client.dao;
 
-import cn.bootx.common.core.annotation.Permission;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -25,7 +24,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ClientManager extends BaseManager<ClientMapper, Client> {
 
-    @Permission(dataScope = false,selectField = false)
     public Optional<Client> findByCode(String code) {
         return findByField(Client::getCode,code);
     }
