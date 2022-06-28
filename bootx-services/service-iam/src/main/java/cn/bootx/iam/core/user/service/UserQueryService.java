@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.user.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
@@ -10,15 +11,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
-* 用户信息查询服务
-* @author xxm
-* @date 2022/6/19
-*/
+ * 用户信息查询服务
+ * @author xxm
+ * @date 2022/6/19
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserQueryService {
     private final UserInfoManager userInfoManager;
+    private final UserAssistService userAssistService;
 
     /**
      * 账号是否存在
@@ -97,6 +99,16 @@ public class UserQueryService {
      */
     public UserInfoDto findByPhone(String phone) {
         return userInfoManager.findByPhone(phone).map(UserInfo::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 根据手机验证码查询账号
+     */
+    public String findUsernameByPhoneCaptcha(String phone,String captcha) {
+        if (!userAssistService.validatePhoneForgetCaptcha(phone,captcha)){
+            throw new BizException("验证码错误");
+        }
+        return userInfoManager.findByPhone(phone).map(UserInfo::getUsername).orElseThrow(DataNotExistException::new);
     }
 
 }

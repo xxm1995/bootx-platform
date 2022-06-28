@@ -14,6 +14,7 @@ import cn.bootx.iam.param.user.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotBlank;
 * @author xxm
 * @date 2020/4/25 20:02
 */
+@Validated
 @IgnoreAuth
 @Tag(name ="用户管理")
 @RestController
@@ -76,7 +78,6 @@ public class UserInfoController {
         return Res.ok();
     }
 
-
     @Operation(summary = "修改密码")
     @PostMapping("/updatePassword")
     public ResResult<Void> updatePassword(@NotBlank(message = "旧密码不能为空") String password,
@@ -100,6 +101,15 @@ public class UserInfoController {
         userInfoService.updateEmail(param.getEmail(),param.getOldCaptcha(),param.getNewCaptcha());
         return Res.ok();
     }
+
+    @Operation(summary = "根据手机验证码查询账号")
+    @GetMapping("/findUsernameByPhoneCaptcha")
+    public ResResult<String> findUsernameByPhoneCaptcha(
+            @NotBlank(message = "手机号不可为空") String phone,
+            @NotBlank(message = "验证码不可为空") String captcha){
+        return Res.ok(userQueryService.findUsernameByPhoneCaptcha(phone,captcha));
+    }
+
 
     @Operation(summary = "通过手机号重置密码")
     @PostMapping("/forgetPasswordByPhone")
@@ -136,7 +146,6 @@ public class UserInfoController {
         return Res.ok();
     }
 
-    @IgnoreAuth
     @Operation(summary = "登录后获取用户信息")
     @GetMapping("/getLoginAfterUserInfo")
     public ResResult<LoginAfterUserInfo> getLoginAfterUserInfo(){
