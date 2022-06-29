@@ -10,6 +10,8 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       enabled: true
+  thymeleaf:
+    mode: LEGACYHTML5
   flyway:
     # 默认不启用
     enabled: false

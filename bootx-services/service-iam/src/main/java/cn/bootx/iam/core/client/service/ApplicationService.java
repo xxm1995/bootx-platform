@@ -11,6 +11,7 @@ import cn.bootx.iam.dto.client.ApplicationDto;
 import cn.bootx.iam.param.client.ApplicationParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,12 @@ public class ApplicationService {
      */
     public void update(ApplicationParam param){
         Application application = applicationManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-
         BeanUtil.copyProperties(param,application, CopyOptions.create().ignoreNullValue());
+        if (CollUtil.isNotEmpty(param.getClientIdList())){
+            application.setClientIds(String.join(",",param.getClientIdList()));
+        } else {
+            application.setClientIds("");
+        }
         applicationManager.updateById(application);
     }
 

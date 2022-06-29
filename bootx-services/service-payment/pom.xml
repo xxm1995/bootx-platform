@@ -37,6 +37,12 @@
             <groupId>com.github.javen205</groupId>
             <artifactId>IJPay-AliPay</artifactId>
             <version>${IJPay.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>cn.hutool</groupId>
+                    <artifactId>hutool-all</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- 微信支付 -->

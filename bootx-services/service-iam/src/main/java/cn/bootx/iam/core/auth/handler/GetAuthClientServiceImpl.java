@@ -1,4 +1,4 @@
-package cn.bootx.iam.core.auth.service;
+package cn.bootx.iam.core.auth.handler;
 
 import cn.bootx.iam.core.client.dao.ClientManager;
 import cn.bootx.iam.core.client.entity.Client;

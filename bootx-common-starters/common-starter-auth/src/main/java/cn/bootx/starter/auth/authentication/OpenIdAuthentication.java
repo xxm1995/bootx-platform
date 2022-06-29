@@ -1,5 +1,9 @@
 package cn.bootx.starter.auth.authentication;
 
+import cn.bootx.starter.auth.entity.ThirdAuthCode;
+import me.zhyd.oauth.model.AuthCallback;
+import me.zhyd.oauth.model.AuthUser;
+
 import java.util.Objects;
 
 /**
@@ -15,10 +19,32 @@ public interface OpenIdAuthentication extends AbstractAuthentication{
     String getClientCode();
 
     /**
+     * 获取登录地址
+     */
+    default String getLoginUrl() {
+        return "";
+    }
+
+    /**
+     * 获取认证授权码
+     */
+    default ThirdAuthCode getAuthCode(AuthCallback callback){
+        return new ThirdAuthCode()
+                .setCode(callback.getCode())
+                .setState(callback.getState());
+    }
+
+    /**
      * openId类型是否匹配
      */
     default boolean adaptation(String clientCode){
         return Objects.equals(getClientCode(),clientCode);
     }
 
+    /**
+     * 获取关联的的第三方平台用户信息
+     */
+    default AuthUser getAuthUser(String authCode, String state){
+        return null;
+    };
 }

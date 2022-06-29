@@ -39,6 +39,8 @@ spring:
   web:
     resources:
       static-locations: classpath:/static/,classpath:/public/
+  thymeleaf:
+    cache: false
   # 数据库版本管理
   flyway:
     # 如果 flyway_schema_history 不存在自动创建
