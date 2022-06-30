@@ -1,29 +1,31 @@
 package cn.bootx.iam.core.auth.login;
 
-import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.social.service.UserSocialQueryService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
-import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-/**
-* 微信登录
-* @author xxm
-* @date 2021/8/2
+import static cn.bootx.iam.code.OpenIdLoginType.WE_COM;
+
+/**   
+* 企业微信登录
+* @author xxm  
+* @date 2022/6/30 
 */
-@Component
+@Slf4j
+@Service
 @RequiredArgsConstructor
-public class WeChatLoginHandler implements OpenIdAuthentication {
-    // 授权码
+public class WeComLoginHandler implements OpenIdAuthentication {
     private final UserSocialQueryService userSocialQueryService;
     private final UserInfoManager userInfoManager;
-    
+
     @Override
     public String getClientCode() {
-        return OpenIdLoginType.WE_CHAT;
+        return WE_COM;
     }
 
     @Override

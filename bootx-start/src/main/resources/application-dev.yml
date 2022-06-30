@@ -122,6 +122,11 @@ bootx:
         - '/error'
         - '/favicon.ico'
         - '/**'
+      third-login:
+        ding-talk:
+          client-id: ??
+          client-secret: ??
+          redirect-uri: http://127.0.0.1:9999/auth/third/callback/dingTalk
     # 审计日志存储
     audit-log:
       store: mongo

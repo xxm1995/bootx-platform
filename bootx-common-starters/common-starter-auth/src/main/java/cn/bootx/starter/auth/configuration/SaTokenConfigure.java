@@ -1,4 +1,4 @@
-package cn.bootx.starter.auth.config;
+package cn.bootx.starter.auth.configuration;
 
 import cn.bootx.starter.auth.handler.SaRouteHandler;
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;

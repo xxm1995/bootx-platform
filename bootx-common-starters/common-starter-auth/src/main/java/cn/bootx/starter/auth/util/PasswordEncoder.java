@@ -1,6 +1,6 @@
 package cn.bootx.starter.auth.util;
 
-import cn.bootx.starter.auth.config.AuthProperties;
+import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

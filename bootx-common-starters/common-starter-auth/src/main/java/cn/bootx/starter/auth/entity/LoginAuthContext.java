@@ -1,7 +1,7 @@
 package cn.bootx.starter.auth.entity;
 
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.starter.auth.config.AuthProperties;
+import cn.bootx.starter.auth.configuration.AuthProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;

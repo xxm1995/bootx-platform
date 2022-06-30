@@ -1,7 +1,7 @@
 package cn.bootx.starter.auth.authentication;
 
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.starter.auth.config.AuthProperties;
+import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.bootx.starter.auth.entity.AuthApplication;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;

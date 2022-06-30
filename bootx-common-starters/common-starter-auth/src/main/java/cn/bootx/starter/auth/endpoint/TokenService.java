@@ -6,7 +6,7 @@ import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.starter.auth.authentication.GetAuthApplicationService;
 import cn.bootx.starter.auth.authentication.GetAuthClientService;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
-import cn.bootx.starter.auth.config.AuthProperties;
+import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.bootx.starter.auth.entity.AuthApplication;
 import cn.bootx.starter.auth.entity.AuthClient;
 import cn.bootx.starter.auth.entity.AuthInfoResult;

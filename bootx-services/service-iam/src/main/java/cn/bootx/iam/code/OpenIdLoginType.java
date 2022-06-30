@@ -22,6 +22,9 @@ public interface OpenIdLoginType {
     /** 微信登录 */
     String WE_CHAT = "weChat";
 
+    /** 企业微信 */
+    String WE_COM = "weCom";
+
     /** qq登录 */
     String QQ = "qq";
 
@@ -31,6 +34,4 @@ public interface OpenIdLoginType {
     /** 钉钉登录 */
     String DING_TALK = "dingTalk";
 
-    /** 企业微信 */
-    String WE_COM = "weCom";
 }

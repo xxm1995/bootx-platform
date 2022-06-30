@@ -3,7 +3,7 @@ package cn.bootx.starter.auth.impl;
 
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.authentication.RouterCheck;
-import cn.bootx.starter.auth.config.AuthProperties;
+import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -5,10 +5,12 @@ import cn.bootx.iam.core.social.service.UserSocialQueryService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
-import cn.bootx.starter.auth.entity.LoginAuthContext;
+import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
@@ -17,6 +19,8 @@ import me.zhyd.oauth.request.AuthDingTalkRequest;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 import static cn.bootx.iam.code.OpenIdLoginType.*;
 
@@ -31,6 +35,7 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
     // 授权码
     private final UserSocialQueryService userSocialQueryService;
     private final UserInfoManager userInfoManager;
+    private final AuthProperties authProperties;
 
     /**
      * 钉钉登录
@@ -67,9 +72,7 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
      */
     @Override
     public String getLoginUrl(){
-        AuthRequest authRequest = new AuthDingTalkRequest(AuthConfig.builder()
-                .redirectUri("http://127.0.0.1:9999/auth/third/callback/"+DING_TALK)
-                .build());
+        AuthRequest authRequest = this.getAuthRequest();
         return authRequest.authorize(AuthStateUtils.createState());
     }
 
@@ -79,14 +82,27 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
     @Override
     @SuppressWarnings("unchecked")
     public AuthUser getAuthUser(String authCode, String state){
-        AuthRequest authRequest = new AuthDingTalkRequest(AuthConfig.builder()
-                .redirectUri("http://127.0.0.1:9999/auth/third/callback/"+DING_TALK)
-                .build());
+        AuthRequest authRequest = this.getAuthRequest();
         AuthCallback callback = AuthCallback.builder()
                 .code(authCode)
                 .state(state)
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
         return response.getData();
+    }
+
+    /**
+     * 获取钉钉认证请求
+     */
+    private AuthDingTalkRequest getAuthRequest(){
+        val thirdLogin = authProperties.getThirdLogin().getDingTalk();
+        if (Objects.isNull(thirdLogin)){
+            throw new LoginFailureException("钉钉开放登录配置有误");
+        }
+        return new AuthDingTalkRequest(AuthConfig.builder()
+                .clientId(thirdLogin.getClientId())
+                .clientSecret(thirdLogin.getClientSecret())
+                .redirectUri(thirdLogin.getRedirectUri())
+                .build());
     }
 }

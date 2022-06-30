@@ -1,7 +1,7 @@
 # 鉴权框架封装模块
 
 ## 介绍
-基于sa-token，为选择Spring Security原因是复杂度较高，而且OAuth2相关项目已经停止，新版还没到生产可用。原生Spring Security想用在前后端分离的情况相对来说也不方便，所以选择了Sa-Token做为安全鉴权框架。
+基于sa-token和justAuth，为选择Spring Security原因是复杂度较高，而且OAuth2相关项目已经停止，新版还没到生产可用。原生Spring Security想用在前后端分离的情况相对来说也不方便，所以选择了Sa-Token做为安全鉴权框架。
 
 引入了 [sa-token-plugin](https://gitee.com/bootx/sa-token-plugin) 中的redis插件，替代官方的实现，配置方式见该项目的README。
 > sa-token-plugin 插件未发布到中央仓库,所以进行了内联
