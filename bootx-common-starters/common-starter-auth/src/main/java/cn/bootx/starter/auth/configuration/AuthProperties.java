@@ -43,7 +43,10 @@ public class AuthProperties {
 
         @Getter@Setter public static class DingTalk extends ThirdLoginConfig{}
         @Getter@Setter public static class WeChat extends ThirdLoginConfig{}
-        @Getter@Setter public static class WeCom extends ThirdLoginConfig{}
+        @Getter@Setter public static class WeCom extends ThirdLoginConfig{
+            /** 企业微信，授权方的网页应用ID */
+            private String agentId;
+        }
 
     }
     @Data

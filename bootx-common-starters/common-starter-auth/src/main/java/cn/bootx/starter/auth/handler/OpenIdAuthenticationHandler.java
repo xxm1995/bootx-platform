@@ -32,7 +32,7 @@ public class OpenIdAuthenticationHandler {
                 return openIdAuthentication.authentication(context);
             }
         }
-        throw new BizException("未找到对应的OpenId认证器");
+        throw new BizException("未找到对应的终端认证器");
     }
 
 }

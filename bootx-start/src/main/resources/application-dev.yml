@@ -124,9 +124,14 @@ bootx:
         - '/**'
       third-login:
         ding-talk:
-          client-id: ??
-          client-secret: ??
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/dingTalk
+          client-secret: ??
+          client-id: ??
+        we-com:
+          redirect-uri: http://127.0.0.1:9999/auth/third/callback/weCom
+          client-secret: ??
+          client-id: ??
+          agent-id: ??
     # 审计日志存储
     audit-log:
       store: mongo
