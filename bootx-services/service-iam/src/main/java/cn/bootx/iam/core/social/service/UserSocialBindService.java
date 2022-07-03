@@ -95,8 +95,7 @@ public class UserSocialBindService {
      * 绑定 开放平台id
      */
     private void bindOpenId(Long userId,String openId,BiConsumer<UserSocial, String> function){
-        UserSocial userSocial = userSocialManager.findByUserId(userId)
-                .orElseThrow(DataNotExistException::new);
+        UserSocial userSocial = userSocialManager.findByUserId(userId).orElse(null);
         if (Objects.isNull(userSocial)){
             UserInfo userInfo = userInfoManager.findById(userId)
                     .orElseThrow(UserInfoNotExistsException::new);
