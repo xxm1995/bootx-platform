@@ -3,7 +3,7 @@ package cn.bootx.iam.core.social.entity;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.iam.core.user.convert.UserConvert;
-import cn.bootx.iam.dto.user.UserSocialLoginDto;
+import cn.bootx.iam.dto.user.UserSocialDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("iam_user_social")
-public class UserSocialLogin extends MpBaseEntity implements EntityBaseFunction<UserSocialLoginDto> {
+public class UserSocial extends MpBaseEntity implements EntityBaseFunction<UserSocialDto> {
     /** 用户id */
     private Long userId;
 
@@ -39,7 +39,7 @@ public class UserSocialLogin extends MpBaseEntity implements EntityBaseFunction<
     private String weComId;
 
     @Override
-    public UserSocialLoginDto toDto() {
+    public UserSocialDto toDto() {
         return UserConvert.CONVERT.convert(this);
     }
 }

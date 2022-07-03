@@ -7,10 +7,11 @@
 登陆中...
 <body>
 <script th:inline="javascript">
-    let authCode = [[${authCode}]]
+    const authCode = [[${authCode}]]
     setTimeout(function (){
         window.opener.postMessage({
             authCode: authCode.code,
+            clientCode: authCode.clientCode,
             state: authCode.state
         }, "*");
         window.close();

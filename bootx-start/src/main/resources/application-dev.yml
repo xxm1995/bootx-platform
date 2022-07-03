@@ -121,7 +121,8 @@ bootx:
         - '/css/**'
         - '/error'
         - '/favicon.ico'
-        - '/**'
+#        - '/**'
+      # 第三方登录
       third-login:
         ding-talk:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/dingTalk
@@ -132,6 +133,10 @@ bootx:
           client-secret: ??
           client-id: ??
           agent-id: ??
+        we-chat:
+          redirect-uri: http://127.0.0.1:9999/auth/third/callback/weChat
+          client-id: ??
+          client-secret: ??
     # 审计日志存储
     audit-log:
       store: mongo

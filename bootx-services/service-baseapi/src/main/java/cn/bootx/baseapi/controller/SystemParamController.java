@@ -3,6 +3,7 @@ package cn.bootx.baseapi.controller;
 import cn.bootx.baseapi.core.parameter.service.SystemParamService;
 import cn.bootx.baseapi.dto.parameter.SystemParameterDto;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
@@ -75,6 +76,7 @@ public class SystemParamController {
         return Res.ok(systemParamService.existsByKey(key,id));
     }
 
+    @IgnoreAuth
     @Operation(summary = "根据键名获取键值")
     @GetMapping("/findByParamKey")
     public ResResult<String> findByParamKey(String key){

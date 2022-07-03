@@ -1,5 +1,6 @@
 package cn.bootx.starter.file.dto;
 
+import cn.hutool.core.io.FileUtil;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
@@ -32,7 +33,7 @@ public class UpdateFileDto {
     private String fileType;
 
     /** 文件大小 */
-    private Double fileSize;
+    private Long fileSize;
 
     /** 外部存储id */
     private String externalStorageId;
@@ -44,4 +45,8 @@ public class UpdateFileDto {
     /** 创建时间 */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+
+    public String getFileSize() {
+        return FileUtil.readableFileSize(fileSize);
+    }
 }

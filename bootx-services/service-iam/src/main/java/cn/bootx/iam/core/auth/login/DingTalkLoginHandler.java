@@ -1,7 +1,8 @@
 package cn.bootx.iam.core.auth.login;
 
-import cn.bootx.iam.core.social.entity.UserSocialLogin;
-import cn.bootx.iam.core.social.service.UserSocialQueryService;
+import cn.bootx.iam.code.OpenIdLoginType;
+import cn.bootx.iam.core.social.dao.UserSocialManager;
+import cn.bootx.iam.core.social.entity.UserSocial;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
@@ -33,7 +34,7 @@ import static cn.bootx.iam.code.OpenIdLoginType.*;
 @RequiredArgsConstructor
 public class DingTalkLoginHandler implements OpenIdAuthentication {
     // 授权码
-    private final UserSocialQueryService userSocialQueryService;
+    private final UserSocialManager userSocialManager;
     private final UserInfoManager userInfoManager;
     private final AuthProperties authProperties;
 
@@ -55,11 +56,11 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
 
         AuthUser authUser = this.getAuthUser(authCode, state);
         // 获取钉钉关联的用户id
-        UserSocialLogin userSocialLogin = userSocialQueryService.findByOpenid(authUser.getUuid(), UserSocialLogin::getDingTalkId)
+        UserSocial userSocial = userSocialManager.findByField(UserSocial::getDingTalkId, authUser.getUuid())
                 .orElseThrow(() -> new LoginFailureException("钉钉没有找到绑定的用户"));
 
         // 获取用户信息
-        UserInfo userInfo = userInfoManager.findById(userSocialLogin.getUserId())
+        UserInfo userInfo = userInfoManager.findById(userSocial.getUserId())
                 .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult()
@@ -88,6 +89,9 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
                 .state(state)
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
+        if (!Objects.equals(response.getCode(), OpenIdLoginType.SUCCESS)){
+            throw new LoginFailureException("钉钉登录出错");
+        }
         return response.getData();
     }
 

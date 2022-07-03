@@ -39,9 +39,9 @@ public class ThirdLoginController {
     }
 
     @Operation(summary = "扫码后回调")
-    @GetMapping("/callback/{source}")
-    public ModelAndView callback(@PathVariable("source") String source, AuthCallback callback){
-        ThirdAuthCode authCode = thirdLoginService.getAuthCode(source,callback);
+    @GetMapping("/callback/{clientCode}")
+    public ModelAndView callback(@PathVariable("clientCode") String clientCode, AuthCallback callback){
+        ThirdAuthCode authCode = thirdLoginService.getAuthCode(clientCode,callback);
         // 回传给前台
         return new ModelAndView("thirdLoginCallback")
                 .addObject("authCode",authCode);

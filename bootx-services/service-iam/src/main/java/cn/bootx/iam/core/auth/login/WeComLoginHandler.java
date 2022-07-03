@@ -1,7 +1,8 @@
 package cn.bootx.iam.core.auth.login;
 
-import cn.bootx.iam.core.social.entity.UserSocialLogin;
-import cn.bootx.iam.core.social.service.UserSocialQueryService;
+import cn.bootx.iam.code.OpenIdLoginType;
+import cn.bootx.iam.core.social.dao.UserSocialManager;
+import cn.bootx.iam.core.social.entity.UserSocial;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
@@ -34,7 +35,7 @@ import static cn.bootx.iam.code.OpenIdLoginType.*;
 @Service
 @RequiredArgsConstructor
 public class WeComLoginHandler implements OpenIdAuthentication {
-    private final UserSocialQueryService userSocialQueryService;
+    private final UserSocialManager userSocialManager;
     private final UserInfoManager userInfoManager;
     private final AuthProperties authProperties;
 
@@ -51,11 +52,11 @@ public class WeComLoginHandler implements OpenIdAuthentication {
         AuthUser authUser = this.getAuthUser(authCode, state);
 
         // 获取企微关联的用户id
-        UserSocialLogin userSocialLogin = userSocialQueryService.findByOpenid(authUser.getUuid(), UserSocialLogin::getWeComId)
+        UserSocial userSocial = userSocialManager.findByField(UserSocial::getWeComId,authUser.getUuid())
                 .orElseThrow(() -> new LoginFailureException("企业微信没有找到绑定的用户"));
 
         // 获取用户信息
-        UserInfo userInfo = userInfoManager.findById(userSocialLogin.getUserId())
+        UserInfo userInfo = userInfoManager.findById(userSocial.getUserId())
                 .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult()
@@ -84,12 +85,14 @@ public class WeComLoginHandler implements OpenIdAuthentication {
                 .state(state)
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
-
+        if (!Objects.equals(response.getCode(), OpenIdLoginType.SUCCESS)){
+            throw new LoginFailureException("企业微信登录出错");
+        }
         return response.getData();
     }
 
     /**
-     * 获取钉钉认证请求
+     * 获取企业微信认证请求
      */
     private AuthWeChatEnterpriseQrcodeRequest getAuthRequest(){
         val thirdLogin = authProperties.getThirdLogin().getWeCom();

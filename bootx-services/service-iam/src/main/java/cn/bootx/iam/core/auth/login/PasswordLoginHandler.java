@@ -138,7 +138,8 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         if (authClient.getPwdErrNum() > -1){
 
         }
-        String errMsg = StrUtil.format("密码不正确, 还有{}次机会",errCount);
+//        String errMsg = StrUtil.format("密码不正确, 还有{}次机会",errCount);
+        String errMsg = StrUtil.format("密码不正确");
         throw new LoginFailureException(userDetail.getUsername(),errMsg);
     }
 

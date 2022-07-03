@@ -4,14 +4,16 @@ import cn.bootx.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.code.UserStatusCode;
-import cn.bootx.iam.core.client.dao.ClientManager;
+import cn.bootx.iam.core.client.dao.ApplicationManager;
 import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.iam.core.user.entity.UserInfo;
+import cn.bootx.iam.core.user.event.UserCreateEvent;
 import cn.bootx.iam.dto.dept.DeptDto;
 import cn.bootx.iam.dto.role.RoleDto;
 import cn.bootx.iam.dto.user.UserInfoDto;
@@ -25,12 +27,14 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 超级管理员操作类
@@ -47,8 +51,9 @@ public class UserAdminService {
     private final UserDeptService userDeptService;
     private final PasswordEncoder passwordEncoder;
     private final UserQueryService userQueryService;
-    private final ClientManager clientManager;
     private final CaptchaService captchaService;
+    private final ApplicationManager applicationManager;
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * 分页查询
@@ -98,6 +103,12 @@ public class UserAdminService {
         UserInfoParam userInfoParam = new UserInfoParam();
         BeanUtil.copyProperties(param,userInfoParam);
         userInfoParam.setName(param.getUsername());
+        // TODO 默认注册就有所有终端的权限, 后期优化
+        List<String> ids = applicationManager.findAll().stream()
+                .map(MpIdEntity::getId)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
+        userInfoParam.setAppIdList(ids);
         this.add(userInfoParam);
     }
 
@@ -128,7 +139,9 @@ public class UserAdminService {
                 .setInitialPassword(true)
                 .setId(userInfo.getId());
         userExpandInfoManager.save(userExpandInfo);
-        // TODO 发送用户注册事件
+        // 发送用户注册事件
+        eventPublisher.publishEvent(new UserCreateEvent(this,userInfo.toDto()));
+
     }
 
     /**

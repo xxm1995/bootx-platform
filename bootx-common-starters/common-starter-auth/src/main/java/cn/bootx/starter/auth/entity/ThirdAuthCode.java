@@ -12,6 +12,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ThirdAuthCode {
 
+    /** 终端类型 */
+    private String clientCode;
+
     /** 认证码 */
     private String code;
 

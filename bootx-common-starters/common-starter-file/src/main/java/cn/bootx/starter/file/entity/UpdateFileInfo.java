@@ -37,7 +37,7 @@ public class UpdateFileInfo extends MpIdEntity implements EntityBaseFunction<Upd
     private String fileSuffix;
 
     /** 文件大小 */
-    private Double fileSize;
+    private Long fileSize;
 
     /** 外部存储id */
     private String externalStorageId;

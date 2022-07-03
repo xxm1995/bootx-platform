@@ -52,7 +52,7 @@ public class LocalUploadService implements UploadService {
         FileUtil.writeFromStream(file.getInputStream(),storePath);
         return new UpdateFileInfo()
                 .setFilePath(filePath)
-                .setFileSize(file.getSize()/1024.0);
+                .setFileSize(file.getSize());
     }
 
     /**

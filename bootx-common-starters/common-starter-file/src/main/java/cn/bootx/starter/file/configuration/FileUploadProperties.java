@@ -23,7 +23,7 @@ public class FileUploadProperties {
     private FileUploadTypeEnum uploadType = FileUploadTypeEnum.LOCAL;
 
     /** 服务器地址,优先级低于系统参数配置 */
-    private String serverUrl = "http://127.0.0.1:8080";
+    private String serverUrl = "http://127.0.0.1:9999";
 
     /** 本地存储 */
     private Local local = new Local();

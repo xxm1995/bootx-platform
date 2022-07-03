@@ -1,5 +1,6 @@
 package cn.bootx.starter.file.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
@@ -21,6 +22,7 @@ import java.io.IOException;
 * @author xxm
 * @date 2022/1/12
 */
+@IgnoreAuth
 @Tag(name = "文件上传")
 @RestController
 @RequestMapping("/file")
@@ -28,12 +30,14 @@ import java.io.IOException;
 public class FIleUpLoadController {
     private final FileUploadService uploadService;
 
+    @IgnoreAuth(ignore = false)
     @Operation(summary = "分页")
     @GetMapping("/page")
     public ResResult<PageResult<UpdateFileDto>> page(PageParam  pageParam){
         return Res.ok(uploadService.page(pageParam));
     }
 
+    @IgnoreAuth(ignore = false)
     @Operation(summary = "上传")
     @PostMapping("/upload")
     public ResResult<UpdateFileDto> local(MultipartFile file, String fileName)  throws IOException {

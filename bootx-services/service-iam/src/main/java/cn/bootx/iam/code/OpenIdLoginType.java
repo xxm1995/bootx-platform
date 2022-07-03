@@ -15,6 +15,9 @@ public interface OpenIdLoginType {
      */
     String STATE = "state";
 
+    /** 成功代码 */
+    int SUCCESS = 2000;
+
 
     /** 手机号登录 */
     String PHONE = "phone";

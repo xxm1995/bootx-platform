@@ -49,7 +49,7 @@ public class MongoUploadService implements UploadService {
         ObjectId store = gridFsTemplate.store(file.getInputStream(), context.getFileName(), file.getContentType());
         return new UpdateFileInfo()
                 .setExternalStorageId(store.toString())
-                .setFileSize(file.getSize() / 1024.0);
+                .setFileSize(file.getSize());
     }
 
     @SneakyThrows
