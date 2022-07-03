@@ -1,10 +1,10 @@
-# Bootx-Platform (v1.1.0-beta-3)
+# Bootx-Platform (v1.1.0-beta-4)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.beta.3-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.1.0.beta.4-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
- <img src="https://img.shields.io/badge/Spring%20Boot-2.7.0-blue.svg" alt="Downloads"/>
+ <img src="https://img.shields.io/badge/Spring%20Boot-2.7.1-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
 
@@ -25,19 +25,22 @@
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 
-## 🚩特色功能演示
+## 🚩路线图
+### 1.1.0-beta5（预计七月中旬完成）
 
-### 结算台支付演示
->
-> - [结算台支付演示地址](http://web.platform.bootx.cn/cashier ) 对当前的支付功能做了一个结算台的DEMO，方便进行演示和测试，支持微信、支付宝、聚合支付等方式
-> - [支付记录列表](http://web.platform.bootx.cn/payment/order/payment) 支付记录列表支持关闭支付记录、退款、手动同步支付状态等功能
-> - 因为当前没有对应的支付宝和微信支付的资质，所以支付宝使用的账号是沙箱账号，而微信暂时没有账号，现在只能测试支付宝和聚合支付相关的功能。
-> - 扫最下方QQ群二维码，直接加群课获取支付宝沙箱账户密码进行测试
+完善支付模块，主要是微信支付方面，适配V3版本API，
 
-> 注: 简单支付UI设计参考过[jeepay支付演示界面](https://www.jeequan.com/demo/jeepay_cashier.html) ，因为与 [jeepay](https://gitee.com/jeequan/jeepay) 项目许可证冲突，所以没有参考和引用代码，在此感谢[jeepay](https://gitee.com/jeequan/jeepay) 项目提供的灵感和思路
+### 1.1.0-beta6（预计八月前完成）
+微信服务号消息通知、钉钉消息通知、短信消息通知等通知相关功能实现，
 
-![简单支付](https://oscimg.oschina.net/oscnet/up-2afe305355141ae9398e3b056052596e1f8.png "结算台.png")
-![简单支付](https://oscimg.oschina.net/oscnet/up-5bc7d0b52ef2cc734798f7854c81df69cca.png "支付记录列表.png")
+### 1.1.0正式版（八月份）
+
+对一些未完成的基础功能进行补全，进行全面的测试，修复遇到的BUG
+
+### 更多
+- 集成工作流
+- 与钉钉打通
+- 与企业微信打通
 
 
 ## 🍎特色功能
@@ -49,10 +52,11 @@
 - 支持嵌套查询的超级查询构造器，自动生成对应条件SQL语句
 - 支持通过ELK和轻量级PlumeLog来管理项目日志,以适应不同的场景
 - 提供移动端开发脚手架，方便开发H5与各种小程序
+- 支持通过微信、钉钉、企业微信等第三方开放平台进行扫码登录
 
 ## 🥂 Quick Start
 
-- 下载项目并导入IDEA中，下载对应的Maven依赖
+- 下载项目并切换到master分支，或者下载发行版后导入IDEA中，下载对应的Maven依赖
 - 配置好各种必要的数据库中间件地址(见下方中间表)，直接启动项目。注：不需要导入Sql脚本到数据库中，默认启用`flyway`会自动对数据库进行初始化
 - 如果使用`_config/sql`导入到数据库中的方式，则需要在项目启动前将`spring.flyway.enabled`设为`false`后启动项目，推荐使用`flyway`对数据库进行数据管理
 - 启动成功，
@@ -109,7 +113,7 @@ bootx-platform
        ├── service-baseapi -- 基础api功能服务
        ├── service-goods -- 商品中心服务(进行中)
        ├── service-iam -- 身份识别与访问管理
-       ├── service-notice -- 消息通知服务(未完成)
+       ├── service-notice -- 消息通知服务(进行中)
        ├── service-office -- 办公服务(未开始)
        ├── service-order -- 订单服务(未完成)
        ├── service-payment -- 支付服务
@@ -147,6 +151,13 @@ service-iam
 ```
 
 ## 🍌项目展示
+
+支付结算台
+![简单支付](https://oscimg.oschina.net/oscnet/up-2afe305355141ae9398e3b056052596e1f8.png "结算台.png")
+
+支付记录列表
+![简单支付](https://oscimg.oschina.net/oscnet/up-5bc7d0b52ef2cc734798f7854c81df69cca.png "支付记录列表.png")
+
 菜单管理
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-19866964c4d12e197daf9f33d51f0f30564.png)
 
@@ -159,14 +170,8 @@ service-iam
 支付宝支付配置
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-5c4fd5380463596db224c3d27329c494ace.png)
 
-代码生成器
-![输入图片说明](https://oscimg.oschina.net/oscnet/up-38cdcb4928d7495f0c73fa6eaf4f5ede6fd.png)
-
 数据字典
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-3c8b4bf1483744c04f8147fc61d5dc51b95.png)
-
-登录方式管理
-![输入图片说明](https://oscimg.oschina.net/oscnet/up-6cf4a123e2c26a3db5786b2cd264d52c4d8.png)
 
 审计日志
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-7ac60f7ab581abdd60c8ae2184e001361a1.png)

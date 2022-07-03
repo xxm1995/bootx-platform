@@ -1,20 +1,20 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE `iam_application`  (
-                                                     `id` bigint(20) NOT NULL,
-                                                     `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
-                                                     `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-                                                     `system` bit(1) NOT NULL COMMENT '是否系统内置',
-                                                     `enable` bit(1) NOT NULL COMMENT '是否可用',
-                                                     `client_ids` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '关联终端',
-                                                     `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-                                                     `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-                                                     `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-                                                     `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-                                                     `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-                                                     `version` int(11) NOT NULL COMMENT '版本',
-                                                     `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-                                                     PRIMARY KEY (`id`) USING BTREE
+                                    `id` bigint(20) NOT NULL,
+                                    `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
+                                    `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+                                    `system` bit(1) NOT NULL COMMENT '是否系统内置',
+                                    `enable` bit(1) NOT NULL COMMENT '是否可用',
+                                    `client_ids` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '关联终端',
+                                    `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                    `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                    `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                    `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                    `version` int(11) NOT NULL COMMENT '版本',
+                                    `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '认证应用' ROW_FORMAT = DYNAMIC;
 
 ALTER TABLE `iam_client` DROP COLUMN `alone_prem`;
@@ -33,22 +33,21 @@ ALTER TABLE `iam_user_social` COMMENT = '用户三方登录绑定';
 ALTER TABLE `iam_user_social` ADD INDEX `pk_user_index`(`user_id`) USING BTREE COMMENT '用户id索引';
 
 CREATE TABLE `iam_user_social_info`  (
-                                                          `id` bigint(20) NOT NULL COMMENT '主键',
-                                                          `user_id` bigint(20) NOT NULL COMMENT '用户id',
-                                                          `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '第三方终端类型',
-                                                          `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户名',
-                                                          `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户昵称',
-                                                          `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户头像',
-                                                          `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-                                                          `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-                                                          `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-                                                          `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-                                                          `version` int(11) NOT NULL COMMENT '版本',
-                                                          `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-                                                          PRIMARY KEY (`id`) USING BTREE,
-                                                          INDEX `pk_user_client`(`user_id`, `client_code`) USING BTREE COMMENT '用户id和终端code'
+                                         `id` bigint(20) NOT NULL COMMENT '主键',
+                                         `user_id` bigint(20) NOT NULL COMMENT '用户id',
+                                         `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '第三方终端类型',
+                                         `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户名',
+                                         `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户昵称',
+                                         `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户头像',
+                                         `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                         `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                         `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                         `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                         `version` int(11) NOT NULL COMMENT '版本',
+                                         `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                         PRIMARY KEY (`id`) USING BTREE,
+                                         INDEX `pk_user_client`(`user_id`, `client_code`) USING BTREE COMMENT '用户id和终端code'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户三方登录绑定详情' ROW_FORMAT = Dynamic;
-
 
 ALTER TABLE `starter_file_upload_info` MODIFY COLUMN `file_size` bigint(20) NULL DEFAULT NULL COMMENT '文件大小' AFTER `file_suffix`;SET FOREIGN_KEY_CHECKS = 1;
 

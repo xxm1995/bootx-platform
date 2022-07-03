@@ -207,4 +207,18 @@ public class UserInfoService {
         userAssistService.deleteEmailForgetCaptcha(email);
     }
 
+    /**
+     * 绑定手机号
+     */
+    public void bindPhone(String phone,String captcha){
+
+    }
+
+    /**
+     * 绑定邮箱
+     */
+    public void bindEmail(String email,String captcha){
+
+    }
+
 }

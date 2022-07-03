@@ -9,7 +9,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 23/06/2022 22:47:26
+ Date: 03/07/2022 21:35:28
 */
 
 SET NAMES utf8mb4;
@@ -405,24 +405,25 @@ INSERT INTO `ding_robot_config` VALUES (1454001517812203520, '33', '12', '111111
 DROP TABLE IF EXISTS `flyway_schema_history`;
 CREATE TABLE `flyway_schema_history`  (
   `installed_rank` int(11) NOT NULL,
-  `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
-  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `script` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `script` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `checksum` int(11) NULL DEFAULT NULL,
-  `installed_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `installed_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `installed_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `execution_time` int(11) NOT NULL,
   `success` tinyint(1) NOT NULL,
   PRIMARY KEY (`installed_rank`) USING BTREE,
   INDEX `flyway_schema_history_s_idx`(`success`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-06-10 13:49:23', 71976, 1);
-INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-06-23 22:45:20', 730, 1);
+INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-07-03 21:33:10', 65866, 1);
+INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-07-03 21:33:11', 727, 1);
+INSERT INTO `flyway_schema_history` VALUES (3, '1.1.0.220702', 'bate4', 'SQL', 'V1.1.0_220702__bate4.sql', 764266899, 'bootx', '2022-07-03 21:33:17', 5646, 1);
 
 -- ----------------------------
 -- Table structure for goods_brand
@@ -735,6 +736,33 @@ CREATE TABLE `goods_specification`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for iam_application
+-- ----------------------------
+DROP TABLE IF EXISTS `iam_application`;
+CREATE TABLE `iam_application`  (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `system` bit(1) NOT NULL COMMENT '是否系统内置',
+  `enable` bit(1) NOT NULL COMMENT '是否可用',
+  `client_ids` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '关联终端',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '版本',
+  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '认证应用' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of iam_application
+-- ----------------------------
+INSERT INTO `iam_application` VALUES (1430430071299207168, 'admin', 'pc管理端', b'1', b'1', '1430430071299207168,1435138582839009280,1430478946919653376,1542091599907115008,1542804450312122368,1543126042909016064', 'pc浏览器', 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-07-02 14:55:11', 4, 0);
+INSERT INTO `iam_application` VALUES (1430430071299207169, 'h5', 'h5端', b'1', b'1', '1430430071299207168,1435138582839009280', '手机wap', 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-06-29 18:31:45', 1, 0);
+
+-- ----------------------------
 -- Table structure for iam_client
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_client`;
@@ -743,7 +771,6 @@ CREATE TABLE `iam_client`  (
   `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
   `system` bit(1) NOT NULL COMMENT '是否系统内置',
-  `alone_prem` bit(1) NOT NULL COMMENT '是否有独立菜单和权限',
   `timeout` bigint(11) NULL DEFAULT NULL COMMENT '在线时长 秒',
   `captcha` bit(1) NOT NULL COMMENT '启用验证码',
   `pwd_err_num` int(8) NOT NULL COMMENT '密码错误次数',
@@ -761,9 +788,12 @@ CREATE TABLE `iam_client`  (
 -- ----------------------------
 -- Records of iam_client
 -- ----------------------------
-INSERT INTO `iam_client` VALUES (1430430071299207168, 'admin', 'pc管理端', b'1', b'1', 3600, b'0', -1, b'1', 'pc浏览器', 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-04-24 19:51:13', 16, 0);
-INSERT INTO `iam_client` VALUES (1430478946919653376, 'miniApp', '微信小程序', b'0', b'0', 99999, b'1', 0, b'1', NULL, 1399985191002447872, '2021-08-25 18:35:33', 1399985191002447872, '2021-08-25 18:35:33', 2, 0);
-INSERT INTO `iam_client` VALUES (1435138582839009280, 'phone', '手机短信登录', b'0', b'1', 3600, b'1', 0, b'1', '', 1399985191002447872, '2021-09-07 15:11:16', 1399985191002447872, '2022-05-27 11:28:42', 3, 0);
+INSERT INTO `iam_client` VALUES (1430430071299207168, 'password', '账号密码登陆', b'1', 3600, b'0', -1, b'1', NULL, 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-04-24 19:51:13', 16, 0);
+INSERT INTO `iam_client` VALUES (1430478946919653376, 'miniApp', '微信小程序', b'0', 99999, b'1', 0, b'1', NULL, 1399985191002447872, '2021-08-25 18:35:33', 1399985191002447872, '2021-08-25 18:35:33', 2, 0);
+INSERT INTO `iam_client` VALUES (1435138582839009280, 'phone', '手机短信登录', b'0', 3600, b'1', 0, b'1', NULL, 1399985191002447872, '2021-09-07 15:11:16', 1399985191002447872, '2022-06-26 21:35:20', 4, 0);
+INSERT INTO `iam_client` VALUES (1542091599907115008, 'dingTalk', '钉钉', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-06-29 18:24:23', 1399985191002447872, '2022-07-02 14:55:01', 5, 0);
+INSERT INTO `iam_client` VALUES (1542804450312122368, 'weCom', '企业微信', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-01 17:37:00', 1399985191002447872, '2022-07-01 17:37:00', 0, 0);
+INSERT INTO `iam_client` VALUES (1543126042909016064, 'WeChat', '微信登录', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-02 14:54:53', 1399985191002447872, '2022-07-02 14:54:53', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_data_scope
@@ -881,7 +911,7 @@ INSERT INTO `iam_dept` VALUES (1477978883247493120, 1477977827897692160, '潍城
 DROP TABLE IF EXISTS `iam_perm_menu`;
 CREATE TABLE `iam_perm_menu`  (
   `id` bigint(20) NOT NULL,
-  `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '终端code',
+  `app_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '应用code',
   `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父id',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单名称',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由名称',
@@ -921,7 +951,7 @@ INSERT INTO `iam_perm_menu` VALUES (1414596805538238464, 'admin', 14525693399874
 INSERT INTO `iam_perm_menu` VALUES (1414596842322284544, 'admin', 1452569691537256448, '部门管理', 'Dept', '', NULL, '', b'0', b'0', 'system/dept/DeptList', '', '/system/userAuth/dept', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:32:53', 1399985191002447872, '2021-08-26 23:56:31', 7, 0);
 INSERT INTO `iam_perm_menu` VALUES (1414596877617352704, 'admin', 1452571269199540224, '数据字典', 'Dict', '', b'0', '', b'0', b'0', 'system/dict/DictList', '', '/system/config/dict', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:32:53', 1399985191002447872, '2022-05-19 09:04:55', 11, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431082258161434624, 'admin', 1452569691537256448, '在线用户管理', 'OnlineUser', '', NULL, '', b'0', b'0', 'system/online/OnlineUserList', NULL, '/system/userAuth/online', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:32:53', 1399985191002447872, '2021-08-27 10:32:53', 6, 0);
-INSERT INTO `iam_perm_menu` VALUES (1431083330909208576, 'admin', 1414596052497092608, '终端管理', 'Client', '', b'0', '', b'0', b'0', 'system/client/ClientList', NULL, '/system/config/client', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:09', 1399985191002447872, '2022-05-19 09:04:25', 6, 0);
+INSERT INTO `iam_perm_menu` VALUES (1431083330909208576, 'admin', 1541427353886859264, '认证终端', 'Client', '', b'0', '', b'0', b'0', 'system/client/ClientList', NULL, '/system/config/client', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:09', 1399985191002447872, '2022-06-27 22:25:16', 8, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431089129232498688, 'admin', 1452569339987472384, '请求权限管理', 'Path', '', NULL, '', b'0', b'0', 'system/path/PathList', NULL, '/system/permission/path', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 11:00:11', 1399985191002447872, '2021-08-27 11:00:11', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431152689832525824, 'admin', NULL, '系统监控', 'monitor', '', b'0', 'radar-chart', b'0', b'0', 'RouteView', NULL, '/monitor', '', 0, 0, b'1', b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2021-08-27 15:12:45', 1399985191002447872, '2022-06-17 17:57:30', 21, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431153358157348864, 'admin', 1431152689832525824, '接口文档', 'ApiSwagger', '', b'0', '', b'0', b'0', '', NULL, 'http://127.0.0.1:9999/doc.html', '', 0, 1, b'1', b'1', b'1', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 15:15:25', 1399985191002447872, '2022-06-07 11:06:52', 15, 0);
@@ -996,6 +1026,8 @@ INSERT INTO `iam_perm_menu` VALUES (1537732440632524800, 'admin', NULL, '个人�
 INSERT INTO `iam_perm_menu` VALUES (1537733801860333568, 'admin', 1537732440632524800, '我的消息', 'PersonSiteMessage', NULL, b'0', '', b'0', b'0', 'Dev', NULL, '/person/siteMessage', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:48:03', 1399985191002447872, '2022-06-21 20:52:50', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1537735851818024960, 'admin', 1537732440632524800, '待办任务', 'PersonTaskList', NULL, b'0', '', b'0', b'0', 'Dev', NULL, '/person/taskList', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:56:11', 1399985191002447872, '2022-06-21 20:52:42', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1538160478872625152, 'admin', 1495968302034210816, '富文本编辑', 'WangEditorDemo', NULL, b'0', '', b'0', b'0', 'demo/wangeditor/WangEditorDemo', NULL, '/demo/wangEditor', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-18 22:03:30', 1399985191002447872, '2022-06-18 22:03:31', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1541355214204030976, 'admin', 1541427353886859264, '认证应用', 'AuthApplication', '', b'0', '', b'0', b'0', 'system/client/ApplicationList', NULL, '/system/config/application', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:08', 1399985191002447872, '2022-06-27 22:25:37', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1541427353886859264, 'admin', 1414596052497092608, '认证管理', 'Auth', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/system/auth', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-27 22:24:54', 1399985191002447872, '2022-06-27 22:24:54', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -1003,7 +1035,7 @@ INSERT INTO `iam_perm_menu` VALUES (1538160478872625152, 'admin', 14959683020342
 DROP TABLE IF EXISTS `iam_perm_path`;
 CREATE TABLE `iam_perm_path`  (
   `id` bigint(20) NOT NULL,
-  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限标识',
+  `code` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限标识',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '权限名称',
   `request_type` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求类型',
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '请求路径',
@@ -1023,426 +1055,6 @@ CREATE TABLE `iam_perm_path`  (
 -- ----------------------------
 -- Records of iam_perm_path
 -- ----------------------------
-INSERT INTO `iam_perm_path` VALUES (1533037132564578304, 'DingTalkConfigController#delete', '删除', 'DELETE', '/ding/config/delete', '钉钉配置', b'1', b'1', '钉钉配置 删除', 1399985191002447872, '2022-06-04 18:45:09.514000', 1399985191002447872, '2022-06-04 18:45:09.514000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132585549824, 'TokenEndpoint#login', '普通登录', 'POST', '/token/login', '认证相关', b'1', b'1', '认证相关 普通登录', 1399985191002447872, '2022-06-04 18:45:09.517000', 1399985191002447872, '2022-06-04 18:45:09.517000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132593938432, 'AlipayConfigController#add', '添加', 'POST', '/alipay/add', '支付宝配置', b'1', b'1', '支付宝配置 添加', 1399985191002447872, '2022-06-04 18:45:09.519000', 1399985191002447872, '2022-06-04 18:45:09.519000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132598132736, 'RoleController#add', '添加角色（返回角色对象）', 'POST', '/role/add', '角色管理', b'1', b'1', '角色管理 添加角色（返回角色对象）', 1399985191002447872, '2022-06-04 18:45:09.520000', 1399985191002447872, '2022-06-04 18:45:09.520000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132602327040, 'CategoryParameterController#findAll', '查询所有', 'GET', '/categoryParameter/findAll', '类目参数', b'1', b'1', '类目参数 查询所有', 1399985191002447872, '2022-06-04 18:45:09.521000', 1399985191002447872, '2022-06-04 18:45:09.521000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132606521344, 'DeptController#delete', '普通删除', 'DELETE', '/dept/delete', '部门管理', b'1', b'1', '部门管理 普通删除', 1399985191002447872, '2022-06-04 18:45:09.522000', 1399985191002447872, '2022-06-04 18:45:09.522000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132610715648, 'PayController#cancelByBusinessId', '取消支付(业务id)', 'POST', '/uni_pay/cancelByBusinessId', '统一支付', b'1', b'1', '统一支付 取消支付(业务id)', 1399985191002447872, '2022-06-04 18:45:09.523000', 1399985191002447872, '2022-06-04 18:45:09.523000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132614909952, 'DictionaryItemController#existsByCode', '编码是否被使用', 'GET', '/dict/item/existsByCode', '字典项', b'1', b'1', '字典项 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.524000', 1399985191002447872, '2022-06-04 18:45:09.524000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132614909953, 'PayController#refundByBusinessId', '全额退款(业务id)', 'POST', '/uni_pay/refundByBusinessId', '统一支付', b'1', b'1', '统一支付 全额退款(业务id)', 1399985191002447872, '2022-06-04 18:45:09.524000', 1399985191002447872, '2022-06-04 18:45:09.524000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132619104256, 'SwaggerWelcomeWebMvc#redirectToUi', 'redirectToUi', 'GET', '/swagger-ui.html', 'SwaggerWelcomeWebMvc', b'1', b'1', 'SwaggerWelcomeWebMvc redirectToUi', 1399985191002447872, '2022-06-04 18:45:09.525000', 1399985191002447872, '2022-06-04 18:45:09.525000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132623298560, 'CategoryController#findBindBrandIds', '根据类目id查询关联的绑定品牌id集合', 'GET', '/category/findBindBrandIds', '类目管理', b'1', b'1', '类目管理 根据类目id查询关联的绑定品牌id集合', 1399985191002447872, '2022-06-04 18:45:09.526000', 1399985191002447872, '2022-06-04 18:45:09.526000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132623298561, 'RoleMenuController#findMenuIds', '获取权限菜单id列表,不包含资源权限', 'GET', '/role/menu/findMenuIds', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 获取权限菜单id列表,不包含资源权限', 1399985191002447872, '2022-06-04 18:45:09.526000', 1399985191002447872, '2022-06-04 18:45:09.526000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132627492864, 'PaymentController#findByUser', '根据userId获取列表', 'GET', '/payment/findByUser', '支付记录', b'1', b'1', '支付记录 根据userId获取列表', 1399985191002447872, '2022-06-04 18:45:09.527000', 1399985191002447872, '2022-06-04 18:45:09.527000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132627492865, 'DataScopeController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/data/scope/existsByCodeNotId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.527000', 1399985191002447872, '2022-06-04 18:45:09.527000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132631687168, 'SystemParamController#add', '添加', 'POST', '/system/param/add', '系统参数', b'1', b'1', '系统参数 添加', 1399985191002447872, '2022-06-04 18:45:09.528000', 1399985191002447872, '2022-06-04 18:45:09.528000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132631687169, 'QuartzJobController#delete', '删除', 'DELETE', '/quartz/delete', '定时任务', b'1', b'1', '定时任务 删除', 1399985191002447872, '2022-06-04 18:45:09.528000', 1399985191002447872, '2022-06-04 18:45:09.528000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132640075776, 'UserInfoController#existsUsername', '账号是否被使用', 'GET', '/user/existsUsername', '用户管理', b'1', b'1', '用户管理 账号是否被使用', 1399985191002447872, '2022-06-04 18:45:09.530000', 1399985191002447872, '2022-06-04 18:45:09.530000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132640075777, 'ClientController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/client/existsByCodeNotId', '终端管理', b'1', b'1', '终端管理 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.530000', 1399985191002447872, '2022-06-04 18:45:09.531000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132644270080, 'PaymentController#findPayTypeInfoById', '根据id获取订单支付方式', 'GET', '/payment/findPayTypeInfoById', '支付记录', b'1', b'1', '支付记录 根据id获取订单支付方式', 1399985191002447872, '2022-06-04 18:45:09.531000', 1399985191002447872, '2022-06-04 18:45:09.531000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132648464384, 'AlipayConfigController#update', '更新', 'POST', '/alipay/update', '支付宝配置', b'1', b'1', '支付宝配置 更新', 1399985191002447872, '2022-06-04 18:45:09.532000', 1399985191002447872, '2022-06-04 18:45:09.532000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132656852992, 'UserAdminController#getByEmail', '根据邮箱查询用户', 'GET', '/user/admin/getByEmail', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据邮箱查询用户', 1399985191002447872, '2022-06-04 18:45:09.534000', 1399985191002447872, '2022-06-04 18:45:09.534000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132661047296, 'CategoryController#bindSpec', '绑定规格', 'POST', '/category/bindSpec', '类目管理', b'1', b'1', '类目管理 绑定规格', 1399985191002447872, '2022-06-04 18:45:09.535000', 1399985191002447872, '2022-06-04 18:45:09.535000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132661047297, 'CategoryController#existsByName', '判断类目是否已经存在', 'GET', '/category/existsByName', '类目管理', b'1', b'1', '类目管理 判断类目是否已经存在', 1399985191002447872, '2022-06-04 18:45:09.535000', 1399985191002447872, '2022-06-04 18:45:09.535000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132661047298, 'StrategyController#add', '添加策略', 'POST', '/strategy/add', '策略定义', b'1', b'1', '策略定义 添加策略', 1399985191002447872, '2022-06-04 18:45:09.535000', 1399985191002447872, '2022-06-04 18:45:09.536000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132665241600, 'UserInfoController#existsEmail', '邮箱是否被使用(不包含自己)', 'GET', '/user/existsEmailNotId', '用户管理', b'1', b'1', '用户管理 邮箱是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.536000', 1399985191002447872, '2022-06-04 18:45:09.536000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132665241601, 'AlipayConfigController#findPayWayList', '支付宝支持支付方式', 'GET', '/alipay/findPayWayList', '支付宝配置', b'1', b'1', '支付宝配置 支付宝支持支付方式', 1399985191002447872, '2022-06-04 18:45:09.536000', 1399985191002447872, '2022-06-04 18:45:09.536000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132669435904, 'DataScopeController#add', '添加', 'POST', '/data/scope/add', '数据范围权限配置', b'1', b'1', '数据范围权限配置 添加', 1399985191002447872, '2022-06-04 18:45:09.537000', 1399985191002447872, '2022-06-04 18:45:09.537000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132669435905, 'UserInfoController#existsEmail', '邮箱是否被使用', 'GET', '/user/existsEmail', '用户管理', b'1', b'1', '用户管理 邮箱是否被使用', 1399985191002447872, '2022-06-04 18:45:09.537000', 1399985191002447872, '2022-06-04 18:45:09.537000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132669435906, 'PayController#cancelByPaymentId', '取消支付(支付id)', 'POST', '/uni_pay/cancelByPaymentId', '统一支付', b'1', b'1', '统一支付 取消支付(支付id)', 1399985191002447872, '2022-06-04 18:45:09.537000', 1399985191002447872, '2022-06-04 18:45:09.538000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132673630208, 'SystemParamController#findByParamKey', '根据键名获取键值', 'GET', '/system/param/findByParamKey', '系统参数', b'1', b'1', '系统参数 根据键名获取键值', 1399985191002447872, '2022-06-04 18:45:09.538000', 1399985191002447872, '2022-06-04 18:45:09.538000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132673630209, 'DictionaryController#delete', '根据id删除', 'DELETE', '/dict/delete', '字典', b'1', b'1', '字典 根据id删除', 1399985191002447872, '2022-06-04 18:45:09.538000', 1399985191002447872, '2022-06-04 18:45:09.538000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132677824512, 'WalletController#createWalletBatch', '批量开通用户钱包操作', 'POST', '/wallet/createWalletBatch', '钱包相关的接口', b'1', b'1', '钱包相关的接口 批量开通用户钱包操作', 1399985191002447872, '2022-06-04 18:45:09.539000', 1399985191002447872, '2022-06-04 18:45:09.539000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132677824513, 'DataEncryptDemoController#findById', '通过ID查询', 'GET', '/demo/data/encrypt/findById', '数据加密解密演示', b'1', b'1', '数据加密解密演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.539000', 1399985191002447872, '2022-06-04 18:45:09.539000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132682018816, 'DataEncryptDemoController#add', '添加', 'POST', '/demo/data/encrypt/add', '数据加密解密演示', b'1', b'1', '数据加密解密演示 添加', 1399985191002447872, '2022-06-04 18:45:09.540000', 1399985191002447872, '2022-06-04 18:45:09.540000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132682018817, 'DingTalkConfigController#setEnable', '设置启用的配置', 'POST', '/ding/config/setEnable', '钉钉配置', b'1', b'1', '钉钉配置 设置启用的配置', 1399985191002447872, '2022-06-04 18:45:09.540000', 1399985191002447872, '2022-06-04 18:45:09.540000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132682018818, 'PermMenuController#existsByPermCode', '编码是否被使用', 'GET', '/perm/menu/existsByPermCode', '菜单权限资源', b'1', b'1', '菜单权限资源 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.540000', 1399985191002447872, '2022-06-04 18:45:09.540000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132686213120, 'QuartzJobController#syncJobStatus', '同步定时任务状态', 'POST', '/quartz/syncJobStatus', '定时任务', b'1', b'1', '定时任务 同步定时任务状态', 1399985191002447872, '2022-06-04 18:45:09.541000', 1399985191002447872, '2022-06-04 18:45:09.541000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132686213121, 'RoleController#findAll', '查询所有的角色', 'GET', '/role/findAll', '角色管理', b'1', b'1', '角色管理 查询所有的角色', 1399985191002447872, '2022-06-04 18:45:09.541000', 1399985191002447872, '2022-06-04 18:45:09.541000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132690407424, 'InventoryController#lockInventory', '锁定库存', 'POST', '/inventory/lockInventory', '库存操作', b'1', b'1', '库存操作 锁定库存', 1399985191002447872, '2022-06-04 18:45:09.542000', 1399985191002447872, '2022-06-04 18:45:09.542000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132690407425, 'DataPermDemoController#add', '添加', 'POST', '/demo/data/perm/add', '数据权限演示', b'1', b'1', '数据权限演示 添加', 1399985191002447872, '2022-06-04 18:45:09.542000', 1399985191002447872, '2022-06-04 18:45:09.542000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132690407426, 'UserDataScopeController#saveAssign', '给用户分配权限', 'POST', '/user/data/scope/saveAssign', '用户数据权限配置', b'1', b'1', '用户数据权限配置 给用户分配权限', 1399985191002447872, '2022-06-04 18:45:09.542000', 1399985191002447872, '2022-06-04 18:45:09.542000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132694601728, 'RolePathController#save', '保存角色权限关联关系', 'POST', '/role/path/save', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 保存角色权限关联关系', 1399985191002447872, '2022-06-04 18:45:09.543000', 1399985191002447872, '2022-06-04 18:45:09.543000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132694601729, 'WalletController#changerBalance', '充值操作(增减余额)', 'POST', '/wallet/changerBalance', '钱包相关的接口', b'1', b'1', '钱包相关的接口 充值操作(增减余额)', 1399985191002447872, '2022-06-04 18:45:09.543000', 1399985191002447872, '2022-06-04 18:45:09.543000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132698796032, 'UserInfoController#existsPhone', '手机号是否被使用(不包含自己)', 'GET', '/user/existsPhoneNotId', '用户管理', b'1', b'1', '用户管理 手机号是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.544000', 1399985191002447872, '2022-06-04 18:45:09.544000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132698796033, 'InventoryController#reduceLockedAndCapacity', '扣减指定的 SKU 的库存', 'POST', '/inventory/reduceLockedAndCapacity', '库存操作', b'1', b'1', '库存操作 扣减指定的 SKU 的库存', 1399985191002447872, '2022-06-04 18:45:09.544000', 1399985191002447872, '2022-06-04 18:45:09.544000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132702990336, 'DatabaseTableController#findByTableName', '获取表信息', 'GET', '/gen/table/findByTableName', '数据库表信息', b'1', b'1', '数据库表信息 获取表信息', 1399985191002447872, '2022-06-04 18:45:09.545000', 1399985191002447872, '2022-06-04 18:45:09.545000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132702990337, 'PermPathController#syncSystem', '同步系统请求资源', 'POST', '/perm/path/syncSystem', '请求权限资源', b'1', b'1', '请求权限资源 同步系统请求资源', 1399985191002447872, '2022-06-04 18:45:09.545000', 1399985191002447872, '2022-06-04 18:45:09.545000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132707184640, 'AuthAssistController#sendSmsCaptcha', '发送短信验证码', 'POST', '/auth/sendSmsCaptcha', '认证支撑接口', b'1', b'1', '认证支撑接口 发送短信验证码', 1399985191002447872, '2022-06-04 18:45:09.546000', 1399985191002447872, '2022-06-04 18:45:09.546000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132707184641, 'StrategyController#findById', '获取策略及其配置项', 'GET', '/strategy/findById', '策略定义', b'1', b'1', '策略定义 获取策略及其配置项', 1399985191002447872, '2022-06-04 18:45:09.546000', 1399985191002447872, '2022-06-04 18:45:09.546000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132707184642, 'RoleController#update', '修改角色（返回角色对象）', 'POST', '/role/update', '角色管理', b'1', b'1', '角色管理 修改角色（返回角色对象）', 1399985191002447872, '2022-06-04 18:45:09.546000', 1399985191002447872, '2022-06-04 18:45:09.546000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132711378944, 'UserAdminController#getByPhone', '根据手机号查询用户', 'GET', '/user/admin/getByPhone', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据手机号查询用户', 1399985191002447872, '2022-06-04 18:45:09.547000', 1399985191002447872, '2022-06-04 18:45:09.547000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132711378945, 'DataScopeController#saveUserAssign', '保存关联用户权限', 'POST', '/data/scope/saveUserAssign', '数据范围权限配置', b'1', b'1', '数据范围权限配置 保存关联用户权限', 1399985191002447872, '2022-06-04 18:45:09.547000', 1399985191002447872, '2022-06-04 18:45:09.547000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132719767552, 'CategoryController#existsByName', '判断类目是否已经存在(不包含自身)', 'GET', '/category/existsByNameNotId', '类目管理', b'1', b'1', '类目管理 判断类目是否已经存在(不包含自身)', 1399985191002447872, '2022-06-04 18:45:09.549000', 1399985191002447872, '2022-06-04 18:45:09.549000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132723961856, 'DingRobotConfigController#add', '新增机器人配置', 'POST', '/ding/robot/config/add', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 新增机器人配置', 1399985191002447872, '2022-06-04 18:45:09.550000', 1399985191002447872, '2022-06-04 18:45:09.550000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132723961857, 'GoodsController#getDetails', '查询包含sku的详情', 'GET', '/goods/getDetails', '商品管理', b'1', b'1', '商品管理 查询包含sku的详情', 1399985191002447872, '2022-06-04 18:45:09.550000', 1399985191002447872, '2022-06-04 18:45:09.550000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132728156160, 'FIleUpLoadController#getFilePreviewUrl', '获取文件预览地址', 'GET', '/file/getFilePreviewUrl', '文件上传', b'0', b'0', '文件上传 获取文件预览地址', 1399985191002447872, '2022-06-04 18:45:09.551000', 1399985191002447872, '2022-06-04 18:45:56.898000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037132728156161, 'DictionaryItemController#findAll', '获取全部字典项', 'GET', '/dict/item/findAll', '字典项', b'1', b'1', '字典项 获取全部字典项', 1399985191002447872, '2022-06-04 18:45:09.551000', 1399985191002447872, '2022-06-04 18:45:09.551000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132732350464, 'PermPathController#add', '添加权限', 'POST', '/perm/path/add', '请求权限资源', b'1', b'1', '请求权限资源 添加权限', 1399985191002447872, '2022-06-04 18:45:09.552000', 1399985191002447872, '2022-06-04 18:45:09.552000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132732350465, 'OrderRecommendController#findCoupon', '查询适用的优惠券', 'POST', '/order/recommend/findCoupon', '订单优惠选择与推荐', b'1', b'1', '订单优惠选择与推荐 查询适用的优惠券', 1399985191002447872, '2022-06-04 18:45:09.552000', 1399985191002447872, '2022-06-04 18:45:09.552000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132732350466, 'UserDeptController#findIdsByUser', '根据用户ID获取到部门id集合', 'GET', '/user/dept/findIdsByUser', '用户部门关联关系', b'1', b'1', '用户部门关联关系 根据用户ID获取到部门id集合', 1399985191002447872, '2022-06-04 18:45:09.552000', 1399985191002447872, '2022-06-04 18:45:09.552000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132736544768, 'IdempotencyDemoController#lock20', '分布式锁(暂停20秒)', 'GET', '/demo/lock/lock20', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(暂停20秒)', 1399985191002447872, '2022-06-04 18:45:09.553000', 1399985191002447872, '2022-06-04 18:45:09.553000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132736544769, 'StrategyRegisterController#delete', '删除', 'DELETE', '/strategy/register/del/{id}', '策略注册', b'1', b'1', '策略注册 删除', 1399985191002447872, '2022-06-04 18:45:09.553000', 1399985191002447872, '2022-06-04 18:45:09.553000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132740739072, 'WalletController#findById', '根据钱包ID查询钱包', 'GET', '/wallet/findById', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据钱包ID查询钱包', 1399985191002447872, '2022-06-04 18:45:09.554000', 1399985191002447872, '2022-06-04 18:45:09.554000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132740739073, 'UserRoleController#saveAndUpdate', '给用户分配角色', 'POST', '/user/role/saveAndUpdate', '用户角色管理', b'1', b'1', '用户角色管理 给用户分配角色', 1399985191002447872, '2022-06-04 18:45:09.554000', 1399985191002447872, '2022-06-04 18:45:09.554000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132740739074, 'TestController#redisPub', 'redis消息队列发布', 'GET', '/test/redisPub', '测试控制器', b'1', b'1', '测试控制器 redis消息队列发布', 1399985191002447872, '2022-06-04 18:45:09.554000', 1399985191002447872, '2022-06-04 18:45:09.555000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132744933376, 'GoodsController#page', '分页', 'GET', '/goods/page', '商品管理', b'1', b'1', '商品管理 分页', 1399985191002447872, '2022-06-04 18:45:09.555000', 1399985191002447872, '2022-06-04 18:45:09.555000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132744933377, 'SwaggerConfigResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs/swagger-config', 'SwaggerConfigResource', b'0', b'0', 'SwaggerConfigResource openapiJson', 1399985191002447872, '2022-06-04 18:45:09.555000', 1399985191002447872, '2022-06-04 18:47:08.619000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037132749127680, 'PermPathController#findAll', '权限列表', 'GET', '/perm/path/findAll', '请求权限资源', b'1', b'1', '请求权限资源 权限列表', 1399985191002447872, '2022-06-04 18:45:09.556000', 1399985191002447872, '2022-06-04 18:45:09.556000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132749127681, 'CategoryParameterGroupController#findById', '通过ID查询', 'GET', '/categoryParameterGroup/findById', '类目参数组', b'1', b'1', '类目参数组 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.556000', 1399985191002447872, '2022-06-04 18:45:09.556000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132753321984, 'PayController#syncByBusinessId', '刷新指定业务id的支付单状态', 'POST', '/uni_pay/syncByBusinessId', '统一支付', b'1', b'1', '统一支付 刷新指定业务id的支付单状态', 1399985191002447872, '2022-06-04 18:45:09.557000', 1399985191002447872, '2022-06-04 18:45:09.557000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132753321985, 'DingRobotConfigController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/ding/robot/config/existsByCodeNotId', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.557000', 1399985191002447872, '2022-06-04 18:45:09.557000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132753321986, 'PermMenuController#add', '添加菜单权限', 'POST', '/perm/menu/add', '菜单权限资源', b'1', b'1', '菜单权限资源 添加菜单权限', 1399985191002447872, '2022-06-04 18:45:09.557000', 1399985191002447872, '2022-06-04 18:45:09.557000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132757516288, 'CouponController#obtainCoupon', '领取优惠券', 'POST', '/coupon/obtainCoupon', '优惠券', b'1', b'1', '优惠券 领取优惠券', 1399985191002447872, '2022-06-04 18:45:09.558000', 1399985191002447872, '2022-06-04 18:45:09.558000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132757516289, 'MessageQueueDemoController#sendRabbitMsg', '发送RabbitMQ消息', 'POST', '/demo/mq/sendRabbitMsg', '测试消息队列', b'1', b'1', '测试消息队列 发送RabbitMQ消息', 1399985191002447872, '2022-06-04 18:45:09.558000', 1399985191002447872, '2022-06-04 18:45:09.558000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132761710592, 'DingRobotSendController#sendLink', '测试发送link', 'POST', '/ding/robot/send/link', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送link', 1399985191002447872, '2022-06-04 18:45:09.559000', 1399985191002447872, '2022-06-04 18:45:09.559000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132761710593, 'GoodsSkuController#findByGoodsId', '根据goodsId查询', 'GET', '/sku/findByGoodsId', 'sku操作', b'1', b'1', 'sku操作 根据goodsId查询', 1399985191002447872, '2022-06-04 18:45:09.559000', 1399985191002447872, '2022-06-04 18:45:09.559000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132761710594, 'UserAdminController#getUserInfoWhole', '查询用户详情', 'GET', '/user/admin/getUserInfoWhole', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 查询用户详情', 1399985191002447872, '2022-06-04 18:45:09.559000', 1399985191002447872, '2022-06-04 18:45:09.559000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132765904896, 'OperateLogController#findById', '获取', 'GET', '/log/operate/findById', '操作日志', b'1', b'1', '操作日志 获取', 1399985191002447872, '2022-06-04 18:45:09.560000', 1399985191002447872, '2022-06-04 18:45:09.560000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132765904897, 'InventoryController#increaseInventory', '增补指定 SKU 的可售库存， 扣减对应售出', 'POST', '/inventory/increaseInventory', '库存操作', b'1', b'1', '库存操作 增补指定 SKU 的可售库存， 扣减对应售出', 1399985191002447872, '2022-06-04 18:45:09.560000', 1399985191002447872, '2022-06-04 18:45:09.560000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132770099200, 'OrderFindController#findByUser', '根据用户获取订单', 'GET', '/order/findByUser', '订单查询', b'1', b'1', '订单查询 根据用户获取订单', 1399985191002447872, '2022-06-04 18:45:09.561000', 1399985191002447872, '2022-06-04 18:45:09.561000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132770099201, 'DataSensitiveDemoController#delete', '删除', 'DELETE', '/demo/data/sensitive/delete', '数据脱敏演示', b'1', b'1', '数据脱敏演示 删除', 1399985191002447872, '2022-06-04 18:45:09.561000', 1399985191002447872, '2022-06-04 18:45:09.561000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132770099202, 'DataPermDemoController#update', '修改', 'POST', '/demo/data/perm/update', '数据权限演示', b'1', b'1', '数据权限演示 修改', 1399985191002447872, '2022-06-04 18:45:09.561000', 1399985191002447872, '2022-06-04 18:45:09.561000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132774293504, 'CategoryParameterController#update', '修改', 'POST', '/categoryParameter/update', '类目参数', b'1', b'1', '类目参数 修改', 1399985191002447872, '2022-06-04 18:45:09.562000', 1399985191002447872, '2022-06-04 18:45:09.562000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132774293505, 'DataScopeController#existsByCode', '编码是否被使用', 'GET', '/data/scope/existsByCode', '数据范围权限配置', b'1', b'1', '数据范围权限配置 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.562000', 1399985191002447872, '2022-06-04 18:45:09.562000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132778487808, 'PermMenuController#allTree', '获取全部树', 'GET', '/perm/menu/allTree', '菜单权限资源', b'1', b'1', '菜单权限资源 获取全部树', 1399985191002447872, '2022-06-04 18:45:09.563000', 1399985191002447872, '2022-06-04 18:45:09.563000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132778487809, 'TestController#sendWsByUserId', '发送ws消息(全部用户)', 'POST', '/test/sendWsByAll', '测试控制器', b'1', b'1', '测试控制器 发送ws消息(全部用户)', 1399985191002447872, '2022-06-04 18:45:09.563000', 1399985191002447872, '2022-06-04 18:45:09.563000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132778487810, 'BrandController#findAll', '查询所有', 'GET', '/brand/findAll', '品牌', b'1', b'1', '品牌 查询所有', 1399985191002447872, '2022-06-04 18:45:09.563000', 1399985191002447872, '2022-06-04 18:45:09.563000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132786876416, 'PermPathController#delete', '删除权限', 'DELETE', '/perm/path/delete', '请求权限资源', b'1', b'1', '请求权限资源 删除权限', 1399985191002447872, '2022-06-04 18:45:09.565000', 1399985191002447872, '2022-06-04 18:45:09.565000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132786876417, 'ClientController#findAll', '查询所有的终端', 'GET', '/client/findAll', '终端管理', b'1', b'1', '终端管理 查询所有的终端', 1399985191002447872, '2022-06-04 18:45:09.565000', 1399985191002447872, '2022-06-04 18:45:09.565000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132791070720, 'StrategyController#findByType', '根据类型查询', 'GET', '/strategy/findByType', '策略定义', b'1', b'1', '策略定义 根据类型查询', 1399985191002447872, '2022-06-04 18:45:09.566000', 1399985191002447872, '2022-06-04 18:45:09.566000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132791070721, 'PermMenuController#update', '修改菜单权限', 'POST', '/perm/menu/update', '菜单权限资源', b'1', b'1', '菜单权限资源 修改菜单权限', 1399985191002447872, '2022-06-04 18:45:09.566000', 1399985191002447872, '2022-06-04 18:45:09.566000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132795265024, 'DataPermDemoController#findById', '通过ID查询', 'GET', '/demo/data/perm/findById', '数据权限演示', b'1', b'1', '数据权限演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.567000', 1399985191002447872, '2022-06-04 18:45:09.567000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132795265025, 'SystemParamController#existsByKey', '判断编码是否存在', 'GET', '/system/param/existsByKey', '系统参数', b'1', b'1', '系统参数 判断编码是否存在', 1399985191002447872, '2022-06-04 18:45:09.567000', 1399985191002447872, '2022-06-04 18:45:09.567000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132799459328, 'ClientController#findById', '通过ID查询终端', 'GET', '/client/findById', '终端管理', b'1', b'1', '终端管理 通过ID查询终端', 1399985191002447872, '2022-06-04 18:45:09.568000', 1399985191002447872, '2022-06-04 18:45:09.568000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132799459329, 'OnlineUserController#page', '分页', 'GET', '/user/online/page', '在线用户', b'1', b'1', '在线用户 分页', 1399985191002447872, '2022-06-04 18:45:09.568000', 1399985191002447872, '2022-06-04 18:45:09.568000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132799459330, 'DeptController#add', '添加', 'POST', '/dept/add', '部门管理', b'1', b'1', '部门管理 添加', 1399985191002447872, '2022-06-04 18:45:09.568000', 1399985191002447872, '2022-06-04 18:45:09.568000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132803653632, 'DictionaryController#update', '更新', 'POST', '/dict/update', '字典', b'1', b'1', '字典 更新', 1399985191002447872, '2022-06-04 18:45:09.569000', 1399985191002447872, '2022-06-04 18:45:09.569000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132803653633, 'ClientController#page', '分页查询终端', 'GET', '/client/page', '终端管理', b'1', b'1', '终端管理 分页查询终端', 1399985191002447872, '2022-06-04 18:45:09.569000', 1399985191002447872, '2022-06-04 18:45:09.569000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132807847936, 'AppVersionController#check', '检查更新', 'POST', '/app/version/check', 'app版本管理', b'1', b'1', 'app版本管理 检查更新', 1399985191002447872, '2022-06-04 18:45:09.570000', 1399985191002447872, '2022-06-04 18:45:09.570000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132807847937, 'UserInfoController#existsUsername', '账号是否被使用(不包含自己)', 'GET', '/user/existsUsernameNotId', '用户管理', b'1', b'1', '用户管理 账号是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.570000', 1399985191002447872, '2022-06-04 18:45:09.570000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132807847938, 'CategoryController#findTree', '获取类目树', 'GET', '/category/findTree', '类目管理', b'1', b'1', '类目管理 获取类目树', 1399985191002447872, '2022-06-04 18:45:09.570000', 1399985191002447872, '2022-06-04 18:45:09.570000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132812042240, 'PaymentController#findStatusByBusinessId', '根据业务ID获取支付状态', 'GET', '/payment/findStatusByBusinessId', '支付记录', b'1', b'1', '支付记录 根据业务ID获取支付状态', 1399985191002447872, '2022-06-04 18:45:09.571000', 1399985191002447872, '2022-06-04 18:45:09.571000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132812042241, 'BrandController#update', '修改', 'POST', '/brand/update', '品牌', b'1', b'1', '品牌 修改', 1399985191002447872, '2022-06-04 18:45:09.571000', 1399985191002447872, '2022-06-04 18:45:09.571000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132812042242, 'WalletLogController#page', '查询钱包日志(分页)', 'GET', '/wallet/log/page', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 查询钱包日志(分页)', 1399985191002447872, '2022-06-04 18:45:09.572000', 1399985191002447872, '2022-06-04 18:45:09.572000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132816236544, 'DataSensitiveDemoController#findById', '通过ID查询', 'GET', '/demo/data/sensitive/findById', '数据脱敏演示', b'1', b'1', '数据脱敏演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.572000', 1399985191002447872, '2022-06-04 18:45:09.572000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132816236545, 'OrderPreviewController#previewOrderPriceNoCheck', '预览价格(手动无检查)', 'POST', '/order/preview/previewOrderPriceNoCheck', '订单计算', b'1', b'1', '订单计算 预览价格(手动无检查)', 1399985191002447872, '2022-06-04 18:45:09.572000', 1399985191002447872, '2022-06-04 18:45:09.572000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132820430848, 'InventoryController#increaseAvailable', '增补指定 SKU 的可售库存', 'POST', '/inventory/increaseAvailable', '库存操作', b'1', b'1', '库存操作 增补指定 SKU 的可售库存', 1399985191002447872, '2022-06-04 18:45:09.573000', 1399985191002447872, '2022-06-04 18:45:09.573000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132820430849, 'CategoryController#add', '增加新类目', 'POST', '/category/add', '类目管理', b'1', b'1', '类目管理 增加新类目', 1399985191002447872, '2022-06-04 18:45:09.573000', 1399985191002447872, '2022-06-04 18:45:09.573000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132820430850, 'DictionaryController#page', '分页', 'GET', '/dict/page', '字典', b'1', b'1', '字典 分页', 1399985191002447872, '2022-06-04 18:45:09.573000', 1399985191002447872, '2022-06-04 18:45:09.573000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132824625152, 'PaymentController#findByBusinessId', '根据businessId获取列表', 'GET', '/payment/findByBusinessId', '支付记录', b'1', b'1', '支付记录 根据businessId获取列表', 1399985191002447872, '2022-06-04 18:45:09.574000', 1399985191002447872, '2022-06-04 18:45:09.574000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132824625153, 'BrandController#add', '添加', 'POST', '/brand/add', '品牌', b'1', b'1', '品牌 添加', 1399985191002447872, '2022-06-04 18:45:09.574000', 1399985191002447872, '2022-06-04 18:45:09.574000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132824625154, 'SuperQueryDemoController#page', '分页查询', 'GET', '/demo/super/query/page', '超级查询演示', b'1', b'1', '超级查询演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.574000', 1399985191002447872, '2022-06-04 18:45:09.574000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132828819456, 'ActivityController#add', '注册活动', 'POST', '/activity/add', '活动', b'1', b'1', '活动 注册活动', 1399985191002447872, '2022-06-04 18:45:09.575000', 1399985191002447872, '2022-06-04 18:45:09.575000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132828819457, 'SystemParamController#delete', '删除', 'DELETE', '/system/param/delete', '系统参数', b'1', b'1', '系统参数 删除', 1399985191002447872, '2022-06-04 18:45:09.575000', 1399985191002447872, '2022-06-04 18:45:09.575000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132828819458, 'UserSocialLoginController#page', '分页', 'GET', '/user/social/page', '用户三方登录管理', b'1', b'1', '用户三方登录管理 分页', 1399985191002447872, '2022-06-04 18:45:09.575000', 1399985191002447872, '2022-06-04 18:45:09.575000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132833013760, 'DataScopeController#delete', '删除', 'DELETE', '/data/scope/delete', '数据范围权限配置', b'1', b'1', '数据范围权限配置 删除', 1399985191002447872, '2022-06-04 18:45:09.576000', 1399985191002447872, '2022-06-04 18:45:09.576000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132833013761, 'MultipleOpenApiWebMvcResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs/{group}', 'MultipleOpenApiWebMvcResource', b'0', b'0', 'MultipleOpenApiWebMvcResource openapiJson', 1399985191002447872, '2022-06-04 18:45:09.576000', 1399985191002447872, '2022-06-04 18:47:14.753000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037132833013762, 'UserRoleController#findRolesByUser', '根据用户ID获取到角色集合', 'GET', '/user/role/findRolesByUser', '用户角色管理', b'1', b'1', '用户角色管理 根据用户ID获取到角色集合', 1399985191002447872, '2022-06-04 18:45:09.576000', 1399985191002447872, '2022-06-04 18:45:09.576000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132837208064, 'RoleMenuController#findPermissionIdsByRole', '根据角色id获取关联权限id集合(包含资源和菜单)', 'GET', '/role/menu/findPermissionIdsByRole', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 根据角色id获取关联权限id集合(包含资源和菜单)', 1399985191002447872, '2022-06-04 18:45:09.577000', 1399985191002447872, '2022-06-04 18:45:09.577000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132837208065, 'DingRobotConfigController#existsByCode', '编码是否被使用', 'GET', '/ding/robot/config/existsByCode', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.577000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132841402368, 'VoucherController#findById', '单条查询', 'GET', '/voucher/findById', '储值卡', b'1', b'1', '储值卡 单条查询', 1399985191002447872, '2022-06-04 18:45:09.578000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132841402369, 'RolePathController#findPathsByUser', '根据用户id获取角色授权(请求权限列表)', 'GET', '/role/path/findPathsByUser', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 根据用户id获取角色授权(请求权限列表)', 1399985191002447872, '2022-06-04 18:45:09.578000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132841402370, 'InventoryController#getAvailable', '获取指定 SKU 的可用库存', 'GET', '/inventory/getAvailable', '库存操作', b'1', b'1', '库存操作 获取指定 SKU 的可用库存', 1399985191002447872, '2022-06-04 18:45:09.578000', 1399985191002447872, '2022-06-04 18:45:09.578000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132845596672, 'CategoryParameterController#findById', '通过ID查询', 'GET', '/categoryParameter/findById', '类目参数', b'1', b'1', '类目参数 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.579000', 1399985191002447872, '2022-06-04 18:45:09.579000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132845596673, 'CategoryController#update', '更新类目', 'POST', '/category/update', '类目管理', b'1', b'1', '类目管理 更新类目', 1399985191002447872, '2022-06-04 18:45:09.579000', 1399985191002447872, '2022-06-04 18:45:09.579000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132849790976, 'ClientController#add', '添加终端', 'POST', '/client/add', '终端管理', b'1', b'1', '终端管理 添加终端', 1399985191002447872, '2022-06-04 18:45:09.580000', 1399985191002447872, '2022-06-04 18:45:09.580000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132853985280, 'VoucherController#lock', '冻结', 'POST', '/voucher/lock', '储值卡', b'1', b'1', '储值卡 冻结', 1399985191002447872, '2022-06-04 18:45:09.581000', 1399985191002447872, '2022-06-04 18:45:09.581000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132853985281, 'DataScopeController#deleteUserAssigns', '批量删除关联用户', 'DELETE', '/data/scope/deleteUserAssigns', '数据范围权限配置', b'1', b'1', '数据范围权限配置 批量删除关联用户', 1399985191002447872, '2022-06-04 18:45:09.581000', 1399985191002447872, '2022-06-04 18:45:09.581000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132858179584, 'DictionaryItemController#update', '修改字典项（返回字典项对象）', 'POST', '/dict/item/update', '字典项', b'1', b'1', '字典项 修改字典项（返回字典项对象）', 1399985191002447872, '2022-06-04 18:45:09.582000', 1399985191002447872, '2022-06-04 18:45:09.582000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132858179585, 'CategoryParameterGroupController#update', '修改', 'POST', '/categoryParameterGroup/update', '类目参数组', b'1', b'1', '类目参数组 修改', 1399985191002447872, '2022-06-04 18:45:09.582000', 1399985191002447872, '2022-06-04 18:45:09.582000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132862373888, 'SuperQueryDemoController#superQuery', '超级查询(分页)', 'POST', '/demo/super/query/superQuery', '超级查询演示', b'1', b'1', '超级查询演示 超级查询(分页)', 1399985191002447872, '2022-06-04 18:45:09.583000', 1399985191002447872, '2022-06-04 18:45:09.583000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132862373889, 'AggregateController#createAggregatePay', '创建聚合支付', 'POST', '/aggregate/createAggregatePay', '聚合支付', b'1', b'1', '聚合支付 创建聚合支付', 1399985191002447872, '2022-06-04 18:45:09.583000', 1399985191002447872, '2022-06-04 18:45:09.583000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132862373890, 'CategoryParameterController#page', '分页查询(限定类目和分组id)', 'GET', '/categoryParameter/page', '类目参数', b'1', b'1', '类目参数 分页查询(限定类目和分组id)', 1399985191002447872, '2022-06-04 18:45:09.583000', 1399985191002447872, '2022-06-04 18:45:09.583000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132866568192, 'WalletController#createWallet', '开通用户钱包操作', 'POST', '/wallet/createWallet', '钱包相关的接口', b'1', b'1', '钱包相关的接口 开通用户钱包操作', 1399985191002447872, '2022-06-04 18:45:09.584000', 1399985191002447872, '2022-06-04 18:45:09.584000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132866568193, 'CategoryParameterController#existsByName', '判断类目参数是否已经存在(不包含自身)', 'GET', '/categoryParameter/existsByNameNotId', '类目参数', b'1', b'1', '类目参数 判断类目参数是否已经存在(不包含自身)', 1399985191002447872, '2022-06-04 18:45:09.584000', 1399985191002447872, '2022-06-04 18:45:09.584000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132870762496, 'AlipayConfigController#findById', '根据Id查询', 'GET', '/alipay/findById', '支付宝配置', b'1', b'1', '支付宝配置 根据Id查询', 1399985191002447872, '2022-06-04 18:45:09.585000', 1399985191002447872, '2022-06-04 18:45:09.585000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132870762497, 'PermMenuController#menuTree', '获取菜单树', 'GET', '/perm/menu/menuTree', '菜单权限资源', b'1', b'1', '菜单权限资源 获取菜单树', 1399985191002447872, '2022-06-04 18:45:09.585000', 1399985191002447872, '2022-06-04 18:45:09.585000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132870762498, 'DataScopeController#getDeptIds', '获取关联部门id', 'GET', '/data/scope/getDeptIds', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取关联部门id', 1399985191002447872, '2022-06-04 18:45:09.585000', 1399985191002447872, '2022-06-04 18:45:09.585000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132874956800, 'QuartzJobLogController#findById', '单条', 'GET', '/quartz/log/findById', '定时任务执行日志', b'1', b'1', '定时任务执行日志 单条', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132874956801, 'IdempotencyDemoController#lock5', '分布式锁(暂停5秒)', 'GET', '/demo/lock/lock5', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(暂停5秒)', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132874956802, 'DingTalkConfigController#findAll', '查询全部', 'GET', '/ding/config/findAll', '钉钉配置', b'1', b'1', '钉钉配置 查询全部', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132874956803, 'DingRobotConfigController#update', '修改机器人配置', 'POST', '/ding/robot/config/update', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 修改机器人配置', 1399985191002447872, '2022-06-04 18:45:09.586000', 1399985191002447872, '2022-06-04 18:45:09.586000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132879151104, 'PayNotifyRecordController#page', '分页', 'GET', '/pay/notify/record/page', '支付回调记录', b'1', b'1', '支付回调记录 分页', 1399985191002447872, '2022-06-04 18:45:09.587000', 1399985191002447872, '2022-06-04 18:45:09.587000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132879151105, 'CouponController#getByIds', '批量优惠券', 'GET', '/coupon/getById', '优惠券', b'1', b'1', '优惠券 批量优惠券', 1399985191002447872, '2022-06-04 18:45:09.587000', 1399985191002447872, '2022-06-04 18:45:09.587000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132879151106, 'GoodsSkuController#findBySkuIds', '获取sku集合', 'GET', '/sku/findBySkuIds', 'sku操作', b'1', b'1', 'sku操作 获取sku集合', 1399985191002447872, '2022-06-04 18:45:09.587000', 1399985191002447872, '2022-06-04 18:45:09.587000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132883345408, 'SuperQueryDemoController#findById', '通过ID查询', 'GET', '/demo/super/query/findById', '超级查询演示', b'1', b'1', '超级查询演示 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132883345409, 'CashierController#combinationPay', '发起支付(组合支付)', 'POST', '/cashier/combinationPay', '结算台', b'1', b'1', '结算台 发起支付(组合支付)', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132883345410, 'DataScopeController#page', '分页', 'GET', '/data/scope/page', '数据范围权限配置', b'1', b'1', '数据范围权限配置 分页', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132883345411, 'SpecificationController#page', '分页查询', 'GET', '/specification/page', '规格', b'1', b'1', '规格 分页查询', 1399985191002447872, '2022-06-04 18:45:09.588000', 1399985191002447872, '2022-06-04 18:45:09.588000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132887539712, 'PermMenuController#existsByPermCode', '编码是否被使用(不包含自己)', 'GET', '/perm/menu/existsByPermCodeNotId', '菜单权限资源', b'1', b'1', '菜单权限资源 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.589000', 1399985191002447872, '2022-06-04 18:45:09.589000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132887539713, 'OnlineUserController#logoutByUserId', '踢人下线', 'POST', '/user/online/logoutByUserId', '在线用户', b'1', b'1', '在线用户 踢人下线', 1399985191002447872, '2022-06-04 18:45:09.589000', 1399985191002447872, '2022-06-04 18:45:09.589000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132887539714, 'CategoryParameterGroupController#add', '添加', 'POST', '/categoryParameterGroup/add', '类目参数组', b'1', b'1', '类目参数组 添加', 1399985191002447872, '2022-06-04 18:45:09.589000', 1399985191002447872, '2022-06-04 18:45:09.589000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132891734016, 'FIleUpLoadController#page', '分页', 'GET', '/file/page', '文件上传', b'1', b'1', '文件上传 分页', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:45:09.590000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132891734017, 'OpenApiWebMvcResource#openapiYaml', 'openapiYaml', 'GET', '/v3/api-docs.yaml', 'OpenApiWebMvcResource', b'0', b'0', 'OpenApiWebMvcResource openapiYaml', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:47:19.608000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037132891734018, 'WeChatPayConfigController#update', '更新', 'POST', '/wechat/pay/update', '微信支付', b'1', b'1', '微信支付 更新', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:45:09.590000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132891734019, 'RolePathController#findIdsByRole', '根据角色id获取关联权限id', 'GET', '/role/path/findIdsByRole', '角色请求权限消息关系', b'1', b'1', '角色请求权限消息关系 根据角色id获取关联权限id', 1399985191002447872, '2022-06-04 18:45:09.590000', 1399985191002447872, '2022-06-04 18:45:09.590000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132895928320, 'DataVersionLogController#findById', '获取', 'GET', '/log/dataVersion/findById', '数据版本日志', b'1', b'1', '数据版本日志 获取', 1399985191002447872, '2022-06-04 18:45:09.591000', 1399985191002447872, '2022-06-04 18:45:09.591000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132895928321, 'DeptController#tree', '树状展示', 'GET', '/dept/tree', '部门管理', b'1', b'1', '部门管理 树状展示', 1399985191002447872, '2022-06-04 18:45:09.591000', 1399985191002447872, '2022-06-04 18:45:09.591000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132895928322, 'UserInfoController#existsPhone', '手机号是否被使用', 'GET', '/user/existsPhone', '用户管理', b'1', b'1', '用户管理 手机号是否被使用', 1399985191002447872, '2022-06-04 18:45:09.591000', 1399985191002447872, '2022-06-04 18:45:09.591000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132900122624, 'TestController#hello', '测试', 'GET', '/test/hello', '测试控制器', b'1', b'1', '测试控制器 测试', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132900122625, 'PayController#pay', '支付', 'POST', '/uni_pay/pay', '统一支付', b'1', b'1', '统一支付 支付', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132900122626, 'RoleController#dropdown', '角色下拉框', 'GET', '/role/dropdown', '角色管理', b'1', b'1', '角色管理 角色下拉框', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132900122627, 'DataSensitiveDemoController#page', '分页查询', 'GET', '/demo/data/sensitive/page', '数据脱敏演示', b'1', b'1', '数据脱敏演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.592000', 1399985191002447872, '2022-06-04 18:45:09.592000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132904316928, 'CouponController#findByIds', '批量查询优惠券', 'GET', '/coupon/findByIds', '优惠券', b'1', b'1', '优惠券 批量查询优惠券', 1399985191002447872, '2022-06-04 18:45:09.593000', 1399985191002447872, '2022-06-04 18:45:09.593000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132904316929, 'DingRobotConfigController#page', '分页', 'GET', '/ding/robot/config/page', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 分页', 1399985191002447872, '2022-06-04 18:45:09.593000', 1399985191002447872, '2022-06-04 18:45:09.593000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132904316930, 'CouponController#lockByIds', '批量锁定优惠券', 'POST', '/coupon/lockByIds', '优惠券', b'1', b'1', '优惠券 批量锁定优惠券', 1399985191002447872, '2022-06-04 18:45:09.593000', 1399985191002447872, '2022-06-04 18:45:09.593000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132908511232, 'ClientController#superPage', '超级查询', 'POST', '/client/superPage', '终端管理', b'1', b'1', '终端管理 超级查询', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132908511233, 'DataPermDemoController#page', '分页查询', 'GET', '/demo/data/perm/page', '数据权限演示', b'1', b'1', '数据权限演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132908511234, 'OrderOperateController#paidOrderState', '付款成功状态变更', 'POST', '/order/paidOrderState', '订单操作', b'1', b'1', '订单操作 付款成功状态变更', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132908511235, 'UserInfoController#getLoginAfterUserInfo', '登录后获取用户信息', 'GET', '/user/getLoginAfterUserInfo', '用户管理', b'1', b'1', '用户管理 登录后获取用户信息', 1399985191002447872, '2022-06-04 18:45:09.594000', 1399985191002447872, '2022-06-04 18:45:09.594000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132912705536, 'FIleUpLoadController#download', '下载文件', 'GET', '/file/download/{id}', '文件上传', b'0', b'0', '文件上传 下载文件', 1399985191002447872, '2022-06-04 18:45:09.595000', 1399985191002447872, '2022-06-04 18:46:04.706000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037132912705537, 'CategoryParameterGroupController#existsByName', '判断类目参数组是否已经存在(不包含自身)', 'GET', '/categoryParameterGroup/existsByNameNotId', '类目参数组', b'1', b'1', '类目参数组 判断类目参数组是否已经存在(不包含自身)', 1399985191002447872, '2022-06-04 18:45:09.595000', 1399985191002447872, '2022-06-04 18:45:09.595000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132916899840, 'UserAdminController#update', '修改用户', 'POST', '/user/admin/update', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 修改用户', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132916899841, 'OrderOperateController#cancelOrderState', '取消订单', 'POST', '/order/cancelOrderState', '订单操作', b'1', b'1', '订单操作 取消订单', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132916899842, 'ClientController#delete', '删除终端', 'DELETE', '/client/delete', '终端管理', b'1', b'1', '终端管理 删除终端', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132916899843, 'PaymentController#findPayTypeInfoByBusinessId', '根据businessId获取订单支付方式', 'GET', '/payment/findPayTypeInfoByBusinessId', '支付记录', b'1', b'1', '支付记录 根据businessId获取订单支付方式', 1399985191002447872, '2022-06-04 18:45:09.596000', 1399985191002447872, '2022-06-04 18:45:09.596000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132921094144, 'DingTalkConfigController#add', '新增配置', 'POST', '/ding/config/add', '钉钉配置', b'1', b'1', '钉钉配置 新增配置', 1399985191002447872, '2022-06-04 18:45:09.597000', 1399985191002447872, '2022-06-04 18:45:09.597000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132921094145, 'SpecificationController#update', '修改', 'POST', '/specification/update', '规格', b'1', b'1', '规格 修改', 1399985191002447872, '2022-06-04 18:45:09.597000', 1399985191002447872, '2022-06-04 18:45:09.597000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132921094146, 'InventoryController#unlockInventory', '释放预占的SKU库存，需使用token', 'POST', '/inventory/unlockInventory', '库存操作', b'1', b'1', '库存操作 释放预占的SKU库存，需使用token', 1399985191002447872, '2022-06-04 18:45:09.597000', 1399985191002447872, '2022-06-04 18:45:09.597000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132925288448, 'CategoryParameterController#existsByName', '判断类目参数是否已经存在', 'GET', '/categoryParameter/existsByName', '类目参数', b'1', b'1', '类目参数 判断类目参数是否已经存在', 1399985191002447872, '2022-06-04 18:45:09.598000', 1399985191002447872, '2022-06-04 18:45:09.598000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132925288449, 'DataEncryptDemoController#delete', '删除', 'DELETE', '/demo/data/encrypt/delete', '数据加密解密演示', b'1', b'1', '数据加密解密演示 删除', 1399985191002447872, '2022-06-04 18:45:09.598000', 1399985191002447872, '2022-06-04 18:45:09.598000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132925288450, 'AlipayConfigController#setUpActivity', '启用指定的支付宝配置', 'POST', '/alipay/setUpActivity', '支付宝配置', b'1', b'1', '支付宝配置 启用指定的支付宝配置', 1399985191002447872, '2022-06-04 18:45:09.598000', 1399985191002447872, '2022-06-04 18:45:09.598000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132929482752, 'DataScopeController#findById', '获取', 'GET', '/data/scope/findById', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取', 1399985191002447872, '2022-06-04 18:45:09.599000', 1399985191002447872, '2022-06-04 18:45:09.599000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132929482753, 'ClientController#findByCode', '通过code查询终端', 'GET', '/client/findByCode', '终端管理', b'1', b'1', '终端管理 通过code查询终端', 1399985191002447872, '2022-06-04 18:45:09.599000', 1399985191002447872, '2022-06-04 18:45:09.599000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132929482754, 'DataPermDemoController#delete', '删除', 'DELETE', '/demo/data/perm/delete', '数据权限演示', b'1', b'1', '数据权限演示 删除', 1399985191002447872, '2022-06-04 18:45:09.599000', 1399985191002447872, '2022-06-04 18:45:09.599000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132933677056, 'DingRobotSendController#sendMarkdown', '测试发送Markdown', 'POST', '/ding/robot/send/markdown', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送Markdown', 1399985191002447872, '2022-06-04 18:45:09.600000', 1399985191002447872, '2022-06-04 18:45:09.600000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132933677057, 'OrderRecommendController#findActivity', '查询适用的活动', 'POST', '/order/recommend/findActivity', '订单优惠选择与推荐', b'1', b'1', '订单优惠选择与推荐 查询适用的活动', 1399985191002447872, '2022-06-04 18:45:09.600000', 1399985191002447872, '2022-06-04 18:45:09.600000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132933677058, 'ActivityController#get', '查询活动', 'GET', '/activity//get/{id}', '活动', b'1', b'1', '活动 查询活动', 1399985191002447872, '2022-06-04 18:45:09.600000', 1399985191002447872, '2022-06-04 18:45:09.600000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132937871360, 'QuartzJobController#judgeJobClass', '判断是否是定时任务类', 'GET', '/quartz/judgeJobClass', '定时任务', b'1', b'1', '定时任务 判断是否是定时任务类', 1399985191002447872, '2022-06-04 18:45:09.601000', 1399985191002447872, '2022-06-04 18:45:09.601000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132937871361, 'TokenEndpoint#loginOpenId', '三方登录登录', 'POST', '/token/loginOpenId', '认证相关', b'1', b'1', '认证相关 三方登录登录', 1399985191002447872, '2022-06-04 18:45:09.601000', 1399985191002447872, '2022-06-04 18:45:09.601000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132937871362, 'AlipayConfigController#clearActivity', '清除指定的支付宝配置', 'POST', '/alipay/clearActivity', '支付宝配置', b'1', b'1', '支付宝配置 清除指定的支付宝配置', 1399985191002447872, '2022-06-04 18:45:09.601000', 1399985191002447872, '2022-06-04 18:45:09.601000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132942065664, 'StrategyController#update', '更新策略', 'POST', '/strategy/update', '策略定义', b'1', b'1', '策略定义 更新策略', 1399985191002447872, '2022-06-04 18:45:09.602000', 1399985191002447872, '2022-06-04 18:45:09.602000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132942065665, 'UserDeptController#findAllByUser', '根据用户ID获取到部门集合', 'GET', '/user/dept/findAllByUser', '用户部门关联关系', b'1', b'1', '用户部门关联关系 根据用户ID获取到部门集合', 1399985191002447872, '2022-06-04 18:45:09.602000', 1399985191002447872, '2022-06-04 18:45:09.602000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132942065666, 'StrategyController#findConfigs', '获取参数配置', 'GET', '/strategy/findConfigs', '策略定义', b'1', b'1', '策略定义 获取参数配置', 1399985191002447872, '2022-06-04 18:45:09.602000', 1399985191002447872, '2022-06-04 18:45:09.602000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132946259968, 'RoleController#existsByCode', '编码是否被使用', 'GET', '/role/existsByCode', '角色管理', b'1', b'1', '角色管理 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.603000', 1399985191002447872, '2022-06-04 18:45:09.603000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132946259969, 'DingRobotSendController#sendText', '测试发送text', 'POST', '/ding/robot/send/text', '钉钉机器人发送', b'1', b'1', '钉钉机器人发送 测试发送text', 1399985191002447872, '2022-06-04 18:45:09.603000', 1399985191002447872, '2022-06-04 18:45:09.603000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132946259970, 'QuartzJobController#stop', '停止', 'POST', '/quartz/stop', '定时任务', b'1', b'1', '定时任务 停止', 1399985191002447872, '2022-06-04 18:45:09.603000', 1399985191002447872, '2022-06-04 18:45:09.603000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132950454272, 'SystemParamController#update', '更新', 'POST', '/system/param/update', '系统参数', b'1', b'1', '系统参数 更新', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132950454273, 'CodeGeneratorController#codeGenPreview', '预览生成代码', 'POST', '/gen/code/codeGenPreview', '代码生成', b'1', b'1', '代码生成 预览生成代码', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132950454274, 'DataScopeController#saveDeptAssign', '保存关联部门', 'POST', '/data/scope/saveDeptAssign', '数据范围权限配置', b'1', b'1', '数据范围权限配置 保存关联部门', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132950454275, 'PayCallbackController#wechat', '微信支付回调', 'POST', '/pay/callback/wechat', '支付回调', b'1', b'1', '支付回调 微信支付回调', 1399985191002447872, '2022-06-04 18:45:09.604000', 1399985191002447872, '2022-06-04 18:45:09.604000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132954648576, 'UserDeptController#saveAndUpdate', '给用户分配部门', 'POST', '/user/dept/saveAndUpdate', '用户部门关联关系', b'1', b'1', '用户部门关联关系 给用户分配部门', 1399985191002447872, '2022-06-04 18:45:09.605000', 1399985191002447872, '2022-06-04 18:45:09.605000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132954648577, 'BrandController#page', '分页查询', 'GET', '/brand/page', '品牌', b'1', b'1', '品牌 分页查询', 1399985191002447872, '2022-06-04 18:45:09.605000', 1399985191002447872, '2022-06-04 18:45:09.605000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132954648578, 'QuartzJobController#page', '分页', 'GET', '/quartz/page', '定时任务', b'1', b'1', '定时任务 分页', 1399985191002447872, '2022-06-04 18:45:09.605000', 1399985191002447872, '2022-06-04 18:45:09.605000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132958842880, 'DictionaryController#findAll', '查询全部', 'GET', '/dict/findAll', '字典', b'1', b'1', '字典 查询全部', 1399985191002447872, '2022-06-04 18:45:09.606000', 1399985191002447872, '2022-06-04 18:45:09.606000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132958842881, 'DingRobotConfigController#delete', '删除', 'DELETE', '/ding/robot/config/delete', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 删除', 1399985191002447872, '2022-06-04 18:45:09.606000', 1399985191002447872, '2022-06-04 18:45:09.606000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132958842882, 'RoleMenuController#getPermissions', '获取菜单和资源权限', 'GET', '/role/menu/getPermissions', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 获取菜单和资源权限', 1399985191002447872, '2022-06-04 18:45:09.606000', 1399985191002447872, '2022-06-04 18:45:09.606000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132963037184, 'VoucherController#findByCardNo', '根据卡号查询', 'GET', '/voucher/findByCardNo', '储值卡', b'1', b'1', '储值卡 根据卡号查询', 1399985191002447872, '2022-06-04 18:45:09.607000', 1399985191002447872, '2022-06-04 18:45:09.607000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132963037185, 'DingTalkConfigController#findById', '获取详情', 'GET', '/ding/config/findById', '钉钉配置', b'1', b'1', '钉钉配置 获取详情', 1399985191002447872, '2022-06-04 18:45:09.607000', 1399985191002447872, '2022-06-04 18:45:09.607000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132963037186, 'UserAdminController#findById', '根据用户id查询用户', 'GET', '/user/admin/findById', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 根据用户id查询用户', 1399985191002447872, '2022-06-04 18:45:09.607000', 1399985191002447872, '2022-06-04 18:45:09.607000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132967231488, 'QuartzJobLogController#page', '分页', 'GET', '/quartz/log/page', '定时任务执行日志', b'1', b'1', '定时任务执行日志 分页', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.608000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132967231489, 'DingTalkConfigController#clearEnable', '清除启用状态', 'POST', '/ding/config/clearEnable', '钉钉配置', b'1', b'1', '钉钉配置 清除启用状态', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.608000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132967231490, 'CouponTemplateController#get', '优惠券模板详情', 'POST', '/coupon/template/get/{id}', '优惠券模板', b'1', b'1', '优惠券模板 优惠券模板详情', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.608000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132967231491, 'SystemParamController#page', '分页', 'GET', '/system/param/page', '系统参数', b'1', b'1', '系统参数 分页', 1399985191002447872, '2022-06-04 18:45:09.608000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132971425792, 'InventoryController#reduceInventory', '扣减指定 SKU 的预占库存，增加对应售出', 'POST', '/inventory/reduceInventory', '库存操作', b'1', b'1', '库存操作 扣减指定 SKU 的预占库存，增加对应售出', 1399985191002447872, '2022-06-04 18:45:09.609000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132971425793, 'WalletController#getWalletInfo', '获取钱包综合信息', 'GET', '/wallet/getWalletInfo', '钱包相关的接口', b'1', b'1', '钱包相关的接口 获取钱包综合信息', 1399985191002447872, '2022-06-04 18:45:09.609000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132971425794, 'WalletController#pageByNotWallet', '分页', 'GET', '/wallet/pageByNotWallet', '钱包相关的接口', b'1', b'1', '钱包相关的接口 分页', 1399985191002447872, '2022-06-04 18:45:09.609000', 1399985191002447872, '2022-06-04 18:45:09.609000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132975620096, 'UserAdminController#lock', '锁定用户', 'POST', '/user/admin/lock', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 锁定用户', 1399985191002447872, '2022-06-04 18:45:09.610000', 1399985191002447872, '2022-06-04 18:45:09.610000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132975620097, 'TestController#say', '测试回声', 'GET', '/test/say', '测试控制器', b'1', b'1', '测试控制器 测试回声', 1399985191002447872, '2022-06-04 18:45:09.610000', 1399985191002447872, '2022-06-04 18:45:09.610000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132975620098, 'PayController#refund', '退款', 'POST', '/uni_pay/refund', '统一支付', b'1', b'1', '统一支付 退款', 1399985191002447872, '2022-06-04 18:45:09.610000', 1399985191002447872, '2022-06-04 18:45:09.610000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132979814400, 'WeChatPayConfigController#setUpActivity', '设置启用的微信支付配置', 'POST', '/wechat/pay/setUpActivity', '微信支付', b'1', b'1', '微信支付 设置启用的微信支付配置', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132979814401, 'TestController#sendWsByUserId', '发送ws消息', 'POST', '/test/sendWsByUserId', '测试控制器', b'1', b'1', '测试控制器 发送ws消息', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'1', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132979814402, 'PermMenuController#findById', '根据id查询', 'GET', '/perm/menu/findById', '菜单权限资源', b'1', b'1', '菜单权限资源 根据id查询', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132979814403, 'WeChatPayConfigController#clearActivity', '清除指定的微信支付配置', 'POST', '/wechat/pay/clearActivity', '微信支付', b'1', b'1', '微信支付 清除指定的微信支付配置', 1399985191002447872, '2022-06-04 18:45:09.611000', 1399985191002447872, '2022-06-04 18:45:09.611000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132984008704, 'PermPathController#findById', '获取详情', 'GET', '/perm/path/findById', '请求权限资源', b'1', b'1', '请求权限资源 获取详情', 1399985191002447872, '2022-06-04 18:45:09.612000', 1399985191002447872, '2022-06-04 18:45:09.612000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132984008705, 'RefundRecordController#findById', '根据id查询', 'GET', '/pay/refund/findById', '退款记录', b'1', b'1', '退款记录 根据id查询', 1399985191002447872, '2022-06-04 18:45:09.612000', 1399985191002447872, '2022-06-04 18:45:09.612000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132984008706, 'DatabaseTableController#findAll', '表列表', 'GET', '/gen/table/findAll', '数据库表信息', b'1', b'1', '数据库表信息 表列表', 1399985191002447872, '2022-06-04 18:45:09.612000', 1399985191002447872, '2022-06-04 18:45:09.612000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132988203008, 'CategoryParameterGroupController#delete', '删除', 'DELETE', '/categoryParameterGroup/delete', '类目参数组', b'1', b'1', '类目参数组 删除', 1399985191002447872, '2022-06-04 18:45:09.613000', 1399985191002447872, '2022-06-04 18:45:09.613000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132988203009, 'InventoryController#unlockInventoryWithoutToken', '解锁没有令牌的库存', 'POST', '/inventory/unlockInventoryWithoutToken', '库存操作', b'1', b'1', '库存操作 解锁没有令牌的库存', 1399985191002447872, '2022-06-04 18:45:09.613000', 1399985191002447872, '2022-06-04 18:45:09.613000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132988203010, 'SystemParamController#findById', '获取单条', 'GET', '/system/param/findById', '系统参数', b'1', b'1', '系统参数 获取单条', 1399985191002447872, '2022-06-04 18:45:09.613000', 1399985191002447872, '2022-06-04 18:45:09.613000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132992397312, 'WalletController#findByUser', '根据用户查询钱包', 'GET', '/wallet/findByUser', '钱包相关的接口', b'1', b'1', '钱包相关的接口 根据用户查询钱包', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132992397313, 'SuperQueryDemoController#add', '添加', 'POST', '/demo/super/query/add', '超级查询演示', b'1', b'1', '超级查询演示 添加', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132992397314, 'SpecificationController#findAll', '查询所有', 'GET', '/specification/findAll', '规格', b'1', b'1', '规格 查询所有', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132992397315, 'DingRobotConfigController#findById', '获取详情', 'GET', '/ding/robot/config/findById', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 获取详情', 1399985191002447872, '2022-06-04 18:45:09.614000', 1399985191002447872, '2022-06-04 18:45:09.614000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132996591616, 'UserInfoController#updateBaseInfo', '修改用户基础信息', 'POST', '/user/updateBaseInfo', '用户管理', b'1', b'1', '用户管理 修改用户基础信息', 1399985191002447872, '2022-06-04 18:45:09.615000', 1399985191002447872, '2022-06-04 18:45:09.615000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132996591617, 'DataScopeController#findAll', '查询全部', 'GET', '/data/scope/findAll', '数据范围权限配置', b'1', b'1', '数据范围权限配置 查询全部', 1399985191002447872, '2022-06-04 18:45:09.615000', 1399985191002447872, '2022-06-04 18:45:09.615000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037132996591618, 'UserDataScopeController#findAllByUser', '根据用户ID获取到部门集合', 'GET', '/user/data/scope/findAllByUser', '用户数据权限配置', b'1', b'1', '用户数据权限配置 根据用户ID获取到部门集合', 1399985191002447872, '2022-06-04 18:45:09.615000', 1399985191002447872, '2022-06-04 18:45:09.615000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133000785920, 'StrategyController#findAll', '查询全部策略', 'GET', '/strategy/findAll', '策略定义', b'1', b'1', '策略定义 查询全部策略', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133000785921, 'PaymentController#findById', '根据id获取', 'GET', '/payment/findById', '支付记录', b'1', b'1', '支付记录 根据id获取', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133000785922, 'CouponTemplateController#addCouponTemplate', '新建优惠券模板', 'POST', '/coupon/template/add', '优惠券模板', b'1', b'1', '优惠券模板 新建优惠券模板', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133000785923, 'WalletController#page', '分页', 'GET', '/wallet/page', '钱包相关的接口', b'1', b'1', '钱包相关的接口 分页', 1399985191002447872, '2022-06-04 18:45:09.616000', 1399985191002447872, '2022-06-04 18:45:09.616000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133004980224, 'InventoryController#reduceSoldAndCapacity', '扣减指定 SKU 的售出库存并减少总库存', 'POST', '/inventory/reduceSoldAndCapacity', '库存操作', b'1', b'1', '库存操作 扣减指定 SKU 的售出库存并减少总库存', 1399985191002447872, '2022-06-04 18:45:09.617000', 1399985191002447872, '2022-06-04 18:45:09.617000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133004980225, 'MultipleOpenApiWebMvcResource#openapiYaml', 'openapiYaml', 'GET', '/v3/api-docs.yaml/{group}', 'MultipleOpenApiWebMvcResource', b'0', b'0', 'MultipleOpenApiWebMvcResource openapiYaml', 1399985191002447872, '2022-06-04 18:45:09.617000', 1399985191002447872, '2022-06-04 18:47:22.698000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037133004980226, 'DataEncryptDemoController#page', '分页查询', 'GET', '/demo/data/encrypt/page', '数据加密解密演示', b'1', b'1', '数据加密解密演示 分页查询', 1399985191002447872, '2022-06-04 18:45:09.617000', 1399985191002447872, '2022-06-04 18:45:09.617000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133009174528, 'QuartzJobController#start', '启动', 'POST', '/quartz/start', '定时任务', b'1', b'1', '定时任务 启动', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:45:09.618000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133009174529, 'AppVersionController#page', '分页', 'GET', '/app/version/page', 'app版本管理', b'1', b'1', 'app版本管理 分页', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:45:09.618000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133009174530, 'FIleUpLoadController#local', '上传', 'POST', '/file/upload', '文件上传', b'0', b'0', '文件上传 上传', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:46:08.153000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037133009174531, 'AppVersionController#delete', '删除', 'DELETE', '/app/version/delete', 'app版本管理', b'1', b'1', 'app版本管理 删除', 1399985191002447872, '2022-06-04 18:45:09.618000', 1399985191002447872, '2022-06-04 18:45:09.618000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133013368832, 'DeptController#deleteAndChildren', '强制级联删除', 'DELETE', '/dept/deleteAndChildren', '部门管理', b'1', b'1', '部门管理 强制级联删除', 1399985191002447872, '2022-06-04 18:45:09.619000', 1399985191002447872, '2022-06-04 18:45:09.619000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133013368833, 'SuperQueryDemoController#delete', '删除', 'DELETE', '/demo/super/query/delete', '超级查询演示', b'1', b'1', '超级查询演示 删除', 1399985191002447872, '2022-06-04 18:45:09.619000', 1399985191002447872, '2022-06-04 18:45:09.619000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133013368834, 'ClientController#existsByCode', '编码是否被使用', 'GET', '/client/existsByCode', '终端管理', b'1', b'1', '终端管理 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.619000', 1399985191002447872, '2022-06-04 18:45:09.619000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133017563136, 'OrderOperateController#placeOrder', '传入订单和优惠, 下单', 'POST', '/order/placeOrder', '订单操作', b'1', b'1', '订单操作 传入订单和优惠, 下单', 1399985191002447872, '2022-06-04 18:45:09.620000', 1399985191002447872, '2022-06-04 18:45:09.620000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133017563137, 'GoodsController#findById', '查询包含商品信息', 'GET', '/goods/findById', '商品管理', b'1', b'1', '商品管理 查询包含商品信息', 1399985191002447872, '2022-06-04 18:45:09.620000', 1399985191002447872, '2022-06-04 18:45:09.620000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133021757440, 'GoodsSkuController#add', '添加商品sku', 'POST', '/sku/add', 'sku操作', b'1', b'1', 'sku操作 添加商品sku', 1399985191002447872, '2022-06-04 18:45:09.621000', 1399985191002447872, '2022-06-04 18:45:09.621000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133021757441, 'LoginLogController#findById', '获取', 'GET', '/log/login/findById', '登录日志', b'1', b'1', '登录日志 获取', 1399985191002447872, '2022-06-04 18:45:09.621000', 1399985191002447872, '2022-06-04 18:45:09.621000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133021757442, 'CategoryParameterGroupController#existsByName', '判断类目参数组是否已经存在', 'GET', '/categoryParameterGroup/existsByName', '类目参数组', b'1', b'1', '类目参数组 判断类目参数组是否已经存在', 1399985191002447872, '2022-06-04 18:45:09.621000', 1399985191002447872, '2022-06-04 18:45:09.621000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133025951744, 'UserInfoController#updatePassword', '修改密码', 'POST', '/user/updatePassword', '用户管理', b'1', b'1', '用户管理 修改密码', 1399985191002447872, '2022-06-04 18:45:09.622000', 1399985191002447872, '2022-06-04 18:45:09.622000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133025951745, 'DataScopeController#existsByName', '名称是否被使用', 'GET', '/data/scope/existsByName', '数据范围权限配置', b'1', b'1', '数据范围权限配置 名称是否被使用', 1399985191002447872, '2022-06-04 18:45:09.622000', 1399985191002447872, '2022-06-04 18:45:09.622000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133025951746, 'GoodsSkuController#getById', '获取sku', 'GET', '/sku/get', 'sku操作', b'1', b'1', 'sku操作 获取sku', 1399985191002447872, '2022-06-04 18:45:09.622000', 1399985191002447872, '2022-06-04 18:45:09.622000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133030146048, 'GoodsController#add', '添加商品', 'POST', '/goods/add', '商品管理', b'1', b'1', '商品管理 添加商品', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133030146049, 'IdempotencyDemoController#lock0', '分布式锁(不暂停)', 'POST', '/demo/lock/lock0', '幂等控制演示', b'1', b'1', '幂等控制演示 分布式锁(不暂停)', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133030146050, 'RoleController#existsByName', '名称是否被使用(不包含自己)', 'GET', '/role/existsByNameNotId', '角色管理', b'1', b'1', '角色管理 名称是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133030146051, 'CaptchaController#imgCaptcha', '获取图片验证码', 'POST', '/captcha/imgCaptcha', '验证码服务', b'1', b'1', '验证码服务 获取图片验证码', 1399985191002447872, '2022-06-04 18:45:09.623000', 1399985191002447872, '2022-06-04 18:45:09.623000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133034340352, 'PaymentController#page', '分页查询', 'GET', '/payment/page', '支付记录', b'1', b'1', '支付记录 分页查询', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:45:09.624000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133034340353, 'OpenApiWebMvcResource#openapiJson', 'openapiJson', 'GET', '/v3/api-docs', 'OpenApiWebMvcResource', b'0', b'0', 'OpenApiWebMvcResource openapiJson', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:47:25.990000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037133034340354, 'UserAdminController#page', '分页', 'GET', '/user/admin/page', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 分页', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:45:09.624000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133034340355, 'SuperQueryDemoController#update', '修改', 'POST', '/demo/super/query/update', '超级查询演示', b'1', b'1', '超级查询演示 修改', 1399985191002447872, '2022-06-04 18:45:09.624000', 1399985191002447872, '2022-06-04 18:45:09.625000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133038534656, 'OperateLogController#page', '分页', 'GET', '/log/operate/page', '操作日志', b'1', b'1', '操作日志 分页', 1399985191002447872, '2022-06-04 18:45:09.625000', 1399985191002447872, '2022-06-04 18:45:09.625000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133038534657, 'DictionaryController#findById', '根据id获取', 'GET', '/dict/findById', '字典', b'1', b'1', '字典 根据id获取', 1399985191002447872, '2022-06-04 18:45:09.625000', 1399985191002447872, '2022-06-04 18:45:09.625000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133042728960, 'DingRobotConfigController#findAll', '查询全部', 'GET', '/ding/robot/config/findAll', '钉钉机器人配置', b'1', b'1', '钉钉机器人配置 查询全部', 1399985191002447872, '2022-06-04 18:45:09.626000', 1399985191002447872, '2022-06-04 18:45:09.626000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133042728961, 'StrategyRegisterController#findAll', '查询全部', 'GET', '/strategy/register/findAll', '策略注册', b'1', b'1', '策略注册 查询全部', 1399985191002447872, '2022-06-04 18:45:09.626000', 1399985191002447872, '2022-06-04 18:45:09.626000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133042728962, 'CategoryController#findById', '通过 id 获取指定类目', 'GET', '/category/findById', '类目管理', b'1', b'1', '类目管理 通过 id 获取指定类目', 1399985191002447872, '2022-06-04 18:45:09.626000', 1399985191002447872, '2022-06-04 18:45:09.626000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133046923264, 'CategoryController#findBindSpecIds', '根据类目id查询关联的绑定规格id集合', 'GET', '/category/findBindSpecIds', '类目管理', b'1', b'1', '类目管理 根据类目id查询关联的绑定规格id集合', 1399985191002447872, '2022-06-04 18:45:09.627000', 1399985191002447872, '2022-06-04 18:45:09.627000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133046923265, 'RefundRecordController#page', '分页', 'GET', '/pay/refund/page', '退款记录', b'1', b'1', '退款记录 分页', 1399985191002447872, '2022-06-04 18:45:09.627000', 1399985191002447872, '2022-06-04 18:45:09.627000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133046923266, 'RoleController#delete', '删除角色', 'DELETE', '/role/delete', '角色管理', b'1', b'1', '角色管理 删除角色', 1399985191002447872, '2022-06-04 18:45:09.627000', 1399985191002447872, '2022-06-04 18:45:09.627000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133051117568, 'GoodsController#findByCategory', '按类目查询', 'GET', '/goods/findByCategory', '商品管理', b'1', b'1', '商品管理 按类目查询', 1399985191002447872, '2022-06-04 18:45:09.628000', 1399985191002447872, '2022-06-04 18:45:09.628000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133051117569, 'IdempotencyDemoController#idempotency', '幂等演示', 'POST', '/demo/lock/idempotency', '幂等控制演示', b'1', b'1', '幂等控制演示 幂等演示', 1399985191002447872, '2022-06-04 18:45:09.628000', 1399985191002447872, '2022-06-04 18:45:09.628000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133051117570, 'AppVersionController#add', '添加', 'POST', '/app/version/add', 'app版本管理', b'1', b'1', 'app版本管理 添加', 1399985191002447872, '2022-06-04 18:45:09.628000', 1399985191002447872, '2022-06-04 18:45:09.628000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133055311872, 'TestController#sequenceZdy', '序列生成器自定义', 'GET', '/test/sequenceZdy', '测试控制器', b'1', b'1', '测试控制器 发号器自定义', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133055311873, 'CategoryParameterController#delete', '删除', 'DELETE', '/categoryParameter/delete', '类目参数', b'1', b'1', '类目参数 删除', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133055311874, 'DataSensitiveDemoController#update', '修改', 'POST', '/demo/data/sensitive/update', '数据脱敏演示', b'1', b'1', '数据脱敏演示 修改', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133055311875, 'SpecificationController#add', '添加', 'POST', '/specification/add', '规格', b'1', b'1', '规格 添加', 1399985191002447872, '2022-06-04 18:45:09.629000', 1399985191002447872, '2022-06-04 18:45:09.629000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133059506176, 'PayNotifyRecordController#findById', '根据id查询', 'GET', '/pay/notify/record/findById', '支付回调记录', b'1', b'1', '支付回调记录 根据id查询', 1399985191002447872, '2022-06-04 18:45:09.630000', 1399985191002447872, '2022-06-04 18:45:09.630000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133059506177, 'DataSensitiveDemoController#add', '添加', 'POST', '/demo/data/sensitive/add', '数据脱敏演示', b'1', b'1', '数据脱敏演示 添加', 1399985191002447872, '2022-06-04 18:45:09.630000', 1399985191002447872, '2022-06-04 18:45:09.630000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133059506178, 'CouponController#findCoupon', '个人可用的优惠券', 'GET', '/coupon/findCoupon', '优惠券', b'1', b'1', '优惠券 个人可用的优惠券', 1399985191002447872, '2022-06-04 18:45:09.630000', 1399985191002447872, '2022-06-04 18:45:09.630000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133063700480, 'RoleMenuController#save', '保存请求权限关系', 'POST', '/role/menu/save', '角色菜单权限关系', b'1', b'1', '角色菜单权限关系 保存请求权限关系', 1399985191002447872, '2022-06-04 18:45:09.631000', 1399985191002447872, '2022-06-04 18:45:09.631000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133063700481, 'OrderFindController#findOrderSkuIds', '查询订单包含的skuIds', 'GET', '/order/findOrderSkuIds', '订单查询', b'1', b'1', '订单查询 查询订单包含的skuIds', 1399985191002447872, '2022-06-04 18:45:09.631000', 1399985191002447872, '2022-06-04 18:45:09.631000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133063700482, 'CategoryController#bindBrand', '绑定品牌', 'POST', '/category/bindBrand', '类目管理', b'1', b'1', '类目管理 绑定品牌', 1399985191002447872, '2022-06-04 18:45:09.631000', 1399985191002447872, '2022-06-04 18:45:09.631000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133067894784, 'FIleUpLoadController#preview', '预览文件', 'GET', '/file/preview/{id}', '文件上传', b'0', b'0', '文件上传 预览文件', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:46:13.683000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037133067894785, 'DatabaseTableController#findColumnByTableName', '获取数据表行信息', 'GET', '/gen/table/findColumnByTableName', '数据库表信息', b'1', b'1', '数据库表信息 获取数据表行信息', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:45:09.632000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133067894786, 'LoginLogController#page', '分页', 'GET', '/log/login/page', '登录日志', b'1', b'1', '登录日志 分页', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:45:09.632000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133067894787, 'CategoryController#findAll', '获取所有类目', 'GET', '/category/findAll', '类目管理', b'1', b'1', '类目管理 获取所有类目', 1399985191002447872, '2022-06-04 18:45:09.632000', 1399985191002447872, '2022-06-04 18:45:09.632000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133072089088, 'WalletLogController#pageByWalletId', '根据钱包id查询钱包日志(分页)', 'GET', '/wallet/log/pageByWalletId', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 根据钱包id查询钱包日志(分页)', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133072089089, 'CategoryParameterGroupController#page', '分页查询', 'GET', '/categoryParameterGroup/page', '类目参数组', b'1', b'1', '类目参数组 分页查询', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133072089090, 'RoleController#page', '分页查询角色', 'GET', '/role/page', '角色管理', b'1', b'1', '角色管理 分页查询角色', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133072089091, 'WeChatPayConfigController#add', '添加微信支付配置', 'POST', '/wechat/pay/add', '微信支付', b'1', b'1', '微信支付 添加微信支付配置', 1399985191002447872, '2022-06-04 18:45:09.633000', 1399985191002447872, '2022-06-04 18:45:09.633000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133076283392, 'UserSocialLoginController#findById', '获取详情', 'POST', '/user/social/findById', '用户三方登录管理', b'1', b'1', '用户三方登录管理 获取详情', 1399985191002447872, '2022-06-04 18:45:09.634000', 1399985191002447872, '2022-06-04 18:45:09.634000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133076283393, 'DictionaryItemController#add', '添加字典项（返回字典项对象）', 'POST', '/dict/item/add', '字典项', b'1', b'1', '字典项 添加字典项（返回字典项对象）', 1399985191002447872, '2022-06-04 18:45:09.634000', 1399985191002447872, '2022-06-04 18:45:09.634000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133076283394, 'PaymentController#superPage', '分页查询(超级查询)', 'POST', '/payment/superPage', '支付记录', b'1', b'1', '支付记录 分页查询(超级查询)', 1399985191002447872, '2022-06-04 18:45:09.634000', 1399985191002447872, '2022-06-04 18:45:09.634000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133076283395, 'MessageQueueDemoController#sendMqttMsg', '发送MQTT消息', 'POST', '/demo/mq/sendMqttMsg', '测试消息队列', b'1', b'1', '测试消息队列 发送MQTT消息', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133080477696, 'WalletController#lock', '锁定钱包', 'POST', '/wallet/lock', '钱包相关的接口', b'1', b'1', '钱包相关的接口 锁定钱包', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133080477697, 'VoucherController#page', '分页', 'GET', '/voucher/page', '储值卡', b'1', b'1', '储值卡 分页', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133080477698, 'UserAdminController#restartPassword', '重置密码', 'POST', '/user/admin/restartPassword', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 重置密码', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133080477699, 'DingTalkConfigController#page', '分页', 'GET', '/ding/config/page', '钉钉配置', b'1', b'1', '钉钉配置 分页', 1399985191002447872, '2022-06-04 18:45:09.635000', 1399985191002447872, '2022-06-04 18:45:09.635000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133084672000, 'VoucherController#unlock', '启用', 'POST', '/voucher/unlock', '储值卡', b'1', b'1', '储值卡 启用', 1399985191002447872, '2022-06-04 18:45:09.636000', 1399985191002447872, '2022-06-04 18:45:09.636000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133084672001, 'OrderFindController#page', '订单列表 分页', 'GET', '/order/page', '订单查询', b'1', b'1', '订单查询 订单列表 分页', 1399985191002447872, '2022-06-04 18:45:09.636000', 1399985191002447872, '2022-06-04 18:45:09.636000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133084672002, 'UserAdminController#unlock', '解锁用户', 'POST', '/user/admin/unlock', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 解锁用户', 1399985191002447872, '2022-06-04 18:45:09.636000', 1399985191002447872, '2022-06-04 18:45:09.636000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133088866304, 'MessageQueueDemoController#sendRedisMsg', '发送RedisMq消息', 'POST', '/demo/mq/sendRedisMsg', '测试消息队列', b'1', b'1', '测试消息队列 发送RedisMq消息', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133088866305, 'DictionaryItemController#findById', '根据字典项ID查询', 'GET', '/dict/item/findById', '字典项', b'1', b'1', '字典项 根据字典项ID查询', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133088866306, 'GoodsController#findAll', '查询全部', 'GET', '/goods/findAll', '商品管理', b'1', b'1', '商品管理 查询全部', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133088866307, 'WeChatPayConfigController#findPayWayList', '微信支持支付方式', 'GET', '/wechat/pay/findPayWayList', '微信支付', b'1', b'1', '微信支付 微信支持支付方式', 1399985191002447872, '2022-06-04 18:45:09.637000', 1399985191002447872, '2022-06-04 18:45:09.637000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133093060608, 'DataScopeController#existsByName', '名称是否被使用(不包含自己)', 'GET', '/data/scope/existsByNameNotId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 名称是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133093060609, 'CashierController#singlePay', '发起支付(单渠道)', 'POST', '/cashier/singlePay', '结算台', b'1', b'1', '结算台 发起支付(单渠道)', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133093060610, 'QuartzJobController#findById', '单条', 'GET', '/quartz/findById', '定时任务', b'1', b'1', '定时任务 单条', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133093060611, 'DataVersionLogController#page', '分页', 'GET', '/log/dataVersion/page', '数据版本日志', b'1', b'1', '数据版本日志 分页', 1399985191002447872, '2022-06-04 18:45:09.638000', 1399985191002447872, '2022-06-04 18:45:09.638000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133097254912, 'DictionaryItemController#pageByDictionaryId', '分页查询指定字典下的字典项', 'GET', '/dict/item/pageByDictionaryId', '字典项', b'1', b'1', '字典项 分页查询指定字典下的字典项', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:45:09.639000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133097254913, 'FIleUpLoadController#getFilePreviewUrlPrefix', '获取文件预览地址前缀', 'GET', '/file/getFilePreviewUrlPrefix', '文件上传', b'0', b'0', '文件上传 获取文件预览地址前缀', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:46:20.486000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037133097254914, 'DictionaryItemController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/dict/item/existsByCodeNotId', '字典项', b'1', b'1', '字典项 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:45:09.639000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133097254915, 'UserInfoController#getUserSecurityInfo', '查询用户安全信息', 'GET', '/user/getUserSecurityInfo', '用户管理', b'1', b'1', '用户管理 查询用户安全信息', 1399985191002447872, '2022-06-04 18:45:09.639000', 1399985191002447872, '2022-06-04 18:45:09.639000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133101449216, 'DictionaryItemController#delete', '删除字典项', 'DELETE', '/dict/item/delete', '字典项', b'1', b'1', '字典项 删除字典项', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133101449217, 'PermMenuController#resourceList', '资源列表', 'GET', '/perm/menu/resourceList', '菜单权限资源', b'1', b'1', '菜单权限资源 资源列表', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133101449218, 'DatabaseTableController#page', '表列表分页', 'GET', '/gen/table/page', '数据库表信息', b'1', b'1', '数据库表信息 表列表分页', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133101449219, 'DictionaryController#add', '添加', 'POST', '/dict/add', '字典', b'1', b'1', '字典 添加', 1399985191002447872, '2022-06-04 18:45:09.640000', 1399985191002447872, '2022-06-04 18:45:09.640000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133105643520, 'WalletController#unlock', '解锁钱包', 'POST', '/wallet/unlock', '钱包相关的接口', b'1', b'1', '钱包相关的接口 解锁钱包', 1399985191002447872, '2022-06-04 18:45:09.641000', 1399985191002447872, '2022-06-04 18:45:09.641000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133109837824, 'QuartzJobController#add', '添加', 'POST', '/quartz/add', '定时任务', b'1', b'1', '定时任务 添加', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133109837825, 'DataScopeController#findUsersByDataScopeId', '获取关联的用户列表', 'GET', '/data/scope/findUsersByDataScopeId', '数据范围权限配置', b'1', b'1', '数据范围权限配置 获取关联的用户列表', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133109837826, 'DataScopeController#update', '更新', 'POST', '/data/scope/update', '数据范围权限配置', b'1', b'1', '数据范围权限配置 更新', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133109837827, 'SpecificationController#findById', '通过ID查询', 'GET', '/specification/findById', '规格', b'1', b'1', '规格 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.642000', 1399985191002447872, '2022-06-04 18:45:09.642000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133114032128, 'OnlineUserController#findBySessionId', '获取单条', 'GET', '/user/online/findBySessionId', '在线用户', b'1', b'1', '在线用户 获取单条', 1399985191002447872, '2022-06-04 18:45:09.643000', 1399985191002447872, '2022-06-04 18:45:09.643000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133114032129, 'CategoryController#delete', '通过 id 删除类目', 'DELETE', '/category/delete', '类目管理', b'1', b'1', '类目管理 通过 id 删除类目', 1399985191002447872, '2022-06-04 18:45:09.643000', 1399985191002447872, '2022-06-04 18:45:09.643000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133114032130, 'TestController#sequence', '序列生成器', 'GET', '/test/sequence', '测试控制器', b'1', b'1', '测试控制器 发号器', 1399985191002447872, '2022-06-04 18:45:09.643000', 1399985191002447872, '2022-06-04 18:45:09.643000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133118226432, 'VoucherController#lockBatch', '批量冻结', 'POST', '/voucher/lockBatch', '储值卡', b'1', b'1', '储值卡 批量冻结', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133118226433, 'CategoryParameterGroupController#findAll', '查询所有', 'GET', '/categoryParameterGroup/findAll', '类目参数组', b'1', b'1', '类目参数组 查询所有', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133118226434, 'CodeGeneratorController#genCodeZip', '下载生成代码', 'POST', '/gen/code/genCodeZip', '代码生成', b'1', b'1', '代码生成 下载生成代码', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133118226435, 'DictionaryItemController#findByDictionaryId', '查询指定字典ID下的所有字典项', 'GET', '/dict/item/findByDictionaryId', '字典项', b'1', b'1', '字典项 查询指定字典ID下的所有字典项', 1399985191002447872, '2022-06-04 18:45:09.644000', 1399985191002447872, '2022-06-04 18:45:09.644000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133122420736, 'OrderFindController#findPayTimeoutOrderIdsByType', '获取指定类型超时订单的id集合', 'GET', '/order/findPayTimeoutOrderIdsByType', '订单查询', b'1', b'1', '订单查询 获取指定类型超时订单的id集合', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133122420737, 'UserAdminController#add', '添加用户', 'POST', '/user/admin/add', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 添加用户', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133122420738, 'DictionaryController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/dict/existsByCodeNotId', '字典', b'1', b'1', '字典 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133122420739, 'DeptController#findById', '获取', 'GET', '/dept/findById', '部门管理', b'1', b'1', '部门管理 获取', 1399985191002447872, '2022-06-04 18:45:09.645000', 1399985191002447872, '2022-06-04 18:45:09.645000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133126615040, 'VoucherController#generationBatch', '批量生成储值卡', 'POST', '/voucher/generationBatch', '储值卡', b'1', b'1', '储值卡 批量生成储值卡', 1399985191002447872, '2022-06-04 18:45:09.646000', 1399985191002447872, '2022-06-04 18:45:09.646000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133126615041, 'UserDataScopeController#findDataScopeIdsByUser', '根据用户ID获取到部门id集合', 'GET', '/user/data/scope/findIdsByUser', '用户数据权限配置', b'1', b'1', '用户数据权限配置 根据用户ID获取到部门id集合', 1399985191002447872, '2022-06-04 18:45:09.646000', 1399985191002447872, '2022-06-04 18:45:09.646000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133126615042, 'VoucherController#unlockBatch', '批量启用', 'POST', '/voucher/unlockBatch', '储值卡', b'1', b'1', '储值卡 批量启用', 1399985191002447872, '2022-06-04 18:45:09.646000', 1399985191002447872, '2022-06-04 18:45:09.646000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133130809344, 'AlipayConfigController#page', '分页', 'GET', '/alipay/page', '支付宝配置', b'1', b'1', '支付宝配置 分页', 1399985191002447872, '2022-06-04 18:45:09.647000', 1399985191002447872, '2022-06-04 18:45:09.647000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133130809345, 'PermPathController#page', '权限分页', 'GET', '/perm/path/page', '请求权限资源', b'1', b'1', '请求权限资源 权限分页', 1399985191002447872, '2022-06-04 18:45:09.647000', 1399985191002447872, '2022-06-04 18:45:09.647000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133130809346, 'DictionaryController#existsByCode', '编码是否被使用', 'GET', '/dict/existsByCode', '字典', b'1', b'1', '字典 编码是否被使用', 1399985191002447872, '2022-06-04 18:45:09.647000', 1399985191002447872, '2022-06-04 18:45:09.647000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133135003648, 'QuartzJobController#update', '更新', 'POST', '/quartz/update', '定时任务', b'1', b'1', '定时任务 更新', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133135003649, 'DingAccessController#genThirdLoginUrl', '生成第三方登录网址', 'GET', '/ding/access/genThirdLoginUrl', '钉钉Access', b'1', b'1', '钉钉Access 生成第三方登录网址', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133135003650, 'ActivityController#findAll', '查询活动', 'GET', '/activity/findAll', '活动', b'1', b'1', '活动 查询活动', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133135003651, 'UserInfoController#getUserBaseInfo', '查询用户基础信息', 'GET', '/user/getUserBaseInfo', '用户管理', b'1', b'1', '用户管理 查询用户基础信息', 1399985191002447872, '2022-06-04 18:45:09.648000', 1399985191002447872, '2022-06-04 18:45:09.648000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133139197952, 'MessageQueueDemoController#sendKeyExpired', '创建15秒后过期的事件', 'POST', '/demo/mq/sendKeyExpired', '测试消息队列', b'1', b'1', '测试消息队列 创建15秒后过期的事件', 1399985191002447872, '2022-06-04 18:45:09.649000', 1399985191002447872, '2022-06-04 18:45:09.649000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133139197953, 'OrderPreviewController#previewOrderPrice', '预览价格(手动)', 'POST', '/order/preview/previewOrderPrice', '订单计算', b'1', b'1', '订单计算 预览价格(手动)', 1399985191002447872, '2022-06-04 18:45:09.649000', 1399985191002447872, '2022-06-04 18:45:09.649000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133139197954, 'WalletLogController#pageByPersonal', '个人钱包日志', 'POST', '/wallet/log/pageByPersonal', '钱包日志相关的接口', b'1', b'1', '钱包日志相关的接口 个人钱包日志', 1399985191002447872, '2022-06-04 18:45:09.649000', 1399985191002447872, '2022-06-04 18:45:09.649000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133143392256, 'PermMenuController#delete', '删除', 'DELETE', '/perm/menu/delete', '菜单权限资源', b'1', b'1', '菜单权限资源 删除', 1399985191002447872, '2022-06-04 18:45:09.650000', 1399985191002447872, '2022-06-04 18:45:09.650000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133143392257, 'CategoryParameterController#add', '添加', 'POST', '/categoryParameter/add', '类目参数', b'1', b'1', '类目参数 添加', 1399985191002447872, '2022-06-04 18:45:09.650000', 1399985191002447872, '2022-06-04 18:45:09.650000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133143392258, 'PermPathController#update', '更新权限', 'POST', '/perm/path/update', '请求权限资源', b'1', b'1', '请求权限资源 更新权限', 1399985191002447872, '2022-06-04 18:45:09.650000', 1399985191002447872, '2022-06-04 18:45:09.650000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133147586560, 'BrandController#delete', '删除', 'DELETE', '/brand/delete', '品牌', b'1', b'1', '品牌 删除', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133147586561, 'DingTalkConfigController#update', '修改配置', 'POST', '/ding/config/update', '钉钉配置', b'1', b'1', '钉钉配置 修改配置', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133147586562, 'OrderFindController#getWholeById', '获取完整订单详情', 'GET', '/order/getWholeById', '订单查询', b'1', b'1', '订单查询 获取完整订单详情', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133147586563, 'SystemParamController#existsByKeyNotId', '判断编码是否存在(不包含自己)', 'GET', '/system/param/existsByKeyNotId', '系统参数', b'1', b'1', '系统参数 判断编码是否存在(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.651000', 1399985191002447872, '2022-06-04 18:45:09.651000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133151780864, 'CashierController#aggregatePay', '扫码聚合支付(单渠道)', 'GET', '/cashier/aggregatePay', '结算台', b'1', b'1', '结算台 扫码聚合支付(单渠道)', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133151780865, 'RoleController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/role/existsByCodeNotId', '角色管理', b'1', b'1', '角色管理 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133151780866, 'ClientController#findAllByAlonePrem', '查询有独立菜单和权限的终端列表', 'GET', '/client/findAllByAlonePrem', '终端管理', b'1', b'1', '终端管理 查询有独立菜单和权限的终端列表', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133151780867, 'RoleController#existsByName', '名称是否被使用', 'GET', '/role/existsByName', '角色管理', b'1', b'1', '角色管理 名称是否被使用', 1399985191002447872, '2022-06-04 18:45:09.652000', 1399985191002447872, '2022-06-04 18:45:09.652000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133155975168, 'RoleController#findById', '通过ID查询角色', 'GET', '/role/findById', '角色管理', b'1', b'1', '角色管理 通过ID查询角色', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133155975169, 'AppVersionController#findById', '查询详情', 'POST', '/app/version/findById', 'app版本管理', b'1', b'1', 'app版本管理 查询详情', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133155975170, 'PayCallbackController#aliPay', '支付宝回调', 'POST', '/pay/callback/aliPay', '支付回调', b'1', b'1', '支付回调 支付宝回调', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133155975171, 'QuartzJobController#execute', '立即执行', 'POST', '/quartz/execute', '定时任务', b'1', b'1', '定时任务 立即执行', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133155975172, 'CouponTemplateController#findAll', '查询优惠券模板', 'POST', '/coupon/template/findAll', '优惠券模板', b'1', b'1', '优惠券模板 查询优惠券模板', 1399985191002447872, '2022-06-04 18:45:09.653000', 1399985191002447872, '2022-06-04 18:45:09.653000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133160169472, 'WeChatPayConfigController#page', '分页', 'GET', '/wechat/pay/page', '微信支付', b'1', b'1', '微信支付 分页', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133160169473, 'TokenEndpoint#logout', '退出', 'POST', '/token/logout', '认证相关', b'1', b'1', '认证相关 退出', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133160169474, 'DeptController#update', '更新', 'POST', '/dept/update', '部门管理', b'1', b'1', '部门管理 更新', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133160169475, 'FIleUpLoadController#getFileDownloadUrl', '获取文件下载地址', 'GET', '/file/getFileDownloadUrl', '文件上传', b'0', b'0', '文件上传 获取文件下载地址', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:46:24.445000', b'0', 1);
-INSERT INTO `iam_perm_path` VALUES (1533037133160169476, 'DataEncryptDemoController#update', '修改', 'POST', '/demo/data/encrypt/update', '数据加密解密演示', b'1', b'1', '数据加密解密演示 修改', 1399985191002447872, '2022-06-04 18:45:09.654000', 1399985191002447872, '2022-06-04 18:45:09.654000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133164363776, 'CouponController#lockById', '锁定优惠券', 'POST', '/coupon/lockById', '优惠券', b'1', b'1', '优惠券 锁定优惠券', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133164363777, 'ClientController#update', '修改终端（返回终端对象）', 'POST', '/client/update', '终端管理', b'1', b'1', '终端管理 修改终端（返回终端对象）', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133164363778, 'BrandController#findById', '通过ID查询', 'GET', '/brand/findById', '品牌', b'1', b'1', '品牌 通过ID查询', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133164363779, 'WeChatPayConfigController#findById', '根据Id查询', 'GET', '/wechat/pay/findById', '微信支付', b'1', b'1', '微信支付 根据Id查询', 1399985191002447872, '2022-06-04 18:45:09.655000', 1399985191002447872, '2022-06-04 18:45:09.655000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133168558080, 'UserRoleController#findRoleIdsByUser', '根据用户ID获取到角色id集合', 'GET', '/user/role/findRoleIdsByUser', '用户角色管理', b'1', b'1', '用户角色管理 根据用户ID获取到角色id集合', 1399985191002447872, '2022-06-04 18:45:09.656000', 1399985191002447872, '2022-06-04 18:45:09.656000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1533037133168558081, 'SpecificationController#delete', '删除', 'DELETE', '/specification/delete', '规格', b'1', b'1', '规格 删除', 1399985191002447872, '2022-06-04 18:45:09.656000', 1399985191002447872, '2022-06-04 18:45:09.656000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330880, 'TestController#validation', '校验测试', 'GET', '/test/validation', '测试控制器', b'1', b'1', '测试控制器 校验测试', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330881, 'UserRoleController#saveAssign', '给用户分配角色', 'POST', '/user/role/saveAssign', '用户角色管理', b'1', b'1', '用户角色管理 给用户分配角色', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330882, 'UserAdminController#lockBatch', '批量锁定用户', 'POST', '/user/admin/lockBatch', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 批量锁定用户', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330883, 'UserDataScopeController#saveAssignBatch', '给用户分配权限(批量)', 'POST', '/user/data/scope/saveAssignBatch', '用户数据权限配置', b'1', b'1', '用户数据权限配置 给用户分配权限(批量)', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330884, 'UserDeptController#saveAssign', '给用户分配部门', 'POST', '/user/dept/saveAssign', '用户部门关联关系', b'1', b'1', '用户部门关联关系 给用户分配部门', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330885, 'PermPathController#batchUpdateEnable', '批量更新状态', 'POST', '/perm/path/batchUpdateEnable', '请求权限资源', b'1', b'1', '请求权限资源 批量更新状态', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330886, 'UserAdminController#unlockBatch', '批量解锁用户', 'POST', '/user/admin/unlockBatch', '管理用户(管理员级别)', b'1', b'1', '管理用户(管理员级别) 批量解锁用户', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330887, 'UserDeptController#saveAssignBatch', '给用户分配部门(批量)', 'POST', '/user/dept/saveAssignBatch', '用户部门关联关系', b'1', b'1', '用户部门关联关系 给用户分配部门(批量)', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330888, 'UserRoleController#saveAssignBatch', '给用户分配角色(批量)', 'POST', '/user/role/saveAssignBatch', '用户角色管理', b'1', b'1', '用户角色管理 给用户分配角色(批量)', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534396720414330889, 'PlumeLogMainController#getRunModel', 'getRunModel', 'GET', '/plumelog/getRunModel', 'PlumeLogMainController', b'1', b'1', 'PlumeLogMainController getRunModel', 1399985191002447872, '2022-06-08 12:47:40.516000', 1399985191002447872, '2022-06-08 12:47:40.516000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307008, 'MessageTemplateController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/message/template/existsByCodeNotId', '消息模板', b'1', b'1', '消息模板 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307009, 'PermPathController#deleteBatch', '批量删除', 'DELETE', '/perm/path/deleteBatch', '请求权限资源', b'1', b'1', '请求权限资源 批量删除', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307010, 'MessageTemplateController#rendering', '渲染模板', 'GET', '/message/template/rendering', '消息模板', b'1', b'1', '消息模板 渲染模板', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307011, 'SiteMessageController#send', '发送站内信', 'POST', '/site/message/send', '站内信', b'1', b'1', '站内信 发送站内信', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307012, 'SiteMessageController#read', '标为已读', 'POST', '/site/message/read', '站内信', b'1', b'1', '站内信 标为已读', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307013, 'MailSendController#sentSimpleMail', '发送简单邮件', 'POST', '/mail/send/sentSimpleMail', '邮件发送', b'1', b'1', '邮件发送 发送简单邮件', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307014, 'SiteMessageController#page', '消息分页', 'GET', '/site/message/page', '站内信', b'1', b'1', '站内信 消息分页', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307015, 'MailConfigController#existsByCode', '编码是否被使用', 'GET', '/mail/config/existsByCode', '邮箱配置', b'1', b'1', '邮箱配置 编码是否被使用', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307016, 'SiteMessageController#getSenderCount', '获取发送消息条数', 'GET', '/site/message/getSenderCount', '站内信', b'1', b'1', '站内信 获取发送消息条数', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307017, 'MailConfigController#setUpActivity', '设置启用的邮箱配置', 'POST', '/mail/config/setUpActivity', '邮箱配置', b'1', b'1', '邮箱配置 设置启用的邮箱配置', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307018, 'MessageTemplateController#add', '添加', 'POST', '/message/template/add', '消息模板', b'1', b'1', '消息模板 添加', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307019, 'MailConfigController#page', '分页', 'GET', '/mail/config/page', '邮箱配置', b'1', b'1', '邮箱配置 分页', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307020, 'MailConfigController#existsByCode', '编码是否被使用(不包含自己)', 'GET', '/mail/config/existsByCodeNotId', '邮箱配置', b'1', b'1', '邮箱配置 编码是否被使用(不包含自己)', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307021, 'MailConfigController#findAll', '获取所有邮箱配置', 'GET', '/mail/config/findAll', '邮箱配置', b'1', b'1', '邮箱配置 获取所有邮箱配置', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307022, 'MailConfigController#findById', '通过 id 获取指定邮箱配置', 'GET', '/mail/config/findById', '邮箱配置', b'1', b'1', '邮箱配置 通过 id 获取指定邮箱配置', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307023, 'MessageTemplateController#delete', '删除', 'DELETE', '/message/template/delete', '消息模板', b'1', b'1', '消息模板 删除', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307024, 'NcDemoController#sendMsg', '消息发送测试', 'GET', '/nc/test/sendMsg', 'nc测试', b'1', b'1', 'nc测试 消息发送测试', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307025, 'SiteMessageController#findById', '消息详情', 'GET', '/site/message/findById', '站内信', b'1', b'1', '站内信 消息详情', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307026, 'MailConfigController#updateMailConfig', '更新邮箱配置', 'POST', '/mail/config/update', '邮箱配置', b'1', b'1', '邮箱配置 更新邮箱配置', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307027, 'MailConfigController#add', '增加新邮箱配置', 'POST', '/mail/config/add', '邮箱配置', b'1', b'1', '邮箱配置 增加新邮箱配置', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307028, 'MailConfigController#delete', '删除', 'DELETE', '/mail/config/delete', '邮箱配置', b'1', b'1', '邮箱配置 删除', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307029, 'MessageTemplateController#existsByCode', '编码是否被使用', 'GET', '/message/template/existsByCode', '消息模板', b'1', b'1', '消息模板 编码是否被使用', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307030, 'MessageTemplateController#page', '分页', 'GET', '/message/template/page', '消息模板', b'1', b'1', '消息模板 分页', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307031, 'SiteMessageController#pageByReceive', '接收消息分页', 'GET', '/site/message/pageByReceive', '站内信', b'1', b'1', '站内信 接收消息分页', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307032, 'SiteMessageController#getReceiveCount', '获取接收消息条数', 'GET', '/site/message/getReceiveCount', '站内信', b'1', b'1', '站内信 获取接收消息条数', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307033, 'MailSendController#sendMail', '发送邮件', 'POST', '/mail/send/sendMail', '邮件发送', b'1', b'1', '邮件发送 发送邮件', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307034, 'SiteMessageController#pageBySender', '发送消息分页', 'GET', '/site/message/pageBySender', '站内信', b'1', b'1', '站内信 发送消息分页', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307035, 'MessageTemplateController#update', '更新', 'POST', '/message/template/update', '消息模板', b'1', b'1', '消息模板 更新', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534778144875307036, 'MessageTemplateController#findById', '获取详情', 'GET', '/message/template/findById', '消息模板', b'1', b'1', '消息模板 获取详情', 1399985191002447872, '2022-06-09 14:03:19.194000', 1399985191002447872, '2022-06-09 14:03:19.194000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1534816201016037376, 'TestController#userNotice', '用户全局ws消息通知测试', 'GET', '/test/userNotice', '测试控制器', b'1', b'1', '测试控制器 用户全局ws消息通知测试', 1399985191002447872, '2022-06-09 16:34:32.485000', 1399985191002447872, '2022-06-09 16:34:32.486000', b'0', 0);
-INSERT INTO `iam_perm_path` VALUES (1535126126934061056, 'GlobalWebsocketDemoController#send', '发送消息', 'POST', '/demo/global/ws/send', '全局websocket通知demo', b'1', b'1', '全局websocket通知demo 发送消息', 1399985191002447872, '2022-06-10 13:06:04.582000', 1399985191002447872, '2022-06-10 13:06:04.582000', b'0', 0);
 
 -- ----------------------------
 -- Table structure for iam_role
@@ -1478,7 +1090,7 @@ DROP TABLE IF EXISTS `iam_role_menu`;
 CREATE TABLE `iam_role_menu`  (
   `id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL COMMENT '角色id',
-  `client_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '终端code',
+  `app_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用code',
   `permission_id` bigint(20) NOT NULL COMMENT '菜单权限id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色菜单权限表' ROW_FORMAT = DYNAMIC;
@@ -1486,210 +1098,6 @@ CREATE TABLE `iam_role_menu`  (
 -- ----------------------------
 -- Records of iam_role_menu
 -- ----------------------------
-INSERT INTO `iam_role_menu` VALUES (1533038290578358272, 1405414804771971072, 'admin', 1414596052497092608);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358273, 1405414804771971072, 'admin', 1414596773275652096);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358274, 1405414804771971072, 'admin', 1431083330909208576);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358275, 1405414804771971072, 'admin', 1452567897717321728);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358276, 1405414804771971072, 'admin', 1435143678721236992);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358277, 1405414804771971072, 'admin', 1435476255797624832);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358278, 1405414804771971072, 'admin', 1480839877352476672);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358279, 1405414804771971072, 'admin', 1452569339987472384);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358280, 1405414804771971072, 'admin', 1414596805538238464);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358281, 1405414804771971072, 'admin', 1431089129232498688);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358282, 1405414804771971072, 'admin', 1474694545336676352);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358283, 1405414804771971072, 'admin', 1452569691537256448);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358284, 1405414804771971072, 'admin', 1414596647509446656);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358285, 1405414804771971072, 'admin', 1414596842322284544);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358286, 1405414804771971072, 'admin', 1431082258161434624);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358287, 1405414804771971072, 'admin', 1450473063320526848);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358288, 1405414804771971072, 'admin', 1452571269199540224);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358289, 1405414804771971072, 'admin', 1414596877617352704);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358290, 1405414804771971072, 'admin', 1450803906215886848);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358291, 1405414804771971072, 'admin', 1452638905302966272);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358292, 1405414804771971072, 'admin', 1490984296616263680);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358293, 1405414804771971072, 'admin', 1495013564652429312);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358294, 1405414804771971072, 'admin', 1431152689832525824);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358295, 1405414804771971072, 'admin', 1431153358157348864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358296, 1405414804771971072, 'admin', 1438061887002759168);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358297, 1405414804771971072, 'admin', 1438072357281542144);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358298, 1405414804771971072, 'admin', 1439196893514031104);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358299, 1405414804771971072, 'admin', 1440216178722050048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358300, 1405414804771971072, 'admin', 1440216612211757056);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358301, 1405414804771971072, 'admin', 1450827660459458560);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358302, 1405414804771971072, 'admin', 1450819607680991232);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358303, 1405414804771971072, 'admin', 1450821723027881984);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358304, 1405414804771971072, 'admin', 1450821877831254016);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358305, 1405414804771971072, 'admin', 1450822511087271936);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358306, 1405414804771971072, 'admin', 1511266086400524288);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358307, 1405414804771971072, 'admin', 1450822842995130368);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358308, 1405414804771971072, 'admin', 1450825488577544192);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358309, 1405414804771971072, 'admin', 1501847310319972352);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358310, 1405414804771971072, 'admin', 1450823960236081152);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358311, 1405414804771971072, 'admin', 1450824117849636864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358312, 1405414804771971072, 'admin', 1450824319868289024);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358313, 1405414804771971072, 'admin', 1450824637876224000);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358314, 1405414804771971072, 'admin', 1450824875198332928);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358315, 1405414804771971072, 'admin', 1450825615857893376);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358316, 1405414804771971072, 'admin', 1450826890318135296);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358317, 1405414804771971072, 'admin', 1450827159626006528);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358318, 1405414804771971072, 'admin', 1450827308515409920);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358319, 1405414804771971072, 'admin', 1450825819436826624);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358320, 1405414804771971072, 'admin', 1501740492360962048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358321, 1405414804771971072, 'admin', 1501742229142556672);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358322, 1405414804771971072, 'admin', 1501742417378725888);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358323, 1405414804771971072, 'admin', 1502926397176242176);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358324, 1405414804771971072, 'admin', 1523860792695283712);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358325, 1405414804771971072, 'admin', 1523941932282114048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358326, 1405414804771971072, 'admin', 1523942130555252736);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358327, 1405414804771971072, 'admin', 1524044195818278912);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358328, 1405414804771971072, 'admin', 1524044395823665152);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358329, 1405414804771971072, 'admin', 1524044678314233856);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358330, 1405414804771971072, 'admin', 1525472571967860736);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358331, 1405414804771971072, 'admin', 1495968302034210816);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358332, 1405414804771971072, 'admin', 1495969099987963904);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358333, 1405414804771971072, 'admin', 1506910599819165696);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358334, 1405414804771971072, 'admin', 1506910885463851008);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358335, 1405414804771971072, 'admin', 1506911113394913280);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358336, 1405414804771971072, 'admin', 1496020308992143360);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358337, 1405414804771971072, 'admin', 1507998458886197248);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358338, 1405414804771971072, 'admin', 1509488473583562752);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358339, 1405414804771971072, 'admin', 1530120084482084864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358340, 1405414804771971072, 'admin', 1414596052497092608);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358341, 1405414804771971072, 'admin', 1414596773275652096);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358342, 1405414804771971072, 'admin', 1431083330909208576);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358343, 1405414804771971072, 'admin', 1452567897717321728);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358344, 1405414804771971072, 'admin', 1435143678721236992);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358345, 1405414804771971072, 'admin', 1435476255797624832);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358346, 1405414804771971072, 'admin', 1480839877352476672);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358347, 1405414804771971072, 'admin', 1452569339987472384);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358348, 1405414804771971072, 'admin', 1414596805538238464);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358349, 1405414804771971072, 'admin', 1431089129232498688);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358350, 1405414804771971072, 'admin', 1474694545336676352);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358351, 1405414804771971072, 'admin', 1452569691537256448);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358352, 1405414804771971072, 'admin', 1414596647509446656);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358353, 1405414804771971072, 'admin', 1414596842322284544);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358354, 1405414804771971072, 'admin', 1431082258161434624);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358355, 1405414804771971072, 'admin', 1450473063320526848);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358356, 1405414804771971072, 'admin', 1452571269199540224);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358357, 1405414804771971072, 'admin', 1414596877617352704);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358358, 1405414804771971072, 'admin', 1450803906215886848);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358359, 1405414804771971072, 'admin', 1452638905302966272);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358360, 1405414804771971072, 'admin', 1490984296616263680);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358361, 1405414804771971072, 'admin', 1495013564652429312);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358362, 1405414804771971072, 'admin', 1431152689832525824);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358363, 1405414804771971072, 'admin', 1431153358157348864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358364, 1405414804771971072, 'admin', 1438061887002759168);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358365, 1405414804771971072, 'admin', 1438072357281542144);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358366, 1405414804771971072, 'admin', 1439196893514031104);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358367, 1405414804771971072, 'admin', 1440216178722050048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358368, 1405414804771971072, 'admin', 1440216612211757056);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358369, 1405414804771971072, 'admin', 1450827660459458560);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358370, 1405414804771971072, 'admin', 1450819607680991232);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358371, 1405414804771971072, 'admin', 1450821723027881984);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358372, 1405414804771971072, 'admin', 1450821877831254016);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358373, 1405414804771971072, 'admin', 1450822511087271936);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358374, 1405414804771971072, 'admin', 1511266086400524288);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358375, 1405414804771971072, 'admin', 1450822842995130368);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358376, 1405414804771971072, 'admin', 1450825488577544192);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358377, 1405414804771971072, 'admin', 1501847310319972352);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358378, 1405414804771971072, 'admin', 1450823960236081152);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358379, 1405414804771971072, 'admin', 1450824117849636864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358380, 1405414804771971072, 'admin', 1450824319868289024);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358381, 1405414804771971072, 'admin', 1450824637876224000);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358382, 1405414804771971072, 'admin', 1450824875198332928);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358383, 1405414804771971072, 'admin', 1450825615857893376);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358384, 1405414804771971072, 'admin', 1450826890318135296);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358385, 1405414804771971072, 'admin', 1450827159626006528);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358386, 1405414804771971072, 'admin', 1450827308515409920);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358387, 1405414804771971072, 'admin', 1450825819436826624);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358388, 1405414804771971072, 'admin', 1501740492360962048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358389, 1405414804771971072, 'admin', 1501742229142556672);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358390, 1405414804771971072, 'admin', 1501742417378725888);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358391, 1405414804771971072, 'admin', 1502926397176242176);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358392, 1405414804771971072, 'admin', 1523860792695283712);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358393, 1405414804771971072, 'admin', 1523941932282114048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358394, 1405414804771971072, 'admin', 1523942130555252736);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358395, 1405414804771971072, 'admin', 1524044195818278912);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358396, 1405414804771971072, 'admin', 1524044395823665152);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358397, 1405414804771971072, 'admin', 1524044678314233856);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358398, 1405414804771971072, 'admin', 1525472571967860736);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358399, 1405414804771971072, 'admin', 1495968302034210816);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358400, 1405414804771971072, 'admin', 1495969099987963904);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358401, 1405414804771971072, 'admin', 1506910599819165696);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358402, 1405414804771971072, 'admin', 1506910885463851008);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358403, 1405414804771971072, 'admin', 1506911113394913280);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358404, 1405414804771971072, 'admin', 1496020308992143360);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358405, 1405414804771971072, 'admin', 1507998458886197248);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358406, 1405414804771971072, 'admin', 1509488473583562752);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358407, 1405414804771971072, 'admin', 1530120084482084864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358408, 1405414804771971072, 'admin', 1414596052497092608);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358409, 1405414804771971072, 'admin', 1414596773275652096);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358410, 1405414804771971072, 'admin', 1431083330909208576);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358411, 1405414804771971072, 'admin', 1452567897717321728);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358412, 1405414804771971072, 'admin', 1435143678721236992);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358413, 1405414804771971072, 'admin', 1435476255797624832);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358414, 1405414804771971072, 'admin', 1480839877352476672);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358415, 1405414804771971072, 'admin', 1452569339987472384);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358416, 1405414804771971072, 'admin', 1414596805538238464);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358417, 1405414804771971072, 'admin', 1431089129232498688);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358418, 1405414804771971072, 'admin', 1474694545336676352);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358419, 1405414804771971072, 'admin', 1452569691537256448);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358420, 1405414804771971072, 'admin', 1414596647509446656);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358421, 1405414804771971072, 'admin', 1414596842322284544);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358422, 1405414804771971072, 'admin', 1431082258161434624);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358423, 1405414804771971072, 'admin', 1450473063320526848);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358424, 1405414804771971072, 'admin', 1452571269199540224);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358425, 1405414804771971072, 'admin', 1414596877617352704);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358426, 1405414804771971072, 'admin', 1450803906215886848);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358427, 1405414804771971072, 'admin', 1452638905302966272);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358428, 1405414804771971072, 'admin', 1490984296616263680);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358429, 1405414804771971072, 'admin', 1495013564652429312);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358430, 1405414804771971072, 'admin', 1431152689832525824);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358431, 1405414804771971072, 'admin', 1431153358157348864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358432, 1405414804771971072, 'admin', 1438061887002759168);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358433, 1405414804771971072, 'admin', 1438072357281542144);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358434, 1405414804771971072, 'admin', 1439196893514031104);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358435, 1405414804771971072, 'admin', 1440216178722050048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358436, 1405414804771971072, 'admin', 1440216612211757056);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358437, 1405414804771971072, 'admin', 1450827660459458560);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358438, 1405414804771971072, 'admin', 1450819607680991232);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358439, 1405414804771971072, 'admin', 1450821723027881984);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358440, 1405414804771971072, 'admin', 1450821877831254016);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358441, 1405414804771971072, 'admin', 1450822511087271936);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358442, 1405414804771971072, 'admin', 1511266086400524288);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358443, 1405414804771971072, 'admin', 1450822842995130368);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358444, 1405414804771971072, 'admin', 1450825488577544192);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358445, 1405414804771971072, 'admin', 1501847310319972352);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358446, 1405414804771971072, 'admin', 1450823960236081152);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358447, 1405414804771971072, 'admin', 1450824117849636864);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358448, 1405414804771971072, 'admin', 1450824319868289024);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358449, 1405414804771971072, 'admin', 1450824637876224000);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358450, 1405414804771971072, 'admin', 1450824875198332928);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358451, 1405414804771971072, 'admin', 1450825615857893376);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358452, 1405414804771971072, 'admin', 1450826890318135296);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358453, 1405414804771971072, 'admin', 1450827159626006528);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358454, 1405414804771971072, 'admin', 1450827308515409920);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358455, 1405414804771971072, 'admin', 1450825819436826624);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358456, 1405414804771971072, 'admin', 1501740492360962048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358457, 1405414804771971072, 'admin', 1501742229142556672);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358458, 1405414804771971072, 'admin', 1501742417378725888);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358459, 1405414804771971072, 'admin', 1502926397176242176);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358460, 1405414804771971072, 'admin', 1523860792695283712);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358461, 1405414804771971072, 'admin', 1523941932282114048);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358462, 1405414804771971072, 'admin', 1523942130555252736);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358463, 1405414804771971072, 'admin', 1524044195818278912);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358464, 1405414804771971072, 'admin', 1524044395823665152);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358465, 1405414804771971072, 'admin', 1524044678314233856);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358466, 1405414804771971072, 'admin', 1525472571967860736);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358467, 1405414804771971072, 'admin', 1495968302034210816);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358468, 1405414804771971072, 'admin', 1495969099987963904);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358469, 1405414804771971072, 'admin', 1506910599819165696);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358470, 1405414804771971072, 'admin', 1506910885463851008);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358471, 1405414804771971072, 'admin', 1506911113394913280);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358472, 1405414804771971072, 'admin', 1496020308992143360);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358473, 1405414804771971072, 'admin', 1507998458886197248);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358474, 1405414804771971072, 'admin', 1509488473583562752);
-INSERT INTO `iam_role_menu` VALUES (1533038290578358475, 1405414804771971072, 'admin', 1530120084482084864);
 
 -- ----------------------------
 -- Table structure for iam_role_path
@@ -1705,390 +1113,11 @@ CREATE TABLE `iam_role_path`  (
 -- ----------------------------
 -- Records of iam_role_path
 -- ----------------------------
-INSERT INTO `iam_role_path` VALUES (1533038257611128832, 1405414804771971072, 1533037132564578304);
-INSERT INTO `iam_role_path` VALUES (1533038257611128833, 1405414804771971072, 1533037132682018817);
-INSERT INTO `iam_role_path` VALUES (1533038257611128834, 1405414804771971072, 1533037132874956802);
-INSERT INTO `iam_role_path` VALUES (1533038257611128835, 1405414804771971072, 1533037132921094144);
-INSERT INTO `iam_role_path` VALUES (1533038257611128836, 1405414804771971072, 1533037132963037185);
-INSERT INTO `iam_role_path` VALUES (1533038257611128837, 1405414804771971072, 1533037132967231489);
-INSERT INTO `iam_role_path` VALUES (1533038257611128838, 1405414804771971072, 1533037133080477699);
-INSERT INTO `iam_role_path` VALUES (1533038257611128839, 1405414804771971072, 1533037133147586561);
-INSERT INTO `iam_role_path` VALUES (1533038257611128840, 1405414804771971072, 1533037132585549824);
-INSERT INTO `iam_role_path` VALUES (1533038257611128841, 1405414804771971072, 1533037132937871361);
-INSERT INTO `iam_role_path` VALUES (1533038257611128842, 1405414804771971072, 1533037133160169473);
-INSERT INTO `iam_role_path` VALUES (1533038257611128843, 1405414804771971072, 1533037132593938432);
-INSERT INTO `iam_role_path` VALUES (1533038257611128844, 1405414804771971072, 1533037132648464384);
-INSERT INTO `iam_role_path` VALUES (1533038257611128845, 1405414804771971072, 1533037132665241601);
-INSERT INTO `iam_role_path` VALUES (1533038257611128846, 1405414804771971072, 1533037132870762496);
-INSERT INTO `iam_role_path` VALUES (1533038257611128847, 1405414804771971072, 1533037132925288450);
-INSERT INTO `iam_role_path` VALUES (1533038257611128848, 1405414804771971072, 1533037132937871362);
-INSERT INTO `iam_role_path` VALUES (1533038257611128849, 1405414804771971072, 1533037133130809344);
-INSERT INTO `iam_role_path` VALUES (1533038257611128850, 1405414804771971072, 1533037132598132736);
-INSERT INTO `iam_role_path` VALUES (1533038257611128851, 1405414804771971072, 1533037132686213121);
-INSERT INTO `iam_role_path` VALUES (1533038257611128852, 1405414804771971072, 1533037132707184642);
-INSERT INTO `iam_role_path` VALUES (1533038257611128853, 1405414804771971072, 1533037132900122626);
-INSERT INTO `iam_role_path` VALUES (1533038257611128854, 1405414804771971072, 1533037132946259968);
-INSERT INTO `iam_role_path` VALUES (1533038257611128855, 1405414804771971072, 1533037133030146050);
-INSERT INTO `iam_role_path` VALUES (1533038257611128856, 1405414804771971072, 1533037133046923266);
-INSERT INTO `iam_role_path` VALUES (1533038257611128857, 1405414804771971072, 1533037133072089090);
-INSERT INTO `iam_role_path` VALUES (1533038257611128858, 1405414804771971072, 1533037133151780865);
-INSERT INTO `iam_role_path` VALUES (1533038257611128859, 1405414804771971072, 1533037133151780867);
-INSERT INTO `iam_role_path` VALUES (1533038257611128860, 1405414804771971072, 1533037133155975168);
-INSERT INTO `iam_role_path` VALUES (1533038257611128861, 1405414804771971072, 1533037132602327040);
-INSERT INTO `iam_role_path` VALUES (1533038257611128862, 1405414804771971072, 1533037132774293504);
-INSERT INTO `iam_role_path` VALUES (1533038257611128863, 1405414804771971072, 1533037132845596672);
-INSERT INTO `iam_role_path` VALUES (1533038257611128864, 1405414804771971072, 1533037132862373890);
-INSERT INTO `iam_role_path` VALUES (1533038257611128865, 1405414804771971072, 1533037132866568193);
-INSERT INTO `iam_role_path` VALUES (1533038257611128866, 1405414804771971072, 1533037132925288448);
-INSERT INTO `iam_role_path` VALUES (1533038257611128867, 1405414804771971072, 1533037133055311873);
-INSERT INTO `iam_role_path` VALUES (1533038257611128868, 1405414804771971072, 1533037133143392257);
-INSERT INTO `iam_role_path` VALUES (1533038257611128869, 1405414804771971072, 1533037132606521344);
-INSERT INTO `iam_role_path` VALUES (1533038257611128870, 1405414804771971072, 1533037132799459330);
-INSERT INTO `iam_role_path` VALUES (1533038257611128871, 1405414804771971072, 1533037132895928321);
-INSERT INTO `iam_role_path` VALUES (1533038257611128872, 1405414804771971072, 1533037133013368832);
-INSERT INTO `iam_role_path` VALUES (1533038257611128873, 1405414804771971072, 1533037133122420739);
-INSERT INTO `iam_role_path` VALUES (1533038257611128874, 1405414804771971072, 1533037133160169474);
-INSERT INTO `iam_role_path` VALUES (1533038257611128875, 1405414804771971072, 1533037132610715648);
-INSERT INTO `iam_role_path` VALUES (1533038257611128876, 1405414804771971072, 1533037132614909953);
-INSERT INTO `iam_role_path` VALUES (1533038257611128877, 1405414804771971072, 1533037132669435906);
-INSERT INTO `iam_role_path` VALUES (1533038257611128878, 1405414804771971072, 1533037132753321984);
-INSERT INTO `iam_role_path` VALUES (1533038257611128879, 1405414804771971072, 1533037132900122625);
-INSERT INTO `iam_role_path` VALUES (1533038257611128880, 1405414804771971072, 1533037132975620098);
-INSERT INTO `iam_role_path` VALUES (1533038257611128881, 1405414804771971072, 1533037132614909952);
-INSERT INTO `iam_role_path` VALUES (1533038257611128882, 1405414804771971072, 1533037132728156161);
-INSERT INTO `iam_role_path` VALUES (1533038257611128883, 1405414804771971072, 1533037132858179584);
-INSERT INTO `iam_role_path` VALUES (1533038257611128884, 1405414804771971072, 1533037133076283393);
-INSERT INTO `iam_role_path` VALUES (1533038257611128885, 1405414804771971072, 1533037133088866305);
-INSERT INTO `iam_role_path` VALUES (1533038257611128886, 1405414804771971072, 1533037133097254912);
-INSERT INTO `iam_role_path` VALUES (1533038257611128887, 1405414804771971072, 1533037133097254914);
-INSERT INTO `iam_role_path` VALUES (1533038257611128888, 1405414804771971072, 1533037133101449216);
-INSERT INTO `iam_role_path` VALUES (1533038257611128889, 1405414804771971072, 1533037133118226435);
-INSERT INTO `iam_role_path` VALUES (1533038257611128890, 1405414804771971072, 1533037132619104256);
-INSERT INTO `iam_role_path` VALUES (1533038257611128891, 1405414804771971072, 1533037132623298560);
-INSERT INTO `iam_role_path` VALUES (1533038257611128892, 1405414804771971072, 1533037132661047296);
-INSERT INTO `iam_role_path` VALUES (1533038257611128893, 1405414804771971072, 1533037132661047297);
-INSERT INTO `iam_role_path` VALUES (1533038257611128894, 1405414804771971072, 1533037132719767552);
-INSERT INTO `iam_role_path` VALUES (1533038257611128895, 1405414804771971072, 1533037132807847938);
-INSERT INTO `iam_role_path` VALUES (1533038257611128896, 1405414804771971072, 1533037132820430849);
-INSERT INTO `iam_role_path` VALUES (1533038257611128897, 1405414804771971072, 1533037132845596673);
-INSERT INTO `iam_role_path` VALUES (1533038257611128898, 1405414804771971072, 1533037133042728962);
-INSERT INTO `iam_role_path` VALUES (1533038257611128899, 1405414804771971072, 1533037133046923264);
-INSERT INTO `iam_role_path` VALUES (1533038257611128900, 1405414804771971072, 1533037133063700482);
-INSERT INTO `iam_role_path` VALUES (1533038257611128901, 1405414804771971072, 1533037133067894787);
-INSERT INTO `iam_role_path` VALUES (1533038257611128902, 1405414804771971072, 1533037133114032129);
-INSERT INTO `iam_role_path` VALUES (1533038257611128903, 1405414804771971072, 1533037132623298561);
-INSERT INTO `iam_role_path` VALUES (1533038257611128904, 1405414804771971072, 1533037132837208064);
-INSERT INTO `iam_role_path` VALUES (1533038257611128905, 1405414804771971072, 1533037132958842882);
-INSERT INTO `iam_role_path` VALUES (1533038257611128906, 1405414804771971072, 1533037133063700480);
-INSERT INTO `iam_role_path` VALUES (1533038257611128907, 1405414804771971072, 1533037132627492864);
-INSERT INTO `iam_role_path` VALUES (1533038257611128908, 1405414804771971072, 1533037132644270080);
-INSERT INTO `iam_role_path` VALUES (1533038257611128909, 1405414804771971072, 1533037132812042240);
-INSERT INTO `iam_role_path` VALUES (1533038257611128910, 1405414804771971072, 1533037132824625152);
-INSERT INTO `iam_role_path` VALUES (1533038257611128911, 1405414804771971072, 1533037132916899843);
-INSERT INTO `iam_role_path` VALUES (1533038257611128912, 1405414804771971072, 1533037133000785921);
-INSERT INTO `iam_role_path` VALUES (1533038257611128913, 1405414804771971072, 1533037133034340352);
-INSERT INTO `iam_role_path` VALUES (1533038257611128914, 1405414804771971072, 1533037133076283394);
-INSERT INTO `iam_role_path` VALUES (1533038257611128915, 1405414804771971072, 1533037132627492865);
-INSERT INTO `iam_role_path` VALUES (1533038257611128916, 1405414804771971072, 1533037132669435904);
-INSERT INTO `iam_role_path` VALUES (1533038257611128917, 1405414804771971072, 1533037132711378945);
-INSERT INTO `iam_role_path` VALUES (1533038257611128918, 1405414804771971072, 1533037132774293505);
-INSERT INTO `iam_role_path` VALUES (1533038257611128919, 1405414804771971072, 1533037132833013760);
-INSERT INTO `iam_role_path` VALUES (1533038257611128920, 1405414804771971072, 1533037132853985281);
-INSERT INTO `iam_role_path` VALUES (1533038257611128921, 1405414804771971072, 1533037132870762498);
-INSERT INTO `iam_role_path` VALUES (1533038257611128922, 1405414804771971072, 1533037132883345410);
-INSERT INTO `iam_role_path` VALUES (1533038257611128923, 1405414804771971072, 1533037132929482752);
-INSERT INTO `iam_role_path` VALUES (1533038257611128924, 1405414804771971072, 1533037132950454274);
-INSERT INTO `iam_role_path` VALUES (1533038257611128925, 1405414804771971072, 1533037132996591617);
-INSERT INTO `iam_role_path` VALUES (1533038257611128926, 1405414804771971072, 1533037133025951745);
-INSERT INTO `iam_role_path` VALUES (1533038257611128927, 1405414804771971072, 1533037133093060608);
-INSERT INTO `iam_role_path` VALUES (1533038257611128928, 1405414804771971072, 1533037133109837825);
-INSERT INTO `iam_role_path` VALUES (1533038257611128929, 1405414804771971072, 1533037133109837826);
-INSERT INTO `iam_role_path` VALUES (1533038257611128930, 1405414804771971072, 1533037132631687168);
-INSERT INTO `iam_role_path` VALUES (1533038257611128931, 1405414804771971072, 1533037132673630208);
-INSERT INTO `iam_role_path` VALUES (1533038257611128932, 1405414804771971072, 1533037132795265025);
-INSERT INTO `iam_role_path` VALUES (1533038257611128933, 1405414804771971072, 1533037132828819457);
-INSERT INTO `iam_role_path` VALUES (1533038257611128934, 1405414804771971072, 1533037132950454272);
-INSERT INTO `iam_role_path` VALUES (1533038257611128935, 1405414804771971072, 1533037132967231491);
-INSERT INTO `iam_role_path` VALUES (1533038257611128936, 1405414804771971072, 1533037132988203010);
-INSERT INTO `iam_role_path` VALUES (1533038257611128937, 1405414804771971072, 1533037133147586563);
-INSERT INTO `iam_role_path` VALUES (1533038257611128938, 1405414804771971072, 1533037132631687169);
-INSERT INTO `iam_role_path` VALUES (1533038257611128939, 1405414804771971072, 1533037132686213120);
-INSERT INTO `iam_role_path` VALUES (1533038257611128940, 1405414804771971072, 1533037132937871360);
-INSERT INTO `iam_role_path` VALUES (1533038257611128941, 1405414804771971072, 1533037132946259970);
-INSERT INTO `iam_role_path` VALUES (1533038257611128942, 1405414804771971072, 1533037132954648578);
-INSERT INTO `iam_role_path` VALUES (1533038257611128943, 1405414804771971072, 1533037133009174528);
-INSERT INTO `iam_role_path` VALUES (1533038257611128944, 1405414804771971072, 1533037133093060610);
-INSERT INTO `iam_role_path` VALUES (1533038257611128945, 1405414804771971072, 1533037133109837824);
-INSERT INTO `iam_role_path` VALUES (1533038257611128946, 1405414804771971072, 1533037133135003648);
-INSERT INTO `iam_role_path` VALUES (1533038257611128947, 1405414804771971072, 1533037133155975171);
-INSERT INTO `iam_role_path` VALUES (1533038257611128948, 1405414804771971072, 1533037132640075776);
-INSERT INTO `iam_role_path` VALUES (1533038257611128949, 1405414804771971072, 1533037132665241600);
-INSERT INTO `iam_role_path` VALUES (1533038257611128950, 1405414804771971072, 1533037132669435905);
-INSERT INTO `iam_role_path` VALUES (1533038257611128951, 1405414804771971072, 1533037132698796032);
-INSERT INTO `iam_role_path` VALUES (1533038257611128952, 1405414804771971072, 1533037132807847937);
-INSERT INTO `iam_role_path` VALUES (1533038257611128953, 1405414804771971072, 1533037132895928322);
-INSERT INTO `iam_role_path` VALUES (1533038257611128954, 1405414804771971072, 1533037132908511235);
-INSERT INTO `iam_role_path` VALUES (1533038257611128955, 1405414804771971072, 1533037132996591616);
-INSERT INTO `iam_role_path` VALUES (1533038257611128956, 1405414804771971072, 1533037133025951744);
-INSERT INTO `iam_role_path` VALUES (1533038257611128957, 1405414804771971072, 1533037133097254915);
-INSERT INTO `iam_role_path` VALUES (1533038257611128958, 1405414804771971072, 1533037133135003651);
-INSERT INTO `iam_role_path` VALUES (1533038257611128959, 1405414804771971072, 1533037132640075777);
-INSERT INTO `iam_role_path` VALUES (1533038257611128960, 1405414804771971072, 1533037132786876417);
-INSERT INTO `iam_role_path` VALUES (1533038257611128961, 1405414804771971072, 1533037132799459328);
-INSERT INTO `iam_role_path` VALUES (1533038257611128962, 1405414804771971072, 1533037132803653633);
-INSERT INTO `iam_role_path` VALUES (1533038257611128963, 1405414804771971072, 1533037132849790976);
-INSERT INTO `iam_role_path` VALUES (1533038257611128964, 1405414804771971072, 1533037132908511232);
-INSERT INTO `iam_role_path` VALUES (1533038257611128965, 1405414804771971072, 1533037132916899842);
-INSERT INTO `iam_role_path` VALUES (1533038257611128966, 1405414804771971072, 1533037132929482753);
-INSERT INTO `iam_role_path` VALUES (1533038257611128967, 1405414804771971072, 1533037133013368834);
-INSERT INTO `iam_role_path` VALUES (1533038257611128968, 1405414804771971072, 1533037133151780866);
-INSERT INTO `iam_role_path` VALUES (1533038257611128969, 1405414804771971072, 1533037133164363777);
-INSERT INTO `iam_role_path` VALUES (1533038257611128970, 1405414804771971072, 1533037132656852992);
-INSERT INTO `iam_role_path` VALUES (1533038257611128971, 1405414804771971072, 1533037132711378944);
-INSERT INTO `iam_role_path` VALUES (1533038257611128972, 1405414804771971072, 1533037132761710594);
-INSERT INTO `iam_role_path` VALUES (1533038257611128973, 1405414804771971072, 1533037132916899840);
-INSERT INTO `iam_role_path` VALUES (1533038257611128974, 1405414804771971072, 1533037132963037186);
-INSERT INTO `iam_role_path` VALUES (1533038257611128975, 1405414804771971072, 1533037132975620096);
-INSERT INTO `iam_role_path` VALUES (1533038257611128976, 1405414804771971072, 1533037133034340354);
-INSERT INTO `iam_role_path` VALUES (1533038257611128977, 1405414804771971072, 1533037133080477698);
-INSERT INTO `iam_role_path` VALUES (1533038257611128978, 1405414804771971072, 1533037133084672002);
-INSERT INTO `iam_role_path` VALUES (1533038257611128979, 1405414804771971072, 1533037133122420737);
-INSERT INTO `iam_role_path` VALUES (1533038257611128980, 1405414804771971072, 1533037132661047298);
-INSERT INTO `iam_role_path` VALUES (1533038257611128981, 1405414804771971072, 1533037132707184641);
-INSERT INTO `iam_role_path` VALUES (1533038257611128982, 1405414804771971072, 1533037132791070720);
-INSERT INTO `iam_role_path` VALUES (1533038257611128983, 1405414804771971072, 1533037132942065664);
-INSERT INTO `iam_role_path` VALUES (1533038257611128984, 1405414804771971072, 1533037132942065666);
-INSERT INTO `iam_role_path` VALUES (1533038257611128985, 1405414804771971072, 1533037133000785920);
-INSERT INTO `iam_role_path` VALUES (1533038257611128986, 1405414804771971072, 1533037132673630209);
-INSERT INTO `iam_role_path` VALUES (1533038257611128987, 1405414804771971072, 1533037132803653632);
-INSERT INTO `iam_role_path` VALUES (1533038257611128988, 1405414804771971072, 1533037132820430850);
-INSERT INTO `iam_role_path` VALUES (1533038257611128989, 1405414804771971072, 1533037132958842880);
-INSERT INTO `iam_role_path` VALUES (1533038257611128990, 1405414804771971072, 1533037133038534657);
-INSERT INTO `iam_role_path` VALUES (1533038257611128991, 1405414804771971072, 1533037133101449219);
-INSERT INTO `iam_role_path` VALUES (1533038257611128992, 1405414804771971072, 1533037133122420738);
-INSERT INTO `iam_role_path` VALUES (1533038257611128993, 1405414804771971072, 1533037133130809346);
-INSERT INTO `iam_role_path` VALUES (1533038257611128994, 1405414804771971072, 1533037132677824512);
-INSERT INTO `iam_role_path` VALUES (1533038257611128995, 1405414804771971072, 1533037132694601729);
-INSERT INTO `iam_role_path` VALUES (1533038257611128996, 1405414804771971072, 1533037132740739072);
-INSERT INTO `iam_role_path` VALUES (1533038257611128997, 1405414804771971072, 1533037132866568192);
-INSERT INTO `iam_role_path` VALUES (1533038257611128998, 1405414804771971072, 1533037132971425793);
-INSERT INTO `iam_role_path` VALUES (1533038257611128999, 1405414804771971072, 1533037132971425794);
-INSERT INTO `iam_role_path` VALUES (1533038257611129000, 1405414804771971072, 1533037132992397312);
-INSERT INTO `iam_role_path` VALUES (1533038257611129001, 1405414804771971072, 1533037133000785923);
-INSERT INTO `iam_role_path` VALUES (1533038257611129002, 1405414804771971072, 1533037133080477696);
-INSERT INTO `iam_role_path` VALUES (1533038257611129003, 1405414804771971072, 1533037133105643520);
-INSERT INTO `iam_role_path` VALUES (1533038257611129004, 1405414804771971072, 1533037132677824513);
-INSERT INTO `iam_role_path` VALUES (1533038257611129005, 1405414804771971072, 1533037132682018816);
-INSERT INTO `iam_role_path` VALUES (1533038257611129006, 1405414804771971072, 1533037132925288449);
-INSERT INTO `iam_role_path` VALUES (1533038257611129007, 1405414804771971072, 1533037133004980226);
-INSERT INTO `iam_role_path` VALUES (1533038257611129008, 1405414804771971072, 1533037133160169476);
-INSERT INTO `iam_role_path` VALUES (1533038257611129009, 1405414804771971072, 1533037132682018818);
-INSERT INTO `iam_role_path` VALUES (1533038257611129010, 1405414804771971072, 1533037132753321986);
-INSERT INTO `iam_role_path` VALUES (1533038257611129011, 1405414804771971072, 1533037132778487808);
-INSERT INTO `iam_role_path` VALUES (1533038257611129012, 1405414804771971072, 1533037132791070721);
-INSERT INTO `iam_role_path` VALUES (1533038257611129013, 1405414804771971072, 1533037132870762497);
-INSERT INTO `iam_role_path` VALUES (1533038257611129014, 1405414804771971072, 1533037132887539712);
-INSERT INTO `iam_role_path` VALUES (1533038257611129015, 1405414804771971072, 1533037132979814402);
-INSERT INTO `iam_role_path` VALUES (1533038257611129016, 1405414804771971072, 1533037133101449217);
-INSERT INTO `iam_role_path` VALUES (1533038257611129017, 1405414804771971072, 1533037133143392256);
-INSERT INTO `iam_role_path` VALUES (1533038257611129018, 1405414804771971072, 1533037132690407424);
-INSERT INTO `iam_role_path` VALUES (1533038257611129019, 1405414804771971072, 1533037132698796033);
-INSERT INTO `iam_role_path` VALUES (1533038257611129020, 1405414804771971072, 1533037132765904897);
-INSERT INTO `iam_role_path` VALUES (1533038257611129021, 1405414804771971072, 1533037132820430848);
-INSERT INTO `iam_role_path` VALUES (1533038257611129022, 1405414804771971072, 1533037132841402370);
-INSERT INTO `iam_role_path` VALUES (1533038257611129023, 1405414804771971072, 1533037132921094146);
-INSERT INTO `iam_role_path` VALUES (1533038257611129024, 1405414804771971072, 1533037132971425792);
-INSERT INTO `iam_role_path` VALUES (1533038257611129025, 1405414804771971072, 1533037132988203009);
-INSERT INTO `iam_role_path` VALUES (1533038257611129026, 1405414804771971072, 1533037133004980224);
-INSERT INTO `iam_role_path` VALUES (1533038257611129027, 1405414804771971072, 1533037132690407425);
-INSERT INTO `iam_role_path` VALUES (1533038257611129028, 1405414804771971072, 1533037132770099202);
-INSERT INTO `iam_role_path` VALUES (1533038257611129029, 1405414804771971072, 1533037132795265024);
-INSERT INTO `iam_role_path` VALUES (1533038257611129030, 1405414804771971072, 1533037132908511233);
-INSERT INTO `iam_role_path` VALUES (1533038257611129031, 1405414804771971072, 1533037132929482754);
-INSERT INTO `iam_role_path` VALUES (1533038257611129032, 1405414804771971072, 1533037132690407426);
-INSERT INTO `iam_role_path` VALUES (1533038257611129033, 1405414804771971072, 1533037132996591618);
-INSERT INTO `iam_role_path` VALUES (1533038257611129034, 1405414804771971072, 1533037133126615041);
-INSERT INTO `iam_role_path` VALUES (1533038257611129035, 1405414804771971072, 1533037132694601728);
-INSERT INTO `iam_role_path` VALUES (1533038257611129036, 1405414804771971072, 1533037132841402369);
-INSERT INTO `iam_role_path` VALUES (1533038257611129037, 1405414804771971072, 1533037132891734019);
-INSERT INTO `iam_role_path` VALUES (1533038257611129038, 1405414804771971072, 1533037132702990336);
-INSERT INTO `iam_role_path` VALUES (1533038257611129039, 1405414804771971072, 1533037132984008706);
-INSERT INTO `iam_role_path` VALUES (1533038257611129040, 1405414804771971072, 1533037133067894785);
-INSERT INTO `iam_role_path` VALUES (1533038257611129041, 1405414804771971072, 1533037133101449218);
-INSERT INTO `iam_role_path` VALUES (1533038257611129042, 1405414804771971072, 1533037132702990337);
-INSERT INTO `iam_role_path` VALUES (1533038257611129043, 1405414804771971072, 1533037132732350464);
-INSERT INTO `iam_role_path` VALUES (1533038257611129044, 1405414804771971072, 1533037132749127680);
-INSERT INTO `iam_role_path` VALUES (1533038257611129045, 1405414804771971072, 1533037132786876416);
-INSERT INTO `iam_role_path` VALUES (1533038257611129046, 1405414804771971072, 1533037132984008704);
-INSERT INTO `iam_role_path` VALUES (1533038257611129047, 1405414804771971072, 1533037133130809345);
-INSERT INTO `iam_role_path` VALUES (1533038257611129048, 1405414804771971072, 1533037133143392258);
-INSERT INTO `iam_role_path` VALUES (1533038257611129049, 1405414804771971072, 1533037132707184640);
-INSERT INTO `iam_role_path` VALUES (1533038257611129050, 1405414804771971072, 1533037132723961856);
-INSERT INTO `iam_role_path` VALUES (1533038257611129051, 1405414804771971072, 1533037132753321985);
-INSERT INTO `iam_role_path` VALUES (1533038257611129052, 1405414804771971072, 1533037132837208065);
-INSERT INTO `iam_role_path` VALUES (1533038257611129053, 1405414804771971072, 1533037132874956803);
-INSERT INTO `iam_role_path` VALUES (1533038257611129054, 1405414804771971072, 1533037132904316929);
-INSERT INTO `iam_role_path` VALUES (1533038257611129055, 1405414804771971072, 1533037132958842881);
-INSERT INTO `iam_role_path` VALUES (1533038257611129056, 1405414804771971072, 1533037132992397315);
-INSERT INTO `iam_role_path` VALUES (1533038257611129057, 1405414804771971072, 1533037133042728960);
-INSERT INTO `iam_role_path` VALUES (1533038257611129058, 1405414804771971072, 1533037132723961857);
-INSERT INTO `iam_role_path` VALUES (1533038257611129059, 1405414804771971072, 1533037132744933376);
-INSERT INTO `iam_role_path` VALUES (1533038257611129060, 1405414804771971072, 1533037133017563137);
-INSERT INTO `iam_role_path` VALUES (1533038257611129061, 1405414804771971072, 1533037133030146048);
-INSERT INTO `iam_role_path` VALUES (1533038257611129062, 1405414804771971072, 1533037133051117568);
-INSERT INTO `iam_role_path` VALUES (1533038257611129063, 1405414804771971072, 1533037133088866306);
-INSERT INTO `iam_role_path` VALUES (1533038257611129064, 1405414804771971072, 1533037132728156160);
-INSERT INTO `iam_role_path` VALUES (1533038257611129065, 1405414804771971072, 1533037132891734016);
-INSERT INTO `iam_role_path` VALUES (1533038257611129066, 1405414804771971072, 1533037132912705536);
-INSERT INTO `iam_role_path` VALUES (1533038257611129067, 1405414804771971072, 1533037133009174530);
-INSERT INTO `iam_role_path` VALUES (1533038257611129068, 1405414804771971072, 1533037133067894784);
-INSERT INTO `iam_role_path` VALUES (1533038257611129069, 1405414804771971072, 1533037133097254913);
-INSERT INTO `iam_role_path` VALUES (1533038257611129070, 1405414804771971072, 1533037133160169475);
-INSERT INTO `iam_role_path` VALUES (1533038257611129071, 1405414804771971072, 1533037132732350465);
-INSERT INTO `iam_role_path` VALUES (1533038257611129072, 1405414804771971072, 1533037132933677057);
-INSERT INTO `iam_role_path` VALUES (1533038257611129073, 1405414804771971072, 1533037132732350466);
-INSERT INTO `iam_role_path` VALUES (1533038257611129074, 1405414804771971072, 1533037132942065665);
-INSERT INTO `iam_role_path` VALUES (1533038257611129075, 1405414804771971072, 1533037132954648576);
-INSERT INTO `iam_role_path` VALUES (1533038257611129076, 1405414804771971072, 1533037132736544768);
-INSERT INTO `iam_role_path` VALUES (1533038257611129077, 1405414804771971072, 1533037132874956801);
-INSERT INTO `iam_role_path` VALUES (1533038257611129078, 1405414804771971072, 1533037133030146049);
-INSERT INTO `iam_role_path` VALUES (1533038257611129079, 1405414804771971072, 1533037133051117569);
-INSERT INTO `iam_role_path` VALUES (1533038257611129080, 1405414804771971072, 1533037132736544769);
-INSERT INTO `iam_role_path` VALUES (1533038257611129081, 1405414804771971072, 1533037133042728961);
-INSERT INTO `iam_role_path` VALUES (1533038257611129082, 1405414804771971072, 1533037132740739073);
-INSERT INTO `iam_role_path` VALUES (1533038257611129083, 1405414804771971072, 1533037132833013762);
-INSERT INTO `iam_role_path` VALUES (1533038257611129084, 1405414804771971072, 1533037133168558080);
-INSERT INTO `iam_role_path` VALUES (1533038257611129085, 1405414804771971072, 1533037132740739074);
-INSERT INTO `iam_role_path` VALUES (1533038257611129086, 1405414804771971072, 1533037132778487809);
-INSERT INTO `iam_role_path` VALUES (1533038257611129087, 1405414804771971072, 1533037132900122624);
-INSERT INTO `iam_role_path` VALUES (1533038257611129088, 1405414804771971072, 1533037132975620097);
-INSERT INTO `iam_role_path` VALUES (1533038257611129089, 1405414804771971072, 1533037132979814401);
-INSERT INTO `iam_role_path` VALUES (1533038257611129090, 1405414804771971072, 1533037133055311872);
-INSERT INTO `iam_role_path` VALUES (1533038257611129091, 1405414804771971072, 1533037133114032130);
-INSERT INTO `iam_role_path` VALUES (1533038257611129092, 1405414804771971072, 1533037132744933377);
-INSERT INTO `iam_role_path` VALUES (1533038257611129093, 1405414804771971072, 1533037132749127681);
-INSERT INTO `iam_role_path` VALUES (1533038257611129094, 1405414804771971072, 1533037132858179585);
-INSERT INTO `iam_role_path` VALUES (1533038257611129095, 1405414804771971072, 1533037132887539714);
-INSERT INTO `iam_role_path` VALUES (1533038257611129096, 1405414804771971072, 1533037132912705537);
-INSERT INTO `iam_role_path` VALUES (1533038257611129097, 1405414804771971072, 1533037132988203008);
-INSERT INTO `iam_role_path` VALUES (1533038257611129098, 1405414804771971072, 1533037133021757442);
-INSERT INTO `iam_role_path` VALUES (1533038257611129099, 1405414804771971072, 1533037133072089089);
-INSERT INTO `iam_role_path` VALUES (1533038257611129100, 1405414804771971072, 1533037133118226433);
-INSERT INTO `iam_role_path` VALUES (1533038257611129101, 1405414804771971072, 1533037132757516288);
-INSERT INTO `iam_role_path` VALUES (1533038257611129102, 1405414804771971072, 1533037132879151105);
-INSERT INTO `iam_role_path` VALUES (1533038257611129103, 1405414804771971072, 1533037132904316928);
-INSERT INTO `iam_role_path` VALUES (1533038257611129104, 1405414804771971072, 1533037132904316930);
-INSERT INTO `iam_role_path` VALUES (1533038257611129105, 1405414804771971072, 1533037133059506178);
-INSERT INTO `iam_role_path` VALUES (1533038257611129106, 1405414804771971072, 1533037133164363776);
-INSERT INTO `iam_role_path` VALUES (1533038257611129107, 1405414804771971072, 1533037132757516289);
-INSERT INTO `iam_role_path` VALUES (1533038257611129108, 1405414804771971072, 1533037133076283395);
-INSERT INTO `iam_role_path` VALUES (1533038257611129109, 1405414804771971072, 1533037133088866304);
-INSERT INTO `iam_role_path` VALUES (1533038257611129110, 1405414804771971072, 1533037133139197952);
-INSERT INTO `iam_role_path` VALUES (1533038257611129111, 1405414804771971072, 1533037132761710592);
-INSERT INTO `iam_role_path` VALUES (1533038257611129112, 1405414804771971072, 1533037132933677056);
-INSERT INTO `iam_role_path` VALUES (1533038257611129113, 1405414804771971072, 1533037132946259969);
-INSERT INTO `iam_role_path` VALUES (1533038257611129114, 1405414804771971072, 1533037132761710593);
-INSERT INTO `iam_role_path` VALUES (1533038257611129115, 1405414804771971072, 1533037132879151106);
-INSERT INTO `iam_role_path` VALUES (1533038257611129116, 1405414804771971072, 1533037133021757440);
-INSERT INTO `iam_role_path` VALUES (1533038257611129117, 1405414804771971072, 1533037133025951746);
-INSERT INTO `iam_role_path` VALUES (1533038257611129118, 1405414804771971072, 1533037132765904896);
-INSERT INTO `iam_role_path` VALUES (1533038257611129119, 1405414804771971072, 1533037133038534656);
-INSERT INTO `iam_role_path` VALUES (1533038257611129120, 1405414804771971072, 1533037132770099200);
-INSERT INTO `iam_role_path` VALUES (1533038257611129121, 1405414804771971072, 1533037133063700481);
-INSERT INTO `iam_role_path` VALUES (1533038257611129122, 1405414804771971072, 1533037133084672001);
-INSERT INTO `iam_role_path` VALUES (1533038257611129123, 1405414804771971072, 1533037133122420736);
-INSERT INTO `iam_role_path` VALUES (1533038257611129124, 1405414804771971072, 1533037133147586562);
-INSERT INTO `iam_role_path` VALUES (1533038257611129125, 1405414804771971072, 1533037132770099201);
-INSERT INTO `iam_role_path` VALUES (1533038257611129126, 1405414804771971072, 1533037132816236544);
-INSERT INTO `iam_role_path` VALUES (1533038257611129127, 1405414804771971072, 1533037132900122627);
-INSERT INTO `iam_role_path` VALUES (1533038257611129128, 1405414804771971072, 1533037133055311874);
-INSERT INTO `iam_role_path` VALUES (1533038257611129129, 1405414804771971072, 1533037133059506177);
-INSERT INTO `iam_role_path` VALUES (1533038257611129130, 1405414804771971072, 1533037132778487810);
-INSERT INTO `iam_role_path` VALUES (1533038257611129131, 1405414804771971072, 1533037132812042241);
-INSERT INTO `iam_role_path` VALUES (1533038257611129132, 1405414804771971072, 1533037132824625153);
-INSERT INTO `iam_role_path` VALUES (1533038257611129133, 1405414804771971072, 1533037132954648577);
-INSERT INTO `iam_role_path` VALUES (1533038257611129134, 1405414804771971072, 1533037133147586560);
-INSERT INTO `iam_role_path` VALUES (1533038257611129135, 1405414804771971072, 1533037133164363778);
-INSERT INTO `iam_role_path` VALUES (1533038257611129136, 1405414804771971072, 1533037132799459329);
-INSERT INTO `iam_role_path` VALUES (1533038257611129137, 1405414804771971072, 1533037132887539713);
-INSERT INTO `iam_role_path` VALUES (1533038257611129138, 1405414804771971072, 1533037133114032128);
-INSERT INTO `iam_role_path` VALUES (1533038257611129139, 1405414804771971072, 1533037132807847936);
-INSERT INTO `iam_role_path` VALUES (1533038257611129140, 1405414804771971072, 1533037133009174529);
-INSERT INTO `iam_role_path` VALUES (1533038257611129141, 1405414804771971072, 1533037133009174531);
-INSERT INTO `iam_role_path` VALUES (1533038257611129142, 1405414804771971072, 1533037133051117570);
-INSERT INTO `iam_role_path` VALUES (1533038257611129143, 1405414804771971072, 1533037133155975169);
-INSERT INTO `iam_role_path` VALUES (1533038257611129144, 1405414804771971072, 1533037132812042242);
-INSERT INTO `iam_role_path` VALUES (1533038257611129145, 1405414804771971072, 1533037133072089088);
-INSERT INTO `iam_role_path` VALUES (1533038257611129146, 1405414804771971072, 1533037133139197954);
-INSERT INTO `iam_role_path` VALUES (1533038257611129147, 1405414804771971072, 1533037132816236545);
-INSERT INTO `iam_role_path` VALUES (1533038257611129148, 1405414804771971072, 1533037133139197953);
-INSERT INTO `iam_role_path` VALUES (1533038257611129149, 1405414804771971072, 1533037132824625154);
-INSERT INTO `iam_role_path` VALUES (1533038257611129150, 1405414804771971072, 1533037132862373888);
-INSERT INTO `iam_role_path` VALUES (1533038257611129151, 1405414804771971072, 1533037132883345408);
-INSERT INTO `iam_role_path` VALUES (1533038257611129152, 1405414804771971072, 1533037132992397313);
-INSERT INTO `iam_role_path` VALUES (1533038257611129153, 1405414804771971072, 1533037133013368833);
-INSERT INTO `iam_role_path` VALUES (1533038257611129154, 1405414804771971072, 1533037133034340355);
-INSERT INTO `iam_role_path` VALUES (1533038257611129155, 1405414804771971072, 1533037132828819456);
-INSERT INTO `iam_role_path` VALUES (1533038257611129156, 1405414804771971072, 1533037132933677058);
-INSERT INTO `iam_role_path` VALUES (1533038257611129157, 1405414804771971072, 1533037133135003650);
-INSERT INTO `iam_role_path` VALUES (1533038257611129158, 1405414804771971072, 1533037132828819458);
-INSERT INTO `iam_role_path` VALUES (1533038257611129159, 1405414804771971072, 1533037133076283392);
-INSERT INTO `iam_role_path` VALUES (1533038257611129160, 1405414804771971072, 1533037132833013761);
-INSERT INTO `iam_role_path` VALUES (1533038257611129161, 1405414804771971072, 1533037133004980225);
-INSERT INTO `iam_role_path` VALUES (1533038257611129162, 1405414804771971072, 1533037132841402368);
-INSERT INTO `iam_role_path` VALUES (1533038257611129163, 1405414804771971072, 1533037132853985280);
-INSERT INTO `iam_role_path` VALUES (1533038257611129164, 1405414804771971072, 1533037132963037184);
-INSERT INTO `iam_role_path` VALUES (1533038257611129165, 1405414804771971072, 1533037133080477697);
-INSERT INTO `iam_role_path` VALUES (1533038257611129166, 1405414804771971072, 1533037133084672000);
-INSERT INTO `iam_role_path` VALUES (1533038257611129167, 1405414804771971072, 1533037133118226432);
-INSERT INTO `iam_role_path` VALUES (1533038257611129168, 1405414804771971072, 1533037133126615040);
-INSERT INTO `iam_role_path` VALUES (1533038257611129169, 1405414804771971072, 1533037133126615042);
-INSERT INTO `iam_role_path` VALUES (1533038257611129170, 1405414804771971072, 1533037132862373889);
-INSERT INTO `iam_role_path` VALUES (1533038257611129171, 1405414804771971072, 1533037132874956800);
-INSERT INTO `iam_role_path` VALUES (1533038257611129172, 1405414804771971072, 1533037132967231488);
-INSERT INTO `iam_role_path` VALUES (1533038257611129173, 1405414804771971072, 1533037132879151104);
-INSERT INTO `iam_role_path` VALUES (1533038257611129174, 1405414804771971072, 1533037133059506176);
-INSERT INTO `iam_role_path` VALUES (1533038257611129175, 1405414804771971072, 1533037132883345409);
-INSERT INTO `iam_role_path` VALUES (1533038257611129176, 1405414804771971072, 1533037133093060609);
-INSERT INTO `iam_role_path` VALUES (1533038257611129177, 1405414804771971072, 1533037133151780864);
-INSERT INTO `iam_role_path` VALUES (1533038257611129178, 1405414804771971072, 1533037132883345411);
-INSERT INTO `iam_role_path` VALUES (1533038257611129179, 1405414804771971072, 1533037132921094145);
-INSERT INTO `iam_role_path` VALUES (1533038257611129180, 1405414804771971072, 1533037132992397314);
-INSERT INTO `iam_role_path` VALUES (1533038257611129181, 1405414804771971072, 1533037133055311875);
-INSERT INTO `iam_role_path` VALUES (1533038257611129182, 1405414804771971072, 1533037133109837827);
-INSERT INTO `iam_role_path` VALUES (1533038257611129183, 1405414804771971072, 1533037133168558081);
-INSERT INTO `iam_role_path` VALUES (1533038257611129184, 1405414804771971072, 1533037132891734017);
-INSERT INTO `iam_role_path` VALUES (1533038257611129185, 1405414804771971072, 1533037133034340353);
-INSERT INTO `iam_role_path` VALUES (1533038257611129186, 1405414804771971072, 1533037132891734018);
-INSERT INTO `iam_role_path` VALUES (1533038257611129187, 1405414804771971072, 1533037132979814400);
-INSERT INTO `iam_role_path` VALUES (1533038257611129188, 1405414804771971072, 1533037132979814403);
-INSERT INTO `iam_role_path` VALUES (1533038257611129189, 1405414804771971072, 1533037133072089091);
-INSERT INTO `iam_role_path` VALUES (1533038257611129190, 1405414804771971072, 1533037133088866307);
-INSERT INTO `iam_role_path` VALUES (1533038257611129191, 1405414804771971072, 1533037133160169472);
-INSERT INTO `iam_role_path` VALUES (1533038257611129192, 1405414804771971072, 1533037133164363779);
-INSERT INTO `iam_role_path` VALUES (1533038257611129193, 1405414804771971072, 1533037132895928320);
-INSERT INTO `iam_role_path` VALUES (1533038257611129194, 1405414804771971072, 1533037133093060611);
-INSERT INTO `iam_role_path` VALUES (1533038257611129195, 1405414804771971072, 1533037132908511234);
-INSERT INTO `iam_role_path` VALUES (1533038257611129196, 1405414804771971072, 1533037132916899841);
-INSERT INTO `iam_role_path` VALUES (1533038257611129197, 1405414804771971072, 1533037133017563136);
-INSERT INTO `iam_role_path` VALUES (1533038257611129198, 1405414804771971072, 1533037132950454273);
-INSERT INTO `iam_role_path` VALUES (1533038257611129199, 1405414804771971072, 1533037133118226434);
-INSERT INTO `iam_role_path` VALUES (1533038257611129200, 1405414804771971072, 1533037132950454275);
-INSERT INTO `iam_role_path` VALUES (1533038257611129201, 1405414804771971072, 1533037133155975170);
-INSERT INTO `iam_role_path` VALUES (1533038257611129202, 1405414804771971072, 1533037132967231490);
-INSERT INTO `iam_role_path` VALUES (1533038257611129203, 1405414804771971072, 1533037133000785922);
-INSERT INTO `iam_role_path` VALUES (1533038257611129204, 1405414804771971072, 1533037133155975172);
-INSERT INTO `iam_role_path` VALUES (1533038257611129205, 1405414804771971072, 1533037132984008705);
-INSERT INTO `iam_role_path` VALUES (1533038257611129206, 1405414804771971072, 1533037133046923265);
-INSERT INTO `iam_role_path` VALUES (1533038257611129207, 1405414804771971072, 1533037133021757441);
-INSERT INTO `iam_role_path` VALUES (1533038257611129208, 1405414804771971072, 1533037133067894786);
-INSERT INTO `iam_role_path` VALUES (1533038257611129209, 1405414804771971072, 1533037133030146051);
-INSERT INTO `iam_role_path` VALUES (1533038257611129210, 1405414804771971072, 1533037133135003649);
 
 -- ----------------------------
 -- Table structure for iam_user_data_scope
 -- ----------------------------
-DROP TABLE IF EXISTS `iam_user_data_scope`;
+DROP TABLE IF EXISTS `iam_user_data_scope`;``
 CREATE TABLE `iam_user_data_scope`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
@@ -2151,9 +1180,9 @@ CREATE TABLE `iam_user_expand_info`  (
 -- ----------------------------
 -- Records of iam_user_expand_info
 -- ----------------------------
-INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-06-22 00:27:07', '2022-06-22 00:51:30', b'0', '2022-06-19 21:25:00', 1, '2021-06-02 15:04:15', 0, '2022-06-22 00:51:30', 180, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-07-02 16:26:31', '2022-07-02 17:21:14', b'0', '2022-06-19 21:25:00', 1, '2021-06-02 15:04:15', 0, '2022-07-02 17:21:14', 253, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, NULL, '1530065639127871488', NULL, '2022-05-27 13:56:02', b'0', NULL, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-05-27 13:57:32', 2, 0);
-INSERT INTO `iam_user_expand_info` VALUES (1435894470432456704, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2021-09-09 17:14:54', 1399985191002447872, '2021-09-09 17:14:54', 0, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1435894470432456704, 1, NULL, NULL, NULL, NULL, b'0', '2022-06-29 00:39:23', 1399985191002447872, '2021-09-09 17:14:54', 0, '2022-06-29 00:39:23', 2, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435967884114194432, 1, NULL, NULL, NULL, '2022-05-31 15:59:42', b'0', NULL, 1414143554414059520, '2021-09-09 22:06:37', 0, '2022-05-31 15:59:42', 1, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1477990832987361280, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2022-01-03 21:10:49', 1399985191002447872, '2022-01-03 21:10:49', 0, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1477997391729631232, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2022-01-03 21:36:53', 1399985191002447872, '2022-01-03 21:36:53', 0, 0);
@@ -2170,7 +1199,7 @@ CREATE TABLE `iam_user_info`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码',
   `phone` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '手机号',
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `client_ids` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '关联终端ids',
+  `app_ids` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '关联应用ds',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
   `source` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '注册来源',
   `admin` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否超级管理员',
@@ -2188,9 +1217,9 @@ CREATE TABLE `iam_user_info`  (
 -- ----------------------------
 -- Records of iam_user_info
 -- ----------------------------
-INSERT INTO `iam_user_info` VALUES (1399985191002447872, '小小明', 'xxm', 'f52020dca765fd3943ed40a615dc2c5c', '13300000000', 'xxm1995@outlook.com', '', NULL, NULL, b'1', '2021-06-02 15:04:12', 1, 1, '2021-06-02 15:04:15', 1399985191002447872, '2022-05-18 17:16:57', 47, 0);
+INSERT INTO `iam_user_info` VALUES (1399985191002447872, '小小明', 'xxm', 'f52020dca765fd3943ed40a615dc2c5c', '13333333333', 'xxm1995@outlook.com', '1430430071299207168,1430430071299207169', NULL, NULL, b'1', '2021-06-02 15:04:12', 1, 1, '2021-06-02 15:04:15', 1399985191002447872, '2022-06-27 23:09:31', 50, 0);
 INSERT INTO `iam_user_info` VALUES (1414143554414059520, '小小明1995', 'xxm1995', 'f52020dca765fd3943ed40a615dc2c5c', '13000000000', 'xxm1995@foxmail.com', NULL, NULL, NULL, b'1', '2021-07-11 16:44:31', 1, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-05-27 13:57:33', 3, 0);
-INSERT INTO `iam_user_info` VALUES (1435894470432456704, '管理员', 'admin', 'f52020dca765fd3943ed40a615dc2c5c', '13000001111', 'admin@qq.com', '1430430071299207168', '', NULL, b'0', '2021-09-09 17:14:52', 1, 1399985191002447872, '2021-09-09 17:14:54', 1399985191002447872, '2022-06-05 20:26:45', 4, 0);
+INSERT INTO `iam_user_info` VALUES (1435894470432456704, '管理员', 'admin', 'c80a93d89e6590e8909a1a9f842b1615', '13000001111', 'admin@qq.com', '1430430071299207168', '', NULL, b'0', '2021-09-09 17:14:52', 1, 1399985191002447872, '2021-09-09 17:14:54', 0, '2022-06-29 00:39:23', 6, 0);
 INSERT INTO `iam_user_info` VALUES (1435967884114194432, '测试', 'test', 'f52020dca765fd3943ed40a615dc2c5c', '13311111111', 'test@qq.com', '1430430071299207168', '', NULL, b'0', '2021-09-09 22:06:37', 1, 1414143554414059520, '2021-09-09 22:06:37', 1399985191002447872, '2022-05-31 15:59:37', 9, 0);
 INSERT INTO `iam_user_info` VALUES (1477990832987361280, '测试用户001', 'test001', 'f52020dca765fd3943ed40a615dc2c5c', '', '', '1430430071299207168', '', NULL, b'0', '2022-01-03 21:10:49', 1, 1399985191002447872, '2022-01-03 21:10:49', 1399985191002447872, '2022-06-05 20:26:26', 1, 0);
 INSERT INTO `iam_user_info` VALUES (1477997391729631232, '测试用户002', 'test002', 'f52020dca765fd3943ed40a615dc2c5c', '', '', '1430430071299207168', '', NULL, b'0', '2022-01-03 21:36:53', 1, 1399985191002447872, '2022-01-03 21:36:53', 1399985191002447872, '2022-06-05 20:26:19', 1, 0);
@@ -2231,11 +1260,38 @@ CREATE TABLE `iam_user_social`  (
   `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
   `version` int(11) NOT NULL COMMENT '版本',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户三方登录' ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pk_user_index`(`user_id`) USING BTREE COMMENT '用户id索引'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户三方登录绑定' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of iam_user_social
+-- ----------------------------
+INSERT INTO `iam_user_social` VALUES (1399985191002447872, 1399985191002447872, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2022-06-29 18:44:34', 1399985191002447872, '2022-07-02 14:50:16', 4, 0);
+
+-- ----------------------------
+-- Table structure for iam_user_social_info
+-- ----------------------------
+DROP TABLE IF EXISTS `iam_user_social_info`;
+CREATE TABLE `iam_user_social_info`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `user_id` bigint(20) NOT NULL COMMENT '用户id',
+  `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '第三方终端类型',
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户名',
+  `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户昵称',
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户头像',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '版本',
+  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `pk_user_client`(`user_id`, `client_code`) USING BTREE COMMENT '用户id和终端code'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户三方登录绑定详情' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of iam_user_social_info
 -- ----------------------------
 
 -- ----------------------------
@@ -3566,7 +2622,7 @@ CREATE TABLE `starter_file_upload_info`  (
   `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件名称',
   `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件类型',
   `file_suffix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件后缀',
-  `file_size` double(8, 0) NULL DEFAULT NULL COMMENT '文件大小',
+  `file_size` bigint(20) NULL DEFAULT NULL COMMENT '文件大小',
   `external_storage_id` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '外部关联id',
   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
