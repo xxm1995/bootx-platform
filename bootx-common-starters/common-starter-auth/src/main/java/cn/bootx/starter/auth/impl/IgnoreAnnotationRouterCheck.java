@@ -2,16 +2,17 @@ package cn.bootx.starter.auth.impl;
 
 import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.starter.auth.authentication.RouterCheck;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 
 import java.util.Objects;
 
-/**   
-* 注解方式过滤
-* @author xxm  
-* @date 2021/12/21 
-*/
+/**
+ * 注解方式过滤
+ * @author xxm
+ * @date 2021/12/21
+ */
 @Component
 public class IgnoreAnnotationRouterCheck implements RouterCheck {
 
@@ -32,11 +33,29 @@ public class IgnoreAnnotationRouterCheck implements RouterCheck {
             } else {
                 // controller和方法上都加了跳过鉴权注解,以方法上为准
                 IgnoreAuth annotation = handlerMethod.getMethodAnnotation(IgnoreAuth.class);
-                if (Objects.nonNull(annotation) ){
-                    return ignoreAuth.ignore();
+                if (Objects.nonNull(annotation)){
+                    ignoreAuth = annotation;
                 }
             }
-            return Objects.nonNull(ignoreAuth) && ignoreAuth.ignore();
+            return this.ignoreAuth(ignoreAuth);
+        }
+        return false;
+    }
+
+    /**
+     * 忽略鉴权注解处理
+     */
+    private boolean ignoreAuth(IgnoreAuth ignoreAuth){
+        if (Objects.isNull(ignoreAuth)){
+            return false;
+        }
+        // 忽略鉴权
+        if (ignoreAuth.ignore()){
+            return true;
+        }
+        // 只校验登录状态
+        if (ignoreAuth.login()){
+            return SecurityUtil.getCurrentUser().isPresent();
         }
         return false;
     }

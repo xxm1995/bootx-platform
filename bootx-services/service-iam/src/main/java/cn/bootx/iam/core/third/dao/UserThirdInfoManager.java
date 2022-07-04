@@ -1,11 +1,11 @@
-package cn.bootx.iam.core.social.dao;
+package cn.bootx.iam.core.third.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.iam.core.social.entity.UserSocialInfo;
-import cn.bootx.iam.param.user.UserSocialInfoParam;
+import cn.bootx.iam.core.third.entity.UserThirdInfo;
+import cn.bootx.iam.param.user.UserThirdInfoParam;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -20,30 +20,30 @@ import java.util.Optional;
  */
 @Repository
 @RequiredArgsConstructor
-public class UserSocialInfoManager extends BaseManager<UserSocialInfoMapper, UserSocialInfo> {
+public class UserThirdInfoManager extends BaseManager<UserThirdInfoMapper, UserThirdInfo> {
 
     /**
     * 分页
     */
-    public Page<UserSocialInfo> page(PageParam pageParam, UserSocialInfoParam param) {
-        Page<UserSocialInfo> mpPage = MpUtil.getMpPage(pageParam, UserSocialInfo.class);
+    public Page<UserThirdInfo> page(PageParam pageParam, UserThirdInfoParam param) {
+        Page<UserThirdInfo> mpPage = MpUtil.getMpPage(pageParam, UserThirdInfo.class);
         return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
     }
 
     /**
      * 根据用户id查询
      */
-    public List<UserSocialInfo> findAllByUser(Long userId){
-        return this.findAllByField(UserSocialInfo::getUserId,userId);
+    public List<UserThirdInfo> findAllByUser(Long userId){
+        return this.findAllByField(UserThirdInfo::getUserId,userId);
     }
 
     /**
      * 根据用户id和终端Code查询
      */
-    public Optional<UserSocialInfo> findByUserAndClientCode(Long userId,String clientCode){
+    public Optional<UserThirdInfo> findByUserAndClientCode(Long userId, String clientCode){
         return lambdaQuery()
-                .eq(UserSocialInfo::getUserId,userId)
-                .eq(UserSocialInfo::getClientCode,clientCode)
+                .eq(UserThirdInfo::getUserId,userId)
+                .eq(UserThirdInfo::getClientCode,clientCode)
                 .oneOpt();
     }
     /**
@@ -51,8 +51,8 @@ public class UserSocialInfoManager extends BaseManager<UserSocialInfoMapper, Use
      */
     public void deleteByUserAndClientCode(Long userId,String clientCode){
         lambdaUpdate()
-                .eq(UserSocialInfo::getUserId,userId)
-                .eq(UserSocialInfo::getClientCode,clientCode)
+                .eq(UserThirdInfo::getUserId,userId)
+                .eq(UserThirdInfo::getClientCode,clientCode)
                 .remove();
     }
 

@@ -1,8 +1,8 @@
 package cn.bootx.iam.core.auth.login;
 
 import cn.bootx.iam.code.OpenIdLoginType;
-import cn.bootx.iam.core.social.dao.UserSocialManager;
-import cn.bootx.iam.core.social.entity.UserSocial;
+import cn.bootx.iam.core.third.dao.UserThirdManager;
+import cn.bootx.iam.core.third.entity.UserThird;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
@@ -35,7 +35,7 @@ import static cn.bootx.iam.code.OpenIdLoginType.*;
 @Service
 @RequiredArgsConstructor
 public class WeComLoginHandler implements OpenIdAuthentication {
-    private final UserSocialManager userSocialManager;
+    private final UserThirdManager userThirdManager;
     private final UserInfoManager userInfoManager;
     private final AuthProperties authProperties;
 
@@ -52,11 +52,11 @@ public class WeComLoginHandler implements OpenIdAuthentication {
         AuthUser authUser = this.getAuthUser(authCode, state);
 
         // 获取企微关联的用户id
-        UserSocial userSocial = userSocialManager.findByField(UserSocial::getWeComId,authUser.getUuid())
+        UserThird userThird = userThirdManager.findByField(UserThird::getWeComId,authUser.getUuid())
                 .orElseThrow(() -> new LoginFailureException("企业微信没有找到绑定的用户"));
 
         // 获取用户信息
-        UserInfo userInfo = userInfoManager.findById(userSocial.getUserId())
+        UserInfo userInfo = userInfoManager.findById(userThird.getUserId())
                 .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult()

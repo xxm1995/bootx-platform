@@ -6,11 +6,11 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ValidationUtil;
-import cn.bootx.iam.core.social.service.UserSocialBindService;
-import cn.bootx.iam.core.social.service.UserSocialQueryService;
-import cn.bootx.iam.dto.user.UserSocialBindInfo;
-import cn.bootx.iam.dto.user.UserSocialDto;
-import cn.bootx.iam.param.user.UserBindSocialParam;
+import cn.bootx.iam.core.third.service.UserThirdBindService;
+import cn.bootx.iam.core.third.service.UserThirdQueryService;
+import cn.bootx.iam.dto.user.UserThirdBindInfo;
+import cn.bootx.iam.dto.user.UserThirdDto;
+import cn.bootx.iam.param.user.UserBindThirdParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -27,37 +27,37 @@ import javax.validation.constraints.NotBlank;
 @Validated
 @Tag(name ="用户三方登录管理")
 @RestController
-@RequestMapping("/user/social")
+@RequestMapping("/user/third")
 @AllArgsConstructor
-public class UserSocialController {
-    private final UserSocialBindService userSocialBindService;
-    private final UserSocialQueryService userSocialQueryService;
+public class UserThirdController {
+    private final UserThirdBindService userThirdBindService;
+    private final UserThirdQueryService userThirdQueryService;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<UserSocialDto>> page(PageParam pageParam){
-        return Res.ok(userSocialQueryService.page(pageParam));
+    public ResResult<PageResult<UserThirdDto>> page(PageParam pageParam){
+        return Res.ok(userThirdQueryService.page(pageParam));
     }
     
     @Operation(summary = "获取详情")
     @PostMapping("/findById")
-    public ResResult<UserSocialDto> findById(Long id){
-        return Res.ok(userSocialQueryService.findById(id));
+    public ResResult<UserThirdDto> findById(Long id){
+        return Res.ok(userThirdQueryService.findById(id));
     }
 
     @IgnoreAuth
     @Operation(summary = "获取绑定详情")
-    @GetMapping("/getSocialBindInfo")
-    public ResResult<UserSocialBindInfo> getSocialBindInfo(){
-        return Res.ok(userSocialQueryService.getSocialBindInfo());
+    @GetMapping("/getThirdBindInfo")
+    public ResResult<UserThirdBindInfo> getThirdBindInfo(){
+        return Res.ok(userThirdQueryService.getThirdBindInfo());
     }
 
     @IgnoreAuth
     @Operation(summary = "绑定第三方账号")
     @PostMapping("/bind")
-    public ResResult<Void> bind(@RequestBody UserBindSocialParam param){
+    public ResResult<Void> bind(@RequestBody UserBindThirdParam param){
         ValidationUtil.validateParam(param);
-        userSocialBindService.bind(param.getAuthCode(),param.getClientCode(),param.getState());
+        userThirdBindService.bind(param.getAuthCode(),param.getClientCode(),param.getState());
         return Res.ok();
     }
 
@@ -65,7 +65,7 @@ public class UserSocialController {
     @Operation(summary = "解绑第三方账号")
     @PostMapping("/unbind")
     public ResResult<Void> unbind(@NotBlank(message = "终端代码不可为空") String clientCode){
-        userSocialBindService.unbind(clientCode);
+        userThirdBindService.unbind(clientCode);
         return Res.ok();
     }
 

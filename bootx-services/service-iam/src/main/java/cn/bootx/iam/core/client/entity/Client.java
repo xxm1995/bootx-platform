@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("iam_client")
+@TableName("iam_login_type")
 @Accessors(chain = true)
 public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto> {
 

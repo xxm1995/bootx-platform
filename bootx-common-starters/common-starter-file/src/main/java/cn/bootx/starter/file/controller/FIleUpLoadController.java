@@ -37,7 +37,7 @@ public class FIleUpLoadController {
         return Res.ok(uploadService.page(pageParam));
     }
 
-    @IgnoreAuth(ignore = false)
+    @IgnoreAuth(ignore = false,login = true)
     @Operation(summary = "上传")
     @PostMapping("/upload")
     public ResResult<UpdateFileDto> local(MultipartFile file, String fileName)  throws IOException {

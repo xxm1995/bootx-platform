@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户绑定第三方开放平台参数")
-public class UserBindSocialParam {
+public class UserBindThirdParam {
 
     @NotBlank(message = "授权码不可为空")
     @Schema(description = "")

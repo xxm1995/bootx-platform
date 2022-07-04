@@ -14,14 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**
-* 安全工具类
-* @author xxm
-* @date 2021/8/2
-*/
+ * 安全工具类
+ * @author xxm
+ * @date 2021/8/2
+ */
 @UtilityClass
 public class SecurityUtil {
-    private final String CLIENT_PARAMETER = "client";
-    private final String APPLICATION_PARAMETER = "application";
+//    private final String LOGIN_TYPE_PARAMETER = "loginType";
+//    private final String CLIENT_PARAMETER = "client";
+    private final String LOGIN_TYPE_PARAMETER = "client";
+    private final String CLIENT_PARAMETER = "application";
 
     /**
      * 获取当前用户,无异常
@@ -30,7 +32,6 @@ public class SecurityUtil {
     public Optional<UserDetail> getCurrentUser() {
         return getCurrentUser0();
     }
-
 
     /**
      * 获取当前用户,无异常
@@ -60,16 +61,16 @@ public class SecurityUtil {
      * 获取登录方式 异步环境中获取会有问题
      */
     @Nullable
-    public String getClientType(HttpServletRequest request) {
-        return request.getParameter(CLIENT_PARAMETER);
+    public String getLoginType(HttpServletRequest request) {
+        return request.getParameter(LOGIN_TYPE_PARAMETER);
     }
 
     /**
-     * 获取认证应用参数 异步环境中获取会有问题
+     * 获取终端Code 异步环境中获取会有问题
      */
     @Nullable
-    public String getApplication(HttpServletRequest request) {
-        return request.getParameter(APPLICATION_PARAMETER);
+    public String getClientCode(HttpServletRequest request) {
+        return request.getParameter(CLIENT_PARAMETER);
     }
 
     /**

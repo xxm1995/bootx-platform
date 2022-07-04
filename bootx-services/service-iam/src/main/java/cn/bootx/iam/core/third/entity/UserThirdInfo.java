@@ -1,10 +1,9 @@
-package cn.bootx.iam.core.social.entity;
+package cn.bootx.iam.core.third.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.iam.core.social.convert.UserSocialInfoConvert;
-import cn.bootx.iam.dto.user.UserSocialInfoDto;
-import cn.bootx.iam.param.user.UserSocialInfoParam;
+import cn.bootx.iam.core.third.convert.UserThirdInfoConvert;
+import cn.bootx.iam.dto.user.UserThirdInfoDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,9 +16,9 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("iam_user_social_info")
+@TableName("iam_user_third_info")
 @Accessors(chain = true)
-public class UserSocialInfo extends MpBaseEntity implements EntityBaseFunction<UserSocialInfoDto>{
+public class UserThirdInfo extends MpBaseEntity implements EntityBaseFunction<UserThirdInfoDto>{
 
     /** 用户id */
     private Long userId;
@@ -32,14 +31,9 @@ public class UserSocialInfo extends MpBaseEntity implements EntityBaseFunction<U
     /** 用户头像 */
     private String avatar;
 
-    /** 创建对象 */
-    public static UserSocialInfo init(UserSocialInfoParam in) {
-            return UserSocialInfoConvert.CONVERT.convert(in);
-    }
-
     /** 转换成dto */
     @Override
-    public UserSocialInfoDto toDto() {
-        return UserSocialInfoConvert.CONVERT.convert(this);
+    public UserThirdInfoDto toDto() {
+        return UserThirdInfoConvert.CONVERT.convert(this);
     }
 }

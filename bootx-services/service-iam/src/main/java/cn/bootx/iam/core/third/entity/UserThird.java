@@ -1,9 +1,9 @@
-package cn.bootx.iam.core.social.entity;
+package cn.bootx.iam.core.third.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.iam.core.user.convert.UserConvert;
-import cn.bootx.iam.dto.user.UserSocialDto;
+import cn.bootx.iam.core.third.convert.UserThirdConvert;
+import cn.bootx.iam.dto.user.UserThirdDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,8 +15,8 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("iam_user_social")
-public class UserSocial extends MpBaseEntity implements EntityBaseFunction<UserSocialDto> {
+@TableName("iam_user_third")
+public class UserThird extends MpBaseEntity implements EntityBaseFunction<UserThirdDto> {
     /** 用户id */
     private Long userId;
 
@@ -39,7 +39,7 @@ public class UserSocial extends MpBaseEntity implements EntityBaseFunction<UserS
     private String weComId;
 
     @Override
-    public UserSocialDto toDto() {
-        return UserConvert.CONVERT.convert(this);
+    public UserThirdDto toDto() {
+        return UserThirdConvert.CONVERT.convert(this);
     }
 }

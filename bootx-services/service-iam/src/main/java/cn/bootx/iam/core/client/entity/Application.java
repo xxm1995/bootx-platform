@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("iam_application")
+@TableName("iam_client")
 @Accessors(chain = true)
 public class Application extends MpBaseEntity implements EntityBaseFunction<ApplicationDto>{
 

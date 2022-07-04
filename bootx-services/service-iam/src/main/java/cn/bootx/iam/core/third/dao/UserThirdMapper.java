@@ -1,6 +1,6 @@
-package cn.bootx.iam.core.social.dao;
+package cn.bootx.iam.core.third.dao;
 
-import cn.bootx.iam.core.social.entity.UserSocial;
+import cn.bootx.iam.core.third.entity.UserThird;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
 * @date 2021/8/2 
 */
 @Mapper
-public interface UserSocialMapper extends BaseMapper<UserSocial> {
+public interface UserThirdMapper extends BaseMapper<UserThird> {
 }

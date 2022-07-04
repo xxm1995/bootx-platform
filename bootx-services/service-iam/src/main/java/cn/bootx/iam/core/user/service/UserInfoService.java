@@ -159,7 +159,7 @@ public class UserInfoService {
             throw new BizException("短信验证码不正确");
         }
         // 邮箱是否已经存在
-        if (!userQueryService.existsPhone(email)){
+        if (!userQueryService.existsEmail(email)){
             throw new BizException("该邮箱已经被使用");
         }
         userAssistService.deleteEmailChangeCaptcha(userInfo.getEmail());
@@ -211,14 +211,38 @@ public class UserInfoService {
      * 绑定手机号
      */
     public void bindPhone(String phone,String captcha){
-
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        // 判断新手机验证码是否正常
+        if (!userAssistService.validatePhoneChangeCaptcha(phone,captcha)){
+            throw new BizException("短信验证码不正确");
+        }
+        // 手机号是否已经存在
+        if (userQueryService.existsPhone(phone)){
+            throw new BizException("该手机号已经被使用");
+        }
+        userInfo.setPhone(phone);
+        userInfoManager.updateById(userInfo);
+        userAssistService.deletePhoneChangeCaptcha(phone);
     }
 
     /**
      * 绑定邮箱
      */
     public void bindEmail(String email,String captcha){
-
+        UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
+                .orElseThrow(UserInfoNotExistsException::new);
+        // 判断新邮箱验证码是否正常
+        if (!userAssistService.validateEmailChangeCaptcha(email,captcha)){
+            throw new BizException("短信验证码不正确");
+        }
+        // 邮箱是否已经存在
+        if (!userQueryService.existsEmail(email)){
+            throw new BizException("该邮箱已经被使用");
+        }
+        userInfo.setEmail(email);
+        userInfoManager.updateById(userInfo);
+        userAssistService.deleteEmailChangeCaptcha(userInfo.getEmail());
     }
 
 }

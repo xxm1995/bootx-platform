@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -86,6 +87,15 @@ public class UserInfoController {
         return Res.ok();
     }
 
+    @Operation(summary = "绑定手机")
+    @PostMapping("/bindPhone")
+    public ResResult<Void> bindPhone(
+            @NotBlank(message = "手机号不可为空") String phone,
+            @NotBlank(message = "验证码不可为空") String captcha){
+        userInfoService.bindPhone(phone,captcha);
+        return Res.ok();
+    }
+
     @Operation(summary = "修改手机号")
     @PostMapping("/updatePhone")
     public ResResult<Void> updatePhone(@RequestBody UserChangePhoneParam param){
@@ -94,11 +104,20 @@ public class UserInfoController {
         return Res.ok();
     }
 
-    @Operation(summary = "修改手机号")
+    @Operation(summary = "修改邮箱")
     @PostMapping("/updateEmail")
     public ResResult<Void> updateEmail(@RequestBody UserChangeEmailParam param){
         ValidationUtil.validateParam(param);
         userInfoService.updateEmail(param.getEmail(),param.getOldCaptcha(),param.getNewCaptcha());
+        return Res.ok();
+    }
+
+    @Operation(summary = "绑定邮箱")
+    @PostMapping("/bindEmail")
+    public ResResult<Void> bindEmail(
+            @NotBlank(message = "邮箱不可为空")@Email(message = "请输入正确的邮箱") String email,
+            @NotBlank(message = "验证码不可为空") String captcha){
+        userInfoService.bindEmail(email,captcha);
         return Res.ok();
     }
 

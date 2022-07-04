@@ -133,7 +133,7 @@ public class TokenService {
      */
     private AuthClient getAuthClient(HttpServletRequest request){
         // 终端
-        AuthClient authClient = getAuthClientService.getAuthClient(SecurityUtil.getClientType(request));
+        AuthClient authClient = getAuthClientService.getAuthClient(SecurityUtil.getLoginType(request));
         if (!authClient.isEnable()){
             throw new ClientNotEnableException();
         }
@@ -145,7 +145,7 @@ public class TokenService {
      */
     private AuthApplication getAuthApplication(HttpServletRequest request){
         // 应用
-        AuthApplication authApplication = getAuthApplicationService.getAuthApplication(SecurityUtil.getApplication(request));
+        AuthApplication authApplication = getAuthApplicationService.getAuthApplication(SecurityUtil.getClientCode(request));
         if (!authApplication.isEnable()){
             throw new ClientNotEnableException();
         }

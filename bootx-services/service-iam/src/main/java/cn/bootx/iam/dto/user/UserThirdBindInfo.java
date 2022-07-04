@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户三方绑定信息")
-public class UserSocialBindInfo {
+public class UserThirdBindInfo {
 
     @Schema(description = "微信绑定信息")
     private BindInfo weChat;

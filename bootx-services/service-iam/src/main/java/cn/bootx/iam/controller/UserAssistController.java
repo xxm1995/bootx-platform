@@ -1,5 +1,6 @@
 package cn.bootx.iam.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.user.service.UserAssistService;
@@ -21,6 +22,7 @@ import javax.validation.constraints.NotBlank;
 * @date 2022/6/19 
 */
 @Validated
+@IgnoreAuth(ignore = false,login = true)
 @Tag(name = "用户操作支撑服务")
 @RestController
 @RequestMapping("/user")
@@ -41,14 +43,14 @@ public class UserAssistController {
         return Res.ok(userAssistService.validateCurrentPhoneChangeCaptcha(captcha));
     }
 
-    @Operation(summary = "发送更改手机号验证码")
+    @Operation(summary = "发送更改/绑定手机号验证码")
     @PostMapping("/sendPhoneChangeCaptcha")
     public ResResult<Void> sendPhoneChangeCaptcha(@NotBlank(message = "手机号不可为空") String phone){
         userAssistService.sendPhoneChangeCaptcha(phone);
         return Res.ok();
     }
 
-    @Operation(summary = "验证改手机验证码")
+    @Operation(summary = "验证改/绑定手机验证码")
     @GetMapping("/validatePhoneChangeCaptcha")
     public ResResult<Boolean> validatePhoneChangeCaptcha(
             @NotBlank(message = "手机号不可为空") String phone,
@@ -56,6 +58,7 @@ public class UserAssistController {
         return Res.ok(userAssistService.validatePhoneChangeCaptcha(phone,captcha));
     }
 
+    @IgnoreAuth(ignore = false,login = true)
     @Operation(summary = "给当前用户发送更改邮箱验证码")
     @PostMapping("/sendCurrentEmailChangeCaptcha")
     public ResResult<Void> sendCurrentEmailChangeCaptcha(){
@@ -69,15 +72,15 @@ public class UserAssistController {
         return Res.ok(userAssistService.validateCurrentChangeEmailCaptcha(captcha));
     }
 
-    @Operation(summary = "发送更改邮箱验证码")
+    @Operation(summary = "发送更改/绑定邮箱验证码")
     @PostMapping("/sendEmailChangeCaptcha")
     public ResResult<Void> sendEmailChangeCaptcha(@NotBlank(message = "邮箱不可为空")@Email String email){
         userAssistService.sendEmailChangeCaptcha(email);
         return Res.ok();
     }
 
-    @Operation(summary = "验证更改邮箱验证码")
-    @GetMapping("/validateEmailCaptcha")
+    @Operation(summary = "验证更改/绑定邮箱验证码")
+    @GetMapping("/validateEmailChangeCaptcha")
     public ResResult<Boolean> validateEmailCaptcha(
             @NotBlank(message = "邮箱不可为空")@Email(message = "请输入正确的邮箱") String email,
             @NotBlank(message = "验证码不可为空") String captcha){

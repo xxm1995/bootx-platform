@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Data
 @Schema(title = "用户三方登录绑定详情")
 @Accessors(chain = true)
-public class UserSocialInfoDto extends BaseDto {
+public class UserThirdInfoDto extends BaseDto {
 
     @Schema(description = "用户id")
     private Long userId;

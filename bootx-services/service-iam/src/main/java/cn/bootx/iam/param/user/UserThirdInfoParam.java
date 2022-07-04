@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Data
 @Schema(title = "用户三方登录绑定详情")
 @Accessors(chain = true)
-public class UserSocialInfoParam {
+public class UserThirdInfoParam {
 
     @Schema(description= "主键")
     private Long id;
