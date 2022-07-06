@@ -28,8 +28,8 @@ public class ClientDto extends BaseDto {
     private Boolean system;
     @Schema(description = "是否可用")
     private Boolean enable;
-    @Schema(description = "关联终端")
-    private List<String> clientIdList = new ArrayList<>();
+    @Schema(description = "关联登录方式id")
+    private List<String> loginTypeIdList = new ArrayList<>();
     @Schema(description = "描述")
     private String description;
 

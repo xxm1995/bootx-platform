@@ -28,7 +28,7 @@ public class ClientParam {
     @Schema(description = "是否可用")
     private Boolean enable;
     @Schema(description = "关联终端")
-    private List<String> clientIdList;
+    private List<String> loginTypeIdList;
     @Schema(description = "描述")
     private String description;
 

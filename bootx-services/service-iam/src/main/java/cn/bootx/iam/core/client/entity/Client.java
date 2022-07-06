@@ -37,17 +37,17 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     private boolean system;
     /** 是否可用 */
     private boolean enable;
-    /** 关联终端 */
-    private String clientIds;
+    /** 关联登录方式 */
+    private String loginTypeIds;
     /** 描述 */
     private String description;
 
     /** 创建对象 */
     public static Client init(ClientParam in) {
         Client client = ClientConvert.CONVERT.convert(in);
-        if (CollUtil.isNotEmpty(in.getClientIdList())){
-            String clientIds= String.join(",", in.getClientIdList());
-            client.setClientIds(clientIds);
+        if (CollUtil.isNotEmpty(in.getLoginTypeIdList())){
+            String loginTypeIds= String.join(",", in.getLoginTypeIdList());
+            client.setLoginTypeIds(loginTypeIds);
         }
         return client;
     }
@@ -55,12 +55,12 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     /** 转换成dto */
     @Override
     public ClientDto toDto() {
-        ClientDto application = ClientConvert.CONVERT.convert(this);
-        if (StrUtil.isNotBlank(this.getClientIds())){
-            List<String> collect = Arrays.stream(this.getClientIds().split(","))
+        ClientDto client = ClientConvert.CONVERT.convert(this);
+        if (StrUtil.isNotBlank(this.getLoginTypeIds())){
+            List<String> collect = Arrays.stream(this.getLoginTypeIds().split(","))
                     .collect(Collectors.toList());
-            application.setClientIdList(collect);
+            client.setLoginTypeIdList(collect);
         }
-        return application;
+        return client;
     }
 }

@@ -43,10 +43,10 @@ public class ClientService {
     public void update(ClientParam param){
         Client client = clientManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
         BeanUtil.copyProperties(param, client, CopyOptions.create().ignoreNullValue());
-        if (CollUtil.isNotEmpty(param.getClientIdList())){
-            client.setClientIds(String.join(",",param.getClientIdList()));
+        if (CollUtil.isNotEmpty(param.getLoginTypeIdList())){
+            client.setLoginTypeIds(String.join(",",param.getLoginTypeIdList()));
         } else {
-            client.setClientIds("");
+            client.setLoginTypeIds("");
         }
         clientManager.updateById(client);
     }

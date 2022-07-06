@@ -158,7 +158,7 @@ public class TokenService {
     private void validateAuthClient(LoginAuthContext loginAuthContext){
         AuthClient authClient = loginAuthContext.getAuthClient();
         AuthLoginType authLoginType = loginAuthContext.getAuthLoginType();
-        if (CollUtil.isEmpty(authClient.getClientIds()) || !authClient.getClientIds().contains(authLoginType.getId())){
+        if (CollUtil.isEmpty(authClient.getLoginTypeIds()) || !authClient.getLoginTypeIds().contains(authLoginType.getId())){
             throw new LoginFailureException("不支持的登录方式");
         }
     }

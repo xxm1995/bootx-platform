@@ -29,6 +29,6 @@ public class AuthClient {
     /** 是否可用 */
     private boolean enable;
 
-    /** 关联应用方式 */
-    private List<Long> clientIds;
+    /** 关联登录方式Id */
+    private List<Long> loginTypeIds;
 }
