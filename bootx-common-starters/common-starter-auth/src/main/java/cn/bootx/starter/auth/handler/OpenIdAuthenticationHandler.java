@@ -26,7 +26,7 @@ public class OpenIdAuthenticationHandler {
      * 认证
      */
     public @NotNull AuthInfoResult authentication(LoginAuthContext context){
-        String clientCode = context.getAuthClient().getCode();
+        String clientCode = context.getAuthLoginType().getCode();
         for (OpenIdAuthentication openIdAuthentication : openIdAuthentications) {
             if (openIdAuthentication.adaptation(clientCode)){
                 return openIdAuthentication.authentication(context);

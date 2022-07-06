@@ -35,6 +35,7 @@ public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
                 .setLogin(true)
                 .setUserId(authInfoResult.getUserDetail().getId())
                 .setClient(authInfoResult.getClient())
+                .setLoginType(authInfoResult.getLoginType())
                 .setAccount(authInfoResult.getUserDetail().getUsername())
                 .setIp(ip)
                 .setOs(userAgent.getOs().getName())

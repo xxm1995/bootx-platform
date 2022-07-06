@@ -28,8 +28,8 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     @TableField(updateStrategy = IGNORED)
     private Long parentId;
 
-    /** 关联应用code */
-    private String appCode;
+    /** 关联终端code */
+    private String clientCode;
 
     /** 菜单标题 */
     private String title;

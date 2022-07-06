@@ -11,6 +11,7 @@ import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.model.AuthCallback;
@@ -30,6 +31,7 @@ import static cn.bootx.iam.code.OpenIdLoginType.*;
  * @author xxm
  * @date 2022/4/2
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DingTalkLoginHandler implements OpenIdAuthentication {
@@ -42,7 +44,7 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
      * 钉钉登录
      */
     @Override
-    public String getClientCode() {
+    public String getLoginType() {
         return DING_TALK;
     }
 
@@ -90,6 +92,7 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
         if (!Objects.equals(response.getCode(), OpenIdLoginType.SUCCESS)){
+            log.error("钉钉登录报错: {}",response.getMsg());
             throw new LoginFailureException("钉钉登录出错");
         }
         return response.getData();

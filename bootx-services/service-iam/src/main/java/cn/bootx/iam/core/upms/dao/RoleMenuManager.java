@@ -32,10 +32,10 @@ public class RoleMenuManager extends BaseManager<RoleMenuMapper, RoleMenu> {
         return findAllByFields(RoleMenu::getRoleId,roleIds);
     }
 
-    public List<RoleMenu> findAllByRoleAndAppCode(Long roleId, String appCode) {
+    public List<RoleMenu> findAllByRoleAndClientCode(Long roleId, String clientCode) {
         return lambdaQuery()
                 .eq(RoleMenu::getRoleId,roleId)
-                .eq(RoleMenu::getAppCode,appCode)
+                .eq(RoleMenu::getClientCode,clientCode)
                 .list();
 
     }

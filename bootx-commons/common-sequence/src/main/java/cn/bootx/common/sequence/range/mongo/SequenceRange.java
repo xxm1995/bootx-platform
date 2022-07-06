@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
-@Document("starter_sequence_range")
+@Document("common_sequence_range")
 public class SequenceRange {
 
     @Id

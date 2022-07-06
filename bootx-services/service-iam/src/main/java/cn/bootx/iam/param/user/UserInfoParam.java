@@ -34,7 +34,7 @@ public class UserInfoParam implements Serializable {
     private String email;
 
     @Schema(description= "终端id列表")
-    private List<String> appIdList;
+    private List<String> clientIdList;
 
     @Schema(description= "头像")
     private String avatar;

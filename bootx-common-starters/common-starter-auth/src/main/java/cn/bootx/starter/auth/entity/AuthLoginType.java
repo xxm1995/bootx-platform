@@ -1,20 +1,19 @@
 package cn.bootx.starter.auth.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 /**
-* 认证应用
-* @author xxm  
-* @date 2022/6/27 
+* @author xxm
+* @date 2021/8/25
 */
 @Data
 @Accessors(chain = true)
-public class AuthClient {
+@Schema(title = "登录方式")
+public class AuthLoginType {
 
-    /** 终端id */
+    /** 登录方式id */
     private Long id;
 
     /** 编码 */
@@ -29,6 +28,9 @@ public class AuthClient {
     /** 是否可用 */
     private boolean enable;
 
-    /** 关联应用方式 */
-    private List<Long> clientIds;
+    /** 密码错误几次冻结 */
+    private int pwdErrNum;
+
+    /** 是否需要验证码 */
+    private boolean captcha;
 }

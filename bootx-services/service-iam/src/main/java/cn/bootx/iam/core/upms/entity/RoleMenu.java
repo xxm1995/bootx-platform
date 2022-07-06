@@ -27,7 +27,7 @@ public class RoleMenu extends MpIdEntity {
     /**
      * 终端类型
      */
-    private String appCode;
+    private String clientCode;
 
     /**
      * 菜单权限id
@@ -35,9 +35,9 @@ public class RoleMenu extends MpIdEntity {
     private Long permissionId;
 
 
-    public RoleMenu(Long roleId, String appCode, Long permissionId) {
+    public RoleMenu(Long roleId, String clientCode, Long permissionId) {
         this.roleId = roleId;
-        this.appCode = appCode;
+        this.clientCode = clientCode;
         this.permissionId = permissionId;
     }
 }

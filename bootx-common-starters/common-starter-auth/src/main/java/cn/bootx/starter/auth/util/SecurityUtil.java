@@ -20,10 +20,8 @@ import java.util.Optional;
  */
 @UtilityClass
 public class SecurityUtil {
-//    private final String LOGIN_TYPE_PARAMETER = "loginType";
-//    private final String CLIENT_PARAMETER = "client";
-    private final String LOGIN_TYPE_PARAMETER = "client";
-    private final String CLIENT_PARAMETER = "application";
+    private final String LOGIN_TYPE_PARAMETER = "loginType";
+    private final String CLIENT_PARAMETER = "client";
 
     /**
      * 获取当前用户,无异常
@@ -69,7 +67,7 @@ public class SecurityUtil {
      * 获取终端Code 异步环境中获取会有问题
      */
     @Nullable
-    public String getClientCode(HttpServletRequest request) {
+    public String getClient(HttpServletRequest request) {
         return request.getParameter(CLIENT_PARAMETER);
     }
 

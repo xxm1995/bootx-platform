@@ -3,12 +3,12 @@ package cn.bootx.starter.auth.endpoint;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.util.CollUtil;
-import cn.bootx.starter.auth.authentication.GetAuthApplicationService;
 import cn.bootx.starter.auth.authentication.GetAuthClientService;
+import cn.bootx.starter.auth.authentication.GetAuthLoginTypeService;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
 import cn.bootx.starter.auth.configuration.AuthProperties;
-import cn.bootx.starter.auth.entity.AuthApplication;
 import cn.bootx.starter.auth.entity.AuthClient;
+import cn.bootx.starter.auth.entity.AuthLoginType;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.ClientNotEnableException;
@@ -38,8 +38,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TokenService {
 
+    private final GetAuthLoginTypeService getAuthLoginTypeService;
     private final GetAuthClientService getAuthClientService;
-    private final GetAuthApplicationService getAuthApplicationService;
     private final UsernamePasswordAuthentication usernamePasswordAuthentication;
 
     private final AuthProperties authProperties;
@@ -54,15 +54,15 @@ public class TokenService {
     public String loginPassword(HttpServletRequest request, HttpServletResponse response){
 
         AuthInfoResult authInfoResult;
-        AuthClient authClient = this.getAuthClient(request);
-        AuthApplication authApplication = this.getAuthApplication(request);
+        AuthLoginType authLoginType = this.getAuthLoginType(request);
+        AuthClient authClient = this.getAuthApplication(request);
         try {
             LoginAuthContext loginAuthContext = new LoginAuthContext()
                     .setRequest(request)
                     .setResponse(response)
                     .setAuthProperties(authProperties)
-                    .setAuthClient(authClient)
-                    .setAuthApplication(authApplication);
+                    .setAuthLoginType(authLoginType)
+                    .setAuthClient(authClient);
             // 校验登录终端
             this.validateAuthClient(loginAuthContext);
             authInfoResult = usernamePasswordAuthentication.authentication(loginAuthContext);
@@ -82,15 +82,15 @@ public class TokenService {
      */
     public String loginOpenId(HttpServletRequest request, HttpServletResponse response){
         AuthInfoResult authInfoResult;
-        AuthClient authClient = this.getAuthClient(request);
-        AuthApplication authApplication = this.getAuthApplication(request);
+        AuthLoginType authLoginType = this.getAuthLoginType(request);
+        AuthClient authClient = this.getAuthApplication(request);
         try {
             LoginAuthContext loginAuthContext = new LoginAuthContext()
                     .setRequest(request)
                     .setResponse(response)
                     .setAuthProperties(authProperties)
-                    .setAuthClient(authClient)
-                    .setAuthApplication(authApplication);
+                    .setAuthLoginType(authLoginType)
+                    .setAuthClient(authClient);
             // 校验登录终端
             this.validateAuthClient(loginAuthContext);
             authInfoResult = openIdAuthenticationHandler.authentication(loginAuthContext);
@@ -131,9 +131,21 @@ public class TokenService {
     /**
      * 获取终端
      */
-    private AuthClient getAuthClient(HttpServletRequest request){
+    private AuthLoginType getAuthLoginType(HttpServletRequest request){
         // 终端
-        AuthClient authClient = getAuthClientService.getAuthClient(SecurityUtil.getLoginType(request));
+        AuthLoginType authLoginType = getAuthLoginTypeService.getAuthLoginType(SecurityUtil.getLoginType(request));
+        if (!authLoginType.isEnable()){
+            throw new ClientNotEnableException();
+        }
+        return authLoginType;
+    }
+
+    /**
+     * 获取应用
+     */
+    private AuthClient getAuthApplication(HttpServletRequest request){
+        // 应用
+        AuthClient authClient = getAuthClientService.getAuthApplication(SecurityUtil.getClient(request));
         if (!authClient.isEnable()){
             throw new ClientNotEnableException();
         }
@@ -141,24 +153,12 @@ public class TokenService {
     }
 
     /**
-     * 获取应用
-     */
-    private AuthApplication getAuthApplication(HttpServletRequest request){
-        // 应用
-        AuthApplication authApplication = getAuthApplicationService.getAuthApplication(SecurityUtil.getClientCode(request));
-        if (!authApplication.isEnable()){
-            throw new ClientNotEnableException();
-        }
-        return authApplication;
-    }
-
-    /**
      * 校验该认证应用是否支持此种登录方式
      */
     private void validateAuthClient(LoginAuthContext loginAuthContext){
-        AuthApplication authApplication = loginAuthContext.getAuthApplication();
         AuthClient authClient = loginAuthContext.getAuthClient();
-        if (CollUtil.isEmpty(authApplication.getClientIds()) || !authApplication.getClientIds().contains(authClient.getId())){
+        AuthLoginType authLoginType = loginAuthContext.getAuthLoginType();
+        if (CollUtil.isEmpty(authClient.getClientIds()) || !authClient.getClientIds().contains(authLoginType.getId())){
             throw new LoginFailureException("不支持的登录方式");
         }
     }
@@ -167,13 +167,14 @@ public class TokenService {
      * 登录
      */
     private void login(AuthInfoResult authInfoResult,LoginAuthContext context){
+        AuthLoginType authLoginType = context.getAuthLoginType();
         AuthClient authClient = context.getAuthClient();
-        AuthApplication authApplication = context.getAuthApplication();
         SaLoginModel saLoginModel = new SaLoginModel()
-                .setDevice(authApplication.getCode())
-                .setTimeout(authClient.getTimeout() * 1000 * 60);
+                .setDevice(authClient.getCode())
+                .setTimeout(authLoginType.getTimeout() * 1000 * 60);
 
-        authInfoResult.setClient(authClient.getCode());
+        authInfoResult.setClient(authClient.getCode())
+                .setLoginType(authLoginType.getCode());
         StpUtil.login(authInfoResult.getId(),saLoginModel);
         SaSession session = StpUtil.getSession();
         UserDetail userDetail = authInfoResult.getUserDetail();

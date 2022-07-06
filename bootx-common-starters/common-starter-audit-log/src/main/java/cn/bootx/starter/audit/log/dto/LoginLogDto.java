@@ -33,6 +33,9 @@ public class LoginLogDto implements Serializable {
     @Schema(description= "登录终端")
     private String client;
 
+    @Schema(description= "登录方式")
+    private String loginType;
+
     @Schema(description= "登录IP地址")
     private String ip;
 

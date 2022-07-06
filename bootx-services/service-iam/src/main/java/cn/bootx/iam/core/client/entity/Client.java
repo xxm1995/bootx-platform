@@ -5,11 +5,17 @@ import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.iam.core.client.convert.ClientConvert;
 import cn.bootx.iam.dto.client.ClientDto;
 import cn.bootx.iam.param.client.ClientParam;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * 认证终端
@@ -18,41 +24,43 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("iam_login_type")
+@TableName("iam_client")
 @Accessors(chain = true)
-public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto> {
+public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto>{
 
     /** 编码 */
     private String code;
-
     /** 名称 */
     private String name;
-
-    /** 在线时长 分钟 */
-    private Long timeout;
-
-    /** 是否需要验证码 */
-    private boolean captcha;
-
     /** 是否系统内置 */
     @TableField("`system`")
     private boolean system;
-
-    /** 密码错误几次冻结 -1表示不限制 */
-    private Integer pwdErrNum;
-
     /** 是否可用 */
     private boolean enable;
-
+    /** 关联终端 */
+    private String clientIds;
     /** 描述 */
     private String description;
 
-    public static Client init(ClientParam in){
-        return ClientConvert.CONVERT.convert(in);
+    /** 创建对象 */
+    public static Client init(ClientParam in) {
+        Client client = ClientConvert.CONVERT.convert(in);
+        if (CollUtil.isNotEmpty(in.getClientIdList())){
+            String clientIds= String.join(",", in.getClientIdList());
+            client.setClientIds(clientIds);
+        }
+        return client;
     }
 
+    /** 转换成dto */
     @Override
     public ClientDto toDto() {
-        return ClientConvert.CONVERT.convert(this);
+        ClientDto application = ClientConvert.CONVERT.convert(this);
+        if (StrUtil.isNotBlank(this.getClientIds())){
+            List<String> collect = Arrays.stream(this.getClientIds().split(","))
+                    .collect(Collectors.toList());
+            application.setClientIdList(collect);
+        }
+        return application;
     }
 }

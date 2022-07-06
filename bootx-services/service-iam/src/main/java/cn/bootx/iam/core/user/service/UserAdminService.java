@@ -7,7 +7,7 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.code.UserStatusCode;
-import cn.bootx.iam.core.client.dao.ApplicationManager;
+import cn.bootx.iam.core.client.dao.ClientManager;
 import cn.bootx.iam.core.upms.service.UserRoleService;
 import cn.bootx.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
@@ -52,7 +52,7 @@ public class UserAdminService {
     private final PasswordEncoder passwordEncoder;
     private final UserQueryService userQueryService;
     private final CaptchaService captchaService;
-    private final ApplicationManager applicationManager;
+    private final ClientManager clientManager;
     private final ApplicationEventPublisher eventPublisher;
 
     /**
@@ -104,11 +104,11 @@ public class UserAdminService {
         BeanUtil.copyProperties(param,userInfoParam);
         userInfoParam.setName(param.getUsername());
         // TODO 默认注册就有所有终端的权限, 后期优化
-        List<String> ids = applicationManager.findAll().stream()
+        List<String> ids = clientManager.findAll().stream()
                 .map(MpIdEntity::getId)
                 .map(String::valueOf)
                 .collect(Collectors.toList());
-        userInfoParam.setAppIdList(ids);
+        userInfoParam.setClientIdList(ids);
         this.add(userInfoParam);
     }
 
@@ -164,10 +164,10 @@ public class UserAdminService {
         UserInfo userInfo = userInfoManager.findById(userInfoParam.getId()).orElseThrow(UserInfoNotExistsException::new);
         userInfoParam.setPassword(null);
         BeanUtil.copyProperties(userInfoParam,userInfo, CopyOptions.create().ignoreNullValue());
-        if (CollUtil.isNotEmpty(userInfoParam.getAppIdList())){
-            userInfo.setAppIds(String.join(",",userInfoParam.getAppIdList()));
+        if (CollUtil.isNotEmpty(userInfoParam.getClientIdList())){
+            userInfo.setClientIds(String.join(",",userInfoParam.getClientIdList()));
         } else {
-            userInfo.setAppIds("");
+            userInfo.setClientIds("");
         }
         return userInfoManager.updateById(userInfo).toDto();
     }

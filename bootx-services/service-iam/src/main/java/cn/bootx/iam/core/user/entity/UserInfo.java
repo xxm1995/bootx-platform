@@ -47,7 +47,7 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     private String email;
 
     /** 关联终端id集合 */
-    private String appIds;
+    private String clientIds;
 
     /** 注册来源 */
     private String source;
@@ -67,19 +67,19 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     @Override
     public UserInfoDto toDto() {
         UserInfoDto userInfoDto = UserConvert.CONVERT.convert(this);
-        if (StrUtil.isNotBlank(this.getAppIds())){
-            List<String> collect = Arrays.stream(this.getAppIds().split(","))
+        if (StrUtil.isNotBlank(this.getClientIds())){
+            List<String> collect = Arrays.stream(this.getClientIds().split(","))
                     .collect(Collectors.toList());
-            userInfoDto.setAppIdList(collect);
+            userInfoDto.setClientIdList(collect);
         }
         return userInfoDto;
     }
 
     public static UserInfo init(UserInfoParam param) {
         UserInfo userInfo = UserConvert.CONVERT.convert(param);
-        if (CollUtil.isNotEmpty(param.getAppIdList())){
-            String appIds= String.join(",", param.getAppIdList());
-            userInfo.setAppIds(appIds);
+        if (CollUtil.isNotEmpty(param.getClientIdList())){
+            String appIds= String.join(",", param.getClientIdList());
+            userInfo.setClientIds(appIds);
         }
         return userInfo;
     }

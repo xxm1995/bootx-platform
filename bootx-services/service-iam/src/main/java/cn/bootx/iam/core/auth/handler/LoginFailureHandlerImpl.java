@@ -31,11 +31,13 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
 
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader(WebHeaderCode.USER_AGENT));
         String ip = ServletUtil.getClientIP(request);
-        String client = SecurityUtil.getLoginType(request);
+        String loginType = SecurityUtil.getLoginType(request);
+        String client = SecurityUtil.getClient(request);
         LoginLogParam loginLog = new LoginLogParam()
                 .setAccount(e.getUsername())
                 .setLogin(false)
                 .setClient(client)
+                .setLoginType(loginType)
                 .setMsg(e.getMessage())
                 .setIp(ip)
                 .setOs(userAgent.getOs().getName())

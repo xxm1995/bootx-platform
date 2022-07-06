@@ -50,7 +50,7 @@ public class UserInfoDto extends BaseDto implements Serializable {
     private String email;
 
     @Schema(description= "终端id列表")
-    private List<String> appIdList = new ArrayList<>();
+    private List<String> clientIdList = new ArrayList<>();
 
     @Schema(description= "注册来源")
     private String source;
@@ -69,8 +69,8 @@ public class UserInfoDto extends BaseDto implements Serializable {
 
     public UserDetail toUserDetail(){
         List<Long> clientIds = new ArrayList<>();
-        if (CollUtil.isNotEmpty(this.getAppIdList())){
-            clientIds = this.getAppIdList().stream()
+        if (CollUtil.isNotEmpty(this.getClientIdList())){
+            clientIds = this.getClientIdList().stream()
                     .map(Long::valueOf)
                     .collect(Collectors.toList());
         }

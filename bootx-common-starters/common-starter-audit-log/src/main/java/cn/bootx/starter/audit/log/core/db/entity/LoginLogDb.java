@@ -34,6 +34,9 @@ public class LoginLogDb extends MpIdEntity implements EntityBaseFunction<LoginLo
     /** 登录终端 */
     private String client;
 
+    /** 登录方式 */
+    private String loginType;
+
     /** 登录IP地址 */
     private String ip;
 

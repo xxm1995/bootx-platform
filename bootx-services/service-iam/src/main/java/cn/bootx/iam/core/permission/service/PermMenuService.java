@@ -60,7 +60,7 @@ public class PermMenuService {
     public PermMenuDto update(PermMenuParam param){
         PermMenu permMenu = permMenuManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("菜单权限不存在"));
-        permMenu.setAppCode(null);
+        permMenu.setClientCode(null);
         BeanUtil.copyProperties(param,permMenu, CopyOptions.create().ignoreNullValue());
 
         // 判断是否是一级菜单，是的话清空父菜单ID
@@ -89,8 +89,8 @@ public class PermMenuService {
     /**
      * 列表(根据应用code)
      */
-    public List<PermMenuDto> findAllByAppCode(String appCode) {
-        return ResultConvertUtil.dtoListConvert(permMenuManager.findAllByAppCode(appCode));
+    public List<PermMenuDto> findAllByClientCode(String clientCode) {
+        return ResultConvertUtil.dtoListConvert(permMenuManager.findAllByClientCode(clientCode));
     }
 
     /**

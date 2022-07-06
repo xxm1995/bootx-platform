@@ -10,7 +10,7 @@ import cn.bootx.iam.core.user.service.UserQueryService;
 import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.starter.auth.authentication.UsernamePasswordAuthentication;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
-import cn.bootx.starter.auth.entity.AuthClient;
+import cn.bootx.starter.auth.entity.AuthLoginType;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.exception.UserNotFoundException;
@@ -53,10 +53,10 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
      */
     @Override
     public void authenticationBefore(LoginAuthContext context){
-        AuthClient authClient = context.getAuthClient();
+        AuthLoginType authLoginType = context.getAuthLoginType();
         HttpServletRequest request = context.getRequest();
         // 开启验证码验证
-        if (authClient.isCaptcha()){
+        if (authLoginType.isCaptcha()){
             String captcha = this.obtainCaptcha(request);
             String captchaKey = this.obtainCaptchaKey(request);
             if (StrUtil.isBlank(captcha)){
@@ -132,10 +132,10 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
      * 密码输入错误处理
      */
     public void passwordError(UserDetail userDetail, LoginAuthContext context){
-        AuthClient authClient = context.getAuthClient();
+        AuthLoginType authLoginType = context.getAuthLoginType();
         int errCount = 0;
         // 密码错误限制
-        if (authClient.getPwdErrNum() > -1){
+        if (authLoginType.getPwdErrNum() > -1){
 
         }
 //        String errMsg = StrUtil.format("密码不正确, 还有{}次机会",errCount);

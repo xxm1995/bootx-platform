@@ -27,6 +27,7 @@ public class LoginLogDbManager extends BaseManager<LoginLogDbMapper, LoginLogDb>
                 .orderByDesc(LoginLogDb::getId)
                 .like(StrUtil.isNotBlank(loginLogParam.getAccount()), LoginLogDb::getAccount,loginLogParam.getAccount())
                 .like(StrUtil.isNotBlank(loginLogParam.getClient()), LoginLogDb::getClient,loginLogParam.getClient())
+                .like(StrUtil.isNotBlank(loginLogParam.getLoginType()), LoginLogDb::getLoginType,loginLogParam.getLoginType())
                 .page(mpPage);
     }
 }

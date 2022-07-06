@@ -31,7 +31,7 @@ public class PermMenuParam implements Serializable {
 
     @NotEmpty(groups = {ValidationGroup.add.class, edit.class})
     @Schema(description = "关联应用code")
-    private String appCode;
+    private String clientCode;
 
     @Schema(description = "菜单标题")
     private String title;

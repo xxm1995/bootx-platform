@@ -7,9 +7,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * 认证终端
- * @author bootx
- * @date 2022-02-20
+ * 认证应用
+ * @author xxm
+ * @date 2022-06-27
  */
 @Mapper
 public interface ClientConvert {

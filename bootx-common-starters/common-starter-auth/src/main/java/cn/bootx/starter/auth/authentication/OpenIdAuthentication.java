@@ -16,7 +16,7 @@ public interface OpenIdAuthentication extends AbstractAuthentication{
     /**
      * 获取终端编码
      */
-    String getClientCode();
+    String getLoginType();
 
     /**
      * 获取登录地址
@@ -37,8 +37,8 @@ public interface OpenIdAuthentication extends AbstractAuthentication{
     /**
      * openId类型是否匹配
      */
-    default boolean adaptation(String clientCode){
-        return Objects.equals(getClientCode(),clientCode);
+    default boolean adaptation(String loginType){
+        return Objects.equals(getLoginType(),loginType);
     }
 
     /**

@@ -40,7 +40,7 @@ public class WeComLoginHandler implements OpenIdAuthentication {
     private final AuthProperties authProperties;
 
     @Override
-    public String getClientCode() {
+    public String getLoginType() {
         return WE_COM;
     }
 
@@ -86,6 +86,7 @@ public class WeComLoginHandler implements OpenIdAuthentication {
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
         if (!Objects.equals(response.getCode(), OpenIdLoginType.SUCCESS)){
+            log.error("企业微信登录报错: {}",response.getMsg());
             throw new LoginFailureException("企业微信登录出错");
         }
         return response.getData();
@@ -97,7 +98,7 @@ public class WeComLoginHandler implements OpenIdAuthentication {
     private AuthWeChatEnterpriseQrcodeRequest getAuthRequest(){
         val thirdLogin = authProperties.getThirdLogin().getWeCom();
         if (Objects.isNull(thirdLogin)){
-            throw new LoginFailureException("钉钉开放登录配置有误");
+            throw new LoginFailureException("企业微信登录配置有误");
         }
         return new AuthWeChatEnterpriseQrcodeRequest(AuthConfig.builder()
                 .clientId(thirdLogin.getClientId())

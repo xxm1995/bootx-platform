@@ -35,6 +35,9 @@ public class LoginLogMongo implements EntityBaseFunction<LoginLogDto> {
     /** 登录终端 */
     private String client;
 
+    /** 登录方式 */
+    private String loginType;
+
     /** 登录IP地址 */
     private String ip;
 

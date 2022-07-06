@@ -11,6 +11,7 @@ import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.model.AuthCallback;
@@ -31,6 +32,7 @@ import static cn.bootx.iam.code.OpenIdLoginType.STATE;
 * @author xxm
 * @date 2021/8/2
 */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class WeChatLoginHandler implements OpenIdAuthentication {
@@ -39,7 +41,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
     private final AuthProperties authProperties;
 
     @Override
-    public String getClientCode() {
+    public String getLoginType() {
         return OpenIdLoginType.WE_CHAT;
     }
 
@@ -88,6 +90,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
         if (!Objects.equals(response.getCode(),OpenIdLoginType.SUCCESS)){
+            log.error("微信登录报错: {}",response.getMsg());
             throw new LoginFailureException("微信登录出错");
         }
         return response.getData();

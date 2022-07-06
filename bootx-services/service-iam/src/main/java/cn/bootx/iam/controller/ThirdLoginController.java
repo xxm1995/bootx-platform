@@ -32,16 +32,16 @@ public class ThirdLoginController {
     private final ThirdLoginService thirdLoginService;
 
     @Operation(summary = "跳转到登陆页")
-    @GetMapping("/toLoginUrl/{clientCode}")
-    public void toLoginUrl(@PathVariable("clientCode") String clientCode, HttpServletResponse response) throws IOException {
-        String loginUrl = thirdLoginService.getLoginUrl(clientCode);
+    @GetMapping("/toLoginUrl/{loginType}")
+    public void toLoginUrl(@PathVariable("loginType") String loginType, HttpServletResponse response) throws IOException {
+        String loginUrl = thirdLoginService.getLoginUrl(loginType);
         response.sendRedirect(loginUrl);
     }
 
     @Operation(summary = "扫码后回调")
-    @GetMapping("/callback/{clientCode}")
-    public ModelAndView callback(@PathVariable("clientCode") String clientCode, AuthCallback callback){
-        ThirdAuthCode authCode = thirdLoginService.getAuthCode(clientCode,callback);
+    @GetMapping("/callback/{loginType}")
+    public ModelAndView callback(@PathVariable("loginType") String loginType, AuthCallback callback){
+        ThirdAuthCode authCode = thirdLoginService.getAuthCode(loginType,callback);
         // 回传给前台
         return new ModelAndView("thirdLoginCallback")
                 .addObject("authCode",authCode);

@@ -25,7 +25,7 @@ public class RolePermissionParam implements Serializable {
 
     @Schema(description= "终端code")
     @NotNull(message = "终端不可为空",groups = {PermMenu.class})
-    private String appCode;
+    private String clientCode;
 
     @Schema(description= "权限id")
     private List<Long> permissionIds;
