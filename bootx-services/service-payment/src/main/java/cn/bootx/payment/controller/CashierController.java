@@ -48,13 +48,13 @@ public class CashierController {
         String ua = request.getHeader("User-Agent");
         // 判断是哪种支付方式
         if (ua.contains(PayChannelCode.UA_ALI_PAY)) {
-            return new ModelAndView("forward:/cashier/h5/wechat");
+            return new ModelAndView("forward:/cashier/h5/alipay");
         }
         else if (ua.contains(PayChannelCode.UA_WECHAT_PAY)) {
             return new ModelAndView("forward:/cashier/h5/wechat");
         } else {
 //            return new ModelAndView("errorCashier");
-            return new ModelAndView("forward:/cashier/h5/wechat");
+            return new ModelAndView("forward:/cashier/h5/alipay");
         }
 
     }

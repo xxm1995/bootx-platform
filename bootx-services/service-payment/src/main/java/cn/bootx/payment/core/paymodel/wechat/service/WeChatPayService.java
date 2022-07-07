@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PayWayCode;
 import cn.bootx.payment.code.pay.PayWayEnum;
@@ -10,6 +9,7 @@ import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.dto.pay.AsyncPayInfo;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.wechat.WeChatPayParam;
 import cn.hutool.core.net.NetUtil;
@@ -48,9 +48,9 @@ public class WeChatPayService {
                 .orElse(new ArrayList<>(1));
 
         PayWayEnum payWayEnum = Optional.ofNullable(WeChatPayWay.findByNo(payModeParam.getPayWay()))
-                .orElseThrow(() -> new BizException("非法的微信支付类型"));
+                .orElseThrow(() -> new PayFailureException("非法的微信支付类型"));
         if (!payWays.contains(payWayEnum.getCode())) {
-            throw new BizException("该微信支付方式不可用");
+            throw new PayFailureException("该微信支付方式不可用");
         }
     }
 
@@ -213,7 +213,7 @@ public class WeChatPayService {
                 errorMsg = result.get(WeChatPayCode.RETURN_MSG);
             }
             log.error("支付失败 {}", errorMsg);
-            throw new BizException(errorMsg);
+            throw new PayFailureException(errorMsg);
         }
     }
 

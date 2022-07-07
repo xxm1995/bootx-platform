@@ -98,17 +98,14 @@ public class WeChatPaymentService {
     /**
      * 更新退款
      */
-    public void updatePayRefund(Long paymentId, BigDecimal amount) {
-        Optional<WeChatPayment> weChatPayment = weChatPaymentManager.findByPaymentId(paymentId);
-        weChatPayment.ifPresent(payment -> {
-            BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
-            payment.setRefundableBalance(refundableBalance);
-            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
-                payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
-            } else {
-                payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
-            }
-            weChatPaymentManager.updateById(payment);
-        });
+    public void updatePayRefund(WeChatPayment weChatPayment, BigDecimal amount) {
+        BigDecimal refundableBalance = weChatPayment.getRefundableBalance().subtract(amount);
+        weChatPayment.setRefundableBalance(refundableBalance);
+        if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+            weChatPayment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
+        } else {
+            weChatPayment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
+        }
+        weChatPaymentManager.updateById(weChatPayment);
     }
 }

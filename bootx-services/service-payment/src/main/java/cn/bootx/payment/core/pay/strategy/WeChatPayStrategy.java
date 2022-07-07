@@ -9,7 +9,9 @@ import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
+import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPaymentManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
+import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayment;
 import cn.bootx.payment.core.paymodel.wechat.service.*;
 import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.exception.payment.PayFailureException;
@@ -41,6 +43,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     private final WeChatPayConfigManager weChatPayConfigManager;
     private final WeChatPayService weChatPayService;
     private final WeChatPaymentService weChatPaymentService;
+    private final WeChatPaymentManager weChatPaymentManager;
     private final WeChatPayCancelService weChatPayCancelService;
     private final WeChatPaySyncService weChatPaySyncService;
     private final PaymentService paymentService;
@@ -156,7 +159,10 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     @Override
     public void doRefundHandler() {
         this.initWeChatPayConfig();
-        weChatPaymentService.updatePayRefund(this.getPayment().getId(),this.getPayMode().getAmount());
+        WeChatPayment weChatPayment = weChatPaymentManager.findByPaymentId(this.getPayment().getId())
+                .orElseThrow(() -> new PayFailureException("微信支付记录不存在"));
+        weChatPayCancelService.refund(this.getPayment(),weChatPayment,this.getPayMode().getAmount(),this.weChatPayConfig);
+        weChatPaymentService.updatePayRefund(weChatPayment,this.getPayMode().getAmount());
         paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.WECHAT);
     }
 

@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>支付宝</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.14/vue.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.27.2/axios.js"></script>
 </head>
 <body>
-
+<div id="app" class="wrapper">
+</div>
 </body>
+<script th:inline="javascript">
+    //<![CDATA[
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                form: {
+
+                }
+            }
+        },
+        methods: {
+            submit() {
+                const url = '/mobile/makeUpPlanByQr'
+                axios.post(url, this.form).then(res => {
+                    if (res.data.code === 1) {
+                        this.isShow = true
+                        this.response = res.data.msg
+                    }else {
+                        this.isSuccess = true
+                    }
+                })
+            }
+        }
+    })
+    //]]>
+</script>
 </html>

@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
@@ -10,6 +9,7 @@ import cn.bootx.payment.code.paymodel.WeChatPayWay;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.paymodel.wechat.WeChatPayConfigParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -50,7 +50,7 @@ public class WeChatPayConfigService {
     @Transactional(rollbackFor = Exception.class)
     public void update(WeChatPayConfigParam param){
         WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(param.getId())
-                .orElseThrow(() -> new BizException("微信支付配置不存在"));
+                .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
         param.setActivity(null);
         BeanUtil.copyProperties(param,weChatPayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
@@ -74,7 +74,7 @@ public class WeChatPayConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void setUpActivity(Long id){
-        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id).orElseThrow(() -> new BizException("微信支付配置不存在"));
+        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
         if (Objects.equals(weChatPayConfig.getActivity(),Boolean.TRUE)){
             return;
         }
@@ -88,7 +88,7 @@ public class WeChatPayConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void clearActivity(Long id){
-        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id).orElseThrow(() -> new BizException("微信支付配置不存在"));
+        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
         if (Objects.equals(weChatPayConfig.getActivity(),Boolean.TRUE)){
             return;
         }
