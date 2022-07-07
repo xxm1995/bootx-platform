@@ -75,6 +75,7 @@ public class WeChatPaymentService {
         wechatPayment.setTradeNo(tradeNo)
                 .setPaymentId(payment.getId())
                 .setAmount(payModeParam.getAmount())
+                .setRefundableBalance(payModeParam.getAmount())
                 .setBusinessId(payment.getBusinessId())
                 .setUserId(payment.getUserId())
                 .setPayStatus(PayStatusCode.TRADE_SUCCESS)

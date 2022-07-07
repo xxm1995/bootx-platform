@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
- * 微信支付撤销
+ * 微信支付关闭和退款
  * @author xxm
  * @date 2021/6/21
  */
@@ -49,4 +49,5 @@ public class WeChatPayCancelService {
             throw new BizException(errorMsg);
         }
     }
+
 }

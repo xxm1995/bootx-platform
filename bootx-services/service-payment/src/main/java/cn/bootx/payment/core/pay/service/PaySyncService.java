@@ -4,15 +4,14 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PaySyncStatus;
 import cn.bootx.payment.core.pay.PayModelUtil;
-import cn.bootx.payment.core.pay.result.PaySyncResult;
+import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
-import cn.bootx.payment.core.pay.builder.PaymentBuilder;
+import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.pay.PayResult;
-import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayModeParam;
@@ -42,19 +41,19 @@ public class PaySyncService {
     /**
      * 同步订单的支付状态
      */
-    public PaymentDto syncByBusinessId(String businessId){
+    public void syncByBusinessId(String businessId){
         List<Payment> payments = paymentManager.findByBusinessIdNoCancelDesc(businessId);
         if (CollUtil.isEmpty(payments)){
-            return null;
+            return ;
         }
         Payment payment = payments.get(0);
-        return this.syncPayment(payment).toDto();
+        this.syncPayment(payment);
     }
 
     /**
      * 同步支付状态
      */
-    private Payment syncPayment(Payment payment){
+    private void syncPayment(Payment payment){
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
         // 1.获取支付方式，通过工厂生成对应的策略组
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
@@ -104,7 +103,6 @@ public class PaySyncService {
                 throw new BizException("代码有问题");
             }
         }
-        return payment;
     }
 
     /**
@@ -114,8 +112,11 @@ public class PaySyncService {
         // 关闭本地支付记录
         this.doHandler(payment,absPayStrategies,(strategyList, paymentObj) -> {
             strategyList.forEach(AbsPayStrategy::doCloseHandler);
-            // 修改payment支付状态为取消
-            payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
+            // 修改payment支付状态为取消, 退款状态则不进行更新
+            if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDED)&&
+                    !Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDING)){
+                payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
+            }
             paymentManager.updateById(payment);
         });
     }
