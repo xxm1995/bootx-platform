@@ -1,33 +1,27 @@
-package cn.bootx.payment.dto.paymodel.wechat;
+package cn.bootx.payment.param.paymodel.wechat;
 
-import cn.bootx.common.core.enums.SensitiveType;
-import cn.bootx.common.core.rest.dto.BaseDto;
-import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2021/3/19
-*/
-@EqualsAndHashCode(callSuper = true)
+ * 微信支付配置参数
+ * @author xxm
+ * @date 2022/7/7
+ */
 @Data
 @Accessors(chain = true)
-@Schema(title = "微信支付配置")
-public class WeChatPayConfigDto extends BaseDto implements Serializable {
-
+@Schema(title = "微信支付配置参数")
+public class WeChatPayConfigParam {
+    @Schema(description = "主键")
+    private Long id;
     @Schema(description = "名称")
     private String name;
     @Schema(description = "微信商户号")
-    @SensitiveInfo(value = SensitiveType.OTHER)
     private String mchId;
     @Schema(description = "微信应用appId")
-    @SensitiveInfo(value = SensitiveType.OTHER)
     private String appId;
 
     /**
@@ -36,10 +30,8 @@ public class WeChatPayConfigDto extends BaseDto implements Serializable {
     @Schema(description = "api版本")
     private String apiVersion;
     @Schema(description = "商户平台「API安全」中的 APIv2 密钥")
-    @SensitiveInfo(value = SensitiveType.OTHER)
     private String apiKeyV2;
     @Schema(description = "商户平台「API安全」中的 APIv3 密钥")
-    @SensitiveInfo(value = SensitiveType.OTHER)
     private String apiKeyV3;
     @Schema(description = "APPID对应的接口密码，用于获取接口调用凭证access_token时使用")
     private String appSecret;
@@ -47,10 +39,8 @@ public class WeChatPayConfigDto extends BaseDto implements Serializable {
     @Schema(description = "API 证书中的 p12")
     private String p12;
     @Schema(description = "API 证书中的 cert.pem 证书")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String certPem;
     @Schema(description = "API 证书中的 key.pem 私钥")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String keyPem;
 
     @Schema(description = "应用域名，回调中会使用此参数")

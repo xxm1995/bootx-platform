@@ -4,8 +4,8 @@ import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayment;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPaymentDto;
+import cn.bootx.payment.param.paymodel.wechat.WeChatPayConfigParam;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -17,7 +17,7 @@ import org.mapstruct.factory.Mappers;
 public interface WeChatConvert {
     WeChatConvert CONVERT = Mappers.getMapper(WeChatConvert.class);
 
-    WeChatPayConfig convert(WeChatPayConfigDto in);
+    WeChatPayConfig convert(WeChatPayConfigParam in);
 
     WeChatPayConfigDto convert(WeChatPayConfig in);
 

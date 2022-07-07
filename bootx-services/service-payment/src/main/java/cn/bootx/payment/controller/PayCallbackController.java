@@ -1,5 +1,6 @@
 package cn.bootx.payment.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.payment.core.paymodel.alipay.service.AliPayCallbackService;
 import cn.bootx.payment.core.paymodel.wechat.service.WeChatPayCallbackService;
 import com.ijpay.alipay.AliPayApi;
@@ -22,6 +23,7 @@ import java.util.Map;
 * @author xxm
 * @date 2021/2/27
 */
+@IgnoreAuth
 @Slf4j
 @Tag(name ="支付回调")
 @RestController

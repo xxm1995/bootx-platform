@@ -9,6 +9,8 @@ import cn.bootx.payment.dto.paymodel.alipay.AlipayConfigDto;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -77,6 +79,7 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     private String expireTime;
 
     /** 可用支付方式 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String payWays;
 
     /** 是否启用 */

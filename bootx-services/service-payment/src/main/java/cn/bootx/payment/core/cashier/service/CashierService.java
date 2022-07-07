@@ -1,13 +1,9 @@
 package cn.bootx.payment.core.cashier.service;
 
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.util.BigDecimalUtil;
-import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
-import cn.bootx.payment.code.pay.PayWayCode;
-import cn.bootx.payment.core.aggregate.entity.AggregatePayInfo;
 import cn.bootx.payment.core.aggregate.service.AggregateService;
 import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.service.PayService;
@@ -19,14 +15,15 @@ import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.DesensitizedUtil;
-import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 结算台
@@ -39,8 +36,6 @@ import java.util.*;
 public class CashierService {
     private final PayService payService;
     private final AggregateService aggregateService;
-    private final RedisClient redisClient;
-    private final String PREFIX_KEY = "cashier:pay:aggregate:";
 
 
 
@@ -78,31 +73,6 @@ public class CashierService {
             throw new PayFailureException("已经退款");
         }
         return payResult;
-    }
-
-    /**
-     * 扫码发起自动支付
-     */
-    public String aggregatePay(String key, String ua){
-        CashierSinglePayParam cashierSinglePayParam = new CashierSinglePayParam()
-                .setPayWay(PayWayCode.QRCODE);
-        // 判断是哪种支付方式
-        if (ua.contains(PayChannelCode.UA_ALI_PAY)) {
-            cashierSinglePayParam.setPayChannel(PayChannelCode.ALI);
-        }
-        else if (ua.contains(PayChannelCode.UA_WECHAT_PAY)) {
-            cashierSinglePayParam.setPayChannel(PayChannelCode.WECHAT);
-        } else {
-            throw new PayFailureException("不支持的支付方式");
-        }
-        String jsonStr = Optional.ofNullable(redisClient.get(PREFIX_KEY + key))
-                .orElseThrow(() -> new PayFailureException("支付超时"));
-        AggregatePayInfo aggregatePayInfo = JSONUtil.toBean(jsonStr, AggregatePayInfo.class);
-        cashierSinglePayParam.setTitle(aggregatePayInfo.getTitle())
-                .setAmount(aggregatePayInfo.getAmount())
-                .setBusinessId(aggregatePayInfo.getBusinessId());
-        PayResult payResult = this.singlePay(cashierSinglePayParam);
-        return payResult.getAsyncPayInfo().getPayBody();
     }
 
     /**

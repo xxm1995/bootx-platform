@@ -83,7 +83,7 @@ public class WeChatPayCallbackService extends AbsPayCallbackStrategy {
             log.warn("微信回调报文 appId 不合法 {}", callReq);
             return false;
         }
-        return WxPayKit.verifyNotify(params, weChatPayConfig.getApiKey(), SignType.HMACSHA256);
+        return WxPayKit.verifyNotify(params, weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
     }
 
 

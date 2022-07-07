@@ -6,16 +6,14 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.code.paymodel.WeChatPayWay;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
+import cn.bootx.payment.param.paymodel.wechat.WeChatPayConfigParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
-import com.ijpay.wxpay.WxPayApiConfig;
-import com.ijpay.wxpay.WxPayApiConfigKit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,19 +38,20 @@ public class WeChatPayConfigService {
      * 添加微信支付配置
      */
     @Transactional(rollbackFor = Exception.class)
-    public WeChatPayConfigDto add(WeChatPayConfigDto param){
+    public void add(WeChatPayConfigParam param){
         WeChatPayConfig weChatPayConfig = WeChatPayConfig.init(param);
-        WeChatPayConfig save = weChatPayConfigManager.save(weChatPayConfig);
-        return save.toDto();
+        weChatPayConfig.setActivity(false);
+        weChatPayConfigManager.save(weChatPayConfig);
     }
 
     /**
      * 修改
      */
     @Transactional(rollbackFor = Exception.class)
-    public WeChatPayConfigDto update(WeChatPayConfigDto param){
+    public void update(WeChatPayConfigParam param){
         WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("微信支付配置不存在"));
+        param.setActivity(null);
         BeanUtil.copyProperties(param,weChatPayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
         if (CollUtil.isNotEmpty(param.getPayWayList())){
@@ -60,7 +59,7 @@ public class WeChatPayConfigService {
         } else {
             weChatPayConfig.setPayWays(null);
         }
-        return weChatPayConfigManager.updateById(weChatPayConfig).toDto();
+        weChatPayConfigManager.updateById(weChatPayConfig);
     }
 
     /**
@@ -114,36 +113,6 @@ public class WeChatPayConfigService {
         return WeChatPayWay.getPayWays().stream()
                 .map(e->new KeyValue(e.getCode(),e.getName()))
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * 初始化
-     */
-    public static void initApiConfig(WeChatPayConfig weChatPayConfig) {
-        WxPayApiConfig wxPayApiConfig;
-        // 公钥方式
-        if (Objects.equals(weChatPayConfig.getAuthType(), WeChatPayCode.AUTH_TYPE_KEY)){
-            wxPayApiConfig = WxPayApiConfig.builder()
-                    .appId(weChatPayConfig.getAppId())
-                    .mchId(weChatPayConfig.getMchId())
-                    .apiKey(weChatPayConfig.getApiKey())
-                    .certPath(weChatPayConfig.getCertPath())
-                    .domain(weChatPayConfig.getDomain())
-                    .build();
-        }
-        // 证书
-        else if (Objects.equals(weChatPayConfig.getAuthType(), WeChatPayCode.AUTH_TYPE_CART)){
-            wxPayApiConfig = WxPayApiConfig.builder()
-                    .appId(weChatPayConfig.getAppId())
-                    .mchId(weChatPayConfig.getMchId())
-                    .apiKey(weChatPayConfig.getApiKey())
-                    .certPath(weChatPayConfig.getCertPath())
-                    .keyPemPath(weChatPayConfig.getDomain())
-                    .build();
-        } else {
-            throw new BizException("微信支付认证类型配置不存在");
-        }
-        WxPayApiConfigKit.setThreadLocalWxPayApiConfig(wxPayApiConfig);
     }
 
 }

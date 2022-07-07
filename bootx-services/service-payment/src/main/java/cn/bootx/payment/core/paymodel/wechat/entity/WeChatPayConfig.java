@@ -1,11 +1,16 @@
 package cn.bootx.payment.core.paymodel.wechat.entity;
 
+import cn.bootx.common.core.annotation.BigField;
+import cn.bootx.common.core.annotation.EncryptionField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.payment.core.paymodel.wechat.convert.WeChatConvert;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
+import cn.bootx.payment.param.paymodel.wechat.WeChatPayConfigParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,53 +29,55 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
 
     /** 名称 */
     private String name;
-    /** 备注 */
-    private String remark;
-    /** 微信应用appId */
-    private String appId;
     /** 微信商户号 */
     private String mchId;
+    /** 微信应用appId */
+    private String appId;
+
     /**
-     * 认证方式
-     * @see cn.bootx.payment.code.paymodel.WeChatPayCode
+     * api版本
+     * @see cn.bootx.payment.code.paymodel.WeChatPayCode#API_V2
      */
-    private Integer authType;
-    /** 微信服务商应用编号 */
-    private String slAppId;
-    /** 微信服务商商户号 */
-    private String slMchId;
-    /** 同 apiKey 后续版本会舍弃 */
-    private String partnerKey;
-    /** 商户平台「API安全」中的 API 密钥 */
-    private String apiKey;
+    private String apiVersion;
+    /** 商户平台「API安全」中的 APIv2 密钥 */
+    @EncryptionField
+    private String apiKeyV2;
     /** 商户平台「API安全」中的 APIv3 密钥 */
-    private String apiKey3;
+    @EncryptionField
+    private String apiKeyV3;
+    /** APPID对应的接口密码，用于获取接口调用凭证access_token时使用 */
+    @EncryptionField
+    private String appSecret;
+
+    /** API 证书中的 p12 */
+    private String p12;
+    /** API 证书中的 cert.pem 证书*/
+    @BigField
+    @EncryptionField
+    private String certPem;
+    /** API 证书中的 key.pem 私钥*/
+    @BigField
+    @EncryptionField
+    private String keyPem;
+
     /** 应用域名，回调中会使用此参数 */
     private String domain;
     /** 服务器异步通知页面路径 通知url必须为直接可访问的url，不能携带参数。公网域名必须为https  */
     private String notifyUrl;
     /** 页面跳转同步通知页面路径 */
     private String returnUrl;
-    /**
-     * API 证书中的 p12
-     */
-    private String certPath;
-    /**
-     * API 证书中的 key.pem
-     */
-    private String keyPemPath;
-    /**
-     * API 证书中的 cert.pem
-     */
-    private String certPemPath;
+
     /** 是否沙箱环境 */
     private boolean sandbox;
     /** 可用支付方式 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String payWays;
     /** 是否启用 */
     private Boolean activity;
     /** 状态 */
     private Integer state;
+    /** 备注 */
+    private String remark;
 
     @Override
     public WeChatPayConfigDto toDto() {
@@ -81,10 +88,10 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
         return convert;
     }
 
-    public static WeChatPayConfig init(WeChatPayConfigDto dto){
-        WeChatPayConfig convert = WeChatConvert.CONVERT.convert(dto);
-        if (CollUtil.isNotEmpty(dto.getPayWayList())){
-            convert.setPayWays(String.join(",", dto.getPayWayList()));
+    public static WeChatPayConfig init(WeChatPayConfigParam in){
+        WeChatPayConfig convert = WeChatConvert.CONVERT.convert(in);
+        if (CollUtil.isNotEmpty(in.getPayWayList())){
+            convert.setPayWays(String.join(",", in.getPayWayList()));
         }
         return convert;
     }

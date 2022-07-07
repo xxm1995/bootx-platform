@@ -18,8 +18,6 @@ import com.ijpay.core.enums.SignType;
 import com.ijpay.core.enums.TradeType;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.WxPayApi;
-import com.ijpay.wxpay.WxPayApiConfig;
-import com.ijpay.wxpay.WxPayApiConfigKit;
 import com.ijpay.wxpay.model.MicroPayModel;
 import com.ijpay.wxpay.model.UnifiedOrderModel;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +65,7 @@ public class WeChatPayService {
         if (payModeParam.getPayWay() == PayWayCode.WAP){
             payBody = this.wapPay(amount, payment,weChatPayConfig);
         }
-        // 程序支付
+        // APP支付
         else if (payModeParam.getPayWay() == PayWayCode.APP){
             payBody = this.appPay(amount, payment, weChatPayConfig);
         }
@@ -81,7 +79,7 @@ public class WeChatPayService {
         }
         // 付款码支付
         else if (payModeParam.getPayWay() == PayWayCode.BARCODE){
-            this.barCode(amount, payment, weChatPayParam.getAuthCode(),weChatPayParam, weChatPayConfig);
+            this.barCode(amount, payment, weChatPayParam.getAuthCode(), weChatPayConfig);
         }
         // payBody到线程存储
         if (StrUtil.isNotBlank(payBody)) {
@@ -89,17 +87,15 @@ public class WeChatPayService {
                     .setPayBody(payBody);
             AsyncPayInfoLocal.set(asyncPayInfo);
         }
-
     }
 
     /**
      * wap支付
      */
     private String wapPay(BigDecimal amount, Payment payment, WeChatPayConfig weChatPayConfig) {
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.MWEB.getTradeType())
                 .build()
-                .createSign(wxPayApiConfig.getApiKey(), SignType.HMACSHA256);
+                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
 
         String xmlResult = WxPayApi.pushOrder(false, params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
@@ -111,10 +107,9 @@ public class WeChatPayService {
      * 程序支付
      */
     private String appPay(BigDecimal amount, Payment payment, WeChatPayConfig weChatPayConfig) {
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.APP.getTradeType())
                 .build()
-                .createSign(wxPayApiConfig.getApiKey(), SignType.HMACSHA256);
+                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
 
         String xmlResult = WxPayApi.pushOrder(false, params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
@@ -127,11 +122,10 @@ public class WeChatPayService {
      * 微信公众号支付或者小程序支付
      */
     private String jsPay(BigDecimal amount, Payment payment, String openId, WeChatPayConfig weChatPayConfig) {
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.JSAPI.getTradeType())
                 .openid(openId)
                 .build()
-                .createSign(wxPayApiConfig.getApiKey(), SignType.HMACSHA256);
+                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
 
         String xmlResult = WxPayApi.pushOrder(false, params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
@@ -144,10 +138,9 @@ public class WeChatPayService {
      */
     private String qrCodePay(BigDecimal amount, Payment payment, WeChatPayConfig weChatPayConfig) {
 
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.NATIVE.getTradeType())
                 .build()
-                .createSign(wxPayApiConfig.getApiKey(), SignType.HMACSHA256);
+                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
 
         String xmlResult = WxPayApi.pushOrder(false, params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
@@ -158,13 +151,12 @@ public class WeChatPayService {
     /**
      * 条形码支付
      */
-    private void barCode(BigDecimal amount, Payment payment, String authCode, WeChatPayParam weChatPayParam, WeChatPayConfig weChatPayConfig) {
+    private void barCode(BigDecimal amount, Payment payment, String authCode, WeChatPayConfig weChatPayConfig) {
         String totalFee = String.valueOf(amount.multiply(new BigDecimal(100)).longValue());
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
         Map<String, String> params = MicroPayModel
                 .builder()
-                .appid(wxPayApiConfig.getAppId())
-                .mch_id(wxPayApiConfig.getMchId())
+                .appid(weChatPayConfig.getAppId())
+                .mch_id(weChatPayConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body(payment.getTitle())
                 .auth_code(authCode)
@@ -172,11 +164,11 @@ public class WeChatPayService {
                 .total_fee(totalFee)
                 .spbill_create_ip(NetUtil.getLocalhostStr())
                 .build()
-                .createSign(wxPayApiConfig.getApiKey(), SignType.HMACSHA256);
+                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
 
-        String xmlResult = WxPayApi.pushOrder(false, params);
+        String xmlResult = WxPayApi.microPay(false, params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
-        this.verifyErrorMsg(result);
+//        this.verifyErrorMsg(result);
         String tradeType = result.get(WeChatPayCode.TRADE_TYPE);
         // 支付成功处理
         if (Objects.equals(result.get(WeChatPayCode.TRADE_STATE), WeChatPayCode.TRADE_SUCCESS)) {
@@ -194,12 +186,11 @@ public class WeChatPayService {
                                                                    WeChatPayConfig weChatPayConfig,
                                                                    String tradeType){
         String totalFee = String.valueOf(amount.multiply(new BigDecimal(100)).longValue());
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
 
         return UnifiedOrderModel
                 .builder()
-                .appid(wxPayApiConfig.getAppId())
-                .mch_id(wxPayApiConfig.getMchId())
+                .appid(weChatPayConfig.getAppId())
+                .mch_id(weChatPayConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .body(payment.getTitle())
                 .out_trade_no(String.valueOf(payment.getId()))

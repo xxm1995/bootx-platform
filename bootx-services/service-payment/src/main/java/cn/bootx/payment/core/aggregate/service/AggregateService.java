@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.aggregate.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.redis.RedisClient;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.core.aggregate.entity.AggregatePayInfo;
@@ -12,6 +11,8 @@ import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**   
 * 聚合支付
@@ -37,6 +38,15 @@ public class AggregateService {
         String key = RandomUtil.randomString(10);
         redisClient.setWithTimeout(PREFIX_KEY + key, JSONUtil.toJsonStr(aggregatePayInfo),2*60*1000);
         return key;
+    }
+
+    /**
+     * 获取聚合支付信息
+     */
+    public AggregatePayInfo getAggregateInfo(String key){
+        String jsonStr = Optional.ofNullable(redisClient.get(PREFIX_KEY + key))
+                .orElseThrow(() -> new PayFailureException("支付超时"));
+        return JSONUtil.toBean(jsonStr, AggregatePayInfo.class);
     }
 
     /**

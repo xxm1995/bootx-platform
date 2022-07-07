@@ -7,6 +7,7 @@ import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.paymodel.wechat.service.WeChatPayConfigService;
 import cn.bootx.payment.dto.paymodel.wechat.WeChatPayConfigDto;
+import cn.bootx.payment.param.paymodel.wechat.WeChatPayConfigParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 * @author xxm
 * @date 2021/3/19
 */
-@Tag(name ="微信支付")
+@Tag(name ="微信支付配置")
 @RestController
 @RequestMapping("/wechat/pay")
 @AllArgsConstructor
@@ -27,19 +28,21 @@ public class WeChatPayConfigController {
 
     @Operation(summary = "添加微信支付配置")
     @PostMapping("/add")
-    public ResResult<WeChatPayConfigDto> add(@RequestBody WeChatPayConfigDto param){
-        return Res.ok(weChatPayConfigService.add(param));
+    public ResResult<Void> add(@RequestBody WeChatPayConfigParam param){
+        weChatPayConfigService.add(param);
+        return Res.ok();
     }
     
     @Operation(summary = "更新")
     @PostMapping("/update")
-    public ResResult<WeChatPayConfigDto> update(@RequestBody WeChatPayConfigDto param){
-        return Res.ok(weChatPayConfigService.update(param));
+    public ResResult<Void> update(@RequestBody WeChatPayConfigParam param){
+        weChatPayConfigService.update(param);
+        return Res.ok();
     }
     
     @Operation(summary = "设置启用的微信支付配置")
     @PostMapping("/setUpActivity")
-    public ResResult<WeChatPayConfigDto> setUpActivity(Long id){
+    public ResResult<Void> setUpActivity(Long id){
         weChatPayConfigService.setUpActivity(id);
         return Res.ok();
     }

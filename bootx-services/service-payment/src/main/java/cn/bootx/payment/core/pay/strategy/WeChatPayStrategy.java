@@ -83,7 +83,6 @@ public class WeChatPayStrategy extends AbsPayStrategy {
         // 检查并获取微信支付配置
         this.initWeChatPayConfig();
         weChatPayService.validation(this.getPayMode(),weChatPayConfig);
-        WeChatPayConfigService.initApiConfig(weChatPayConfig);
     }
 
     /**
@@ -179,6 +178,5 @@ public class WeChatPayStrategy extends AbsPayStrategy {
         this.weChatPayConfig = Optional.ofNullable(this.weChatPayConfig)
                 .orElse(weChatPayConfigManager.findEnable()
                         .orElseThrow(() -> new PayFailureException("支付配置不存在")));
-        WeChatPayConfigService.initApiConfig(weChatPayConfig);;
     }
 }

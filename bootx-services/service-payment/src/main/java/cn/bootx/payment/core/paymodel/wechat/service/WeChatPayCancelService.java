@@ -8,8 +8,6 @@ import cn.hutool.core.util.StrUtil;
 import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.WxPayApi;
-import com.ijpay.wxpay.WxPayApiConfig;
-import com.ijpay.wxpay.WxPayApiConfigKit;
 import com.ijpay.wxpay.model.CloseOrderModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,14 +29,13 @@ public class WeChatPayCancelService {
      */
     public void cancelRemote(Payment payment, WeChatPayConfig weChatPayConfig) {
         // 只有部分需要调用微信网关进行关闭
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
         Map<String, String> params = CloseOrderModel.builder()
-                .appid(wxPayApiConfig.getAppId())
-                .mch_id(wxPayApiConfig.getMchId())
+                .appid(weChatPayConfig.getAppId())
+                .mch_id(weChatPayConfig.getMchId())
                 .out_trade_no(String.valueOf(payment.getId()))
                 .nonce_str(WxPayKit.generateStr())
                 .build()
-                .createSign(wxPayApiConfig.getApiKey(), SignType.HMACSHA256);
+                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
         String xmlResult = WxPayApi.closeOrder(params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
         String returnCode = result.get(WeChatPayCode.RETURN_CODE);

@@ -7,6 +7,11 @@ package cn.bootx.payment.code.paymodel;
 */
 public interface WeChatPayCode {
 
+    // 版本
+    String API_V2 = "api_v2";
+    String API_V3 = "api_v3";
+
+
     // 认证类型
     /** 公钥 */
     int AUTH_TYPE_KEY = 1;

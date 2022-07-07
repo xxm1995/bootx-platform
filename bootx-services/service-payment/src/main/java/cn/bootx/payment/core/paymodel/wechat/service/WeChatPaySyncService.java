@@ -8,8 +8,6 @@ import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.WxPayKit;
 import com.ijpay.wxpay.WxPayApi;
-import com.ijpay.wxpay.WxPayApiConfig;
-import com.ijpay.wxpay.WxPayApiConfigKit;
 import com.ijpay.wxpay.model.UnifiedOrderModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,17 +32,16 @@ public class WeChatPaySyncService {
      * 同步查询
      */
     public PaySyncResult syncPayStatus(Long paymentId, WeChatPayConfig weChatPayConfig) {
-        WxPayApiConfig wxPayApiConfig = WxPayApiConfigKit.getWxPayApiConfig();
         PaySyncResult paySyncResult = new PaySyncResult()
                 .setPaySyncStatus(PaySyncStatus.FAIL);
         Map<String, String> params = UnifiedOrderModel
                 .builder()
-                .appid(wxPayApiConfig.getAppId())
-                .mch_id(wxPayApiConfig.getMchId())
+                .appid(weChatPayConfig.getAppId())
+                .mch_id(weChatPayConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
                 .out_trade_no(String.valueOf(paymentId))
                 .build()
-                .createSign(wxPayApiConfig.getApiKey(), SignType.HMACSHA256);
+                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
         try {
             String xmlResult = WxPayApi.orderQuery(params);
             Map<String, String> result = WxPayKit.xmlToMap(xmlResult);

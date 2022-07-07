@@ -70,7 +70,7 @@ public class WeChatPaymentService {
         Payment payment = paymentManager.findById(id)
                 .orElseThrow(() -> new BizException("支付记录不存在"));
 
-        // 创建支付宝支付记录
+        // 创建微信支付记录
         WeChatPayment wechatPayment = new WeChatPayment();
         wechatPayment.setTradeNo(tradeNo)
                 .setPaymentId(payment.getId())
@@ -79,7 +79,7 @@ public class WeChatPaymentService {
                 .setUserId(payment.getUserId())
                 .setPayStatus(PayStatusCode.TRADE_SUCCESS)
                 .setPayTime(LocalDateTime.now());
-        weChatPaymentManager.updateById(wechatPayment);
+        weChatPaymentManager.save(wechatPayment);
     }
 
     /**
