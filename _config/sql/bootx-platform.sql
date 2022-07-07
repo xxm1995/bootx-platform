@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : bootx
+ Source Server         : 阿里
  Source Server Type    : MySQL
  Source Server Version : 50735
 
@@ -9,7 +9,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 03/07/2022 21:35:28
+ Date: 07/07/2022 10:57:51
 */
 
 SET NAMES utf8mb4;
@@ -421,9 +421,9 @@ CREATE TABLE `flyway_schema_history`  (
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-07-03 21:33:10', 65866, 1);
-INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-07-03 21:33:11', 727, 1);
-INSERT INTO `flyway_schema_history` VALUES (3, '1.1.0.220702', 'bate4', 'SQL', 'V1.1.0_220702__bate4.sql', 764266899, 'bootx', '2022-07-03 21:33:17', 5646, 1);
+INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-07-07 10:32:27', 83640, 1);
+INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-07-07 10:32:28', 723, 1);
+INSERT INTO `flyway_schema_history` VALUES (3, '1.1.0.220702', 'bate4', 'SQL', 'V1.1.0_220702__bate4.sql', 764266899, 'bootx', '2022-07-07 10:32:35', 6172, 1);
 
 -- ----------------------------
 -- Table structure for goods_brand
@@ -1117,7 +1117,7 @@ CREATE TABLE `iam_role_path`  (
 -- ----------------------------
 -- Table structure for iam_user_data_scope
 -- ----------------------------
-DROP TABLE IF EXISTS `iam_user_data_scope`;``
+DROP TABLE IF EXISTS `iam_user_data_scope`;
 CREATE TABLE `iam_user_data_scope`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
