@@ -63,7 +63,7 @@ public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<Ref
 
     /**
      * 退款状态
-     * @see cn.bootx.payment.code.pay.PayStatusCode
+     * @see cn.bootx.payment.code.pay.PayStatusCode#REFUND_PROCESS_FAIL
      */
     private int refundStatus;
 

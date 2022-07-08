@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.wechat.entity;
 
+import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.annotation.EncryptionField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
@@ -48,8 +49,18 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
     @EncryptionField
     private String appSecret;
 
-    /** API 证书中的 p12 */
-    private byte[] p12;
+    /** API 证书中的 p12 文件id */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @EncryptionField
+    private Long p12;
+
+    @BigField
+    @EncryptionField
+    private String certPem;
+    /** API 证书中的 key.pem 私钥*/
+    @BigField
+    @EncryptionField
+    private String keyPem;
 
     /** 应用域名，回调中会使用此参数 */
     private String domain;

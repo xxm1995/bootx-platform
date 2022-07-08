@@ -44,8 +44,8 @@ public class WeChatPayConfigDto extends BaseDto implements Serializable {
     @Schema(description = "APPID对应的接口密码，用于获取接口调用凭证access_token时使用")
     private String appSecret;
 
-    @Schema(description = "API 证书中的 p12")
-    private String p12;
+    @Schema(description = "API 证书中的 p12 文件id")
+    private Long p12;
     @Schema(description = "API 证书中的 cert.pem 证书")
     @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String certPem;

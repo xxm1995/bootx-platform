@@ -3,7 +3,6 @@ package cn.bootx.payment.core.paymodel.wechat.service;
 import cn.bootx.payment.code.pay.PaySyncStatus;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
-import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPayConfigManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import com.ijpay.core.enums.SignType;
 import com.ijpay.core.kit.WxPayKit;
@@ -26,7 +25,6 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class WeChatPaySyncService {
-    private final WeChatPayConfigManager weChatPayConfigManager;
 
     /**
      * 同步查询

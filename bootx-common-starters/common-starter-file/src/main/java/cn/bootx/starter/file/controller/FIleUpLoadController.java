@@ -70,8 +70,8 @@ public class FIleUpLoadController {
 
     @Operation(summary = "下载文件")
     @GetMapping("/download/{id}")
-    public ResponseEntity<byte[]> download(@PathVariable Long id, HttpServletResponse response){
-        return uploadService.download(id,response);
+    public ResponseEntity<byte[]> download(@PathVariable Long id){
+        return uploadService.download(id);
     }
 
 }

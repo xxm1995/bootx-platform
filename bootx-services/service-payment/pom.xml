@@ -72,6 +72,12 @@
             <artifactId>common-starter-auth</artifactId>
         </dependency>
 
+        <!-- 文件管理 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-file</artifactId>
+        </dependency>
+
         <!-- 超级查询 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>

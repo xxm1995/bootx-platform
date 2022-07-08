@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.pay.service;
 
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.common.spring.util.WebServletUtil;
 import cn.bootx.payment.code.pay.PayStatusCode;
@@ -25,7 +24,6 @@ import cn.bootx.payment.param.refund.RefundParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
@@ -207,7 +205,7 @@ public class PayRefundService {
     }
 
     /**
-     * 保存退款记录
+     * 保存退款记录 成不成功都记录
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveRefund(Payment payment, BigDecimal amount, List<RefundModeParam> refundModeParams){

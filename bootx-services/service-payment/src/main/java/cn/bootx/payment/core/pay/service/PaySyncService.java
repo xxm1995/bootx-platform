@@ -12,6 +12,7 @@ import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.pay.PayResult;
+import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayModeParam;
@@ -111,12 +112,12 @@ public class PaySyncService {
     private void paymentCancel(Payment payment, List<AbsPayStrategy> absPayStrategies) {
         // 关闭本地支付记录
         this.doHandler(payment,absPayStrategies,(strategyList, paymentObj) -> {
-            strategyList.forEach(AbsPayStrategy::doCloseHandler);
             // 修改payment支付状态为取消, 退款状态则不进行更新
             if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDED)&&
                     !Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDING)){
                 payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
             }
+            strategyList.forEach(AbsPayStrategy::doCloseHandler);
             paymentManager.updateById(payment);
         });
     }
@@ -163,7 +164,8 @@ public class PaySyncService {
      */
     private void errorHandler(Payment payment, List<AbsPayStrategy> strategyList, Exception e) {
         // 待编写
-        log.warn("支付状态同步方法报错了");
+        log.warn("支付状态同步方法报错了",e);
+        throw new PayFailureException("支付状态同步方法报错了");
     }
 
 }

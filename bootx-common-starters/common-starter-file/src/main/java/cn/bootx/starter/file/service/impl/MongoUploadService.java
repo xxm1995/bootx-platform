@@ -73,7 +73,7 @@ public class MongoUploadService implements UploadService {
 
     @SneakyThrows
     @Override
-    public InputStream download(UpdateFileInfo updateFileInfo, HttpServletResponse response) {
+    public InputStream download(UpdateFileInfo updateFileInfo) {
         Criteria criteria = Criteria.where("_id").is(new ObjectId(updateFileInfo.getExternalStorageId()));
         Query query = new Query(criteria);
 

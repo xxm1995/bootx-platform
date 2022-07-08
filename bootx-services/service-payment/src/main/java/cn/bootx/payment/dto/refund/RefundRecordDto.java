@@ -59,7 +59,7 @@ public class RefundRecordDto extends BaseDto {
     private String refundableInfo;
 
     /**
-     * @see cn.bootx.payment.code.pay.PayStatusCode
+     * @see cn.bootx.payment.code.pay.PayStatusCode#REFUND_PROCESS_FAIL
      */
     @Schema(description = "退款状态")
     private int refundStatus;

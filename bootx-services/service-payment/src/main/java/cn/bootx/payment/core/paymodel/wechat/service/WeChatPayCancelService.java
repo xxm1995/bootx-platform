@@ -7,6 +7,7 @@ import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayment;
 import cn.bootx.payment.exception.payment.PayFailureException;
+import cn.bootx.starter.file.service.FileUploadService;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.ijpay.core.enums.SignType;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 微信支付关闭和退款
@@ -31,6 +33,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class WeChatPayCancelService {
+    private final FileUploadService uploadService;
     /**
      * 关闭支付
      */
@@ -75,11 +78,13 @@ public class WeChatPayCancelService {
                 .nonce_str(WxPayKit.generateStr())
                 .build()
                 .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(weChatPayConfig.getP12());
-            // 证书密码为 微信商户号
-            String xmlResult = WxPayApi.orderRefund(false, params, "d:\\apiclient_cert.p12", weChatPayConfig.getMchId());
-            Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
-            this.verifyErrorMsg(result);
+        // 获取证书文件流
+        byte[] fileBytes = uploadService.getFileBytes(weChatPayConfig.getP12());
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(fileBytes);
+        // 证书密码为 微信商户号
+        String xmlResult = WxPayApi.orderRefund(false, params, inputStream, weChatPayConfig.getMchId());
+        Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
+        this.verifyErrorMsg(result);
     }
     /**
      * 验证错误信息
@@ -93,6 +98,8 @@ public class WeChatPayCancelService {
                 errorMsg = result.get(WeChatPayCode.RETURN_MSG);
             }
             log.error("退款失败 {}", errorMsg);
+            AsyncRefundLocal.setErrorMsg(errorMsg);
+            AsyncRefundLocal.setErrorCode(Optional.ofNullable(resultCode).orElse(returnCode));
             throw new PayFailureException(errorMsg);
         }
     }

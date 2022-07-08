@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.Optional;
 
 /**   
@@ -80,12 +81,12 @@ public class LocalUploadService implements UploadService {
      */
     @SneakyThrows
     @Override
-    public InputStream download(UpdateFileInfo updateFileInfo, HttpServletResponse response){
+    public InputStream download(UpdateFileInfo updateFileInfo){
         String storePath = fileUploadProperties.getLocal().getLocalPath() + updateFileInfo.getFilePath();
         File file = new File(storePath);
         if (!file.exists()){
             throw new BizException("文件不存在");
         }
-        return new FileInputStream(file);
+        return Files.newInputStream(file.toPath());
     }
 }

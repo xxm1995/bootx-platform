@@ -30,5 +30,5 @@ public interface UploadService {
     /**
      * 下载文件
      */
-    InputStream download(UpdateFileInfo updateFileInfo, HttpServletResponse response);
+    InputStream download(UpdateFileInfo updateFileInfo);
 }

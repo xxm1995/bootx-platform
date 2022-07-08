@@ -32,7 +32,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**   
-* 文件上传
+* 文件上传管理类
 * @author xxm  
 * @date 2022/1/14 
 */
@@ -64,7 +64,7 @@ public class FileUploadService {
         if (StrUtil.isBlank(fileName)){
             fileName = file.getOriginalFilename();
         }
-        String fileType = FileTypeUtil.getType(file.getInputStream());
+        String fileType = FileTypeUtil.getType(file.getInputStream(),fileName);
         String fileSuffix = fileType;
 
         // 获取不到类型名,后缀名使用上传文件名称的后缀
@@ -101,20 +101,34 @@ public class FileUploadService {
     /**
      * 文件下载
      */
-    public ResponseEntity<byte[]> download(Long id, HttpServletResponse response){
+    public ResponseEntity<byte[]> download(Long id){
         val uploadType = fileUploadProperties.getUploadType();
         UploadService uploadService = uploadServices.stream()
                 .filter(s -> s.enable(uploadType))
                 .findFirst()
-                .orElseThrow(() -> new BizException("未找到该类的上传处理器"));
+                .orElseThrow(() -> new BizException("未找到该类文件的处理器"));
         UpdateFileInfo updateFileInfo = updateFileManager.findById(id).orElseThrow(() -> new BizException("文件不存在"));
-        InputStream inputStream = uploadService.download(updateFileInfo, response);
+        InputStream inputStream = uploadService.download(updateFileInfo);
         //设置header信息
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment",
                 new String(updateFileInfo.getFileName().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
         return new ResponseEntity<>(IoUtil.readBytes(inputStream),headers, HttpStatus.OK);
+    }
+
+    /**
+     * 获取文件字节数组
+     */
+    public byte[] getFileBytes(Long id){
+        val uploadType = fileUploadProperties.getUploadType();
+        UploadService uploadService = uploadServices.stream()
+                .filter(s -> s.enable(uploadType))
+                .findFirst()
+                .orElseThrow(() -> new BizException("未找到该类文件的处理器"));
+        UpdateFileInfo updateFileInfo = updateFileManager.findById(id).orElseThrow(() -> new BizException("文件不存在"));
+        InputStream inputStream = uploadService.download(updateFileInfo);
+        return IoUtil.readBytes(inputStream);
     }
 
     /**
