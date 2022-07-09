@@ -40,24 +40,28 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
      */
     private String apiVersion;
     /** 商户平台「API安全」中的 APIv2 密钥 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @EncryptionField
     private String apiKeyV2;
     /** 商户平台「API安全」中的 APIv3 密钥 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @EncryptionField
     private String apiKeyV3;
-    /** APPID对应的接口密码，用于获取接口调用凭证access_token时使用 */
+    /** APPID对应的接口密码，用于获取微信公众号jsapi支付时使用 */
     @EncryptionField
     private String appSecret;
 
-    /** API 证书中的 p12 文件id */
+    /** API 证书中的 p12 文件存储的 id */
     @TableField(updateStrategy = FieldStrategy.IGNORED)
     @EncryptionField
     private Long p12;
-
+    /** API 证书中的 cert.pem 证书*/
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @BigField
     @EncryptionField
     private String certPem;
     /** API 证书中的 key.pem 私钥*/
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
     @BigField
     @EncryptionField
     private String keyPem;

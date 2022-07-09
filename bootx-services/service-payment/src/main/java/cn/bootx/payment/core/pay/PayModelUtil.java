@@ -59,6 +59,7 @@ public class PayModelUtil {
             }
             case WECHAT:{
                 return JSONUtil.toJsonStr(new WeChatPayParam()
+                        .setOpenId(map.get(PayModelExtraCode.OPEN_ID))
                         .setAuthCode(map.get(PayModelExtraCode.AUTH_CODE)));
             }
             case VOUCHER:{
@@ -67,7 +68,7 @@ public class PayModelUtil {
                 if (StrUtil.isNotBlank(voucherNo)){
                     list.add(voucherNo);
                 }
-               return JSONUtil.toJsonStr(new VoucherPayParam().setCardNoList(list));
+                return JSONUtil.toJsonStr(new VoucherPayParam().setCardNoList(list));
             }
             default:{
                 return null;

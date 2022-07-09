@@ -68,7 +68,6 @@ public class WeChatPayStrategy extends AbsPayStrategy {
             // 微信参数验证
             String extraParamsJson = this.getPayMode().getExtraParamsJson();
             if (StrUtil.isNotBlank(extraParamsJson)){
-
                 this.weChatPayParam = JSONUtil.toBean(extraParamsJson, WeChatPayParam.class);
             } else {
                 this.weChatPayParam = new WeChatPayParam();

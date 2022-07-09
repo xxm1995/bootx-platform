@@ -97,16 +97,8 @@ public class PayCancelService {
             successCallback.accept(strategyList, payment);
         } catch (Exception e) {
             // error事件的处理
-            this.errorHandler(payment, strategyList, e);
+            log.warn("取消订单失败");
             throw e;
         }
-    }
-
-    /**
-     * 对Error的处理
-     */
-    private void errorHandler(Payment payment, List<AbsPayStrategy> strategyList, Exception e) {
-        // 待编写
-        log.warn("取消订单失败");
     }
 }

@@ -22,6 +22,9 @@ public class CashierSinglePayParam {
     @Schema(description = "金额")
     private BigDecimal amount;
 
+    @Schema(description = "openId")
+    private String openId;
+
     @Schema(description = "支付通道")
     private Integer payChannel;
 

@@ -44,7 +44,7 @@ public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<Ref
     /** 标题 */
     private String title;
 
-    /** 金额 */
+    /** 退款金额 */
     private BigDecimal amount;
 
     /** 剩余可退 */

@@ -59,6 +59,12 @@
             <version>${IJPay.version}</version>
         </dependency>
 
+        <!-- 微信公众号API -->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-mp</artifactId>
+        </dependency>
+
         <!-- 身份识别与访问管理 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>

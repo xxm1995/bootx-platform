@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.pay.local.AsyncRefundLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
@@ -48,16 +47,7 @@ public class WeChatPayCancelService {
                 .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
         String xmlResult = WxPayApi.closeOrder(params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
-        String returnCode = result.get(WeChatPayCode.RETURN_CODE);
-        String resultCode = result.get(WeChatPayCode.RESULT_CODE);
-        if (!WxPayKit.codeIsOk(returnCode) || !WxPayKit.codeIsOk(resultCode)) {
-            String errorMsg = result.get(WeChatPayCode.ERR_CODE_DES);
-            if (StrUtil.isBlank(errorMsg)) {
-                errorMsg = result.get(WeChatPayCode.RETURN_MSG);
-            }
-            log.error("关闭订单失败 {}", errorMsg);
-            throw new BizException(errorMsg);
-        }
+        this.verifyErrorMsg(result);
     }
 
     /**
@@ -97,7 +87,7 @@ public class WeChatPayCancelService {
             if (StrUtil.isBlank(errorMsg)){
                 errorMsg = result.get(WeChatPayCode.RETURN_MSG);
             }
-            log.error("退款失败 {}", errorMsg);
+            log.error("订单退款/关闭失败 {}", errorMsg);
             AsyncRefundLocal.setErrorMsg(errorMsg);
             AsyncRefundLocal.setErrorCode(Optional.ofNullable(resultCode).orElse(returnCode));
             throw new PayFailureException(errorMsg);

@@ -153,20 +153,12 @@ public class PayRefundService {
             // 执行
             successCallback.accept(strategyList, payment);
         } catch (Exception e) {
-            // error事件的处理
-            this.errorHandler(payment, strategyList, e);
+            log.warn("退款失败");
             throw e;
         } finally {
             // 清除
             AsyncRefundLocal.clear();
         }
-    }
-
-    /**
-     * 对Error的处理
-     */
-    private void errorHandler(Payment payment, List<AbsPayStrategy> strategyList, Exception e) {
-        log.warn("退款失败");
     }
 
     /**

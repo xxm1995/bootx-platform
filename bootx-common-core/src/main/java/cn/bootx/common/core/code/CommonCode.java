@@ -7,6 +7,9 @@ package cn.bootx.common.core.code;
  */
 public interface CommonCode {
 
+    /** 服务器地址 */
+    String SERVER_URL = "ServerUrl";
+
     /** 开发环境 */
     String ENV_DEV = "dev";
     /** 测试环境 */

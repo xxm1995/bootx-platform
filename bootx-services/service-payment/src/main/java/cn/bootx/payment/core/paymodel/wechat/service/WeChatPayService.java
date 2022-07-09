@@ -58,28 +58,29 @@ public class WeChatPayService {
      * 支付
      */
     public void pay(BigDecimal amount, Payment payment, WeChatPayParam weChatPayParam, PayModeParam payModeParam, WeChatPayConfig weChatPayConfig){
+        String totalFee = String.valueOf(amount.multiply(new BigDecimal(100)).longValue());
 
         String payBody = null;
 
         // wap支付
         if (payModeParam.getPayWay() == PayWayCode.WAP){
-            payBody = this.wapPay(amount, payment,weChatPayConfig);
+            payBody = this.wapPay(totalFee, payment,weChatPayConfig);
         }
         // APP支付
         else if (payModeParam.getPayWay() == PayWayCode.APP){
-            payBody = this.appPay(amount, payment, weChatPayConfig);
+            payBody = this.appPay(totalFee, payment, weChatPayConfig);
         }
         // 微信公众号支付或者小程序支付
         else if (payModeParam.getPayWay() == PayWayCode.JSAPI){
-            payBody = this.jsPay(amount, payment,weChatPayParam.getOpenId(), weChatPayConfig);
+            payBody = this.jsPay(totalFee, payment,weChatPayParam.getOpenId(), weChatPayConfig);
         }
         // 二维码支付
         else if (payModeParam.getPayWay() == PayWayCode.QRCODE){
-            payBody = this.qrCodePay(amount, payment, weChatPayConfig);
+            payBody = this.qrCodePay(totalFee, payment, weChatPayConfig);
         }
         // 付款码支付
         else if (payModeParam.getPayWay() == PayWayCode.BARCODE){
-            this.barCode(amount, payment, weChatPayParam.getAuthCode(), weChatPayConfig);
+            this.barCode(totalFee, payment, weChatPayParam.getAuthCode(), weChatPayConfig);
         }
         // payBody到线程存储
         if (StrUtil.isNotBlank(payBody)) {
@@ -92,7 +93,7 @@ public class WeChatPayService {
     /**
      * wap支付
      */
-    private String wapPay(BigDecimal amount, Payment payment, WeChatPayConfig weChatPayConfig) {
+    private String wapPay(String amount, Payment payment, WeChatPayConfig weChatPayConfig) {
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.MWEB.getTradeType())
                 .build()
                 .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
@@ -106,7 +107,7 @@ public class WeChatPayService {
     /**
      * 程序支付
      */
-    private String appPay(BigDecimal amount, Payment payment, WeChatPayConfig weChatPayConfig) {
+    private String appPay(String amount, Payment payment, WeChatPayConfig weChatPayConfig) {
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.APP.getTradeType())
                 .build()
                 .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
@@ -121,7 +122,7 @@ public class WeChatPayService {
     /**
      * 微信公众号支付或者小程序支付
      */
-    private String jsPay(BigDecimal amount, Payment payment, String openId, WeChatPayConfig weChatPayConfig) {
+    private String jsPay(String amount, Payment payment, String openId, WeChatPayConfig weChatPayConfig) {
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.JSAPI.getTradeType())
                 .openid(openId)
                 .build()
@@ -136,7 +137,7 @@ public class WeChatPayService {
     /**
      * 二维码支付
      */
-    private String qrCodePay(BigDecimal amount, Payment payment, WeChatPayConfig weChatPayConfig) {
+    private String qrCodePay(String amount, Payment payment, WeChatPayConfig weChatPayConfig) {
 
         Map<String, String> params = this.buildParams(amount,payment,weChatPayConfig,TradeType.NATIVE.getTradeType())
                 .build()
@@ -151,8 +152,7 @@ public class WeChatPayService {
     /**
      * 条形码支付
      */
-    private void barCode(BigDecimal amount, Payment payment, String authCode, WeChatPayConfig weChatPayConfig) {
-        String totalFee = String.valueOf(amount.multiply(new BigDecimal(100)).longValue());
+    private void barCode(String amount, Payment payment, String authCode, WeChatPayConfig weChatPayConfig) {
         Map<String, String> params = MicroPayModel
                 .builder()
                 .appid(weChatPayConfig.getAppId())
@@ -161,7 +161,7 @@ public class WeChatPayService {
                 .body(payment.getTitle())
                 .auth_code(authCode)
                 .out_trade_no(String.valueOf(payment.getId()))
-                .total_fee(totalFee)
+                .total_fee(amount)
                 .spbill_create_ip(NetUtil.getLocalhostStr())
                 .build()
                 .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
@@ -181,12 +181,10 @@ public class WeChatPayService {
     /**
      * 构建参数
      */
-    private UnifiedOrderModel.UnifiedOrderModelBuilder buildParams(BigDecimal amount,
+    private UnifiedOrderModel.UnifiedOrderModelBuilder buildParams(String amount,
                                                                    Payment payment,
                                                                    WeChatPayConfig weChatPayConfig,
                                                                    String tradeType){
-        String totalFee = String.valueOf(amount.multiply(new BigDecimal(100)).longValue());
-
         return UnifiedOrderModel
                 .builder()
                 .appid(weChatPayConfig.getAppId())
@@ -194,7 +192,7 @@ public class WeChatPayService {
                 .nonce_str(WxPayKit.generateStr())
                 .body(payment.getTitle())
                 .out_trade_no(String.valueOf(payment.getId()))
-                .total_fee(totalFee)
+                .total_fee(amount)
                 .spbill_create_ip(NetUtil.getLocalhostStr())
                 .notify_url(weChatPayConfig.getNotifyUrl())
                 .trade_type(tradeType);

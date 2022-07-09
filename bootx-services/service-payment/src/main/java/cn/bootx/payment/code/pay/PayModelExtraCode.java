@@ -10,6 +10,9 @@ public interface PayModelExtraCode {
     /** 付款码 */
     String AUTH_CODE = "authCode";
 
+    /** openId */
+    String OPEN_ID = "openId";
+
     /** 单张储值卡 */
     String VOUCHER_NO = "voucherNo";
 

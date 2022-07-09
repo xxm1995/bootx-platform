@@ -36,7 +36,7 @@ public class AggregateService {
                 .setTitle(param.getTitle())
                 .setBusinessId(param.getBusinessId());
         String key = RandomUtil.randomString(10);
-        redisClient.setWithTimeout(PREFIX_KEY + key, JSONUtil.toJsonStr(aggregatePayInfo),2*60*1000);
+        redisClient.setWithTimeout(PREFIX_KEY + key, JSONUtil.toJsonStr(aggregatePayInfo),5*60*1000);
         return key;
     }
 

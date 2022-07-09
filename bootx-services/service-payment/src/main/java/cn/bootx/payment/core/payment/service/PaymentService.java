@@ -6,7 +6,6 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.exception.payment.PayFailureException;
-import cn.bootx.payment.exception.payment.PayIsProcessingException;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
@@ -37,12 +36,6 @@ public class PaymentService {
         List<Payment> payments = paymentManager.findByBusinessIdNoCancelDesc(businessId);
         if (!CollectionUtil.isEmpty(payments)) {
             Payment  payment = payments.get(0);
-
-            // 支付中 (非异步支付方式下)
-            if (payment.getPayStatus() == PayStatusCode.TRADE_PROGRESS) {
-                throw new PayIsProcessingException();
-            }
-
             // 支付失败
             List<Integer> trades = Arrays.asList(PayStatusCode.TRADE_FAIL, PayStatusCode.TRADE_CANCEL);
             if (trades.contains(payment.getPayStatus())) {

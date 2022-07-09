@@ -32,7 +32,7 @@ public interface WeChatPayCode {
     /**
      * 预支付交易会话ID
      */
-    String PREPAY_ID = "prepayid";
+    String PREPAY_ID = "prepay_id";
 
     /**
      * 返回状态码
