@@ -260,7 +260,6 @@ public class WeChatPayService {
     @Retryable(value = RetryableException.class, maxAttempts = 20, backoff = @Backoff(value = 5000L))
     public void rotationSync(Payment payment, WeChatPayConfig weChatPayConfig){
         PaySyncResult paySyncResult = weChatPaySyncService.syncPayStatus(payment.getId(), weChatPayConfig);
-        log.info("同步中");
         // 不为支付中状态后, 调用系统同步更新状态, 支付状态则继续重试
         if (Objects.equals(WAIT_BUYER_PAY,paySyncResult.getPaySyncStatus())){
             throw new RetryableException();

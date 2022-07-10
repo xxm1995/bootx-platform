@@ -85,7 +85,7 @@ public class PaySyncService {
                 log.warn("依然是代付款状态");
                 break;
             }
-            // 网关已经超时关闭 和 网关没找到记录
+            // 订单已经关闭超时关闭 和 网关没找到记录
             case PaySyncStatus.TRADE_CLOSED:
             case PaySyncStatus.NOT_FOUND: {
                 // 判断下是否超时, 同时payment 变更为取消支付
@@ -117,10 +117,14 @@ public class PaySyncService {
         // 关闭本地支付记录
         this.doHandler(payment,absPayStrategies,(strategyList, paymentObj) -> {
             // 修改payment支付状态为取消, 退款状态则不进行更新
-            if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDED)&&
-                    !Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDING)){
-                payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
+            if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDED)){
+                return;
             }
+            if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDING)){
+                return;
+            }
+
+            payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
             strategyList.forEach(AbsPayStrategy::doCloseHandler);
             paymentManager.updateById(payment);
         });
@@ -142,6 +146,14 @@ public class PaySyncService {
         if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
             return;
         }
+        // 退款的不处理
+        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDED)){
+            return;
+        }
+        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDING)){
+            return;
+        }
+
         syncPayStrategy.doAsyncSuccessHandler(paySyncResult.getMap());
         // 修改payment支付状态为成功
         payment.setPayStatus(PayStatusCode.TRADE_SUCCESS);
