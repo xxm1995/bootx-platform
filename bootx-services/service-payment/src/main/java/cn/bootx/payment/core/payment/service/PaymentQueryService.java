@@ -53,7 +53,7 @@ public class PaymentQueryService {
      * 根据业务ID获取支付状态
      */
     public Integer findStatusByBusinessId(String businessId){
-        // 根据订单查询支付记录
+        // 根据订单查询支付记录 TODO 加缓存
         List<Payment> payments = paymentManager.findByBusinessIdNoCancelDesc(businessId);
         if (!CollectionUtil.isEmpty(payments)) {
             Payment payment = payments.get(0);

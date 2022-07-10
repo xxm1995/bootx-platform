@@ -3,10 +3,12 @@ package cn.bootx.payment.core.paymodel.alipay.service;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
+import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.alipay.dao.AliPaymentManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AliPayment;
+import cn.bootx.payment.dto.pay.AsyncPayInfo;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.exception.payment.PayFailureException;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -59,6 +62,11 @@ public class AliPaymentService {
                 .setPayChannel(PayChannelCode.ALI)
                 .setAmount(payModeParam.getAmount()));
         payment.setRefundableInfo(JSONUtil.toJsonStr(refundableInfos));
+        // 如果支付完成(付款码情况) 调用 updateSyncSuccess 创建支付宝支付记录
+        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+            AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();
+            this.updateAsyncSuccess(payment.getId(),payModeParam,asyncPayInfo.getTradeNo());
+        }
     }
 
     /**

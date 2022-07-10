@@ -15,8 +15,10 @@ public interface PaySyncStatus {
     int WAIT_BUYER_PAY = 2;
     /** 3 已关闭 */
     int TRADE_CLOSED = 3;
-    /** 4 查询不到订单 */
-    int NOT_FOUND = 4;
-    /** 5 查询失败 */
-    int FAIL = 5;
+    /** 4 已退款 */
+    int TRADE_REFUND = 4;
+    /** 5 查询不到订单 */
+    int NOT_FOUND = 5;
+    /** 4 查询失败 */
+    int FAIL = 6;
 }

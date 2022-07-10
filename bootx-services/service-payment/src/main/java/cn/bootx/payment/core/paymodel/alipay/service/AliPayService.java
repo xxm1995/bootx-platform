@@ -27,10 +27,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+
+import static cn.bootx.payment.code.paymodel.AliPayCode.BAR_CODE;
+import static cn.bootx.payment.code.paymodel.AliPayCode.QUICK_MSECURITY_PAY;
 
 /**
  * 支付宝支付service
@@ -63,6 +63,7 @@ public class AliPayService {
      */
     public void pay(BigDecimal amount, Payment payment, AliPayParam aliPayParam, PayModeParam payModeParam, AlipayConfig alipayConfig){
         String payBody = null;
+        String tradeNo = null;
         // wap支付
         if (payModeParam.getPayWay()== PayWayCode.WAP){
             payBody = this.wapPay(amount, payment,alipayConfig,aliPayParam);
@@ -81,17 +82,15 @@ public class AliPayService {
         }
         // 付款码支付
         else if (payModeParam.getPayWay() == PayWayCode.BARCODE){
-            this.barCode(amount, payment,aliPayParam, alipayConfig);
+            tradeNo = this.barCode(amount, payment,aliPayParam, alipayConfig);
         }
 
         // payBody到线程存储
-        if (StrUtil.isNotBlank(payBody)) {
-            AsyncPayInfo asyncPayInfo = new AsyncPayInfo()
-                    .setPayBody(payBody);
-            AsyncPayInfoLocal.set(asyncPayInfo);
-        }
+        AsyncPayInfo asyncPayInfo = Optional.ofNullable(AsyncPayInfoLocal.get()).orElse(new AsyncPayInfo());
+        asyncPayInfo.setPayBody(payBody)
+                .setTradeNo(tradeNo);
+        AsyncPayInfoLocal.set(asyncPayInfo);
     }
-
 
     /**
      * wap支付
@@ -130,6 +129,7 @@ public class AliPayService {
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 
         model.setSubject(payment.getTitle());
+        model.setProductCode(QUICK_MSECURITY_PAY);
         model.setOutTradeNo(String.valueOf(payment.getId()));
         // 过期时间
         model.setTimeoutExpress(alipayConfig.getExpireTime());
@@ -198,12 +198,12 @@ public class AliPayService {
     /**
      * 付款码支付
      */
-    public void barCode(BigDecimal amount, Payment payment, AliPayParam aliPayParam, AlipayConfig alipayConfig) {
+    public String barCode(BigDecimal amount, Payment payment, AliPayParam aliPayParam, AlipayConfig alipayConfig) {
         AlipayTradePayModel model = new AlipayTradePayModel();
 
         model.setSubject(payment.getTitle());
         model.setOutTradeNo(String.valueOf(payment.getId()));
-        model.setScene("bar_code");
+        model.setScene(BAR_CODE);
         model.setAuthCode(aliPayParam.getAuthCode());
 
         // 过期时间
@@ -217,7 +217,7 @@ public class AliPayService {
             if (Objects.equals(response.getCode(),AliPayCode.SUCCESS)) {
                 payment.setPayStatus(PayStatusCode.TRADE_SUCCESS)
                         .setPayTime(LocalDateTime.now());
-                return;
+                return response.getTradeNo();
             }
             // 非支付中响应码, 进行错误处理
             if (!Objects.equals(response.getCode(),AliPayCode.INPROCESS)){
@@ -227,6 +227,7 @@ public class AliPayService {
             log.error("主动扫码支付失败", e);
             throw new PayFailureException("主动扫码支付失败");
         }
+        return null;
     }
 
     /**

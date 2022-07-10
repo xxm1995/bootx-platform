@@ -9,13 +9,18 @@ import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRangeManager;
+import cn.bootx.common.spring.exception.RetryableException;
 import cn.bootx.common.websocket.entity.WsRes;
 import cn.bootx.common.websocket.entity.WsResult;
 import cn.bootx.common.websocket.service.UserWsNoticeService;
+import cn.hutool.extra.spring.SpringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,5 +94,24 @@ public class TestController {
         result = WsRes.eventNotice("hello", "cs");
         userWsNoticeService.sendMessageByUser(result,id);
         return Res.ok();
+    }
+
+    @Operation(summary = "轮训测试")
+    @GetMapping("/rotationSync")
+    public ResResult<Void> rotationSync(){
+        for (int i = 0; i < 20; i++) {
+            SpringUtil.getBean(getClass()).rotationSyncFun(String.valueOf(i));
+        }
+        return Res.ok();
+    }
+
+    /**
+     * 轮训同步支付状态
+     */
+    @Retryable(value = RetryableException.class, maxAttempts = 20, backoff = @Backoff(value = 5000L))
+    @Async("asyncExecutor")
+    public void rotationSyncFun(String i){
+        log.info(i);
+        throw new RetryableException();
     }
 }

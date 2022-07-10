@@ -35,7 +35,6 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class PaySyncService {
-
     private final PaymentManager paymentManager;
     private final PaymentEventSender eventSender;
 
@@ -52,9 +51,9 @@ public class PaySyncService {
     }
 
     /**
-     * 同步支付状态
+     * 同步支付状态 传入 payment 对象
      */
-    private void syncPayment(Payment payment){
+    public void syncPayment(Payment payment){
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
         // 1.获取支付方式，通过工厂生成对应的策略组
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
@@ -81,7 +80,7 @@ public class PaySyncService {
                 this.paymentSuccess(payment,syncPayStrategy,paySyncResult);
                 break;
             }
-            // 待付款 理论上不会出现, 不进行处理
+            // 待付款/ 支付中
             case PaySyncStatus.WAIT_BUYER_PAY:{
                 log.warn("依然是代付款状态");
                 break;
@@ -91,6 +90,11 @@ public class PaySyncService {
             case PaySyncStatus.NOT_FOUND: {
                 // 判断下是否超时, 同时payment 变更为取消支付
                 this.paymentCancel(payment,paymentStrategyList);
+                break;
+            }
+            // 交易退款
+            case PaySyncStatus.TRADE_REFUND:{
+                this.paymentRefund(payment,syncPayStrategy,paySyncResult);
                 break;
             }
             // 调用出错
@@ -120,6 +124,13 @@ public class PaySyncService {
             strategyList.forEach(AbsPayStrategy::doCloseHandler);
             paymentManager.updateById(payment);
         });
+    }
+
+    /**
+     * payment 退款处理 TODO 需要考虑退款详情的合并处理
+     */
+    private void paymentRefund(Payment payment, AbsPayStrategy syncPayStrategy, PaySyncResult paySyncResult){
+
     }
 
     /**

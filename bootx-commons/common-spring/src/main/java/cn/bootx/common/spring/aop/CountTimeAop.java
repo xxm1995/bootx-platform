@@ -1,12 +1,15 @@
 package cn.bootx.common.spring.aop;
 
 import cn.bootx.common.core.annotation.CountTime;
+import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -21,12 +24,14 @@ public class CountTimeAop {
 
     @Around("@annotation(countTime)")
     public Object doAround(ProceedingJoinPoint pjp, CountTime countTime) throws Throwable {
-        long startTime = System.currentTimeMillis();
+        //创建的时候就开始计时
+        Stopwatch stopwatch = Stopwatch.createStarted();
         Object obj = pjp.proceed();
-        long endTime = System.currentTimeMillis();
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         String methodName = signature.getDeclaringTypeName() + "." + signature.getName();
-        log.info("方法 [{}] 花费时间：{}ms",methodName,(endTime-startTime));
+        //停止计时，然后计算时长.单位为毫秒.
+        long elapsed = stopwatch.stop().elapsed(TimeUnit.MILLISECONDS);
+        log.info("方法 [{}] 花费时间：{}ms",methodName,(elapsed));
         return obj;
     }
 

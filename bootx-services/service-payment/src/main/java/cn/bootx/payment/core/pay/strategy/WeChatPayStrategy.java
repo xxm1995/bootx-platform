@@ -119,8 +119,8 @@ public class WeChatPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doAsyncSuccessHandler(Map<String, String> map) {
-        String tradeNo = map.get(WeChatPayCode.OUT_TRADE_NO);
-        weChatPaymentService.updateSyncSuccess(this.getPayment().getId(),this.getPayMode(),tradeNo);
+        String tradeNo = map.get(WeChatPayCode.TRANSACTION_ID);
+        weChatPaymentService.updateAsyncSuccess(this.getPayment().getId(),this.getPayMode(),tradeNo);
     }
 
     /**

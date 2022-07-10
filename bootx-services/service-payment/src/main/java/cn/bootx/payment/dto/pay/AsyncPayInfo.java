@@ -12,9 +12,12 @@ import java.io.Serializable;
 */
 @Data
 @Accessors(chain = true)
-@Schema(title = "异步支付")
+@Schema(title = "异步支付线程信息")
 public class AsyncPayInfo implements Serializable {
 
-    /** 支付参数体 */
+    /** 支付参数体(通常用于发起支付的参数) */
     private String payBody;
+
+    /** 第三方支付平台订单号(付款码支付直接成功时会出现) */
+    private String tradeNo;
 }

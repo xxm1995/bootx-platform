@@ -21,7 +21,8 @@ public interface AliPayCode {
     String QUICK_WAP_PAY = "QUICK_WAP_WAY";
     /** APP支付必填 APP支付产品 */
     String QUICK_MSECURITY_PAY = "QUICK_MSECURITY_PAY";
-
+    /** 付款码支付 */
+    String BAR_CODE = "bar_code";
     // 响应字段
     /** 支付状态 */
     String TRADE_STATUS = "trade_status";

@@ -4,10 +4,12 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
+import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPaymentManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayment;
+import cn.bootx.payment.dto.pay.AsyncPayInfo;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.param.pay.PayModeParam;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -60,12 +63,17 @@ public class WeChatPaymentService {
         payment.setRefundableInfo(JSONUtil.toJsonStr(payTypeInfos))
                 .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos));
         paymentManager.updateById(payment);
+        // 如果支付完成(付款码情况) 调用 updateSyncSuccess 创建微信支付记录
+        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+            AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();
+            this.updateAsyncSuccess(payment.getId(),payModeParam,asyncPayInfo.getTradeNo());
+        }
     }
 
     /**
      * 更新支付记录成功状态, 并创建微信支付记录
      */
-    public void updateSyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
+    public void updateAsyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
         // 更新支付记录
         Payment payment = paymentManager.findById(id)
                 .orElseThrow(() -> new BizException("支付记录不存在"));

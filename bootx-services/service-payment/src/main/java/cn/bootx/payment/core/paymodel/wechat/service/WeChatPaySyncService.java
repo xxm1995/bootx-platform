@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -54,17 +53,12 @@ public class WeChatPaySyncService {
                 log.warn("疑似未查询到订单:{}",result);
                 return paySyncResult.setPaySyncStatus(PaySyncStatus.NOT_FOUND);
             }
-
             String tradeStatus = result.get(WeChatPayCode.TRADE_STATE);
-            String outTradeNo = result.get(WeChatPayCode.OUT_TRADE_NO);
-
             // 支付完成
             if (Objects.equals(tradeStatus, WeChatPayCode.TRADE_SUCCESS)
                     ||Objects.equals(tradeStatus, WeChatPayCode.TRADE_ACCEPT)){
-                HashMap<String, String> map = new HashMap<>(1);
-                map.put(WeChatPayCode.OUT_TRADE_NO,outTradeNo);
                 return paySyncResult.setPaySyncStatus(PaySyncStatus.TRADE_SUCCESS)
-                        .setMap(map);
+                        .setMap(result);
             }
             // 待支付
             if (Objects.equals(tradeStatus, WeChatPayCode.TRADE_NOTPAY)
@@ -72,6 +66,10 @@ public class WeChatPaySyncService {
                 return paySyncResult.setPaySyncStatus(PaySyncStatus.WAIT_BUYER_PAY);
             }
 
+            // 已退款
+            if (Objects.equals(tradeStatus, WeChatPayCode.TRADE_REFUND)){
+                return paySyncResult.setPaySyncStatus(PaySyncStatus.TRADE_REFUND);
+            }
             // 已关闭
             if (Objects.equals(tradeStatus, WeChatPayCode.TRADE_CLOSED)
                     || Objects.equals(tradeStatus, WeChatPayCode.TRADE_REVOKED)

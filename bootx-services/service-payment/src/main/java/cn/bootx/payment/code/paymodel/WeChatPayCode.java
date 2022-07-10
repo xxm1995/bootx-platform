@@ -1,10 +1,10 @@
 package cn.bootx.payment.code.paymodel;
 
-/**   
-* 微信参数
-* @author xxm  
-* @date 2021/6/21 
-*/
+/**
+ * 微信参数
+ * @author xxm
+ * @date 2021/6/21
+ */
 public interface WeChatPayCode {
 
     // 版本
@@ -12,83 +12,62 @@ public interface WeChatPayCode {
     String API_V3 = "api_v3";
 
 
-    // 认证类型
-    /** 公钥 */
-    int AUTH_TYPE_KEY = 1;
-
-    /** 证书 */
-    int AUTH_TYPE_CART = 2;
-
-    /**
-     * 二维码链接
-     */
+    // 返回参数
+    /** 二维码链接 */
     String CODE_URL = "code_url";
 
-    /**
-     * 支付跳转链接
-     */
+    /** 支付跳转链接 */
     String MWEB_URL = "mweb_url";
 
-    /**
-     * 预支付交易会话ID
-     */
+    /** 预支付交易会话ID */
     String PREPAY_ID = "prepay_id";
 
-    /**
-     * 返回状态码
-     */
+    /** 返回状态码 */
     String RETURN_CODE = "return_code";
 
-    /**
-     * 返回信息
-     */
+    /** 返回信息 */
     String RETURN_MSG = "return_msg";
 
-    /**
-     * 返回错误信息
-     */
+    /** 返回错误代码(例如付款码返回的支付中状态就在这里面) */
+    String ERR_CODE = "err_code";
+
+    /** 返回错误信息 */
     String ERR_CODE_DES = "err_code_des";
 
-    /**
-     * 业务结果
-     */
+    /** 业务结果(部分结果不在这个参数里, 例如付款码的响应码) */
     String RESULT_CODE = "result_code";
 
-    /**
-     * 交易类型
-     */
+    /** 交易类型 */
     String TRADE_TYPE = "trade_type";
 
-    /**
-     * 交易状态
-     */
+    /** 交易状态 */
     String TRADE_STATE = "trade_state";
 
-    /**
-     * 商户订单号
-     */
+    /** 商户订单号 */
     String OUT_TRADE_NO = "out_trade_no";
 
-    /**
-     * 商户订单号
-     */
-    String ATTACH = "attach";
+    /** 微信交易单号 */
+    String TRANSACTION_ID = "transaction_id";
 
     // 交易状态
     /** 支付成功 */
     String TRADE_SUCCESS = "SUCCESS";
-    /** 转入退款 */
+    /** 支付失败 */
+    String TRADE_FAIL = "FAIL";
+    /** 退款 */
     String TRADE_REFUND = "REFUND";
     /** 未支付 */
     String TRADE_NOTPAY = "NOTPAY";
     /** 已关闭 */
     String TRADE_CLOSED = "CLOSED";
-    /** 已撤销(刷卡支付) */
-    String TRADE_REVOKED = "REVOKED";
-    /** 用户支付中 */
-    String TRADE_USERPAYING = "USERPAYING";
-    /** 支付失败 */
-    String TRADE_PAYERROR = "PAYERROR";
     /** 已接收，等待扣款 */
     String TRADE_ACCEPT = "ACCEPT";
+    /** 已撤销(刷卡支付) */
+    String TRADE_REVOKED = "REVOKED";
+    /** 用户支付中(刷卡支付) */
+    String TRADE_USERPAYING = "USERPAYING";
+    /** 支付失败(刷卡支付) */
+    String TRADE_PAYERROR = "PAYERROR";
+
+
 }

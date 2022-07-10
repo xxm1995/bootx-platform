@@ -77,7 +77,7 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
 
     /**
      * 支付状态
-     * @see PayStatusCode
+     * @see PayStatusCode#TRADE_PROGRESS
      */
     private Integer payStatus;
 
