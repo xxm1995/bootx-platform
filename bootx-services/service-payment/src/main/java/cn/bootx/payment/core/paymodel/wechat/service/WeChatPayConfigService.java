@@ -65,8 +65,8 @@ public class WeChatPayConfigService {
     /**
      * 分页
      */
-    public PageResult<WeChatPayConfigDto> page(PageParam pageParam){
-        return MpUtil.convert2DtoPageResult(weChatPayConfigManager.page(pageParam));
+    public PageResult<WeChatPayConfigDto> page(PageParam pageParam,WeChatPayConfigParam param){
+        return MpUtil.convert2DtoPageResult(weChatPayConfigManager.page(pageParam,param));
     }
 
     /**

@@ -6,10 +6,7 @@ import cn.bootx.common.redis.code.RedisCode;
 import cn.bootx.common.redis.listener.RedisTopicReceiver;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -61,11 +58,11 @@ public class RedisAutoConfiguration {
     @Bean
     @Primary
     public RedisTemplate<String,?> redisTemplate(RedisConnectionFactory redisConnectionFactory,
-                                                 @Qualifier("redisObjectMapper") ObjectMapper redisObjectMapper){
+                                                 @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper){
 
         // 配置key和value的序列化方式
         StringRedisSerializer keySerializer = new StringRedisSerializer();
-        RedisSerializer<?> valueSerializer = new GenericJackson2JsonRedisSerializer(redisObjectMapper);
+        RedisSerializer<?> valueSerializer = new GenericJackson2JsonRedisSerializer(typeObjectMapper);
 
         // 构建RedisTemplate
         RedisTemplate<String, ?> template = new RedisTemplate<>();
@@ -143,7 +140,7 @@ public class RedisAutoConfiguration {
     public RedisMessageListenerContainer redisMessageListenerContainer(
             RedisConnectionFactory redisConnectionFactory,
             RedisTopicReceiver redisTopicReceiver,
-            ObjectMapper redisObjectMapper
+            ObjectMapper typeObjectMapper
     ) {
         RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
         redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory);
@@ -151,24 +148,8 @@ public class RedisAutoConfiguration {
         // 消息订阅配置
         MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(redisTopicReceiver);
         // 设置序列化方式
-        messageListenerAdapter.setSerializer(new GenericJackson2JsonRedisSerializer(redisObjectMapper));
+        messageListenerAdapter.setSerializer(new GenericJackson2JsonRedisSerializer(typeObjectMapper));
         redisMessageListenerContainer.addMessageListener(messageListenerAdapter,new PatternTopic(RedisCode.TOPIC_PATTERN_TOPIC));
         return redisMessageListenerContainer;
-    }
-
-    /**
-     * redis序列化配置 ObjectMapper 对象
-     * 会记录被序列化的类型信息, 反序列化时直接能反序列化回原始的对象类型
-     */
-    @Bean
-    public ObjectMapper redisObjectMapper() {
-        // 对象映射器
-        ObjectMapper copy = objectMapper.copy();
-        // 序列化是记录被序列化的类型信息
-        //指定序列化输入的类型为非最终类型，除了少数“自然”类型（字符串、布尔值、整数、双精度），它们可以从 JSON 正确推断； 以及所有非最终类型的数组
-        copy.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY)
-                // null 值不序列化
-                .setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        return copy;
     }
 }

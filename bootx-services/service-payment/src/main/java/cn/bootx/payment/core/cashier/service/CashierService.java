@@ -119,7 +119,7 @@ public class CashierService {
      * 微信jsapi支付 - 跳转到授权页面
      */
     private String wxJsapiAuth(String key){
-        WeChatPayConfig config = weChatPayConfigManager.findEnable().orElseThrow(() -> new PayFailureException("未找到启用的微信支付配置"));
+        WeChatPayConfig config = weChatPayConfigManager.findActivity().orElseThrow(() -> new PayFailureException("未找到启用的微信支付配置"));
         WxMpService wxMpService = getWxMpService(config.getAppId(), config.getAppSecret());
         // 回调地址为 结算台微信jsapi支付的回调地址
         SystemParameter systemParameter = systemParamManager.findByParamKey(CommonCode.SERVER_URL)
@@ -136,7 +136,7 @@ public class CashierService {
      */
     @SneakyThrows
     public Map<String, String> wxJsapiPay(String code, String state) {
-        WeChatPayConfig config = weChatPayConfigManager.findEnable().orElseThrow(() -> new PayFailureException("未找到启用的微信支付配置"));
+        WeChatPayConfig config = weChatPayConfigManager.findActivity().orElseThrow(() -> new PayFailureException("未找到启用的微信支付配置"));
         WxMpService wxMpService = this.getWxMpService(config.getAppId(), config.getAppSecret());
         WxOAuth2AccessToken accessToken = wxMpService.getOAuth2Service().getAccessToken(code);
         String openId = accessToken.getOpenId();

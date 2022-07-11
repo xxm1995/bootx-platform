@@ -56,8 +56,8 @@ public class WeChatPayConfigController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<WeChatPayConfigDto>> page(PageParam pageParam){
-        return Res.ok(weChatPayConfigService.page(pageParam));
+    public ResResult<PageResult<WeChatPayConfigDto>> page(PageParam pageParam,WeChatPayConfigParam param){
+        return Res.ok(weChatPayConfigService.page(pageParam,param));
     }
 
     @Operation(summary = "根据Id查询")

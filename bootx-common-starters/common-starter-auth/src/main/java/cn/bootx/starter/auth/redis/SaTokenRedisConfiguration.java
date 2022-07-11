@@ -39,7 +39,7 @@ public class SaTokenRedisConfiguration {
     private final RedisConnectionFactory connectionFactory;
 
     @Resource
-    private ObjectMapper redisObjectMapper;
+    private ObjectMapper typeObjectMapper;
 
     /**
      * 配置信息的前缀
@@ -133,7 +133,7 @@ public class SaTokenRedisConfiguration {
      */
     protected RedisTemplate<String, Object> objectRedisTemplate(){
         StringRedisSerializer keySerializer = new StringRedisSerializer();
-        RedisSerializer<Object> valueSerializer = new GenericJackson2JsonRedisSerializer(redisObjectMapper);
+        RedisSerializer<Object> valueSerializer = new GenericJackson2JsonRedisSerializer(typeObjectMapper);
 
         // 构建RedisTemplate
         RedisTemplate<String, Object> template = new RedisTemplate<>();

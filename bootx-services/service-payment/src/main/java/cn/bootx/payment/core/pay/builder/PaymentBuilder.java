@@ -14,7 +14,6 @@ import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import cn.hutool.json.JSONUtil;
 import lombok.experimental.UtilityClass;
 import org.springframework.beans.BeanUtils;
 
@@ -57,8 +56,8 @@ public class PaymentBuilder {
                 .reduce(BigDecimal::add)
                 .orElse(BigDecimal.ZERO);
         // 支付通道信息
-        payment.setPayChannelInfo(JSONUtil.toJsonStr(payTypeInfos))
-                .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos))
+        payment.setPayChannelInfo(payTypeInfos)
+                .setRefundableInfo(refundableInfos)
                 .setPayStatus(PayStatusCode.TRADE_PROGRESS)
                 .setAmount(sumAmount)
                 .setClientIp(ip)
@@ -89,7 +88,7 @@ public class PaymentBuilder {
     public PayParam buildPayParamByPayment(Payment payment){
         PayParam payParam = new PayParam();
         // 恢复 payModeList
-        List<PayModeParam> payModeParams = payment.getPayChannelInfoList().stream()
+        List<PayModeParam> payModeParams = payment.getPayChannelInfo().stream()
                 .map(payTypeInfo -> new PayModeParam()
                         .setAmount(payTypeInfo.getAmount())
                         .setPayChannel(payTypeInfo.getPayChannel())
@@ -121,7 +120,7 @@ public class PaymentBuilder {
                     .setPayStatus(payment.getPayStatus())
                     .setPayment(buildPaymentInfo(payment));
 
-            List<PayChannelInfo> channelInfos = payment.getPayChannelInfoList();
+            List<PayChannelInfo> channelInfos = payment.getPayChannelInfo();
 
             // 设置异步支付参数
             List<PayChannelInfo> moneyPayTypeInfos = channelInfos.stream()

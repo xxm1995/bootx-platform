@@ -52,12 +52,6 @@ public class PaymentController {
         return Res.ok(paymentQueryService.superPage(pageParam,queryParams));
     }
 
-    @Operation(summary = "根据businessId获取列表")
-    @GetMapping("/findByBusinessId")
-    public ResResult<List<PaymentDto>> findByBusinessId(String businessId){
-        return Res.ok(paymentQueryService.findByBusinessId(businessId));
-    }
-
     @Operation(summary = "根据业务ID获取支付状态")
     @GetMapping("/findStatusByBusinessId")
     public ResResult<Integer> findStatusByBusinessId(String businessId){

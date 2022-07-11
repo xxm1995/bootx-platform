@@ -34,7 +34,7 @@ import java.util.Objects;
 public class AliPayCallbackService extends AbsPayCallbackStrategy {
     private final AlipayConfigManager alipayConfigManager;
 
-    public AliPayCallbackService(RedisClient redisClient, PayNotifyRecordManager payNotifyRecordManager, PayCallbackService payCallbackService, AlipayConfigService alipayConfigService, AlipayConfigManager alipayConfigManager) {
+    public AliPayCallbackService(RedisClient redisClient, PayNotifyRecordManager payNotifyRecordManager, PayCallbackService payCallbackService, AlipayConfigManager alipayConfigManager) {
         super(redisClient, payNotifyRecordManager, payCallbackService);
         this.alipayConfigManager = alipayConfigManager;
     }

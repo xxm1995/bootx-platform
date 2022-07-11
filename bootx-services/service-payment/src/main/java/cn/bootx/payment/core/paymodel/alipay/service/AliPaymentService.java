@@ -13,7 +13,6 @@ import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
-import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,8 +44,8 @@ public class AliPaymentService {
                 .setAsyncPayChannel(PayChannelCode.ALI);
         // TODO 设置超时时间
 
-        List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfoList();
-        List<RefundableInfo> refundableInfos = payment.getRefundableInfoList();
+        List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfo();
+        List<RefundableInfo> refundableInfos = payment.getRefundableInfo();
         // 清除已有的异步支付类型信息
         payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         refundableInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
@@ -56,12 +55,12 @@ public class AliPaymentService {
                 .setPayWay(payModeParam.getPayWay())
                 .setAmount(payModeParam.getAmount())
                 .setExtraParamsJson(payModeParam.getExtraParamsJson()));
-        payment.setPayChannelInfo(JSONUtil.toJsonStr(payTypeInfos));
+        payment.setPayChannelInfo(payTypeInfos);
         // 更新支付宝可退款类型信息
         refundableInfos.add(new RefundableInfo()
                 .setPayChannel(PayChannelCode.ALI)
                 .setAmount(payModeParam.getAmount()));
-        payment.setRefundableInfo(JSONUtil.toJsonStr(refundableInfos));
+        payment.setRefundableInfo(refundableInfos);
         // 如果支付完成(付款码情况) 调用 updateSyncSuccess 创建支付宝支付记录
         if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
             AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();

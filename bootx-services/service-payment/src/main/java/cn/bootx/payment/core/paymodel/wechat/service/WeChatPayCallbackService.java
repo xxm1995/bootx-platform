@@ -77,8 +77,8 @@ public class WeChatPayCallbackService extends AbsPayCallbackStrategy {
             log.warn("微信回调报文 appId 为空 {}", callReq);
             return false;
         }
-
-        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findByAppId(appId).orElseThrow(DataNotExistException::new);
+        //
+        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findActivity().orElseThrow(DataNotExistException::new);
         if (weChatPayConfig == null) {
             log.warn("微信回调报文 appId 不合法 {}", callReq);
             return false;

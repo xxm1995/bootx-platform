@@ -21,5 +21,9 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-jackson</artifactId>
+        </dependency>
     </dependencies>
 </project>

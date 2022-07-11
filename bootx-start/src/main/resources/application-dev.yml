@@ -93,6 +93,9 @@ bootx:
         "[自定义starter组件]": cn.bootx.starter
     # 缓存
     cache:
+      # 默认超时时间 30分钟
+      default-ttl: 1800
+      # 对Key设置超时间
       keys-ttl:
         "[iam:user:path]" : 5200
         "[iam:ignore:path]" : 5200

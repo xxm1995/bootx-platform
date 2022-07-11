@@ -1,9 +1,6 @@
 package cn.bootx.payment.dto.payment;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +9,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,13 +66,13 @@ public class PaymentDto extends BaseDto implements Serializable {
      * @see PayChannelInfo
      */
     @Schema(description= "支付通道信息")
-    private String payChannelInfo;
+    private List<PayChannelInfo> payChannelInfo;
 
     /**
-     * @see cn.bootx.payment.dto.payment.RefundableInfo
+     * @see RefundableInfo
      */
     @Schema(description= "可退款信息列表")
-    private String refundableInfo;
+    private List<RefundableInfo> refundableInfo;
 
     @Schema(description= "支付时间")
     private LocalDateTime payTime;
@@ -86,25 +82,5 @@ public class PaymentDto extends BaseDto implements Serializable {
 
     @Schema(description= "过期时间")
     private LocalDateTime expiredTime;
-    /**
-     * 获取支付通道
-     */
-    public List<PayChannelInfo> getPayChannelInfoList(){
-        if (StrUtil.isNotBlank(this.payChannelInfo)){
-            JSONArray array = JSONUtil.parseArray(this.payChannelInfo);
-            return JSONUtil.toList(array, PayChannelInfo.class);
-        }
-        return new ArrayList<>(0);
-    }
 
-    /**
-     * 获取可退款信息列表
-     */
-    public List<RefundableInfo> getRefundableInfoList(){
-        if (StrUtil.isNotBlank(this.refundableInfo)){
-            JSONArray array = JSONUtil.parseArray(this.refundableInfo);
-            return JSONUtil.toList(array, RefundableInfo.class);
-        }
-        return new ArrayList<>(0);
-    }
 }

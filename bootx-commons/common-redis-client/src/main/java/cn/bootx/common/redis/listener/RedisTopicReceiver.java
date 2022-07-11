@@ -25,7 +25,7 @@ public class RedisTopicReceiver implements MessageListener {
     private final ObjectMapper objectMapper;
 
     public RedisTopicReceiver(List<RedisTopicListener> redisTopicListeners,
-                              @Qualifier("redisObjectMapper") ObjectMapper objectMapper) {
+                              @Qualifier("typeObjectMapper") ObjectMapper objectMapper) {
         this.redisTopicListeners = redisTopicListeners;
         this.objectMapper = objectMapper;
     }

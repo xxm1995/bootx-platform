@@ -1,15 +1,15 @@
 package cn.bootx.payment.core.payment.entity;
 
+import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.handler.JacksonListTypeHandler;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.convert.PaymentConvert;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
 import cn.bootx.payment.dto.payment.PaymentDto;
 import cn.bootx.payment.dto.payment.RefundableInfo;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,6 @@ import lombok.experimental.FieldNameConstants;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +29,7 @@ import java.util.List;
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
-@TableName("pay_payment")
+@TableName(value = "pay_payment",autoResultMap = true)
 public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentDto> {
 
     /** 关联的业务id */
@@ -67,13 +66,17 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
      * 支付通道信息列表
      * @see PayChannelInfo
      */
-    private String payChannelInfo;
+    @TableField(typeHandler = JacksonListTypeHandler.class)
+    @BigField
+    private List<PayChannelInfo> payChannelInfo;
 
     /**
      * 退款信息列表
      * @see cn.bootx.payment.dto.payment.RefundableInfo
      */
-    private String refundableInfo;
+    @TableField(typeHandler = JacksonListTypeHandler.class)
+    @BigField
+    private List<RefundableInfo> refundableInfo;
 
     /**
      * 支付状态
@@ -87,7 +90,7 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
     /** 支付终端ip */
     private String clientIp;
 
-    /** 超时时间 */
+    /** 过期时间 */
     private LocalDateTime expiredTime;
 
     @Override
@@ -95,25 +98,4 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
         return PaymentConvert.CONVERT.convert(this);
     }
 
-    /**
-     * 获取支付通道
-     */
-    public List<PayChannelInfo> getPayChannelInfoList(){
-        if (StrUtil.isNotBlank(this.payChannelInfo)){
-            JSONArray array = JSONUtil.parseArray(this.payChannelInfo);
-            return JSONUtil.toList(array, PayChannelInfo.class);
-        }
-        return new ArrayList<>(0);
-    }
-
-    /**
-     * 获取可退款信息列表
-     */
-    public List<RefundableInfo> getRefundableInfoList(){
-        if (StrUtil.isNotBlank(this.refundableInfo)){
-            JSONArray array = JSONUtil.parseArray(this.refundableInfo);
-            return JSONUtil.toList(array, RefundableInfo.class);
-        }
-        return new ArrayList<>(0);
-    }
 }

@@ -53,6 +53,18 @@ public class SpringExecutorConfiguration {
     }
 
     /**
+     *  TTl包装后的线程执行器(线程极多, 用来处理一些非核心的异步任务)
+     */
+    @Bean
+    public Executor bigExecutor() {
+        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+        taskExecutor.setMaxPoolSize(9999);
+        taskExecutor.setQueueCapacity(10000);
+        taskExecutor.initialize();
+        return TtlExecutors.getTtlExecutor(taskExecutor);
+    }
+
+    /**
      * TTl包装后的线程执行服务
      */
     @Bean

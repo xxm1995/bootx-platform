@@ -42,11 +42,10 @@ public class PaySyncService {
      * 同步订单的支付状态
      */
     public void syncByBusinessId(String businessId){
-        List<Payment> payments = paymentManager.findByBusinessIdNoCancelDesc(businessId);
-        if (CollUtil.isEmpty(payments)){
+        Payment payment = paymentManager.findByBusinessId(businessId).orElse(null);
+        if (Objects.isNull(payment)){
             return ;
         }
-        Payment payment = payments.get(0);
         this.syncPayment(payment);
     }
 
@@ -74,7 +73,7 @@ public class PaySyncService {
         int paySyncStatus = paySyncResult.getPaySyncStatus();
 
         switch (paySyncStatus){
-            // 支付成功
+            // 支付成功 支付宝退款时也是支付成功状态, 除非支付完成
             case PaySyncStatus.TRADE_SUCCESS:{
                 // payment 变更为支付成功
                 this.paymentSuccess(payment,syncPayStrategy,paySyncResult);
@@ -82,17 +81,17 @@ public class PaySyncService {
             }
             // 待付款/ 支付中
             case PaySyncStatus.WAIT_BUYER_PAY:{
-                log.warn("依然是代付款状态");
+                log.info("依然是付款状态");
                 break;
             }
-            // 订单已经关闭超时关闭 和 网关没找到记录
+            // 订单已经关闭超时关闭 和 网关没找到记录, 支付宝退款完成也是这个状态
             case PaySyncStatus.TRADE_CLOSED:
             case PaySyncStatus.NOT_FOUND: {
                 // 判断下是否超时, 同时payment 变更为取消支付
                 this.paymentCancel(payment,paymentStrategyList);
                 break;
             }
-            // 交易退款
+            // 交易退款 支付宝没这个状态
             case PaySyncStatus.TRADE_REFUND:{
                 this.paymentRefund(payment,syncPayStrategy,paySyncResult);
                 break;

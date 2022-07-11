@@ -254,9 +254,9 @@ public class WeChatPayService {
     }
 
     /**
-     * 重试同步支付状态, 最多10次, 30秒不操作微信会自动关闭  TODO 目前有占用线程的问题
+     * 重试同步支付状态, 最多10次, 30秒不操作微信会自动关闭
      */
-    @Async("asyncExecutor")
+    @Async("bigExecutor")
     @Retryable(value = RetryableException.class, maxAttempts = 20, backoff = @Backoff(value = 5000L))
     public void rotationSync(Payment payment, WeChatPayConfig weChatPayConfig){
         PaySyncResult paySyncResult = weChatPaySyncService.syncPayStatus(payment.getId(), weChatPayConfig);

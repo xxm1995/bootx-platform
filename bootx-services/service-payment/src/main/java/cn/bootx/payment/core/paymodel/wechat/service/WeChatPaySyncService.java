@@ -66,7 +66,7 @@ public class WeChatPaySyncService {
                 return paySyncResult.setPaySyncStatus(PaySyncStatus.WAIT_BUYER_PAY);
             }
 
-            // 已退款
+            // 已退款/退款中
             if (Objects.equals(tradeStatus, WeChatPayCode.TRADE_REFUND)){
                 return paySyncResult.setPaySyncStatus(PaySyncStatus.TRADE_REFUND);
             }

@@ -2,13 +2,11 @@ package cn.bootx.goods.core.category.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.bootx.goods.core.category.convert.SpecificationConvert;
 import cn.bootx.goods.dto.category.SpecificationDto;
 import cn.bootx.goods.param.category.SpecificationParam;
-import cn.bootx.goods.core.category.convert.SpecificationConvert;
-
-
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -70,7 +70,7 @@ public class PayRefundService {
     @Transactional(rollbackFor = Exception.class)
     public void refundByBusinessId(String businessId) {
         Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(businessId));
-        paymentOptional.ifPresent(payment -> this.refundPayment(payment,payment.getRefundableInfoList().stream()
+        paymentOptional.ifPresent(payment -> this.refundPayment(payment,payment.getRefundableInfo().stream()
                         .map(o -> new RefundModeParam()
                                 .setPayChannel(o.getPayChannel())
                                 .setAmount(o.getAmount()))
@@ -88,7 +88,7 @@ public class PayRefundService {
         // 获取 paymentParam
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
         // 退款参数检查
-        this.payModeCheck(refundModeParams,payment.getRefundableInfoList());
+        this.payModeCheck(refundModeParams,payment.getRefundableInfo());
 
         // 1.获取退款参数方式，通过工厂生成对应的策略组
         List<PayModeParam> payModeParams = refundModeParams.stream().map(RefundModeParam::toPayModeParam).collect(Collectors.toList());

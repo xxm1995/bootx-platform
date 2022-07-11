@@ -1,12 +1,10 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.code.paymodel.AliPayWay;
 import cn.bootx.payment.core.paymodel.alipay.dao.AlipayConfigManager;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
@@ -17,11 +15,7 @@ import cn.bootx.payment.param.paymodel.alipay.AlipayConfigQuery;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.CharsetUtil;
-import com.ijpay.alipay.AliPayApiConfig;
-import com.ijpay.alipay.AliPayApiConfigKit;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,12 +39,11 @@ public class AlipayConfigService {
      * 添加支付宝配置
      */
     @Transactional(rollbackFor = Exception.class)
-    public AlipayConfigDto add(AlipayConfigParam param){
+    public void add(AlipayConfigParam param){
         AlipayConfig alipayConfig = AlipayConfig.init(param);
         alipayConfig.setActivity(false)
                 .setState(1);
-        AlipayConfig save = alipayConfigManager.save(alipayConfig);
-        return save.toDto();
+        alipayConfigManager.save(alipayConfig);
     }
 
     /**
@@ -84,7 +77,7 @@ public class AlipayConfigService {
      * 修改
      */
     @Transactional(rollbackFor = Exception.class)
-    public AlipayConfigDto update(AlipayConfigParam param){
+    public void update(AlipayConfigParam param){
         AlipayConfig alipayConfig = alipayConfigManager.findById(param.getId())
                 .orElseThrow(DataNotExistException::new);
         BeanUtil.copyProperties(param,alipayConfig, CopyOptions.create().ignoreNullValue());
@@ -94,7 +87,7 @@ public class AlipayConfigService {
         } else {
             alipayConfig.setPayWays(null);
         }
-        return alipayConfigManager.updateById(alipayConfig).toDto();
+        alipayConfigManager.updateById(alipayConfig);
     }
 
     /**
@@ -122,40 +115,4 @@ public class AlipayConfigService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * 移到工具类中
-     */
-    @SneakyThrows
-    public static void initApiConfig(AlipayConfig alipayConfig){
-
-        AliPayApiConfig aliPayApiConfig;
-        // 公钥
-        if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_KEY)){
-            aliPayApiConfig = AliPayApiConfig.builder()
-                    .setAppId(alipayConfig.getAppId())
-                    .setPrivateKey(alipayConfig.getPrivateKey())
-                    .setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
-                    .setCharset(CharsetUtil.UTF_8)
-                    .setServiceUrl(alipayConfig.getServerUrl())
-                    .setSignType(alipayConfig.getSignType())
-                    .build();
-        }
-        // 证书
-        else if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_CART)){
-            aliPayApiConfig = AliPayApiConfig.builder()
-                    .setAppId(alipayConfig.getAppId())
-                    .setPrivateKey(alipayConfig.getPrivateKey())
-                    .setAppCertContent(alipayConfig.getAppCert())
-                    .setAliPayCertContent(alipayConfig.getAlipayCert())
-                    .setAliPayRootCertContent(alipayConfig.getAlipayRootCert())
-                    .setCharset(CharsetUtil.UTF_8)
-                    .setServiceUrl(alipayConfig.getServerUrl())
-                    .setSignType(alipayConfig.getSignType())
-                    .buildByCertContent();
-        } else {
-            throw new BizException("支付宝认证方式不可为空");
-        }
-
-        AliPayApiConfigKit.setThreadLocalAliPayApiConfig(aliPayApiConfig);
-    }
 }

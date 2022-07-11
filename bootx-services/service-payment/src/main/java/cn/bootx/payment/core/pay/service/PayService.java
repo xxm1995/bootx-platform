@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.pay.service;
 
+import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.PayModelUtil;
@@ -45,13 +46,14 @@ public class PayService {
     /**
      * 支付方法(同步/异步/组合支付)
      * 同步支付：都只会在第一次执行中就完成支付，例如钱包、积分都是调用完就进行了扣减，完成了支付记录
-     * 异步支付：例如支付宝、微信，发起支付后还需要跳转第三方平台进行支付，支付后进行回调支付中心，才完成支付记录
-     * 组合支付：主要是混合了同步支付和异步支付，同时异步支付只能有一个，在支付时先对同步支付进行扣减，然后异步支付回调完成完成整个支付单
+     * 异步支付：例如支付宝、微信，发起支付后还需要跳转第三方平台进行支付，支付后通常需要进行回调，之后才完成支付记录
+     * 组合支付：主要是混合了同步支付和异步支付，同时异步支付只能有一个，在支付时先对同步支付进行扣减，然后异步支付回调结束后完成整个支付单
      * 组合支付在非第一次支付的时候，只对新传入的异步支付PayMode进行处理，PayMode的价格使用第一次发起的价格，旧的同步支付如果传入后也不做处理，
      * Payment中PayModeList将会为 旧有的同步支付+新传入的异步支付方式(在具体支付实现中处理)
      */
     @Transactional(rollbackFor = Exception.class)
     public PayResult pay(PayParam payParam) {
+        ValidationUtil.validateParam(payParam);
         // 支付参数检查
         payValidationService.validationAsyncPayMode(payParam);
 

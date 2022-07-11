@@ -33,11 +33,11 @@ import java.time.Duration;
 public class CachingConfiguration extends CachingConfigurerSupport {
 
     private final CachingProperties cachingProperties;
-    private final ObjectMapper redisObjectMapper;
+    private final ObjectMapper typeObjectMapper;
 
-    public CachingConfiguration(CachingProperties cachingProperties, @Qualifier("redisObjectMapper") ObjectMapper redisObjectMapper) {
+    public CachingConfiguration(CachingProperties cachingProperties, @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper) {
         this.cachingProperties = cachingProperties;
-        this.redisObjectMapper = redisObjectMapper;
+        this.typeObjectMapper = typeObjectMapper;
     }
 
     /**
@@ -70,7 +70,7 @@ public class CachingConfiguration extends CachingConfigurerSupport {
     private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Duration duration) {
         // 序列化方式
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        jackson2JsonRedisSerializer.setObjectMapper(redisObjectMapper);
+        jackson2JsonRedisSerializer.setObjectMapper(typeObjectMapper);
 
         // redis缓存配置
         return RedisCacheConfiguration

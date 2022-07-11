@@ -29,14 +29,16 @@ public class AlipayConfigController {
 
     @Operation(summary = "添加")
     @PostMapping("/add")
-    public ResResult<AlipayConfigDto> add(@RequestBody AlipayConfigParam param){
-        return Res.ok(alipayConfigService.add(param));
+    public ResResult<Void> add(@RequestBody AlipayConfigParam param){
+        alipayConfigService.add(param);
+        return Res.ok();
     }
 
     @Operation(summary = "更新")
     @PostMapping("/update")
-    public ResResult<AlipayConfigDto> update(@RequestBody AlipayConfigParam param){
-        return Res.ok(alipayConfigService.update(param));
+    public ResResult<Void> update(@RequestBody AlipayConfigParam param){
+        alipayConfigService.update(param);
+        return Res.ok();
     }
 
     @Operation(summary = "启用指定的支付宝配置")

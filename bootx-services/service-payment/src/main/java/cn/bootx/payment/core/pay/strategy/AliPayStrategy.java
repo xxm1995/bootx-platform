@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.pay.strategy;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
@@ -15,15 +16,20 @@ import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONException;
 import cn.hutool.json.JSONUtil;
+import com.ijpay.alipay.AliPayApiConfig;
+import com.ijpay.alipay.AliPayApiConfigKit;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
@@ -80,7 +86,7 @@ public class AliPayStrategy extends AbsPayStrategy {
         if (StrUtil.isBlank(aliPayParam.getReturnUrl())){
             aliPayParam.setReturnUrl(alipayConfig.getReturnUrl());
         }
-        AlipayConfigService.initApiConfig(alipayConfig);
+        this.initAlipayConfig();
     }
 
     /**
@@ -176,6 +182,42 @@ public class AliPayStrategy extends AbsPayStrategy {
         // 检查并获取支付宝支付配置
         this.alipayConfig = alipayConfigManager.findActivity()
                 .orElseThrow(() -> new PayFailureException("支付配置不存在"));
-        AlipayConfigService.initApiConfig(this.alipayConfig);
+        this.initApiConfig(this.alipayConfig);
+    }
+
+    /**
+     * 初始化IJPay 服务
+     */
+    @SneakyThrows
+    private void initApiConfig(AlipayConfig alipayConfig){
+
+        AliPayApiConfig aliPayApiConfig;
+        // 公钥
+        if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_KEY)){
+            aliPayApiConfig = AliPayApiConfig.builder()
+                    .setAppId(alipayConfig.getAppId())
+                    .setPrivateKey(alipayConfig.getPrivateKey())
+                    .setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
+                    .setCharset(CharsetUtil.UTF_8)
+                    .setServiceUrl(alipayConfig.getServerUrl())
+                    .setSignType(alipayConfig.getSignType())
+                    .build();
+        }
+        // 证书
+        else if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_CART)){
+            aliPayApiConfig = AliPayApiConfig.builder()
+                    .setAppId(alipayConfig.getAppId())
+                    .setPrivateKey(alipayConfig.getPrivateKey())
+                    .setAppCertContent(alipayConfig.getAppCert())
+                    .setAliPayCertContent(alipayConfig.getAlipayCert())
+                    .setAliPayRootCertContent(alipayConfig.getAlipayRootCert())
+                    .setCharset(CharsetUtil.UTF_8)
+                    .setServiceUrl(alipayConfig.getServerUrl())
+                    .setSignType(alipayConfig.getSignType())
+                    .buildByCertContent();
+        } else {
+            throw new BizException("支付宝认证方式不可为空");
+        }
+        AliPayApiConfigKit.setThreadLocalAliPayApiConfig(aliPayApiConfig);
     }
 }
