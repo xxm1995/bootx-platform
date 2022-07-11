@@ -2,9 +2,6 @@ package cn.bootx.payment.dto.refund;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.payment.dto.payment.RefundableInfo;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,7 +9,6 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**   
@@ -52,11 +48,9 @@ public class RefundRecordDto extends BaseDto {
 
     @Schema(description = "退款时间")
     private LocalDateTime refundTime;
-    /**
-     * @see RefundableInfo
-     */
+
     @Schema(description = "退款信息列表")
-    private String refundableInfo;
+    private List<RefundableInfo> refundableInfo;
 
     /**
      * @see cn.bootx.payment.code.pay.PayStatusCode#REFUND_PROCESS_FAIL
@@ -69,15 +63,4 @@ public class RefundRecordDto extends BaseDto {
 
     @Schema(description = "错误信息")
     private String errorMsg;
-
-    /**
-     * 获取可退款信息列表
-     */
-    public List<RefundableInfo> getRefundableInfoList(){
-        if (StrUtil.isNotBlank(this.refundableInfo)){
-            JSONArray array = JSONUtil.parseArray(this.refundableInfo);
-            return JSONUtil.toList(array, RefundableInfo.class);
-        }
-        return new ArrayList<>(0);
-    }
 }

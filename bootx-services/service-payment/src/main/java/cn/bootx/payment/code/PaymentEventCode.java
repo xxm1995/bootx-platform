@@ -7,4 +7,12 @@ public interface PaymentEventCode {
 
     /** 支付完成 */
     String PAY_COMPLETE = "pay.complete";
+
+    /** 支付取消 */
+    String PAY_CANCEL = "pay.cancel";
+
+    /** 支付退款 */
+    String PAY_REFUND = "pay.refund";
+
+
 }

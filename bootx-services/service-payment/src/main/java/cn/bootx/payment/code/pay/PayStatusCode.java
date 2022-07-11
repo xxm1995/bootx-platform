@@ -24,7 +24,7 @@ public interface PayStatusCode {
     int TRADE_REFUNDED = 5;
 
     /**
-     * 回调信息支付状态 0.失败 2.成功
+     * 回调信息支付状态 0.失败 1.成功
      */
     int NOTIFY_TRADE_FAIL = 0;
     int NOTIFY_TRADE_SUCCESS = 1;

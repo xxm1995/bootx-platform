@@ -66,7 +66,7 @@ public class VoucherPayService {
         if (vouchers.size() != cardNoList.size()) {
             throw new PayFailureException("储值卡支付参数错误");
         }
-        // 判断有效期
+        // 判断有效期 TODO 判断长期有效卡
         boolean timeCheck = vouchers.stream()
                 .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(), voucher.getEndTime()));
         if (!timeCheck) {

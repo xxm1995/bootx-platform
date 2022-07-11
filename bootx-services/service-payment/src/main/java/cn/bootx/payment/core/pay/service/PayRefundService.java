@@ -26,7 +26,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -206,7 +205,7 @@ public class PayRefundService {
         String ip = ServletUtil.getClientIP(request);
         RefundRecord refundRecord = new RefundRecord()
                 .setRefundRequestNo(AsyncRefundLocal.get())
-                .setRefundableInfo(JSONUtil.toJsonStr(refundableInfos))
+                .setRefundableInfo(refundableInfos)
                 .setAmount(amount)
                 .setRefundableBalance(payment.getRefundableBalance())
                 .setClientIp(ip)

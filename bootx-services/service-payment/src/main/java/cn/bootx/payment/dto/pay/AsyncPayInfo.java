@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Schema(title = "异步支付线程信息")
 public class AsyncPayInfo implements Serializable {
+    private static final long serialVersionUID = 8239742916705144905L;
 
     /** 支付参数体(通常用于发起支付的参数) */
     private String payBody;

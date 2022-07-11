@@ -1,17 +1,15 @@
 package cn.bootx.payment.core.pay.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PaySyncStatus;
 import cn.bootx.payment.core.pay.PayModelUtil;
+import cn.bootx.payment.core.pay.builder.PayEventBuilder;
 import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
-import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
 import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.dto.pay.PayResult;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.mq.PaymentEventSender;
@@ -25,6 +23,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+
+import static cn.bootx.payment.code.pay.PayStatusCode.*;
 
 /**
  * 未完成的异步支付单与支付网关进行对比
@@ -75,7 +75,6 @@ public class PaySyncService {
         switch (paySyncStatus){
             // 支付成功 支付宝退款时也是支付成功状态, 除非支付完成
             case PaySyncStatus.TRADE_SUCCESS:{
-                // payment 变更为支付成功
                 this.paymentSuccess(payment,syncPayStrategy,paySyncResult);
                 break;
             }
@@ -109,32 +108,6 @@ public class PaySyncService {
         }
     }
 
-    /**
-     * payment 变更为取消支付
-     */
-    private void paymentCancel(Payment payment, List<AbsPayStrategy> absPayStrategies) {
-        // 关闭本地支付记录
-        this.doHandler(payment,absPayStrategies,(strategyList, paymentObj) -> {
-            // 修改payment支付状态为取消, 退款状态则不进行更新
-            if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDED)){
-                return;
-            }
-            if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDING)){
-                return;
-            }
-
-            payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
-            strategyList.forEach(AbsPayStrategy::doCloseHandler);
-            paymentManager.updateById(payment);
-        });
-    }
-
-    /**
-     * payment 退款处理 TODO 需要考虑退款详情的合并处理
-     */
-    private void paymentRefund(Payment payment, AbsPayStrategy syncPayStrategy, PaySyncResult paySyncResult){
-
-    }
 
     /**
      * payment 变更为已支付
@@ -142,52 +115,55 @@ public class PaySyncService {
     private void paymentSuccess(Payment payment, AbsPayStrategy syncPayStrategy, PaySyncResult paySyncResult) {
 
         // 已支付不在重复处理
-        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+        if (Objects.equals(payment.getPayStatus(), TRADE_SUCCESS)){
             return;
         }
         // 退款的不处理
-        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDED)){
+        if (Objects.equals(payment.getPayStatus(), TRADE_REFUNDED)
+                ||Objects.equals(payment.getPayStatus(), TRADE_REFUNDING)){
             return;
         }
-        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_REFUNDING)){
-            return;
-        }
-
-        syncPayStrategy.doAsyncSuccessHandler(paySyncResult.getMap());
         // 修改payment支付状态为成功
-        payment.setPayStatus(PayStatusCode.TRADE_SUCCESS);
+        syncPayStrategy.doAsyncSuccessHandler(paySyncResult.getMap());
+        payment.setPayStatus(TRADE_SUCCESS);
         payment.setPayTime(LocalDateTime.now());
         paymentManager.updateById(payment);
 
         // 发送成功事件
-        PayResult payResult = PaymentBuilder.buildResultByPayment(payment);
-        eventSender.sendPaymentCompleted(payResult);
+        eventSender.sendPayComplete(PayEventBuilder.buildPayComplete(payment));
     }
 
     /**
-     * 处理方法
-     * @param payment 支付记录
-     * @param strategyList 支付策略
-     * @param callback 回调
+     * payment 变更为取消支付
      */
-    private void doHandler(Payment payment,
-                           List<AbsPayStrategy> strategyList,
-                           PayStrategyConsumer<List<AbsPayStrategy>, Payment> callback) {
+    private void paymentCancel(Payment payment, List<AbsPayStrategy> absPayStrategies) {
         try {
-            // 执行
-            callback.accept(strategyList, payment);
+            // 已关闭的不再进行关闭
+            if (Objects.equals(payment.getPayStatus(), TRADE_CANCEL)){
+                return;
+            }
+            // 修改payment支付状态为取消, 退款状态则不进行更新
+            if (Objects.equals(payment.getPayStatus(), TRADE_REFUNDED)
+                    ||Objects.equals(payment.getPayStatus(), TRADE_REFUNDING)){
+                return;
+            }
+            payment.setPayStatus(TRADE_CANCEL);
+            // 执行策略的关闭方法
+            absPayStrategies.forEach(AbsPayStrategy::doCloseHandler);
+            paymentManager.updateById(payment);
+            // 发送事件
+            eventSender.sendPayCancel(PayEventBuilder.buildPayCancel(payment));
         } catch (Exception e) {
-            // error事件的处理
-            this.errorHandler(payment, strategyList, e);
+            log.warn("支付状态同步后关闭支付单报错了",e);
+            throw new PayFailureException("支付状态同步后关闭支付单报错了");
         }
     }
+
     /**
-     * 对Error的处理
+     * payment 退款处理 TODO 需要考虑退款详情的合并处理
      */
-    private void errorHandler(Payment payment, List<AbsPayStrategy> strategyList, Exception e) {
-        // 待编写
-        log.warn("支付状态同步方法报错了",e);
-        throw new PayFailureException("支付状态同步方法报错了");
+    private void paymentRefund(Payment payment, AbsPayStrategy syncPayStrategy, PaySyncResult paySyncResult){
+
     }
 
 }

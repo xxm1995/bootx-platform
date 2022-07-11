@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.pay.service;
 
 import cn.bootx.payment.code.pay.PayStatusCode;
+import cn.bootx.payment.core.pay.builder.PayEventBuilder;
 import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
@@ -9,7 +10,9 @@ import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.exception.payment.PayFailureException;
+import cn.bootx.payment.exception.payment.PayNotExistedException;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
+import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,8 @@ import java.util.Optional;
 public class PayCancelService {
     private final PaymentManager paymentManager;
     private final PaymentService paymentService;
+
+    private final PaymentEventSender paymentEventSender;
 
     /**
      * 根据业务id取消支付记录
@@ -80,6 +85,13 @@ public class PayCancelService {
             paymentObj.setPayStatus(PayStatusCode.TRADE_CANCEL);
             paymentManager.updateById(paymentObj);
         });
+
+        // 4. 获取支付记录信息
+        payment = paymentManager.findById(payment.getId())
+                .orElseThrow(PayNotExistedException::new);
+
+        // 5. 发布撤销事件
+        paymentEventSender.sendPayCancel(PayEventBuilder.buildPayCancel(payment));
     }
 
     /**

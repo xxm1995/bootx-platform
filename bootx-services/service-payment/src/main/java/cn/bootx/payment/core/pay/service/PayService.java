@@ -4,6 +4,7 @@ import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.PayModelUtil;
+import cn.bootx.payment.core.pay.builder.PayEventBuilder;
 import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
@@ -96,7 +97,7 @@ public class PayService {
 
         // 如果是支付成功, 发送事件
         if (Objects.equals(payResult.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
-            eventSender.sendPaymentCompleted(payResult);
+            eventSender.sendPayComplete(PayEventBuilder.buildPayComplete(payment));
         }
         return payResult;
     }
@@ -189,7 +190,7 @@ public class PayService {
         strategyList.forEach(payMethod);
 
         // 执行操作成功的处理
-        Optional.ofNullable(successMethod).ifPresent(function -> function.accept(strategyList, payment));
+        Optional.ofNullable(successMethod).ifPresent(fun -> fun.accept(strategyList, payment));
     }
 
     /**

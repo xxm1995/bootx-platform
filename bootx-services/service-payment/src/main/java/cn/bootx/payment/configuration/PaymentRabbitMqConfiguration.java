@@ -18,19 +18,45 @@ public class PaymentRabbitMqConfiguration {
 
     /** 支付完成队列 */
     @Bean
-    public Queue payCompleted() {
+    public Queue payComplete() {
         return new Queue(PaymentEventCode.PAY_COMPLETE);
     }
+    /** 支付关闭/撤销队列 */
+    @Bean
+    public Queue payCancel() {
+        return new Queue(PaymentEventCode.PAY_CANCEL);
+    }
+  /** 支付退款队列 */
+    @Bean
+    public Queue payRefund() {
+        return new Queue(PaymentEventCode.PAY_REFUND);
+    }
+
     /** 交换机 */
     @Bean
     public DirectExchange paymentExchange() {
         return new DirectExchange(PaymentEventCode.EXCHANGE_PAYMENT);
     }
+
     /** 绑定支付完成 */
     @Bean
-    public Binding bindPayCompleted() {
-        return BindingBuilder.bind(payCompleted())
+    public Binding bindPayComplete() {
+        return BindingBuilder.bind(payComplete())
                 .to(paymentExchange())
                 .with(PaymentEventCode.PAY_COMPLETE);
+    }
+    /** 绑定支付关闭/撤销 */
+    @Bean
+    public Binding bindPayCancel() {
+        return BindingBuilder.bind(payCancel())
+                .to(paymentExchange())
+                .with(PaymentEventCode.PAY_CANCEL);
+    }
+    /** 绑定支付退款 */
+    @Bean
+    public Binding bindPayRefund() {
+        return BindingBuilder.bind(payRefund())
+                .to(paymentExchange())
+                .with(PaymentEventCode.PAY_REFUND);
     }
 }

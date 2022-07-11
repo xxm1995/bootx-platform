@@ -20,7 +20,7 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
 public class RabbitMqConfigurer {
 
     /**
-     * 添加自定义序列化
+     * 注册 RabbitTemplate 对象, 使用默认序列化方式
      */
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,ObjectMapper objectMapper) {
@@ -31,7 +31,7 @@ public class RabbitMqConfigurer {
     }
 
     /**
-     * 添加自定义序列化
+     * 添加默认消息序列化方式, 使用默认序列化方式
      */
     @Bean
     public DefaultMessageHandlerMethodFactory jsonHandlerMethodFactory(ObjectMapper objectMapper) {
