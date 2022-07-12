@@ -21,4 +21,7 @@ public class AsyncPayInfo implements Serializable {
 
     /** 第三方支付平台订单号(付款码支付直接成功时会出现) */
     private String tradeNo;
+
+    /** 是否记录超时时间,默认记录 */
+    private boolean expiredTime = true;
 }

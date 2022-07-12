@@ -10,10 +10,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
+import static cn.bootx.payment.code.pay.PayStatusCode.TRADE_PROGRESS;
 
 /**   
 * 支付记录
@@ -25,6 +30,36 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PaymentService {
     private final PaymentManager paymentManager;
+
+    /**
+     * 保存
+     */
+    public Payment save(Payment payment){
+        return paymentManager.save(payment);
+    }
+
+    /**
+     * 更新支付记录
+     */
+    public Payment updateById(Payment payment) {
+        // 超时注册
+        this.registerExpiredTime(payment);
+        return paymentManager.updateById(payment);
+    }
+
+    /**
+     * 根据id查询
+     */
+    public Optional<Payment> findById(Serializable id) {
+        return paymentManager.findById(id);
+    }
+
+    /**
+     * 根据BusinessId查询
+     */
+    public Optional<Payment> findByBusinessId(String businessId){
+        return paymentManager.findByBusinessId(businessId);
+    }
 
     /**
      * 校验支付状态，支付成功则返回，支付失败则抛出对应的异常
@@ -58,6 +93,20 @@ public class PaymentService {
         refundableInfo.setAmount(refundableInfo.getAmount().subtract(amount));
         refundableInfos.add(refundableInfo);
         payment.setRefundableInfo(refundableInfos);
+    }
+
+    /**
+     * 支付单超时关闭事件注册
+     */
+    public void registerExpiredTime(Payment payment){
+        LocalDateTime expiredTime = payment.getExpiredTime();
+        if (Objects.equals(payment.getPayStatus(),TRADE_PROGRESS)&&Objects.nonNull(expiredTime)){
+            try {
+
+            } catch (Exception e){
+                log.error("注册支付单超时关闭失败");
+            }
+        }
     }
 
 }

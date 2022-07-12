@@ -76,7 +76,7 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     private boolean sandbox;
 
     /** 超时配置 */
-    private String expireTime;
+    private Integer expireTime;
 
     /** 可用支付方式 */
     @TableField(updateStrategy = FieldStrategy.IGNORED)

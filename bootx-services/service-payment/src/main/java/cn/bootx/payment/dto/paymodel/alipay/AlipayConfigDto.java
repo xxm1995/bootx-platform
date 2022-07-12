@@ -22,63 +22,63 @@ import java.util.List;
 public class AlipayConfigDto extends BaseDto implements Serializable {
     private static final long serialVersionUID = 6641158663606363171L;
 
-    /** 名称 */
+    @Schema(description = "名称")
     private String name;
 
-    /** 支付宝商户appId */
+    @Schema(description = "支付宝商户appId")
     @SensitiveInfo(value = SensitiveType.OTHER)
     private String appId;
 
-    /** 服务器异步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 */
+    @Schema(description = "服务器异步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问")
     private String notifyUrl;
 
-    /** 页面跳转同步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 商户可以自定义同步跳转地址 */
+    @Schema(description = "页面跳转同步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 商户可以自定义同步跳转地址")
     private String returnUrl;
 
-    /** 请求网关地址 */
+    @Schema(description = "请求网关地址")
     private String serverUrl;
 
-    /** 认证类型 证书/公钥 */
+    @Schema(description = "认证类型 证书/公钥")
     private Integer authType;
 
-    /** 签名类型 */
+    @Schema(description = "签名类型")
     private String signType;
 
-    /** 支付宝公钥 */
+    @Schema(description = "支付宝公钥")
     @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String alipayPublicKey;
 
-    /** 私钥 */
+    @Schema(description = "私钥")
     @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String privateKey;
 
-    /** 应用公钥证书 */
+    @Schema(description = "应用公钥证书")
     @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String appCert;
 
-    /** 支付宝公钥证书文件 */
+    @Schema(description = "支付宝公钥证书文件")
     @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String alipayCert;
 
-    /** 支付宝CA根证书文件 */
+    @Schema(description = "支付宝CA根证书文件")
     @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
     private String alipayRootCert;
 
-    /** 超时配置 */
-    private String expireTime;
+    @Schema(description = "超时配置")
+    private Integer expireTime;
 
-    /** 可用支付方式 */
+    @Schema(description = "可用支付方式")
     private List<String> payWayList;
 
-    /** 是否沙箱环境 */
+    @Schema(description = "是否沙箱环境")
     private boolean sandbox;
 
-    /** 是否启用 */
+    @Schema(description = "是否启用")
     private Boolean activity;
 
-    /** 状态 */
+    @Schema(description = "状态")
     private Integer state;
 
-    /** 备注 */
+    @Schema(description = "备注")
     private String remark;
 }

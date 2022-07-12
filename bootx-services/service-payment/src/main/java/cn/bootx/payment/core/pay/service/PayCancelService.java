@@ -6,7 +6,6 @@ import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
-import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.exception.payment.PayFailureException;
@@ -32,7 +31,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PayCancelService {
-    private final PaymentManager paymentManager;
     private final PaymentService paymentService;
 
     private final PaymentEventSender paymentEventSender;
@@ -53,7 +51,7 @@ public class PayCancelService {
     @Transactional(rollbackFor = Exception.class)
     public void cancelByPaymentId(Long paymentId){
         // 获取payment和paymentParam数据
-        Payment payment = paymentManager.findById(paymentId)
+        Payment payment = paymentService.findById(paymentId)
                 .orElseThrow(() -> new PayFailureException("未找到payment"));
         this.cancelPayment(payment);
     }
@@ -83,11 +81,11 @@ public class PayCancelService {
             strategyList.forEach(AbsPayStrategy::doCancelHandler);
             // 取消订单
             paymentObj.setPayStatus(PayStatusCode.TRADE_CANCEL);
-            paymentManager.updateById(paymentObj);
+            paymentService.updateById(paymentObj);
         });
 
         // 4. 获取支付记录信息
-        payment = paymentManager.findById(payment.getId())
+        payment = paymentService.findById(payment.getId())
                 .orElseThrow(PayNotExistedException::new);
 
         // 5. 发布撤销事件

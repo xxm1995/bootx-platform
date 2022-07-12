@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -66,9 +67,7 @@ public class VoucherPayService {
         if (vouchers.size() != cardNoList.size()) {
             throw new PayFailureException("储值卡支付参数错误");
         }
-        // 判断有效期 TODO 判断长期有效卡
-        boolean timeCheck = vouchers.stream()
-                .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(), voucher.getEndTime()));
+        boolean timeCheck = this.check(vouchers);
         if (!timeCheck) {
             throw new PayFailureException("储值卡不再有效期内");
         }
@@ -168,6 +167,16 @@ public class VoucherPayService {
                 .setType(VoucherCode.LOG_REFUND);
         voucherManager.updateById(voucher);
         voucherLogManager.save(log);
+    }
+
+    /**
+     * 卡信息检查
+     */
+    private boolean check(List<Voucher> vouchers){
+        // 判断有效期
+        return vouchers.stream()
+                .filter(voucher -> !Objects.equals(voucher.getEnduring(),true))
+                .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(), voucher.getEndTime()));
     }
 
 }

@@ -29,9 +29,10 @@ public interface PayStatusCode {
     int NOTIFY_TRADE_FAIL = 0;
     int NOTIFY_TRADE_SUCCESS = 1;
 
-    /** 回调处理状态 0.失败 1.成功 */
+    /** 回调处理状态  */
     int NOTIFY_PROCESS_FAIL = 0;
     int NOTIFY_PROCESS_SUCCESS = 1;
+    int NOTIFY_PROCESS_IGNORE = 2;
 
     /** 退款处理状态 0.失败 1.成功 */
     int REFUND_PROCESS_FAIL = 0;

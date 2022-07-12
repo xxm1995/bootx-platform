@@ -16,6 +16,7 @@
 - 增加`JacksonListTypeHandler` `MyBatis-Plus`的类型处理器
 - 优化系统中注入的`Jackson`的`ObjectMapper`注入，增加携带类型信息`ObjectMapper`注入
 - 优化`JacksonUtil`方法设置`ObjectMapper`限制，增加支持序列化带类型信息的Json方法
+- fix: 前端业务页面F5刷新后，字典项有几率获取不到
 
 ## [v1.1.0-bate-4-fix] 一号线-工研院.测试版4-优化版
 - 重构认证应用和认证终端重新设计为认证终端和登录方式

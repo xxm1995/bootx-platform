@@ -3,13 +3,11 @@ package cn.bootx.payment.core.pay.service;
 import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
-import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.builder.PayEventBuilder;
 import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
-import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.dto.pay.PayResult;
@@ -19,6 +17,7 @@ import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
+import cn.bootx.payment.util.PayModelUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +39,6 @@ import java.util.function.Consumer;
 public class PayService {
     private final PaymentService paymentService;
     private final PayValidationService payValidationService;
-    private final PaymentManager paymentManager;
 
     private final PaymentEventSender eventSender;
 
@@ -89,7 +87,7 @@ public class PayService {
         this.payMethod(payParam,payment);
 
         // 4. 获取支付记录信息
-        payment = paymentManager.findById(payment.getId())
+        payment = paymentService.findById(payment.getId())
                 .orElseThrow(PayNotExistedException::new);
 
         // 5. 返回支付结果
@@ -132,7 +130,7 @@ public class PayService {
         });
 
         // 5. 获取支付记录信息
-        payment = paymentManager.findById(payment.getId())
+        payment = paymentService.findById(payment.getId())
                 .orElseThrow(PayNotExistedException::new);
 
         // 6. 组装返回参数
@@ -168,7 +166,7 @@ public class PayService {
                 paymentObj.setPayStatus(PayStatusCode.TRADE_SUCCESS);
                 paymentObj.setPayTime(LocalDateTime.now());
             }
-            paymentManager.updateById(paymentObj);
+            paymentService.updateById(paymentObj);
         });
     }
 
@@ -221,6 +219,6 @@ public class PayService {
     private Payment createPayment(PayParam payParam) {
         // 构建payment记录 并保存
         Payment payment = PaymentBuilder.buildPayment(payParam);
-        return paymentManager.save(payment);
+        return paymentService.save(payment);
     }
 }

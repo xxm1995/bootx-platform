@@ -11,9 +11,8 @@ import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.func.PayStrategyConsumer;
 import cn.bootx.payment.core.pay.result.PayCallbackResult;
-import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
-import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayParam;
 import cn.hutool.core.collection.CollectionUtil;
@@ -36,7 +35,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PayCallbackService {
-    private final PaymentManager paymentManager;
+    private final PaymentService paymentService;
     private final PaymentEventSender eventSender;
 
     /**
@@ -46,33 +45,39 @@ public class PayCallbackService {
      */
     public PayCallbackResult callback(Long paymentId, int tradeStatus, Map<String, String> map){
 
+        // 获取payment和paymentParam数据
+        Payment payment = paymentService.findById(paymentId)
+                .orElse(null);
+
+        // 支付单不存在,记录回调记录, TODO 后期处理，打算做成自动退款
+        if (Objects.isNull(payment)){
+            return new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
+                    .setMsg("支付单不存在,记录回调记录");
+        }
+
         // 成功状态
         if (PayStatusCode.NOTIFY_TRADE_SUCCESS == tradeStatus){
-            return this.success(paymentId,map);
+            return this.success(payment,map);
         } else {
             // 失败状态
-            return this.fail(paymentId,map);
+            return this.fail(payment,map);
         }
     }
 
     /**
      * 成功处理
      */
-    private PayCallbackResult success(Long paymentId, Map<String, String> map){
+    private PayCallbackResult success(Payment payment, Map<String, String> map){
         PayCallbackResult result = new PayCallbackResult()
                 .setCode(PayStatusCode.NOTIFY_PROCESS_SUCCESS);
 
-        // 1. 获取payment和paymentParam数据
-        Payment payment = paymentManager.findById(paymentId)
-                .orElse(null);
-
-        // 支付单不存在,记录回调记录,后期处理
-        if (Objects.isNull(payment)){
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单不存在,记录回调记录");
+        // payment已经被支付,不需要重复处理
+        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_IGNORE)
+                    .setMsg("支付单已经是支付成功状态,不进行处理");
         }
 
-        // payment已被取消,记录回调记录,后期处理
+        // payment已被取消,记录回调记录,TODO 后期处理. 打算做成自动退款
         if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_PROGRESS)){
             return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
                     .setMsg("支付单不是待支付状态,记录回调记录");
@@ -83,7 +88,8 @@ public class PayCallbackService {
 
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
         if (CollectionUtil.isEmpty(paymentStrategyList)) {
-            throw new PayUnsupportedMethodException();
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
+                    .setMsg("支付单数据非法,未找到对应的支付方式");
         }
 
         // 3.初始化支付的参数
@@ -98,7 +104,7 @@ public class PayCallbackService {
             // 修改payment支付状态为成功
             paymentObj.setPayStatus(PayStatusCode.TRADE_SUCCESS);
             paymentObj.setPayTime(LocalDateTime.now());
-            paymentManager.updateById(paymentObj);
+            paymentService.updateById(paymentObj);
         });
 
         if (handlerFlag) {
@@ -113,28 +119,52 @@ public class PayCallbackService {
 
 
     /**
-     * 失败处理
+     * 失败处理, 关闭并退款  按说这块不会发生
      */
-    private PayCallbackResult fail(Long paymentId, Map<String, String> map) {
+    private PayCallbackResult fail(Payment payment, Map<String, String> map) {
         PayCallbackResult result = new PayCallbackResult()
-                .setCode(PayStatusCode.NOTIFY_PROCESS_FAIL);
-
-        // 1. 获取payment和paymentParam数据
-        Payment payment = paymentManager.findById(paymentId)
-                .orElse(null);
-
-        // 支付单不存在,记录回调记录,后期处理
-        if (Objects.isNull(payment)){
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单不存在,记录回调记录");
-        }
+                .setCode(PayStatusCode.NOTIFY_PROCESS_SUCCESS);
 
         // payment已被取消,记录回调记录,后期处理
         if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_PROGRESS)){
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单不是待支付状态,记录回调记录");
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_IGNORE)
+                    .setMsg("支付单已经取消,记录回调记录");
         }
 
+        // payment支付成功, 状态非法
+        if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
+                    .setMsg("支付单状态非法,支付网关状态为失败,但支付单状态为已完成");
+        }
+
+        // 2.通过工厂生成对应的策略组
+        PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
+        List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
+        if (CollectionUtil.isEmpty(paymentStrategyList)) {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
+                    .setMsg("支付单数据非法,未找到对应的支付方式");
+        }
+        // 3.初始化支付关闭的参数
+        for (AbsPayStrategy paymentStrategy : paymentStrategyList) {
+            paymentStrategy.initPayParam(payment, payParam);
+        }
+        // 4.处理方法, 支付时只有一种payModel(异步支付), 失败时payment的所有payModel都会生效
+        boolean handlerFlag = this.doHandler(payment, paymentStrategyList, (strategyList, paymentObj) -> {
+            // 执行异步支付方式的成功回调(不会有同步payModel)
+            strategyList.forEach(AbsPayStrategy::doCancelHandler);
+
+            // 修改payment支付状态为成功
+            paymentObj.setPayStatus(PayStatusCode.TRADE_CANCEL);
+            paymentService.updateById(paymentObj);
+        });
+
+        if (handlerFlag) {
+            // 5. 发送退款事件
+            eventSender.sendPayRefund(PayEventBuilder.buildPayRefund(payment));
+        } else {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
+                    .setMsg("回调处理过程报错");
+        }
 
         return result;
     }
@@ -146,8 +176,8 @@ public class PayCallbackService {
      * @param successCallback 成功操作
      */
     private boolean doHandler(Payment payment,
-                           List<AbsPayStrategy> strategyList,
-                           PayStrategyConsumer<List<AbsPayStrategy>, Payment> successCallback) {
+                              List<AbsPayStrategy> strategyList,
+                              PayStrategyConsumer<List<AbsPayStrategy>, Payment> successCallback) {
 
         try {
             // 1.获取异步支付方式，通过工厂生成对应的策略组
@@ -182,7 +212,7 @@ public class PayCallbackService {
         payment.setErrorCode(String.valueOf(exceptionInfo.getErrorCode()));
         payment.setErrorMsg(String.valueOf(exceptionInfo.getErrorMsg()));
         payment.setPayStatus(PayStatusCode.TRADE_FAIL);
-        paymentManager.updateById(payment);
+        paymentService.updateById(payment);
 
         // 调用失败处理
         for (AbsPayStrategy paymentStrategy : strategyList) {

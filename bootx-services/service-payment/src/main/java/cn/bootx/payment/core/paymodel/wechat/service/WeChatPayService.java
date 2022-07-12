@@ -15,6 +15,7 @@ import cn.bootx.payment.dto.pay.AsyncPayInfo;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.wechat.WeChatPayParam;
+import cn.bootx.payment.util.PayModelUtil;
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -71,8 +72,8 @@ public class WeChatPayService {
     public void pay(BigDecimal amount, Payment payment, WeChatPayParam weChatPayParam, PayModeParam payModeParam, WeChatPayConfig weChatPayConfig){
         // 微信传入的是分, 将元转换为分
         String totalFee = String.valueOf(amount.multiply(new BigDecimal(100)).longValue());
+        AsyncPayInfo asyncPayInfo = Optional.ofNullable(AsyncPayInfoLocal.get()).orElse(new AsyncPayInfo());
         String payBody = null;
-        String tradeNo = null;
 
         // wap支付
         if (payModeParam.getPayWay() == PayWayCode.WAP){
@@ -92,12 +93,11 @@ public class WeChatPayService {
         }
         // 付款码支付
         else if (payModeParam.getPayWay() == PayWayCode.BARCODE){
-            tradeNo = this.barCode(totalFee, payment, weChatPayParam.getAuthCode(), weChatPayConfig);
+            String tradeNo = this.barCode(totalFee, payment, weChatPayParam.getAuthCode(), weChatPayConfig);
+            asyncPayInfo.setTradeNo(tradeNo)
+                    .setExpiredTime(false);
         }
-        // payBody到线程存储
-        AsyncPayInfo asyncPayInfo = Optional.ofNullable(AsyncPayInfoLocal.get()).orElse(new AsyncPayInfo());
-        asyncPayInfo.setPayBody(payBody)
-                .setTradeNo(tradeNo);
+        asyncPayInfo.setPayBody(payBody);
         AsyncPayInfoLocal.set(asyncPayInfo);
     }
 
@@ -223,11 +223,14 @@ public class WeChatPayService {
                                                                    Payment payment,
                                                                    WeChatPayConfig weChatPayConfig,
                                                                    String tradeType){
+        // 过期时间
+        payment.setExpiredTime(PayModelUtil.getPaymentExpiredTime(weChatPayConfig.getExpireTime()));
         return UnifiedOrderModel
                 .builder()
                 .appid(weChatPayConfig.getAppId())
                 .mch_id(weChatPayConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
+                .time_expire(PayModelUtil.getWxExpiredTime(weChatPayConfig.getExpireTime()))
                 .body(payment.getTitle())
                 .out_trade_no(String.valueOf(payment.getId()))
                 .total_fee(amount)
@@ -257,7 +260,7 @@ public class WeChatPayService {
      * 重试同步支付状态, 最多10次, 30秒不操作微信会自动关闭
      */
     @Async("bigExecutor")
-    @Retryable(value = RetryableException.class, maxAttempts = 20, backoff = @Backoff(value = 5000L))
+    @Retryable(value = RetryableException.class, maxAttempts = 10, backoff = @Backoff(value = 5000L))
     public void rotationSync(Payment payment, WeChatPayConfig weChatPayConfig){
         PaySyncResult paySyncResult = weChatPaySyncService.syncPayStatus(payment.getId(), weChatPayConfig);
         // 不为支付中状态后, 调用系统同步更新状态, 支付状态则继续重试

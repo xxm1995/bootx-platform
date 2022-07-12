@@ -2,19 +2,19 @@ package cn.bootx.payment.core.pay.service;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.payment.code.pay.PaySyncStatus;
-import cn.bootx.payment.core.pay.PayModelUtil;
 import cn.bootx.payment.core.pay.builder.PayEventBuilder;
 import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.result.PaySyncResult;
-import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.exception.payment.PayUnsupportedMethodException;
 import cn.bootx.payment.mq.PaymentEventSender;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
+import cn.bootx.payment.util.PayModelUtil;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,14 +35,14 @@ import static cn.bootx.payment.code.pay.PayStatusCode.*;
 @Service
 @RequiredArgsConstructor
 public class PaySyncService {
-    private final PaymentManager paymentManager;
+    private final PaymentService paymentService;
     private final PaymentEventSender eventSender;
 
     /**
      * 同步订单的支付状态
      */
     public void syncByBusinessId(String businessId){
-        Payment payment = paymentManager.findByBusinessId(businessId).orElse(null);
+        Payment payment = paymentService.findByBusinessId(businessId).orElse(null);
         if (Objects.isNull(payment)){
             return ;
         }
@@ -127,7 +127,7 @@ public class PaySyncService {
         syncPayStrategy.doAsyncSuccessHandler(paySyncResult.getMap());
         payment.setPayStatus(TRADE_SUCCESS);
         payment.setPayTime(LocalDateTime.now());
-        paymentManager.updateById(payment);
+        paymentService.updateById(payment);
 
         // 发送成功事件
         eventSender.sendPayComplete(PayEventBuilder.buildPayComplete(payment));
@@ -150,7 +150,7 @@ public class PaySyncService {
             payment.setPayStatus(TRADE_CANCEL);
             // 执行策略的关闭方法
             absPayStrategies.forEach(AbsPayStrategy::doCloseHandler);
-            paymentManager.updateById(payment);
+            paymentService.updateById(payment);
             // 发送事件
             eventSender.sendPayCancel(PayEventBuilder.buildPayCancel(payment));
         } catch (Exception e) {

@@ -75,6 +75,8 @@ public class WeChatPayConfig extends MpBaseEntity implements EntityBaseFunction<
 
     /** 是否沙箱环境 */
     private boolean sandbox;
+    /** 超时时间(分钟) */
+    private Integer expireTime;
     /** 可用支付方式 */
     @TableField(updateStrategy = FieldStrategy.IGNORED)
     private String payWays;

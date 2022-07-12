@@ -12,6 +12,7 @@ import cn.bootx.payment.dto.pay.AsyncPayInfo;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.alipay.AliPayParam;
+import cn.bootx.payment.util.PayModelUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.Method;
 import com.alipay.api.AlipayApiException;
@@ -27,7 +28,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import static cn.bootx.payment.code.paymodel.AliPayCode.BAR_CODE;
 import static cn.bootx.payment.code.paymodel.AliPayCode.QUICK_MSECURITY_PAY;
@@ -63,7 +67,8 @@ public class AliPayService {
      */
     public void pay(BigDecimal amount, Payment payment, AliPayParam aliPayParam, PayModeParam payModeParam, AlipayConfig alipayConfig){
         String payBody = null;
-        String tradeNo = null;
+        // 线程存储
+        AsyncPayInfo asyncPayInfo = Optional.ofNullable(AsyncPayInfoLocal.get()).orElse(new AsyncPayInfo());
         // wap支付
         if (payModeParam.getPayWay()== PayWayCode.WAP){
             payBody = this.wapPay(amount, payment,alipayConfig,aliPayParam);
@@ -82,13 +87,12 @@ public class AliPayService {
         }
         // 付款码支付
         else if (payModeParam.getPayWay() == PayWayCode.BARCODE){
-            tradeNo = this.barCode(amount, payment,aliPayParam, alipayConfig);
+            String tradeNo = this.barCode(amount, payment,aliPayParam, alipayConfig);
+            asyncPayInfo.setExpiredTime(false)
+                    .setTradeNo(tradeNo);
         }
-
-        // payBody到线程存储
-        AsyncPayInfo asyncPayInfo = Optional.ofNullable(AsyncPayInfoLocal.get()).orElse(new AsyncPayInfo());
-        asyncPayInfo.setPayBody(payBody)
-                .setTradeNo(tradeNo);
+        // 通常是发起支付的参数
+        asyncPayInfo.setPayBody(payBody);
         AsyncPayInfoLocal.set(asyncPayInfo);
     }
 
@@ -102,7 +106,8 @@ public class AliPayService {
         model.setOutTradeNo(String.valueOf(payment.getId()));
         model.setTotalAmount(amount.toPlainString());
         // 过期时间
-        model.setTimeoutExpress(alipayConfig.getExpireTime());
+        model.setTimeoutExpress(PayModelUtil.getAliExpiredTime(alipayConfig.getExpireTime()));
+        payment.setExpiredTime(PayModelUtil.getPaymentExpiredTime(alipayConfig.getExpireTime()));
         model.setProductCode(AliPayCode.QUICK_WAP_PAY);
         model.setQuitUrl(aliPayParam.getReturnUrl());
 
@@ -132,7 +137,8 @@ public class AliPayService {
         model.setProductCode(QUICK_MSECURITY_PAY);
         model.setOutTradeNo(String.valueOf(payment.getId()));
         // 过期时间
-        model.setTimeoutExpress(alipayConfig.getExpireTime());
+        model.setTimeoutExpress(PayModelUtil.getAliExpiredTime(alipayConfig.getExpireTime()));
+        payment.setExpiredTime(PayModelUtil.getPaymentExpiredTime(alipayConfig.getExpireTime()));
         model.setTotalAmount(amount.toPlainString());
 
         try {
@@ -154,7 +160,9 @@ public class AliPayService {
 
         model.setSubject(payment.getTitle());
         model.setOutTradeNo(String.valueOf(payment.getId()));
-        model.setTimeoutExpress(alipayConfig.getExpireTime());
+        // 过期时间
+        model.setTimeoutExpress(PayModelUtil.getAliExpiredTime(alipayConfig.getExpireTime()));
+        payment.setExpiredTime(PayModelUtil.getPaymentExpiredTime(alipayConfig.getExpireTime()));
         model.setTotalAmount(amount.toPlainString());
         // 目前仅支持FAST_INSTANT_TRADE_PAY
         model.setProductCode(AliPayCode.FAST_INSTANT_TRADE_PAY);
@@ -183,7 +191,8 @@ public class AliPayService {
         model.setTotalAmount(amount.toPlainString());
 
         // 过期时间
-        model.setTimeoutExpress(alipayConfig.getExpireTime());
+        model.setTimeoutExpress(PayModelUtil.getAliExpiredTime(alipayConfig.getExpireTime()));
+        payment.setExpiredTime(PayModelUtil.getPaymentExpiredTime(alipayConfig.getExpireTime()));
 
         try {
             AlipayTradePrecreateResponse response = AliPayApi.tradePrecreatePayToResponse(model, alipayConfig.getNotifyUrl());
@@ -207,7 +216,8 @@ public class AliPayService {
         model.setAuthCode(aliPayParam.getAuthCode());
 
         // 过期时间
-        model.setTimeoutExpress(alipayConfig.getExpireTime());
+        model.setTimeoutExpress(PayModelUtil.getAliExpiredTime(alipayConfig.getExpireTime()));
+        payment.setExpiredTime(PayModelUtil.getPaymentExpiredTime(alipayConfig.getExpireTime()));
         model.setTotalAmount(amount.toPlainString());
 
         try {

@@ -63,6 +63,8 @@ public class WeChatPayConfigDto extends BaseDto implements Serializable {
 
     @Schema(description = "是否沙箱环境")
     private boolean sandbox;
+    @Schema(description = "超时时间(分钟)")
+    private Integer expireTime;
     @Schema(description= "可用支付方式")
     private List<String> payWayList;
     @Schema(description = "是否启用")

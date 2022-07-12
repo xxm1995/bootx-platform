@@ -5,8 +5,8 @@ import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.local.AsyncPayInfoLocal;
-import cn.bootx.payment.core.payment.dao.PaymentManager;
 import cn.bootx.payment.core.payment.entity.Payment;
+import cn.bootx.payment.core.payment.service.PaymentService;
 import cn.bootx.payment.core.paymodel.wechat.dao.WeChatPaymentManager;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayment;
 import cn.bootx.payment.dto.pay.AsyncPayInfo;
@@ -32,7 +32,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class WeChatPaymentService {
-    private final PaymentManager paymentManager;
+    private final PaymentService paymentService;
     private final WeChatPaymentManager weChatPaymentManager;
 
     /**
@@ -40,6 +40,7 @@ public class WeChatPaymentService {
      * 更新 payment 中 异步支付类型信息
      */
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
+        AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();
         payment.setAsyncPayMode(true)
                 .setAsyncPayChannel(PayChannelCode.WECHAT);
 
@@ -60,21 +61,26 @@ public class WeChatPaymentService {
                 .setPayChannel(PayChannelCode.WECHAT)
                 .setAmount(payModeParam.getAmount()));
         payment.setRefundableInfo(refundableInfos);
-        paymentManager.updateById(payment);
         // 如果支付完成(付款码情况) 调用 updateSyncSuccess 创建微信支付记录
         if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
-            AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();
-            this.updateAsyncSuccess(payment.getId(),payModeParam,asyncPayInfo.getTradeNo());
+            this.createWeChatPayment(payment,payModeParam,asyncPayInfo.getTradeNo());
         }
     }
 
     /**
-     * 更新支付记录成功状态, 并创建微信支付记录
+     * 异步支付成功, 更新支付记录成功状态, 并创建微信支付记录
      */
     public void updateAsyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
-        // 更新支付记录
-        Payment payment = paymentManager.findById(id)
+        Payment payment = paymentService.findById(id)
                 .orElseThrow(() -> new BizException("支付记录不存在"));
+        this.createWeChatPayment(payment,payModeParam,tradeNo);
+    }
+
+
+    /**
+     * 更新支付记录成功状态, 并创建微信支付记录
+     */
+    private void createWeChatPayment(Payment payment, PayModeParam payModeParam, String tradeNo) {
 
         // 创建微信支付记录
         WeChatPayment wechatPayment = new WeChatPayment();

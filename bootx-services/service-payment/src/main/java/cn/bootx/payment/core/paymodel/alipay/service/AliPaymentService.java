@@ -40,10 +40,9 @@ public class AliPaymentService {
      * 更新 payment 中 异步支付类型信息
      */
     public void updatePaySuccess(Payment payment, PayModeParam payModeParam) {
+        AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();
         payment.setAsyncPayMode(true)
                 .setAsyncPayChannel(PayChannelCode.ALI);
-        // TODO 设置超时时间
-
         List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfo();
         List<RefundableInfo> refundableInfos = payment.getRefundableInfo();
         // 清除已有的异步支付类型信息
@@ -63,8 +62,7 @@ public class AliPaymentService {
         payment.setRefundableInfo(refundableInfos);
         // 如果支付完成(付款码情况) 调用 updateSyncSuccess 创建支付宝支付记录
         if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
-            AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();
-            this.updateAsyncSuccess(payment.getId(),payModeParam,asyncPayInfo.getTradeNo());
+            this.createAliPayment(payment,payModeParam,asyncPayInfo.getTradeNo());
         }
     }
 
@@ -72,11 +70,16 @@ public class AliPaymentService {
      * 更新异步支付记录成功状态, 并创建支付宝支付记录
      */
     public void updateAsyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
-
         // 更新支付记录
         Payment payment = paymentManager.findById(id)
                 .orElseThrow(() -> new PayFailureException("支付记录不存在"));
 
+    }
+
+    /**
+     * 创建支付宝支付记录
+     */
+    private void createAliPayment(Payment payment, PayModeParam payModeParam, String tradeNo){
         // 创建支付宝支付记录
         AliPayment aliPayment = new AliPayment();
         aliPayment.setTradeNo(tradeNo)
