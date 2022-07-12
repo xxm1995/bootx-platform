@@ -38,6 +38,18 @@ public class PaySyncService {
     private final PaymentService paymentService;
     private final PaymentEventSender eventSender;
 
+
+    /**
+     * 同步订单的支付状态
+     */
+    public void syncByPaymentId(Long id){
+        Payment payment = paymentService.findById(id).orElse(null);
+        if (Objects.isNull(payment)){
+            return ;
+        }
+        this.syncPayment(payment);
+    }
+
     /**
      * 同步订单的支付状态
      */

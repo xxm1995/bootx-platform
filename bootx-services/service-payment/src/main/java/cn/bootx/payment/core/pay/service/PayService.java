@@ -2,7 +2,6 @@ package cn.bootx.payment.core.pay.service;
 
 import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
-import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.builder.PayEventBuilder;
 import cn.bootx.payment.core.pay.builder.PaymentBuilder;
 import cn.bootx.payment.core.pay.factory.PayStrategyFactory;
@@ -27,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Consumer;
+
+import static cn.bootx.payment.code.pay.PayStatusCode.*;
 
 /**
  * 支付流程
@@ -84,7 +85,7 @@ public class PayService {
         payment = this.createPayment(payParam);
 
         // 3. 调用支付方法进行发起支付
-        this.payMethod(payParam,payment);
+        this.payFirstMethod(payParam,payment);
 
         // 4. 获取支付记录信息
         payment = paymentService.findById(payment.getId())
@@ -94,53 +95,16 @@ public class PayService {
         PayResult payResult = PaymentBuilder.buildResultByPayment(payment);
 
         // 如果是支付成功, 发送事件
-        if (Objects.equals(payResult.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
+        if (Objects.equals(payResult.getPayStatus(), TRADE_SUCCESS)){
             eventSender.sendPayComplete(PayEventBuilder.buildPayComplete(payment));
         }
         return payResult;
     }
 
     /**
-     * 异步支付执行(非第一次请求), 只执行异步支付策略, 报错不影响继续发起支付
+     * 执行支付方法 (第一次支付)
      */
-    private PayResult paySyncNotFirst(PayParam payParam, Payment payment){
-
-        // 0. 处理支付完成情况(完成/退款)
-        List<Integer> trades = Arrays.asList(PayStatusCode.TRADE_SUCCESS, PayStatusCode.TRADE_REFUNDING, PayStatusCode.TRADE_REFUNDED);
-        if (trades.contains(payment.getPayStatus())){
-            return PaymentBuilder.buildResultByPayment(payment);
-        }
-
-        // 1.获取 异步支付 通道，通过工厂生成对应的策略组
-        PayParam oldPayParam = PaymentBuilder.buildPayParamByPayment(payment);
-        PayModeParam payModeParam = this.getAsyncPayModeParam(payParam,oldPayParam);
-        List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(Collections.singletonList(payModeParam));
-
-        // 2.初始化支付的参数
-        for (AbsPayStrategy paymentStrategy : paymentStrategyList) {
-            paymentStrategy.initPayParam(payment, payParam);
-        }
-        // 3.支付前准备
-        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doBeforePay, null);
-
-        // 4. 发起支付
-        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doPayHandler,(strategyList, paymentObj) -> {
-            // 发起支付成功进行的执行方法
-            strategyList.forEach(AbsPayStrategy::doSuccessHandler);
-        });
-
-        // 5. 获取支付记录信息
-        payment = paymentService.findById(payment.getId())
-                .orElseThrow(PayNotExistedException::new);
-
-        // 6. 组装返回参数
-        return PaymentBuilder.buildResultByPayment(payment);
-    }
-
-    /**
-     * 执行支付方法
-     */
-    private void payMethod(PayParam payParam, Payment payment){
+    private void payFirstMethod(PayParam payParam, Payment payment){
 
         // 1.获取支付方式，通过工厂生成对应的策略组
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
@@ -163,11 +127,49 @@ public class PayService {
             // 所有支付方式都是同步时进行Payment处理
             if (PayModelUtil.isNotSync(payParam.getPayModeList())){
                 // 修改payment支付状态为成功
-                paymentObj.setPayStatus(PayStatusCode.TRADE_SUCCESS);
+                paymentObj.setPayStatus(TRADE_SUCCESS);
                 paymentObj.setPayTime(LocalDateTime.now());
             }
             paymentService.updateById(paymentObj);
         });
+    }
+
+    /**
+     * 异步支付执行(非第一次请求), 只执行异步支付策略, 报错不影响继续发起支付
+     */
+    private PayResult paySyncNotFirst(PayParam payParam, Payment payment){
+
+        // 0. 处理支付完成情况(完成/退款)
+        List<Integer> trades = Arrays.asList(TRADE_SUCCESS,TRADE_CANCEL,TRADE_REFUNDING, TRADE_REFUNDED);
+        if (trades.contains(payment.getPayStatus())){
+            return PaymentBuilder.buildResultByPayment(payment);
+        }
+
+        // 1.获取 异步支付 通道，通过工厂生成对应的策略组
+        PayParam oldPayParam = PaymentBuilder.buildPayParamByPayment(payment);
+        PayModeParam payModeParam = this.getAsyncPayModeParam(payParam,oldPayParam);
+        List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(Collections.singletonList(payModeParam));
+
+        // 2.初始化支付的参数
+        for (AbsPayStrategy paymentStrategy : paymentStrategyList) {
+            paymentStrategy.initPayParam(payment, payParam);
+        }
+        // 3.支付前准备
+        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doBeforePay, null);
+
+        // 4. 发起支付
+        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doPayHandler,(strategyList, paymentObj) -> {
+            // 发起支付成功进行的执行方法
+            strategyList.forEach(AbsPayStrategy::doSuccessHandler);
+            paymentService.updateById(paymentObj);
+        });
+
+        // 5. 获取支付记录信息
+        payment = paymentService.findById(payment.getId())
+                .orElseThrow(PayNotExistedException::new);
+
+        // 6. 组装返回参数
+        return PaymentBuilder.buildResultByPayment(payment);
     }
 
 

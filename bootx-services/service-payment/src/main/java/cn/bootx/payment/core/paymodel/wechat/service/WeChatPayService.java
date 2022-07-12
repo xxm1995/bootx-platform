@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
+import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.common.spring.exception.RetryableException;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PayWayCode;
@@ -16,6 +17,7 @@ import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.paymodel.wechat.WeChatPayParam;
 import cn.bootx.payment.util.PayModelUtil;
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.net.NetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
@@ -230,6 +232,8 @@ public class WeChatPayService {
                 .appid(weChatPayConfig.getAppId())
                 .mch_id(weChatPayConfig.getMchId())
                 .nonce_str(WxPayKit.generateStr())
+                .time_start(LocalDateTimeUtil.format(LocalDateTime.now(), DatePattern.PURE_DATETIME_PATTERN))
+                // 反正v2版本的超时时间无效
                 .time_expire(PayModelUtil.getWxExpiredTime(weChatPayConfig.getExpireTime()))
                 .body(payment.getTitle())
                 .out_trade_no(String.valueOf(payment.getId()))

@@ -13,7 +13,7 @@ import java.time.ZoneId;
  * @date 2020/11/10
  */
 @UtilityClass
-public class LocalDateTimeUtil {
+public class LocalDateTimeUtil extends cn.hutool.core.date.LocalDateTimeUtil {
 
     /**
      * 是否在指定的时间范围内

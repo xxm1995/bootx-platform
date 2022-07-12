@@ -14,5 +14,6 @@ public interface PaymentEventCode {
     /** 支付退款 */
     String PAY_REFUND = "pay.refund";
 
-
+    /** 支付单超时 */
+    String PAYMENT_EXPIRED_TIME = "payment.expired:time";
 }

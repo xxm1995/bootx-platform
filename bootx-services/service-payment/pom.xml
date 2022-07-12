@@ -95,6 +95,14 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-rabbitmq</artifactId>
         </dependency>
+
+        <!-- 定时任务 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-quartz</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 </project>

@@ -26,10 +26,15 @@ public class PaymentRabbitMqConfiguration {
     public Queue payCancel() {
         return new Queue(PaymentEventCode.PAY_CANCEL);
     }
-  /** 支付退款队列 */
+    /** 支付退款队列 */
     @Bean
     public Queue payRefund() {
         return new Queue(PaymentEventCode.PAY_REFUND);
+    }
+    /** 支付超时通知队列 */
+    @Bean
+    public Queue paymentExpiredTime() {
+        return new Queue(PaymentEventCode.PAYMENT_EXPIRED_TIME);
     }
 
     /** 交换机 */
@@ -58,5 +63,12 @@ public class PaymentRabbitMqConfiguration {
         return BindingBuilder.bind(payRefund())
                 .to(paymentExchange())
                 .with(PaymentEventCode.PAY_REFUND);
+    }
+    /** 绑定支付超时通知 */
+    @Bean
+    public Binding bindPaymentExpiredTime() {
+        return BindingBuilder.bind(paymentExpiredTime())
+                .to(paymentExchange())
+                .with(PaymentEventCode.PAYMENT_EXPIRED_TIME);
     }
 }

@@ -11,6 +11,6 @@ public interface CachingCode {
     String PAYMENT_ID = "pay:payment:id";
 
     /** 支付单(业务号码) */
-    String PAYMENT_BUSINESS_ID = "pay:business:id";
+    String PAYMENT_BUSINESS_ID = "pay:payment:business";
 
 }
