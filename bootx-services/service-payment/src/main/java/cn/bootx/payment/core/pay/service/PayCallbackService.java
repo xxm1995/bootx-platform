@@ -1,6 +1,7 @@
 package cn.bootx.payment.core.pay.service;
 
 import cn.bootx.common.core.exception.ErrorCodeRuntimeException;
+import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.pay.builder.PayEventBuilder;
@@ -49,10 +50,16 @@ public class PayCallbackService {
         Payment payment = paymentService.findById(paymentId)
                 .orElse(null);
 
-        // 支付单不存在,记录回调记录, TODO 后期处理，打算做成自动退款
+        // 支付单不存在,记录回调记录
         if (Objects.isNull(payment)){
             return new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
                     .setMsg("支付单不存在,记录回调记录");
+        }
+
+        // 回调时间超出了支付单超时时间, 记录一下, 不做处理
+        if (Objects.nonNull(payment.getExpiredTime())&& LocalDateTimeUtil.ge(LocalDateTime.now(),payment.getExpiredTime())){
+            return new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
+                    .setMsg("回调时间超出了支付单支付有效时间");
         }
 
         // 成功状态
@@ -77,7 +84,7 @@ public class PayCallbackService {
                     .setMsg("支付单已经是支付成功状态,不进行处理");
         }
 
-        // payment已被取消,记录回调记录,TODO 后期处理. 打算做成自动退款
+        // payment已被取消,记录回调记录
         if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_PROGRESS)){
             return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
                     .setMsg("支付单不是待支付状态,记录回调记录");

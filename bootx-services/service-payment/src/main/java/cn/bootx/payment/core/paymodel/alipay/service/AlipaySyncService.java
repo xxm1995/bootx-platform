@@ -41,6 +41,7 @@ public class AlipaySyncService {
         try {
             AlipayTradeQueryModel queryModel = new AlipayTradeQueryModel();
             queryModel.setOutTradeNo(String.valueOf(payment.getId()));
+            // 查询退款参数
             AlipayTradeQueryResponse response = AliPayApi.tradeQueryToResponse(queryModel);
             String tradeStatus = response.getTradeStatus();
 
@@ -65,6 +66,7 @@ public class AlipaySyncService {
             if (Objects.equals(response.getSubCode(),AliPayCode.ACQ_TRADE_NOT_EXIST)){
                 return paySyncResult.setPaySyncStatus(PaySyncStatus.NOT_FOUND);
             }
+            // 退款 支付宝查不到
 
         } catch (AlipayApiException e) {
             log.error("查询订单失败:",e);

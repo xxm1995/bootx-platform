@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.pay.service;
 
+import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.core.pay.builder.PayEventBuilder;
@@ -57,7 +58,7 @@ public class PayService {
         PayModelUtil.validationAsyncPayMode(payParam);
 
         // 获取并校验支付状态
-        Payment payment = paymentService.getAndCheckPaymentByBusinessId(payParam.getBusinessId());
+        Payment payment = this.getAndCheckPaymentByBusinessId(payParam.getBusinessId());
 
         // 异步支付且非第一次支付
         if (Objects.nonNull(payment) && payment.isAsyncPayMode()){
@@ -221,5 +222,32 @@ public class PayService {
         // 构建payment记录 并保存
         Payment payment = PaymentBuilder.buildPayment(payParam);
         return paymentService.save(payment);
+    }
+
+    /**
+     * 校验支付状态，支付成功则返回，支付失败则抛出对应的异常
+     */
+    private Payment getAndCheckPaymentByBusinessId(String businessId) {
+        // 根据订单查询支付记录
+        Payment payment = paymentService.findByBusinessId(businessId)
+                .orElse(null);
+        if (Objects.nonNull(payment)) {
+            // 支付失败
+            List<Integer> trades = Arrays.asList(TRADE_FAIL, TRADE_CANCEL);
+            if (trades.contains(payment.getPayStatus())) {
+                throw new PayFailureException("支付失败或已经被撤销");
+            }
+            // 退款状态
+            trades = Arrays.asList(TRADE_REFUNDING, TRADE_REFUNDED);
+            if (trades.contains(payment.getPayStatus())) {
+                throw new PayFailureException("支付失败或已经被撤销");
+            }
+            // 支付超时
+            if (Objects.nonNull(payment.getExpiredTime())&& LocalDateTimeUtil.ge(LocalDateTime.now(),payment.getExpiredTime())){
+                throw new PayFailureException("支付已超时");
+            }
+            return payment;
+        }
+        return null;
     }
 }

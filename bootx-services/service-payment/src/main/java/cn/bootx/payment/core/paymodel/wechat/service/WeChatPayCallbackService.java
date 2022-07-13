@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import static cn.bootx.payment.code.paymodel.WeChatPayCode.APPID;
+
 /**
  * 微信支付回调
  * @author xxm
@@ -71,7 +73,7 @@ public class WeChatPayCallbackService extends AbsPayCallbackStrategy {
         Map<String, String> params = PARAMS.get();
         String callReq = JSONUtil.toJsonStr(params);
         log.info("微信发起回调 报文: {}", callReq);
-        String appId = params.get("appid");
+        String appId = params.get(APPID);
 
         if (StrUtil.isBlank(appId)) {
             log.warn("微信回调报文 appId 为空 {}", callReq);
@@ -80,7 +82,7 @@ public class WeChatPayCallbackService extends AbsPayCallbackStrategy {
         //
         WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findActivity().orElseThrow(DataNotExistException::new);
         if (weChatPayConfig == null) {
-            log.warn("微信回调报文 appId 不合法 {}", callReq);
+            log.warn("微信支付配置不存在: {}", callReq);
             return false;
         }
         return WxPayKit.verifyNotify(params, weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);

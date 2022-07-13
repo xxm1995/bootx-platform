@@ -40,6 +40,9 @@ public interface WeChatPayCode {
     /** 交易类型 */
     String TRADE_TYPE = "trade_type";
 
+    /** appid */
+    String APPID = "appid";
+
     /** 交易状态 */
     String TRADE_STATE = "trade_state";
 

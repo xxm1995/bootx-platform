@@ -41,7 +41,7 @@ public abstract class AbsPayCallbackStrategy {
             }
             // 去重处理
             if (!this.duplicateChecker()){
-                return null;
+                return this.getReturnMsg();
             }
             // 调用统一回调处理
             PayCallbackResult result = payCallbackService.callback(this.getPaymentId(), this.getTradeStatus(), params);
@@ -64,7 +64,7 @@ public abstract class AbsPayCallbackStrategy {
      */
     public boolean duplicateChecker(){
         // 判断10秒内是否已经回调处理
-        String key = "payment:callback:duplicate:" + ":" + this.getPaymentId();
+        String key = "payment:callback:duplicate:" + this.getPaymentId();
         return redisClient.setIfAbsent(key, "", 10*1000);
     }
 

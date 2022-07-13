@@ -59,14 +59,14 @@ public class AliPayCallbackService extends AbsPayCallbackStrategy {
     public boolean verifyNotify() {
         Map<String, String> params = PARAMS.get();
         String callReq = JSONUtil.toJsonStr(params);
-        String appId = params.get("app_id");
+        String appId = params.get(AliPayCode.APP_ID);
         if (StrUtil.isBlank(appId)) {
-            log.warn("支付宝回调报文 appId 为空 {}", callReq);
+            log.error("支付宝回调报文 appId 为空 {}", callReq);
             return false;
         }
         AlipayConfig alipayConfig = alipayConfigManager.findActivity().orElseThrow(DataNotExistException::new);
         if (alipayConfig == null) {
-            log.warn("支付宝回调报文 appId 不合法 {}", callReq);
+            log.error("支付宝支付配置不存在: {}", callReq);
             return false;
         }
 
@@ -95,5 +95,4 @@ public class AliPayCallbackService extends AbsPayCallbackStrategy {
     public String getReturnMsg() {
         return "success";
     }
-
 }

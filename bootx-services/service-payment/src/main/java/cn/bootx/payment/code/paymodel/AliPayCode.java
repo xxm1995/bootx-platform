@@ -23,21 +23,20 @@ public interface AliPayCode {
     String QUICK_MSECURITY_PAY = "QUICK_MSECURITY_PAY";
     /** 付款码支付 */
     String BAR_CODE = "bar_code";
+
     // 响应字段
     /** 支付状态 */
     String TRADE_STATUS = "trade_status";
-
     /** 公用回传参数 */
     String PASS_BACK_PARAMS = "passback_params";
-
     /** 对交易或商品的描述(在没有公用回传参数的时候, 这个作为公用回传参数) */
     String BODY = "body";
-
     /** 外部订单号-paymentId */
     String OUT_TRADE_NO = "out_trade_no";
-
     /** 支付宝流水号 */
     String TRADE_NO = "trade_no";
+    /** appId */
+    String APP_ID = "app_id";
 
     //交易状态说明
     /** 交易创建，等待买家付款 */

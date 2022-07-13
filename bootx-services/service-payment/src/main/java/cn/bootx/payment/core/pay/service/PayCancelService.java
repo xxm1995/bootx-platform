@@ -19,8 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
+
+import static cn.bootx.payment.code.pay.PayStatusCode.*;
+import static cn.bootx.payment.code.pay.PayStatusCode.TRADE_REFUNDED;
 
 /**
  * 取消订单处理
@@ -40,8 +43,9 @@ public class PayCancelService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void cancelByBusinessId(String businessId) {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(businessId));
-        paymentOptional.ifPresent(this::cancelPayment);
+        Payment payment = paymentService.findByBusinessId(businessId)
+                .orElseThrow(() -> new PayFailureException("未找到支付单"));
+        this.cancelPayment(payment);
     }
 
 
@@ -50,9 +54,8 @@ public class PayCancelService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void cancelByPaymentId(Long paymentId){
-        // 获取payment和paymentParam数据
         Payment payment = paymentService.findById(paymentId)
-                .orElseThrow(() -> new PayFailureException("未找到payment"));
+                .orElseThrow(() -> new PayFailureException("未找到支付单"));
         this.cancelPayment(payment);
     }
 
@@ -60,6 +63,11 @@ public class PayCancelService {
      * 取消支付记录
      */
     private void cancelPayment(Payment payment){
+        // 状态检查, 成功/退款/退款中 不处理
+        List<Integer> trades = Arrays.asList(TRADE_SUCCESS,TRADE_REFUNDING,TRADE_REFUNDED);
+        if (trades.contains(payment.getPayStatus())) {
+            throw new PayFailureException("支付已完成, 无法撤销");
+        }
 
         // 获取 paymentParam
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);;

@@ -67,27 +67,6 @@ public class PaymentService {
         return paymentManager.findByBusinessId(businessId);
     }
 
-    /**
-     * 校验支付状态，支付成功则返回，支付失败则抛出对应的异常
-     */
-    public Payment getAndCheckPaymentByBusinessId(String businessId) {
-        // 根据订单查询支付记录
-        Payment payment = paymentManager.findByBusinessId(businessId)
-                .orElse(null);
-        if (Objects.nonNull(payment)) {
-            // 支付失败
-            List<Integer> trades = Arrays.asList(TRADE_FAIL, TRADE_CANCEL);
-            if (trades.contains(payment.getPayStatus())) {
-                throw new PayFailureException("支付失败或已经被撤销");
-            }
-            // 支付超时
-            if (Objects.nonNull(payment.getExpiredTime())&&LocalDateTimeUtil.ge(LocalDateTime.now(),payment.getExpiredTime())){
-                throw new PayFailureException("支付已超时");
-            }
-            return payment;
-        }
-        return null;
-    }
 
     /**
      * 退款成功处理, 更新可退款信息 不进行持久化

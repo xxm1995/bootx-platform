@@ -47,9 +47,8 @@ public class PayExpiredTimeService {
 
         Payment payment = paymentService.findById(paymentId)
                 .orElseThrow(() -> new PayFailureException("支付单未找到"));
-        // 支付失败/撤销/退款不需要处理
-        List<Integer> trades = Arrays.asList(TRADE_FAIL, TRADE_CANCEL,TRADE_REFUNDING,TRADE_REFUNDED);
-        if (trades.contains(payment.getPayStatus())) {
+        // 只处理支付中
+        if (!Objects.equals(payment.getPayStatus(),TRADE_PROGRESS)) {
             return;
         }
         // 获取支付网关状态

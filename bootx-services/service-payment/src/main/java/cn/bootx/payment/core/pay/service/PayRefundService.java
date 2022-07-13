@@ -35,11 +35,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static cn.bootx.payment.code.pay.PayStatusCode.*;
 
 /**
  * 支付退款
@@ -59,8 +58,10 @@ public class PayRefundService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void refund(RefundParam refundParam) {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(refundParam.getBusinessId()));
-        paymentOptional.ifPresent(payment -> this.refundPayment(payment,refundParam.getRefundModeParams()));
+        Payment payment = paymentService.findByBusinessId(refundParam.getBusinessId())
+                .orElseThrow(() -> new PayFailureException("未找到支付单"));
+
+        this.refundPayment(payment,refundParam.getRefundModeParams());
     }
 
     /**
@@ -68,21 +69,28 @@ public class PayRefundService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void refundByBusinessId(String businessId) {
-        Optional<Payment> paymentOptional = Optional.ofNullable(paymentService.getAndCheckPaymentByBusinessId(businessId));
-        paymentOptional.ifPresent(payment -> this.refundPayment(payment,payment.getRefundableInfo().stream()
-                        .map(o -> new RefundModeParam()
-                                .setPayChannel(o.getPayChannel())
-                                .setAmount(o.getAmount()))
-                        .collect(Collectors.toList())
-                )
-        );
+        Payment payment = paymentService.findByBusinessId(businessId)
+                .orElseThrow(() -> new PayFailureException("未找到支付单"));
+        List<RefundModeParam> refundModeParams = payment.getRefundableInfo().stream()
+                .map(o -> new RefundModeParam()
+                        .setPayChannel(o.getPayChannel())
+                        .setAmount(o.getAmount()))
+                .collect(Collectors.toList());
+        this.refundPayment(payment,refundModeParams);
+
     }
 
     /**
      * 退款
      */
     private void refundPayment(Payment payment, List<RefundModeParam> refundModeParams){
-        // 删除退款金额为0的支付通道参数
+        // 状态判断, 支付中/失败/撤销不处理
+        List<Integer> trades = Arrays.asList(TRADE_PROGRESS, TRADE_CANCEL,TRADE_FAIL);
+        if (trades.contains(payment.getPayStatus())) {
+            throw new PayFailureException("状态非法, 无法退款");
+        }
+
+        // 过滤退款金额为0的支付通道参数
         refundModeParams.removeIf(refundModeParam -> BigDecimalUtil.compareTo(refundModeParam.getAmount(),BigDecimal.ZERO) == 0);
         // 获取 paymentParam
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
