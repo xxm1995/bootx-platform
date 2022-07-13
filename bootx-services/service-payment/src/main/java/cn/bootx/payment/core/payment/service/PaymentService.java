@@ -112,6 +112,7 @@ public class PaymentService {
     @Retryable(value = RetryableException.class)
     public void registerExpiredTime(Payment payment){
         LocalDateTime expiredTime = payment.getExpiredTime();
+        // 支付中且有超时时间才会注册超时关闭时间
         if (Objects.equals(payment.getPayStatus(),TRADE_PROGRESS)&&Objects.nonNull(expiredTime)){
             try {
                 // 将过期时间添加到redis中, 往后延时一分钟

@@ -1,5 +1,6 @@
 package cn.bootx.payment.core.paymodel.wechat.service;
 
+import cn.bootx.common.spring.exception.RetryableException;
 import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.pay.local.AsyncRefundLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
@@ -16,6 +17,7 @@ import com.ijpay.wxpay.model.CloseOrderModel;
 import com.ijpay.wxpay.model.RefundModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -36,6 +38,7 @@ public class WeChatPayCancelService {
     /**
      * 关闭支付
      */
+    @Retryable(value = RetryableException.class)
     public void cancelRemote(Payment payment, WeChatPayConfig weChatPayConfig) {
         // 只有部分需要调用微信网关进行关闭
         Map<String, String> params = CloseOrderModel.builder()

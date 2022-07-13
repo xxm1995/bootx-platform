@@ -85,7 +85,7 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     /** 是否启用 */
     private Boolean activity;
 
-    /** 状态 */
+    /** 状态 暂时没什么用  */
     private Integer state;
 
     /** 备注 */

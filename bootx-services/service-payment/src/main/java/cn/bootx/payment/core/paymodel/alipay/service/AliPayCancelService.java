@@ -1,11 +1,11 @@
 package cn.bootx.payment.core.paymodel.alipay.service;
 
+import cn.bootx.common.spring.exception.RetryableException;
 import cn.bootx.payment.code.paymodel.AliPayCode;
 import cn.bootx.payment.core.pay.local.AsyncRefundLocal;
 import cn.bootx.payment.core.payment.entity.Payment;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.json.JSONUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.domain.AlipayTradeCancelModel;
 import com.alipay.api.domain.AlipayTradeRefundModel;
@@ -14,6 +14,7 @@ import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.ijpay.alipay.AliPayApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -32,6 +33,7 @@ public class AliPayCancelService {
     /**
      * 关闭支付
      */
+    @Retryable(value = RetryableException.class)
     public void cancelRemote(Payment payment){
         // 只有部分需要调用支付宝网关进行关闭
         AlipayTradeCancelModel model = new AlipayTradeCancelModel();
@@ -39,7 +41,6 @@ public class AliPayCancelService {
 
         try {
             AlipayTradeCancelResponse response = AliPayApi.tradeCancelToResponse(model);
-            log.info(JSONUtil.toJsonStr(response));
             if (!Objects.equals(AliPayCode.SUCCESS,response.getCode())){
                 log.error("网关返回撤销失败: {}",response.getSubMsg());
                 throw new PayFailureException(response.getSubMsg());
@@ -63,7 +64,6 @@ public class AliPayCancelService {
         refundModel.setOutRequestNo(AsyncRefundLocal.get());
         try {
             AlipayTradeRefundResponse response = AliPayApi.tradeRefundToResponse(refundModel);
-            log.info(JSONUtil.toJsonStr(response));
             if (!Objects.equals(AliPayCode.SUCCESS,response.getCode())){
                 AsyncRefundLocal.setErrorMsg(response.getSubMsg());
                 AsyncRefundLocal.setErrorCode(response.getCode());

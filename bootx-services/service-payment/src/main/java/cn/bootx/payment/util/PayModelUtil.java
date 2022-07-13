@@ -1,9 +1,11 @@
 package cn.bootx.payment.util;
 
+import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayChannelEnum;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
+import cn.bootx.payment.exception.payment.PayAmountAbnormalException;
 import cn.bootx.payment.exception.payment.PayFailureException;
 import cn.bootx.payment.param.pay.PayModeParam;
 import cn.bootx.payment.param.pay.PayParam;
@@ -15,6 +17,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import lombok.experimental.UtilityClass;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -99,6 +102,34 @@ public class PayModelUtil {
             default:{
                 return null;
             }
+        }
+    }
+
+    /**
+     * 检查支付金额
+     */
+    public void validationAmount(List<PayModeParam> payModeList){
+        for (PayModeParam payModeParam : payModeList) {
+            // 同时满足支付金额小于等于零
+            if (BigDecimalUtil.compareTo(payModeParam.getAmount(), BigDecimal.ZERO) < 1){
+                throw new PayAmountAbnormalException();
+            }
+        }
+    }
+
+    /**
+     * 检查异步支付方式
+     */
+    public void validationAsyncPayMode(PayParam payParam) {
+        // 组合支付时只允许有一个异步支付方式
+        List<PayModeParam> payModeList = payParam.getPayModeList();
+
+        long asyncPayModeCount = payModeList.stream()
+                .map(PayModeParam::getPayChannel)
+                .filter(PayChannelCode.ASYNC_TYPE::contains)
+                .count();
+        if (asyncPayModeCount>1){
+            throw new PayFailureException("组合支付时只允许有一个异步支付方式");
         }
     }
 

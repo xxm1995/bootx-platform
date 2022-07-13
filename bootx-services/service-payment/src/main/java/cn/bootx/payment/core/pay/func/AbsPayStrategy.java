@@ -53,17 +53,10 @@ public abstract class AbsPayStrategy {
     }
 
     /**
-     * 支付前处理
-     */
-    public void doBeforePay() {
-        this.doBeforePayHandler();
-    }
-
-    /**
-     * 支付前对Payment的处理
+     * 支付前对处理
      * 包含必要的校验以及对Payment对象的创建和保存操作
      */
-    protected void doBeforePayHandler(){
+    public void doBeforePayHandler(){
     }
 
     /**

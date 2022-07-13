@@ -39,7 +39,6 @@ import static cn.bootx.payment.code.pay.PayStatusCode.*;
 @RequiredArgsConstructor
 public class PayService {
     private final PaymentService paymentService;
-    private final PayValidationService payValidationService;
 
     private final PaymentEventSender eventSender;
 
@@ -54,8 +53,8 @@ public class PayService {
     @Transactional(rollbackFor = Exception.class)
     public PayResult pay(PayParam payParam) {
         ValidationUtil.validateParam(payParam);
-        // 支付参数检查
-        payValidationService.validationAsyncPayMode(payParam);
+        // 异步支付方法检查
+        PayModelUtil.validationAsyncPayMode(payParam);
 
         // 获取并校验支付状态
         Payment payment = paymentService.getAndCheckPaymentByBusinessId(payParam.getBusinessId());
@@ -79,7 +78,7 @@ public class PayService {
         }
 
         // 1. 价格检测
-        payValidationService.validationAmount(payParam.getPayModeList());
+        PayModelUtil.validationAmount(payParam.getPayModeList());
 
         // 2. 创建支付记录
         payment = this.createPayment(payParam);
@@ -118,7 +117,7 @@ public class PayService {
         }
 
         // 3.支付前准备
-        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doBeforePay, null);
+        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doBeforePayHandler, null);
 
         // 4.支付
         this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doPayHandler, (strategyList, paymentObj) -> {
@@ -155,7 +154,7 @@ public class PayService {
             paymentStrategy.initPayParam(payment, payParam);
         }
         // 3.支付前准备
-        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doBeforePay, null);
+        this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doBeforePayHandler, null);
 
         // 4. 发起支付
         this.doHandler(payment, paymentStrategyList, AbsPayStrategy::doPayHandler,(strategyList, paymentObj) -> {

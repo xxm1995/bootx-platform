@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 超时任务撤销
+ * 支付超时任务撤销消息注册
  * @author xxm
  * @date 2022/7/12
  */
@@ -31,8 +31,8 @@ public class PayExpiredTimeTaskService {
                 .map(Long::valueOf)
                 .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(paymentIds)){
-            paymentIds.forEach(paymentEventSender::sendPaymentExpiredTime);
             expiredTimeRepository.removeKeys(paymentIds.stream().map(String::valueOf).toArray(String[]::new));
+            paymentIds.forEach(paymentEventSender::sendPaymentExpiredTime);
         }
     }
 }
