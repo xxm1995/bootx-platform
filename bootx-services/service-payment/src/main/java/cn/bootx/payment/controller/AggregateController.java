@@ -1,5 +1,6 @@
 package cn.bootx.payment.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.payment.core.aggregate.service.AggregateService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 * @author xxm
 * @date 2022/3/6
 */
+@IgnoreAuth
 @Tag(name = "聚合支付")
 @RestController
 @RequestMapping("/aggregate")
