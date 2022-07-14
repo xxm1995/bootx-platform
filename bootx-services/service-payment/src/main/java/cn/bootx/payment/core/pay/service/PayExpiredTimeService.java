@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +44,7 @@ public class PayExpiredTimeService {
      * 支付单超时支付单处理
      */
     @Async("bigExecutor")
+    @Transactional(rollbackFor = Exception.class)
     public void expiredTime(Long paymentId){
 
         Payment payment = paymentService.findById(paymentId)

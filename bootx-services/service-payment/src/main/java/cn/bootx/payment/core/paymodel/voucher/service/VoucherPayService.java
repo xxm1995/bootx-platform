@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.paymodel.voucher.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.common.core.util.LocalDateTimeUtil;
@@ -83,10 +82,9 @@ public class VoucherPayService {
     }
 
     /**
-     * 支付
+     * 支付 TODO 有期限的在前面, 同样有期限到期时间短的在前面, 同样到期日金额小的在前面
      */
     public void pay(BigDecimal amount, Payment payment, List<Voucher> vouchers) {
-        // 排序,金额小的在前 TODO 有期限的在前面, 同样有期限到期时间短的在前面, 同样到期日金额小的在前面
         vouchers.sort((o1, o2) -> BigDecimalUtil.compareTo(o1.getBalance(), o2.getBalance()));
         List<VoucherLog> voucherLogs = new ArrayList<>();
 
@@ -148,10 +146,10 @@ public class VoucherPayService {
     }
 
     /**
-     * 退款 退到使用的第一个卡上
+     * 退款 TODO 延长卡的有效期,
      */
     public void refund(Long paymentId, BigDecimal amount){
-        VoucherPayment voucherPayment = voucherPaymentManager.findByPaymentId(paymentId).orElseThrow(() -> new BizException("储值卡支付记录不存在"));
+        VoucherPayment voucherPayment = voucherPaymentManager.findByPaymentId(paymentId).orElseThrow(() -> new PayFailureException("储值卡支付记录不存在"));
 
         Long voucherId = Long.valueOf(voucherPayment.getVoucherIds().split(",")[0]);
         Voucher voucher = voucherManager.findById(voucherId).orElseThrow(DataNotExistException::new);
@@ -178,5 +176,4 @@ public class VoucherPayService {
                 .filter(voucher -> !Objects.equals(voucher.getEnduring(),true))
                 .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(), voucher.getEndTime()));
     }
-
 }

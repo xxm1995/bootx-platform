@@ -20,6 +20,6 @@ public class PayExpiredTimeTask implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        payExpiredTimeTaskService.sync();
+        payExpiredTimeTaskService. sync();
     }
 }

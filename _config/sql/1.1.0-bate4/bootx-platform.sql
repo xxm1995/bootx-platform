@@ -9,7 +9,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 14/07/2022 12:49:56
+ Date: 07/07/2022 10:57:51
 */
 
 SET NAMES utf8mb4;
@@ -58,7 +58,6 @@ INSERT INTO `base_dict` VALUES (1502624632392347648, 'WalletLogOperation', '钱�
 INSERT INTO `base_dict` VALUES (1503340128037212160, 'VoucherStatus', '储值卡状态', '支付服务', '储值卡状态', 1399985191002447872, '2022-03-14 19:59:52', 1399985191002447872, '2022-05-11 19:47:12', 0, 1);
 INSERT INTO `base_dict` VALUES (1524356168611188736, 'input', '手工输入', '商品服务', '', 1399985191002447872, '2022-05-11 19:50:06', 1399985191002447872, '2022-05-11 19:50:06', 1, 0);
 INSERT INTO `base_dict` VALUES (1524356376518643712, 'GoodsParamType', '参数类型', '商品服务', '列表/手动输入', 1399985191002447872, '2022-05-11 19:50:56', 1399985191002447872, '2022-05-14 23:05:41', 0, 1);
-INSERT INTO `base_dict` VALUES (1546757092010078208, 'PayNotifyProcess', '支付回调处理状态', '支付服务', '成功/忽略/失败', 1399985191002447872, '2022-07-12 15:23:23', 1399985191002447872, '2022-07-12 15:23:53', 0, 1);
 
 -- ----------------------------
 -- Table structure for base_dict_item
@@ -165,9 +164,6 @@ INSERT INTO `base_dict_item` VALUES (1503340326645895168, 1503340128037212160, '
 INSERT INTO `base_dict_item` VALUES (1505112357976612864, 1496722894707728384, 'PayChannel', '6', '储值卡', 0.00, '', 1399985191002447872, '2022-03-19 17:22:04', 1399985191002447872, '2022-03-19 17:22:04', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1524356452720758784, 1524356376518643712, 'GoodsParamType', 'input', '手工录入', 0.00, '', 1399985191002447872, '2022-05-11 19:51:14', 1399985191002447872, '2022-05-11 19:51:14', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1524356510157557760, 1524356376518643712, 'GoodsParamType', 'select', '列表选择', 0.00, '', 1399985191002447872, '2022-05-11 19:51:28', 1399985191002447872, '2022-05-11 19:51:28', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1546757293592522752, 1546757092010078208, 'PayNotifyProcess', '0', '失败', 0.00, '', 1399985191002447872, '2022-07-12 15:24:11', 1399985191002447872, '2022-07-12 15:24:11', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1546757327901929472, 1546757092010078208, 'PayNotifyProcess', '1', '成功', -1.00, '', 1399985191002447872, '2022-07-12 15:24:19', 1399985191002447872, '2022-07-12 15:31:38', 0, 2);
-INSERT INTO `base_dict_item` VALUES (1546757375637303296, 1546757092010078208, 'PayNotifyProcess', '2', '忽略', 0.00, '', 1399985191002447872, '2022-07-12 15:24:30', 1399985191002447872, '2022-07-12 15:24:30', 0, 0);
 
 -- ----------------------------
 -- Table structure for base_key_value
@@ -218,7 +214,6 @@ INSERT INTO `base_param` VALUES (1452842684284891136, '测试', 'test.v1', '123'
 INSERT INTO `base_param` VALUES (1500338438182789120, '结算台聚合支付请求地址', 'CashierAggregateUrl', 'http://pay1.bootx.cn/cashier/aggregatePay?key=', 1, b'1', '', 1399985191002447872, '2022-03-06 13:12:13', 1399985191002447872, '2022-05-01 15:03:03', 0, 3);
 INSERT INTO `base_param` VALUES (1520668030248361984, '文件服务器地址', 'FileServerUrl', 'http://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-01 15:34:46', 1399985191002447872, '2022-05-19 12:53:21', 0, 5);
 INSERT INTO `base_param` VALUES (1529281530059161600, 'websocket服务器地址', 'WebsocketServerUrl', 'ws://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-05-25 10:01:44', 1399985191002447872, '2022-05-25 10:01:44', 0, 0);
-INSERT INTO `base_param` VALUES (1545765299880448000, '服务器地址', 'ServerUrl', 'http://pay1.bootx.cn/', 1, b'1', '', 1399985191002447872, '2022-07-09 21:42:21', 1399985191002447872, '2022-07-09 21:42:21', 0, 0);
 
 -- ----------------------------
 -- Table structure for common_sequence_range
@@ -426,11 +421,9 @@ CREATE TABLE `flyway_schema_history`  (
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-07-14 12:28:56', 71928, 1);
-INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-07-14 12:28:57', 788, 1);
-INSERT INTO `flyway_schema_history` VALUES (3, '1.1.0.220702', 'bate4', 'SQL', 'V1.1.0_220702__bate4.sql', 764266899, 'bootx', '2022-07-14 12:29:03', 5982, 1);
-INSERT INTO `flyway_schema_history` VALUES (4, '1.1.0.220707', 'bate4-fix', 'SQL', 'V1.1.0_220707__bate4-fix.sql', 1727269960, 'bootx', '2022-07-14 12:29:10', 6278, 1);
-INSERT INTO `flyway_schema_history` VALUES (5, '1.1.0.220714', 'bate5', 'SQL', 'V1.1.0_220714__bate5.sql', -1924142323, 'bootx', '2022-07-14 12:29:14', 3516, 1);
+INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-07-07 10:32:27', 83640, 1);
+INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-07-07 10:32:28', 723, 1);
+INSERT INTO `flyway_schema_history` VALUES (3, '1.1.0.220702', 'bate4', 'SQL', 'V1.1.0_220702__bate4.sql', 764266899, 'bootx', '2022-07-07 10:32:35', 6172, 1);
 
 -- ----------------------------
 -- Table structure for goods_brand
@@ -743,6 +736,33 @@ CREATE TABLE `goods_specification`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for iam_application
+-- ----------------------------
+DROP TABLE IF EXISTS `iam_application`;
+CREATE TABLE `iam_application`  (
+  `id` bigint(20) NOT NULL,
+  `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `system` bit(1) NOT NULL COMMENT '是否系统内置',
+  `enable` bit(1) NOT NULL COMMENT '是否可用',
+  `client_ids` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '关联终端',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '版本',
+  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '认证应用' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of iam_application
+-- ----------------------------
+INSERT INTO `iam_application` VALUES (1430430071299207168, 'admin', 'pc管理端', b'1', b'1', '1430430071299207168,1435138582839009280,1430478946919653376,1542091599907115008,1542804450312122368,1543126042909016064', 'pc浏览器', 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-07-02 14:55:11', 4, 0);
+INSERT INTO `iam_application` VALUES (1430430071299207169, 'h5', 'h5端', b'1', b'1', '1430430071299207168,1435138582839009280', '手机wap', 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-06-29 18:31:45', 1, 0);
+
+-- ----------------------------
 -- Table structure for iam_client
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_client`;
@@ -751,8 +771,10 @@ CREATE TABLE `iam_client`  (
   `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
   `system` bit(1) NOT NULL COMMENT '是否系统内置',
+  `timeout` bigint(11) NULL DEFAULT NULL COMMENT '在线时长 秒',
+  `captcha` bit(1) NOT NULL COMMENT '启用验证码',
+  `pwd_err_num` int(8) NOT NULL COMMENT '密码错误次数',
   `enable` bit(1) NOT NULL COMMENT '是否可用',
-  `login_type_ids` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '关联登录方式\r\n',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
@@ -766,8 +788,12 @@ CREATE TABLE `iam_client`  (
 -- ----------------------------
 -- Records of iam_client
 -- ----------------------------
-INSERT INTO `iam_client` VALUES (1430430071299207168, 'admin', 'pc管理端', b'1', b'1', '1430430071299207168,1435138582839009280,1430478946919653376,1542091599907115008,1542804450312122368,1543126042909016064', 'pc浏览器', 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-07-02 14:55:11', 4, 0);
-INSERT INTO `iam_client` VALUES (1430430071299207169, 'h5', 'h5端', b'1', b'1', '1430430071299207168,1435138582839009280', '手机wap', 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-06-29 18:31:45', 1, 0);
+INSERT INTO `iam_client` VALUES (1430430071299207168, 'password', '账号密码登陆', b'1', 3600, b'0', -1, b'1', NULL, 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-04-24 19:51:13', 16, 0);
+INSERT INTO `iam_client` VALUES (1430478946919653376, 'miniApp', '微信小程序', b'0', 99999, b'1', 0, b'1', NULL, 1399985191002447872, '2021-08-25 18:35:33', 1399985191002447872, '2021-08-25 18:35:33', 2, 0);
+INSERT INTO `iam_client` VALUES (1435138582839009280, 'phone', '手机短信登录', b'0', 3600, b'1', 0, b'1', NULL, 1399985191002447872, '2021-09-07 15:11:16', 1399985191002447872, '2022-06-26 21:35:20', 4, 0);
+INSERT INTO `iam_client` VALUES (1542091599907115008, 'dingTalk', '钉钉', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-06-29 18:24:23', 1399985191002447872, '2022-07-02 14:55:01', 5, 0);
+INSERT INTO `iam_client` VALUES (1542804450312122368, 'weCom', '企业微信', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-01 17:37:00', 1399985191002447872, '2022-07-01 17:37:00', 0, 0);
+INSERT INTO `iam_client` VALUES (1543126042909016064, 'WeChat', '微信登录', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-02 14:54:53', 1399985191002447872, '2022-07-02 14:54:53', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_data_scope
@@ -880,46 +906,12 @@ INSERT INTO `iam_dept` VALUES (1477978810526650368, 1477977827897692160, '奎文
 INSERT INTO `iam_dept` VALUES (1477978883247493120, 1477977827897692160, '潍城办事部', 0, '2', '1_2_2', '', NULL, '', '', 1399985191002447872, '2022-01-03 20:23:20', 1399985191002447872, '2022-01-03 20:23:20', 0, 0);
 
 -- ----------------------------
--- Table structure for iam_login_type
--- ----------------------------
-DROP TABLE IF EXISTS `iam_login_type`;
-CREATE TABLE `iam_login_type`  (
-  `id` bigint(20) NOT NULL,
-  `code` varchar(21) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编码',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型',
-  `system` bit(1) NOT NULL COMMENT '是否系统内置',
-  `timeout` bigint(11) NULL DEFAULT NULL COMMENT '在线时长 秒',
-  `captcha` bit(1) NOT NULL COMMENT '启用验证码',
-  `pwd_err_num` int(8) NOT NULL COMMENT '密码错误次数',
-  `enable` bit(1) NOT NULL COMMENT '是否可用',
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '登录方式' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of iam_login_type
--- ----------------------------
-INSERT INTO `iam_login_type` VALUES (1430430071299207168, 'password', '账号密码登陆', 'password', b'1', 3600, b'0', -1, b'1', NULL, 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-04-24 19:51:13', 16, 0);
-INSERT INTO `iam_login_type` VALUES (1430478946919653376, 'miniApp', '微信小程序', 'openId', b'0', 99999, b'1', 0, b'1', NULL, 1399985191002447872, '2021-08-25 18:35:33', 1399985191002447872, '2021-08-25 18:35:33', 2, 0);
-INSERT INTO `iam_login_type` VALUES (1435138582839009280, 'phone', '手机短信登录', 'openId', b'0', 3600, b'1', 0, b'1', NULL, 1399985191002447872, '2021-09-07 15:11:16', 1399985191002447872, '2022-06-26 21:35:20', 4, 0);
-INSERT INTO `iam_login_type` VALUES (1542091599907115008, 'dingTalk', '钉钉', 'openId', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-06-29 18:24:23', 1399985191002447872, '2022-07-02 14:55:01', 5, 0);
-INSERT INTO `iam_login_type` VALUES (1542804450312122368, 'weCom', '企业微信', 'openId', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-01 17:37:00', 1399985191002447872, '2022-07-01 17:37:00', 0, 0);
-INSERT INTO `iam_login_type` VALUES (1543126042909016064, 'WeChat', '微信登录', 'openId', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-02 14:54:53', 1399985191002447872, '2022-07-02 14:54:53', 0, 0);
-
--- ----------------------------
 -- Table structure for iam_perm_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `iam_perm_menu`;
 CREATE TABLE `iam_perm_menu`  (
   `id` bigint(20) NOT NULL,
-  `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '终端code',
+  `app_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '应用code',
   `parent_id` bigint(20) NULL DEFAULT NULL COMMENT '父id',
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '菜单名称',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '路由名称',
@@ -959,7 +951,7 @@ INSERT INTO `iam_perm_menu` VALUES (1414596805538238464, 'admin', 14525693399874
 INSERT INTO `iam_perm_menu` VALUES (1414596842322284544, 'admin', 1452569691537256448, '部门管理', 'Dept', '', NULL, '', b'0', b'0', 'system/dept/DeptList', '', '/system/userAuth/dept', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:32:53', 1399985191002447872, '2021-08-26 23:56:31', 7, 0);
 INSERT INTO `iam_perm_menu` VALUES (1414596877617352704, 'admin', 1452571269199540224, '数据字典', 'Dict', '', b'0', '', b'0', b'0', 'system/dict/DictList', '', '/system/config/dict', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:32:53', 1399985191002447872, '2022-05-19 09:04:55', 11, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431082258161434624, 'admin', 1452569691537256448, '在线用户管理', 'OnlineUser', '', NULL, '', b'0', b'0', 'system/online/OnlineUserList', NULL, '/system/userAuth/online', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:32:53', 1399985191002447872, '2021-08-27 10:32:53', 6, 0);
-INSERT INTO `iam_perm_menu` VALUES (1431083330909208576, 'admin', 1541427353886859264, '登录方式', 'LoginType', '', b'0', '', b'0', b'0', 'system/client/LoginTypeList', NULL, '/system/config/loginType', '', 9, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:09', 1399985191002447872, '2022-07-05 21:18:12', 11, 0);
+INSERT INTO `iam_perm_menu` VALUES (1431083330909208576, 'admin', 1541427353886859264, '认证终端', 'Client', '', b'0', '', b'0', b'0', 'system/client/ClientList', NULL, '/system/config/client', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:09', 1399985191002447872, '2022-06-27 22:25:16', 8, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431089129232498688, 'admin', 1452569339987472384, '请求权限管理', 'Path', '', NULL, '', b'0', b'0', 'system/path/PathList', NULL, '/system/permission/path', '', 0, 1, b'1', b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 11:00:11', 1399985191002447872, '2021-08-27 11:00:11', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431152689832525824, 'admin', NULL, '系统监控', 'monitor', '', b'0', 'radar-chart', b'0', b'0', 'RouteView', NULL, '/monitor', '', 0, 0, b'1', b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2021-08-27 15:12:45', 1399985191002447872, '2022-06-17 17:57:30', 21, 0);
 INSERT INTO `iam_perm_menu` VALUES (1431153358157348864, 'admin', 1431152689832525824, '接口文档', 'ApiSwagger', '', b'0', '', b'0', b'0', '', NULL, 'http://127.0.0.1:9999/doc.html', '', 0, 1, b'1', b'1', b'1', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 15:15:25', 1399985191002447872, '2022-06-07 11:06:52', 15, 0);
@@ -982,7 +974,7 @@ INSERT INTO `iam_perm_menu` VALUES (1450824117849636864, 'admin', 14508239602360
 INSERT INTO `iam_perm_menu` VALUES (1450824319868289024, 'admin', 1450823960236081152, '微信支付', 'WeChatPayConfig', '', NULL, '', b'0', b'0', 'payment/channel/wechat/WeChatConfigList', NULL, '/payment/channel/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:00:48', 1399985191002447872, '2021-10-20 22:00:48', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450824637876224000, 'admin', 1450823960236081152, '云闪付', 'UnionPayConfig', '', b'0', '', b'0', b'0', 'payment/channel/unionpay/UnionPayConfigList', NULL, '/payment/channel/unionpay', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:02:03', 1399985191002447872, '2022-03-04 16:12:13', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450824875198332928, 'admin', 1450823960236081152, '现金支付', 'CashPayConfig', '', b'0', '', b'1', b'0', '', NULL, '/payment/channel/cash', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:03:00', 1399985191002447872, '2022-03-04 16:12:08', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450825488577544192, 'admin', 1546850918849249280, '收银台', 'PayCashier', '', b'0', '', b'0', b'0', 'payment/cashier/Cashier', NULL, '/demo/pay/cashier', '', -1, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:05:26', 1399985191002447872, '2022-07-12 21:37:22', 3, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450825488577544192, 'admin', 1450822842995130368, '收银台', 'PayCashier', '', NULL, '', b'0', b'0', 'payment/cashier/Cashier', NULL, '/payment/cashier', '', -1, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:05:26', 1399985191002447872, '2021-10-20 22:05:26', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450825615857893376, 'admin', 1450822842995130368, '订单管理', 'PayOrder', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/payment/order', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:05:57', 1399985191002447872, '2021-10-20 22:05:57', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450825819436826624, 'admin', 1450822842995130368, '回调记录', 'PayNotify', '', NULL, '', b'0', b'0', 'payment/notify/PayNotifyRecordList', NULL, '/payment/notify', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:06:45', 1399985191002447872, '2021-10-20 22:06:45', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450826890318135296, 'admin', 1450825615857893376, '支付订单', 'PaymentOrder', '', b'0', '', b'0', b'0', 'payment/order/payment/PaymentList', NULL, '/payment/order/payment', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:11:00', 1399985191002447872, '2022-02-25 15:17:07', 2, 0);
@@ -1007,7 +999,7 @@ INSERT INTO `iam_perm_menu` VALUES (1496020308992143360, 'admin', 14959683020342
 INSERT INTO `iam_perm_menu` VALUES (1501740492360962048, 'admin', 1450822842995130368, '钱包管理', 'Wallet', NULL, b'0', '', b'0', b'0', 'RouteView', NULL, '/payment/wallet', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-10 10:03:29', 1399985191002447872, '2022-03-10 10:04:53', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1501742229142556672, 'admin', 1501740492360962048, '钱包列表', 'WalletList', NULL, b'0', '', b'0', b'0', 'payment/wallet/list/WalletList', NULL, '/payment/wallet/list', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-10 10:10:23', 1399985191002447872, '2022-03-10 17:06:19', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1501742417378725888, 'admin', 1501740492360962048, '个人钱包', 'PersonalWallet', NULL, b'0', '', b'0', b'0', 'payment/wallet/list/WalletList', NULL, '/payment/wallet/personal', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-10 10:11:08', 1399985191002447872, '2022-03-10 17:06:10', 2, 0);
-INSERT INTO `iam_perm_menu` VALUES (1501847310319972352, 'admin', 1546850918849249280, '组合支付', 'CombinationCashier', NULL, b'0', '', b'0', b'0', 'payment/combination/CombinationCashier', NULL, '/demo/pay/combination', '', -0.5, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-10 17:07:56', 1399985191002447872, '2022-07-12 21:37:59', 4, 0);
+INSERT INTO `iam_perm_menu` VALUES (1501847310319972352, 'admin', 1450822842995130368, '组合支付', 'CombinationCashier', NULL, b'0', '', b'0', b'0', 'payment/combination/CombinationCashier', NULL, '/payment/combination', '', -0.5, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-10 17:07:56', 1399985191002447872, '2022-03-10 17:09:28', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1502926397176242176, 'admin', 1450822842995130368, '储值卡', 'Voucher', NULL, b'0', '', b'0', b'0', 'payment/voucher/VoucherList', NULL, '/payment/voucher', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-13 16:35:51', 1399985191002447872, '2022-03-14 19:39:45', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1506910599819165696, 'admin', 1495969099987963904, '数据权限', 'DataPermDemoList', NULL, b'0', '', b'0', b'0', 'demo/data/perm/DataPermDemoList', NULL, '/demo/data/perm', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-24 16:27:39', 1399985191002447872, '2022-03-24 16:28:56', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1506910885463851008, 'admin', 1495969099987963904, '加密解密', 'DataEncryptDemo', NULL, b'0', '', b'0', b'0', 'demo/data/encrypt/DataEncryptDemoList', NULL, '/demo/data/encrypt', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-24 16:28:47', 1399985191002447872, '2022-03-24 16:28:47', 0, 0);
@@ -1030,14 +1022,12 @@ INSERT INTO `iam_perm_menu` VALUES (1534008203006652416, 'admin', 14311526898325
 INSERT INTO `iam_perm_menu` VALUES (1535451167008436224, 'admin', 1431152689832525824, '系统信息', 'SysInfo', NULL, b'0', '', b'0', b'0', 'starter/monitor/SystemInfoMonitor', NULL, '/monitor/sysinfo', '', 0, 1, NULL, b'0', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-11 10:37:40', 1399985191002447872, '2022-06-13 13:07:46', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1535965936371085312, 'admin', 1431152689832525824, 'Redis监控', 'RedisInfoMonitor', NULL, b'0', '', b'0', b'0', 'starter/monitor/RedisInfoMonitor', NULL, '/monitor/redis', '', 0, 1, NULL, b'0', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-12 20:43:11', 1399985191002447872, '2022-06-13 13:07:38', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1537730140522348544, 'admin', 1438061887002759168, '站内信', 'SiteMessage', '', b'0', '', b'0', b'0', 'notice/site/SiteMessage', NULL, '/notice/siteMessage', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:33:30', 1399985191002447872, '2022-06-17 17:33:30', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1537732440632524800, 'admin', NULL, '个人办公', 'person', '', b'0', 'user', b'1', b'0', 'RouteView', NULL, '/person', '', -99, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:42:38', 1399985191002447872, '2022-07-04 22:28:06', 3, 0);
+INSERT INTO `iam_perm_menu` VALUES (1537732440632524800, 'admin', NULL, '个人办公', 'person', '', b'0', 'user', b'0', b'0', 'RouteView', NULL, '/person', '', -99, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:42:38', 1399985191002447872, '2022-06-17 17:45:24', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1537733801860333568, 'admin', 1537732440632524800, '我的消息', 'PersonSiteMessage', NULL, b'0', '', b'0', b'0', 'Dev', NULL, '/person/siteMessage', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:48:03', 1399985191002447872, '2022-06-21 20:52:50', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1537735851818024960, 'admin', 1537732440632524800, '待办任务', 'PersonTaskList', NULL, b'0', '', b'0', b'0', 'Dev', NULL, '/person/taskList', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:56:11', 1399985191002447872, '2022-06-21 20:52:42', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1538160478872625152, 'admin', 1495968302034210816, '富文本编辑', 'WangEditorDemo', NULL, b'0', '', b'0', b'0', 'demo/wangeditor/WangEditorDemo', NULL, '/demo/wangEditor', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-18 22:03:30', 1399985191002447872, '2022-06-18 22:03:31', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1541355214204030976, 'admin', 1541427353886859264, '认证终端', 'Client', '', b'0', '', b'0', b'0', 'system/client/ClientList', NULL, '/system/config/client', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:08', 1399985191002447872, '2022-07-05 21:17:45', 3, 0);
+INSERT INTO `iam_perm_menu` VALUES (1541355214204030976, 'admin', 1541427353886859264, '认证应用', 'AuthApplication', '', b'0', '', b'0', b'0', 'system/client/ApplicationList', NULL, '/system/config/application', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:08', 1399985191002447872, '2022-06-27 22:25:37', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1541427353886859264, 'admin', 1414596052497092608, '认证管理', 'Auth', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/system/auth', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-27 22:24:54', 1399985191002447872, '2022-06-27 22:24:54', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1544952211901218816, 'admin', 1546850918849249280, '支付结算台演示', 'CashierDemo', NULL, b'0', '', b'0', b'0', '', NULL, '/cashier', '', 0, 1, NULL, b'0', b'1', b'0', b'0', NULL, 1399985191002447872, '2022-07-07 15:51:26', 1399985191002447872, '2022-07-12 21:36:34', 2, 0);
-INSERT INTO `iam_perm_menu` VALUES (1546850918849249280, 'admin', 1495968302034210816, '支付演示', 'DemoPay', NULL, b'0', '', b'0', b'0', 'RouteView', NULL, '/demo/pay', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-07-12 21:36:13', 1399985191002447872, '2022-07-12 21:36:13', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -1100,7 +1090,7 @@ DROP TABLE IF EXISTS `iam_role_menu`;
 CREATE TABLE `iam_role_menu`  (
   `id` bigint(20) NOT NULL,
   `role_id` bigint(20) NOT NULL COMMENT '角色id',
-  `client_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '终端code',
+  `app_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用code',
   `permission_id` bigint(20) NOT NULL COMMENT '菜单权限id',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色菜单权限表' ROW_FORMAT = DYNAMIC;
@@ -1190,8 +1180,8 @@ CREATE TABLE `iam_user_expand_info`  (
 -- ----------------------------
 -- Records of iam_user_expand_info
 -- ----------------------------
-INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-07-12 15:20:44', '2022-07-12 21:35:26', b'0', '2022-06-19 21:25:00', 1, '2021-06-02 15:04:15', 0, '2022-07-12 21:35:26', 273, 0);
-INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, NULL, '1530065639127871488', '2022-05-27 13:56:02', '2022-07-04 22:39:33', b'0', NULL, 1, '2021-07-11 16:44:32', 0, '2022-07-04 22:39:33', 3, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-07-02 16:26:31', '2022-07-02 17:21:14', b'0', '2022-06-19 21:25:00', 1, '2021-06-02 15:04:15', 0, '2022-07-02 17:21:14', 253, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, NULL, '1530065639127871488', NULL, '2022-05-27 13:56:02', b'0', NULL, 1, '2021-07-11 16:44:32', 1414143554414059520, '2022-05-27 13:57:32', 2, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435894470432456704, 1, NULL, NULL, NULL, NULL, b'0', '2022-06-29 00:39:23', 1399985191002447872, '2021-09-09 17:14:54', 0, '2022-06-29 00:39:23', 2, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435967884114194432, 1, NULL, NULL, NULL, '2022-05-31 15:59:42', b'0', NULL, 1414143554414059520, '2021-09-09 22:06:37', 0, '2022-05-31 15:59:42', 1, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1477990832987361280, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2022-01-03 21:10:49', 1399985191002447872, '2022-01-03 21:10:49', 0, 0);
@@ -1209,7 +1199,7 @@ CREATE TABLE `iam_user_info`  (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '密码',
   `phone` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '手机号',
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '邮箱',
-  `client_ids` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '关联终端ds',
+  `app_ids` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '关联应用ds',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '头像',
   `source` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '注册来源',
   `admin` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否超级管理员',
@@ -1252,10 +1242,10 @@ CREATE TABLE `iam_user_role`  (
 INSERT INTO `iam_user_role` VALUES (1533038443724980224, 1435894470432456704, 1405414804771971072);
 
 -- ----------------------------
--- Table structure for iam_user_third
+-- Table structure for iam_user_social
 -- ----------------------------
-DROP TABLE IF EXISTS `iam_user_third`;
-CREATE TABLE `iam_user_third`  (
+DROP TABLE IF EXISTS `iam_user_social`;
+CREATE TABLE `iam_user_social`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `user_id` bigint(20) NULL DEFAULT NULL COMMENT '用户id',
   `we_chat_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信openId',
@@ -1275,14 +1265,15 @@ CREATE TABLE `iam_user_third`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户三方登录绑定' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of iam_user_third
+-- Records of iam_user_social
 -- ----------------------------
+INSERT INTO `iam_user_social` VALUES (1399985191002447872, 1399985191002447872, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2022-06-29 18:44:34', 1399985191002447872, '2022-07-02 14:50:16', 4, 0);
 
 -- ----------------------------
--- Table structure for iam_user_third_info
+-- Table structure for iam_user_social_info
 -- ----------------------------
-DROP TABLE IF EXISTS `iam_user_third_info`;
-CREATE TABLE `iam_user_third_info`  (
+DROP TABLE IF EXISTS `iam_user_social_info`;
+CREATE TABLE `iam_user_social_info`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
   `client_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '第三方终端类型',
@@ -1300,7 +1291,7 @@ CREATE TABLE `iam_user_third_info`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户三方登录绑定详情' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of iam_user_third_info
+-- Records of iam_user_social_info
 -- ----------------------------
 
 -- ----------------------------
@@ -1648,17 +1639,17 @@ CREATE TABLE `pay_alipay_config`  (
   `alipay_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝公钥证书',
   `alipay_root_cert` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支付宝CA根证书',
   `sandbox` bit(1) NOT NULL COMMENT '是否沙箱环境',
-  `expire_time` int(10) NOT NULL COMMENT '超时配置',
+  `expire_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '超时配置',
   `pay_ways` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支持的支付类型',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `activity` bit(1) NOT NULL COMMENT '是否启用',
   `state` int(11) NOT NULL COMMENT '状态',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+  `creator` bigint(20) NULL DEFAULT NULL,
+  `create_time` datetime(6) NULL DEFAULT NULL,
+  `last_modifier` bigint(20) NULL DEFAULT NULL,
+  `last_modified_time` datetime(6) NULL DEFAULT NULL,
+  `version` int(11) NOT NULL,
+  `deleted` bit(1) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付宝配置' ROW_FORMAT = DYNAMIC;
 
@@ -1747,9 +1738,9 @@ DROP TABLE IF EXISTS `pay_payment`;
 CREATE TABLE `pay_payment`  (
   `id` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL COMMENT '用户id',
-  `business_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '业务id',
-  `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
-  `description` varchar(240) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '业务id',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '标题',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
   `amount` decimal(19, 2) NOT NULL COMMENT '金额',
   `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款余额',
   `pay_status` int(11) NOT NULL COMMENT '支付状态',
@@ -1769,8 +1760,7 @@ CREATE TABLE `pay_payment`  (
   `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
   `version` int(11) NOT NULL COMMENT '版本',
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `uniq_business_id`(`business_id`) USING BTREE COMMENT '业务编号id, 唯一ID'
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '支付记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1975,32 +1965,34 @@ CREATE TABLE `pay_wallet_payment`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `pay_wechat_pay_config`;
 CREATE TABLE `pay_wechat_pay_config`  (
-  `id` bigint(20) NOT NULL COMMENT '主键',
-  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `app_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信应用AppId',
-  `mch_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户号',
-  `api_version` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务商应用编号',
-  `api_key_v2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 APIv2 密钥',
-  `api_key_v3` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 APIv3 密钥',
-  `app_secret` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'APPID对应的接口密码，用于获取接口调用凭证access_token时使用',
-  `p12` bigint(20) NULL DEFAULT NULL COMMENT 'p12的文件id',
-  `cert_pem` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT 'API 证书中的 cert.pem',
-  `key_pem` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT 'API 证书中的 key.pem',
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '微信应用AppId',
+  `sl_app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务商应用编号',
+  `api_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 API 密钥',
+  `api_key3` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户平台「API安全」中的 APIv3 密钥',
+  `mch_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '商户号',
+  `sl_mch_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务商商户号',
+  `auth_type` int(3) NULL DEFAULT NULL COMMENT '认证方式',
+  `cert_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 p12',
+  `cert_pem_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 key.pem',
+  `key_pem_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'API 证书中的 cert.pem',
   `domain` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '应用域名，回调中会使用此参数',
   `notify_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '服务器异步通知页面路径',
   `return_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '页面跳转同步通知页面路径',
-  `pay_ways` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '支持的支付类型',
+  `partner_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '同 apiKey 后续版本会舍弃',
+  `is_default` bit(1) NULL DEFAULT NULL COMMENT '是否默认',
+  `pay_ways` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支持的支付类型',
   `sandbox` bit(1) NOT NULL COMMENT '是否沙箱环境',
-  `expire_time` int(10) NOT NULL COMMENT '超时配置',
   `activity` bit(1) NOT NULL COMMENT '是否启用',
   `state` int(11) NULL DEFAULT NULL COMMENT '状态',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+  `creator` bigint(20) NULL DEFAULT NULL,
+  `create_time` datetime(6) NULL DEFAULT NULL,
+  `last_modifier` bigint(20) NULL DEFAULT NULL,
+  `last_modified_time` datetime(6) NULL DEFAULT NULL,
+  `version` int(11) NOT NULL,
+  `deleted` bit(1) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信支付配置' ROW_FORMAT = DYNAMIC;
 
@@ -2022,12 +2014,13 @@ CREATE TABLE `pay_wechat_payment`  (
   `refundable_balance` decimal(19, 2) NULL DEFAULT NULL COMMENT '可退款金额',
   `business_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '业务id',
   `pay_time` datetime(6) NULL DEFAULT NULL COMMENT '支付时间',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+  `creator` bigint(20) NULL DEFAULT NULL,
+  `create_time` datetime(6) NULL DEFAULT NULL,
+  `last_modifier` bigint(20) NULL DEFAULT NULL,
+  `last_modified_time` datetime(6) NULL DEFAULT NULL,
+  `version` int(11) NOT NULL,
+  `deleted` bit(1) NOT NULL,
+  `tid` bigint(20) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信支付记录' ROW_FORMAT = DYNAMIC;
 
@@ -2085,7 +2078,6 @@ CREATE TABLE `qrtz_cron_triggers`  (
 -- ----------------------------
 -- Records of qrtz_cron_triggers
 -- ----------------------------
-INSERT INTO `qrtz_cron_triggers` VALUES ('quartzScheduler', '1546857070483939328', 'DEFAULT', '0/5 * * * * ? *', 'Asia/Shanghai');
 
 -- ----------------------------
 -- Table structure for qrtz_fired_triggers
@@ -2117,7 +2109,6 @@ CREATE TABLE `qrtz_fired_triggers`  (
 -- ----------------------------
 -- Records of qrtz_fired_triggers
 -- ----------------------------
-INSERT INTO `qrtz_fired_triggers` VALUES ('quartzScheduler', 'NON_CLUSTERED1657772921496', '1546857070483939328', 'DEFAULT', 'NON_CLUSTERED', 1657774220709, 1657774225000, 5, 'ACQUIRED', NULL, NULL, '0', '0');
 
 -- ----------------------------
 -- Table structure for qrtz_job_details
@@ -2142,7 +2133,6 @@ CREATE TABLE `qrtz_job_details`  (
 -- ----------------------------
 -- Records of qrtz_job_details
 -- ----------------------------
-INSERT INTO `qrtz_job_details` VALUES ('quartzScheduler', '1546857070483939328', 'DEFAULT', NULL, 'cn.bootx.payment.task.PayExpiredTimeTask', '0', '1', '1', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C77080000001000000001740009706172616D65746572707800);
 
 -- ----------------------------
 -- Table structure for qrtz_locks
@@ -2277,7 +2267,6 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('quartzScheduler', '1546857070483939328', 'DEFAULT', '1546857070483939328', 'DEFAULT', NULL, 1657774225000, 1657774220000, 5, 'ACQUIRED', 'CRON', 1657634445000, 0, NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for sales_activity
@@ -2674,7 +2663,6 @@ CREATE TABLE `starter_quartz_job`  (
 -- Records of starter_quartz_job
 -- ----------------------------
 INSERT INTO `starter_quartz_job` VALUES (1456579473573867520, '测试任务', 'cn.bootx.starter.quartz.task.TestTask', '50 0 * * * ? *', '{\"aaa\":\"5255\"}', 0, '测试任务', 1399985191002447872, '2021-11-05 19:09:43', 1399985191002447872, '2022-06-22 00:37:48', 25, 0);
-INSERT INTO `starter_quartz_job` VALUES (1546857070483939328, '支付单超时检测', 'cn.bootx.payment.task.PayExpiredTimeTask', '0/5 * * * * ? *', NULL, 1, '检测超时的支付单, 超时后发送超时事件', 1399985191002447872, '2022-07-12 22:00:39', 1399985191002447872, '2022-07-12 22:00:45', 1, 0);
 
 -- ----------------------------
 -- Table structure for starter_quartz_job_log
