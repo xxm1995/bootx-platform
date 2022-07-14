@@ -1,5 +1,6 @@
 package cn.bootx.payment.controller;
 
+import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
@@ -52,17 +53,20 @@ public class PaymentController {
         return Res.ok(paymentQueryService.superPage(pageParam,queryParams));
     }
 
-    @Operation(summary = "根据业务ID获取支付状态")
+    @IgnoreAuth
+    @Operation(summary = "根据业务ID获取支付状态`")
     @GetMapping("/findStatusByBusinessId")
     public ResResult<Integer> findStatusByBusinessId(String businessId){
         return Res.ok(paymentQueryService.findStatusByBusinessId(businessId));
     }
 
+    @IgnoreAuth
     @Operation(summary = "根据businessId获取订单支付方式")
     @GetMapping("/findPayTypeInfoByBusinessId")
     public ResResult<List<PayChannelInfo>> findPayTypeInfoByBusinessId(String businessId){
         return Res.ok(paymentQueryService.findPayTypeInfoByBusinessId(businessId));
     }
+
     @Operation(summary = "根据id获取订单支付方式")
     @GetMapping("/findPayTypeInfoById")
     public ResResult<List<PayChannelInfo>> findPayTypeInfoById(Long id){

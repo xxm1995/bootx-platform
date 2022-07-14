@@ -16,6 +16,7 @@ spring:
     port: 6379
     database: 1
   rabbitmq:
+    virtual-host: bootx-platform
     host: 127.0.0.1
     port: 5672
     username: guest
