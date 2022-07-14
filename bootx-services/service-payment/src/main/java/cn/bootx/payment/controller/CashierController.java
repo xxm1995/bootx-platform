@@ -54,7 +54,7 @@ public class CashierController {
         }
     }
 
-    @Operation(summary = "微信jsapi支付")
+    @Operation(summary = "微信jsapi支付(回调)")
     @GetMapping("/wxJsapiPay")
     public ModelAndView wxJsapiPay(String code, String state){
         Map<String, String> map = cashierService.wxJsapiPay(code, state);

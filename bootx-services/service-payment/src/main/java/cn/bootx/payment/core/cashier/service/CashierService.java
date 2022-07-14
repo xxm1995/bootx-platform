@@ -2,13 +2,12 @@ package cn.bootx.payment.core.cashier.service;
 
 import cn.bootx.baseapi.core.parameter.dao.SystemParamManager;
 import cn.bootx.baseapi.core.parameter.entity.SystemParameter;
-import cn.bootx.common.core.code.CommonCode;
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.BigDecimalUtil;
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.code.pay.PayModelExtraCode;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.code.pay.PayWayCode;
+import cn.bootx.payment.code.paymodel.WeChatPayCode;
 import cn.bootx.payment.core.aggregate.entity.AggregatePayInfo;
 import cn.bootx.payment.core.aggregate.service.AggregateService;
 import cn.bootx.payment.core.pay.service.PayService;
@@ -122,8 +121,8 @@ public class CashierService {
         WeChatPayConfig config = weChatPayConfigManager.findActivity().orElseThrow(() -> new PayFailureException("未找到启用的微信支付配置"));
         WxMpService wxMpService = getWxMpService(config.getAppId(), config.getAppSecret());
         // 回调地址为 结算台微信jsapi支付的回调地址
-        SystemParameter systemParameter = systemParamManager.findByParamKey(CommonCode.SERVER_URL)
-                .orElseThrow(() -> new BizException("服务器地址参数不存在"));
+        SystemParameter systemParameter = systemParamManager.findByParamKey(WeChatPayCode.JSAPI_REDIRECT_URL)
+                .orElseThrow(() -> new PayFailureException("微信支付回调地址参数不存在"));
         String url = systemParameter.getValue()+"cashier/wxJsapiPay";
         return wxMpService.getOAuth2Service().buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_BASE, key);
     }

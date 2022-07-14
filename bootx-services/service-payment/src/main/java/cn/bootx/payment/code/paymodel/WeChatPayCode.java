@@ -11,7 +11,9 @@ public interface WeChatPayCode {
     String API_V2 = "api_v2";
     String API_V3 = "api_v3";
 
-
+    // 请求参数
+    /** jsapi发起获取AuthCode时的重定向参数 */
+    String JSAPI_REDIRECT_URL = "JsapiRedirectUrl";
     // 返回参数
     /** 二维码链接 */
     String CODE_URL = "code_url";

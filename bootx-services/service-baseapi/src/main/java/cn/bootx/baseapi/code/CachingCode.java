@@ -8,5 +8,5 @@ package cn.bootx.baseapi.code;
 public interface CachingCode {
 
     /** 参数缓存 */
-    String SYSTEM_PARAM = "ba:system:param";
+    String SYSTEM_PARAM = "base:system:param";
 }
