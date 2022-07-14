@@ -24,11 +24,20 @@
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove) [PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
+## 🛠️重磅版本更新
+一大波支付相关功能来袭，支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务，
+
+增加支付结算台演示，不需要登录沙箱账号，欢迎扫体验，ps：支付后可以在后台支付订单模块处进行退款💪💪💪
+
+结算台演示地址：[http://web.platform.bootx.cn/cashier](http://web.platform.bootx.cn/cashier)
+
+![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
 
 ## 🚩路线图
-### 1.1.0-beta5（预计七月中旬完成）
+### 1.1.0-beta5（一期完成）
 
-完善支付模块，主要是微信支付方面，适配V3版本API，
+- [x] 完善支付模块，支付宝、微信、聚合支付、退款、超时关闭，支付信息同步、消息通知等功能
+- [ ] 退款信息同步优化、网关对账、异常情况报警、支付后可以在支付宝/微信上查看商品订单明细
 
 ### 1.1.0-beta6（预计八月前完成）
 微信服务号消息通知、钉钉消息通知、短信消息通知等通知相关功能实现，
@@ -85,7 +94,7 @@ bootx-platform
        ├── common-starter-code-gen -- 代码生成模块
        ├── common-starter-data-perm -- 数据权限模块
        ├── common-starter-file -- 文件管理模块
-       ├── common-starter-monitor  系统监控
+       ├── common-starter-monitor -- 系统监控
        ├── common-starter-quartz -- Quartz定时任务模块
     ├── bootx-commons -- commons工具配置封装
        ├── common-cache -- 缓存配置
@@ -93,7 +102,7 @@ bootx-platform
        ├── common-header-holder -- 请求头获取工具
        ├── common-idempotency -- 幂等控制组件
        ├── common-jackson -- Json序列化配置
-       ├── common-lock 分布式锁
+       ├── common-lock -- 分布式锁
        ├── common-log -- 日志配置
        ├── common-mongo -- MongoDB配置
        ├── common-mqtt -- mqtt配置
