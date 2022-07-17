@@ -47,10 +47,6 @@ public class MailConfigManager extends BaseManager<MailConfigMapper, MailConfig>
         return existedByField(MailConfig::getCode,code,id);
     }
 
-    public boolean existsByActivity() {
-        return existedByField(MailConfig::getActivity,Boolean.TRUE);
-    }
-
     public void removeAllActivity() {
         lambdaUpdate().eq(MailConfig::getActivity,Boolean.TRUE)
                 .set(MailConfig::getActivity,Boolean.FALSE)

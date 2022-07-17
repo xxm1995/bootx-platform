@@ -16,8 +16,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * 邮件配置
  * @author xxm
@@ -54,13 +52,6 @@ public class MailConfigService {
 
         BeanUtil.copyProperties(param,mailConfig, CopyOptions.create().ignoreNullValue());
         return mailConfigManager.updateById(mailConfig).toDto();
-    }
-
-    /**
-     * 获取所有邮箱配置
-     */
-    public List<MailConfigDto> findAll() {
-        return ResultConvertUtil.dtoListConvert(mailConfigManager.findAll());
     }
 
     /**
@@ -104,8 +95,6 @@ public class MailConfigService {
     public boolean existsByCode(String code,Long id){
         return mailConfigManager.existsByCode(code,id);
     }
-
-
 
     /**
      * 设置活动邮箱

@@ -109,6 +109,19 @@ bootx:
       # 自动追加终端id后缀 client@xxx
       auto-client-id-suffix: true
   starter:
+    # 三方平台
+    social:
+      # 钉钉
+      ding-talk:
+        app-key: ??
+        app-secret: ??
+      #微信
+      wechat:
+        app-id: ??
+        app-secret: ??
+        token: ??
+        encoding-aes-key: ??
+    # 认证
     auth:
       default-password: 123456
       ignore-urls:
@@ -130,8 +143,8 @@ bootx:
       third-login:
         ding-talk:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/dingTalk
-          client-secret: ??
-          client-id: ??
+          client-secret: ${bootx.starter.social.ding-talk.app-secret}
+          client-id: ${bootx.starter.social.ding-talk.app-key}
         we-com:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/weCom
           client-secret: ??
@@ -139,8 +152,8 @@ bootx:
           agent-id: ??
         we-chat:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/weChat
-          client-id: ??
-          client-secret: ??
+          client-id: ${bootx.starter.social.wechat.app-id}
+          client-secret: ${bootx.starter.social.wechat.app-secret}
     # 审计日志存储
     audit-log:
       store: mongo
@@ -152,4 +165,4 @@ bootx:
         bucket: fs
     # 数据权限
     data-perm:
-      fieldDecryptKey: "UCrtxSCwYZNCIlav"
+      field-decrypt-key: "UCrtxSCwYZNCIlav"

@@ -5,10 +5,12 @@ import cn.bootx.notice.dto.mail.MailConfigDto;
 import cn.bootx.notice.dto.mail.MailFileParam;
 import cn.bootx.notice.dto.mail.SendMailParam;
 import cn.bootx.notice.exception.MailConfigNotExistException;
+import cn.bootx.notice.service.EmailNoticeService;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
@@ -40,7 +42,7 @@ import java.util.*;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class MailSendService {
+public class MailSendService implements EmailNoticeService {
 
     /**
      * 默认 MIME Type
@@ -49,25 +51,26 @@ public class MailSendService {
     private final MailConfigService mailConfigService;
 
     /**
-     * 简单
+     * 简单邮件发送
      * @param email 邮件地址
-     * @param subject 话题
-     * @param msg 消息
+     * @param subject 邮件标题
+     * @param msg 邮件消息
      */
+    @Override
     public void sentSimpleMail(String email,String subject,String msg){
         SendMailParam mailParam = new SendMailParam();
         mailParam.setTo(Collections.singletonList(email));
         mailParam.setSubject(subject);
         mailParam.setMessage(msg);
-        // 发送
-        this.sendHtmlMail(mailParam);
+        SpringUtil.getBean(getClass()).sendMail(mailParam);
     }
 
     /**
-     * 发送html邮件
+     * 标准邮件发送
      */
     @Async("asyncExecutor")
-    public void sendHtmlMail(SendMailParam mailParam) {
+    @Override
+    public void sendMail(SendMailParam mailParam) {
         log.info("开始发送邮件");
         try {
             MailConfigDto mailConfig = this.getMailConfig( mailParam.getConfigCode());
@@ -87,7 +90,6 @@ public class MailSendService {
             if (CollUtil.isNotEmpty(mailParam.getCcList())) {
                 allReceivers.addAll(mailParam.getCcList());
             }
-
             // 设置接收人
             Set<String> receivers = Sets.intersection(allReceivers, new HashSet<>(mailParam.getTo()));
             if (CollUtil.isEmpty(receivers)) {
@@ -118,7 +120,6 @@ public class MailSendService {
             log.error(e.getMessage(), e);
             log.error("发送HTML邮件错误。主题：{}，至：{}，错误消息：{}",  mailParam.getSubject(), JSONUtil.toJsonStr(mailParam.getTo()), e.getMessage());
         }
-
         log.info("SendMail结束");
     }
 

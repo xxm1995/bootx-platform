@@ -26,7 +26,7 @@ public class DingTalkResult<T> implements Serializable {
     private T result;
 
     @JsonProperty("errmsg")
-    @Schema(description= "内容")
+    @Schema(description= "返回码描述")
     private String msg;
 
 }

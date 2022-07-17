@@ -2,7 +2,6 @@ package cn.bootx.payment.core.payment.dao;
 
 import cn.bootx.common.core.rest.param.OrderParam;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.handler.MpBigFieldHandler;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.common.query.entity.QueryParams;
@@ -66,7 +65,7 @@ public class PaymentManager extends BaseManager<PaymentMapper, Payment> {
     public Page<Payment> page(PageParam pageParam, PaymentQuery param, OrderParam orderParam) {
         Page<Payment> mpPage = MpUtil.getMpPage(pageParam, Payment.class);
         return query()
-                .select(Payment.class, MpBigFieldHandler::excludeBigField)
+                .select(Payment.class, MpUtil::excludeBigField)
                 .orderBy(Objects.nonNull(orderParam.getSortField()),orderParam.isAsc(), StrUtil.toUnderlineCase(orderParam.getSortField()))
                 .like(Objects.nonNull(param.getPaymentId()), MpUtil.getColumnName(Payment::getId),param.getPaymentId())
                 .like(Objects.nonNull(param.getBusinessId()),MpUtil.getColumnName(Payment::getBusinessId),param.getBusinessId())

@@ -27,23 +27,24 @@ public class MailConfigDto extends BaseDto implements Serializable {
     @Schema(description= "编号")
     private String code;
 
-    @Schema(description= "邮箱服务器 地址")
+    @Schema(description= "地址")
     private String host;
 
-    @Schema(description= "邮箱服务器 端口")
+    @Schema(description= "端口")
     private Integer port;
 
-    @Schema(description= "邮箱服务器 username")
+    @Schema(description= "账号")
+    @SensitiveInfo
     private String username;
 
-    @Schema(description= "邮箱服务器 password")
+    @Schema(description= "password")
     @SensitiveInfo(SensitiveType.PASSWORD)
     private String password;
 
-    @Schema(description= "邮箱服务器 sender")
+    @Schema(description= "sender")
     private String sender;
 
-    @Schema(description= "邮箱服务器 from")
+    @Schema(description= "from")
     private String from;
 
     @Schema(description= "是否默认配置")

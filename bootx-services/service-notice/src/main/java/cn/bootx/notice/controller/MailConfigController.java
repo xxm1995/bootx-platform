@@ -8,12 +8,10 @@ import cn.bootx.common.core.util.ValidationUtil;
 import cn.bootx.notice.core.mail.service.MailConfigService;
 import cn.bootx.notice.dto.mail.MailConfigDto;
 import cn.bootx.notice.param.mail.MailConfigParam;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
 * @author xxm
@@ -25,13 +23,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MailConfigController {
     private final MailConfigService mailConfigService;
-
-    @Operation(summary = "获取所有邮箱配置")
-    @GetMapping("/findAll")
-    public ResResult<List<MailConfigDto>> findAll() {
-        List<MailConfigDto> all = mailConfigService.findAll();
-        return Res.ok(all);
-    }
 
     @Operation(summary = "通过 id 获取指定邮箱配置")
     @GetMapping("/findById")

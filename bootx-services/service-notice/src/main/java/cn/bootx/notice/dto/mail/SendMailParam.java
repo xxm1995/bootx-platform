@@ -1,13 +1,14 @@
 package cn.bootx.notice.dto.mail;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
+
+;
 
 /**   
 * 发邮件的参数
@@ -33,10 +34,10 @@ public class SendMailParam implements Serializable {
     private String message;
 
     @Schema(description= "接收人")
-    @NotNull(message = "to 不能为空")
+    @NotNull(message = "接收人不能为空")
     private List<String> to;
 
-    @Schema(description= "抄送")
+    @Schema(description= "抄送人列表")
     private List<String> ccList;
 
     @Schema(description= "密送")

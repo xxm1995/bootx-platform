@@ -1,5 +1,6 @@
 package cn.bootx.common.mybatisplus.util;
 
+import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -7,6 +8,7 @@ import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.ColumnCache;
@@ -23,7 +25,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
- * 工具类
+ * MP工具类
  * @author xxm
  * @date 2020/4/21 10:00
  */
@@ -118,5 +120,13 @@ public class MpUtil {
                 entity.setVersion(0);
             }
         }
+    }
+
+    /**
+     * 字段存在长文本注解则在查询时被排除
+     */
+    public static boolean excludeBigField(TableFieldInfo tableFieldInfo) {
+        BigField annotation = tableFieldInfo.getField().getAnnotation(BigField.class);
+        return Objects.isNull(annotation);
     }
 }

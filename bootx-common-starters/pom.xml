@@ -21,6 +21,7 @@
         <module>common-starter-code-gen</module>
         <module>common-starter-dingtalk</module>
         <module>common-starter-monitor</module>
+        <module>common-starter-wechat</module>
     </modules>
 
     <dependencies>

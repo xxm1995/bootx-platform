@@ -55,5 +55,17 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-websocket</artifactId>
         </dependency>
+
+        <!-- 钉钉 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-dingtalk</artifactId>
+        </dependency>
+
+        <!-- 微信 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-wechat</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -1,5 +1,6 @@
 package cn.bootx.starter.dingtalk.util;
 
+import cn.hutool.crypto.digest.HmacAlgorithm;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
@@ -25,8 +26,8 @@ public class DingTalkUtil {
     public String generateSign(Long timestamp, String sec) {
         String combine = String.format("%d\n%s", timestamp, sec);
         try {
-            Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init(new SecretKeySpec(sec.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
+            Mac mac = Mac.getInstance(HmacAlgorithm.HmacSHA256.getValue());
+            mac.init(new SecretKeySpec(sec.getBytes(StandardCharsets.UTF_8), HmacAlgorithm.HmacSHA256.getValue()));
             byte[] signData = mac.doFinal(combine.getBytes(StandardCharsets.UTF_8));
             return Base64.encodeBase64String(signData);
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {

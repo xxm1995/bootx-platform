@@ -2,7 +2,6 @@ package cn.bootx.payment.core.paymodel.wechat.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.common.mybatisplus.handler.MpBigFieldHandler;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.core.paymodel.wechat.entity.WeChatPayConfig;
@@ -41,7 +40,7 @@ public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, W
     public Page<WeChatPayConfig> page(PageParam pageParam, WeChatPayConfigParam param) {
         Page<WeChatPayConfig> mpPage = MpUtil.getMpPage(pageParam, WeChatPayConfig.class);
         return lambdaQuery()
-                .select(WeChatPayConfig.class, MpBigFieldHandler::excludeBigField)
+                .select(WeChatPayConfig.class, MpUtil::excludeBigField)
                 .like(StrUtil.isNotBlank(param.getName()), WeChatPayConfig::getName,param.getName())
                 .like(StrUtil.isNotBlank(param.getAppId()),WeChatPayConfig::getAppId,param.getAppId())
                 .like(StrUtil.isNotBlank(param.getAppId()),WeChatPayConfig::getMchId,param.getMchId())

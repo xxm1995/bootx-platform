@@ -2,10 +2,10 @@ package cn.bootx.notice.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.notice.core.mail.service.MailSendService;
 import cn.bootx.notice.core.template.service.MessageTemplateService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import cn.bootx.notice.service.EmailNoticeService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class NcDemoController {
     private final MessageTemplateService messageTemplateService;
-    private final MailSendService mailSendService;
+    private final EmailNoticeService mailSendService;
 
     @Operation(summary = "消息发送测试")
     @GetMapping("/sendMsg")

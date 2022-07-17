@@ -1,5 +1,6 @@
 package cn.bootx.notice.core.mail.entity;
 
+import cn.bootx.common.core.annotation.EncryptionField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.notice.core.mail.convert.MailConvert;
@@ -35,9 +36,11 @@ public class MailConfig extends MpBaseEntity implements EntityBaseFunction<MailC
     private Integer port;
 
     /** 邮箱服务器 账号 */
+    @EncryptionField
     private String username;
 
     /** 邮箱服务器 密码 */
+    @EncryptionField
     private String password;
 
     /** 邮箱服务器 sender */

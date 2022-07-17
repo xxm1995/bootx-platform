@@ -1,30 +1,26 @@
 package cn.bootx.starter.dingtalk.code;
 
-/**   
-* 钉钉消息类型
-* @author xxm  
-* @date 2020/11/30 
-*/
+/**
+ * 钉钉消息类型
+ * @author xxm
+ * @date 2020/11/30
+ */
 public interface DingTalkCode {
 
-    /** 钉钉机器人基本url */
-    String ROBOT_BASE_URL = "https://oapi.dingtalk.com/robot/";
-    /** 带sign的消息发送请求 */
-    String ROBOT_SEND_SIGN_URL = ROBOT_BASE_URL +"send?access_token={accessToken}&timestamp={timestamp}&sign={sign}";
-    /** 不带sign的消息发送请求 */
-    String ROBOT_SEND_NOT_SIGN_URL = ROBOT_BASE_URL +"send?access_token={accessToken}";
-    /** 内部应用access_token */
+    /** 钉钉Access参数 */
+    String ACCESS_TOKEN_URL = "?access_token=={}";
+    /** 内部应用获取access_token */
     String APP_ACCESS_TOKEN_URL = "https://oapi.dingtalk.com/gettoken?appkey={appKey}&appsecret={appSecret}";
-    /** 用户access_token */
-    String USER_ACCESS_TOKEN_URL = "https://oapi.dingtalk.com//v1.0/oauth2/userAccessToken";
-    /** 钉钉三方登录 */
-    String THIRD_LOGIN_URL = "https://login.dingtalk.com/oauth2/auth?" +
-            "redirect_uri={redirectUri}" +
-            "&response_type={responseType}" +
-            "&client_id={clientId}" +
-            "&scope={scope}" +
-            "&state={state}" +
-            "&prompt={prompt}";
+    /** 带sign的消息发送请求 */
+    String ROBOT_SEND_SIGN_URL = "https://oapi.dingtalk.com/robot/send?access_token={accessToken}&timestamp={timestamp}&sign={sign}";
+    /** 不带sign的消息发送请求 */
+    String ROBOT_SEND_NOT_SIGN_URL = "https://oapi.dingtalk.com/robot/send"+ACCESS_TOKEN_URL;
+    /** 发送工作通知 */
+    String NOTICE_CORP_CONVERSATION_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2"+ACCESS_TOKEN_URL;
+    /** 发送企业群通知 */
+    String NOTICE_CHAT_URL = "https://oapi.dingtalk.com/chat/send"+ACCESS_TOKEN_URL;
+    /** 发送普通消息通知 */
+    String NOTICE_MESSAGE_URL = "https://oapi.dingtalk.com/message/send_to_conversation"+ACCESS_TOKEN_URL;
 
 
     /** 钉钉字段 */
@@ -55,5 +51,9 @@ public interface DingTalkCode {
     String AUTH_REFRESH_TOKEN = "refresh_token";
     // OPEN_ID
     String OPEN_ID = "openid";
+
+    /* 响应值 */
+    /** 成功 */
+    int SUCCESS_CODE = 0;
 
 }

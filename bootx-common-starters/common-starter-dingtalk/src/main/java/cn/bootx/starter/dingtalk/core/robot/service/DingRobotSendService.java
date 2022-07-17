@@ -1,15 +1,12 @@
 package cn.bootx.starter.dingtalk.core.robot.service;
 
-import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.starter.dingtalk.code.DingTalkCode;
 import cn.bootx.starter.dingtalk.core.robot.dao.DingRobotConfigManage;
 import cn.bootx.starter.dingtalk.core.robot.entity.DingRobotConfig;
 import cn.bootx.starter.dingtalk.dto.common.DingTalkResult;
-import cn.bootx.starter.dingtalk.param.notice.DingTalkLinkNotice;
-import cn.bootx.starter.dingtalk.param.notice.DingTalkMarkdownNotice;
-import cn.bootx.starter.dingtalk.param.notice.DingTalkNotice;
-import cn.bootx.starter.dingtalk.param.notice.DingTalkTextNotice;
+import cn.bootx.starter.dingtalk.param.notice.msg.DingMsg;
 import cn.bootx.starter.dingtalk.util.DingTalkUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
@@ -20,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import static cn.bootx.starter.dingtalk.code.DingTalkCode.SUCCESS_CODE;
 
 /**
 * 钉钉机器人消息发送
@@ -32,31 +31,11 @@ import java.util.Objects;
 public class DingRobotSendService {
     private final DingRobotConfigManage dingRobotConfigManage;
 
-
-    /**
-     * 发送text
-     */
-    public DingTalkResult<?> sendText(String code, DingTalkTextNotice notice){
-        return this.sendNotice(code,notice);
-    }
-    /**
-     * 发送text
-     */
-    public DingTalkResult<?> sendLink(String code, DingTalkLinkNotice notice){
-        return this.sendNotice(code,notice);
-    }
-    /**
-     * 发送text
-     */
-    public DingTalkResult<?> sendMarkdown(String code, DingTalkMarkdownNotice notice){
-        return this.sendNotice(code,notice);
-    }
-
     /**
      * 发送钉钉机器人消息
      */
-    private DingTalkResult<?> sendNotice(String code, DingTalkNotice body) {
-        DingRobotConfig dingRobotConfig = dingRobotConfigManage.findByCode(code).orElseThrow(() -> new BizException("钉钉机器人配置不存在"));
+    public void sendNotice(String code, DingMsg body) {
+        DingRobotConfig dingRobotConfig = dingRobotConfigManage.findByCode(code).orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
         long timestamp = System.currentTimeMillis();
 
         Map<String, Object> map = new HashMap<>(3);
@@ -77,10 +56,9 @@ public class DingRobotSendService {
                 .execute()
                 .body();
         DingTalkResult<?> dingTalkResult = JacksonUtil.toBean(responseBody, DingTalkResult.class);
-        if (!Objects.equals(0,dingTalkResult.getCode())){
+        if (!Objects.equals(SUCCESS_CODE,dingTalkResult.getCode())){
             log.error("钉钉机器人发送消息失败: {}",dingTalkResult.getMsg());
         }
-        return dingTalkResult;
     }
 
 }
