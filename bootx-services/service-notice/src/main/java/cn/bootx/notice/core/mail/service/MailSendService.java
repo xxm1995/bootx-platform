@@ -5,7 +5,7 @@ import cn.bootx.notice.dto.mail.MailConfigDto;
 import cn.bootx.notice.dto.mail.MailFileParam;
 import cn.bootx.notice.dto.mail.SendMailParam;
 import cn.bootx.notice.exception.MailConfigNotExistException;
-import cn.bootx.notice.service.EmailNoticeService;
+import cn.bootx.notice.service.EmailNoticeSender;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ArrayUtil;
@@ -42,7 +42,7 @@ import java.util.*;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class MailSendService implements EmailNoticeService {
+public class MailSendService implements EmailNoticeSender {
 
     /**
      * 默认 MIME Type

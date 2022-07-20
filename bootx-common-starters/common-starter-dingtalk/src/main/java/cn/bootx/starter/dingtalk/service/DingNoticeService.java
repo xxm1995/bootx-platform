@@ -1,16 +1,20 @@
 package cn.bootx.starter.dingtalk.service;
 
 import cn.bootx.common.jackson.util.JacksonUtil;
+import cn.bootx.starter.dingtalk.dto.common.DingTalkResult;
+import cn.bootx.starter.dingtalk.dto.notice.ChatNoticeResult;
 import cn.bootx.starter.dingtalk.dto.notice.CorpNoticeResult;
-import cn.bootx.starter.dingtalk.param.notice.DingCorpNotice;
-import cn.bootx.starter.dingtalk.param.notice.DingUpdateCorpNotice;
+import cn.bootx.starter.dingtalk.param.notice.ChatNotice;
+import cn.bootx.starter.dingtalk.param.notice.CorpNotice;
+import cn.bootx.starter.dingtalk.param.notice.RecallCorpNotice;
+import cn.bootx.starter.dingtalk.param.notice.UpdateCorpNotice;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static cn.bootx.starter.dingtalk.code.DingTalkCode.NOTICE_CORP_CONVERSATION_URL;
+import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 
 /**
 * 钉钉通知发送服务
@@ -32,13 +36,25 @@ public class DingNoticeService {
     }
 
     /**
+     * 发送企业群消息
+     */
+    public ChatNoticeResult sendChatNotice(ChatNotice param){
+        String accessToken = dingAccessService.getAccessToken();
+        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CHAT_URL, accessToken))
+                .body(param.toParam())
+                .execute()
+                .body();
+        return JacksonUtil.toBean(responseBody, ChatNoticeResult.class);
+    }
+
+    /**
      * 发送工作通知
      *
      * @url <a href="https://open.dingtalk.com/document/orgapp-server/asynchronous-sending-of-enterprise-session-messages">...</a>
      */
-    public CorpNoticeResult sendCorpNotice(DingCorpNotice param) {
+    public CorpNoticeResult sendCorpNotice(CorpNotice param) {
         String accessToken = dingAccessService.getAccessToken();
-        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_CONVERSATION_URL, accessToken))
+        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_SEND_URL, accessToken))
                 .body(param.toParam())
                 .execute()
                 .body();
@@ -49,9 +65,9 @@ public class DingNoticeService {
      * 更新工作通知状态栏
      * @url <a href="https://open.dingtalk.com/document/orgapp-server/update-work-notification-status-bar">...</a>
      */
-    public CorpNoticeResult updateCorpNotice(DingUpdateCorpNotice param) {
+    public CorpNoticeResult updateCorpNotice(UpdateCorpNotice param) {
         String accessToken = dingAccessService.getAccessToken();
-        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_CONVERSATION_URL, accessToken))
+        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_UPDATE_URL, accessToken))
                 .body(param.toParam())
                 .execute()
                 .body();
@@ -62,7 +78,13 @@ public class DingNoticeService {
      * 撤回工作通知消息
      * @url <a href="https://open.dingtalk.com/document/orgapp-server/notification-of-work-withdrawal">...</a>
      */
-    public void recallCorpNotice(){
+    public DingTalkResult<?> recallCorpNotice(RecallCorpNotice param){
 
+        String accessToken = dingAccessService.getAccessToken();
+        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_RECALL_URL, accessToken))
+                .body(param.toParam())
+                .execute()
+                .body();
+        return JacksonUtil.toBean(responseBody, DingTalkResult.class);
     }
 }

@@ -8,19 +8,23 @@ package cn.bootx.starter.dingtalk.code;
 public interface DingTalkCode {
 
     /** 钉钉Access参数 */
-    String ACCESS_TOKEN_URL = "?access_token=={}";
+    String ACCESS_TOKEN_PARAM = "?access_token={}";
     /** 内部应用获取access_token */
     String APP_ACCESS_TOKEN_URL = "https://oapi.dingtalk.com/gettoken?appkey={appKey}&appsecret={appSecret}";
     /** 带sign的消息发送请求 */
     String ROBOT_SEND_SIGN_URL = "https://oapi.dingtalk.com/robot/send?access_token={accessToken}&timestamp={timestamp}&sign={sign}";
     /** 不带sign的消息发送请求 */
-    String ROBOT_SEND_NOT_SIGN_URL = "https://oapi.dingtalk.com/robot/send"+ACCESS_TOKEN_URL;
+    String ROBOT_SEND_NOT_SIGN_URL = "https://oapi.dingtalk.com/robot/send"+ ACCESS_TOKEN_PARAM;
     /** 发送工作通知 */
-    String NOTICE_CORP_CONVERSATION_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2"+ACCESS_TOKEN_URL;
+    String NOTICE_CORP_SEND_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2"+ ACCESS_TOKEN_PARAM;
+    /** 更新工作通知(OA消息)  */
+    String NOTICE_CORP_UPDATE_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/status_bar/update"+ACCESS_TOKEN_PARAM;
+    /** 撤回工作通知 */
+    String NOTICE_CORP_RECALL_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/recall"+ACCESS_TOKEN_PARAM;
     /** 发送企业群通知 */
-    String NOTICE_CHAT_URL = "https://oapi.dingtalk.com/chat/send"+ACCESS_TOKEN_URL;
+    String NOTICE_CHAT_URL = "https://oapi.dingtalk.com/chat/send"+ ACCESS_TOKEN_PARAM;
     /** 发送普通消息通知 */
-    String NOTICE_MESSAGE_URL = "https://oapi.dingtalk.com/message/send_to_conversation"+ACCESS_TOKEN_URL;
+    String NOTICE_MESSAGE_URL = "https://oapi.dingtalk.com/message/send_to_conversation"+ ACCESS_TOKEN_PARAM;
 
 
     /** 钉钉字段 */

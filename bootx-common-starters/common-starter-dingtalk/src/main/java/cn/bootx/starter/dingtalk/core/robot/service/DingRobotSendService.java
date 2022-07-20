@@ -6,7 +6,7 @@ import cn.bootx.starter.dingtalk.code.DingTalkCode;
 import cn.bootx.starter.dingtalk.core.robot.dao.DingRobotConfigManage;
 import cn.bootx.starter.dingtalk.core.robot.entity.DingRobotConfig;
 import cn.bootx.starter.dingtalk.dto.common.DingTalkResult;
-import cn.bootx.starter.dingtalk.param.notice.msg.DingMsg;
+import cn.bootx.starter.dingtalk.param.notice.msg.Msg;
 import cn.bootx.starter.dingtalk.util.DingTalkUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
@@ -34,7 +34,7 @@ public class DingRobotSendService {
     /**
      * 发送钉钉机器人消息
      */
-    public void sendNotice(String code, DingMsg body) {
+    public void sendNotice(String code, Msg body) {
         DingRobotConfig dingRobotConfig = dingRobotConfigManage.findByCode(code).orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
         long timestamp = System.currentTimeMillis();
 

@@ -9,6 +9,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
+/**
+ * websocket管理器 (Spring封装的socket)
+ * @author xxm
+ * @date 2022/5/27
+ */
 public class SpringWebSocketSessionManager {
     // session缓存
     protected static final Map<String, WebSocketSession> sessionPool = new ConcurrentHashMap<>();

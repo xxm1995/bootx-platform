@@ -57,6 +57,7 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message){
         // 不处理接收的消息, 通常只会接收到心跳请求
+        log.debug("心跳请求");
     }
 
 

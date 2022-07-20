@@ -21,6 +21,6 @@ public class DingTalkProperties {
     private String appSecret;
 
     /** 应用id */
-    private Integer agentId;
+    private Long agentId;
 
 }

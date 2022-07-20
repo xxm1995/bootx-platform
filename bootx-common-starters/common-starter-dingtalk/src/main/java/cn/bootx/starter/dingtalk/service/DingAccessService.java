@@ -47,7 +47,7 @@ public class DingAccessService {
         try {
             do {
                 locked = lock.tryLock(100, TimeUnit.MILLISECONDS);
-                if (!(System.currentTimeMillis() < expiresTime)) {
+                if (System.currentTimeMillis() < expiresTime) {
                     return accessToken;
                 }
             } while (!locked);
