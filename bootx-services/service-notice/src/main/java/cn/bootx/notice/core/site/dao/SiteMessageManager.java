@@ -1,7 +1,7 @@
 package cn.bootx.notice.core.site.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.site.entity.SiteMessage;
@@ -56,7 +56,7 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
     }
 
     public void readById(Long id) {
-        lambdaUpdate().eq(MpBaseEntity::getId,id).set(SiteMessage::getHaveRead,Boolean.TRUE)
+        lambdaUpdate().eq(MpIdEntity::getId,id).set(SiteMessage::getHaveRead,Boolean.TRUE)
                 .set(SiteMessage::getReadTime, LocalDateTime.now());
     }
 }

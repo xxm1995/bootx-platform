@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class NcDemoController {
     public ResResult<Void> sendDingMsg(){
         DingTextMsg msg = new DingTextMsg("中文通知");
         DingCorpNoticeReceive receive = new DingCorpNoticeReceive()
-                .setToAllUser(true);
+                .setUseridList(Collections.singletonList(""));
         dingTalkNoticeSender.sendTextCorpNotice(msg,receive);
         return Res.ok();
     }

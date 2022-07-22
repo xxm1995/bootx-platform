@@ -1,7 +1,7 @@
 package cn.bootx.notice.core.mail.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.mail.entity.MailConfig;
@@ -33,7 +33,7 @@ public class MailConfigManager extends BaseManager<MailConfigMapper, MailConfig>
 
     public Page<MailConfig> page(PageParam pageParam, MailConfigParam param){
         Page<MailConfig> mpPage = MpUtil.getMpPage(pageParam, MailConfig.class);
-        return this.lambdaQuery().orderByDesc(MpBaseEntity::getId)
+        return this.lambdaQuery().orderByDesc(MpIdEntity::getId)
                 .like(StrUtil.isNotBlank(param.getCode()),MailConfig::getCode,param.getCode())
                 .like(StrUtil.isNotBlank(param.getName()),MailConfig::getName,param.getName())
                 .page(mpPage);

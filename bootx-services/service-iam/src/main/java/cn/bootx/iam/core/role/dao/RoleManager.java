@@ -2,7 +2,7 @@ package cn.bootx.iam.core.role.dao;
 
 import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.role.entity.Role;
@@ -60,7 +60,7 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
         return lambdaQuery()
                 .like(StrUtil.isNotBlank(roleParam.getCode()), Role::getCode,roleParam.getCode())
                 .like(StrUtil.isNotBlank(roleParam.getName()), Role::getName,roleParam.getName())
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 }

@@ -1,7 +1,7 @@
 package cn.bootx.payment.core.paymodel.voucher.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.core.paymodel.voucher.entity.Voucher;
@@ -37,7 +37,7 @@ public class VoucherManager extends BaseManager<VoucherMapper, Voucher> {
                 .eq(Objects.nonNull(param.getEnduring()),Voucher::getEnduring,param.getEnduring())
                 .like(StrUtil.isNotBlank(param.getCardNo()),Voucher::getCardNo,param.getCardNo())
                 .like(Objects.nonNull(param.getBatchNo()),Voucher::getBatchNo,param.getBatchNo())
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 
@@ -60,7 +60,7 @@ public class VoucherManager extends BaseManager<VoucherMapper, Voucher> {
      */
     public void changeStatus(Long id, int status){
         this.lambdaUpdate()
-                .eq(MpBaseEntity::getId,id)
+                .eq(MpIdEntity::getId,id)
                 .set(Voucher::getStatus,status)
                 .update();
 
@@ -71,7 +71,7 @@ public class VoucherManager extends BaseManager<VoucherMapper, Voucher> {
      */
     public void changeStatusBatch(List<Long> ids, int status){
         this.lambdaUpdate()
-                .in(MpBaseEntity::getId,ids)
+                .in(MpIdEntity::getId,ids)
                 .set(Voucher::getStatus,status)
                 .update();
     }

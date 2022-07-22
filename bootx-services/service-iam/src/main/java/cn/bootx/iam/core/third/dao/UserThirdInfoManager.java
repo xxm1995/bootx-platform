@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.third.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.third.entity.UserThirdInfo;
@@ -27,7 +27,7 @@ public class UserThirdInfoManager extends BaseManager<UserThirdInfoMapper, UserT
     */
     public Page<UserThirdInfo> page(PageParam pageParam, UserThirdInfoParam param) {
         Page<UserThirdInfo> mpPage = MpUtil.getMpPage(pageParam, UserThirdInfo.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
     /**

@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.third.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.third.entity.UserThird;
@@ -27,6 +27,10 @@ public class UserThirdManager extends BaseManager<UserThirdMapper, UserThird> {
         return findByField(UserThird::getUserId,userId);
     }
 
+    public boolean existedByUserId(Long userId){
+        return existedByField(UserThird::getUserId,userId);
+    }
+
     /**
      * 解绑
      */
@@ -40,7 +44,7 @@ public class UserThirdManager extends BaseManager<UserThirdMapper, UserThird> {
     public Page<UserThird> page(PageParam pageParam) {
         Page<UserThird> mpPage = MpUtil.getMpPage(pageParam, UserThird.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 }

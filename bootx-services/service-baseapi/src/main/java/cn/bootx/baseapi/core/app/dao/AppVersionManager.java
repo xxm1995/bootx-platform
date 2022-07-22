@@ -2,7 +2,7 @@ package cn.bootx.baseapi.core.app.dao;
 
 import cn.bootx.baseapi.core.app.entity.AppVersion;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -25,13 +25,13 @@ public class AppVersionManager extends BaseManager<AppVersionMapper, AppVersion>
     public Page<AppVersion> page(PageParam pageParam) {
         Page<AppVersion> mpPage = MpUtil.getMpPage(pageParam, AppVersion.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 
     public Optional<AppVersion> findLatest(){
-        return lambdaQuery().orderByDesc(AppVersion::getAppVersion)
-                .last("limit 1")
-                .oneOpt();
+        return MpUtil.findOne(
+                lambdaQuery().orderByDesc(AppVersion::getAppVersion)
+        );
     }
 }

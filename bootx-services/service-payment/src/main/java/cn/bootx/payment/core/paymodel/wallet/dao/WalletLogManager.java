@@ -1,7 +1,7 @@
 package cn.bootx.payment.core.paymodel.wallet.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.core.paymodel.wallet.entity.WalletLog;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
-* 钱包日志
-* @author xxm
-* @date 2020/12/8
-*/
+ * 钱包日志
+ * @author xxm
+ * @date 2020/12/8
+ */
 @Repository
 @RequiredArgsConstructor
 public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
@@ -25,10 +25,10 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
      * 按付款查找优先
      */
     public Optional<WalletLog> findFirstByPayment(Long paymentId) {
-        return lambdaQuery().eq(WalletLog::getPaymentId,paymentId)
-                .orderByDesc(MpBaseEntity::getId)
-                .last("limit 1")
-                .oneOpt();
+        return MpUtil.findOne(
+                lambdaQuery().eq(WalletLog::getPaymentId,paymentId)
+                        .orderByDesc(MpIdEntity::getId)
+        );
     }
 
     /**
@@ -38,7 +38,7 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
 
         return this.lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .eq(WalletLog::getUserId,userId)
                 .page(mpPage);
     }
@@ -49,7 +49,7 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
     public Page<WalletLog> page(PageParam pageParam, WalletLogQueryParam param) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
         return this.lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
     /**
@@ -58,7 +58,7 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
     public Page<WalletLog> pageByWalletId(PageParam pageParam, WalletLogQueryParam param) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
         return this.lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .eq(WalletLog::getWalletId,param.getWalletId())
                 .page(mpPage);
     }

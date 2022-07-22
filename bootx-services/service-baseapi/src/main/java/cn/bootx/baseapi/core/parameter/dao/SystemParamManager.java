@@ -3,7 +3,7 @@ package cn.bootx.baseapi.core.parameter.dao;
 import cn.bootx.baseapi.core.parameter.entity.SystemParameter;
 import cn.bootx.baseapi.param.system.SystemParameterParam;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.util.StrUtil;
@@ -68,7 +68,7 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
     public Page<SystemParameter> page(PageParam pageParam, SystemParameterParam param){
         Page<SystemParameter> mpPage = MpUtil.getMpPage(pageParam, SystemParameter.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .like(StrUtil.isNotBlank(param.getName()),SystemParameter::getName,param.getName())
                 .like(StrUtil.isNotBlank(param.getParamKey()),SystemParameter::getParamKey,param.getParamKey())
                 .page(mpPage);

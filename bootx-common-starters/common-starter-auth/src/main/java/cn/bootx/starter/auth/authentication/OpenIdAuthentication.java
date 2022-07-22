@@ -46,5 +46,13 @@ public interface OpenIdAuthentication extends AbstractAuthentication{
      */
     default AuthUser getAuthUser(String authCode, String state){
         return null;
-    };
+    }
+
+    /**
+     * 绑定用户
+     */
+    default void bindUser(String authCode, String state){
+
+    }
+
 }

@@ -3,6 +3,7 @@ package cn.bootx.iam.core.auth.login;
 import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.third.dao.UserThirdManager;
 import cn.bootx.iam.core.third.entity.UserThird;
+import cn.bootx.iam.core.third.service.UserTiredOperateService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
@@ -10,6 +11,7 @@ import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -24,8 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-import static cn.bootx.iam.code.OpenIdLoginType.AUTH_CODE;
-import static cn.bootx.iam.code.OpenIdLoginType.STATE;
+import static cn.bootx.iam.code.OpenIdLoginType.*;
 
 /**
 * 微信登录
@@ -36,6 +37,8 @@ import static cn.bootx.iam.code.OpenIdLoginType.STATE;
 @Component
 @RequiredArgsConstructor
 public class WeChatLoginHandler implements OpenIdAuthentication {
+    private final UserTiredOperateService userTiredOperateService;
+
     private final UserThirdManager userThirdManager;
     private final UserInfoManager userInfoManager;
     private final AuthProperties authProperties;
@@ -94,6 +97,18 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
             throw new LoginFailureException("微信登录出错");
         }
         return response.getData();
+    }
+
+    /**
+     * 绑定用户
+     */
+    @Override
+    public void bindUser(String authCode, String state){
+        Long userId = SecurityUtil.getUserId();
+        AuthUser authUser = this.getAuthUser(authCode, state);
+        userTiredOperateService.existsByOpenId(authUser.getUuid(), UserThird::getWeChatId);
+        userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setWeChatId);
+        userTiredOperateService.bindOpenInfo(userId,authUser,WE_CHAT);
     }
 
     /**

@@ -1,7 +1,7 @@
 package cn.bootx.notice.core.template.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.template.entity.MessageTemplate;
@@ -37,7 +37,7 @@ public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, M
     public Page<MessageTemplate> page(PageParam pageParam) {
         Page<MessageTemplate> mpPage = MpUtil.getMpPage(pageParam, MessageTemplate.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 }

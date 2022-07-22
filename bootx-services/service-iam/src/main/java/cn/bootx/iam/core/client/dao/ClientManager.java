@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.client.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.client.entity.Client;
@@ -26,7 +26,7 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
     */
     public Page<Client> page(PageParam pageParam, ClientParam param) {
         Page<Client> mpPage = MpUtil.getMpPage(pageParam, Client.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
     public Optional<Client> findByCode(String code) {

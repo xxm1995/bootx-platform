@@ -1,7 +1,7 @@
 package cn.bootx.payment.core.paymodel.wallet.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.user.entity.UserInfo;
@@ -99,7 +99,7 @@ public class WalletManager extends BaseManager<WalletMapper,Wallet> {
 
         Page<Wallet> mpPage = MpUtil.getMpPage(pageParam, Wallet.class);
         return this.lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 

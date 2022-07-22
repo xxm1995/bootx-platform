@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.permission.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.permission.entity.PermPath;
@@ -26,7 +26,7 @@ public class PermPathManager extends BaseManager<PermPathMapper, PermPath> {
     public Page<PermPath> page(PageParam pageParam, PermPathParam param) {
         Page<PermPath> mpPage = MpUtil.getMpPage(pageParam, PermPath.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .like(StrUtil.isNotBlank(param.getCode()), PermPath::getCode,param.getCode())
                 .like(StrUtil.isNotBlank(param.getPath()), PermPath::getPath,param.getPath())
                 .like(StrUtil.isNotBlank(param.getName()), PermPath::getName,param.getName())

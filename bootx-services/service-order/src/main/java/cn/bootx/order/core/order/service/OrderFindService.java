@@ -3,7 +3,7 @@ package cn.bootx.order.core.order.service;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.order.core.order.dao.OrderDetailManager;
 import cn.bootx.order.core.order.dao.OrderManager;
@@ -90,7 +90,7 @@ public class OrderFindService {
      */
     public List<Long> findPayTimeoutOrderIdsByType(LocalDateTime date,Integer type){
         return orderManager.findPayTimeoutOrderIdsByType(date,type)
-                .stream().map(MpBaseEntity::getId)
+                .stream().map(MpIdEntity::getId)
                 .collect(Collectors.toList());
     }
 

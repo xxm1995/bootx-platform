@@ -2,7 +2,7 @@ package cn.bootx.baseapi.core.dict.dao;
 
 import cn.bootx.baseapi.core.dict.entity.DictionaryItem;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -34,7 +34,7 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
     public boolean existsByCode(String code, Long dictId, Long itemId){
         return lambdaQuery().eq(DictionaryItem::getCode,code)
                 .eq(DictionaryItem::getDictId,dictId)
-                .ne(MpBaseEntity::getId,itemId)
+                .ne(MpIdEntity::getId,itemId)
                 .exists();
     }
 
@@ -53,7 +53,7 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
         return lambdaQuery()
                 .eq(DictionaryItem::getDictId,dictId)
                 .orderByAsc(DictionaryItem::getSortNo)
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 

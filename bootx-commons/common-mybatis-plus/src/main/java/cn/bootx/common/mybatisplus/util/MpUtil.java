@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.ColumnCache;
 import com.baomidou.mybatisplus.core.toolkit.support.LambdaMeta;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -128,5 +130,17 @@ public class MpUtil {
     public static boolean excludeBigField(TableFieldInfo tableFieldInfo) {
         BigField annotation = tableFieldInfo.getField().getAnnotation(BigField.class);
         return Objects.isNull(annotation);
+    }
+
+    /**
+     * 获取最新的一条
+     */
+    public static  <T> Optional<T> findOne(LambdaQueryChainWrapper<T> lambdaQuery){
+        Page<T> mpPage = new Page<>(0,1);
+        Page<T> page = lambdaQuery.page(mpPage);
+        if (page.getTotal() > 0) {
+            return Optional.of(page.getRecords().get(0));
+        }
+        return Optional.empty();
     }
 }

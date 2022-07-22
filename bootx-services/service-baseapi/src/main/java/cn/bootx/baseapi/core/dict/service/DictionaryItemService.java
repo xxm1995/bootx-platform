@@ -13,7 +13,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -126,7 +126,7 @@ public class DictionaryItemService {
         return dictionaryItemManager.findAll().stream()
                 .sorted(Comparator.comparing(DictionaryItem::getDictId)
                         .thenComparing(DictionaryItem::getSortNo)
-                        .thenComparing(MpBaseEntity::getId)
+                        .thenComparing(MpIdEntity::getId)
                 )
                 .map(DictionaryItem::toSimpleDto)
                 .collect(Collectors.toList());

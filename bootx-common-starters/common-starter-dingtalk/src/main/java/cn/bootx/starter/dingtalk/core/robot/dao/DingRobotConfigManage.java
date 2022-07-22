@@ -1,7 +1,7 @@
 package cn.bootx.starter.dingtalk.core.robot.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.dingtalk.core.robot.entity.DingRobotConfig;
@@ -30,14 +30,14 @@ public class DingRobotConfigManage extends BaseManager<DingRobotConfigMapper, Di
 
     public boolean existsByCode(String code,Long id) {
         return lambdaQuery().eq(DingRobotConfig::getCode, code)
-                .ne(MpBaseEntity::getId,id)
+                .ne(MpIdEntity::getId,id)
                 .exists();
     }
 
     public Page<DingRobotConfig> page(PageParam pageParam) {
         Page<DingRobotConfig> mpPage = MpUtil.getMpPage(pageParam, DingRobotConfig.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 }

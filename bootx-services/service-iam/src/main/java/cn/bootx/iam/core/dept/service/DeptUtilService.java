@@ -2,6 +2,7 @@ package cn.bootx.iam.core.dept.service;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.lock.annotation.Lock;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.dept.entity.Dept;
 import cn.bootx.iam.dto.dept.DeptTreeResult;
@@ -13,10 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 /**
-* 部门规则工具类
-* @author xxm
-* @date 2020/5/10 15:01
-*/
+ * 部门规则工具类
+ * @author xxm
+ * @date 2020/5/10 15:01
+ */
 @Service
 @RequiredArgsConstructor
 public class DeptUtilService {
@@ -30,11 +31,11 @@ public class DeptUtilService {
     public String generateOrgCode(Long parentId) {
         // 顶级机构
         if (Objects.isNull(parentId)) {
-            Dept dept = deptManager.lambdaQuery()
-                    .isNull(Dept::getParentId)
-                    .orderByDesc(Dept::getOrgCode)
-                    .last("limit 1")
-                    .one();
+            Dept dept = MpUtil.findOne(
+                    deptManager.lambdaQuery()
+                            .isNull(Dept::getParentId)
+                            .orderByDesc(Dept::getOrgCode)
+            ).orElse(null);
             if (Objects.isNull(dept)) {
                 return "1";
             } else {
@@ -45,11 +46,11 @@ public class DeptUtilService {
             Dept parenDept = deptManager.findById(parentId)
                     .orElseThrow(() -> new BizException("父机构不存在"));
             //最新的兄弟
-            Dept dept = deptManager.lambdaQuery()
-                    .eq(Dept::getParentId,parenDept.getId())
-                    .orderByDesc(Dept::getOrgCategory)
-                    .last("limit 1")
-                    .one();
+            Dept dept = MpUtil.findOne(
+                    deptManager.lambdaQuery()
+                            .eq(Dept::getParentId,parenDept.getId())
+                            .orderByDesc(Dept::getOrgCategory)
+            ).orElse(null);
             if (Objects.isNull(dept)){
                 return parenDept.getOrgCode()+"_1";
             }else {

@@ -29,6 +29,6 @@ public class ${className}Manager extends BaseManager<${className}Mapper, ${class
     */
     public Page<${className}> page(PageParam pageParam, ${className}Param param) {
         Page<${className}> mpPage = MpUtil.getMpPage(pageParam, ${className}.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 }

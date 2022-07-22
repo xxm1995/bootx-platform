@@ -26,6 +26,8 @@ public interface DingTalkCode {
     /** 发送普通消息通知 */
     String NOTICE_MESSAGE_URL = "https://oapi.dingtalk.com/message/send_to_conversation"+ ACCESS_TOKEN_PARAM;
 
+    /** 根据unionid获取用户userid */
+    String USER_GET_URL = "https://oapi.dingtalk.com/topapi/user/getbyunionid" + ACCESS_TOKEN_PARAM;
 
     /** 钉钉字段 */
     String ACCESS_TOKEN = "accessToken";
@@ -46,15 +48,18 @@ public interface DingTalkCode {
     String REDIRECT_URI = "redirectUri";
     String STATE = "state";
     String PROMPT = "prompt";
+    /** 请求头参数调用服务端接口的授权凭证 */
+    String HEADER_TOKEN = "x-acs-dingtalk-access-token";
 
-
-    /** 认证字段 */
-    // 授权码换token
+    /* 认证字段 */
+    /** 授权码换token */
     String AUTH_AUTHORIZATION_CODE = "authorization_code";
-    // 刷新token换用户token
+    /** 刷新token换用户token */
     String AUTH_REFRESH_TOKEN = "refresh_token";
-    // OPEN_ID
+    /** openid */
     String OPEN_ID = "openid";
+    /** union_id */
+    String UNION_ID = "unionid";
 
     /* 响应值 */
     /** 成功 */

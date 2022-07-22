@@ -1,7 +1,7 @@
 package cn.bootx.goods.core.category.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.goods.core.category.entity.Specification;
@@ -25,6 +25,6 @@ public class SpecificationManager extends BaseManager<SpecificationMapper, Speci
     */
     public Page<Specification> page(PageParam pageParam, SpecificationParam param) {
         Page<Specification> mpPage = MpUtil.getMpPage(pageParam, Specification.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 }

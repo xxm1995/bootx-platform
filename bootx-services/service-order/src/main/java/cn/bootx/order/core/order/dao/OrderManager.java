@@ -1,7 +1,7 @@
 package cn.bootx.order.core.order.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.order.code.OrderStatusCode;
@@ -31,7 +31,7 @@ public class OrderManager extends BaseManager<OrderMapper,Order> {
     public Page<Order> page(PageParam pageParam) {
         Page<Order> mpPage = MpUtil.getMpPage(pageParam, Order.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 
@@ -41,7 +41,7 @@ public class OrderManager extends BaseManager<OrderMapper,Order> {
     public List<Order> findPayTimeoutOrderIdsByType(LocalDateTime date, Integer type) {
         // select id from Order where state = ?1 and createTime < ?2 and businessId = ?3
         return lambdaQuery().eq(Order::getStatus,OrderStatusCode.STATUS_NORMAL)
-                .le(MpBaseEntity::getId,date)
+                .le(MpIdEntity::getId,date)
                 .eq(Order::getType,type)
                 .list();
     }

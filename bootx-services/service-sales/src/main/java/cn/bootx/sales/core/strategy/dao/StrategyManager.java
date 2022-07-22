@@ -1,6 +1,6 @@
 package cn.bootx.sales.core.strategy.dao;
 
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.sales.core.strategy.entity.Strategy;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +27,10 @@ public class StrategyManager extends BaseManager<StrategyMapper,Strategy> {
     }
 
     public boolean existsById(Long id) {
-        return existedByField(MpBaseEntity::getId,id);
+        return existedByField(MpIdEntity::getId,id);
     }
 
     public Long countByStrategyId(Long id) {
-        return countByField(MpBaseEntity::getId,id);
+        return countByField(MpIdEntity::getId,id);
     }
 }

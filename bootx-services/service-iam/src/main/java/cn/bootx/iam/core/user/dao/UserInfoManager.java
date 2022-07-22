@@ -1,7 +1,7 @@
 package cn.bootx.iam.core.user.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.user.entity.UserInfo;
@@ -70,7 +70,7 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
     }
 
     public void setUpStatus(Long userId, int status) {
-        lambdaUpdate().eq(MpBaseEntity::getId,userId)
+        lambdaUpdate().eq(MpIdEntity::getId,userId)
                 .set(UserInfo::getStatus,status)
                 .update();
     }
@@ -79,7 +79,7 @@ public class UserInfoManager extends BaseManager<UserInfoMapper,UserInfo> {
      * 批量更新用户状态
      */
     public void setUpStatusBatch(List<Long> userIds, int status) {
-        lambdaUpdate().in(MpBaseEntity::getId,userIds)
+        lambdaUpdate().in(MpIdEntity::getId,userIds)
                 .set(UserInfo::getStatus,status)
                 .update();
     }

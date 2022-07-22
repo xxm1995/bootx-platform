@@ -7,7 +7,7 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.common.websocket.entity.WsRes;
 import cn.bootx.common.websocket.service.UserWsNoticeService;
@@ -203,7 +203,7 @@ public class PermPathService {
         List<Long> removeIds = pathList.stream()
                 .filter(PermPath::isGenerate)
                 .filter(permPath -> removePaths.contains(permPath.getPath()))
-                .map(MpBaseEntity::getId)
+                .map(MpIdEntity::getId)
                 .collect(Collectors.toList());
         permPathManager.saveAll(permPathList);
         permPathManager.deleteByIds(removeIds);

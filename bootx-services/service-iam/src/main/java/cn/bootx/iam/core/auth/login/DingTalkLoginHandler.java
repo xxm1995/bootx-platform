@@ -3,6 +3,8 @@ package cn.bootx.iam.core.auth.login;
 import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.third.dao.UserThirdManager;
 import cn.bootx.iam.core.third.entity.UserThird;
+import cn.bootx.iam.core.third.entity.UserThirdInfo;
+import cn.bootx.iam.core.third.service.UserTiredOperateService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
@@ -10,6 +12,9 @@ import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
+import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.bootx.starter.dingtalk.core.user.entity.UserIdResult;
+import cn.bootx.starter.dingtalk.core.user.service.DingUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -35,7 +40,9 @@ import static cn.bootx.iam.code.OpenIdLoginType.*;
 @Component
 @RequiredArgsConstructor
 public class DingTalkLoginHandler implements OpenIdAuthentication {
-    // 授权码
+    private final UserTiredOperateService userTiredOperateService;
+    private final DingUserService dingUserService;
+
     private final UserThirdManager userThirdManager;
     private final UserInfoManager userInfoManager;
     private final AuthProperties authProperties;
@@ -96,6 +103,26 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
             throw new LoginFailureException("钉钉登录出错");
         }
         return response.getData();
+    }
+
+    /**
+     * 绑定用户
+     */
+    @Override
+    public void bindUser(String authCode, String state){
+        Long userId = SecurityUtil.getUserId();
+        AuthUser authUser = this.getAuthUser(authCode, state);
+        userTiredOperateService.existsByOpenId(authUser.getUuid(), UserThird::getDingTalkId);
+        userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setDingTalkId);
+        UserIdResult userIdResult = dingUserService.getUserIdByUnionId(authUser.getUuid());
+        UserThirdInfo userThirdInfo = new UserThirdInfo()
+                .setUserId(userId)
+                .setClientCode(DING_TALK)
+                .setUsername(authUser.getUsername())
+                .setNickname(authUser.getNickname())
+                .setAvatar(authUser.getAvatar())
+                .setThirdUserId(userIdResult.getUserId());
+        userTiredOperateService.bindOpenInfo(userThirdInfo);
     }
 
     /**

@@ -4,7 +4,7 @@ import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.ResultConvertUtil;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.dept.entity.Dept;
 import cn.bootx.iam.core.scope.dao.DataScopeDeptManager;
@@ -162,11 +162,11 @@ public class UserDataScopeService {
         Set<Long> deptIds = userDeptManager.findDeptIdsByUser(userId).stream()
                 .map(UserDept::getDeptId)
                 .collect(Collectors.toSet());
-        Map<Long, Dept> deptMap = deptManager.findAll().stream().collect(Collectors.toMap(MpBaseEntity::getId, dept -> dept));
+        Map<Long, Dept> deptMap = deptManager.findAll().stream().collect(Collectors.toMap(MpIdEntity::getId, dept -> dept));
         Set<String> deptOrgCodes = deptIds.stream().map(deptMap::get).map(Dept::getOrgCode).collect(Collectors.toSet());
         return deptMap.values().stream()
                 .filter(dept -> this.judgeSubDept(dept.getOrgCode(), deptOrgCodes))
-                .map(MpBaseEntity::getId)
+                .map(MpIdEntity::getId)
                 .collect(Collectors.toSet());
     }
 

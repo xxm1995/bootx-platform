@@ -1,7 +1,7 @@
 package cn.bootx.goods.core.category.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.goods.core.category.entity.Brand;
@@ -25,6 +25,6 @@ public class BrandManager extends BaseManager<BrandMapper, Brand> {
     */
     public Page<Brand> page(PageParam pageParam, BrandParam param) {
         Page<Brand> mpPage = MpUtil.getMpPage(pageParam, Brand.class);
-        return lambdaQuery().orderByDesc(MpBaseEntity::getId).page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 }

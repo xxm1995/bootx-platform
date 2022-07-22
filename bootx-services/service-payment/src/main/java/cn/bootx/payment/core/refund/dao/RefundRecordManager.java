@@ -1,7 +1,7 @@
 package cn.bootx.payment.core.refund.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.payment.core.refund.entity.RefundRecord;
@@ -27,7 +27,7 @@ public class RefundRecordManager extends BaseManager<RefundRecordMapper, RefundR
     public Page<RefundRecord> page(PageParam pageParam, RefundRecordDto param){
         Page<RefundRecord> mpPage = MpUtil.getMpPage(pageParam, RefundRecord.class);
         return lambdaQuery()
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .like(Objects.nonNull(param.getPaymentId()), RefundRecord::getPaymentId,param.getPaymentId())
                 .like(Objects.nonNull(param.getBusinessId()),RefundRecord::getBusinessId,param.getBusinessId())
                 .like(Objects.nonNull(param.getTitle()),RefundRecord::getTitle,param.getTitle())

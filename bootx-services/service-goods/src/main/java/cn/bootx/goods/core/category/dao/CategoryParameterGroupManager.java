@@ -1,7 +1,7 @@
 package cn.bootx.goods.core.category.dao;
 
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.goods.core.category.entity.CategoryParameterGroup;
@@ -27,7 +27,7 @@ public class CategoryParameterGroupManager extends BaseManager<CategoryParameter
         Page<CategoryParameterGroup> mpPage = MpUtil.getMpPage(pageParam, CategoryParameterGroup.class);
         return lambdaQuery()
                 .eq(CategoryParameterGroup::getCategoryId,param.getCategoryId())
-                .orderByDesc(MpBaseEntity::getId)
+                .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
 
