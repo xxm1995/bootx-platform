@@ -6,4 +6,5 @@ package cn.bootx.notice.service;
 * @date 2022/7/16
 */
 public interface WeComRobotNoticeSender {
+
 }

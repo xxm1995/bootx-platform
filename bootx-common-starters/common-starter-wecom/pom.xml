@@ -18,5 +18,9 @@
             <artifactId>weixin-java-cp</artifactId>
             <version>${wxjava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-mybatis-plus</artifactId>
+        </dependency>
     </dependencies>
 </project>

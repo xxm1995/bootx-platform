@@ -11,9 +11,9 @@ public interface DingTalkCode {
     String ACCESS_TOKEN_PARAM = "?access_token={}";
     /** 内部应用获取access_token */
     String APP_ACCESS_TOKEN_URL = "https://oapi.dingtalk.com/gettoken?appkey={appKey}&appsecret={appSecret}";
-    /** 带sign的消息发送请求 */
+    /** 带sign的机器人消息发送请求 */
     String ROBOT_SEND_SIGN_URL = "https://oapi.dingtalk.com/robot/send?access_token={accessToken}&timestamp={timestamp}&sign={sign}";
-    /** 不带sign的消息发送请求 */
+    /** 不带sign的机器人消息发送请求 */
     String ROBOT_SEND_NOT_SIGN_URL = "https://oapi.dingtalk.com/robot/send"+ ACCESS_TOKEN_PARAM;
     /** 发送工作通知 */
     String NOTICE_CORP_SEND_URL = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2"+ ACCESS_TOKEN_PARAM;

@@ -11,7 +11,7 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessageSendResult;
 import org.springframework.stereotype.Service;
 
-import static cn.bootx.starter.wecom.WeComCode.NOTICE_RECALL_URL;
+import static cn.bootx.starter.wecom.code.WeComCode.NOTICE_RECALL_URL;
 
 /**
 * 企业微信消息发送

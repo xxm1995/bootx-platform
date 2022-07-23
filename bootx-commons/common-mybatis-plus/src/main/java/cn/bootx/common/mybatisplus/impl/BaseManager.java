@@ -305,7 +305,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @return 对象
      */
     public Optional<T> findByField(SFunction<T, ?> field, Object fieldValue){
-        return Optional.ofNullable(lambdaQuery().eq(field,fieldValue).one());
+        return lambdaQuery().eq(field,fieldValue).oneOpt();
     }
 
 

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static cn.bootx.starter.wecom.WeComCode.NOTICE_MSG_ID;
+import static cn.bootx.starter.wecom.code.WeComCode.NOTICE_MSG_ID;
 
 /**
 * 消息撤回请求执行器.
