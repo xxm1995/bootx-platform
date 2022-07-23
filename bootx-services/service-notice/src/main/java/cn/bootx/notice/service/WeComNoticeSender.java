@@ -1,9 +1,57 @@
 package cn.bootx.notice.service;
 
-/**   
+import cn.bootx.notice.core.wecom.entity.WeComNoticeReceive;
+import cn.bootx.notice.core.wecom.entity.msg.*;
+
+/**
 * 企业微信通知服务
 * @author xxm  
 * @date 2022/7/16 
 */
 public interface WeComNoticeSender {
+
+    /**
+     * 发送文本消息
+     */
+    String sendTextNotice(WeComTextMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送图片消息
+     */
+    String sendImageNotice(WeComImageMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送语音消息
+     */
+    String sendVoiceNotice(WeComVoiceMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送视频消息
+     */
+    String sendVideoNotice(WeComVideoMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送文本卡片消息
+     */
+    String sendTextCardNotice(WeComTextCardMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送图文消息
+     */
+    String sendNewsNotice(WeComNewsMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送图文消息(mpnews)
+     */
+    String sendMpNewsNotice(WeComMpNewsMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送markdown消息
+     */
+    String sendMarkdownNotice(WeComMarkdownMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 撤回企微消息
+     */
+    void recallNotice(String msgId);
 }

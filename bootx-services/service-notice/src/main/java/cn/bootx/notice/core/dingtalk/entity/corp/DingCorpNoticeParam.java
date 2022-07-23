@@ -26,6 +26,9 @@ public class DingCorpNoticeParam {
     @Schema(description = "钉钉消息内容")
     private DingMsg dingMsg;
 
+    /**
+     * 转换成钉钉消息发送参数
+     */
     public CorpNotice toDingCorpNotice() {
         return new CorpNotice()
                 .setToAllUser(receive.isToAllUser())

@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 */
 @Getter
 @Setter
-@ConfigurationProperties("bootx.starter.social.wechat")
+@ConfigurationProperties("bootx.starter.third.wechat")
 public class WeChatProperties {
 
     /** AppKey */

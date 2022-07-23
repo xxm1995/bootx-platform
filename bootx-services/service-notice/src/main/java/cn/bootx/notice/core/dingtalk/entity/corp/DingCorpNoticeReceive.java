@@ -24,4 +24,12 @@ public class DingCorpNoticeReceive {
 
     @Schema(description = "是否发送给企业全部用户")
     private boolean toAllUser;
+
+    /**
+     * 发送给全部用户
+     */
+    public static DingCorpNoticeReceive toAll(){
+        return new DingCorpNoticeReceive()
+                .setToAllUser(true);
+    }
 }

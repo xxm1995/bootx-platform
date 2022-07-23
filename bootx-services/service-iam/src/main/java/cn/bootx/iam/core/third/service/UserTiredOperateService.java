@@ -68,7 +68,8 @@ public class UserTiredOperateService {
                 .setClientCode(clientCode)
                 .setUsername(authUser.getUsername())
                 .setNickname(authUser.getNickname())
-                .setAvatar(authUser.getAvatar());
+                .setAvatar(authUser.getAvatar())
+                .setThirdUserId(authUser.getUuid());
         this.bindOpenInfo(userThirdInfo);
     }
 

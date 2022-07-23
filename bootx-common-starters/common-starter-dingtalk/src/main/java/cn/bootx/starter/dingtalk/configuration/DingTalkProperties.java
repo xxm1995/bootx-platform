@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 */
 @Getter
 @Setter
-@ConfigurationProperties("bootx.starter.social.ding-talk")
+@ConfigurationProperties("bootx.starter.third.ding-talk")
 public class DingTalkProperties {
 
     /** AppKey */

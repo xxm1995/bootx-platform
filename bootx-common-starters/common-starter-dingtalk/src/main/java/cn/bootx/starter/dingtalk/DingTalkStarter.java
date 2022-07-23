@@ -6,12 +6,12 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
 /**   
-* 钉钉
+* 钉钉对接
 * @author xxm  
 * @date 2022/4/2 
 */
 @ComponentScan
 @ConfigurationPropertiesScan
 @MapperScan(annotationClass = Mapper.class)
-public class DingTalkApplication {
+public class DingTalkStarter {
 }

@@ -22,6 +22,7 @@ import java.util.List;
 public class WeChatMessageRouterConfiguration {
     private final List<WeChatMpMessageHandler> weChatMpMessageHandlers;
     private final WeChatMsgHandler weChatMsgHandler;
+
     @Bean
     public WxMpMessageRouter wxMpMessageRouter(WxMpService wxMpService){
         WxMpMessageRouter router = new WxMpMessageRouter(wxMpService);

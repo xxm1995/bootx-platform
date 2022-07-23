@@ -67,5 +67,11 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-wechat</artifactId>
         </dependency>
+
+        <!-- 企业微信 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-wecom</artifactId>
+        </dependency>
     </dependencies>
 </project>

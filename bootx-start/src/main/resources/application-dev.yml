@@ -110,7 +110,7 @@ bootx:
       auto-client-id-suffix: true
   starter:
     # 三方平台
-    social:
+    third:
       # 钉钉
       ding-talk:
         app-key: ??
@@ -119,6 +119,13 @@ bootx:
       wechat:
         app-id: ??
         app-secret: ??
+        token: ??
+        encoding-aes-key: ??
+      # 企业微信
+      wecom:
+        agent-id: 1000003
+        corp-id: wwab6908d4789e9a52
+        corp-secret: a9rBRFauUvzV8XNrnDmyF8d8_O0l9aK-pZ2iR-2E3kI
         token: ??
         encoding-aes-key: ??
     # 认证
@@ -143,17 +150,17 @@ bootx:
       third-login:
         ding-talk:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/dingTalk
-          client-secret: ${bootx.starter.social.ding-talk.app-secret}
-          client-id: ${bootx.starter.social.ding-talk.app-key}
+          client-secret: ${bootx.starter.third.ding-talk.app-secret}
+          client-id: ${bootx.starter.third.ding-talk.app-key}
         we-com:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/weCom
-          client-secret: ??
-          client-id: ??
-          agent-id: ??
+          client-secret: ${bootx.starter.third.wecom.corp-secret}
+          client-id: ${bootx.starter.third.wecom.corp-id}
+          agent-id: ${bootx.starter.third.wecom.agent-id}
         we-chat:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/weChat
-          client-id: ${bootx.starter.social.wechat.app-id}
-          client-secret: ${bootx.starter.social.wechat.app-secret}
+          client-id: ${bootx.starter.third.wechat.app-id}
+          client-secret: ${bootx.starter.third.wechat.app-secret}
     # 审计日志存储
     audit-log:
       store: mongo

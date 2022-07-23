@@ -145,6 +145,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送文本企业群消息
+     * @param chatId 群Id
      * @return 发布企业群消息ID
      */
     @Override
@@ -154,6 +155,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送图片企业群消息
+     * @param chatId 群Id
      * @return 发布企业群消息ID
      */
     @Override
@@ -163,6 +165,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送语音企业群消息
+     * @param chatId 群Id
      * @return 发布企业群消息ID
      */
     @Override
@@ -172,6 +175,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送文件企业群消息
+     * @param chatId 群Id
      * @return 发布企业群消息ID
      */
     @Override
@@ -181,6 +185,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送链接企业群消息
+     * @param chatId 群Id
      * @return 发布企业群消息ID
      */
     @Override
@@ -190,6 +195,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送OA企业群消息
+     * @param chatId 群Id
      * @return 发布企业群消息ID
      */
     @Override
@@ -199,6 +205,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送markdown企业群消息
+     * @param chatId 群Id
+     * @return 发布企业群消息ID
      */
     @Override
     public String sendMarkDownChatNotice(DingMarkDownMsg dingMarkDownMsg, String chatId) {
@@ -207,6 +215,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送卡片企业群消息
+     * @param chatId 群Id
+     * @return 发布企业群消息ID
      */
     @Override
     public String sendActionCardChatNotice(DingActionCardMsg dingActionCardMsg, String chatId) {
@@ -215,6 +225,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
 
     /**
      * 发送企业群消息
+     * @param chatId 群Id
+     * @return 发布企业群消息ID
      */
     private String sendChatNotice(DingMsg dingMsg, String chatId){
 

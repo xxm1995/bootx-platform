@@ -18,10 +18,10 @@ import org.springframework.stereotype.Service;
 import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 
 /**
-* 钉钉通知发送服务
-* @author xxm
-* @date 2022/7/17
-*/
+ * 钉钉通知发送服务
+ * @author xxm
+ * @date 2022/7/17
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -31,13 +31,15 @@ public class DingNoticeService {
     /**
      * 发送普通消息, 支持普通群和个人会话
      *
-     * @url <a href="https://open.dingtalk.com/document/orgapp-server/send-normal-messages">...</a>
+     * <a href="https://open.dingtalk.com/document/orgapp-server/send-normal-messages">...</a>
      */
     public void sendNotice() {
     }
 
     /**
      * 发送企业群消息
+     *
+     * <a href="https://open.dingtalk.com/document/orgapp-server/enterprise-group-message-overview">...</a>
      */
     public ChatNoticeResult sendChatNotice(ChatNotice param){
         String accessToken = dingAccessService.getAccessToken();
@@ -51,7 +53,7 @@ public class DingNoticeService {
     /**
      * 发送工作通知
      *
-     * @url <a href="https://open.dingtalk.com/document/orgapp-server/asynchronous-sending-of-enterprise-session-messages">...</a>
+     * <a href="https://open.dingtalk.com/document/orgapp-server/asynchronous-sending-of-enterprise-session-messages">...</a>
      */
     public CorpNoticeResult sendCorpNotice(CorpNotice param) {
         String accessToken = dingAccessService.getAccessToken();
