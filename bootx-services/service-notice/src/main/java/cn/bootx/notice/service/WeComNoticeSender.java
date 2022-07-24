@@ -3,6 +3,8 @@ package cn.bootx.notice.service;
 import cn.bootx.notice.core.wecom.entity.WeComNoticeReceive;
 import cn.bootx.notice.core.wecom.entity.msg.*;
 
+import java.io.InputStream;
+
 /**
 * 企业微信通知服务
 * @author xxm  
@@ -21,9 +23,24 @@ public interface WeComNoticeSender {
     String sendImageNotice(WeComImageMsg msg, WeComNoticeReceive receive);
 
     /**
+     * 发送图片消息 (传入文件)
+     */
+    String sendImageNotice(InputStream inputStream, WeComNoticeReceive receive);
+
+    /**
      * 发送语音消息
      */
     String sendVoiceNotice(WeComVoiceMsg msg, WeComNoticeReceive receive);
+
+    /**
+     * 发送语音消息(传入文件)
+     */
+    String sendVoiceNotice(InputStream inputStream, WeComNoticeReceive receive);
+
+    /**
+     * 发送视频消息 (传入文件)
+     */
+    String sendVideoNotice(String title, String description, InputStream inputStream, WeComNoticeReceive receive);
 
     /**
      * 发送视频消息

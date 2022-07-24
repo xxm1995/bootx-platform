@@ -1,5 +1,6 @@
 package cn.bootx.starter.wecom;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -10,5 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 */
 @ComponentScan
 @ConfigurationPropertiesScan
+@MapperScan
 public class WeComStarter {
 }

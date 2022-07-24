@@ -2,18 +2,19 @@ package cn.bootx.starter.wecom.core.robot.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.starter.wecom.core.robot.dao.WecomRobotConfigManager;
+import cn.bootx.starter.wecom.core.base.domin.UploadMedia;
 import cn.bootx.starter.wecom.core.robot.entity.WecomRobotConfig;
 import cn.bootx.starter.wecom.core.robot.executor.RobotMediaFileUploadRequestExecutor;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.cp.api.WxCpGroupRobotService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
 import java.util.List;
 
 import static cn.bootx.starter.wecom.code.WeComCode.ROBOT_UPLOAD_URL;
@@ -84,9 +85,10 @@ public class WeComRobotNoticeService {
      * 机器人临时文件上传
      */
     @SneakyThrows
-    public void updateFile(String code, InputStream in){
+    public String updatedMedia(String code, UploadMedia uploadMedia){
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code).orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         String url = StrUtil.format(ROBOT_UPLOAD_URL,robotConfig.getWebhookKey());
-        wxCpService.execute(new RobotMediaFileUploadRequestExecutor(), url, in);
+        WxMediaUploadResult result = wxCpService.execute(new RobotMediaFileUploadRequestExecutor(), url, uploadMedia);
+        return result.getMediaId();
     }
 }

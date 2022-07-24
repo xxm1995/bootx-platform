@@ -1,9 +1,21 @@
 package cn.bootx.notice.core.wecom.service;
 
 import cn.bootx.notice.service.WeComRobotNoticeSender;
+import cn.bootx.starter.wecom.core.base.domin.UploadMedia;
+import cn.bootx.starter.wecom.core.robot.service.WeComRobotNoticeService;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.cp.bean.article.NewArticle;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * 微信机器人消息发送
@@ -14,4 +26,72 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class WeComRobotNoticeSenderImpl implements WeComRobotNoticeSender {
+    private final WeComRobotNoticeService robotNoticeService;
+
+    /**
+     * 发送文本消息
+     */
+    @Override
+    public void sendTextNotice(String code, String content, List<String> mentionedList, List<String> mobileList) {
+        robotNoticeService.sendTextNotice(code, content, mentionedList, mobileList);
+    }
+
+    /**
+     * 发送markdown消息
+     */
+    @Override
+    public void sendMarkdownNotice(String code, String content){
+        robotNoticeService.sendMarkdownNotice(code,content);
+    }
+
+    /**
+     * 发送图片消息
+     */
+    @Override
+    public void sendImageNotice(String code, String imageBase64,String md5){
+        robotNoticeService.sendImageNotice(code,imageBase64,md5);
+    }
+
+    /**
+     * 发送图片消息
+     */
+    @Override
+    public void sendImageNotice(String code, InputStream imageIs){
+        byte[] bytes = IoUtil.readBytes(imageIs);
+        String md5 = DigestUtil.md5Hex(bytes);
+        String imageBase64 = Base64.encode(bytes);
+        robotNoticeService.sendImageNotice(code,imageBase64,md5);
+    }
+
+    /**
+     * 发送图文消息
+     */
+    @Override
+    public void sendNewsNotice(String code, List<NewArticle> articleList){
+        robotNoticeService.sendNewsNotice(code,articleList);
+    }
+
+    /**
+     * 发送文件消息
+     */
+    @Override
+    public void sendFIleNotice(String code, String mediaId){
+        robotNoticeService.sendFIleNotice(code,mediaId);
+    }
+
+    /**
+     * 发送文件消息
+     */
+    @SneakyThrows
+    @Override
+    public void sendFIleNotice(String code, InputStream fileIs){
+        byte[] bytes = IoUtil.readBytes(fileIs);
+        String type = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
+        UploadMedia uploadMedia = new UploadMedia()
+                .setFileType(type)
+                .setInputStream(new ByteArrayInputStream(bytes));
+
+        String mediaId = robotNoticeService.updatedMedia(code, uploadMedia);
+        robotNoticeService.sendFIleNotice(code,mediaId);
+    }
 }

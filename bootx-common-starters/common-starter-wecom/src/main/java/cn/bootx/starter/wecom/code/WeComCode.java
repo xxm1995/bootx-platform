@@ -17,4 +17,15 @@ public interface WeComCode {
     /* 消息通知 */
     /** 消息ID */
     String NOTICE_MSG_ID = "msgid";
+
+
+    /* 请求参数 */
+    /** 文件名称 */
+    String FILE_NAME = "filename";
+    /** 文件长度 */
+    String FILE_LENGTH = "filelength";
+    /** 文件类型 */
+    String CONTENT_TYPE = "content-type";
+    /** 文件 */
+    String MEDIA = "media";
 }

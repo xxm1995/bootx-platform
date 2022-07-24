@@ -4,10 +4,17 @@ import cn.bootx.notice.core.wecom.entity.WeComNoticeParam;
 import cn.bootx.notice.core.wecom.entity.WeComNoticeReceive;
 import cn.bootx.notice.core.wecom.entity.msg.*;
 import cn.bootx.notice.service.WeComNoticeSender;
+import cn.bootx.starter.wecom.core.base.domin.UploadMedia;
 import cn.bootx.starter.wecom.core.notice.service.WeComNoticeService;
+import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.IoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.api.WxConsts;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 /**   
 * 实现类
@@ -37,10 +44,58 @@ public class WeComNoticeSenderImpl implements WeComNoticeSender {
     }
 
     /**
+     * 发送图片消息 (传入文件)
+     */
+    @Override
+    public String sendImageNotice(InputStream inputStream, WeComNoticeReceive receive){
+        byte[] bytes = IoUtil.readBytes(inputStream);
+        String type = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
+        UploadMedia uploadMedia = new UploadMedia()
+                .setMediaType(WxConsts.MediaFileType.IMAGE)
+                .setFileType(type)
+                .setInputStream(new ByteArrayInputStream(bytes));
+        String media = weComNoticeService.updatedMedia(uploadMedia);
+        WeComImageMsg msg = new WeComImageMsg(media);
+        return this.sendNotice(msg,receive);
+    }
+
+    /**
      * 发送语音消息
      */
     @Override
     public String sendVoiceNotice(WeComVoiceMsg msg, WeComNoticeReceive receive){
+        return this.sendNotice(msg,receive);
+    }
+
+    /**
+     * 发送语音消息(传入文件)
+     */
+    @Override
+    public String sendVoiceNotice(InputStream inputStream, WeComNoticeReceive receive){
+        byte[] bytes = IoUtil.readBytes(inputStream);
+        String type = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
+        UploadMedia uploadMedia = new UploadMedia()
+                .setMediaType(WxConsts.MediaFileType.VOICE)
+                .setFileType(type)
+                .setInputStream(new ByteArrayInputStream(bytes));
+        String media = weComNoticeService.updatedMedia(uploadMedia);
+        WeComVoiceMsg msg = new WeComVoiceMsg(media);
+        return this.sendNotice(msg,receive);
+    }
+
+    /**
+     * 发送视频消息 (传入文件)
+     */
+    @Override
+    public String sendVideoNotice(String title, String description, InputStream inputStream, WeComNoticeReceive receive){
+        byte[] bytes = IoUtil.readBytes(inputStream);
+        String type = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
+        UploadMedia uploadMedia = new UploadMedia()
+                .setMediaType(WxConsts.MediaFileType.VIDEO)
+                .setFileType(type)
+                .setInputStream(new ByteArrayInputStream(bytes));
+        String media = weComNoticeService.updatedMedia(uploadMedia);
+        WeComVideoMsg msg = new WeComVideoMsg(title,media,description);
         return this.sendNotice(msg,receive);
     }
 

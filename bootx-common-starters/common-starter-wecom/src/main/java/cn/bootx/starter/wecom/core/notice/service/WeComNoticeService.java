@@ -1,10 +1,13 @@
 package cn.bootx.starter.wecom.core.notice.service;
 
 import cn.bootx.starter.wecom.configuration.WeComProperties;
+import cn.bootx.starter.wecom.core.base.domin.UploadMedia;
 import cn.bootx.starter.wecom.core.notice.executor.RecallNoticeRequestExecutor;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
+import me.chanjar.weixin.cp.api.WxCpMediaService;
 import me.chanjar.weixin.cp.api.WxCpMessageService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
@@ -44,5 +47,15 @@ public class WeComNoticeService {
     @SneakyThrows
     public void recallNotice(String msgId)  {
         wxCpService.execute(new RecallNoticeRequestExecutor(), NOTICE_RECALL_URL, msgId);
+    }
+
+    /**
+     * 上传临时素材
+     */
+    @SneakyThrows
+    public String updatedMedia(UploadMedia uploadMedia){
+        WxCpMediaService mediaService = wxCpService.getMediaService();
+        WxMediaUploadResult result = mediaService.upload(uploadMedia.getMediaType(), uploadMedia.getFileType(), uploadMedia.getInputStream());
+        return result.getMediaId();
     }
 }

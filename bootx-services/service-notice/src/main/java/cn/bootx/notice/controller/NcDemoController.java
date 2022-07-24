@@ -10,12 +10,15 @@ import cn.bootx.notice.core.wecom.entity.msg.WeComTextMsg;
 import cn.bootx.notice.service.DingTalkNoticeSender;
 import cn.bootx.notice.service.EmailNoticeSender;
 import cn.bootx.notice.service.WeComNoticeSender;
+import cn.bootx.notice.service.WeComRobotNoticeSender;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,6 +33,7 @@ public class NcDemoController {
     private final EmailNoticeSender mailSendService;
     private final DingTalkNoticeSender dingTalkNoticeSender;
     private final WeComNoticeSender weComNoticeSender;
+    private final WeComRobotNoticeSender weComRobotNoticeSender;
 
     @Operation(summary = "邮件消息测试")
     @PostMapping("/sendMsg")
@@ -60,6 +64,15 @@ public class NcDemoController {
         receive.setUseridList(Collections.singletonList("XiaXiangMing"));
         return Res.ok(weComNoticeSender.sendTextNotice(msg,receive));
     }
+
+    @SneakyThrows
+    @Operation(summary = "企微图片消息测试")
+    @PostMapping("/sendImageNotice")
+    public ResResult<String> sendImageNotice(MultipartFile file){
+        WeComNoticeReceive receive = new WeComNoticeReceive();
+        receive.setUseridList(Collections.singletonList("XiaXiangMing"));
+        return Res.ok(weComNoticeSender.sendImageNotice(file.getInputStream(),receive));
+    }
     
     @Operation(summary = "企微消息撤回")
     @PostMapping("/recallNotice")
@@ -67,4 +80,22 @@ public class NcDemoController {
         weComNoticeSender.recallNotice(msgId);
         return Res.ok();
     }
+
+    @SneakyThrows
+    @Operation(summary = "企微机器人图片发送")
+    @PostMapping("/p1")
+    public ResResult<Void> p1(MultipartFile file){
+        weComRobotNoticeSender.sendImageNotice("bootx",file.getInputStream());
+        return Res.ok();
+    }
+
+    @SneakyThrows
+    @Operation(summary = "企微机器人文件发送")
+    @PostMapping("/p2")
+    public ResResult<Void> p2(MultipartFile file){
+        weComRobotNoticeSender.sendFIleNotice("bootx",file.getInputStream());
+        return Res.ok();
+    }
+
+
 }
