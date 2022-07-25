@@ -5,7 +5,7 @@ import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.starter.dingtalk.code.DingTalkCode;
 import cn.bootx.starter.dingtalk.core.robot.dao.DingRobotConfigManage;
 import cn.bootx.starter.dingtalk.core.robot.entity.DingRobotConfig;
-import cn.bootx.starter.dingtalk.core.base.entity.DingTalkResult;
+import cn.bootx.starter.dingtalk.core.base.result.DingTalkResult;
 import cn.bootx.starter.dingtalk.param.notice.msg.Msg;
 import cn.bootx.starter.dingtalk.util.DingTalkUtil;
 import cn.hutool.core.util.StrUtil;

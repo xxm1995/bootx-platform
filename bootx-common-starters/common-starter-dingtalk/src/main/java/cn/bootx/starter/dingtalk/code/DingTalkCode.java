@@ -29,13 +29,16 @@ public interface DingTalkCode {
     /** 根据unionid获取用户userid */
     String USER_GET_URL = "https://oapi.dingtalk.com/topapi/user/getbyunionid" + ACCESS_TOKEN_PARAM;
 
+    /** 媒体文件上传 */
+    String MEDIA_UPLOAD_URL = "https://oapi.dingtalk.com/media/upload" + ACCESS_TOKEN_PARAM;
+
     /** 钉钉字段 */
     String ACCESS_TOKEN = "accessToken";
     String SIGN = "sign";
     String TIMESTAMP = "timestamp";
     String APP_KEY = "appKey";
     String APP_SECRET = "appSecret";
-    // 应用id
+    /** 应用id */
     String CLIENT_ID = "clientId";
     // 应用密钥
     String CLIENT_SECRET = "clientSecret";
@@ -48,6 +51,8 @@ public interface DingTalkCode {
     String REDIRECT_URI = "redirectUri";
     String STATE = "state";
     String PROMPT = "prompt";
+    /** 媒体 */
+    String MEDIA = "media";
     /** 请求头参数调用服务端接口的授权凭证 */
     String HEADER_TOKEN = "x-acs-dingtalk-access-token";
 
@@ -64,5 +69,15 @@ public interface DingTalkCode {
     /* 响应值 */
     /** 成功 */
     int SUCCESS_CODE = 0;
+
+    /* 媒体类型 */
+    /** 图片 */
+    String MEDIA_IMAGE = "image";
+    /** 语音 */
+    String MEDIA_VOICE = "voice";
+    /** 视频 */
+    String MEDIA_VIDEO = "video";
+    /** 普通文件 */
+    String MEDIA_FILE = "file";
 
 }

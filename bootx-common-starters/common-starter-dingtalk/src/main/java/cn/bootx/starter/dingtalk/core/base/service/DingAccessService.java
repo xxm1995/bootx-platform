@@ -4,7 +4,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.common.spring.exception.RetryableException;
 import cn.bootx.starter.dingtalk.configuration.DingTalkProperties;
-import cn.bootx.starter.dingtalk.core.base.entity.AccessTokenResult;
+import cn.bootx.starter.dingtalk.core.base.result.AccessTokenResult;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import cn.hutool.http.HttpException;

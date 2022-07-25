@@ -3,7 +3,9 @@ package cn.bootx.notice.core.dingtalk.entity.msg;
 import cn.bootx.starter.dingtalk.param.notice.msg.ImageMsg;
 import cn.bootx.starter.dingtalk.param.notice.msg.Msg;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -13,6 +15,8 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
+@AllArgsConstructor
+@RequiredArgsConstructor
 @Schema(title = "钉钉图片工作通知消息")
 public class DingImageMsg implements DingMsg {
 

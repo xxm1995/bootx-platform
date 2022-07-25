@@ -2,7 +2,7 @@ package cn.bootx.starter.dingtalk.core.user.service;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.jackson.util.JacksonUtil;
-import cn.bootx.starter.dingtalk.core.base.entity.DingTalkResult;
+import cn.bootx.starter.dingtalk.core.base.result.DingTalkResult;
 import cn.bootx.starter.dingtalk.core.base.service.DingAccessService;
 import cn.bootx.starter.dingtalk.core.user.entity.UserIdResult;
 import cn.hutool.core.util.StrUtil;

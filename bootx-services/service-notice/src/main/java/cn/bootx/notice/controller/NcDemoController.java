@@ -55,6 +55,16 @@ public class NcDemoController {
         dingTalkNoticeSender.sendTextCorpNotice(msg,receive);
         return Res.ok();
     }
+
+    @SneakyThrows
+    @Operation(summary = "钉钉图片消息测试")
+    @PostMapping("/sendDingImageMsg")
+    public ResResult<Void> sendDingImageMsg(MultipartFile file){
+        DingCorpNoticeReceive receive = new DingCorpNoticeReceive()
+                .setUseridList(Collections.singletonList("manager7303"));
+        dingTalkNoticeSender.sendImageCorpNotice(file.getInputStream(),receive);
+        return Res.ok();
+    }
     
     @Operation(summary = "企微消息测试")
     @PostMapping("/sendWeComMsg")

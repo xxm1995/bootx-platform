@@ -2,7 +2,7 @@ package cn.bootx.starter.dingtalk.core.notice.service;
 
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.starter.dingtalk.core.base.service.DingAccessService;
-import cn.bootx.starter.dingtalk.core.base.entity.DingTalkResult;
+import cn.bootx.starter.dingtalk.core.base.result.DingTalkResult;
 import cn.bootx.starter.dingtalk.core.notice.entity.ChatNoticeResult;
 import cn.bootx.starter.dingtalk.core.notice.entity.CorpNoticeResult;
 import cn.bootx.starter.dingtalk.param.notice.ChatNotice;

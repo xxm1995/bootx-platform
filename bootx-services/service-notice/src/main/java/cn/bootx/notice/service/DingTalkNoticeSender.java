@@ -4,6 +4,8 @@ import cn.bootx.notice.core.dingtalk.entity.corp.DingCorpNoticeReceive;
 import cn.bootx.notice.core.dingtalk.entity.corp.DingCorpNoticeUpdate;
 import cn.bootx.notice.core.dingtalk.entity.msg.*;
 
+import java.io.InputStream;
+
 /**
  * 钉钉消息通知服务
  * @author xxm
@@ -22,6 +24,12 @@ public interface DingTalkNoticeSender {
      * @return 发布消息任务ID
      */
     Long sendImageCorpNotice(DingImageMsg dingImageMsg, DingCorpNoticeReceive receive);
+
+    /**
+     * 发送图片消息 (文件方式)
+     * @return 发布消息任务ID
+     */
+    Long sendImageCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive);
 
     /**
      * 发送语音消息

@@ -1,4 +1,4 @@
-package cn.bootx.starter.dingtalk.core.base.entity;
+package cn.bootx.starter.dingtalk.core.base.result;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

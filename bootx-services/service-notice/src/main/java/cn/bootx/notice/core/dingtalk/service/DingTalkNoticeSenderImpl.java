@@ -1,22 +1,31 @@
 package cn.bootx.notice.core.dingtalk.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.notice.core.dingtalk.entity.corp.*;
+import cn.bootx.notice.core.dingtalk.entity.corp.DingCorpNoticeParam;
+import cn.bootx.notice.core.dingtalk.entity.corp.DingCorpNoticeReceive;
+import cn.bootx.notice.core.dingtalk.entity.corp.DingCorpNoticeUpdate;
 import cn.bootx.notice.core.dingtalk.entity.msg.*;
 import cn.bootx.notice.service.DingTalkNoticeSender;
+import cn.bootx.starter.dingtalk.code.DingTalkCode;
 import cn.bootx.starter.dingtalk.configuration.DingTalkProperties;
-import cn.bootx.starter.dingtalk.core.base.entity.DingTalkResult;
+import cn.bootx.starter.dingtalk.core.base.domin.UploadMedia;
+import cn.bootx.starter.dingtalk.core.base.result.DingTalkResult;
+import cn.bootx.starter.dingtalk.core.base.service.DingMediaService;
 import cn.bootx.starter.dingtalk.core.notice.entity.ChatNoticeResult;
 import cn.bootx.starter.dingtalk.core.notice.entity.CorpNoticeResult;
+import cn.bootx.starter.dingtalk.core.notice.service.DingNoticeService;
 import cn.bootx.starter.dingtalk.param.notice.ChatNotice;
 import cn.bootx.starter.dingtalk.param.notice.CorpNotice;
 import cn.bootx.starter.dingtalk.param.notice.RecallCorpNotice;
 import cn.bootx.starter.dingtalk.param.notice.UpdateCorpNotice;
-import cn.bootx.starter.dingtalk.core.notice.service.DingNoticeService;
+import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.IoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Objects;
 
 import static cn.bootx.starter.dingtalk.code.DingTalkCode.SUCCESS_CODE;
@@ -31,6 +40,7 @@ import static cn.bootx.starter.dingtalk.code.DingTalkCode.SUCCESS_CODE;
 @RequiredArgsConstructor
 public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
     private final DingNoticeService dingNoticeService;
+    private final DingMediaService dingMediaService;
     private final DingTalkProperties dingTalkProperties;
 
     /**
@@ -48,6 +58,23 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendImageCorpNotice(DingImageMsg dingImageMsg, DingCorpNoticeReceive receive){
+        return this.sendCorpNotice(dingImageMsg,receive);
+    }
+
+    /**
+     * 发送图片消息 (文件方式)
+     * @return 发布消息任务ID
+     */
+    @Override
+    public Long sendImageCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive){
+        byte[] bytes = IoUtil.readBytes(inputStream);
+        String type = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
+        UploadMedia uploadMedia = new UploadMedia()
+                .setMediaType(DingTalkCode.MEDIA_IMAGE)
+                .setFileType(type)
+                .setInputStream(new ByteArrayInputStream(bytes));
+        String mediaId = dingMediaService.uploadMedia(uploadMedia);
+        DingImageMsg dingImageMsg = new DingImageMsg(mediaId);
         return this.sendCorpNotice(dingImageMsg,receive);
     }
 

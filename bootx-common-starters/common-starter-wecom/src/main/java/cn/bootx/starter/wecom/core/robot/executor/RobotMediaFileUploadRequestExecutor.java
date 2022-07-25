@@ -17,7 +17,7 @@ import java.io.IOException;
 
 /**
  * 机器人文件素材上传
- * @author xxm  
+ * @author xxm
  * @date 2022/7/23 
  */
 public class RobotMediaFileUploadRequestExecutor implements RequestExecutor<WxMediaUploadResult, UploadMedia> {
@@ -27,14 +27,10 @@ public class RobotMediaFileUploadRequestExecutor implements RequestExecutor<WxMe
         File tmpFile = FileUtils.createTmpFile(uploadMedia.getInputStream(), IdUtil.getSnowflakeNextIdStr(), uploadMedia.getFileType());
 
         String response;
-        try {
-            response = HttpUtil.createPost(uri)
-                    .form(WeComCode.MEDIA,tmpFile)
-                    .execute()
-                    .body();
-        } finally {
-            tmpFile.delete();
-        }
+        response = HttpUtil.createPost(uri)
+                .form(WeComCode.MEDIA,tmpFile)
+                .execute()
+                .body();
 
         WxError result = WxError.fromJson(response);
         if (result.getErrorCode() != 0) {

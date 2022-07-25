@@ -1,4 +1,4 @@
-package cn.bootx.starter.wecom.core.base.domin;
+package cn.bootx.starter.dingtalk.core.base.domin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -7,13 +7,13 @@ import lombok.experimental.Accessors;
 import java.io.InputStream;
 
 /**   
- * 企微文件上传
+ * 钉钉文件上传
  * @author xxm  
  * @date 2022/7/24 
  */
 @Data
 @Accessors(chain = true)
-@Schema(title = "企微文件上传")
+@Schema(title = "钉钉文件上传")
 public class UploadMedia {
 
     @Schema(description = "媒体类型")
