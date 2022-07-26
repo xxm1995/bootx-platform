@@ -1,8 +1,7 @@
 package cn.bootx.starter.wecom.core.robot.executor;
 
 import cn.bootx.starter.wecom.code.WeComCode;
-import cn.bootx.starter.wecom.core.base.domin.UploadMedia;
-import cn.hutool.core.util.IdUtil;
+import cn.bootx.starter.wecom.core.robot.domin.UploadMedia;
 import cn.hutool.http.HttpUtil;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
@@ -24,11 +23,11 @@ public class RobotMediaFileUploadRequestExecutor implements RequestExecutor<WxMe
 
     @Override
     public WxMediaUploadResult execute(String uri, UploadMedia uploadMedia, WxType wxType) throws WxErrorException, IOException {
-        File tmpFile = FileUtils.createTmpFile(uploadMedia.getInputStream(), IdUtil.getSnowflakeNextIdStr(), uploadMedia.getFileType());
-
+        File tmpFile = FileUtils.createTmpFile(uploadMedia.getInputStream(), uploadMedia.getFilename(), uploadMedia.getFileType());
+        String filename = uploadMedia.getFilename() + "." + uploadMedia.getFileType();
         String response;
         response = HttpUtil.createPost(uri)
-                .form(WeComCode.MEDIA,tmpFile)
+                .form(WeComCode.MEDIA,tmpFile,filename)
                 .execute()
                 .body();
 

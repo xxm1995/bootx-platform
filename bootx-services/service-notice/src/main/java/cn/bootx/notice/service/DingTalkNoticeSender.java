@@ -32,16 +32,46 @@ public interface DingTalkNoticeSender {
     Long sendImageCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive);
 
     /**
+     * 发送图片消息 (文件方式)
+     * @return 发布消息任务ID
+     */
+    Long sendImageCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive);
+
+    /**
      * 发送语音消息
      * @return 发布消息任务ID
      */
     Long sendVoiceCorpNotice(DingVoiceMsg dingVoiceMsg, DingCorpNoticeReceive receive);
 
     /**
+     * 发送语音消息 (文件)
+     * @return 发布消息任务ID
+     */
+    Long sendVoiceCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive);
+
+    /**
+     * 发送语音消息 (文件)
+     * @return 发布消息任务ID
+     */
+    Long sendVoiceCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive);
+
+    /**
      * 发送文件消息
      * @return 发布消息任务ID
      */
     Long sendFileCorpNotice(DingFileMsg dingFileMsg, DingCorpNoticeReceive receive);
+
+    /**
+     * 发送文件消息(文件)
+     * @return 发布消息任务ID
+     */
+    Long sendFileCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive);
+
+    /**
+     * 发送文件消息(文件)
+     * @return 发布消息任务ID
+     */
+    Long sendFileCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive);
 
     /**
      * 发送链接消息

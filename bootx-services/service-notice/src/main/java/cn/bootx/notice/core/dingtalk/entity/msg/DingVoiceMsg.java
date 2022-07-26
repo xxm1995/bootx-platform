@@ -3,7 +3,9 @@ package cn.bootx.notice.core.dingtalk.entity.msg;
 import cn.bootx.starter.dingtalk.param.notice.msg.Msg;
 import cn.bootx.starter.dingtalk.param.notice.msg.VoiceMsg;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
@@ -13,6 +15,8 @@ import lombok.experimental.Accessors;
 */
 @Data
 @Accessors(chain = true)
+@AllArgsConstructor
+@NoArgsConstructor
 @Schema(title = "声音消息")
 public class DingVoiceMsg implements DingMsg {
 

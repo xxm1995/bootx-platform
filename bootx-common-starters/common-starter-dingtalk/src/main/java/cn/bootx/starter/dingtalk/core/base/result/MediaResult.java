@@ -23,7 +23,7 @@ public class MediaResult {
     @Schema(description= "返回码描述")
     private String msg;
 
-    @JsonProperty("media_id")
+    @JsonProperty("type")
     @Schema(description= "媒体文件类型")
     private String type;
     @JsonProperty("media_id")

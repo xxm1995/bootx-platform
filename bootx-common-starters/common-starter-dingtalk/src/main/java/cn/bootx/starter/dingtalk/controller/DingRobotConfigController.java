@@ -39,8 +39,8 @@ public class DingRobotConfigController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<DingRobotConfigDto>> page(PageParam pageParam){
-        return Res.ok(dingRobotConfigService.page(pageParam));
+    public ResResult<PageResult<DingRobotConfigDto>> page(PageParam pageParam,DingRobotConfigParam param){
+        return Res.ok(dingRobotConfigService.page(pageParam,param));
     }
 
     @Operation(summary = "查询全部")

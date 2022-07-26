@@ -24,10 +24,10 @@ public class WeChatPayConfigDto extends BaseDto implements Serializable {
     @Schema(description = "名称")
     private String name;
     @Schema(description = "微信商户号")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @SensitiveInfo
     private String mchId;
     @Schema(description = "微信应用appId")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @SensitiveInfo
     private String appId;
 
     /**
@@ -36,13 +36,13 @@ public class WeChatPayConfigDto extends BaseDto implements Serializable {
     @Schema(description = "api版本")
     private String apiVersion;
     @Schema(description = "商户平台「API安全」中的 APIv2 密钥")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @SensitiveInfo
     private String apiKeyV2;
     @Schema(description = "商户平台「API安全」中的 APIv3 密钥")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @SensitiveInfo
     private String apiKeyV3;
     @Schema(description = "APPID对应的接口密码，用于获取接口调用凭证access_token时使用")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @SensitiveInfo
     private String appSecret;
 
     @Schema(description = "API 证书中的 p12 文件id")

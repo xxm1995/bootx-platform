@@ -1,4 +1,4 @@
-package cn.bootx.starter.wecom.core.base.domin;
+package cn.bootx.starter.wecom.core.robot.domin;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -16,8 +16,8 @@ import java.io.InputStream;
 @Schema(title = "企微文件上传")
 public class UploadMedia {
 
-    @Schema(description = "媒体类型")
-    private String mediaType;
+    @Schema(description = "文件名称")
+    private String filename;
 
     @Schema(description = "文件类型")
     private String fileType;

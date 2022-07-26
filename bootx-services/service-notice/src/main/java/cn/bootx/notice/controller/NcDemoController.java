@@ -65,6 +65,16 @@ public class NcDemoController {
         dingTalkNoticeSender.sendImageCorpNotice(file.getInputStream(),receive);
         return Res.ok();
     }
+
+    @SneakyThrows
+    @Operation(summary = "钉钉文件消息测试")
+    @PostMapping("/sendDingFileMsg")
+    public ResResult<Void> sendDingFileMsg(MultipartFile file){
+        DingCorpNoticeReceive receive = new DingCorpNoticeReceive()
+                .setUseridList(Collections.singletonList("manager7303"));
+        dingTalkNoticeSender.sendFileCorpNotice(file.getInputStream(),file.getOriginalFilename(),receive);
+        return Res.ok();
+    }
     
     @Operation(summary = "企微消息测试")
     @PostMapping("/sendWeComMsg")
@@ -103,7 +113,7 @@ public class NcDemoController {
     @Operation(summary = "企微机器人文件发送")
     @PostMapping("/p2")
     public ResResult<Void> p2(MultipartFile file){
-        weComRobotNoticeSender.sendFIleNotice("bootx",file.getInputStream());
+        weComRobotNoticeSender.sendFIleNotice("bootx",file.getInputStream(),file.getOriginalFilename());
         return Res.ok();
     }
 

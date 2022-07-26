@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("ding_robot_config")
+@TableName("starter_ding_robot_config")
 public class DingRobotConfig extends MpBaseEntity implements EntityBaseFunction<DingRobotConfigDto> {
 
     /**  机器人编号编号 */

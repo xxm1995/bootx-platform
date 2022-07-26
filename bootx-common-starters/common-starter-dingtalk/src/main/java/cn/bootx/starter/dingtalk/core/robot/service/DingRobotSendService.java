@@ -3,7 +3,7 @@ package cn.bootx.starter.dingtalk.core.robot.service;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.starter.dingtalk.code.DingTalkCode;
-import cn.bootx.starter.dingtalk.core.robot.dao.DingRobotConfigManage;
+import cn.bootx.starter.dingtalk.core.robot.dao.DingRobotConfigManager;
 import cn.bootx.starter.dingtalk.core.robot.entity.DingRobotConfig;
 import cn.bootx.starter.dingtalk.core.base.result.DingTalkResult;
 import cn.bootx.starter.dingtalk.param.notice.msg.Msg;
@@ -29,13 +29,13 @@ import static cn.bootx.starter.dingtalk.code.DingTalkCode.SUCCESS_CODE;
 @Service
 @RequiredArgsConstructor
 public class DingRobotSendService {
-    private final DingRobotConfigManage dingRobotConfigManage;
+    private final DingRobotConfigManager dingRobotConfigManager;
 
     /**
      * 发送钉钉机器人消息
      */
     public void sendNotice(String code, Msg body) {
-        DingRobotConfig dingRobotConfig = dingRobotConfigManage.findByCode(code).orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
+        DingRobotConfig dingRobotConfig = dingRobotConfigManager.findByCode(code).orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
         long timestamp = System.currentTimeMillis();
 
         Map<String, Object> map = new HashMap<>(3);

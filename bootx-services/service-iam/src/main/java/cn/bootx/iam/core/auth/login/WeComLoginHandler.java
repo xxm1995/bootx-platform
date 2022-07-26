@@ -103,7 +103,7 @@ public class WeComLoginHandler implements OpenIdAuthentication {
     public void bindUser(String authCode, String state){
         Long userId = SecurityUtil.getUserId();
         AuthUser authUser = this.getAuthUser(authCode, state);
-        userTiredOperateService.existsByOpenId(authUser.getUuid(), UserThird::getWeComId);
+        userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getWeComId);
         userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setWeComId);
         userTiredOperateService.bindOpenInfo(userId,authUser,WE_COM);
     }

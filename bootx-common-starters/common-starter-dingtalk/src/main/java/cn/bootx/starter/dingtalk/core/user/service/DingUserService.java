@@ -32,7 +32,7 @@ public class DingUserService {
      * 根据unionid获取用户userid
      * <a href="https://open.dingtalk.com/document/isvapp-server/query-a-user-by-the-union-id">...</a>
      */
-    public UserIdResult getUserIdByUnionId(String unionId){
+    public String getUserIdByUnionId(String unionId){
         String accessToken = dingAccessService.getAccessToken();
         Map<String,String> map = new HashMap<>(1);
         map.put(UNION_ID,unionId);
@@ -42,9 +42,14 @@ public class DingUserService {
                 .body();
         DingTalkResult<UserIdResult> dingTalkResult = JacksonUtil.toBean(responseBody, new TypeReference<DingTalkResult<UserIdResult>>() {
         });
+        // 未找到用户, 返回空
+        if (Objects.equals(dingTalkResult.getCode(),NOT_FUND_STAFF)){
+            return null;
+        }
+        // 错误
         if (!Objects.equals(dingTalkResult.getCode(),SUCCESS_CODE)){
             throw new BizException(dingTalkResult.getMsg());
         }
-        return dingTalkResult.getResult();
+        return dingTalkResult.getResult().getUserId();
     }
 }

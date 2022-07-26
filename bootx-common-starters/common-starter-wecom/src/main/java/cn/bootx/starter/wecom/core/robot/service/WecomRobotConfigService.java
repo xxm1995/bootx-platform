@@ -26,51 +26,65 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WecomRobotConfigService {
-    private final WecomRobotConfigManager wecomRobotConfigManager;
+    private final WecomRobotConfigManager robotConfigManager;
 
     /**
      * 添加
      */
     public void add(WecomRobotConfigParam param){
         WecomRobotConfig wecomRobotConfig = WecomRobotConfig.init(param);
-        wecomRobotConfigManager.save(wecomRobotConfig);
+        robotConfigManager.save(wecomRobotConfig);
     }
 
     /**
      * 修改
      */
     public void update(WecomRobotConfigParam param){
-        WecomRobotConfig wecomRobotConfig = wecomRobotConfigManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+        WecomRobotConfig wecomRobotConfig = robotConfigManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
 
         BeanUtil.copyProperties(param,wecomRobotConfig, CopyOptions.create().ignoreNullValue());
-        wecomRobotConfigManager.updateById(wecomRobotConfig);
+        robotConfigManager.updateById(wecomRobotConfig);
     }
 
     /**
      * 分页
      */
     public PageResult<WecomRobotConfigDto> page(PageParam pageParam, WecomRobotConfigParam wecomRobotConfigParam){
-        return MpUtil.convert2DtoPageResult(wecomRobotConfigManager.page(pageParam,wecomRobotConfigParam));
+        return MpUtil.convert2DtoPageResult(robotConfigManager.page(pageParam,wecomRobotConfigParam));
     }
 
     /**
      * 获取单条
      */
     public WecomRobotConfigDto findById(Long id){
-        return wecomRobotConfigManager.findById(id).map(WecomRobotConfig::toDto).orElseThrow(DataNotExistException::new);
+        return robotConfigManager.findById(id).map(WecomRobotConfig::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
     public List<WecomRobotConfigDto> findAll(){
-        return ResultConvertUtil.dtoListConvert(wecomRobotConfigManager.findAll());
+        return ResultConvertUtil.dtoListConvert(robotConfigManager.findAll());
     }
 
     /**
      * 删除
      */
     public void delete(Long id){
-        wecomRobotConfigManager.deleteById(id);
+        robotConfigManager.deleteById(id);
+    }
+
+    /**
+     * 编码是否已经存在
+     */
+    public boolean existsByCode(String code){
+        return robotConfigManager.existsByCode(code);
+    }
+
+    /**
+     * 编码是否已经存在(不包含自身)
+     */
+    public boolean existsByCode(String code,Long id){
+        return robotConfigManager.existsByCode(code,id);
     }
 }

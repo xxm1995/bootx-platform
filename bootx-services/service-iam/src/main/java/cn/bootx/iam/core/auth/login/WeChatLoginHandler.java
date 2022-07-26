@@ -106,7 +106,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
     public void bindUser(String authCode, String state){
         Long userId = SecurityUtil.getUserId();
         AuthUser authUser = this.getAuthUser(authCode, state);
-        userTiredOperateService.existsByOpenId(authUser.getUuid(), UserThird::getWeChatId);
+        userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getWeChatId);
         userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setWeChatId);
         userTiredOperateService.bindOpenInfo(userId,authUser,WE_CHAT);
     }

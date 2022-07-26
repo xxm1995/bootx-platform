@@ -1,6 +1,7 @@
 package cn.bootx.starter.wecom.dto.robot;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
+import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,7 @@ public class WecomRobotConfigDto extends BaseDto {
     private String name;
     @Schema(description = "编号")
     private String code;
+    @SensitiveInfo
     @Schema(description = "webhook地址的key值")
     private String webhookKey;
     @Schema(description = "备注")

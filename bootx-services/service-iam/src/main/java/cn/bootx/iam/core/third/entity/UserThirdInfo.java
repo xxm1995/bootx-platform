@@ -30,7 +30,7 @@ public class UserThirdInfo extends MpDelEntity implements EntityBaseFunction<Use
     private String nickname;
     /** 三方平台用户头像 */
     private String avatar;
-    /** 关联第三方平台的用户id(例如钉钉) */
+    /** 关联第三方平台中的用户id(例如钉钉) */
     private String thirdUserId;
 
     /** 转换成dto */

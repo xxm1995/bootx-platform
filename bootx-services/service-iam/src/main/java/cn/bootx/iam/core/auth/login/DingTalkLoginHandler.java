@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.auth.login;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.third.dao.UserThirdManager;
 import cn.bootx.iam.core.third.entity.UserThird;
@@ -13,7 +14,6 @@ import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.util.SecurityUtil;
-import cn.bootx.starter.dingtalk.core.user.entity.UserIdResult;
 import cn.bootx.starter.dingtalk.core.user.service.DingUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -112,16 +112,23 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
     public void bindUser(String authCode, String state){
         Long userId = SecurityUtil.getUserId();
         AuthUser authUser = this.getAuthUser(authCode, state);
-        userTiredOperateService.existsByOpenId(authUser.getUuid(), UserThird::getDingTalkId);
+        userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getDingTalkId);
         userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setDingTalkId);
-        UserIdResult userIdResult = dingUserService.getUserIdByUnionId(authUser.getUuid());
+        String thirdUserId = dingUserService.getUserIdByUnionId(authUser.getUuid());
+
+        // 检查是否允许不在组织中的钉钉人员进行绑定
+        if (!authProperties.getThirdLogin().getDingTalk().isCheckBelongOrg()
+                &&Objects.isNull(thirdUserId)){
+            throw new BizException("未在钉钉组织找到该用户，无法进行绑定");
+        }
+
         UserThirdInfo userThirdInfo = new UserThirdInfo()
                 .setUserId(userId)
                 .setClientCode(DING_TALK)
                 .setUsername(authUser.getUsername())
                 .setNickname(authUser.getNickname())
                 .setAvatar(authUser.getAvatar())
-                .setThirdUserId(userIdResult.getUserId());
+                .setThirdUserId(thirdUserId);
         userTiredOperateService.bindOpenInfo(userThirdInfo);
     }
 

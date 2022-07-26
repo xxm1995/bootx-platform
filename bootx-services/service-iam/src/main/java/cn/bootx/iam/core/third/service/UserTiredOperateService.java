@@ -34,7 +34,7 @@ public class UserTiredOperateService {
     /**
      * 判断该OpenId是否已经被使用
      */
-    public void existsByOpenId(String openId, SFunction<UserThird, String> field){
+    public void checkOpenIdBind(String openId, SFunction<UserThird, String> field){
         if (userThirdManager.existedByField(field,openId)){
             throw new BizException("该第三方平台已经被绑定");
         }

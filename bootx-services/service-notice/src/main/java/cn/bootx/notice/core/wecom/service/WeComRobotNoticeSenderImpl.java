@@ -1,10 +1,8 @@
 package cn.bootx.notice.core.wecom.service;
 
 import cn.bootx.notice.service.WeComRobotNoticeSender;
-import cn.bootx.starter.wecom.core.base.domin.UploadMedia;
 import cn.bootx.starter.wecom.core.robot.service.WeComRobotNoticeService;
 import cn.hutool.core.codec.Base64;
-import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.cp.bean.article.NewArticle;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 
@@ -85,13 +82,17 @@ public class WeComRobotNoticeSenderImpl implements WeComRobotNoticeSender {
     @SneakyThrows
     @Override
     public void sendFIleNotice(String code, InputStream fileIs){
-        byte[] bytes = IoUtil.readBytes(fileIs);
-        String type = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
-        UploadMedia uploadMedia = new UploadMedia()
-                .setFileType(type)
-                .setInputStream(new ByteArrayInputStream(bytes));
+        String mediaId = robotNoticeService.updatedMedia(code, fileIs);
+        robotNoticeService.sendFIleNotice(code,mediaId);
+    }
 
-        String mediaId = robotNoticeService.updatedMedia(code, uploadMedia);
+    /**
+     * 发送文件消息
+     */
+    @SneakyThrows
+    @Override
+    public void sendFIleNotice(String code, InputStream inputStream, String filename){
+        String mediaId = robotNoticeService.updatedMedia(code, inputStream, filename);
         robotNoticeService.sendFIleNotice(code,mediaId);
     }
 }

@@ -26,7 +26,7 @@ public class AlipayConfigDto extends BaseDto implements Serializable {
     private String name;
 
     @Schema(description = "支付宝商户appId")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @SensitiveInfo
     private String appId;
 
     @Schema(description = "服务器异步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问")

@@ -1,6 +1,5 @@
 package cn.bootx.starter.dingtalk.dto.robot;
 
-import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,15 +23,15 @@ public class DingRobotConfigDto extends BaseDto implements Serializable {
     @Schema(description= "配置名称")
     private String name;
 
-    @Schema(description= "钉钉机器人的accessToken")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @Schema(description= "钉钉机器人的AccessToken")
+    @SensitiveInfo
     private String accessToken;
 
     @Schema(description= "是否开启验签")
     private boolean enableSignatureCheck;
 
     @Schema(description= "验签秘钥")
-    @SensitiveInfo(value = SensitiveType.OTHER)
+    @SensitiveInfo
     private String signSecret;
 
     @Schema(description= "描述")

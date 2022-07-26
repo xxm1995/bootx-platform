@@ -47,4 +47,9 @@ public interface WeComRobotNoticeSender {
      * 发送文件消息
      */
     void sendFIleNotice(String code, InputStream fileIs);
+
+    /**
+     * 发送文件消息
+     */
+    void sendFIleNotice(String code, InputStream inputStream, String filename);
 }

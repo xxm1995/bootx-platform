@@ -6,29 +6,24 @@ import cn.bootx.notice.core.dingtalk.entity.corp.DingCorpNoticeReceive;
 import cn.bootx.notice.core.dingtalk.entity.corp.DingCorpNoticeUpdate;
 import cn.bootx.notice.core.dingtalk.entity.msg.*;
 import cn.bootx.notice.service.DingTalkNoticeSender;
-import cn.bootx.starter.dingtalk.code.DingTalkCode;
 import cn.bootx.starter.dingtalk.configuration.DingTalkProperties;
-import cn.bootx.starter.dingtalk.core.base.domin.UploadMedia;
 import cn.bootx.starter.dingtalk.core.base.result.DingTalkResult;
-import cn.bootx.starter.dingtalk.core.base.service.DingMediaService;
-import cn.bootx.starter.dingtalk.core.notice.entity.ChatNoticeResult;
-import cn.bootx.starter.dingtalk.core.notice.entity.CorpNoticeResult;
+import cn.bootx.starter.dingtalk.core.media.service.DingMediaService;
+import cn.bootx.starter.dingtalk.core.notice.result.ChatNoticeResult;
+import cn.bootx.starter.dingtalk.core.notice.result.CorpNoticeResult;
 import cn.bootx.starter.dingtalk.core.notice.service.DingNoticeService;
 import cn.bootx.starter.dingtalk.param.notice.ChatNotice;
 import cn.bootx.starter.dingtalk.param.notice.CorpNotice;
 import cn.bootx.starter.dingtalk.param.notice.RecallCorpNotice;
 import cn.bootx.starter.dingtalk.param.notice.UpdateCorpNotice;
-import cn.hutool.core.io.FileTypeUtil;
-import cn.hutool.core.io.IoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Objects;
 
-import static cn.bootx.starter.dingtalk.code.DingTalkCode.SUCCESS_CODE;
+import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 
 /**
  * 钉钉消息通知
@@ -67,13 +62,18 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendImageCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive){
-        byte[] bytes = IoUtil.readBytes(inputStream);
-        String type = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
-        UploadMedia uploadMedia = new UploadMedia()
-                .setMediaType(DingTalkCode.MEDIA_IMAGE)
-                .setFileType(type)
-                .setInputStream(new ByteArrayInputStream(bytes));
-        String mediaId = dingMediaService.uploadMedia(uploadMedia);
+        String mediaId = dingMediaService.uploadMedia(inputStream, MEDIA_IMAGE);
+        DingImageMsg dingImageMsg = new DingImageMsg(mediaId);
+        return this.sendCorpNotice(dingImageMsg,receive);
+    }
+
+    /**
+     * 发送图片消息 (文件方式)
+     * @return 发布消息任务ID
+     */
+    @Override
+    public Long sendImageCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive){
+        String mediaId = dingMediaService.uploadMedia(inputStream, filename, MEDIA_IMAGE);
         DingImageMsg dingImageMsg = new DingImageMsg(mediaId);
         return this.sendCorpNotice(dingImageMsg,receive);
     }
@@ -88,11 +88,54 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
     }
 
     /**
+     * 发送语音消息 (文件)
+     * @return 发布消息任务ID
+     */
+    @Override
+    public Long sendVoiceCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive) {
+        String mediaId = dingMediaService.uploadMedia(inputStream, MEDIA_VOICE);
+        DingVoiceMsg dingVoiceMsg = new DingVoiceMsg(mediaId,"10");
+        return this.sendCorpNotice(dingVoiceMsg,receive);
+    }
+
+    /**
+     * 发送语音消息 (文件)
+     * @return 发布消息任务ID
+     */
+    @Override
+    public Long sendVoiceCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive) {
+        String mediaId = dingMediaService.uploadMedia(inputStream, filename, MEDIA_VOICE);
+        DingVoiceMsg dingVoiceMsg = new DingVoiceMsg(mediaId,"10");
+        return this.sendCorpNotice(dingVoiceMsg,receive);
+    }
+
+    /**
      * 发送文件消息
      * @return 发布消息任务ID
      */
     @Override
     public Long sendFileCorpNotice(DingFileMsg dingFileMsg, DingCorpNoticeReceive receive) {
+        return this.sendCorpNotice(dingFileMsg,receive);
+    }
+
+    /**
+     * 发送文件消息(文件)
+     * @return 发布消息任务ID
+     */
+    @Override
+    public Long sendFileCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive) {
+        String mediaId = dingMediaService.uploadMedia(inputStream, MEDIA_FILE);
+        DingFileMsg dingFileMsg = new DingFileMsg(mediaId);
+        return this.sendCorpNotice(dingFileMsg,receive);
+    }
+    /**
+     * 发送文件消息(文件)
+     * @return 发布消息任务ID
+     */
+    @Override
+    public Long sendFileCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive) {
+        String mediaId = dingMediaService.uploadMedia(inputStream,filename, MEDIA_FILE);
+        DingFileMsg dingFileMsg = new DingFileMsg(mediaId);
         return this.sendCorpNotice(dingFileMsg,receive);
     }
 

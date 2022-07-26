@@ -53,6 +53,8 @@ public interface DingTalkCode {
     String PROMPT = "prompt";
     /** 媒体 */
     String MEDIA = "media";
+    /** 类型 */
+    String TYPE = "type";
     /** 请求头参数调用服务端接口的授权凭证 */
     String HEADER_TOKEN = "x-acs-dingtalk-access-token";
 
@@ -69,6 +71,8 @@ public interface DingTalkCode {
     /* 响应值 */
     /** 成功 */
     int SUCCESS_CODE = 0;
+    /** 未找到对应员工 */
+    int NOT_FUND_STAFF = 60121;
 
     /* 媒体类型 */
     /** 图片 */

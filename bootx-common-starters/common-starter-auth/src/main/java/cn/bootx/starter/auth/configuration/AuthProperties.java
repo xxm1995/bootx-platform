@@ -41,7 +41,10 @@ public class AuthProperties {
         /** 企业微信 */
         private WeCom weCom = new WeCom();
 
-        @Getter@Setter public static class DingTalk extends ThirdLoginConfig{}
+        @Getter@Setter public static class DingTalk extends ThirdLoginConfig{
+            /** 不是组织用户是否可以进行用户绑定 */
+            private boolean checkBelongOrg;
+        }
         @Getter@Setter public static class WeChat extends ThirdLoginConfig{}
         @Getter@Setter public static class WeCom extends ThirdLoginConfig{
             /** 企业微信，授权方的网页应用ID */

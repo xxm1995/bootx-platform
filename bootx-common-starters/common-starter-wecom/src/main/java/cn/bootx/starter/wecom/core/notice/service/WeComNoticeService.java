@@ -1,8 +1,9 @@
 package cn.bootx.starter.wecom.core.notice.service;
 
 import cn.bootx.starter.wecom.configuration.WeComProperties;
-import cn.bootx.starter.wecom.core.base.domin.UploadMedia;
 import cn.bootx.starter.wecom.core.notice.executor.RecallNoticeRequestExecutor;
+import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.IoUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,9 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpMessageSendResult;
 import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 import static cn.bootx.starter.wecom.code.WeComCode.NOTICE_RECALL_URL;
 
@@ -53,9 +57,11 @@ public class WeComNoticeService {
      * 上传临时素材
      */
     @SneakyThrows
-    public String updatedMedia(UploadMedia uploadMedia){
+    public String updatedMedia(InputStream inputStream, String mediaType){
         WxCpMediaService mediaService = wxCpService.getMediaService();
-        WxMediaUploadResult result = mediaService.upload(uploadMedia.getMediaType(), uploadMedia.getFileType(), uploadMedia.getInputStream());
+        byte[] bytes = IoUtil.readBytes(inputStream);
+        String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
+        WxMediaUploadResult result = mediaService.upload(mediaType, fileType, new ByteArrayInputStream(bytes));
         return result.getMediaId();
     }
 }
