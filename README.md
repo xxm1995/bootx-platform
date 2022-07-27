@@ -1,4 +1,4 @@
-# Bootx-Platform (v1.1.0-beta-5)
+# Bootx-Platform (v1.1.0-beta-6)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
@@ -24,7 +24,7 @@
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove) [PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
-## 🛠️重磅版本更新
+## 🛠️功能亮点
 一大波支付相关功能来袭，支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务，
 
 增加支付结算台演示，不需要登录沙箱账号，欢迎扫体验，ps：支付后可以在后台支付订单模块处进行退款💪💪💪
@@ -32,25 +32,6 @@
 结算台演示地址：[http://web.platform.bootx.cn/cashier](http://web.platform.bootx.cn/cashier)
 
 ![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
-
-## 🚩路线图
-### 1.1.0-beta5（一期完成）
-
-- [x] 完善支付模块，支付宝、微信、聚合支付、退款、超时关闭，支付信息同步、消息通知等功能
-- [ ] 退款信息同步优化、网关对账、异常情况报警、支付后可以在支付宝/微信上查看商品订单明细
-
-### 1.1.0-beta6（预计八月前完成）
-微信服务号消息通知、钉钉消息通知、短信消息通知等通知相关功能实现，
-
-### 1.1.0正式版（八月份）
-
-对一些未完成的基础功能进行补全，进行全面的测试，修复遇到的BUG
-
-### 更多
-- 集成工作流
-- 与钉钉打通
-- 与企业微信打通
-
 
 ## 🍎特色功能
 - 支持单通道支付、聚合支付、组合支付、部分和全部退款等支付功能
@@ -62,6 +43,7 @@
 - 支持通过ELK和轻量级PlumeLog来管理项目日志,以适应不同的场景
 - 提供移动端开发脚手架，方便开发H5与各种小程序
 - 支持通过微信、钉钉、企业微信等第三方开放平台进行扫码登录
+- 支持微信、钉钉、企业微信的消息推送
 
 ## 🥂 Quick Start
 
