@@ -1,8 +1,8 @@
 package cn.bootx.iam.core.auth.service;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
 import cn.bootx.starter.auth.entity.ThirdAuthCode;
+import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthCallback;
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**   
-* 三方登录
-* @author xxm  
-* @date 2022/6/29 
-*/
+/**
+ * 三方登录
+ * @author xxm
+ * @date 2022/6/29
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -31,7 +31,7 @@ public class ThirdLoginService {
     }
 
     /**
-     * 回调
+     * 回调获取认证码
      */
     public ThirdAuthCode getAuthCode(String loginType, AuthCallback authCallback) {
         OpenIdAuthentication openIdAuthentication = this.getOpenIdAuthentication(loginType);
@@ -39,14 +39,12 @@ public class ThirdLoginService {
     }
 
     /**
-     * 获取
+     * 获取认证器
      */
     private OpenIdAuthentication getOpenIdAuthentication(String loginType){
-        for (OpenIdAuthentication openIdAuthentication : openIdAuthentications) {
-            if (openIdAuthentication.adaptation(loginType)){
-                return openIdAuthentication;
-            }
-        }
-        throw new BizException("未找到对应的终端认证器");
+        return openIdAuthentications.stream()
+                .filter(o->o.adaptation(loginType))
+                .findFirst()
+                .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
 }

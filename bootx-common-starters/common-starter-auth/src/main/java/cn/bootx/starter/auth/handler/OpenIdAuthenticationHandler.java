@@ -1,9 +1,9 @@
 package cn.bootx.starter.auth.handler;
 
-import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
+import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -27,12 +27,11 @@ public class OpenIdAuthenticationHandler {
      */
     public @NotNull AuthInfoResult authentication(LoginAuthContext context){
         String clientCode = context.getAuthLoginType().getCode();
-        for (OpenIdAuthentication openIdAuthentication : openIdAuthentications) {
-            if (openIdAuthentication.adaptation(clientCode)){
-                return openIdAuthentication.authentication(context);
-            }
-        }
-        throw new BizException("未找到对应的终端认证器");
+        return openIdAuthentications.stream()
+                .filter(o->o.adaptation(clientCode))
+                .findFirst()
+                .map(o->o.authentication(context))
+                .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
 
 }

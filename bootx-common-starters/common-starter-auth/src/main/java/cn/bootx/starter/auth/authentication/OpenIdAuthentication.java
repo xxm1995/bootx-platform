@@ -22,7 +22,7 @@ public interface OpenIdAuthentication extends AbstractAuthentication{
      * 获取登录地址
      */
     default String getLoginUrl() {
-        return "";
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -52,7 +52,7 @@ public interface OpenIdAuthentication extends AbstractAuthentication{
      * 绑定用户
      */
     default void bindUser(String authCode, String state){
-
+        throw new UnsupportedOperationException();
     }
 
 }

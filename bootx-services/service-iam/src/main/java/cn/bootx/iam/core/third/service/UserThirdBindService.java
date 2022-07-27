@@ -7,6 +7,7 @@ import cn.bootx.iam.core.third.dao.UserThirdInfoManager;
 import cn.bootx.iam.core.third.dao.UserThirdManager;
 import cn.bootx.iam.core.third.entity.UserThird;
 import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
+import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,11 +73,9 @@ public class UserThirdBindService {
      * 获取 openId登录认证器
      */
     private OpenIdAuthentication getOpenIdAuthentication(String clientCode){
-        for (OpenIdAuthentication openIdAuthentication : openIdAuthentications) {
-            if (openIdAuthentication.adaptation(clientCode)){
-                return openIdAuthentication;
-            }
-        }
-        throw new BizException("未找到对应的终端认证器");
+        return openIdAuthentications.stream()
+                .filter(o->o.adaptation(clientCode))
+                .findFirst()
+                .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
 }
