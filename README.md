@@ -75,9 +75,12 @@ bootx-platform
        ├── common-starter-auth -- 认证模块
        ├── common-starter-code-gen -- 代码生成模块
        ├── common-starter-data-perm -- 数据权限模块
+       ├── common-starter-dingtalk -- 钉钉对接模块
        ├── common-starter-file -- 文件管理模块
-       ├── common-starter-monitor -- 系统监控
+       ├── common-starter-monitor -- 系统监控模块
        ├── common-starter-quartz -- Quartz定时任务模块
+       ├── common-starter-wechat -- 微信对接模块
+       ├── common-starter-wecom -- 企业微信对接模块
     ├── bootx-commons -- commons工具配置封装
        ├── common-cache -- 缓存配置
        ├── common-exception-handler -- 异常处理器
@@ -95,7 +98,7 @@ bootx-platform
        ├── common-spring -- Spring相关配置
        ├── common-super-query -- 超级查询器
        ├── common-swagger -- swagger3配置（Spring Doc）
-       ├── common-websocket  -- websocket
+       ├── common-websocket  -- websocket封装
        ├── common-xxl-job -- XXL-JOB定时任务
     ├── bootx-demo -- demo示例模块
     ├── bootx-modules -- 业务系统
