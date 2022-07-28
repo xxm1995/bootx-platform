@@ -9,7 +9,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 14/07/2022 12:49:56
+ Date: 28/07/2022 15:33:57
 */
 
 SET NAMES utf8mb4;
@@ -209,7 +209,7 @@ CREATE TABLE `base_param`  (
   `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
   `version` int(8) NOT NULL COMMENT '版本',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统参数配置' ROW_FORMAT = DYNAMIC;pay_alipay_config
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统参数配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of base_param
@@ -353,85 +353,33 @@ INSERT INTO `demo_super_query` VALUES (1496372766427779072, '梁冀', 38, b'1', 
 INSERT INTO `demo_super_query` VALUES (1496373512871284736, '刘备', 108, b'0', '1993-11-12', '09:30:10', '2022-02-23 14:37:01', '2', '刘羽禅的粑粑', 1399985191002447872, '2022-02-23 14:37:01', 1399985191002447872, '2022-02-23 14:37:01', 0, 0);
 
 -- ----------------------------
--- Table structure for ding_config
--- ----------------------------
-DROP TABLE IF EXISTS `ding_config`;
-CREATE TABLE `ding_config`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `app_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `app_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `enable` bit(1) NOT NULL COMMENT '是否启用',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钉钉配置' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of ding_config
--- ----------------------------
-INSERT INTO `ding_config` VALUES (1511265279181553664, '测试钉钉小程序配置', 'dingg4kj0ymmvbrvrg5a', 'Ushk8RuIT694Y7qhPQs2PHa0MFHa4PjHVUv1Th4AYW8W5kuDRcwnV3irpnAupAJK', b'0', '备注', 0, '2022-04-05 16:51:35.166000', 1399985191002447872, '2022-04-05 18:02:13.542000', 3, b'0');
-INSERT INTO `ding_config` VALUES (1511283139236810752, '测试钉钉h5配置', 'dingcksft7waezipjcjq', 'WCc3q4-iOFxSmPG_OyKIKL1l0DvM-HX0B2_jsbOrOxxsYuy0iBCXKTyFbv2RZ3jX', b'1', NULL, 1399985191002447872, '2022-04-05 18:02:33.334000', 1399985191002447872, '2022-04-05 18:04:25.936000', 3, b'0');
-
--- ----------------------------
--- Table structure for ding_robot_config
--- ----------------------------
-DROP TABLE IF EXISTS `ding_robot_config`;
-CREATE TABLE `ding_robot_config`  (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编号',
-  `access_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人访问token',
-  `enable_signature_check` bit(1) NOT NULL COMMENT '是否开启验签',
-  `sign_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人私钥',
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
-  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
-  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
-  `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
-  `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钉钉机器人配置' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of ding_robot_config
--- ----------------------------
-INSERT INTO `ding_robot_config` VALUES (1333022277138264064, 'bootx机器人', 'bootx', '4a6212971d64208f45d647190ebc69986d6e9b67faf6aa7f1c8fc332f6652060', b'1', 'SECb6f9f872847caec745fcf10a46f4250b36c0337bade670d2f1f4756682b8cad2', 'bootx群机器人', -1, '2020-11-29 20:17:31.875000', -1, '2020-11-29 20:17:31.875000', 1, b'0');
-INSERT INTO `ding_robot_config` VALUES (1454001517812203520, '33', '12', '111111111111111111', b'1', '', '', 1399985191002447872, '2021-10-29 16:25:50.547000', 1399985191002447872, '2021-10-29 16:25:50.597000', 2, b'1');
-
--- ----------------------------
 -- Table structure for flyway_schema_history
 -- ----------------------------
 DROP TABLE IF EXISTS `flyway_schema_history`;
 CREATE TABLE `flyway_schema_history`  (
   `installed_rank` int(11) NOT NULL,
-  `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `script` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `version` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
+  `description` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `script` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `checksum` int(11) NULL DEFAULT NULL,
-  `installed_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `installed_by` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `installed_on` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `execution_time` int(11) NOT NULL,
   `success` tinyint(1) NOT NULL,
   PRIMARY KEY (`installed_rank`) USING BTREE,
   INDEX `flyway_schema_history_s_idx`(`success`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of flyway_schema_history
 -- ----------------------------
-INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-07-14 12:28:56', 71928, 1);
-INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-07-14 12:28:57', 788, 1);
-INSERT INTO `flyway_schema_history` VALUES (3, '1.1.0.220702', 'bate4', 'SQL', 'V1.1.0_220702__bate4.sql', 764266899, 'bootx', '2022-07-14 12:29:03', 5982, 1);
-INSERT INTO `flyway_schema_history` VALUES (4, '1.1.0.220707', 'bate4-fix', 'SQL', 'V1.1.0_220707__bate4-fix.sql', 1727269960, 'bootx', '2022-07-14 12:29:10', 6278, 1);
-INSERT INTO `flyway_schema_history` VALUES (5, '1.1.0.220714', 'bate5', 'SQL', 'V1.1.0_220714__bate5.sql', -1924142323, 'bootx', '2022-07-14 12:29:14', 3516, 1);
+INSERT INTO `flyway_schema_history` VALUES (1, '1.1.0.220604', 'init', 'SQL', 'V1.1.0_220604__init.sql', -474276030, 'bootx', '2022-07-14 17:39:59', 67308, 1);
+INSERT INTO `flyway_schema_history` VALUES (2, '1.1.0.220624', 'bate3', 'SQL', 'V1.1.0_220624__bate3.sql', 85360861, 'bootx', '2022-07-14 17:40:01', 724, 1);
+INSERT INTO `flyway_schema_history` VALUES (3, '1.1.0.220702', 'bate4', 'SQL', 'V1.1.0_220702__bate4.sql', 764266899, 'bootx', '2022-07-14 17:40:07', 5691, 1);
+INSERT INTO `flyway_schema_history` VALUES (4, '1.1.0.220707', 'bate4-fix', 'SQL', 'V1.1.0_220707__bate4-fix.sql', 1727269960, 'bootx', '2022-07-14 17:40:13', 5991, 1);
+INSERT INTO `flyway_schema_history` VALUES (5, '1.1.0.220714', 'bate5', 'SQL', 'V1.1.0_220714__bate5.sql', 1029462157, 'bootx', '2022-07-14 17:40:17', 3461, 1);
+INSERT INTO `flyway_schema_history` VALUES (6, '1.1.0.220728', 'bate6', 'SQL', 'V1.1.0_220728__bate6.sql', 257300270, 'bootx', '2022-07-28 15:30:39', 1776, 1);
 
 -- ----------------------------
 -- Table structure for goods_brand
@@ -908,8 +856,8 @@ CREATE TABLE `iam_login_type`  (
 -- Records of iam_login_type
 -- ----------------------------
 INSERT INTO `iam_login_type` VALUES (1430430071299207168, 'password', '账号密码登陆', 'password', b'1', 3600, b'0', -1, b'1', NULL, 1399985191002447872, '2021-08-25 15:21:20', 1399985191002447872, '2022-04-24 19:51:13', 16, 0);
-INSERT INTO `iam_login_type` VALUES (1430478946919653376, 'miniApp', '微信小程序', 'openId', b'0', 99999, b'1', 0, b'1', NULL, 1399985191002447872, '2021-08-25 18:35:33', 1399985191002447872, '2021-08-25 18:35:33', 2, 0);
-INSERT INTO `iam_login_type` VALUES (1435138582839009280, 'phone', '手机短信登录', 'openId', b'0', 3600, b'1', 0, b'1', NULL, 1399985191002447872, '2021-09-07 15:11:16', 1399985191002447872, '2022-06-26 21:35:20', 4, 0);
+INSERT INTO `iam_login_type` VALUES (1430478946919653376, 'miniApp', '微信小程序', 'openId', b'0', 99999, b'0', 0, b'1', NULL, 1399985191002447872, '2021-08-25 18:35:33', 1399985191002447872, '2022-07-16 12:32:26', 3, 0);
+INSERT INTO `iam_login_type` VALUES (1435138582839009280, 'phone', '手机短信登录', 'openId', b'0', 3600, b'0', 0, b'1', NULL, 1399985191002447872, '2021-09-07 15:11:16', 1399985191002447872, '2022-07-16 12:32:19', 5, 0);
 INSERT INTO `iam_login_type` VALUES (1542091599907115008, 'dingTalk', '钉钉', 'openId', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-06-29 18:24:23', 1399985191002447872, '2022-07-02 14:55:01', 5, 0);
 INSERT INTO `iam_login_type` VALUES (1542804450312122368, 'weCom', '企业微信', 'openId', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-01 17:37:00', 1399985191002447872, '2022-07-01 17:37:00', 0, 0);
 INSERT INTO `iam_login_type` VALUES (1543126042909016064, 'WeChat', '微信登录', 'openId', b'0', 5, b'0', -1, b'1', '', 1399985191002447872, '2022-07-02 14:54:53', 1399985191002447872, '2022-07-02 14:54:53', 0, 0);
@@ -969,14 +917,14 @@ INSERT INTO `iam_perm_menu` VALUES (1435476255797624832, 'admin', 14525678977173
 INSERT INTO `iam_perm_menu` VALUES (1438061887002759168, 'admin', NULL, '通知管理', 'notice', '', NULL, 'message', b'0', b'0', 'RouteView', NULL, '/notice', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-15 16:47:26', 1399985191002447872, '2021-09-15 16:47:26', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1438072357281542144, 'admin', 1438061887002759168, '邮件配置', 'MailConfig', '', NULL, '', b'0', b'0', 'notice/mail/MailConfigList', NULL, '/notice/mailConfig', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-15 17:29:03', 1399985191002447872, '2021-09-15 17:29:03', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1439196893514031104, 'admin', 1438061887002759168, '消息模板', 'MessageTemplate', '', NULL, '', b'0', b'0', 'notice/template/TemplateList', NULL, '/notice/template', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-18 19:57:33', 1399985191002447872, '2021-09-18 19:57:33', 3, 0);
-INSERT INTO `iam_perm_menu` VALUES (1440216178722050048, 'admin', 1438061887002759168, '钉钉', 'DingTalk', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/notice/dingTalk', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-21 15:27:50', 1399985191002447872, '2021-09-21 15:27:50', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1440216612211757056, 'admin', 1440216178722050048, '钉钉机器人', 'DingTalkRobot', '', NULL, '', b'0', b'0', 'notice/dingTalk/robot/DingRobotConfigList', NULL, '/notice/dingTalk/robot', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-21 15:29:33', 1399985191002447872, '2021-09-21 15:29:33', 3, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450473063320526848, 'admin', 1452569691537256448, '第三方登录', 'Social', '', NULL, '', b'0', b'0', 'system/social/SocialList', NULL, '/system/userAuth/social', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-19 22:45:01', 1399985191002447872, '2021-10-19 22:45:01', 4, 0);
+INSERT INTO `iam_perm_menu` VALUES (1440216178722050048, 'admin', 1438061887002759168, '钉钉', 'DingTalk', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/notice/dingTalk', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-21 15:27:50', 1399985191002447872, '2021-09-21 15:27:50', 0, 1);
+INSERT INTO `iam_perm_menu` VALUES (1440216612211757056, 'admin', 1450822511087271936, '钉钉机器人', 'DingTalkRobot', '', b'0', '', b'0', b'0', 'third/dingtalk/robot/DingRobotConfigList', NULL, '/third/dingTalk/robot', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-09-21 15:29:33', 1399985191002447872, '2022-07-26 13:34:35', 5, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450473063320526848, 'admin', 1452569691537256448, '第三方登录', 'Social', '', b'0', '', b'1', b'0', 'system/social/SocialList', NULL, '/system/userAuth/social', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-19 22:45:01', 1399985191002447872, '2022-07-26 13:35:47', 5, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450803906215886848, 'admin', 1452571269199540224, '定时任务', 'QuartzJobList', '', NULL, '', b'0', b'0', 'starter/quartz/QuartzJobList', NULL, '/system/config/quartz', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 20:39:41', 1399985191002447872, '2021-10-20 20:39:41', 5, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450819607680991232, 'admin', NULL, '第三方对接', 'social', '', b'0', 'branches', b'0', b'0', 'RouteView', NULL, '/social', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:42:04', 1399985191002447872, '2022-04-05 16:53:25', 3, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450821723027881984, 'admin', 1450819607680991232, '微信', 'SocialWeChat', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/social/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:50:28', 1399985191002447872, '2021-10-20 21:50:28', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450821877831254016, 'admin', 1450819607680991232, '企业微信', 'SocialWeCom', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/social/wecom', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:51:05', 1399985191002447872, '2021-10-20 21:51:05', 2, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450822511087271936, 'admin', 1450819607680991232, '钉钉', 'SocialDingTalk', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/social/dingtalk', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:53:36', 1399985191002447872, '2021-10-20 21:53:36', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450819607680991232, 'admin', NULL, '第三方对接', 'third', '', b'0', 'branches', b'0', b'0', 'RouteView', NULL, '/third', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:42:04', 1399985191002447872, '2022-07-26 13:34:02', 4, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450821723027881984, 'admin', 1450819607680991232, '微信', 'SocialWeChat', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/third/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:50:28', 1399985191002447872, '2022-07-26 13:35:55', 2, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450821877831254016, 'admin', 1450819607680991232, '企业微信', 'SocialWeCom', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/third/wecom', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:51:05', 1399985191002447872, '2022-07-26 13:35:29', 3, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450822511087271936, 'admin', 1450819607680991232, '钉钉', 'SocialDingTalk', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/third/dingtalk', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:53:36', 1399985191002447872, '2022-07-26 13:34:11', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450822842995130368, 'admin', NULL, '支付管理', 'PayManager', '', NULL, 'pay-circle', b'0', b'0', 'RouteView', NULL, '/payment', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:54:55', 1399985191002447872, '2021-10-20 21:54:55', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450823960236081152, 'admin', 1450822842995130368, '支付通道', 'PayChannel', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/payment/channel', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:59:22', 1399985191002447872, '2021-10-20 21:59:22', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450824117849636864, 'admin', 1450823960236081152, '支付宝', 'AliPayConfig', '', NULL, '', b'0', b'0', 'payment/channel/alipay/AliPayConfigList', NULL, '/payment/channel/alipay', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 21:59:59', 1399985191002447872, '2021-10-20 21:59:59', 1, 0);
@@ -989,7 +937,7 @@ INSERT INTO `iam_perm_menu` VALUES (1450825819436826624, 'admin', 14508228429951
 INSERT INTO `iam_perm_menu` VALUES (1450826890318135296, 'admin', 1450825615857893376, '支付订单', 'PaymentOrder', '', b'0', '', b'0', b'0', 'payment/order/payment/PaymentList', NULL, '/payment/order/payment', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:11:00', 1399985191002447872, '2022-02-25 15:17:07', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450827159626006528, 'admin', 1450825615857893376, '退款订单', 'ReturnOrder', '', b'0', '', b'0', b'0', 'payment/order/refund/RefundRecordList', NULL, '/payment/order/return', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:12:05', 1399985191002447872, '2022-03-04 15:44:06', 4, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450827308515409920, 'admin', 1450825615857893376, '转账订单', 'TransferOrder', '', b'0', '', b'1', b'0', 'payment/order/transfer/TransferList', NULL, '/payment/order/transfer', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:12:40', 1399985191002447872, '2022-03-04 15:33:31', 3, 0);
-INSERT INTO `iam_perm_menu` VALUES (1450827660459458560, 'admin', 1438061887002759168, '微信', 'NoticeWeChat', '', b'0', '', b'0', b'0', 'Dev', NULL, '/notice/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:14:04', 1399985191002447872, '2022-06-21 20:53:04', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1450827660459458560, 'admin', 1438061887002759168, '微信', 'NoticeWeChat', '', b'0', '', b'0', b'0', 'Dev', NULL, '/notice/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:14:04', 1399985191002447872, '2022-06-21 20:53:04', 1, 1);
 INSERT INTO `iam_perm_menu` VALUES (1452567897717321728, 'admin', 1414596052497092608, '审计日志', 'auditLog', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/log', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:29:09', 1399985191002447872, '2021-10-25 17:29:09', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452569339987472384, 'admin', 1414596052497092608, '权限管理', 'permission', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/permission', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:34:53', 1399985191002447872, '2021-10-25 17:34:53', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452569691537256448, 'admin', 1414596052497092608, '用户信息', 'userAuth', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/userAuth', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:36:17', 1399985191002447872, '2021-10-25 17:36:17', 2, 0);
@@ -1000,8 +948,8 @@ INSERT INTO `iam_perm_menu` VALUES (1476489893513404416, 'admin', 14145960524970
 INSERT INTO `iam_perm_menu` VALUES (1478002945936015360, 'admin', 1414596052497092608, '1', NULL, '1', b'1', NULL, b'0', b'0', NULL, NULL, NULL, NULL, 0, 2, NULL, b'0', b'0', b'0', b'0', '', 1399985191002447872, '2022-01-03 21:58:57', 1399985191002447872, '2022-01-03 21:58:57', 0, 1);
 INSERT INTO `iam_perm_menu` VALUES (1478004271512240128, 'admin', 1414596052497092608, '22', NULL, '22', b'1', NULL, b'0', b'0', NULL, NULL, NULL, NULL, 0, 2, NULL, b'0', b'0', b'0', b'0', '', 1399985191002447872, '2022-01-03 22:04:13', 1399985191002447872, '2022-01-03 22:04:13', 0, 1);
 INSERT INTO `iam_perm_menu` VALUES (1480839877352476672, 'admin', 1452567897717321728, '数据版本日志', 'DataVersionLog', NULL, b'0', '', b'0', b'0', 'starter/log/DataVersionLogList', NULL, '/system/log/DataVersionLog', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-01-11 17:51:54', 1399985191002447872, '2022-01-11 17:51:54', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1490984296616263680, 'admin', 1452571269199540224, '文件管理', 'FIleUpLoad', NULL, b'0', '', b'0', b'0', 'starter/file/FileUploadList', NULL, '/system/config/file', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-02-08 17:42:12', 1399985191002447872, '2022-02-08 17:42:12', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1495013564652429312, 'admin', 1452571269199540224, '代码生成', 'CodeGen', NULL, b'0', '', b'0', b'0', 'starter/codegen/CodeGenList', NULL, '/system/config/codeGen', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-02-19 20:33:04', 1399985191002447872, '2022-02-19 20:33:05', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1490984296616263680, 'admin', 1552207982510706688, '文件管理', 'FIleUpLoad', NULL, b'0', '', b'0', b'0', 'develop/file/FileUploadList', NULL, '/develop/file', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-02-08 17:42:12', 1399985191002447872, '2022-07-28 09:16:56', 2, 0);
+INSERT INTO `iam_perm_menu` VALUES (1495013564652429312, 'admin', 1552207982510706688, '代码生成', 'CodeGen', NULL, b'0', '', b'0', b'0', 'develop/codegen/CodeGenList', NULL, '/develop/codegen', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-02-19 20:33:04', 1399985191002447872, '2022-07-27 16:25:05', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1495968302034210816, 'admin', NULL, '功能演示', 'Demo', NULL, b'0', 'block', b'0', b'0', 'RouteView', NULL, '/demo', '', 99, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-02-22 11:46:52', 1399985191002447872, '2022-05-10 11:02:05', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1495969099987963904, 'admin', 1495968302034210816, '数据相关', 'DemoData', NULL, b'0', '', b'0', b'0', 'RouteView', NULL, '/demo/data', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-02-22 11:50:02', 1399985191002447872, '2022-03-24 16:27:46', 4, 0);
 INSERT INTO `iam_perm_menu` VALUES (1496020308992143360, 'admin', 1495968302034210816, '超级查询', 'SuperQueryDemo', NULL, b'0', '', b'0', b'0', 'demo/query/SuperQueryDemoList', NULL, '/demo/query/super', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-02-22 15:13:31', 1399985191002447872, '2022-05-27 17:34:41', 2, 0);
@@ -1015,7 +963,7 @@ INSERT INTO `iam_perm_menu` VALUES (1506910885463851008, 'admin', 14959690999879
 INSERT INTO `iam_perm_menu` VALUES (1506911113394913280, 'admin', 1495969099987963904, '数据脱敏', 'DataSensitiveDemo', NULL, b'0', '', b'0', b'0', 'demo/data/sensitive/DataSensitiveDemoList', NULL, '/demo/data/sensitive', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-24 16:29:41', 1399985191002447872, '2022-03-24 17:16:03', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1507998458886197248, 'admin', 1495968302034210816, 'WS演示', 'WebsocketDemo', NULL, b'0', '', b'0', b'0', 'demo/ws/WebsocketDemo', NULL, '/demo/ws', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-27 16:30:25', 1399985191002447872, '2022-03-27 16:30:25', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1509488473583562752, 'admin', 1495968302034210816, '幂等请求演示', 'IdempotentDemo', NULL, b'0', '', b'0', b'0', 'demo/idempotent/Idempotent', NULL, '/demo/idempotent', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-31 19:11:12', 1399985191002447872, '2022-05-27 17:35:00', 1, 0);
-INSERT INTO `iam_perm_menu` VALUES (1511266086400524288, 'admin', 1450822511087271936, '钉钉配置', 'DingTalkConfig', NULL, b'0', '', b'0', b'0', 'social/dingtalk/config/DingTalkConfigList', NULL, '/social/dingtalk/config', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-04-05 16:54:48', 1399985191002447872, '2022-04-05 16:54:48', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1511266086400524288, 'admin', 1450822511087271936, '钉钉配置', 'DingTalkConfig', NULL, b'0', '', b'1', b'0', 'third/dingtalk/config/DingTalkConfigList', NULL, '/third/dingtalk/config', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-04-05 16:54:48', 1399985191002447872, '2022-07-26 13:34:44', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1523860792695283712, 'admin', NULL, '商品管理', 'GoodsManager', NULL, b'0', 'car', b'0', b'0', 'RouteView', NULL, '/goods', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 11:01:40', 1399985191002447872, '2022-05-10 11:02:45', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1523941932282114048, 'admin', 1523860792695283712, '类目管理', 'CategoryManager', NULL, b'0', '', b'0', b'0', 'RouteView', NULL, '/goods/category', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 16:24:05', 1399985191002447872, '2022-05-10 16:24:17', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1523942130555252736, 'admin', 1523941932282114048, '类目', 'Category', NULL, b'0', '', b'0', b'0', 'goods/category/CategoryList', NULL, '/goods/category/category', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 16:24:52', 1399985191002447872, '2022-05-10 16:25:23', 1, 0);
@@ -1039,6 +987,9 @@ INSERT INTO `iam_perm_menu` VALUES (1541355214204030976, 'admin', 15414273538868
 INSERT INTO `iam_perm_menu` VALUES (1541427353886859264, 'admin', 1414596052497092608, '认证管理', 'Auth', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/system/auth', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-27 22:24:54', 1399985191002447872, '2022-06-27 22:24:54', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1544952211901218816, 'admin', 1546850918849249280, '支付结算台演示', 'CashierDemo', NULL, b'0', '', b'0', b'0', '', NULL, '/cashier', '', 0, 1, NULL, b'0', b'1', b'0', b'0', NULL, 1399985191002447872, '2022-07-07 15:51:26', 1399985191002447872, '2022-07-12 21:36:34', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1546850918849249280, 'admin', 1495968302034210816, '支付演示', 'DemoPay', NULL, b'0', '', b'0', b'0', 'RouteView', NULL, '/demo/pay', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-07-12 21:36:13', 1399985191002447872, '2022-07-12 21:36:13', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1551803592828932096, 'admin', 1450821877831254016, '企微机器人', 'WeComRobot', '', b'0', '', b'0', b'0', 'third/wecom/robot/WeComRobotConfigList', NULL, '/third/wecom', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-07-26 13:36:22', 1399985191002447872, '2022-07-26 15:14:26', 2, 0);
+INSERT INTO `iam_perm_menu` VALUES (1552207982510706688, 'admin', NULL, '开发管理', 'develop', NULL, b'0', 'gold', b'0', b'0', 'RouteView', NULL, '/develop', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-07-27 16:23:16', 1399985191002447872, '2022-07-27 16:39:09', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1552208167664062464, 'admin', 1552207982510706688, '动态表单', 'DynamicForm', NULL, b'0', '', b'0', b'0', 'develop/dynamicform/DynamicFormList', NULL, '/develop/form', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-07-27 16:24:00', 1399985191002447872, '2022-07-27 16:38:05', 2, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -1290,12 +1241,12 @@ CREATE TABLE `iam_user_third_info`  (
   `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户名',
   `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户昵称',
   `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户头像',
+  `third_user_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '关联第三方平台的用户id',
   `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
   `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
   `version` int(11) NOT NULL COMMENT '版本',
-  `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `pk_user_client`(`user_id`, `client_code`) USING BTREE COMMENT '用户id和终端code'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户三方登录绑定详情' ROW_FORMAT = DYNAMIC;
@@ -2118,7 +2069,6 @@ CREATE TABLE `qrtz_fired_triggers`  (
 -- ----------------------------
 -- Records of qrtz_fired_triggers
 -- ----------------------------
-INSERT INTO `qrtz_fired_triggers` VALUES ('quartzScheduler', 'NON_CLUSTERED1657772921496', '1546857070483939328', 'DEFAULT', 'NON_CLUSTERED', 1657774220709, 1657774225000, 5, 'ACQUIRED', NULL, NULL, '0', '0');
 
 -- ----------------------------
 -- Table structure for qrtz_job_details
@@ -2278,7 +2228,7 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('quartzScheduler', '1546857070483939328', 'DEFAULT', '1546857070483939328', 'DEFAULT', NULL, 1657774225000, 1657774220000, 5, 'ACQUIRED', 'CRON', 1657634445000, 0, NULL, 0, '');
+INSERT INTO `qrtz_triggers` VALUES ('quartzScheduler', '1546857070483939328', 'DEFAULT', '1546857070483939328', 'DEFAULT', NULL, 1658993665000, 1658993660000, 5, 'ACQUIRED', 'CRON', 1657634445000, 0, NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for sales_activity
@@ -2625,6 +2575,48 @@ CREATE TABLE `starter_audit_operate_log`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for starter_ding_media_md5
+-- ----------------------------
+DROP TABLE IF EXISTS `starter_ding_media_md5`;
+CREATE TABLE `starter_ding_media_md5`  (
+  `id` bigint(20) NOT NULL,
+  `media_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '媒体id',
+  `md5` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'md5值',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钉钉媒体文件MD5值关联关系' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of starter_ding_media_md5
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for starter_ding_robot_config
+-- ----------------------------
+DROP TABLE IF EXISTS `starter_ding_robot_config`;
+CREATE TABLE `starter_ding_robot_config`  (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编号',
+  `access_token` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人访问token',
+  `enable_signature_check` bit(1) NOT NULL COMMENT '是否开启验签',
+  `sign_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '钉钉机器人私钥',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+  `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '版本',
+  `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '钉钉机器人配置' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of starter_ding_robot_config
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for starter_file_upload_info
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_file_upload_info`;
@@ -2696,6 +2688,81 @@ CREATE TABLE `starter_quartz_job_log`  (
 
 -- ----------------------------
 -- Records of starter_quartz_job_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for starter_wecom_robot_config
+-- ----------------------------
+DROP TABLE IF EXISTS `starter_wecom_robot_config`;
+CREATE TABLE `starter_wecom_robot_config`  (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '名称',
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '编号',
+  `webhook_key` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'webhook地址的key值',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(6) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+  `last_modified_time` datetime(6) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '版本',
+  `deleted` bit(1) NOT NULL COMMENT '0:未删除。1:已删除',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '企业微信机器人配置' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of starter_wecom_robot_config
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for starter_wx_fans
+-- ----------------------------
+DROP TABLE IF EXISTS `starter_wx_fans`;
+CREATE TABLE `starter_wx_fans`  (
+  `id` bigint(20) NOT NULL,
+  `openid` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '关联OpenId',
+  `subscribe_status` bit(1) NULL DEFAULT NULL COMMENT '订阅状态',
+  `subscribe_time` datetime(0) NULL DEFAULT NULL COMMENT '订阅时间',
+  `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '昵称',
+  `sex` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '性别',
+  `language` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '语言',
+  `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '国家',
+  `province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '省份',
+  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '城市',
+  `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像地址',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信公众号粉丝' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of starter_wx_fans
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for starter_wx_template
+-- ----------------------------
+DROP TABLE IF EXISTS `starter_wx_template`;
+CREATE TABLE `starter_wx_template`  (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '编码',
+  `enable` bit(1) NOT NULL COMMENT '是否启用',
+  `template_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '模板ID',
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板标题',
+  `primary_industry` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板所属行业的一级行业',
+  `deputy_industry` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板所属行业的二级行业',
+  `content` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模板内容',
+  `example` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '示例',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '版本',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `inx_`(`template_id`) USING BTREE COMMENT '模板id'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '微信消息模板' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of starter_wx_template
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
