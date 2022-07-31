@@ -1,12 +1,12 @@
 package cn.bootx.iam.core.auth.login;
 
 import cn.bootx.baseapi.core.captcha.service.CaptchaService;
-import cn.bootx.iam.code.OpenIdLoginType;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
-import cn.bootx.starter.auth.authentication.OpenIdAuthentication;
-import cn.bootx.starter.auth.entity.LoginAuthContext;
+import cn.bootx.starter.auth.authentication.AbstractAuthentication;
+import cn.bootx.starter.auth.code.AuthLoginTypeCode;
 import cn.bootx.starter.auth.entity.AuthInfoResult;
+import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class PhoneLoginHandler implements OpenIdAuthentication {
+public class PhoneLoginHandler implements AbstractAuthentication {
     // 手机号
     private final String phoneParameter = "phone";
     // 短信验证码
@@ -35,7 +35,7 @@ public class PhoneLoginHandler implements OpenIdAuthentication {
 
     @Override
     public String getLoginType() {
-        return OpenIdLoginType.PHONE;
+        return AuthLoginTypeCode.PHONE;
     }
 
     /**

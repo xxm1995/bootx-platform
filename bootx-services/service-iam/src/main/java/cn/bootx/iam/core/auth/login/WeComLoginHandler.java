@@ -1,6 +1,6 @@
 package cn.bootx.iam.core.auth.login;
 
-import cn.bootx.iam.code.OpenIdLoginType;
+import cn.bootx.starter.auth.code.AuthLoginTypeCode;
 import cn.bootx.iam.core.third.dao.UserThirdManager;
 import cn.bootx.iam.core.third.entity.UserThird;
 import cn.bootx.iam.core.third.service.UserTiredOperateService;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-import static cn.bootx.iam.code.OpenIdLoginType.*;
+import static cn.bootx.starter.auth.code.AuthLoginTypeCode.*;
 
 /**   
 * 企业微信登录
@@ -89,7 +89,7 @@ public class WeComLoginHandler implements OpenIdAuthentication {
                 .state(state)
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
-        if (!Objects.equals(response.getCode(), OpenIdLoginType.SUCCESS)){
+        if (!Objects.equals(response.getCode(), AuthLoginTypeCode.SUCCESS)){
             log.error("企业微信登录报错: {}",response.getMsg());
             throw new LoginFailureException("企业微信登录出错");
         }

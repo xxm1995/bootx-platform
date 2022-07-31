@@ -22,6 +22,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+            <version>${dynamic-datasource.version}</version>
+        </dependency>
+        <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-jackson</artifactId>
         </dependency>

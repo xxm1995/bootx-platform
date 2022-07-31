@@ -26,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class SystemParamService implements ParamService {
-
     private final SystemParamManager systemParamManager;
 
     /**

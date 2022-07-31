@@ -18,6 +18,7 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- 超级查询 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-super-query</artifactId>
@@ -40,6 +41,7 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-websocket</artifactId>
         </dependency>
+
         <!--数学验证码-->
         <dependency>
             <groupId>com.github.whvcse</groupId>

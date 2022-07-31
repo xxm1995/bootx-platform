@@ -8,6 +8,7 @@ import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 /**
  * 抽象认证器
@@ -15,6 +16,18 @@ import javax.validation.constraints.NotNull;
  * @date 2021/7/30
  */
 public interface AbstractAuthentication {
+
+    /**
+     * 获取终端编码
+     */
+    String getLoginType();
+
+    /**
+     * openId类型是否匹配
+     */
+    default boolean adaptation(String loginType){
+        return Objects.equals(getLoginType(),loginType);
+    }
 
     /**
      * 认证前操作

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-*
+* 表信息查询
 * @author xxm
 * @date 2022/1/27
 */

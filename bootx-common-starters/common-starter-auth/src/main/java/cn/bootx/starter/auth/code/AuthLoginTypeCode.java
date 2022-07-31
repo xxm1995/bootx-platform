@@ -1,11 +1,11 @@
-package cn.bootx.iam.code;
+package cn.bootx.starter.auth.code;
 
 /**   
-* 登三方平台录方式
+* 认证录方式
 * @author xxm  
 * @date 2021/8/2 
 */
-public interface OpenIdLoginType {
+public interface AuthLoginTypeCode {
 
     // 参数
     /** 第三方平台授权码 */
@@ -18,6 +18,9 @@ public interface OpenIdLoginType {
     /** 成功代码 */
     int SUCCESS = 2000;
 
+
+    /** 账号密码登录 */
+    String PASSWORD = "password";
 
     /** 手机号登录 */
     String PHONE = "phone";

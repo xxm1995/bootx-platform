@@ -1,6 +1,6 @@
 package cn.bootx.iam.core.auth.login;
 
-import cn.bootx.iam.code.OpenIdLoginType;
+import cn.bootx.starter.auth.code.AuthLoginTypeCode;
 import cn.bootx.iam.core.third.dao.UserThirdManager;
 import cn.bootx.iam.core.third.entity.UserThird;
 import cn.bootx.iam.core.third.service.UserTiredOperateService;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-import static cn.bootx.iam.code.OpenIdLoginType.*;
+import static cn.bootx.starter.auth.code.AuthLoginTypeCode.*;
 
 /**
 * 微信登录
@@ -45,7 +45,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
 
     @Override
     public String getLoginType() {
-        return OpenIdLoginType.WE_CHAT;
+        return AuthLoginTypeCode.WE_CHAT;
     }
 
     /**
@@ -92,7 +92,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
                 .state(state)
                 .build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
-        if (!Objects.equals(response.getCode(),OpenIdLoginType.SUCCESS)){
+        if (!Objects.equals(response.getCode(), AuthLoginTypeCode.SUCCESS)){
             log.error("微信登录报错: {}",response.getMsg());
             throw new LoginFailureException("微信登录出错");
         }

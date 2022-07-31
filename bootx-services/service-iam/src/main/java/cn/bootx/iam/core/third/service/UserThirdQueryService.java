@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static cn.bootx.iam.code.OpenIdLoginType.*;
+import static cn.bootx.starter.auth.code.AuthLoginTypeCode.*;
 
 /**   
 * 用户三方账号查询

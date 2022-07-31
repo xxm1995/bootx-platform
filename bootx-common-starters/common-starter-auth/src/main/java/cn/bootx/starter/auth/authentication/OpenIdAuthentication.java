@@ -4,19 +4,12 @@ import cn.bootx.starter.auth.entity.ThirdAuthCode;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthUser;
 
-import java.util.Objects;
-
 /**
-* openId登录认证器
+* openId登录认证器 (微信/钉钉/飞书/QQ/企微等)
 * @author xxm  
 * @date 2021/7/30 
 */
 public interface OpenIdAuthentication extends AbstractAuthentication{
-
-    /**
-     * 获取终端编码
-     */
-    String getLoginType();
 
     /**
      * 获取登录地址
@@ -34,12 +27,6 @@ public interface OpenIdAuthentication extends AbstractAuthentication{
                 .setState(callback.getState());
     }
 
-    /**
-     * openId类型是否匹配
-     */
-    default boolean adaptation(String loginType){
-        return Objects.equals(getLoginType(),loginType);
-    }
 
     /**
      * 获取关联的的第三方平台用户信息

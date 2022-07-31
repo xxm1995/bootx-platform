@@ -2,10 +2,15 @@ server:
   port: 9999
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/bootx-platform?serverTimezone=GMT%2B8&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
-    username: root
-    password: root
+    dynamic:
+      primary: master
+      datasource:
+        # 默认数据源
+        master:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/bootx-platform?serverTimezone=GMT%2B8&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+          username: root
+          password: root
     hikari:
       # 30 秒, 心跳检测
       keepalive-time: 30000

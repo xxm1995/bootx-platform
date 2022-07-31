@@ -2,7 +2,7 @@ package cn.bootx.iam.core.third.service;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
-import cn.bootx.iam.code.OpenIdLoginType;
+import cn.bootx.starter.auth.code.AuthLoginTypeCode;
 import cn.bootx.iam.core.third.dao.UserThirdInfoManager;
 import cn.bootx.iam.core.third.dao.UserThirdManager;
 import cn.bootx.iam.core.third.entity.UserThird;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static cn.bootx.iam.code.OpenIdLoginType.WE_CHAT;
+import static cn.bootx.starter.auth.code.AuthLoginTypeCode.WE_CHAT;
 
 
 /**
@@ -56,11 +56,11 @@ public class UserThirdBindService {
                 userThirdManager.unbind(userId, UserThird::getWeChatId);
                 break;
             }
-            case OpenIdLoginType.WE_COM: {
+            case AuthLoginTypeCode.WE_COM: {
                 userThirdManager.unbind(userId, UserThird::getWeComId);
                 break;
             }
-            case OpenIdLoginType.DING_TALK: {
+            case AuthLoginTypeCode.DING_TALK: {
                 userThirdManager.unbind(userId, UserThird::getDingTalkId);
                 break;
             }

@@ -27,13 +27,13 @@ public class TokenEndpoint {
     @Operation(summary = "普通登录")
     @PostMapping("/login")
     public ResResult<String> login(HttpServletRequest request, HttpServletResponse response){
-        return Res.ok(tokenService.loginPassword(request,response));
+        return Res.ok(tokenService.login(request,response));
     }
 
     @Operation(summary = "三方登录登录")
     @PostMapping("/loginOpenId")
     public ResResult<String> loginOpenId(HttpServletRequest request, HttpServletResponse response){
-        return Res.ok(tokenService.loginOpenId(request,response));
+        return Res.ok(tokenService.login(request,response));
     }
 
     @Operation(summary = "退出")
