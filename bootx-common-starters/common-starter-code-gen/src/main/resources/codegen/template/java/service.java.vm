@@ -1,15 +1,15 @@
-package cn.bootx.${module}.core.${method}.service;
+package ${corePack}.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.${module}.dto.${method}.${className}Dto;
-import cn.bootx.${module}.param.${method}.${className}Param;
-import cn.bootx.${module}.core.${method}.convert.${className}Convert;
-import cn.bootx.${module}.core.${method}.entity.${className};
-import cn.bootx.${module}.core.${method}.dao.${className}Manager;
+import ${dtoPack}.${entityUpName}Dto;
+import ${paramPack}.${entityUpName}Param;
+import ${corePack}.convert.${entityUpName}Convert;
+import ${corePack}.entity.${entityUpName};
+import ${corePack}.dao.${entityUpName}Manager;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,52 +24,52 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ${className}Service {
-    private final ${className}Manager ${classname}Manager;
+public class ${entityUpName}Service {
+    private final ${entityUpName}Manager ${entityLowName}Manager;
 
     /**
      * 添加
      */
-    public void add(${className}Param param){
-        ${className} ${classname} = ${className}.init(param);
-        ${classname}Manager.save(${classname});
+    public void add(${entityUpName}Param param){
+        ${entityUpName} ${entityLowName} = ${entityUpName}.init(param);
+        ${entityLowName}Manager.save(${entityLowName});
     }
 
     /**
      * 修改
      */
-    public void update(${className}Param param){
-        ${className} ${classname} = ${classname}Manager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+    public void update(${entityUpName}Param param){
+        ${entityUpName} ${entityLowName} = ${entityLowName}Manager.findById(param.getId()).orElseThrow(DataNotExistException::new);
 
-        BeanUtil.copyProperties(param,${classname}, CopyOptions.create().ignoreNullValue());
-        ${classname}Manager.updateById(${classname});
+        BeanUtil.copyProperties(param,${entityLowName}, CopyOptions.create().ignoreNullValue());
+        ${entityLowName}Manager.updateById(${entityLowName});
     }
 
     /**
      * 分页
      */
-    public PageResult<${className}Dto> page(PageParam pageParam,${className}Param ${classname}Param){
-        return MpUtil.convert2DtoPageResult(${classname}Manager.page(pageParam,${classname}Param));
+    public PageResult<${entityUpName}Dto> page(PageParam pageParam,${entityUpName}Param ${entityLowName}Param){
+        return MpUtil.convert2DtoPageResult(${entityLowName}Manager.page(pageParam,${entityLowName}Param));
     }
 
     /**
      * 获取单条
      */
-    public ${className}Dto findById(Long id){
-        return ${classname}Manager.findById(id).map(${className}::toDto).orElseThrow(DataNotExistException::new);
+    public ${entityUpName}Dto findById(Long id){
+        return ${entityLowName}Manager.findById(id).map(${entityUpName}::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
-    public List<${className}Dto> findAll(){
-        return ResultConvertUtil.dtoListConvert(${classname}Manager.findAll());
+    public List<${entityUpName}Dto> findAll(){
+        return ResultConvertUtil.dtoListConvert(${entityLowName}Manager.findAll());
     }
 
     /**
      * 删除
      */
     public void delete(Long id){
-        ${classname}Manager.deleteById(id);
+        ${entityLowName}Manager.deleteById(id);
     }
 }

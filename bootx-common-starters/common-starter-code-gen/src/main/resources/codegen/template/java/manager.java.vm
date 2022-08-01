@@ -1,8 +1,8 @@
-package cn.bootx.${module}.core.${method}.dao;
+package ${corePack}.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.${module}.param.${method}.${className}Param;
-import cn.bootx.${module}.core.${method}.entity.${className};
+import ${paramPack}.${entityUpName}Param;
+import ${corePack}.entity.${entityUpName};
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
@@ -21,14 +21,16 @@ import java.util.Optional;
  */
 @Repository
 @RequiredArgsConstructor
-public class ${className}Manager extends BaseManager<${className}Mapper, ${className}> {
-    private final ${className}Mapper mapper;
+public class ${entityUpName}Manager extends BaseManager<${entityUpName}Mapper, ${entityUpName}> {
+    private final ${entityUpName}Mapper mapper;
 
     /**
     * 分页
     */
-    public Page<${className}> page(PageParam pageParam, ${className}Param param) {
-        Page<${className}> mpPage = MpUtil.getMpPage(pageParam, ${className}.class);
-        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
+    public Page<${entityUpName}> page(PageParam pageParam, ${entityUpName}Param param) {
+        Page<${entityUpName}> mpPage = MpUtil.getMpPage(pageParam, ${entityUpName}.class);
+        return lambdaQuery()
+                .orderByDesc(MpIdEntity::getId)
+                .page(mpPage);
     }
 }

@@ -37,9 +37,9 @@
 
 <script>
 import { FormMixin } from '@/mixins/FormMixin'
-import { get, add, update } from '@/api/${module}/${classname}'
+import { get, add, update } from '@${vueApiPath}/${entityLowName}'
 export default {
-  name: '${className}Edit',
+  name: '${entityUpName}Edit',
   mixins: [FormMixin],
   data () {
     return {
@@ -50,11 +50,16 @@ export default {
       #end
       },
       rules: {
-
+      #foreach ($column in $columns)
+        $column.name: [],
+      #end
       }
     }
   },
   methods: {
+    /**
+     * 编辑
+     */
     edit (id, type) {
       if (['edit', 'show'].includes(type)) {
         this.confirmLoading = true
@@ -66,6 +71,9 @@ export default {
         this.confirmLoading = false
       }
     },
+    /**
+     * 提交
+     */
     handleOk () {
       this.#[[$]]#refs.form.validate(async valid => {
         if (valid) {
@@ -75,16 +83,17 @@ export default {
           } else if (this.type === 'edit') {
             await update(this.form)
           }
-          setTimeout(() => {
-            this.confirmLoading = false
-            this.#[[$]]#emit('ok')
-            this.visible = false
-          }, 200)
+          this.confirmLoading = false
+          this.#[[$]]#emit('ok')
+          this.visible = false
         } else {
           return false
         }
       })
     },
+    /**
+     * 重置表单
+     */
     resetForm () {
       this.#[[$]]#nextTick(() => {
         this.#[[$]]#refs.form.resetFields()

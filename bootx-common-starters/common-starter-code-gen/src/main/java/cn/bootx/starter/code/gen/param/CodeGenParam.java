@@ -17,11 +17,29 @@ public class CodeGenParam {
     @Schema(description = "表名")
     private String tableName;
 
-    @Schema(description = "模块")
-    private String module;
+    @Schema(description = "生成对象名称")
+    private String entityName;
 
-    @Schema(description = "功能")
-    private String method;
+    @Schema(description = "基于什么类型的基类")
+    private String baseEntity;
+
+    @Schema(description = "core目录(service/entity/dao等所在的包)")
+    private String corePack;
+
+    @Schema(description = "param参数类包名")
+    private String paramPack;
+
+    @Schema(description = "dto参数类包名")
+    private String dtoPack;
+
+    @Schema(description = "控制器包名")
+    private String controllerPack;
+
+    @Schema(description = "请求地址")
+    private String requestPath;
+
+    @Schema(description = "前端接口文件所在目录")
+    private String vueApiPath;
 
     @Schema(description = "创建人")
     private String author;

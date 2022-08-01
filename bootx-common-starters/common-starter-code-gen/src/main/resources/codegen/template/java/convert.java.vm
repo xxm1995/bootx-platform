@@ -1,8 +1,8 @@
-package cn.bootx.${module}.core.${method}.convert;
+package ${corePack}.convert;
 
-import cn.bootx.${module}.core.${method}.entity.${className};
-import cn.bootx.${module}.dto.${method}.${className}Dto;
-import cn.bootx.${module}.param.${method}.${className}Param;
+import ${corePack}.entity.${entityUpName};
+import ${dtoPack}.${entityUpName}Dto;
+import ${paramPack}.${entityUpName}Param;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -12,11 +12,11 @@ import org.mapstruct.factory.Mappers;
  * @date ${datetime}
  */
 @Mapper
-public interface ${className}Convert {
-    ${className}Convert CONVERT = Mappers.getMapper(${className}Convert.class);
+public interface ${entityUpName}Convert {
+    ${entityUpName}Convert CONVERT = Mappers.getMapper(${entityUpName}Convert.class);
 
-    ${className} convert(${className}Param in);
+    ${entityUpName} convert(${entityUpName}Param in);
 
-    ${className}Dto convert(${className} in);
+    ${entityUpName}Dto convert(${entityUpName} in);
 
 }

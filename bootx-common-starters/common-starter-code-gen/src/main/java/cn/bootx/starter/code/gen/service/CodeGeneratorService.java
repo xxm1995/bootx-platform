@@ -3,12 +3,13 @@ package cn.bootx.starter.code.gen.service;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.starter.code.gen.code.CodeGenColumnTypeEnum;
 import cn.bootx.starter.code.gen.code.CodeGenTemplateVmEnum;
+import cn.bootx.starter.code.gen.domain.CodeGenData;
+import cn.bootx.starter.code.gen.domain.CodeGenData.CodeGenColumnData;
 import cn.bootx.starter.code.gen.dto.CodeGenPreview;
-import cn.bootx.starter.code.gen.entity.CodeGenColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseTable;
 import cn.bootx.starter.code.gen.param.CodeGenParam;
-import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.CharsetUtil;
@@ -29,7 +30,10 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -45,7 +49,7 @@ import java.util.zip.ZipOutputStream;
 public class CodeGeneratorService {
     private final DatabaseTableService databaseTableService;
 
-    /** 生成实体类时要过滤掉的字段 */
+    /** 生成实体类时要过滤掉的字段(继承自基类) */
     private final List<String> entityFilterFields = Arrays.asList(
             CommonCode.ID,
             CommonCode.CREATOR,
@@ -90,31 +94,31 @@ public class CodeGeneratorService {
         DatabaseTable databaseTable = databaseTableService.findByTableName(codeGenParam.getTableName());
         List<DatabaseColumn> databaseColumns = databaseTableService.findColumnByTableName(codeGenParam.getTableName());
 
-        Map<String, Object> map = new HashMap<>(16);
         // 数据库字段
-        List<CodeGenColumn> columns = databaseColumns.stream()
-                .map(databaseColumn -> new CodeGenColumn()
+        List<CodeGenColumnData> columns = databaseColumns.stream()
+                .map(databaseColumn -> new CodeGenColumnData()
                         .setComments(databaseColumn.getColumnComment())
-                        .setAttrType(CodeGenColumnTypeEnum.convertJavaType(databaseColumn.getDataType()))
+                        .setJavaType(CodeGenColumnTypeEnum.convertJavaType(databaseColumn.getDataType()))
                         .setName(NamingCase.toCamelCase(databaseColumn.getColumnName())))
                 .filter(codeGenColumn->!entityFilterFields.contains(codeGenColumn.getName()))
                 .collect(Collectors.toList());
 
-        // 添加代码生成所需要的属性
-        map.put("module",codeGenParam.getModule());
-        map.put("method",codeGenParam.getMethod());
-        map.put("comments",databaseTable.getTableComment());
-        map.put("author",codeGenParam.getAuthor());
-        map.put("datetime", DateUtil.formatDate(new Date()));
-        // 大写开头
-        map.put("className",tableToJava(databaseTable.getTableName()));
-        // 小写开头
-        map.put("classname", StrUtil.lowerFirst(tableToJava(databaseTable.getTableName())));
-        // 连接线
-        map.put("classNameKebab", NamingCase.toKebabCase(tableToJava(databaseTable.getTableName())));
-        map.put("tableName",databaseTable.getTableName());
-        map.put("columns",columns);
-        return map;
+        CodeGenData codeGenData = new CodeGenData()
+                .setTableName(databaseTable.getTableName())
+                .setEntityUpName(tableToJava(databaseTable.getTableName()))
+                .setEntityLowName(StrUtil.lowerFirst(tableToJava(databaseTable.getTableName())))
+                .setEntityDashName(NamingCase.toKebabCase(tableToJava(databaseTable.getTableName())))
+                .setBaseClass(codeGenParam.getBaseEntity())
+                .setCorePack(codeGenParam.getCorePack())
+                .setParamPack(codeGenParam.getParamPack())
+                .setDtoPack(codeGenParam.getDtoPack())
+                .setControllerPack(codeGenParam.getControllerPack())
+                .setRequestPath(codeGenParam.getRequestPath())
+                .setVueApiPath(codeGenParam.getVueApiPath())
+                .setAuthor(codeGenParam.getAuthor())
+                .setColumns(columns);
+
+        return BeanUtil.beanToMap(codeGenData,false,false);
     }
 
     /**
@@ -152,12 +156,5 @@ public class CodeGeneratorService {
     private String tableToJava(String tableName) {
         // 自动去除表前缀
         return NamingCase.toPascalCase(tableName.substring(tableName.indexOf("_") + 1));
-    }
-
-    /**
-     * 获取代码生成参数
-     */
-    public void getCodeGenConfig(){
-
     }
 }

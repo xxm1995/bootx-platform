@@ -16,14 +16,14 @@ import lombok.experimental.Accessors;
 @Data
 @Schema(title = "${comments}")
 @Accessors(chain = true)
-public class ${className}Param {
+public class ${entityUpName}Param {
 
     @Schema(description= "主键")
     private Long id;
 
 #foreach ($column in $columns)
     @Schema(description = "$column.comments")
-    private $column.attrType $column.name;
+    private $column.javaType $column.name;
 #end
 
 }

@@ -58,20 +58,20 @@
       :page-size="pagination.size"
       :total="pagination.total"
       @page-change="handleTableChange"/>
-    <${classNameKebab}-edit
-      ref="${classname}Edit"
+    <${entityDashName}-edit
+      ref="${entityLowName}Edit"
       @ok="handleOk"/>
   </a-card>
 </template>
 
 <script>
-  import { page, del } from '@/api/${module}/${classname}'
-  import ${className}Edit from './${className}Edit'
+  import { page, del } from '@/api/${module}/${entityLowName}'
+  import ${entityUpName}Edit from './${entityUpName}Edit'
   import { TableMixin } from '@/mixins/TableMixin'
   export default {
-    name: '${className}List',
+    name: '${entityUpName}List',
     components: {
-      ${className}Edit
+      ${entityUpName}Edit
     },
     mixins: [TableMixin],
     data () {
@@ -91,13 +91,13 @@
         })
       },
       add () {
-        this.$refs.${classname}Edit.init('', 'add')
+        this.$refs.${entityLowName}Edit.init('', 'add')
       },
       edit (record) {
-        this.$refs.${classname}Edit.init(record.id, 'edit')
+        this.$refs.${entityLowName}Edit.init(record.id, 'edit')
       },
       show (record) {
-        this.$refs.${classname}Edit.init(record.id, 'show')
+        this.$refs.${entityLowName}Edit.init(record.id, 'show')
       },
       remove (record) {
         del(record.id).then(_ => {

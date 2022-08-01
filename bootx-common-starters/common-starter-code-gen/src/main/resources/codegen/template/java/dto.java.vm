@@ -1,4 +1,4 @@
-package cn.bootx.${module}.dto.${method};
+package ${dtoPack};
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,11 +19,11 @@ import lombok.experimental.Accessors;
 @Data
 @Schema(title = "${comments}")
 @Accessors(chain = true)
-public class ${className}Dto extends BaseDto {
+public class ${entityUpName}Dto extends BaseDto {
 
 #foreach ($column in $columns)
     @Schema(description = "$column.comments")
-    private $column.attrType $column.name;
+    private $column.javaType $column.name;
 #end
 
 }
