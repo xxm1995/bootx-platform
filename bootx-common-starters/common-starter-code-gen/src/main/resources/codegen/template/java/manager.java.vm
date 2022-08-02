@@ -4,7 +4,7 @@ import cn.bootx.common.mybatisplus.impl.BaseManager;
 import ${paramPack}.${entityUpName}Param;
 import ${corePack}.entity.${entityUpName};
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -22,7 +22,6 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class ${entityUpName}Manager extends BaseManager<${entityUpName}Mapper, ${entityUpName}> {
-    private final ${entityUpName}Mapper mapper;
 
     /**
     * 分页

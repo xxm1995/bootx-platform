@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Tag(name ="${comments}")
 @RestController
-@RequestMapping("/${requestPath}")
+@RequestMapping("${requestPath}")
 @RequiredArgsConstructor
 public class ${entityUpName}Controller {
     private final ${entityUpName}Service ${entityLowName}Service;
