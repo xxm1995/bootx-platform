@@ -3,6 +3,7 @@ package cn.bootx.starter.code.gen.controller;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.starter.code.gen.dto.TableGenParamDto;
 import cn.bootx.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseTable;
 import cn.bootx.starter.code.gen.service.DatabaseTableService;
@@ -50,6 +51,12 @@ public class DatabaseTableController {
     @GetMapping("/findColumnByTableName")
     public ResResult<List<DatabaseColumn>> findColumnByTableName(String tableName){
         return Res.ok(databaseTableService.findColumnByTableName(tableName));
+    }
+
+    @Operation(summary = "获取表相关的代码生成参数信息")
+    @GetMapping("/getTableGenParam")
+    public ResResult<TableGenParamDto> getTableGenParam(String tableName){
+        return Res.ok(databaseTableService.getTableGenParam(tableName));
     }
 
 }

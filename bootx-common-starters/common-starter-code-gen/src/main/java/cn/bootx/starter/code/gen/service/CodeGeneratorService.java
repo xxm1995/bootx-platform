@@ -9,6 +9,7 @@ import cn.bootx.starter.code.gen.dto.CodeGenPreview;
 import cn.bootx.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseTable;
 import cn.bootx.starter.code.gen.param.CodeGenParam;
+import cn.bootx.starter.code.gen.util.CodeGenUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.text.NamingCase;
@@ -105,9 +106,9 @@ public class CodeGeneratorService {
 
         CodeGenData codeGenData = new CodeGenData()
                 .setTableName(databaseTable.getTableName())
-                .setEntityUpName(tableToJava(databaseTable.getTableName()))
-                .setEntityLowName(StrUtil.lowerFirst(tableToJava(databaseTable.getTableName())))
-                .setEntityDashName(NamingCase.toKebabCase(tableToJava(databaseTable.getTableName())))
+                .setEntityUpName(CodeGenUtil.tableToJava(databaseTable.getTableName()))
+                .setEntityLowName(StrUtil.lowerFirst(CodeGenUtil.tableToJava(databaseTable.getTableName())))
+                .setEntityDashName(NamingCase.toKebabCase(CodeGenUtil.tableToJava(databaseTable.getTableName())))
                 .setBaseClass(codeGenParam.getBaseEntity())
                 .setCorePack(codeGenParam.getCorePack())
                 .setParamPack(codeGenParam.getParamPack())
@@ -116,6 +117,7 @@ public class CodeGeneratorService {
                 .setRequestPath(codeGenParam.getRequestPath())
                 .setVueApiPath(codeGenParam.getVueApiPath())
                 .setAuthor(codeGenParam.getAuthor())
+                .setComments(databaseTable.getTableComment())
                 .setColumns(columns);
 
         return BeanUtil.beanToMap(codeGenData,false,false);
@@ -132,10 +134,10 @@ public class CodeGeneratorService {
         for (CodeGenPreview codeGenPreview : this.codeGenPreview(codeGenParam)) {
             // 添加到zip
             CodeGenTemplateVmEnum vmEnum = CodeGenTemplateVmEnum.findByName(codeGenPreview.getName());
-            String fileName = tableToJava(codeGenParam.getTableName())+vmEnum.getFileSuffixName();
+            String fileName = CodeGenUtil.tableToJava(codeGenParam.getTableName())+vmEnum.getFileSuffixName();
             // js后缀特殊处理
             if (vmEnum.getFileSuffixName().equals(".js")||vmEnum.getFileSuffixName().equals(".ts")){
-                fileName = StrUtil.lowerFirst(tableToJava(fileName));
+                fileName = StrUtil.lowerFirst(CodeGenUtil.tableToJava(fileName));
             }
             zip.putNextEntry(new ZipEntry(fileName));
             IOUtils.write(codeGenPreview.getContent(), zip, CharsetUtil.UTF_8);
@@ -148,13 +150,5 @@ public class CodeGeneratorService {
         headers.setContentDispositionFormData("attachment",
                 new String((codeGenParam.getTableName()+".zip").getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
         return new ResponseEntity<>(outputStream.toByteArray(),headers, HttpStatus.OK);
-    }
-
-    /**
-     * 表名转换成Java类名 大驼峰
-     */
-    private String tableToJava(String tableName) {
-        // 自动去除表前缀
-        return NamingCase.toPascalCase(tableName.substring(tableName.indexOf("_") + 1));
     }
 }

@@ -4,8 +4,10 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.code.gen.dao.DatabaseTableMapper;
+import cn.bootx.starter.code.gen.dto.TableGenParamDto;
 import cn.bootx.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.starter.code.gen.entity.DatabaseTable;
+import cn.bootx.starter.code.gen.util.CodeGenUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -61,5 +63,14 @@ public class DatabaseTableService {
         return databaseTableMapper.findColumnByTableName(tableName);
     }
 
-
+    /**
+     * 获取表相关的代码生成参数信息
+     */
+    public TableGenParamDto getTableGenParam(String tableName){
+        DatabaseTable databaseTable = this.findByTableName(tableName);
+        String entityName = CodeGenUtil.tableToJava(databaseTable.getTableName());
+        return new TableGenParamDto()
+                .setEntityName(entityName)
+                .setModule(entityName.toLowerCase());
+    }
 }

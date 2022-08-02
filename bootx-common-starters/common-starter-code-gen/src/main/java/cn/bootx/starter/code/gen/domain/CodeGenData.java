@@ -19,10 +19,10 @@ public class CodeGenData {
     /** 表名 */
     private String tableName;
 
-    /** 小写类型的实体名称 */
+    /** 小驼峰的实体名称 */
     private String entityLowName;
 
-    /** 大写类型的实体名称 */
+    /** 大驼峰的实体名称 */
     private String entityUpName;
 
     /** 中划线类型的实体名称 */
