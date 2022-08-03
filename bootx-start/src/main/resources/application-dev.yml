@@ -96,7 +96,18 @@ bootx:
         "[销售服务]": cn.bootx.sales
         "[订单服务]": cn.bootx.order
         "[演示模块]": cn.bootx.demo
-        "[自定义starter组件]": cn.bootx.starter
+        "[第三方对接]":
+          - cn.bootx.starter.dingtalk
+          - cn.bootx.starter.wecom
+          - cn.bootx.starter.wechat
+        "[认证与权限]":
+          - cn.bootx.starter.auth
+          - cn.bootx.starter.data.perm
+        "[其他starter组件]":
+          - cn.bootx.starter.audit.log
+          - cn.bootx.starter.file
+          - cn.bootx.starter.quartz
+          - cn.bootx.starter.monitor
     # 缓存
     cache:
       # 默认超时时间 30分钟

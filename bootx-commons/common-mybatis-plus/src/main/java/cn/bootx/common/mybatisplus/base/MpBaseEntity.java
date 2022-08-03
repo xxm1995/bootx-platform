@@ -14,7 +14,7 @@ import java.io.Serializable;
 */
 @Getter
 @Setter
-@FieldNameConstants
+@FieldNameConstants(innerTypeName = "Base")
 public class MpBaseEntity extends MpDelEntity implements Serializable {
     private static final long serialVersionUID = -2699324766101179583L;
 

@@ -79,13 +79,13 @@ bootx:
       description: bootx-platform开发平台单体版
       # 多模块扫码
       base-packages:
-        "[基础API]": cn.bootx.baseapi
-        "[身份识别和管理]": cn.bootx.iam
-        "[消息服务]": cn.bootx.notice
-        "[商品服务]": cn.bootx.goods
         "[支付服务]": cn.bootx.payment
-        "[销售服务]": cn.bootx.sales
-        "[订单服务]": cn.bootx.order
-        "[自定义starter组件]": cn.bootx.starter
+        "[身份识别和管理]": cn.bootx.iam
+        "[基础API]": cn.bootx.baseapi
+        # 支持一个模块扫描多个包
+        "[第三方对接]":
+          - cn.bootx.starter.dingtalk
+          - cn.bootx.starter.wecom
+          - cn.bootx.starter.wechat
 ```
 

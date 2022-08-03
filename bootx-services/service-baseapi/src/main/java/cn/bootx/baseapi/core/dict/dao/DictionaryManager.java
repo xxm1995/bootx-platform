@@ -34,10 +34,6 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
         return existedByField(Dictionary::getCode,code,id);
     }
 
-    public boolean existedById(Long id) {
-        return lambdaQuery().eq(Dictionary::getId,id).exists();
-    }
-
     public Page<Dictionary> page(PageParam pageParam, DictionaryParam param) {
         Page<Dictionary> mpPage = MpUtil.getMpPage(pageParam, Dictionary.class);
         return lambdaQuery()

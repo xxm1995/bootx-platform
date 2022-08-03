@@ -75,7 +75,7 @@ public class DataScopeService {
         if (!dataScopeManager.existedById(id)){
             throw new BizException("数据不存在");
         }
-        if (userDataScopeManager.existedByDataScopeId(id)){
+        if (userDataScopeManager.existsByDataScopeId(id)){
             throw new BizException("该权限已经有用户在使用，无法删除");
         }
         dataScopeManager.deleteById(id);

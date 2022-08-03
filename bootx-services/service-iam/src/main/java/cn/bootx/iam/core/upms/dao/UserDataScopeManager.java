@@ -19,8 +19,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class UserDataScopeManager extends BaseManager<UserDataScopeMapper, UserDataScope> {
-    private final UserDataScopeMapper userDataScopeMapper;
-    public boolean existedByDataScopeId(Long dataScopeId){
+    public boolean existsByDataScopeId(Long dataScopeId){
         return this.existedByField(UserDataScope::getDataScopeId,dataScopeId);
     }
 

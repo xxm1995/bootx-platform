@@ -47,7 +47,7 @@ public class UserThirdBindService {
     @Transactional
     public void unbind(String clientCode) {
         Long userId = SecurityUtil.getUserId();
-        if (!userThirdManager.existedByUserId(userId)){
+        if (!userThirdManager.existsByUserId(userId)){
            throw new DataNotExistException("用户绑定关系不存");
         }
         userThirdInfoManager.deleteByUserAndClientCode(userId, clientCode);

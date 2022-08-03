@@ -19,7 +19,7 @@ import java.util.List;
  * @author xxm
  * @date 2022/7/26
  */
-@Tag(name = "")
+@Tag(name = "企业微信机器人配置")
 @RestController
 @RequestMapping("/wecom/robot/config")
 @RequiredArgsConstructor

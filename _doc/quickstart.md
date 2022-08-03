@@ -26,10 +26,14 @@ bootx:
       description: bootx平台单体版
       # 多模块扫码
       base-packages:
-        payment: cn.bootx.payment
-        iam: cn.bootx.iam
-        baseapi: cn.bootx.baseapi
-        notice: cn.bootx.notice
+        "[支付服务]": cn.bootx.payment
+        "[身份识别和管理]": cn.bootx.iam
+        "[基础API]": cn.bootx.baseapi
+        # 支持一个模块扫描多个包
+        "[第三方对接]":
+          - cn.bootx.starter.dingtalk
+          - cn.bootx.starter.wecom
+          - cn.bootx.starter.wechat
 ```
 4. 可以在bootx-service中找到用不到的功能模块给删除了，然后在数据库删除对应的表，通过表前缀就可以找到模块对应的表
 

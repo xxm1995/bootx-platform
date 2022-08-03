@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class CategoryManager extends BaseManager<CategoryMapper, Category> {
 
-    public boolean existedByChildren(Long id) {
+    public boolean existsByChildren(Long id) {
         return existedByField(Category::getPid,id);
     }
 

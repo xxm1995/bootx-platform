@@ -52,13 +52,13 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
     /**
      * key重复检查
      */
-    public boolean existedByKey(String key){
+    public boolean existsByKey(String key){
         return existedByField(SystemParameter::getParamKey,key);
     }
     /**
      * key重复检查
      */
-    public boolean existedByKey(String key,Long id){
+    public boolean existsByKey(String key, Long id){
         return existedByField(SystemParameter::getParamKey,key,id);
     }
 

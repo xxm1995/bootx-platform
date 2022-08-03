@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,7 +25,7 @@ public class SwaggerProperties {
     /**
      * 业务模块模块
      */
-    private Map<String, String> basePackages = new LinkedHashMap<>();
+    private Map<String, List<String>> basePackages = new LinkedHashMap<>();
     /**
      * 标题
      */

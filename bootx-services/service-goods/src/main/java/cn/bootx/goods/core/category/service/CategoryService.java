@@ -125,7 +125,7 @@ public class CategoryService {
      */
     public void delete(Long id){
         // 判断是否还有子类目
-        if (categoryManager.existedByChildren(id)){
+        if (categoryManager.existsByChildren(id)){
             throw new BizException("无法删除, 还有子类目");
         }
         categoryManager.deleteById(id);

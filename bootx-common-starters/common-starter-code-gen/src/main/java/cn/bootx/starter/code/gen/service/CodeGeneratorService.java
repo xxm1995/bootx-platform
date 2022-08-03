@@ -106,9 +106,9 @@ public class CodeGeneratorService {
 
         CodeGenData codeGenData = new CodeGenData()
                 .setTableName(databaseTable.getTableName())
-                .setEntityUpName(CodeGenUtil.tableToJava(databaseTable.getTableName()))
-                .setEntityLowName(StrUtil.lowerFirst(CodeGenUtil.tableToJava(databaseTable.getTableName())))
-                .setEntityDashName(NamingCase.toKebabCase(CodeGenUtil.tableToJava(databaseTable.getTableName())))
+                .setEntityUpName(codeGenParam.getEntityName())
+                .setEntityLowName(StrUtil.lowerFirst(codeGenParam.getEntityName()))
+                .setEntityDashName(NamingCase.toKebabCase(codeGenParam.getEntityName()))
                 .setBaseClass(codeGenParam.getBaseEntity())
                 .setCorePack(codeGenParam.getCorePack())
                 .setParamPack(codeGenParam.getParamPack())
@@ -134,7 +134,7 @@ public class CodeGeneratorService {
         for (CodeGenPreview codeGenPreview : this.codeGenPreview(codeGenParam)) {
             // 添加到zip
             CodeGenTemplateVmEnum vmEnum = CodeGenTemplateVmEnum.findByName(codeGenPreview.getName());
-            String fileName = CodeGenUtil.tableToJava(codeGenParam.getTableName())+vmEnum.getFileSuffixName();
+            String fileName = codeGenParam.getEntityName()+vmEnum.getFileSuffixName();
             // js后缀特殊处理
             if (vmEnum.getFileSuffixName().equals(".js")||vmEnum.getFileSuffixName().equals(".ts")){
                 fileName = StrUtil.lowerFirst(CodeGenUtil.tableToJava(fileName));

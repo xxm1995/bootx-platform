@@ -1,5 +1,6 @@
 package cn.bootx.common.swagger;
 
+import cn.hutool.core.util.ArrayUtil;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -7,6 +8,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -23,7 +25,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 import javax.validation.constraints.NotNull;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -43,9 +44,9 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
     /**
      * 创建swagger文档模块
      * @param name 模块名称
-     * @param basePackage 扫描路径
+     * @param basePackage 扫描路径数组
      */
-    private GroupedOpenApi createApi(String name, String basePackage) {
+    private GroupedOpenApi createApi(String name, String... basePackage) {
         return GroupedOpenApi.builder()
                 .group(name)
                 .packagesToScan(basePackage)
@@ -86,10 +87,11 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
     @Override
     public void postProcessBeanDefinitionRegistry(@NotNull BeanDefinitionRegistry registry) throws BeansException {
         if (swaggerProperties.isEnabled()){
-            Map<String, String> basePackages = this.swaggerProperties.getBasePackages();
+            val basePackages = this.swaggerProperties.getBasePackages();
             AtomicInteger atomicInteger = new AtomicInteger(96);
             basePackages.forEach((name, basePackage) -> {
-                RootBeanDefinition bean = new RootBeanDefinition(GroupedOpenApi.class,()->this.createApi(name,basePackage));
+                val packages = ArrayUtil.toArray(basePackage, String.class);
+                val bean = new RootBeanDefinition(GroupedOpenApi.class,()->this.createApi(name,packages));
                 registry.registerBeanDefinition((char)atomicInteger.incrementAndGet()+"ModelAPi", bean);
             });
         }

@@ -78,13 +78,13 @@ public class CategoryParameterService {
      * 名称是否存在
      */
     public boolean existsByName(String name, Long groupId) {
-        return categoryParameterManager.existedByName(name,groupId);
+        return categoryParameterManager.existsByName(name,groupId);
     }
 
     /**
      * 名称是否存在
      */
     public boolean existsByName(String name, Long groupId, Long id) {
-        return categoryParameterManager.existedByName(name,groupId,id);
+        return categoryParameterManager.existsByName(name,groupId,id);
     }
 }

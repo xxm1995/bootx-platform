@@ -18,10 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataScopeDeptManager extends BaseManager<DataScopeDeptMapper, DataScopeDept> {
 
-    public boolean existedByDataScopeIdd(Long dataScopeId){
-        return this.existedByField(DataScopeDept::getDeptId,dataScopeId);
-    }
-
     public void deleteByDataScopeId(Long dataScopeId){
         this.deleteByField(DataScopeDept::getDataScopeId,dataScopeId);
     }

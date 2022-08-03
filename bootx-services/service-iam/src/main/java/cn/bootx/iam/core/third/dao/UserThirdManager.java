@@ -27,7 +27,7 @@ public class UserThirdManager extends BaseManager<UserThirdMapper, UserThird> {
         return findByField(UserThird::getUserId,userId);
     }
 
-    public boolean existedByUserId(Long userId){
+    public boolean existsByUserId(Long userId){
         return existedByField(UserThird::getUserId,userId);
     }
 

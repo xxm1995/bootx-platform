@@ -33,7 +33,7 @@ public class SystemParamService implements ParamService {
      */
     public void add(SystemParameterParam param){
         SystemParameter systemParameter = SystemParameter.init(param);
-        if (systemParamManager.existedByKey(systemParameter.getParamKey())){
+        if (systemParamManager.existsByKey(systemParameter.getParamKey())){
             throw new BizException("key重复");
         }
         // 默认非内置
@@ -49,7 +49,7 @@ public class SystemParamService implements ParamService {
         SystemParameter systemParameter = systemParamManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("参数项不存在"));
 
-        if (systemParamManager.existedByKey(param.getParamKey(),param.getId())) {
+        if (systemParamManager.existsByKey(param.getParamKey(),param.getId())) {
             throw new BizException("key重复");
         }
         BeanUtil.copyProperties(param,systemParameter, CopyOptions.create().ignoreNullValue());
@@ -102,14 +102,14 @@ public class SystemParamService implements ParamService {
      * 判断编码是否存在
      */
     public boolean existsByKey(String key){
-        return systemParamManager.existedByKey(key);
+        return systemParamManager.existsByKey(key);
     }
 
     /**
      * 判断编码是否存在
      */
     public boolean existsByKey(String key,Long id){
-        return systemParamManager.existedByKey(key,id);
+        return systemParamManager.existsByKey(key,id);
     }
 
     /**

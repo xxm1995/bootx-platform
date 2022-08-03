@@ -34,7 +34,7 @@ public class CategoryParameterGroupManager extends BaseManager<CategoryParameter
     /**
      * 名称是否存在
      */
-    public boolean existedByName(String name,Long categoryId){
+    public boolean existsByName(String name, Long categoryId){
         return this.lambdaQuery()
                 .eq(CategoryParameterGroup::getName,name)
                 .eq(CategoryParameterGroup::getCategoryId,categoryId)
@@ -43,7 +43,7 @@ public class CategoryParameterGroupManager extends BaseManager<CategoryParameter
     /**
      * 名称是否存在
      */
-    public boolean existedByName(String name,Long categoryId,Long id){
+    public boolean existsByName(String name, Long categoryId, Long id){
         return this.lambdaQuery()
                 .eq(CategoryParameterGroup::getName,name)
                 .eq(CategoryParameterGroup::getCategoryId,categoryId)

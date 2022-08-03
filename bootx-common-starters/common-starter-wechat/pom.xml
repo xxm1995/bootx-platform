@@ -29,5 +29,13 @@
             <artifactId>weixin-java-mp</artifactId>
             <version>${wxjava.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-auth</artifactId>
+        </dependency>
     </dependencies>
 </project>

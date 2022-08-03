@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 */
 @Getter
 @Setter
-@FieldNameConstants
+@FieldNameConstants(innerTypeName="Del")
 public class MpDelEntity extends MpCreateEntity{
 
     /** 最后修者ID */
