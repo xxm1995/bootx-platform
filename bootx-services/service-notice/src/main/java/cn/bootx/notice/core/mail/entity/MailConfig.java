@@ -43,10 +43,10 @@ public class MailConfig extends MpBaseEntity implements EntityBaseFunction<MailC
     @EncryptionField
     private String password;
 
-    /** 邮箱服务器 sender */
+    /** 邮箱服务器 发送人名称   */
     private String sender;
 
-    /** 邮箱服务器 from */
+    /** 邮箱服务器 发送人邮箱账号 */
     @TableField("from_")
     private String from;
 

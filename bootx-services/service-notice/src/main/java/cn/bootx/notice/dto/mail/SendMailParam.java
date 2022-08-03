@@ -8,9 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
-;
-
-/**   
+/**
 * 发邮件的参数
 * @author xxm  
 * @date 2020/5/2 20:31

@@ -11,14 +11,12 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import cn.hutool.json.JSONUtil;
 import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.activation.DataHandler;
@@ -42,7 +40,7 @@ import java.util.*;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class MailSendService implements EmailNoticeSender {
+public class EmailNoticeSenderImpl implements EmailNoticeSender {
 
     /**
      * 默认 MIME Type
@@ -68,58 +66,43 @@ public class MailSendService implements EmailNoticeSender {
     /**
      * 标准邮件发送
      */
-    @Async("asyncExecutor")
+    @SneakyThrows
     @Override
     public void sendMail(SendMailParam mailParam) {
         log.info("开始发送邮件");
-        try {
-            MailConfigDto mailConfig = this.getMailConfig( mailParam.getConfigCode());
-            JavaMailSenderImpl mailSender = this.getMailSender(mailConfig);
-            List<MimeMessage> mimeMessageList = new ArrayList<>();
+        MailConfigDto mailConfig = this.getMailConfig( mailParam.getConfigCode());
+        JavaMailSenderImpl mailSender = this.getMailSender(mailConfig);
+        List<MimeMessage> mimeMessageList = new ArrayList<>();
 
-            if (CollUtil.isEmpty(mailParam.getTo())) {
-                return;
-            }
-            // 获取to cc bcc 中所有允许发送的receiver
-            HashSet<String> allReceivers = Sets.newHashSet(mailParam.getTo());
-            // 密送
-            if (CollUtil.isNotEmpty(mailParam.getBccList())) {
-                allReceivers.addAll(mailParam.getBccList());
-            }
-            // 抄送
-            if (CollUtil.isNotEmpty(mailParam.getCcList())) {
-                allReceivers.addAll(mailParam.getCcList());
-            }
-            // 设置接收人
-            Set<String> receivers = Sets.intersection(allReceivers, new HashSet<>(mailParam.getTo()));
-            if (CollUtil.isEmpty(receivers)) {
-                return;
-            }
-            // 是否单条发送(拆分收件人)
-            if (mailParam.getSingleSend()) {
-                for (String to : receivers) {
-                    this.buildMailParam(mailParam, mailConfig, mailSender, mimeMessageList, allReceivers, to);
-                }
-            } else {
-                this.buildMailParam(mailParam, mailConfig, mailSender, mimeMessageList, allReceivers,ArrayUtil.toArray(receivers,String.class));
-            }
-
-            // 调用发送
-            mailSender.send(ArrayUtil.toArray(mimeMessageList,MimeMessage.class));
-
-        } catch ( MailSendException mailSendException) {
-            mailSendException.getFailedMessages().values().forEach((v) -> {
-                if (v instanceof MessagingException) {
-                    Exception ex = ((MessagingException) v).getNextException();
-                    if (ex != null) {
-                        log.error(ex.getMessage(), ex);
-                    }
-                }
-            });
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            log.error("发送HTML邮件错误。主题：{}，至：{}，错误消息：{}",  mailParam.getSubject(), JSONUtil.toJsonStr(mailParam.getTo()), e.getMessage());
+        if (CollUtil.isEmpty(mailParam.getTo())) {
+            return;
         }
+        // 获取to cc bcc 中所有允许发送的receiver
+        HashSet<String> allReceivers = Sets.newHashSet(mailParam.getTo());
+        // 密送
+        if (CollUtil.isNotEmpty(mailParam.getBccList())) {
+            allReceivers.addAll(mailParam.getBccList());
+        }
+        // 抄送
+        if (CollUtil.isNotEmpty(mailParam.getCcList())) {
+            allReceivers.addAll(mailParam.getCcList());
+        }
+        // 设置接收人
+        Set<String> receivers = Sets.intersection(allReceivers, new HashSet<>(mailParam.getTo()));
+        if (CollUtil.isEmpty(receivers)) {
+            return;
+        }
+        // 是否单条发送(拆分收件人)
+        if (mailParam.getSingleSend()) {
+            for (String to : receivers) {
+                this.buildMailParam(mailParam, mailConfig, mailSender, mimeMessageList, allReceivers, to);
+            }
+        } else {
+            this.buildMailParam(mailParam, mailConfig, mailSender, mimeMessageList, allReceivers,ArrayUtil.toArray(receivers,String.class));
+        }
+
+        // 调用发送
+        mailSender.send(ArrayUtil.toArray(mimeMessageList,MimeMessage.class));
         log.info("SendMail结束");
     }
 
