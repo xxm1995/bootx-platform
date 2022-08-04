@@ -20,8 +20,11 @@ public class UserThird extends MpBaseEntity implements EntityBaseFunction<UserTh
     /** 用户id */
     private Long userId;
 
-    /** 微信openId */
+    /** 微信(公众号) */
     private String weChatId;
+
+    /** 微信(开放平台) */
+    private String weChatOpenId;
 
     /** qqId */
     private String qqId;

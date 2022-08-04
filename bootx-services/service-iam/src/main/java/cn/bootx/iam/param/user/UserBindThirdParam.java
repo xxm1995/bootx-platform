@@ -17,14 +17,14 @@ import javax.validation.constraints.NotBlank;
 public class UserBindThirdParam {
 
     @NotBlank(message = "授权码不可为空")
-    @Schema(description = "")
+    @Schema(description = "授权码")
     private String authCode;
 
     @NotBlank(message = "终端类型不可为空")
-    @Schema(description = "")
+    @Schema(description = "终端类型")
     private String clientCode;
 
-    @NotBlank(message = "state不可为空")
+//    @NotBlank(message = "state不可为空")
     @Schema(description = "state")
     private String state;
 }

@@ -1,5 +1,6 @@
 package cn.bootx.starter.wechat.handler;
 
+import cn.bootx.starter.wechat.core.login.service.WeChatQrLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
@@ -9,33 +10,34 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.builder.outxml.TextBuilder;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-/**
-* 新增关注订阅消息
-* @author xxm
-* @date 2022/7/16
-*/
+/**   
+ * 微信扫码事件
+ * @author xxm  
+ * @date 2022/8/4
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WeChatSubscribeHandler implements WeChatMpMessageHandler {
-    private final ApplicationEventPublisher eventPublisher;
+public class WeChatQrScanHandler implements WeChatMpMessageHandler{
+    private final WeChatQrLoginService weChatQrLoginService;
 
     @Override
     public String getEvent() {
-        return WxConsts.EventType.SUBSCRIBE;
+        return WxConsts.EventType.SCAN;
     }
 
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) throws WxErrorException {
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> map, WxMpService wxMpService, WxSessionManager wxSessionManager) throws WxErrorException {
+        // 扫描用户的OpenId
+        String openId = wxMessage.getOpenId();
+        // 二维码key值 qrscene_为前缀，后面为二维码的参数值
+        String eventKey = wxMessage.getEventKey();
 
-        log.info("新关注用户 OPENID: " + wxMessage.getFromUser());
-        // 判断是否携带参数, 携带参数发送扫码关注事件
-
+        weChatQrLoginService.setOpenId(eventKey,openId);
 
         return new TextBuilder()
                 .toUser(wxMessage.getFromUser())

@@ -58,6 +58,7 @@ public class UserThirdQueryService {
         Map<String, UserThirdInfo> thirdInfoMap = userThirdInfoManager.findAllByUser(userId).stream()
                 .collect(Collectors.toMap(UserThirdInfo::getClientCode, o -> o));
         userThirdBindInfo.setWeChat(getBindInfo(thirdInfoMap,WE_CHAT));
+        userThirdBindInfo.setWeChatOpen(getBindInfo(thirdInfoMap,WE_CHAT_OPEN));
         userThirdBindInfo.setWeCom(getBindInfo(thirdInfoMap,WE_COM));
         userThirdBindInfo.setDingTalk(getBindInfo(thirdInfoMap,DING_TALK));
         return userThirdBindInfo;

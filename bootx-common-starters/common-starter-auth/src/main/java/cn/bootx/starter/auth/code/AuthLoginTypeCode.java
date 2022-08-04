@@ -25,8 +25,10 @@ public interface AuthLoginTypeCode {
     /** 手机号登录 */
     String PHONE = "phone";
 
-    /** 微信登录 */
+    /** 微信登录(公众号) */
     String WE_CHAT = "weChat";
+    /** 微信登录(开放平台) */
+    String WE_CHAT_OPEN = "weChatOpen";
 
     /** 企业微信 */
     String WE_COM = "weCom";

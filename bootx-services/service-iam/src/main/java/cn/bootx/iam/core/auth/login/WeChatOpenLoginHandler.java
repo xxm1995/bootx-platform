@@ -12,30 +12,33 @@ import cn.bootx.starter.auth.entity.AuthInfoResult;
 import cn.bootx.starter.auth.entity.LoginAuthContext;
 import cn.bootx.starter.auth.exception.LoginFailureException;
 import cn.bootx.starter.auth.util.SecurityUtil;
-import cn.bootx.starter.wechat.core.login.service.WeChatQrLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import me.zhyd.oauth.config.AuthConfig;
+import me.zhyd.oauth.model.AuthCallback;
+import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
+import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.request.AuthWeChatOpenRequest;
+import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 import static cn.bootx.starter.auth.code.AuthLoginTypeCode.*;
+import static cn.bootx.starter.auth.code.AuthLoginTypeCode.WE_CHAT;
 
 /**
-* 微信登录(公众号)
-* @author xxm
-* @date 2021/8/2
-*/
+ * 微信开放平台登录
+ * @author xxm  
+ * @date 2022/8/4 
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WeChatLoginHandler implements OpenIdAuthentication {
+public class WeChatOpenLoginHandler implements OpenIdAuthentication {
     private final UserTiredOperateService userTiredOperateService;
-    private final WeChatQrLoginService weChatQrLoginService;
 
     private final UserThirdManager userThirdManager;
     private final UserInfoManager userInfoManager;
@@ -43,7 +46,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
 
     @Override
     public String getLoginType() {
-        return AuthLoginTypeCode.WE_CHAT;
+        return WE_CHAT_OPEN;
     }
 
     /**
@@ -52,9 +55,11 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
     @Override
     public AuthInfoResult attemptAuthentication(LoginAuthContext context) {
         String authCode = context.getRequest().getParameter(AUTH_CODE);
-        AuthUser authUser = this.getAuthUser(authCode, null);
+        String state = context.getRequest().getParameter(STATE);
 
-        // 获取微信公众号关联的用户id
+        AuthUser authUser = this.getAuthUser(authCode, state);
+
+        // 获取企微关联的用户id
         UserThird userThird = userThirdManager.findByField(UserThird::getWeChatId,authUser.getUuid())
                 .orElseThrow(() -> new LoginFailureException("微信没有找到绑定的用户"));
 
@@ -68,20 +73,33 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
     }
 
     /**
-     * 获取关联的的第三方平台用户信息
-     * @param authCode key 值, 可以用来拿用户信息
+     * 获取登录地址
      */
     @Override
-    public AuthUser getAuthUser(String authCode, String state){
-        // 根据微信二维码的值获取关联扫码的微信信息
-        String uuid = weChatQrLoginService.getStatus(authCode);
-        AuthUser authUser = new AuthUser();
-        authUser.setNickname("未知");
-        authUser.setUsername("未知");
-        authUser.setAvatar("未知");
-        authUser.setUuid(uuid);
-        return authUser;
+    public String getLoginUrl(){
+        AuthRequest authRequest = this.getAuthRequest();
+        return authRequest.authorize(AuthStateUtils.createState());
     }
+
+    /**
+     * 获取关联的的第三方平台用户信息
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public AuthUser getAuthUser(String authCode, String state){
+        AuthRequest authRequest = this.getAuthRequest();
+        AuthCallback callback = AuthCallback.builder()
+                .code(authCode)
+                .state(state)
+                .build();
+        AuthResponse<AuthUser> response = authRequest.login(callback);
+        if (!Objects.equals(response.getCode(), AuthLoginTypeCode.SUCCESS)){
+            log.error("微信登录报错: {}",response.getMsg());
+            throw new LoginFailureException("微信登录出错");
+        }
+        return response.getData();
+    }
+
     /**
      * 绑定用户
      */
@@ -89,8 +107,8 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
     public void bindUser(String authCode, String state){
         Long userId = SecurityUtil.getUserId();
         AuthUser authUser = this.getAuthUser(authCode, state);
-        userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getWeChatId);
-        userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setWeChatId);
+        userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getWeChatOpenId);
+        userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setWeChatOpenId);
         userTiredOperateService.bindOpenInfo(userId,authUser,WE_CHAT);
     }
 
@@ -100,7 +118,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
     private AuthWeChatOpenRequest getAuthRequest(){
         val thirdLogin = authProperties.getThirdLogin().getWeCom();
         if (Objects.isNull(thirdLogin)){
-            throw new LoginFailureException("钉钉开放登录配置有误");
+            throw new LoginFailureException("微信开放登录配置有误");
         }
         return new AuthWeChatOpenRequest(AuthConfig.builder()
                 .clientId(thirdLogin.getClientId())

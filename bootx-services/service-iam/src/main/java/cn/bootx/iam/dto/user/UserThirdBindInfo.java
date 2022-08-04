@@ -16,8 +16,11 @@ import lombok.experimental.Accessors;
 @Schema(title = "用户三方绑定信息")
 public class UserThirdBindInfo {
 
-    @Schema(description = "微信绑定信息")
+    @Schema(description = "微信(公众号)绑定信息")
     private BindInfo weChat;
+
+    @Schema(description = "微信(开放平台)绑定信息")
+    private BindInfo weChatOpen;
 
     @Schema(description = "企业微信绑定信息")
     private BindInfo weCom;
