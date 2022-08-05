@@ -36,7 +36,6 @@ public class WeChatQrScanHandler implements WeChatMpMessageHandler{
         String openId = wxMessage.getFromUser();
         // 二维码key值
         String qrCodeKey = wxMessage.getEventKey();
-
         weChatQrLoginService.setOpenId(qrCodeKey,openId);
 
         return new TextBuilder()
