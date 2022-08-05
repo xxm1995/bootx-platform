@@ -1,6 +1,9 @@
 package cn.bootx.starter.wechat.core.login.service;
 
 import cn.bootx.common.redis.RedisClient;
+import cn.bootx.starter.auth.exception.LoginFailureException;
+import cn.bootx.starter.wechat.dto.login.WeChatLoginQrCode;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -30,14 +33,14 @@ public class WeChatQrLoginService {
      * 申请待扫描的二维码
      */
     @SneakyThrows
-    public String applyQrCode(){
+    public WeChatLoginQrCode applyQrCode(){
         WxMpQrcodeService qrcodeService = wxMpService.getQrcodeService();
         long timeout = 5 * 60 * 1000;
-        WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(1, (int) timeout);
+        String qrCodeKey = IdUtil.getSnowflakeNextIdStr();
+        WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(qrCodeKey, (int) timeout);
         String url = wxMpQrCodeTicket.getUrl();
-        String qrCodeKey = StrUtil.subAfter(url,"/q/",true);
         redisClient.setWithTimeout(PREFIX_KEY+qrCodeKey,"", timeout);
-        return qrCodeKey;
+        return new WeChatLoginQrCode(qrCodeKey,url);
     }
 
     /**
@@ -47,9 +50,9 @@ public class WeChatQrLoginService {
         String openId = redisClient.get(PREFIX_KEY + key);
 
         if (Objects.isNull(openId)){
-            return "过期";
+            return "expired";
         } else if (StrUtil.isBlank(openId)){
-            return "未扫码";
+            return "wait";
         } else {
             return "ok";
         }
@@ -68,7 +71,11 @@ public class WeChatQrLoginService {
      * 获取 openId
      */
     public String getOpenId(String key){
-        return redisClient.get(PREFIX_KEY + key);
+        String openId = redisClient.get(PREFIX_KEY + key);
+        if (StrUtil.isBlank(openId)) {
+            throw new LoginFailureException("数据已过期或不存在");
+        }
+        return openId;
     }
 
     /**

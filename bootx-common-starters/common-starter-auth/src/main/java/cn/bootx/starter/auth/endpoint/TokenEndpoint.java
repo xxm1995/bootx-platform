@@ -30,12 +30,6 @@ public class TokenEndpoint {
         return Res.ok(tokenService.login(request,response));
     }
 
-    @Operation(summary = "三方登录登录")
-    @PostMapping("/loginOpenId")
-    public ResResult<String> loginOpenId(HttpServletRequest request, HttpServletResponse response){
-        return Res.ok(tokenService.login(request,response));
-    }
-
     @Operation(summary = "退出")
     @PostMapping("/logout")
     public ResResult<String> logout(){

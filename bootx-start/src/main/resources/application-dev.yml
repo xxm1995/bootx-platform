@@ -131,7 +131,7 @@ bootx:
       ding-talk:
         app-key: ??
         app-secret: ??
-      #微信
+      #微信(公众平台)
       wechat:
         app-id: ??
         app-secret: ??
@@ -173,10 +173,11 @@ bootx:
           client-secret: ${bootx.starter.third.wecom.corp-secret}
           client-id: ${bootx.starter.third.wecom.corp-id}
           agent-id: ${bootx.starter.third.wecom.agent-id}
-        we-chat:
+        # 微信开放平台
+        we-chat-open:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/weChat
-          client-id: ${bootx.starter.third.wechat.app-id}
-          client-secret: ${bootx.starter.third.wechat.app-secret}
+          client-id: ??
+          client-secret: ??
     # 审计日志存储
     audit-log:
       store: mongo

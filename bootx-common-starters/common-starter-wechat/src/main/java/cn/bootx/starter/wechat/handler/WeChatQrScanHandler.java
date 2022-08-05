@@ -33,13 +33,14 @@ public class WeChatQrScanHandler implements WeChatMpMessageHandler{
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> map, WxMpService wxMpService, WxSessionManager wxSessionManager) throws WxErrorException {
         // 扫描用户的OpenId
-        String openId = wxMessage.getOpenId();
-        // 二维码key值 qrscene_为前缀，后面为二维码的参数值
-        String eventKey = wxMessage.getEventKey();
+        String openId = wxMessage.getFromUser();
+        // 二维码key值
+        String qrCodeKey = wxMessage.getEventKey();
 
-        weChatQrLoginService.setOpenId(eventKey,openId);
+        weChatQrLoginService.setOpenId(qrCodeKey,openId);
 
         return new TextBuilder()
+                .fromUser(wxMessage.getToUser())
                 .toUser(wxMessage.getFromUser())
                 .content("感谢关注").build();
     }

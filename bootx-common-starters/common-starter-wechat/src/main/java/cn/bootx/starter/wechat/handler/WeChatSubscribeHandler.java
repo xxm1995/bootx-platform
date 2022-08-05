@@ -38,6 +38,7 @@ public class WeChatSubscribeHandler implements WeChatMpMessageHandler {
 
 
         return new TextBuilder()
+                .fromUser(wxMessage.getToUser())
                 .toUser(wxMessage.getFromUser())
                 .content("感谢关注").build();
     }

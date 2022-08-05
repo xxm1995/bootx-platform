@@ -116,7 +116,7 @@ public class WeChatOpenLoginHandler implements OpenIdAuthentication {
      * 获取微信认证请求
      */
     private AuthWeChatOpenRequest getAuthRequest(){
-        val thirdLogin = authProperties.getThirdLogin().getWeCom();
+        val thirdLogin = authProperties.getThirdLogin().getWeChatOpen();
         if (Objects.isNull(thirdLogin)){
             throw new LoginFailureException("微信开放登录配置有误");
         }
