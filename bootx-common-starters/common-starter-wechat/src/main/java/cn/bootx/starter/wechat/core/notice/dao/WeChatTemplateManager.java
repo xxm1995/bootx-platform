@@ -12,11 +12,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
-*
-* @author xxm
-* @date 2022/7/17
-*/
+ *
+ * @author xxm
+ * @date 2022/7/17
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -35,5 +37,23 @@ public class WeChatTemplateManager extends BaseManager<WeChatTemplateMapper, WeC
 
     public boolean existsByCode(String code,Long id){
         return existedByField(WeChatTemplate::getCode,code,id);
+    }
+
+
+    /**
+     * 根据code查询
+     */
+    public Optional<WeChatTemplate> findByCode(String code){
+        return this.findByField(WeChatTemplate::getCode,code);
+    }
+
+    /**
+     * 根据code查询
+     */
+    public Optional<WeChatTemplate> findTemplateIdByCode(String code){
+        return lambdaQuery()
+                .select(WeChatTemplate::getTemplateId)
+                .eq(WeChatTemplate::getCode,code)
+                .oneOpt();
     }
 }
