@@ -10,8 +10,6 @@ import cn.bootx.starter.wechat.param.menu.WeChatMenuParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.common.bean.menu.WxMenu;
-import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,14 +68,15 @@ public class WeChatMenuController {
 
     @Operation(summary = "发布菜单")
     @PostMapping("/publish")
-    public ResResult<Void> publish(@RequestBody WxMenu menu){
-        weChatMenuService.publish(menu);
+    public ResResult<Void> publish(Long id){
+        weChatMenuService.publish(id);
         return Res.ok();
     }
 
-    @Operation(summary = "获取微信菜单")
-    @GetMapping("/getMenus")
-    public ResResult<WxMpMenu> getMenus(){
-        return Res.ok(weChatMenuService.getMenus());
+    @Operation(summary = "获取微信自定义菜单到系统中")
+    @PostMapping("/importMenu")
+    public ResResult<Void> importMenu(){
+        weChatMenuService.importMenu();
+        return Res.ok();
     }
 }

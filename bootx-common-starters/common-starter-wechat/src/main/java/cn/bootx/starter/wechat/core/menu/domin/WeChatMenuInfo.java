@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.common.bean.menu.WxMenuButton;
+import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,9 +127,9 @@ public class WeChatMenuInfo {
     /**
      * 从WxJava对象转成
      */
-    public static WeChatMenuInfo init(WxMenu menu){
+    public static WeChatMenuInfo init(WxMpMenu wxMpMenu){
         WeChatMenuInfo weChatMenuInfo = new WeChatMenuInfo();
-        List<Button> buttons = menu.getButtons().stream()
+        List<Button> buttons = wxMpMenu.getMenu().getButtons().stream()
                 .map(WeChatMenuInfo::initButton)
                 .collect(Collectors.toList());
 

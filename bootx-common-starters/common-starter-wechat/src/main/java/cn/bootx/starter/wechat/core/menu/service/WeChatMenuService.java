@@ -6,6 +6,7 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.wechat.core.menu.dao.WeChatMenuManager;
+import cn.bootx.starter.wechat.core.menu.domin.WeChatMenuInfo;
 import cn.bootx.starter.wechat.core.menu.entity.WeChatMenu;
 import cn.bootx.starter.wechat.dto.menu.WeChatMenuDto;
 import cn.bootx.starter.wechat.param.menu.WeChatMenuParam;
@@ -85,20 +86,26 @@ public class WeChatMenuService {
      * 添加菜单
      */
     @SneakyThrows
-    public void publish(WxMenu menu){
+    public void publish(Long id){
+        WeChatMenu weChatMenu = weChatMenuManager.findById(id).orElseThrow(() -> new DataNotExistException("菜单信息不存在"));
+        WxMenu wxMenu = weChatMenu.getMenuInfo().toWxMenu();
         WxMpMenuService menuService = wxMpService.getMenuService();
-        menuService.menuCreate(menu);
+        menuService.menuCreate(wxMenu);
+        weChatMenu.setPublish(true);
+        weChatMenuManager.updateById(weChatMenu);
     }
 
     /**
      * 获取当前微信菜单
      */
     @SneakyThrows
-    public WxMpMenu getMenus(){
+    public void importMenu(){
         WxMpMenuService menuService = wxMpService.getMenuService();
         WxMpMenu wxMpMenu = menuService.menuGet();
-        System.out.println(wxMpMenu);
-        return wxMpMenu;
+        WeChatMenuInfo weChatMenuInfo = WeChatMenuInfo.init(wxMpMenu);
+        WeChatMenu weChatMenu = new WeChatMenu()
+                .setMenuInfo(weChatMenuInfo);
+        weChatMenuManager.save(weChatMenu);
     }
 
 }
