@@ -12,6 +12,7 @@ import cn.bootx.starter.wechat.dto.menu.WeChatMenuDto;
 import cn.bootx.starter.wechat.param.menu.WeChatMenuParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.date.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -83,28 +85,35 @@ public class WeChatMenuService {
 
 
     /**
-     * 添加菜单
+     * 发布菜单
      */
     @SneakyThrows
+    @Transactional(rollbackFor = Exception.class)
     public void publish(Long id){
         WeChatMenu weChatMenu = weChatMenuManager.findById(id).orElseThrow(() -> new DataNotExistException("菜单信息不存在"));
         WxMenu wxMenu = weChatMenu.getMenuInfo().toWxMenu();
         WxMpMenuService menuService = wxMpService.getMenuService();
         menuService.menuCreate(wxMenu);
         weChatMenu.setPublish(true);
+        weChatMenuManager.clearPublish();
         weChatMenuManager.updateById(weChatMenu);
     }
 
     /**
-     * 获取当前微信菜单
+     * 导入当前微信菜单
      */
+    @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
     public void importMenu(){
         WxMpMenuService menuService = wxMpService.getMenuService();
         WxMpMenu wxMpMenu = menuService.menuGet();
         WeChatMenuInfo weChatMenuInfo = WeChatMenuInfo.init(wxMpMenu);
         WeChatMenu weChatMenu = new WeChatMenu()
+                .setName("微信自定义菜单")
+                .setRemark("导入时间" + DateUtil.now())
+                .setPublish(true)
                 .setMenuInfo(weChatMenuInfo);
+        weChatMenuManager.clearPublish();
         weChatMenuManager.save(weChatMenu);
     }
 
