@@ -1,14 +1,20 @@
 package cn.bootx.starter.wechat.controller;
 
+import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.wechat.core.menu.service.WeChatMenuService;
+import cn.bootx.starter.wechat.dto.menu.WeChatMenuDto;
+import cn.bootx.starter.wechat.param.menu.WeChatMenuParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.menu.WxMenu;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 微信菜单管理
@@ -21,6 +27,46 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class WeChatMenuController {
     private final WeChatMenuService weChatMenuService;
+
+
+    @Operation( summary = "添加")
+    @PostMapping(value = "/add")
+    public ResResult<Void> add(@RequestBody WeChatMenuParam param){
+        weChatMenuService.add(param);
+        return Res.ok();
+    }
+
+    @Operation( summary = "修改")
+    @PostMapping(value = "/update")
+    public ResResult<Void> update(@RequestBody WeChatMenuParam param){
+        weChatMenuService.update(param);
+        return Res.ok();
+    }
+
+    @Operation( summary = "删除")
+    @DeleteMapping(value = "/delete")
+    public ResResult<Void> delete(Long id){
+        weChatMenuService.delete(id);
+        return Res.ok();
+    }
+
+    @Operation( summary = "通过ID查询")
+    @GetMapping(value = "/findById")
+    public ResResult<WeChatMenuDto> findById(Long id){
+        return Res.ok(weChatMenuService.findById(id));
+    }
+
+    @Operation( summary = "查询所有")
+    @GetMapping(value = "/findAll")
+    public ResResult<List<WeChatMenuDto>> findAll(){
+        return Res.ok(weChatMenuService.findAll());
+    }
+
+    @Operation( summary = "分页查询")
+    @GetMapping(value = "/page")
+    public ResResult<PageResult<WeChatMenuDto>> page(PageParam pageParam, WeChatMenuParam weChatMenuParam){
+        return Res.ok(weChatMenuService.page(pageParam,weChatMenuParam));
+    }
 
     @Operation(summary = "发布菜单")
     @PostMapping("/publish")

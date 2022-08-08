@@ -23,8 +23,8 @@ import lombok.experimental.Accessors;
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("${tableName}")
 @Accessors(chain = true)
+@TableName("${tableName}")
 public class ${entityUpName} extends ${baseClass} implements EntityBaseFunction<${entityUpName}Dto>{
 
 #foreach ($column in $columns)

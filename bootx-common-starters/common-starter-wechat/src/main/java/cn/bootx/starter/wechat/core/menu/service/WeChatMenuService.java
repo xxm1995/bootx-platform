@@ -1,5 +1,16 @@
 package cn.bootx.starter.wechat.core.menu.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.starter.wechat.core.menu.dao.WeChatMenuManager;
+import cn.bootx.starter.wechat.core.menu.entity.WeChatMenu;
+import cn.bootx.starter.wechat.dto.menu.WeChatMenuDto;
+import cn.bootx.starter.wechat.param.menu.WeChatMenuParam;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +19,8 @@ import me.chanjar.weixin.mp.api.WxMpMenuService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.menu.WxMpMenu;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**   
  * 微信菜单
@@ -19,6 +32,54 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WeChatMenuService {
     private final WxMpService wxMpService;
+    private final WeChatMenuManager weChatMenuManager;
+
+    /**
+     * 添加
+     */
+    public void add(WeChatMenuParam param){
+        WeChatMenu weChatMenu = WeChatMenu.init(param);
+        weChatMenuManager.save(weChatMenu);
+    }
+
+    /**
+     * 修改
+     */
+    public void update(WeChatMenuParam param){
+        WeChatMenu weChatMenu = weChatMenuManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+
+        BeanUtil.copyProperties(param,weChatMenu, CopyOptions.create().ignoreNullValue());
+        weChatMenuManager.updateById(weChatMenu);
+    }
+
+    /**
+     * 分页
+     */
+    public PageResult<WeChatMenuDto> page(PageParam pageParam, WeChatMenuParam weChatMenuParam){
+        return MpUtil.convert2DtoPageResult(weChatMenuManager.page(pageParam,weChatMenuParam));
+    }
+
+    /**
+     * 获取单条
+     */
+    public WeChatMenuDto findById(Long id){
+        return weChatMenuManager.findById(id).map(WeChatMenu::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 获取全部
+     */
+    public List<WeChatMenuDto> findAll(){
+        return ResultConvertUtil.dtoListConvert(weChatMenuManager.findAll());
+    }
+
+    /**
+     * 删除
+     */
+    public void delete(Long id){
+        weChatMenuManager.deleteById(id);
+    }
+
 
     /**
      * 添加菜单
@@ -30,7 +91,7 @@ public class WeChatMenuService {
     }
 
     /**
-     * 获取微信菜单
+     * 获取当前微信菜单
      */
     @SneakyThrows
     public WxMpMenu getMenus(){
@@ -39,4 +100,5 @@ public class WeChatMenuService {
         System.out.println(wxMpMenu);
         return wxMpMenu;
     }
+
 }
