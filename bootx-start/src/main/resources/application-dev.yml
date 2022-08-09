@@ -124,6 +124,9 @@ bootx:
       client-id: clientId
       # 自动追加终端id后缀 client@xxx
       auto-client-id-suffix: true
+    # 异常
+    exception:
+      show-full-message: true
   starter:
     # 三方平台
     third:

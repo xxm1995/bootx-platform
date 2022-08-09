@@ -73,10 +73,16 @@ public class WeChatMenuController {
         return Res.ok();
     }
 
-    @Operation(summary = "获取微信自定义菜单到系统中")
+    @Operation(summary = "导入微信自定义菜单到系统中")
     @PostMapping("/importMenu")
     public ResResult<Void> importMenu(){
         weChatMenuService.importMenu();
+        return Res.ok();
+    }
+    @Operation(summary = "清空微信自定义菜单")
+    @PostMapping("/clearMenu")
+    public ResResult<Void> clearMenu(){
+        weChatMenuService.clearMenu();
         return Res.ok();
     }
 }

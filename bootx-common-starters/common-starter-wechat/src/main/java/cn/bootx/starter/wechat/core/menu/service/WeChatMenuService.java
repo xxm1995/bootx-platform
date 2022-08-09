@@ -117,4 +117,13 @@ public class WeChatMenuService {
         weChatMenuManager.save(weChatMenu);
     }
 
+    /**
+     * 清空菜单
+     */
+    @SneakyThrows
+    public void clearMenu(){
+        WxMpMenuService menuService = wxMpService.getMenuService();
+        menuService.menuDelete();;
+    }
+
 }
