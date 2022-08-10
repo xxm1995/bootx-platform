@@ -2,8 +2,10 @@ package cn.bootx.starter.wechat.core.media.service;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.FileUtil;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.file.FileNameUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,13 +13,15 @@ import lombok.val;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.mp.api.WxMpMaterialService;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.util.Objects;
 
 /**   
  * 素材管理
@@ -36,7 +40,8 @@ public class WeChatMediaService {
     @SneakyThrows
     public PageResult<WxMaterialFileBatchGetNewsItem> pageFile(PageParam pageParam, String type){
         WxMpMaterialService materialService = wxMpService.getMaterialService();
-        WxMpMaterialFileBatchGetResult result = materialService.materialFileBatchGet(type, pageParam.start(), pageParam.getSize());
+        val result = materialService.materialFileBatchGet(type, pageParam.start(), pageParam.getSize());
+//        val result = new WxMpMaterialFileBatchGetResult();
         val items = result.getItems();;
         PageResult<WxMaterialFileBatchGetNewsItem> pageResult = new PageResult<>();
         pageResult.setCurrent(pageParam.getCurrent())
@@ -79,8 +84,17 @@ public class WeChatMediaService {
     public void uploadFile(String mediaType, MultipartFile multipartFile){
         WxMpMaterialService materialService = wxMpService.getMaterialService();
         byte[] bytes = IoUtil.readBytes(multipartFile.getInputStream());
-        String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
-        materialService.mediaUpload(mediaType,fileType,new ByteArrayInputStream(bytes));
+        String originalFilename = multipartFile.getOriginalFilename();
+        String fileName = FileNameUtil.mainName(originalFilename);
+        String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes),originalFilename);
+        File tempFile = FileUtil.createTempFile(new ByteArrayInputStream(bytes), fileName, fileType);
+        WxMpMaterial material = new WxMpMaterial();
+        material.setFile(tempFile);
+        if (Objects.equals(mediaType,WxConsts.MediaFileType.VIDEO)) {
+            material.setVideoTitle(fileName);
+            material.setVideoIntroduction(fileName);
+        }
+        materialService.materialFileUpload(mediaType,material);
     }
 
 }

@@ -24,7 +24,9 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
      */
     @SneakyThrows
     public static File createTempFile(InputStream inputStream, String name, String ext){
-        return createTmpFile(inputStream, name, ext, Files.createTempDirectory("temp").toFile());
+        File tempDir = Files.createTempDirectory("temp").toFile();
+        tempDir.deleteOnExit();
+        return createTmpFile(inputStream, name, ext, tempDir);
     }
 
     /**
@@ -37,9 +39,9 @@ public class FileUtil extends cn.hutool.core.io.FileUtil {
      */
     @SneakyThrows
     public File createTmpFile(InputStream inputStream, String name, String ext, File tmpDirFile){
-        File resultFile = File.createTempFile(name, '.' + ext, tmpDirFile);
-        resultFile.deleteOnExit();
+        File resultFile = new File(tmpDirFile, name + '.' + ext);
         writeFromStream(inputStream, resultFile);
+        resultFile.deleteOnExit();
         return resultFile;
     }
 }
