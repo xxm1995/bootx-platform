@@ -2,13 +2,15 @@ package cn.bootx.starter.wechat.core.article.service;
 
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.starter.wechat.dto.article.WeChatArticleDto;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.freepublish.WxMpFreePublishItem;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 /**
  *
@@ -28,11 +30,13 @@ public class WeChatArticleService {
      * @return
      */
     @SneakyThrows
-    public PageResult<WxMpFreePublishItem> page(PageParam pageParam){
+    public PageResult<WeChatArticleDto> page(PageParam pageParam){
         val freePublishService = wxMpService.getFreePublishService();
         val result = freePublishService.getPublicationRecords(pageParam.start(), pageParam.getSize());
-        val items = result.getItems();;
-        PageResult<WxMpFreePublishItem> pageResult = new PageResult<>();
+        val items = result.getItems().stream()
+                .map(WeChatArticleDto::init)
+                .collect(Collectors.toList());
+        PageResult<WeChatArticleDto> pageResult = new PageResult<>();
         pageResult.setCurrent(pageParam.getCurrent())
                 .setRecords(items)
                 .setSize(pageParam.getSize())

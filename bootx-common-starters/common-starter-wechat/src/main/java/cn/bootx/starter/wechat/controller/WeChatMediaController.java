@@ -5,10 +5,10 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.wechat.core.media.service.WeChatMediaService;
+import cn.bootx.starter.wechat.dto.media.WeChatMediaDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialFileBatchGetResult.WxMaterialFileBatchGetNewsItem;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +28,7 @@ public class WeChatMediaController {
 
     @Operation(summary = "非图文素材分页")
     @GetMapping("/pageFile")
-    public ResResult<PageResult<WxMaterialFileBatchGetNewsItem>> pageFile(PageParam pageParam, String type){
+    public ResResult<PageResult<WeChatMediaDto>> pageFile(PageParam pageParam, String type){
         return Res.ok(weChatMediaService.pageFile(pageParam,type));
     }
 
