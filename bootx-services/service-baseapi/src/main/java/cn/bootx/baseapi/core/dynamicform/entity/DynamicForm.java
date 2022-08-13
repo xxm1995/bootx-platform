@@ -28,7 +28,6 @@ public class DynamicForm extends MpBaseEntity implements EntityBaseFunction<Dyna
     private String code;
     /** 表单内容 */
     @BigField
-//    @TableField(typeHandler= JacksonTypeHandler.class)
     private String value;
     /** 备注 */
     private String remark;

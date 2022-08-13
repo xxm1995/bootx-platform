@@ -16,4 +16,7 @@ Snowy国产密码算法后台权限管理系统：
 https://gitee.com/xiaonuobase/snowy
 
 表单设计器 k-form-design： 
-https://gitee.com/kcz66/k-form-design?_from=gitee_search
+https://gitee.com/kcz66/k-form-design
+
+Vue微信菜单编辑器: 
+https://github.com/hopex/vue-menu
