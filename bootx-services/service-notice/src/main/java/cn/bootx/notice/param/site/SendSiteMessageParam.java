@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,11 +23,20 @@ public class SendSiteMessageParam {
     /**消息内容*/
     private String content;
 
+    /**发送者id*/
+    private Long senderId;
+
+    /**发送者姓名*/
+    private String senderName;
+
     /** 接收者类型 */
     private String receiveType;
 
     /**接收者id*/
     private List<Long> receiveIds;
+
+    /** 截至有效期 接收值为全体的时候必填写, 超过有效期后 */
+    private LocalDateTime efficientTime;
 
     /** 用户处理方式 跳转路由/跳转链接/打开组件*/
     private String handleType;

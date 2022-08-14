@@ -4,6 +4,7 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.notice.core.site.domain.SiteMessageInfo;
 import cn.bootx.notice.core.site.service.SiteMessageService;
 import cn.bootx.notice.dto.site.SiteMessageDto;
 import cn.bootx.notice.param.site.SendSiteMessageParam;
@@ -40,25 +41,25 @@ public class SiteMessageController {
     @Operation(summary = "获取接收消息条数")
     @GetMapping("/getReceiveCount")
     public ResResult<Long> getReceiveCount(Boolean haveRead){
-        return Res.ok(siteMessageService.getReceiveCount(haveRead));
+        return Res.ok();
     }
 
     @Operation(summary = "获取发送消息条数")
     @GetMapping("/getSenderCount")
-    public ResResult<Long> getSenderCount(Boolean haveRead){
-        return Res.ok(siteMessageService.getSenderCount(haveRead));
+    public ResResult<Long> getSenderCount(){
+        return Res.ok();
     }
 
     @Operation(summary = "接收消息分页")
     @GetMapping("/pageByReceive")
-    public ResResult<PageResult<SiteMessageDto>> pageByReceive(PageParam pageParam, Boolean haveRead){
-        return Res.ok(siteMessageService.pageByReceive(pageParam,haveRead));
+    public ResResult<PageResult<SiteMessageInfo>> pageByReceive(PageParam pageParam,SiteMessageInfo query){
+        return Res.ok(siteMessageService.pageByReceive(pageParam,query));
     }
 
     @Operation(summary = "发送消息分页")
     @GetMapping("/pageBySender")
     public ResResult<PageResult<SiteMessageDto>> pageBySender(PageParam pageParam, Boolean haveRead){
-        return Res.ok(siteMessageService.pageBySender(pageParam,haveRead));
+        return Res.ok();
     }
 
     @Operation(summary = "消息分页")

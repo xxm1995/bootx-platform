@@ -3,6 +3,7 @@ package cn.bootx.notice.core.site.entity;
 import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.notice.code.SiteMessageCode;
 import cn.bootx.notice.core.site.convert.SiteMessageConvert;
 import cn.bootx.notice.dto.site.SiteMessageDto;
 import cn.bootx.notice.param.site.SiteMessageParam;
@@ -31,10 +32,16 @@ public class SiteMessage extends MpBaseEntity implements EntityBaseFunction<Site
     @BigField
     private String content;
 
-    /** 接收对象类型 全体/指定用户 */
+    /**
+     * 接收对象类型 全体/指定用户
+     * @see SiteMessageCode#RECEIVE_ALL
+     */
     private String receiveType;
 
-    /** 发布状态 */
+    /**
+     * 发布状态
+     * @see SiteMessageCode#STATE_SENT
+     */
     private String sendState;
 
     /**发送者id*/

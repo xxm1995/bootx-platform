@@ -20,7 +20,9 @@ public class MpInterceptorConfiguration {
      */
     @Bean
     public MpInterceptor paginationInnerInterceptor(){
-        return new MpInterceptor(new PaginationInnerInterceptor(DbType.MYSQL),1);
+        PaginationInnerInterceptor paginationInnerInterceptor = new PaginationInnerInterceptor(DbType.MYSQL);
+        paginationInnerInterceptor.setOptimizeJoin(false);
+        return new MpInterceptor(paginationInnerInterceptor,1);
     }
     /**
      * 乐观锁
