@@ -22,8 +22,14 @@ public class SendSiteMessageParam {
     /**消息内容*/
     private String content;
 
+    /** 接收者类型 */
+    private String receiveType;
+
     /**接收者id*/
-    private List<User> receiveIds;
+    private List<Long> receiveIds;
+
+    /** 用户处理方式 跳转路由/跳转链接/打开组件*/
+    private String handleType;
 
     @Data
     @Accessors(chain = true)

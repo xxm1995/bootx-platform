@@ -10,8 +10,10 @@ import cn.bootx.notice.core.site.entity.SiteMessage;
 import cn.bootx.notice.dto.site.SiteMessageDto;
 import cn.bootx.notice.param.site.SendSiteMessageParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,17 +37,19 @@ public class SiteMessageService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void send(SendSiteMessageParam param){
-        UserDetail userDetail = SecurityUtil.getUser();
+        val userDetail = SecurityUtil.getCurrentUser();
+
+        // 新增站内信内容
+
         List<SiteMessage> siteMessages = param.getReceiveIds().stream()
                 .map(user -> new SiteMessage().setTitle(param.getTitle())
                         .setContent(param.getContent())
-                        .setSenderId(userDetail.getId())
-                        .setSenderName(userDetail.getName())
+                        .setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                        .setSenderName(userDetail.map(UserDetail::getName).orElse("未知"))
                         .setSenderTime(LocalDateTime.now())
-                        .setReceiveId(user.getReceiveId())
-                        .setReceiveName(user.getReceiveName())
-                        .setHaveRead(Boolean.FALSE)
                 ).collect(Collectors.toList());
+        // 视情况添加
+
         siteMessageManager.saveAll(siteMessages);
     }
 
