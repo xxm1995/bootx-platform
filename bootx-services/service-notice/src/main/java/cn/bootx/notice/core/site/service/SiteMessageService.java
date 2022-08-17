@@ -93,12 +93,12 @@ public class SiteMessageService {
     }
 
     /**
-     * 获取最新的几条消息(未读的在最上面)
+     * 未读消息数量
      */
-    public void getLatest(){
-
+    public Integer countByReceiveNotRead(SiteMessageInfo query){
+        Long userId = 0L;
+        return siteMessageManager.countByReceiveNotRead(userId);
     }
-
 
     /**
      * 接收消息分页

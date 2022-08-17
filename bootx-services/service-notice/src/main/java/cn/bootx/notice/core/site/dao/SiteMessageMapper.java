@@ -18,4 +18,6 @@ import org.apache.ibatis.annotations.Param;
 public interface SiteMessageMapper extends BaseMapper<SiteMessage> {
 
     Page<SiteMessageInfo> pageMassage(Page<SiteMessageInfo> page, @Param(Constants.WRAPPER) Wrapper<SiteMessageInfo> wrapper);
+
+    Integer countMassage(@Param(Constants.WRAPPER) Wrapper<SiteMessageInfo> wrapper);
 }

@@ -38,16 +38,10 @@ public class SiteMessageController {
         return Res.ok(siteMessageService.findById(id));
     }
 
-    @Operation(summary = "获取接收消息条数")
-    @GetMapping("/getReceiveCount")
-    public ResResult<Long> getReceiveCount(Boolean haveRead){
-        return Res.ok();
-    }
-
-    @Operation(summary = "获取发送消息条数")
-    @GetMapping("/getSenderCount")
-    public ResResult<Long> getSenderCount(){
-        return Res.ok();
+    @Operation(summary = "获取未读的接收消息条数")
+    @GetMapping("/countByReceiveNotRead")
+    public ResResult<Integer> countByReceiveNotRead(SiteMessageInfo query){
+        return Res.ok(siteMessageService.countByReceiveNotRead(query));
     }
 
     @Operation(summary = "接收消息分页")

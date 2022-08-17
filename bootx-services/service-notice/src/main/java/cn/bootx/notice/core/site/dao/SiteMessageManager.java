@@ -32,13 +32,29 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
         val mpPage = MpUtil.getMpPage(pageParam, SiteMessageInfo.class);
 
         val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
-                .and(o->o.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL))
-                .or(o->o.eq(SiteMessageInfo::getReceiveId,userId)
+                .and(o->o.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                        .or()
+                        .eq(SiteMessageInfo::getReceiveId,userId))
+                .and(o->o.eq(SiteMessageInfo::getReceiveId,userId)
                         .eq(Objects.nonNull(query.getHaveRead()),SiteMessageInfo::getHaveRead,query.getHaveRead())
                         .eq(Objects.nonNull(query.getTitle()),SiteMessageInfo::getTitle,query.getTitle())
                 ).orderByAsc(SiteMessageInfo::getHaveRead)
                 .orderByDesc(SiteMessageInfo::getReadTime);
         return baseMapper.pageMassage(mpPage,wrapper);
+    }
+
+    /**
+     * 查询未读的消息数量
+     */
+    public Integer countByReceiveNotRead(Long userId){
+        val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
+                .and(o->o.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                        .or()
+                        .eq(SiteMessageInfo::getReceiveId,userId))
+                .eq(SiteMessageInfo::getHaveRead,false)
+                .orderByAsc(SiteMessageInfo::getHaveRead)
+                .orderByDesc(SiteMessageInfo::getReadTime);
+        return baseMapper.countMassage(wrapper);
     }
 
     /**
