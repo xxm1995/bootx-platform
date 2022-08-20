@@ -2,9 +2,7 @@ package cn.bootx.notice.core.site.convert;
 
 import cn.bootx.notice.core.site.entity.SiteMessage;
 import cn.bootx.notice.dto.site.SiteMessageDto;
-import cn.bootx.notice.param.site.SiteMessageParam;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -18,7 +16,4 @@ public interface SiteMessageConvert {
 
     SiteMessageDto convert(SiteMessage in);
 
-    SiteMessage convert(SiteMessageDto in);
-
-    SiteMessage convert(SiteMessageParam in);
 }

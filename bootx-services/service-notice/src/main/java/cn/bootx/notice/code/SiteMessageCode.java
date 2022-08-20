@@ -1,8 +1,8 @@
 package cn.bootx.notice.code;
 
-/**   
+/**
  * 站内信编码
- * @author xxm  
+ * @author xxm
  * @date 2022/8/14 
  */
 public interface SiteMessageCode {
@@ -10,7 +10,7 @@ public interface SiteMessageCode {
     /** 指定用户 */
     String RECEIVE_USER = "user";
     /** 全部用户 */
-        String RECEIVE_ALL = "all";
+    String RECEIVE_ALL = "all";
 
     /* 发布状态 */
     /** 已发送 */

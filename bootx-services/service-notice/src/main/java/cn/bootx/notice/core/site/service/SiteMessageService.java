@@ -96,7 +96,8 @@ public class SiteMessageService {
      * 未读消息数量
      */
     public Integer countByReceiveNotRead(SiteMessageInfo query){
-        Long userId = 0L;
+        Long userId = SecurityUtil.getUserId();
+//        Long userId = 0L;
         return siteMessageManager.countByReceiveNotRead(userId);
     }
 
@@ -104,17 +105,17 @@ public class SiteMessageService {
      * 接收消息分页
      */
     public PageResult<SiteMessageInfo> pageByReceive(PageParam pageParam,SiteMessageInfo query){
-        Long userId = 0L;
+        Long userId = SecurityUtil.getUserId();
+//        Long userId = 0L;
         return MpUtil.convert2PageResult(siteMessageManager.pageByReceive(pageParam,query,userId));
     }
-
     /**
-     * 消息分页
+     * 发送消息分页
      */
-    public PageResult<SiteMessageDto> page(PageParam pageParam){
+    public PageResult<SiteMessageDto> pageBySender(PageParam pageParam,SiteMessageInfo query){
         Long userId = SecurityUtil.getUserId();
-        return MpUtil.convert2DtoPageResult(siteMessageManager.page(pageParam,userId));
-
+//        Long userId = 0L;
+        return MpUtil.convert2DtoPageResult(siteMessageManager.pageBySender(pageParam,query,userId));
     }
 
     /**
@@ -129,8 +130,8 @@ public class SiteMessageService {
      * 阅读
      */
     public void read(Long messageId){
-//        Long userId = SecurityUtil.getUserId();
-        Long userId = 0L;
+        Long userId = SecurityUtil.getUserId();
+//        Long userId = 0L;
         SiteMessageUser siteMessageUser = siteMessageUserManager.findByMessageId(messageId)
                 .orElse(new SiteMessageUser()
                         .setReceiveId(userId)

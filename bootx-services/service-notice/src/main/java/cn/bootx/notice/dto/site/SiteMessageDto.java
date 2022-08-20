@@ -1,6 +1,7 @@
 package cn.bootx.notice.dto.site;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
+import cn.bootx.notice.code.SiteMessageCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,24 +26,30 @@ public class SiteMessageDto extends BaseDto {
     @Schema(description= "消息内容")
     private String content;
 
+    /**
+     * @see SiteMessageCode#RECEIVE_ALL
+     */
+    @Schema(description= "接收对象类型 全体/指定用户")
+    private String receiveType;
+
+    /**
+     * @see SiteMessageCode#STATE_SENT
+     */
+    @Schema(description= "发布状态")
+    private String sendState;
+
     @Schema(description= "发送者id")
     private Long senderId;
 
     @Schema(description= "发送者姓名")
     private String senderName;
 
-    @Schema(description= "接收者id")
-    private Long receiveId;
-
-    @Schema(description= "接收者姓名")
-    private String receiveName;
-
     @Schema(description= "发送时间")
     private LocalDateTime senderTime;
 
-    @Schema(description= "已读")
-    private Boolean haveRead;
+    @Schema(description= "撤销时间")
+    private LocalDateTime cancelTime;
 
-    @Schema(description= "已读时间")
-    private LocalDateTime readTime;
+    @Schema(description= "截至有效期 有效超过有效期后全体通知将无法看到")
+    private LocalDateTime efficientTime;
 }

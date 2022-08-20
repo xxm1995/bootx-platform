@@ -13,18 +13,18 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-/**   
-*
-* @author xxm  
-* @date 2021/8/8 
-*/
+/**
+ *
+ * @author xxm
+ * @date 2021/8/8
+ */
 @Tag(name ="站内信")
 @RestController
 @RequestMapping("/site/message")
 @RequiredArgsConstructor
 public class SiteMessageController {
     private final SiteMessageService siteMessageService;
-    
+
     @Operation(summary = "发送站内信")
     @PostMapping("/send")
     public ResResult<Void> send(@RequestBody SendSiteMessageParam param){
@@ -52,14 +52,22 @@ public class SiteMessageController {
 
     @Operation(summary = "发送消息分页")
     @GetMapping("/pageBySender")
-    public ResResult<PageResult<SiteMessageDto>> pageBySender(PageParam pageParam, Boolean haveRead){
+    public ResResult<PageResult<SiteMessageDto>> pageBySender(PageParam pageParam, SiteMessageInfo query){
+        return Res.ok(siteMessageService.pageBySender(pageParam,query));
+    }
+
+    @Operation(summary = "撤回消息")
+    @PostMapping("/cancel")
+    public ResResult<Void> cancel(Long id){
+        siteMessageService.cancel(id);
         return Res.ok();
     }
 
-    @Operation(summary = "消息分页")
-    @GetMapping("/page")
-    public ResResult<PageResult<SiteMessageDto>> page(PageParam pageParam){
-        return Res.ok(siteMessageService.page(pageParam));
+    @Operation(summary = "撤回消息")
+    @DeleteMapping("/delete")
+    public ResResult<Void> delete(Long id){
+        siteMessageService.delete(id);
+        return Res.ok();
     }
 
     @Operation(summary = "标为已读")

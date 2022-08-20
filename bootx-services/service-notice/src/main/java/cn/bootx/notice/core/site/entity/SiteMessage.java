@@ -6,7 +6,6 @@ import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.notice.code.SiteMessageCode;
 import cn.bootx.notice.core.site.convert.SiteMessageConvert;
 import cn.bootx.notice.dto.site.SiteMessageDto;
-import cn.bootx.notice.param.site.SiteMessageParam;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -56,13 +55,8 @@ public class SiteMessage extends MpBaseEntity implements EntityBaseFunction<Site
     /** 撤销时间 */
     private LocalDateTime cancelTime;
 
-    public static SiteMessage init(SiteMessageDto in) {
-        return SiteMessageConvert.CONVERT.convert(in);
-    }
-
-    public static SiteMessage init(SiteMessageParam in) {
-        return SiteMessageConvert.CONVERT.convert(in);
-    }
+    /** 截至有效期 有效超过有效期后全体通知将无法看到 */
+    private LocalDateTime efficientTime;
 
 
     @Override
