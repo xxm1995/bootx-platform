@@ -21,7 +21,7 @@
             ${ew.customSqlSegment}
     </select>
 
-    <select id="countMassage" resultType="Integer">
+    <select id="countMassage" resultType="java.lang.Integer">
         select count(*)
         from notice_site_message nsm
                  left join notice_site_message_user nsmu on nsm.id = nsmu.message_id

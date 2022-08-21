@@ -20,4 +20,8 @@ public interface SiteMessageCode {
     /** 撤销 */
     String STATE_CANCEL = "cancel";
 
+    /* 事件 */
+    /** 消息更新 */
+    String EVENT_MESSAGE_UPDATE = "notice_message_update";
+
 }

@@ -39,6 +39,5 @@ public class UserWsNoticeService {
      */
     public <T> void sendMessageByAll(WsResult<T> resResult) {
         noticeWebSocketHandler.sendMessageByAll(JacksonUtil.toJson(resResult));
-
     }
 }

@@ -7,6 +7,8 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.common.websocket.entity.WsRes;
+import cn.bootx.common.websocket.service.UserWsNoticeService;
 import cn.bootx.notice.core.site.dao.SiteMessageManager;
 import cn.bootx.notice.core.site.dao.SiteMessageUserManager;
 import cn.bootx.notice.core.site.domain.SiteMessageInfo;
@@ -15,6 +17,8 @@ import cn.bootx.notice.core.site.entity.SiteMessageUser;
 import cn.bootx.notice.dto.site.SiteMessageDto;
 import cn.bootx.notice.param.site.SendSiteMessageParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.util.DesensitizedUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +44,44 @@ import static cn.bootx.notice.code.SiteMessageCode.*;
 public class SiteMessageService {
     private final SiteMessageManager siteMessageManager;
     private final SiteMessageUserManager siteMessageUserManager;
+    private final UserWsNoticeService userWsNoticeService;
+
+    /**
+     * 保存草稿
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void save(SendSiteMessageParam param){
+        SiteMessage siteMessage = null;
+        if (Objects.nonNull(param.getId())){
+            siteMessage = siteMessageManager.findById(param.getId()).orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
+            BeanUtil.copyProperties(param,siteMessage, CopyOptions.create().ignoreNullValue());
+
+        } else {
+            siteMessage = new SiteMessage()
+                    .setTitle(param.getTitle())
+                    .setSendState(STATE_DRAFT)
+                    .setContent(param.getContent())
+                    .setReceiveType(param.getReceiveType())
+                    .setEfficientTime(param.getEfficientTime())
+                    .setSenderTime(LocalDateTime.now());
+            // 添加消息关联人信息 暂时这段逻辑用不到, 现在发布的都是全体用户信心
+            if (Objects.equals(RECEIVE_USER,param.getReceiveType())){
+                List<SiteMessageUser> siteMessageUsers = param.getReceiveIds().stream()
+                        .map(userId -> new SiteMessageUser()
+                                .setMessageId(param.getId())
+                                .setReceiveId(userId))
+                        .collect(Collectors.toList());
+                siteMessageUserManager.saveAll(siteMessageUsers);
+            }
+        }
+        // 新增或更新站内信内容
+        val userDetail = SecurityUtil.getCurrentUser();
+        siteMessage.setTitle(param.getTitle())
+                .setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setSenderName(userDetail.map(UserDetail::getName).orElse("未知"));
+        siteMessageManager.saveOrUpdate(siteMessage);
+
+    }
 
     /**
      * 站内信发送消息
@@ -51,25 +93,28 @@ public class SiteMessageService {
 
         // 新增站内信内容
         siteMessage.setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setSendState(STATE_SENT)
                 .setSenderName(userDetail.map(UserDetail::getName).orElse("未知"))
                 .setSenderTime(LocalDateTime.now());
         siteMessageManager.updateById(siteMessage);
+        userWsNoticeService.sendMessageByAll(WsRes.eventNotice(EVENT_MESSAGE_UPDATE));
     }
 
     /**
-     * 保存草稿
+     * 发送站内信
      */
     @Transactional(rollbackFor = Exception.class)
-    public void add(SendSiteMessageParam param){
-        // 新增或更新站内信内容
+    public void send(SendSiteMessageParam param){
+        val userDetail = SecurityUtil.getCurrentUser();
+
+        // 新增站内信内容
         SiteMessage siteMessage = new SiteMessage()
                 .setTitle(param.getTitle())
-                .setSendState(STATE_DRAFT)
                 .setContent(param.getContent())
                 .setReceiveType(param.getReceiveType())
                 .setEfficientTime(param.getEfficientTime())
                 .setSenderTime(LocalDateTime.now());
-        siteMessageManager.saveOrUpdate(siteMessage);
+        siteMessageManager.save(siteMessage);
         // 添加消息关联人信息
         if (Objects.equals(RECEIVE_USER,param.getReceiveType())){
             List<SiteMessageUser> siteMessageUsers = param.getReceiveIds().stream()
@@ -79,6 +124,7 @@ public class SiteMessageService {
                     .collect(Collectors.toList());
             siteMessageUserManager.saveAll(siteMessageUsers);
         }
+
     }
 
     /**
@@ -90,6 +136,7 @@ public class SiteMessageService {
         siteMessage.setCancelTime(LocalDateTime.now())
                 .setSendState(STATE_CANCEL);
         siteMessageManager.updateById(siteMessage);
+        userWsNoticeService.sendMessageByAll(WsRes.eventNotice(EVENT_MESSAGE_UPDATE));
     }
 
     /**

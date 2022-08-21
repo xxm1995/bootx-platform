@@ -16,6 +16,8 @@ import java.util.List;
 @Accessors(chain = true)
 @Schema(title = "站内信发送参数")
 public class SendSiteMessageParam {
+    /** 主键 */
+    private Long id;
 
     /**消息标题*/
     private String title;

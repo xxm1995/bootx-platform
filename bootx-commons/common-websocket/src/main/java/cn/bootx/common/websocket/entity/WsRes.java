@@ -38,4 +38,11 @@ public class WsRes {
         return new WsResult<>(WebsocketCode.EVENT_NOTICE,data,code);
     }
 
+    /**
+     * 事件通知
+     */
+    public <T> WsResult<T> eventNotice(String code) {
+        return new WsResult<>(WebsocketCode.EVENT_NOTICE,null,code);
+    }
+
 }

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -37,14 +38,24 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
 
         val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
                 .and(o->o.and(p->p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
-                                .gt(SiteMessageInfo::getEfficientTime, LocalDateTime.now()))
+                                .gt(SiteMessageInfo::getEfficientTime, LocalDate.now()))
                         .or()
                         .eq(SiteMessageInfo::getReceiveId,userId))
                 .eq(SiteMessageInfo::getSendState,STATE_SENT)
-                .eq(Objects.nonNull(query.getHaveRead()),SiteMessageInfo::getHaveRead,query.getHaveRead())
                 .eq(StrUtil.isNotBlank(query.getTitle()),SiteMessageInfo::getTitle,query.getTitle())
                 .orderByAsc(SiteMessageInfo::getHaveRead)
                 .orderByDesc(SiteMessageInfo::getReadTime);
+        if (Objects.equals(query.getHaveRead(),true)){
+            wrapper.eq(SiteMessageInfo::getHaveRead,query.getHaveRead());
+        }
+        // 已读为空也视为未读
+        if (Objects.equals(query.getHaveRead(),false)){
+            wrapper.and(o->o.eq(SiteMessageInfo::getHaveRead,false)
+                    .or()
+                    .isNull(SiteMessageInfo::getHaveRead));
+
+        }
+
         return baseMapper.pageMassage(mpPage,wrapper);
     }
 
@@ -57,7 +68,9 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
                                 .le(SiteMessageInfo::getEfficientTime, LocalDateTime.now()))
                         .or()
                         .eq(SiteMessageInfo::getReceiveId,userId))
-                .eq(SiteMessageInfo::getHaveRead,false)
+                .and(o->o.eq(SiteMessageInfo::getHaveRead,false)
+                        .or()
+                        .isNull(SiteMessageInfo::getHaveRead))
                 .eq(SiteMessageInfo::getSendState,STATE_SENT)
                 .orderByAsc(SiteMessageInfo::getHaveRead)
                 .orderByDesc(SiteMessageInfo::getReadTime);
@@ -65,7 +78,7 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
     }
 
     /**
-     * 接收人消息分页
+     * 发送人消息分页
      */
     public Page<SiteMessage> pageBySender(PageParam pageParam, SiteMessageInfo query, Long userId) {
         Page<SiteMessage> mpPage = MpUtil.getMpPage(pageParam, SiteMessage.class);
