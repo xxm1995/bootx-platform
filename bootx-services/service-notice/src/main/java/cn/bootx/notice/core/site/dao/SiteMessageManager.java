@@ -14,7 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
+
+import static cn.bootx.notice.code.SiteMessageCode.STATE_SENT;
 
 /**
  * 站内信
@@ -33,11 +36,13 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
         val mpPage = MpUtil.getMpPage(pageParam, SiteMessageInfo.class);
 
         val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
-                .and(o->o.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                .and(o->o.and(p->p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                                .gt(SiteMessageInfo::getEfficientTime, LocalDateTime.now()))
                         .or()
                         .eq(SiteMessageInfo::getReceiveId,userId))
+                .eq(SiteMessageInfo::getSendState,STATE_SENT)
                 .eq(Objects.nonNull(query.getHaveRead()),SiteMessageInfo::getHaveRead,query.getHaveRead())
-                .eq(Objects.nonNull(query.getTitle()),SiteMessageInfo::getTitle,query.getTitle())
+                .eq(StrUtil.isNotBlank(query.getTitle()),SiteMessageInfo::getTitle,query.getTitle())
                 .orderByAsc(SiteMessageInfo::getHaveRead)
                 .orderByDesc(SiteMessageInfo::getReadTime);
         return baseMapper.pageMassage(mpPage,wrapper);
@@ -48,10 +53,12 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
      */
     public Integer countByReceiveNotRead(Long userId){
         val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
-                .and(o->o.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                .and(o->o.and(p->p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                                .le(SiteMessageInfo::getEfficientTime, LocalDateTime.now()))
                         .or()
                         .eq(SiteMessageInfo::getReceiveId,userId))
                 .eq(SiteMessageInfo::getHaveRead,false)
+                .eq(SiteMessageInfo::getSendState,STATE_SENT)
                 .orderByAsc(SiteMessageInfo::getHaveRead)
                 .orderByDesc(SiteMessageInfo::getReadTime);
         return baseMapper.countMassage(wrapper);

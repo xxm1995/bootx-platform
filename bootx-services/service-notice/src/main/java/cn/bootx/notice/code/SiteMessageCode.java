@@ -13,6 +13,8 @@ public interface SiteMessageCode {
     String RECEIVE_ALL = "all";
 
     /* 发布状态 */
+    /** 草稿 */
+    String STATE_DRAFT = "draft";
     /** 已发送 */
     String STATE_SENT = "sent";
     /** 撤销 */

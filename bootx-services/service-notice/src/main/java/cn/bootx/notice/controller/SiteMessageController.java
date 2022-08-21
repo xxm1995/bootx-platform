@@ -8,8 +8,8 @@ import cn.bootx.notice.core.site.domain.SiteMessageInfo;
 import cn.bootx.notice.core.site.service.SiteMessageService;
 import cn.bootx.notice.dto.site.SiteMessageDto;
 import cn.bootx.notice.param.site.SendSiteMessageParam;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +25,16 @@ import org.springframework.web.bind.annotation.*;
 public class SiteMessageController {
     private final SiteMessageService siteMessageService;
 
+    @Operation(summary = "保存站内信草稿")
+    @PostMapping("/add")
+    public ResResult<Void> add(@RequestBody SendSiteMessageParam param){
+        siteMessageService.add(param);
+        return Res.ok();
+    }
     @Operation(summary = "发送站内信")
     @PostMapping("/send")
-    public ResResult<Void> send(@RequestBody SendSiteMessageParam param){
-        siteMessageService.send(param);
+    public ResResult<Void> send(Long id){
+        siteMessageService.send(id);
         return Res.ok();
     }
 

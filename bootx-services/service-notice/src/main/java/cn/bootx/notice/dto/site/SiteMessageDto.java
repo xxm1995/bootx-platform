@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -51,5 +52,5 @@ public class SiteMessageDto extends BaseDto {
     private LocalDateTime cancelTime;
 
     @Schema(description= "截至有效期 有效超过有效期后全体通知将无法看到")
-    private LocalDateTime efficientTime;
+    private LocalDate efficientTime;
 }

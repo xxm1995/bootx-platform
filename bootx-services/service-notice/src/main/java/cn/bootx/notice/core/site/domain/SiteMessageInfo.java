@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldNameConstants;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -39,4 +40,6 @@ public class SiteMessageInfo {
     private Boolean haveRead;
     @Schema(description = "读取时间")
     private LocalDateTime readTime;
+    @Schema(description = "截至有效期")
+    private LocalDate efficientTime;
 }

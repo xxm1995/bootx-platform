@@ -10,6 +10,7 @@
             nsm.sender_name as senderName,
             nsm.sender_time as senderTime,
             nsm.receive_type as receiveType,
+            nsm.efficient_time as efficientTime,
             nsm.send_state as sendState,
             nsm.cancel_time as cancelTime,
             nsmu.receive_id as receiveId,

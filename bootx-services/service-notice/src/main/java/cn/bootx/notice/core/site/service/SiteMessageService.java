@@ -5,6 +5,7 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.site.dao.SiteMessageManager;
 import cn.bootx.notice.core.site.dao.SiteMessageUserManager;
@@ -26,8 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static cn.bootx.notice.code.SiteMessageCode.RECEIVE_USER;
-import static cn.bootx.notice.code.SiteMessageCode.STATE_CANCEL;
+import static cn.bootx.notice.code.SiteMessageCode.*;
 
 /**
  * 站内信
@@ -45,17 +45,31 @@ public class SiteMessageService {
      * 站内信发送消息
      */
     @Transactional(rollbackFor = Exception.class)
-    public void send(SendSiteMessageParam param){
+    public void send(Long id){
+        SiteMessage siteMessage = siteMessageManager.findById(id).orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
         val userDetail = SecurityUtil.getCurrentUser();
 
         // 新增站内信内容
-        SiteMessage siteMessage = new SiteMessage()
-                .setTitle(param.getTitle())
-                .setContent(param.getContent())
-                .setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+        siteMessage.setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                 .setSenderName(userDetail.map(UserDetail::getName).orElse("未知"))
                 .setSenderTime(LocalDateTime.now());
-        siteMessageManager.save(siteMessage);
+        siteMessageManager.updateById(siteMessage);
+    }
+
+    /**
+     * 保存草稿
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void add(SendSiteMessageParam param){
+        // 新增或更新站内信内容
+        SiteMessage siteMessage = new SiteMessage()
+                .setTitle(param.getTitle())
+                .setSendState(STATE_DRAFT)
+                .setContent(param.getContent())
+                .setReceiveType(param.getReceiveType())
+                .setEfficientTime(param.getEfficientTime())
+                .setSenderTime(LocalDateTime.now());
+        siteMessageManager.saveOrUpdate(siteMessage);
         // 添加消息关联人信息
         if (Objects.equals(RECEIVE_USER,param.getReceiveType())){
             List<SiteMessageUser> siteMessageUsers = param.getReceiveIds().stream()
@@ -65,7 +79,6 @@ public class SiteMessageService {
                     .collect(Collectors.toList());
             siteMessageUserManager.saveAll(siteMessageUsers);
         }
-
     }
 
     /**
@@ -85,8 +98,8 @@ public class SiteMessageService {
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long messageId){
         SiteMessage siteMessage = siteMessageManager.findById(messageId).orElseThrow(() -> new DataNotExistException("站内信不存在"));
-        if (!Objects.equals(siteMessage.getSendState(),STATE_CANCEL)){
-            throw new BizException("站内信不是撤销状态，无法被删除");
+        if (!CollUtil.toList(STATE_CANCEL,STATE_DRAFT).contains(siteMessage.getSendState())){
+            throw new BizException("站内信不是撤回或草稿状态，无法被删除");
         }
         siteMessageManager.deleteById(messageId);
         siteMessageUserManager.deleteByMessageId(messageId);
