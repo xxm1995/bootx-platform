@@ -83,7 +83,7 @@ bootx:
     swagger:
       enabled: true
       author: bootx
-      version: 1.1.0-bate-4
+      version: 1.1.0
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
       # 多模块扫码
@@ -143,8 +143,8 @@ bootx:
       # 企业微信
       wecom:
         agent-id: 1000003
-        corp-id: wwab6908d4789e9a52
-        corp-secret: a9rBRFauUvzV8XNrnDmyF8d8_O0l9aK-pZ2iR-2E3kI
+        corp-id: ??
+        corp-secret: ??
         token: ??
         encoding-aes-key: ??
     # 认证
