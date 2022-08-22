@@ -47,6 +47,8 @@
         <slf4j.version>1.7.30</slf4j.version>
         <ttl.version>2.13.2</ttl.version>
         <flyway.version>7.15.0</flyway.version>
+        <xml-apis.version>1.4.01</xml-apis.version>
+        <flowable.version>6.7.2</flowable.version>
         <logback-classic.version>1.2.11</logback-classic.version>
         <plumelog.version>3.5.3</plumelog.version>
         <xxl-job.version>2.3.1</xxl-job.version>
@@ -304,6 +306,13 @@
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
                 <artifactId>common-starter-wecom</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+
+            <!-- 工作流 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-starter-flowable</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
         </dependencies>

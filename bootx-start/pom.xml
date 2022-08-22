@@ -44,6 +44,7 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
+
         <!-- 业务 -->
         <!-- 代码生成 -->
         <dependency>
@@ -61,7 +62,7 @@
         <dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
-            <version>1.4.01</version>
+            <version>${xml-apis.version}</version>
         </dependency>
 
         <!-- flyway -->

@@ -38,6 +38,12 @@
             <artifactId>service-baseapi</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+
+        <!-- 工作流 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-flowable</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

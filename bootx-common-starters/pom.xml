@@ -23,6 +23,7 @@
         <module>common-starter-monitor</module>
         <module>common-starter-wechat</module>
         <module>common-starter-wecom</module>
+        <module>common-starter-flowable</module>
     </modules>
 
     <dependencies>
