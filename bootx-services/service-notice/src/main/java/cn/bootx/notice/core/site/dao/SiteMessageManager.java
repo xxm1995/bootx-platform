@@ -15,7 +15,6 @@ import lombok.val;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static cn.bootx.notice.code.SiteMessageCode.STATE_SENT;
@@ -65,7 +64,7 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
     public Integer countByReceiveNotRead(Long userId){
         val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
                 .and(o->o.and(p->p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
-                                .le(SiteMessageInfo::getEfficientTime, LocalDateTime.now()))
+                                .gt(SiteMessageInfo::getEfficientTime, LocalDate.now()))
                         .or()
                         .eq(SiteMessageInfo::getReceiveId,userId))
                 .and(o->o.eq(SiteMessageInfo::getHaveRead,false)
