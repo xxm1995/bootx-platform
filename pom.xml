@@ -58,8 +58,7 @@
         <justauth..spring.boot.version>1.4.0</justauth..spring.boot.version>
         <mybatis-plus.version>3.5.2</mybatis-plus.version>
         <dynamic-datasource.version>3.5.1</dynamic-datasource.version>
-        <swagger-annotations.version>2.2.2</swagger-annotations.version>
-        <springdoc.version>1.6.9</springdoc.version>
+        <springdoc.version>1.6.10</springdoc.version>
         <redisson.version>3.17.3</redisson.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>

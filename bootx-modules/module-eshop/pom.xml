@@ -19,6 +19,7 @@
             <artifactId>service-iam</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>service-payment</artifactId>

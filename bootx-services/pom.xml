@@ -103,7 +103,6 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
-            <version>2.12.6</version>
         </dependency>
 
         <!-- 日志 -->
@@ -233,32 +232,6 @@
                 <artifactId>easy-captcha</artifactId>
                 <version>${easy-captcha.version}</version>
             </dependency>
-
-            <!-- weixin-java 微信小程序 -->
-            <dependency>
-                <groupId>com.github.binarywang</groupId>
-                <artifactId>weixin-java-miniapp</artifactId>
-                <version>${wxjava.version}</version>
-            </dependency>
-            <!-- weixin-java 微信开放平台 -->
-            <dependency>
-                <groupId>com.github.binarywang</groupId>
-                <artifactId>weixin-java-open</artifactId>
-                <version>${wxjava.version}</version>
-            </dependency>
-            <!-- weixin-java 公众号（包括订阅号和服务号） -->
-            <dependency>
-                <groupId>com.github.binarywang</groupId>
-                <artifactId>weixin-java-mp</artifactId>
-                <version>${wxjava.version}</version>
-            </dependency>
-            <!-- weixin-java 企业号/企业微信 -->
-            <dependency>
-                <groupId>com.github.binarywang</groupId>
-                <artifactId>weixin-java-cp</artifactId>
-                <version>${wxjava.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 
