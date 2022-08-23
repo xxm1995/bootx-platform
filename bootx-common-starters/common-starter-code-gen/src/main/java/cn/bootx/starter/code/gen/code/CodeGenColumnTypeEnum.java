@@ -27,6 +27,7 @@ public enum CodeGenColumnTypeEnum {
     BIT("bit","Boolean"),
     CHAR("char","String"),
     VARCHAR("varchar","String"),
+    VARBINARY("VARBINARY","byte[]"),
     TINYTEXT("tinytext","String"),
     TEXT("text","String"),
     MEDIUMTEXT("mediumtext","String"),
@@ -43,6 +44,12 @@ public enum CodeGenColumnTypeEnum {
      * 数据库类型转换成java类型
      */
     public static String convertJavaType(String columnType){
+        String type = Arrays.stream(CodeGenColumnTypeEnum.values())
+                .filter(e -> Objects.equals(columnType, e.getColumnType()))
+                .findFirst()
+                .orElseThrow(() -> new BizException("不支持的数据库字段类型"))
+                .getJavaType();
+
         return Arrays.stream(CodeGenColumnTypeEnum.values())
                 .filter(e -> Objects.equals(columnType,e.getColumnType()))
                 .findFirst()
