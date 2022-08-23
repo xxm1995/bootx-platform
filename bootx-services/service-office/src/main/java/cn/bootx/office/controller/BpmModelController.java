@@ -4,13 +4,18 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.office.core.model.service.BpmModelService;
 import cn.bootx.office.core.model.service.FlowModelService;
-import cn.bootx.office.dto.model.FlowModelDto;
+import cn.bootx.office.dto.model.BpmModelDto;
+import cn.bootx.office.param.model.BpmModelParam;
 import cn.bootx.office.param.model.FlowModelParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,13 +28,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/bpm/model")
 @RequiredArgsConstructor
-public class FlowModelController {
+public class BpmModelController {
     private final FlowModelService flowModelService;
+    private final BpmModelService bpmModelService;
 
-    @Operation( summary = "修改")
-    @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody FlowModelParam param){
-        flowModelService.update(param);
+    @SneakyThrows
+    @Operation(summary = "添加")
+    @PostMapping("/add")
+    public ResResult<Void> add(MultipartFile file, @ParameterObject BpmModelParam flowModelParam){
+        bpmModelService.add(flowModelParam,file.getBytes());
+        return Res.ok();
+    }
+
+    @Operation(summary = "发布")
+    @PostMapping("/publish")
+    public ResResult<Void> publish(Long id){
+        bpmModelService.publish(id);
         return Res.ok();
     }
 
@@ -42,19 +56,19 @@ public class FlowModelController {
 
     @Operation( summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<FlowModelDto> findById(Long id){
+    public ResResult<BpmModelDto> findById(Long id){
         return Res.ok(flowModelService.findById(id));
     }
 
     @Operation( summary = "查询所有")
     @GetMapping(value = "/findAll")
-    public ResResult<List<FlowModelDto>> findAll(){
+    public ResResult<List<BpmModelDto>> findAll(){
         return Res.ok(flowModelService.findAll());
     }
 
     @Operation( summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<FlowModelDto>> page(PageParam pageParam, FlowModelParam flowModelParam){
+    public ResResult<PageResult<BpmModelDto>> page(PageParam pageParam, FlowModelParam flowModelParam){
         return Res.ok(flowModelService.page(pageParam,flowModelParam));
     }
 }

@@ -1,6 +1,6 @@
 package cn.bootx.office.core.model.dao;
 
-import cn.bootx.office.core.model.entity.FlowModel;
+import cn.bootx.office.core.model.entity.BpmModel;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2022-08-23
  */
 @Mapper
-public interface FlowModelMapper extends BaseMapper<FlowModel> {
+public interface BpmModelMapper extends BaseMapper<BpmModel> {
 }

@@ -1,0 +1,26 @@
+package cn.bootx.office.param.instance;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+/**
+* @author xxm
+* @date 2020/3/1 13:47
+*/
+@Data
+@Accessors(chain = true)
+@Schema(title = "流程实例编辑参数")
+public class FlowInstanceParam {
+    @Schema(description = "流程实例id")
+    private Long id;
+    @Schema(description = "实例名称")
+    private String name;
+    @Schema(description = "实例标题")
+    private String subject;
+    @Schema(description = "流程实例创建人，也是发起人")
+    private String creator;
+    @Schema(description = "外部key")
+    private String businessKey;
+
+}

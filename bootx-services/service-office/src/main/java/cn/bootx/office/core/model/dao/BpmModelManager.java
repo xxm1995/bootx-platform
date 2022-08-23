@@ -4,7 +4,7 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.office.core.model.entity.FlowModel;
+import cn.bootx.office.core.model.entity.BpmModel;
 import cn.bootx.office.param.model.FlowModelParam;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +17,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @RequiredArgsConstructor
-public class FlowModelManager extends BaseManager<FlowModelMapper, FlowModel> {
+public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
 
     /**
     * 分页
     */
-    public Page<FlowModel> page(PageParam pageParam, FlowModelParam param) {
-        Page<FlowModel> mpPage = MpUtil.getMpPage(pageParam, FlowModel.class);
+    public Page<BpmModel> page(PageParam pageParam, FlowModelParam param) {
+        Page<BpmModel> mpPage = MpUtil.getMpPage(pageParam, BpmModel.class);
         return this.lambdaQuery()
                 .select(this.getEntityClass(),MpUtil::excludeBigField)
                 .orderByDesc(MpIdEntity::getId)
@@ -35,8 +35,8 @@ public class FlowModelManager extends BaseManager<FlowModelMapper, FlowModel> {
      * @param defKey
      */
     public void cancelMainProcessByDefKey(String defKey) {
-        lambdaUpdate().set(FlowModel::getMainProcess,false)
-                .eq(FlowModel::getDefKey,defKey)
+        lambdaUpdate().set(BpmModel::getMainProcess,false)
+                .eq(BpmModel::getDefKey,defKey)
                 .update();
 
     }

@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
 @Data
 @Schema(title = "流程模型")
 @Accessors(chain = true)
-public class FlowModelDto extends BaseDto {
+public class BpmModelDto extends BaseDto {
 
     @Schema(description = "名称")
     private String name;

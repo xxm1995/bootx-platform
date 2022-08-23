@@ -1,9 +1,10 @@
 package cn.bootx.office.core.model.entity;
 
+import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.office.core.model.convert.FlowModelConvert;
-import cn.bootx.office.dto.model.FlowModelDto;
+import cn.bootx.office.core.model.convert.BpmModelConvert;
+import cn.bootx.office.dto.model.BpmModelDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -19,14 +20,12 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @TableName("bpm_flow_model")
-public class FlowModel extends MpBaseEntity implements EntityBaseFunction<FlowModelDto> {
+public class BpmModel extends MpBaseEntity implements EntityBaseFunction<BpmModelDto> {
 
     @Schema(description ="名称")
     private String name;
-    @Schema(description ="类型id")
-    private Long typeId;
     @Schema(description ="流程类型")
-    private String typeKey;
+    private String modelType;
     @Schema(description ="发布状态")
     private String publish;
     @Schema(description ="启用状态")
@@ -37,10 +36,13 @@ public class FlowModel extends MpBaseEntity implements EntityBaseFunction<FlowMo
     private String defId;
     @Schema(description ="流程key")
     private String defKey;
+    @Schema(description ="流程名称")
+    private String defName;
     @Schema(description ="是否主流程")
     private Boolean mainProcess;
     @Schema(description ="流程版本号")
     private Integer processVersion;
+    @BigField
     @Schema(description ="流程xml")
     private String modelEditorXml;
     @Schema(description ="备注")
@@ -49,8 +51,8 @@ public class FlowModel extends MpBaseEntity implements EntityBaseFunction<FlowMo
 
     /** 转换成dto */
     @Override
-    public FlowModelDto toDto() {
-        return FlowModelConvert.CONVERT.convert(this);
+    public BpmModelDto toDto() {
+        return BpmModelConvert.CONVERT.convert(this);
     }
 
 }

@@ -13,12 +13,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(title = "流程模型添加参数")
 public class BpmModelParam {
+    @Schema(description = "流程名称")
+    private String name;
 
-
-    @Schema(description = "流程模型ID")
-    private Long id;
-    @Schema(description = "流程类型ID")
-    private Long typeId;
     @Schema(description = "流程类型")
-    private String typeKey;
+    private String modelType;
 }
