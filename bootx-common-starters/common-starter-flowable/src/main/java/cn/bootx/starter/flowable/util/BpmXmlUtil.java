@@ -1,6 +1,7 @@
 package cn.bootx.starter.flowable.util;
 
 import cn.hutool.core.collection.CollUtil;
+import lombok.experimental.UtilityClass;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.ItemDefinition;
@@ -22,12 +23,13 @@ import java.util.Map;
 * @author xxm  
 * @date 2020/3/27 15:21
 */
-public class BpmXmlUtils {
+@UtilityClass
+public class BpmXmlUtil {
 
     /**
      * 将字节转换成Bpmn对象
      */
-    public static BpmnModel convertByte2BpmnModel(byte[] bytes){
+    public BpmnModel convertByte2BpmnModel(byte[] bytes){
         //创建转换对象
         try {
             //将xml文件转换成BpmnModel
@@ -53,7 +55,7 @@ public class BpmXmlUtils {
     /**
      * 将Bpmn对象转换xml字符串
      */
-    public static String convertBpmnModel2Str(BpmnModel bpmnModel){
+    public String convertBpmnModel2Str(BpmnModel bpmnModel){
         BpmnXMLConverter converter = new BpmnXMLConverter();
         byte[] bytes = converter.convertToXML(bpmnModel);
         return new String(bytes);

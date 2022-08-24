@@ -2,17 +2,22 @@ package cn.bootx.office.core.model.service;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.office.core.model.dao.BpmModelManager;
 import cn.bootx.office.core.model.entity.BpmModel;
+import cn.bootx.office.dto.model.BpmModelDto;
 import cn.bootx.office.param.model.BpmModelParam;
 import cn.bootx.office.param.model.FlowModelParam;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
-import cn.bootx.starter.flowable.util.BpmXmlUtils;
+import cn.bootx.starter.flowable.util.BpmXmlUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.bpmn.model.FlowNode;
 import org.flowable.bpmn.model.Process;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
@@ -21,6 +26,7 @@ import org.flowable.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 import static cn.bootx.office.code.ModelCode.PUBLISH_FALSE;
@@ -40,10 +46,10 @@ public class BpmModelService {
     private final BpmModelManager bpmModelManager;
 
     /**
-     * 创建模型
+     * 创建模型 并上传BPMN文件
      */
-    public void add(BpmModelParam bpmModelParam, byte[] bytes){
-        BpmnModel bpmnModel = BpmXmlUtils.convertByte2BpmnModel(bytes);
+    public void addAndUploadBpmn(BpmModelParam bpmModelParam, byte[] bytes){
+        BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(bytes);
         Process mainProcess = bpmnModel.getMainProcess();
         BpmModel flowBpmModel = new BpmModel()
                 .setName(bpmModelParam.getName())
@@ -51,17 +57,46 @@ public class BpmModelService {
                 .setMainProcess(false)
                 .setPublish(PUBLISH_FALSE)
                 .setEnable(false)
-                .setModelEditorXml(BpmXmlUtils.convertBpmnModel2Str(bpmnModel))
+                .setModelEditorXml(BpmXmlUtil.convertBpmnModel2Str(bpmnModel))
                 .setDefKey(mainProcess.getId())
                 .setDefName(mainProcess.getName())
-                .setRemark(mainProcess.getDocumentation());
+                .setDefRemark(mainProcess.getDocumentation())
+                .setRemark(bpmModelParam.getRemark());
         bpmModelManager.save(flowBpmModel);
+    }
+
+    /**
+     * 创建模型
+     */
+    public void add(BpmModelParam bpmModelParam){
+        BpmModel flowBpmModel = new BpmModel()
+                .setName(bpmModelParam.getName())
+                .setModelType(bpmModelParam.getModelType())
+                .setMainProcess(false)
+                .setPublish(PUBLISH_FALSE)
+                .setEnable(false)
+                .setRemark(bpmModelParam.getRemark());
+        bpmModelManager.save(flowBpmModel);
+    }
+
+    /**
+     * 上传bpm文件
+     */
+    public void uploadBpmn(Long id,byte[] bytes){
+        BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
+        BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(bytes);
+        Process mainProcess = bpmnModel.getMainProcess();
+        bpmModel.setModelEditorXml(BpmXmlUtil.convertBpmnModel2Str(bpmnModel))
+                .setDefKey(mainProcess.getId())
+                .setDefName(mainProcess.getName())
+                .setDefRemark(mainProcess.getDocumentation());
+        bpmModelManager.updateById(bpmModel);
     }
 
     /**
      * 修改
      */
-    public void update(FlowModelParam param){
+    public void update(BpmModelParam param){
         BpmModel flowBpmModel = bpmModelManager.findById(param.getId()).orElseThrow(ModelNotExistException::new);
 
         BeanUtil.copyProperties(param, flowBpmModel, CopyOptions.create().ignoreNullValue());
@@ -105,10 +140,9 @@ public class BpmModelService {
 
     /**
      * 删除
-     * @param id
      */
     @Transactional(rollbackFor = Exception.class)
-    public void remove(Long id){
+    public void delete(Long id){
         BpmModel flowBpmModel = bpmModelManager.findById(id).orElseThrow(() -> new DataNotExistException(""));
 
         //发布状态删除
@@ -119,5 +153,33 @@ public class BpmModelService {
         }
         bpmModelManager.deleteById(id);
     }
+
+    /**
+     * 分页
+     */
+    public PageResult<BpmModelDto> page(PageParam pageParam, FlowModelParam flowModelParam){
+        return MpUtil.convert2DtoPageResult(bpmModelManager.page(pageParam,flowModelParam));
+    }
+
+    /**
+     * 获取单条
+     */
+    public BpmModelDto findById(Long id){
+        return bpmModelManager.findById(id).map(BpmModel::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 查询流程定义各节点
+     * 后期需要修改成根据不同节点做不同的处理
+     */
+    public List<FlowNode> getFlowNodes(Long id){
+        BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
+
+        String modelEditorXml = bpmModel.getModelEditorXml();
+        BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(modelEditorXml.getBytes());
+        Process process = bpmnModel.getMainProcess();
+        return process.findFlowElementsOfType(FlowNode.class);
+    }
+
 
 }

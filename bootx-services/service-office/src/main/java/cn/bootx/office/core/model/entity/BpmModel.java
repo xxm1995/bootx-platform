@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("bpm_flow_model")
+@TableName("bpm_model")
 public class BpmModel extends MpBaseEntity implements EntityBaseFunction<BpmModelDto> {
 
     @Schema(description ="名称")
@@ -38,6 +38,8 @@ public class BpmModel extends MpBaseEntity implements EntityBaseFunction<BpmMode
     private String defKey;
     @Schema(description ="流程名称")
     private String defName;
+    @Schema(description ="流程备注")
+    private String defRemark;
     @Schema(description ="是否主流程")
     private Boolean mainProcess;
     @Schema(description ="流程版本号")

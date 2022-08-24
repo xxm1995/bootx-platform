@@ -12,6 +12,12 @@
     <artifactId>common-starter-flowable</artifactId>
 
     <dependencies>
+        <!-- 认证 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-starter-auth</artifactId>
+        </dependency>
+        <!-- 工作流 -->
         <dependency>
             <groupId>org.flowable</groupId>
             <artifactId>flowable-spring-boot-starter-process</artifactId>

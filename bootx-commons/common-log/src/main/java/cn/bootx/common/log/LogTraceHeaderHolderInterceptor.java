@@ -6,13 +6,14 @@ import com.plumelog.core.TraceId;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.MDC;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**   
@@ -20,13 +21,14 @@ import java.io.IOException;
 * @author xxm  
 * @date 2021/4/20 
 */
+@Order(value = Integer.MIN_VALUE)
 @Component
 @RequiredArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class LogTraceHeaderHolderInterceptor extends GenericFilterBean {
+public class LogTraceHeaderHolderInterceptor extends OncePerRequestFilter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         try {
             String traceId = RandomUtil.randomString(12);
             // 添加普通日志和 plumelog 日志的 TraceId

@@ -19,10 +19,8 @@ public class BpmModelDto extends BaseDto {
 
     @Schema(description = "名称")
     private String name;
-    @Schema(description = "类型id")
-    private Long typeId;
     @Schema(description = "流程类型")
-    private String typeKey;
+    private String modelType;
     @Schema(description = "发布状态")
     private String publish;
     @Schema(description = "启用状态")
@@ -33,6 +31,8 @@ public class BpmModelDto extends BaseDto {
     private String defId;
     @Schema(description = "流程key")
     private String defKey;
+    @Schema(description ="流程备注")
+    private String defRemark;
     @Schema(description = "是否主流程")
     private Boolean mainProcess;
     @Schema(description = "流程版本号")

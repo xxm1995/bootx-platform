@@ -18,10 +18,6 @@ public class FlowInstanceParam {
     private Long modelId;
     @Schema(description = "实例名称")
     private String name;
-    @Schema(description = "实例标题")
-    private String subject;
-    @Schema(description = "流程实例创建人，也是发起人")
-    private String creator;
     @Schema(description = "外部key")
     private String businessKey;
     @Schema(description = "表单信息")

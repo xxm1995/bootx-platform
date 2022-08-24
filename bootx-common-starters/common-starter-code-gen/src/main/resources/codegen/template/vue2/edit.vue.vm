@@ -37,7 +37,7 @@
 
 <script>
 import { FormMixin } from '@/mixins/FormMixin'
-import { get, add, update } from '@${vueApiPath}/${entityLowName}'
+import { get, add, update } from '@${vueApiPath}${entityLowName}'
 export default {
   name: '${entityUpName}Edit',
   mixins: [FormMixin],
