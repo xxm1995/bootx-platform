@@ -37,9 +37,9 @@ public class BpmInstanceService {
      * 启动一个流程
      */
     @Transactional(rollbackFor = Exception.class)
-    public void start(Long modelId, FlowInstanceParam instanceParam){
+    public void start(FlowInstanceParam instanceParam){
 
-        BpmModel bpmModel = bpmModelManager.findById(modelId).orElseThrow(ModelNotExistException::new);
+        BpmModel bpmModel = bpmModelManager.findById(instanceParam.getModelId()).orElseThrow(ModelNotExistException::new);
         // 未发布
         if (Objects.equals(bpmModel.getPublish(), PUBLISH_FALSE)){
             throw new ModelNotPublishException();
@@ -53,12 +53,13 @@ public class BpmInstanceService {
 
         BpmInstance bpmInstance = new BpmInstance()
                 .setInstanceId(instance.getProcessInstanceId())
-                .setFlowModelId(modelId)
+                .setBpmModelId(instanceParam.getModelId())
                 .setModelType(bpmModel.getModelType())
                 .setDefId(bpmModel.getDefId())
                 .setDefName(bpmModel.getDefName())
                 .setStartUserId(Long.valueOf(instance.getStartUserId()))
-                .setStartTime(LocalDateTime.now());
+                .setStartTime(LocalDateTime.now())
+                .setFormVariables(instanceParam.getFormVariables());
 
         bpmInstanceManager.save(bpmInstance);
     }

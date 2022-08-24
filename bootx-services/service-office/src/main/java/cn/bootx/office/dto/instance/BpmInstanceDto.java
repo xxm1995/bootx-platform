@@ -1,12 +1,13 @@
 package cn.bootx.office.dto.instance;
 
-import java.time.LocalDateTime;
-
 import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * 流程实例扩展
@@ -40,6 +41,6 @@ public class BpmInstanceDto extends BaseDto {
     @Schema(description = "结束时间")
     private LocalDateTime endTime;
     @Schema(description = "提交的表单值")
-    private String formVariables;
+    private Map<String,Object> formVariables;
 
 }

@@ -1,17 +1,19 @@
 package cn.bootx.office.core.instance.entity;
 
-import java.time.LocalDateTime;
-
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.bootx.office.core.instance.convert.BpmInstanceConvert;
 import cn.bootx.office.dto.instance.BpmInstanceDto;
 import cn.bootx.office.param.instance.BpmInstanceParam;
-import cn.bootx.office.core.instance.convert.BpmInstanceConvert;
-
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
 * 流程实例扩展
@@ -21,11 +23,11 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName("bpm_instance")
+@TableName(value = "bpm_instance",autoResultMap = true)
 public class BpmInstance extends MpBaseEntity implements EntityBaseFunction<BpmInstanceDto>{
 
     /** 关联模型id */
-    private Long flowModelId;
+    private Long bpmModelId;
     /** 流程实例的id */
     private String instanceId;
     /** 流程定义的id */
@@ -45,7 +47,8 @@ public class BpmInstance extends MpBaseEntity implements EntityBaseFunction<BpmI
     /** 结束时间 */
     private LocalDateTime endTime;
     /** 提交的表单值 */
-    private String formVariables;
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private Map<String,Object> formVariables;
 
     /** 创建对象 */
     public static BpmInstance init(BpmInstanceParam in) {
