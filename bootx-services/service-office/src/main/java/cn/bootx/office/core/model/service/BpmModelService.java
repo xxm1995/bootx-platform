@@ -6,10 +6,11 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.office.core.model.dao.BpmModelManager;
+import cn.bootx.office.core.model.dao.BpmModelTaskManager;
 import cn.bootx.office.core.model.entity.BpmModel;
+import cn.bootx.office.core.model.entity.BpmModelTask;
 import cn.bootx.office.dto.model.BpmModelDto;
 import cn.bootx.office.param.model.BpmModelParam;
-import cn.bootx.office.param.model.FlowModelParam;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
 import cn.bootx.starter.flowable.util.BpmXmlUtil;
 import cn.hutool.core.bean.BeanUtil;
@@ -41,6 +42,7 @@ public class BpmModelService {
 
     private final RepositoryService repositoryService;
     private final BpmModelManager bpmModelManager;
+    private final BpmModelTaskManager bpmModelTaskManager;
 
     /**
      * 创建模型 并上传BPMN文件
@@ -92,6 +94,14 @@ public class BpmModelService {
     }
 
     /**
+     * 复制
+     */
+    public void copy(Long id){
+        BpmModel flowBpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
+
+    }
+
+    /**
      * 修改
      */
     public void update(BpmModelParam param){
@@ -106,33 +116,34 @@ public class BpmModelService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void publish(Long id){
-        BpmModel flowBpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
+        BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
 
-        if (Objects.equals(flowBpmModel.getPublish(), PUBLISHED)){
+        if (Objects.equals(bpmModel.getPublish(), PUBLISHED)){
             throw new BizException("流程模型已经发布");
         }
         //部署
         DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
 
-        Deployment deploy = deploymentBuilder.name(flowBpmModel.getName())
+        Deployment deploy = deploymentBuilder.name(bpmModel.getName())
                 // 文件后缀名有要求
-                .addString(flowBpmModel.getName()+".bpmn", flowBpmModel.getModelEditorXml())
-                .key(flowBpmModel.getDefKey())
-                .category(flowBpmModel.getModelType())
+                .addString(bpmModel.getName()+".bpmn", bpmModel.getModelEditorXml())
+                .key(bpmModel.getDefKey())
+                .category(bpmModel.getModelType())
                 .deploy();
         //流程定义
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .deploymentId(deploy.getId())
                 .singleResult();
         //回填属性
-        flowBpmModel.setDeployId(deploy.getId())
+        bpmModel.setDeployId(deploy.getId())
                 .setMainProcess(true)
                 .setPublish(PUBLISHED)
                 .setEnable(true)
                 .setDefId(processDefinition.getId())
                 .setProcessVersion(processDefinition.getVersion());
-        bpmModelManager.cancelMainProcessByDefKey(flowBpmModel.getDefKey());
-        bpmModelManager.updateById(flowBpmModel);
+        bpmModelManager.cancelMainProcessByDefKey(bpmModel.getDefKey());
+        bpmModelManager.updateById(bpmModel);
+        this.updateTaskNodes(bpmModel);
 
     }
 
@@ -155,8 +166,8 @@ public class BpmModelService {
     /**
      * 分页
      */
-    public PageResult<BpmModelDto> page(PageParam pageParam, FlowModelParam flowModelParam){
-        return MpUtil.convert2DtoPageResult(bpmModelManager.page(pageParam,flowModelParam));
+    public PageResult<BpmModelDto> page(PageParam pageParam, BpmModelParam bpmModelParam){
+        return MpUtil.convert2DtoPageResult(bpmModelManager.page(pageParam,bpmModelParam));
     }
 
     /**
@@ -164,6 +175,17 @@ public class BpmModelService {
      */
     public BpmModelDto findById(Long id){
         return bpmModelManager.findById(id).map(BpmModel::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 更新关联任务节点信息
+     */
+    private void updateTaskNodes(BpmModel bpmModel){
+        bpmModelTaskManager.lambdaUpdate()
+                .set(BpmModelTask::getDefId,bpmModel.getDefId())
+                .set(BpmModelTask::getDefKey, bpmModel.getDefKey())
+                .eq(BpmModelTask::getModelId,bpmModel.getId())
+                .update();
     }
 
     /**

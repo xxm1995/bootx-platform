@@ -5,7 +5,7 @@ import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.office.core.model.entity.BpmModel;
-import cn.bootx.office.param.model.FlowModelParam;
+import cn.bootx.office.param.model.BpmModelParam;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -22,7 +22,7 @@ public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
     /**
     * 分页
     */
-    public Page<BpmModel> page(PageParam pageParam, FlowModelParam param) {
+    public Page<BpmModel> page(PageParam pageParam, BpmModelParam param) {
         Page<BpmModel> mpPage = MpUtil.getMpPage(pageParam, BpmModel.class);
         return this.lambdaQuery()
                 .select(this.getEntityClass(),MpUtil::excludeBigField)

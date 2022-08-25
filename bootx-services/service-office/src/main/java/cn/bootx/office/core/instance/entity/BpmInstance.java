@@ -27,7 +27,7 @@ import java.util.Map;
 public class BpmInstance extends MpBaseEntity implements EntityBaseFunction<BpmInstanceDto>{
 
     /** 关联模型id */
-    private Long bpmModelId;
+    private Long modelId;
     /** 流程实例的id */
     private String instanceId;
     /** 流程定义的id */

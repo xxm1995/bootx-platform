@@ -57,7 +57,7 @@ public class BpmInstanceService {
 
         BpmInstance bpmInstance = new BpmInstance()
                 .setInstanceId(instance.getProcessInstanceId())
-                .setBpmModelId(instanceParam.getModelId())
+                .setModelId(instanceParam.getModelId())
                 .setModelType(bpmModel.getModelType())
                 .setDefId(bpmModel.getDefId())
                 .setDefName(bpmModel.getDefName())

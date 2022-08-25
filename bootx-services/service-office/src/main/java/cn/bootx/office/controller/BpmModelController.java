@@ -7,17 +7,13 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.office.core.model.service.BpmModelService;
 import cn.bootx.office.dto.model.BpmModelDto;
 import cn.bootx.office.param.model.BpmModelParam;
-import cn.bootx.office.param.model.FlowModelParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.flowable.bpmn.model.FlowNode;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 /**
  * 流程模型
@@ -76,8 +72,8 @@ public class BpmModelController {
 
     @Operation( summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<BpmModelDto>> page(PageParam pageParam, FlowModelParam flowModelParam){
-        return Res.ok(bpmModelService.page(pageParam,flowModelParam));
+    public ResResult<PageResult<BpmModelDto>> page(PageParam pageParam, BpmModelParam bpmModelParam){
+        return Res.ok(bpmModelService.page(pageParam,bpmModelParam));
     }
 
 }

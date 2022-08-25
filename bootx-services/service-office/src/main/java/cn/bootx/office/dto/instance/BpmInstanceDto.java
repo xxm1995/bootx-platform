@@ -21,7 +21,7 @@ import java.util.Map;
 public class BpmInstanceDto extends BaseDto {
 
     @Schema(description = "关联模型id")
-    private Long flowModelId;
+    private Long modelId;
     @Schema(description = "流程实例的id")
     private String instanceId;
     @Schema(description = "流程定义的id")
