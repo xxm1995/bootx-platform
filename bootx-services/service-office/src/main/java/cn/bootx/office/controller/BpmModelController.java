@@ -79,10 +79,5 @@ public class BpmModelController {
     public ResResult<PageResult<BpmModelDto>> page(PageParam pageParam, FlowModelParam flowModelParam){
         return Res.ok(bpmModelService.page(pageParam,flowModelParam));
     }
-    
-    @Operation(summary = "查询流程各节点内容")
-    @GetMapping("/getFlowNodes")
-    public ResResult<List<FlowNode>> getFlowNodes(Long id){
-        return Res.ok(bpmModelService.getFlowNodes(id));
-    }
+
 }

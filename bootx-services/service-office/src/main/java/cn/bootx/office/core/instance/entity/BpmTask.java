@@ -16,4 +16,13 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName(value = "bpm_task",autoResultMap = true)
 public class BpmTask extends MpBaseEntity {
+
+    /** 下一步处理人类别 */
+    private String assignType;
+
+    /** 下一步处理人 */
+    private Long userId;
+
+    /** 下一步处理人 */
+    private String userName;
 }

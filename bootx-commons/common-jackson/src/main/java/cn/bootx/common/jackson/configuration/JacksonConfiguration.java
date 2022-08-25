@@ -3,7 +3,6 @@ package cn.bootx.common.jackson.configuration;
 import cn.bootx.common.jackson.jdk.Java8TimeModule;
 import cn.bootx.common.jackson.jdk.JavaLongTypeModule;
 import cn.bootx.common.jackson.util.JacksonUtil;
-import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -15,15 +14,10 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-
-import java.time.ZoneId;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * jackson 序列化
@@ -33,18 +27,6 @@ import java.util.TimeZone;
 @Configuration
 @AutoConfigureBefore(JacksonAutoConfiguration.class)
 public class JacksonConfiguration {
-
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return builder -> {
-            builder.locale(Locale.CHINA);
-            builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
-            builder.visibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-            // 时间格式
-            builder.simpleDateFormat(DatePattern.NORM_DATETIME_PATTERN);
-            builder.modules(new JavaLongTypeModule(), new Java8TimeModule(),new Jdk8Module(),new SimpleModule());
-        };
-    }
 
     /**
      * 对象映射

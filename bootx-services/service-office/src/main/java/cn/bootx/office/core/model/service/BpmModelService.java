@@ -17,7 +17,6 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.bpmn.model.FlowNode;
 import org.flowable.bpmn.model.Process;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
@@ -26,11 +25,9 @@ import org.flowable.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 
-import static cn.bootx.office.code.ModelCode.PUBLISH_FALSE;
-import static cn.bootx.office.code.ModelCode.PUBLISH_TRUE;
+import static cn.bootx.office.code.ModelCode.*;
 
 /**
  * 流程模型
@@ -55,7 +52,7 @@ public class BpmModelService {
                 .setName(bpmModelParam.getName())
                 .setModelType(bpmModelParam.getModelType())
                 .setMainProcess(false)
-                .setPublish(PUBLISH_FALSE)
+                .setPublish(UNPUBLISHED)
                 .setEnable(false)
                 .setModelEditorXml(BpmXmlUtil.convertBpmnModel2Str(bpmnModel))
                 .setDefKey(mainProcess.getId())
@@ -73,7 +70,7 @@ public class BpmModelService {
                 .setName(bpmModelParam.getName())
                 .setModelType(bpmModelParam.getModelType())
                 .setMainProcess(false)
-                .setPublish(PUBLISH_FALSE)
+                .setPublish(UNPUBLISHED)
                 .setEnable(false)
                 .setRemark(bpmModelParam.getRemark());
         bpmModelManager.save(flowBpmModel);
@@ -87,6 +84,7 @@ public class BpmModelService {
         BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(bytes);
         Process mainProcess = bpmnModel.getMainProcess();
         bpmModel.setModelEditorXml(BpmXmlUtil.convertBpmnModel2Str(bpmnModel))
+                .setPublish(UNPUBLISHED_XML)
                 .setDefKey(mainProcess.getId())
                 .setDefName(mainProcess.getName())
                 .setDefRemark(mainProcess.getDocumentation());
@@ -110,7 +108,7 @@ public class BpmModelService {
     public void publish(Long id){
         BpmModel flowBpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
 
-        if (Objects.equals(flowBpmModel.getPublish(), PUBLISH_TRUE)){
+        if (Objects.equals(flowBpmModel.getPublish(), PUBLISHED)){
             throw new BizException("流程模型已经发布");
         }
         //部署
@@ -129,11 +127,11 @@ public class BpmModelService {
         //回填属性
         flowBpmModel.setDeployId(deploy.getId())
                 .setMainProcess(true)
-                .setPublish(PUBLISH_TRUE)
+                .setPublish(PUBLISHED)
                 .setEnable(true)
                 .setDefId(processDefinition.getId())
                 .setProcessVersion(processDefinition.getVersion());
-        bpmModelManager.cancelMainProcessByDefKey(flowBpmModel.getDefId());
+        bpmModelManager.cancelMainProcessByDefKey(flowBpmModel.getDefKey());
         bpmModelManager.updateById(flowBpmModel);
 
     }
@@ -146,7 +144,7 @@ public class BpmModelService {
         BpmModel flowBpmModel = bpmModelManager.findById(id).orElseThrow(() -> new DataNotExistException(""));
 
         //发布状态删除
-        if (Objects.equals(PUBLISH_TRUE, flowBpmModel.getPublish())){
+        if (Objects.equals(PUBLISHED, flowBpmModel.getPublish())){
             // 先删除部署以及对应的流程
             repositoryService.deleteDeployment(flowBpmModel.getDeployId(),true);
             bpmModelManager.deleteById(id);
@@ -169,17 +167,11 @@ public class BpmModelService {
     }
 
     /**
-     * 查询流程定义各节点
-     * 后期需要修改成根据不同节点做不同的处理
+     * 校验流程
      */
-    public List<FlowNode> getFlowNodes(Long id){
-        BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
+    public void verifyModel(){
+        // 校验是否有xml文档
 
-        String modelEditorXml = bpmModel.getModelEditorXml();
-        BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(modelEditorXml.getBytes());
-        Process process = bpmnModel.getMainProcess();
-        return process.findFlowElementsOfType(FlowNode.class);
+        // 校验对应的任务节点是否已经被配置
     }
-
-
 }

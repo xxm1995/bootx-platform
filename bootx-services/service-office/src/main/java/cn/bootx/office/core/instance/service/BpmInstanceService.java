@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 import java.util.Optional;
 
-import static cn.bootx.office.code.ModelCode.PUBLISH_FALSE;
+import static cn.bootx.office.code.ModelCode.PUBLISHED;
 
 /**
  * 流程实例
@@ -44,7 +44,7 @@ public class BpmInstanceService {
     public void start(FlowInstanceParam instanceParam){
         BpmModel bpmModel = bpmModelManager.findById(instanceParam.getModelId()).orElseThrow(ModelNotExistException::new);
         // 未发布
-        if (Objects.equals(bpmModel.getPublish(), PUBLISH_FALSE)){
+        if (!Objects.equals(bpmModel.getPublish(), PUBLISHED)){
             throw new ModelNotPublishException();
         }
 
