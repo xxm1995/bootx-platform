@@ -3,6 +3,7 @@ package cn.bootx.office.core.model.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.dto.LabelValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.office.core.model.dao.BpmModelManager;
@@ -26,7 +27,9 @@ import org.flowable.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static cn.bootx.office.code.ModelCode.*;
 
@@ -144,7 +147,6 @@ public class BpmModelService {
         bpmModelManager.cancelMainProcessByDefKey(bpmModel.getDefKey());
         bpmModelManager.updateById(bpmModel);
         this.updateTaskNodes(bpmModel);
-
     }
 
     /**
@@ -175,6 +177,15 @@ public class BpmModelService {
      */
     public BpmModelDto findById(Long id){
         return bpmModelManager.findById(id).map(BpmModel::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 获取生效并部署的主流程列表
+     */
+    public List<LabelValue> findMainProcess(){
+        return bpmModelManager.findMainProcess().stream()
+                .map(bpmModel -> new LabelValue(bpmModel.getName(),bpmModel.getId()))
+                .collect(Collectors.toList());
     }
 
     /**

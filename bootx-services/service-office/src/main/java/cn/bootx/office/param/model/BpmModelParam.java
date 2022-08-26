@@ -23,6 +23,9 @@ public class BpmModelParam {
     @Schema(description = "流程类型(相当于flowable的分类)")
     private String modelType;
 
+    @Schema(description = "关联动态表单id")
+    private Long formId;
+
     @Schema(description = "备注")
     private String remark;
 

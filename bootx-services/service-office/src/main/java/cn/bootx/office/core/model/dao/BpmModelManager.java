@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 流程模型
  * @author xxm
@@ -39,5 +41,12 @@ public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
                 .eq(BpmModel::getDefKey,defKey)
                 .update();
 
+    }
+
+    /**
+     * 获取生效并部署的主流程列表
+     */
+    public List<BpmModel> findMainProcess() {
+        return findAllByField(BpmModel::getMainProcess,true);
     }
 }

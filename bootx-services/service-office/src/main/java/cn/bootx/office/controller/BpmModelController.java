@@ -3,6 +3,7 @@ package cn.bootx.office.controller;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.dto.LabelValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.office.core.model.service.BpmModelService;
 import cn.bootx.office.dto.model.BpmModelDto;
@@ -14,6 +15,8 @@ import lombok.SneakyThrows;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 流程模型
@@ -57,6 +60,13 @@ public class BpmModelController {
         return Res.ok();
     }
 
+    @Operation(summary = "更新")
+    @PostMapping("/update")
+    public ResResult<Void> update(@RequestBody BpmModelParam param){
+        bpmModelService.update(param);
+        return Res.ok();
+    }
+
     @Operation( summary = "删除")
     @DeleteMapping(value = "/delete")
     public ResResult<Void> delete(Long id){
@@ -74,6 +84,12 @@ public class BpmModelController {
     @GetMapping(value = "/page")
     public ResResult<PageResult<BpmModelDto>> page(PageParam pageParam, BpmModelParam bpmModelParam){
         return Res.ok(bpmModelService.page(pageParam,bpmModelParam));
+    }
+
+    @Operation(summary = "获取生效并部署的主流程列表")
+    @GetMapping("/findMainProcess")
+    public ResResult<List<LabelValue>> findMainProcess(){
+        return Res.ok(bpmModelService.findMainProcess());
     }
 
 }
