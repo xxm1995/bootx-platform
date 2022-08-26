@@ -1,6 +1,7 @@
 package cn.bootx.office.core.instance.service;
 
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.office.param.instance.BpmTaskApproveParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.flowable.task.api.TaskQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.flowable.task.api.history.HistoricTaskInstanceQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -52,19 +54,25 @@ public class BpmTaskService {
     /**
      * 通过
      */
-    public void approve(){
-        
+    @Transactional(rollbackFor = Exception.class)
+    public void pass(BpmTaskApproveParam param){
+        // 查询到任务和扩展属性
+        Task task = taskService.createTaskQuery().taskId(param.getTaskId()).singleResult();
+
+
+        taskService.complete(task.getId());
     }
     /**
      * 驳回
-     */  public void reject(){
-        
+     */
+    public void reject(BpmTaskApproveParam param){
+        Task task = taskService.createTaskQuery().taskId(param.getTaskId()).singleResult();
+
     }
 
     /**
      * 重新分配人员
      */
     public void assignee(){
-        
     }
 }

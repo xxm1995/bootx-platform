@@ -27,6 +27,8 @@ public class BpmModelTask extends MpDelEntity implements EntityBaseFunction<BpmM
     private String defId;
     /** 流程key */
     private String defKey;
+    /** 关联表单id */
+    private Long formId;
     /** 任务节点id */
     private String taskId;
     /** 任务节点名称 */

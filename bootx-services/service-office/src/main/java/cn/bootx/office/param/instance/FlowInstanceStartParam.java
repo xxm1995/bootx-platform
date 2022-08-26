@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 @Schema(title = "流程启动参数")
-public class FlowInstanceParam {
+public class FlowInstanceStartParam {
     @Schema(description = "流程实例id")
     private Long modelId;
     @Schema(description = "实例名称")

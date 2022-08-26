@@ -21,6 +21,8 @@ public class BpmModelDto extends BaseDto {
     private String name;
     @Schema(description = "流程类型")
     private String modelType;
+    @Schema(description = "关联表单id")
+    private Long formId;
     @Schema(description = "发布状态")
     private String publish;
     @Schema(description = "启用状态")

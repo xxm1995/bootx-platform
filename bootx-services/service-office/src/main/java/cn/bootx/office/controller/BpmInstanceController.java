@@ -3,7 +3,7 @@ package cn.bootx.office.controller;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.office.core.instance.service.BpmInstanceService;
-import cn.bootx.office.param.instance.FlowInstanceParam;
+import cn.bootx.office.param.instance.FlowInstanceStartParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class BpmInstanceController {
     
     @Operation(summary = "启动任务")
     @PostMapping("/start")
-    public ResResult<Void> start(@ParameterObject FlowInstanceParam instanceParam){
+    public ResResult<Void> start(@ParameterObject FlowInstanceStartParam instanceParam){
         bpmInstanceService.start(instanceParam);
         return Res.ok();
     }

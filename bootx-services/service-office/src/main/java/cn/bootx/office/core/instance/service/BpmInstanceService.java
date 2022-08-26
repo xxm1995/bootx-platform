@@ -5,7 +5,7 @@ import cn.bootx.office.core.instance.dao.BpmInstanceManager;
 import cn.bootx.office.core.instance.entity.BpmInstance;
 import cn.bootx.office.core.model.dao.BpmModelManager;
 import cn.bootx.office.core.model.entity.BpmModel;
-import cn.bootx.office.param.instance.FlowInstanceParam;
+import cn.bootx.office.param.instance.FlowInstanceStartParam;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
 import cn.bootx.starter.flowable.exception.ModelNotPublishException;
 import cn.hutool.core.util.DesensitizedUtil;
@@ -41,7 +41,7 @@ public class BpmInstanceService {
      * 启动一个流程
      */
     @Transactional(rollbackFor = Exception.class)
-    public void start(FlowInstanceParam instanceParam){
+    public void start(FlowInstanceStartParam instanceParam){
         BpmModel bpmModel = bpmModelManager.findById(instanceParam.getModelId()).orElseThrow(ModelNotExistException::new);
         // 未发布
         if (!Objects.equals(bpmModel.getPublish(), PUBLISHED)){
