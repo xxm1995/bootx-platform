@@ -1,16 +1,17 @@
 package cn.bootx.office.controller;
 
+import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.office.core.instance.service.BpmInstanceService;
+import cn.bootx.office.dto.instance.InstanceInfo;
 import cn.bootx.office.param.instance.FlowInstanceStartParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**   
  * 流程实例
@@ -26,8 +27,14 @@ public class BpmInstanceController {
     
     @Operation(summary = "启动任务")
     @PostMapping("/start")
-    public ResResult<Void> start(@ParameterObject FlowInstanceStartParam instanceParam){
+    public ResResult<Void> start(@RequestBody FlowInstanceStartParam instanceParam){
         bpmInstanceService.start(instanceParam);
         return Res.ok();
+    }
+
+    @Operation(summary = "我发起的流程(分页)")
+    @GetMapping("/pageMyApply")
+    public ResResult<PageResult<InstanceInfo>> pageMyApply(@ParameterObject PageParam pageParam){
+        return Res.ok(bpmInstanceService.pageMyApply(pageParam));
     }
 }

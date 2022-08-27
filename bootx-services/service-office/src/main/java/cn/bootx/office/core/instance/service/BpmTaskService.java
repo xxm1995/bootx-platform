@@ -46,7 +46,7 @@ public class BpmTaskService {
         // 查询已办任务
         HistoricTaskInstanceQuery taskQuery = historyService.createHistoricTaskInstanceQuery().finished()
                 .taskAssignee(String.valueOf(SecurityUtil.getUserId()))
-                .orderByHistoricTaskInstanceEndTime().desc();
+                .orderByHistoricTaskInstanceStartTime().desc();
         List<HistoricTaskInstance> tasks = taskQuery.listPage(pageParam.start(),pageParam.getSize());
 
     }

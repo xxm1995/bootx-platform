@@ -20,10 +20,11 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 public class UserDetail{
+    /** 用户id */
     private Long id;
-    /** 名称 */
+    /** 用户名称 */
     private String name;
-    /** 用户 */
+    /** 账号 */
     private String username;
 
     @JsonIgnore

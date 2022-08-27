@@ -33,6 +33,8 @@ public class BpmModelDto extends BaseDto {
     private String defId;
     @Schema(description = "流程key")
     private String defKey;
+    @Schema(description ="流程名称")
+    private String defName;
     @Schema(description ="流程备注")
     private String defRemark;
     @Schema(description = "是否主流程")

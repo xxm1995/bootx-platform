@@ -11,6 +11,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * 流程实例扩展
  * @author xxm
@@ -29,5 +32,12 @@ public class BpmInstanceManager extends BaseManager<BpmInstanceMapper, BpmInstan
                 .select(this.getEntityClass(),MpUtil::excludeBigField)
                 .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
+    }
+
+    /**
+     * 根据流程实例ID查询
+     */
+    public Collection<BpmInstance> findAllByInstanceIds(List<String> ids) {
+        return findAllByFields(BpmInstance::getInstanceId,ids);
     }
 }

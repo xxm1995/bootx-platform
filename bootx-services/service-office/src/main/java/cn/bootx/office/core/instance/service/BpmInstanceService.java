@@ -1,24 +1,33 @@
 package cn.bootx.office.core.instance.service;
 
+import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.LocalDateTimeUtil;
 import cn.bootx.office.core.instance.dao.BpmInstanceManager;
 import cn.bootx.office.core.instance.entity.BpmInstance;
 import cn.bootx.office.core.model.dao.BpmModelManager;
 import cn.bootx.office.core.model.entity.BpmModel;
+import cn.bootx.office.dto.instance.InstanceInfo;
 import cn.bootx.office.param.instance.FlowInstanceStartParam;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
 import cn.bootx.starter.flowable.exception.ModelNotPublishException;
-import cn.hutool.core.util.DesensitizedUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.flowable.engine.IdentityService;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.engine.runtime.ProcessInstanceQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static cn.bootx.office.code.ModelCode.PUBLISHED;
 
@@ -35,7 +44,6 @@ public class BpmInstanceService {
     private final BpmInstanceManager bpmInstanceManager;
 
     private final RuntimeService runtimeService;
-    private final IdentityService identityService;
 
     /**
      * 启动一个流程
@@ -47,21 +55,24 @@ public class BpmInstanceService {
         if (!Objects.equals(bpmModel.getPublish(), PUBLISHED)){
             throw new ModelNotPublishException();
         }
+        Optional<UserDetail> currentUser = SecurityUtil.getCurrentUser();
+        Long userId = currentUser.map(UserDetail::getId).orElse(null);
+        String userName = currentUser.map(UserDetail::getName).orElse("未知");
+
+        String title = instanceParam.getName();
+        if (StrUtil.isBlank(title)){
+            title = bpmModel.getName() + "[" + userName +"]";
+        }
 
         ProcessInstance instance = runtimeService.createProcessInstanceBuilder()
                 .processDefinitionId(bpmModel.getDefId())
-                .name(instanceParam.getName())
+                .name(title)
                 .businessKey(instanceParam.getBusinessKey())
                 .start();
-        Long startUserId = Optional.ofNullable(instance.getStartUserId()).map(Long::valueOf).orElse(DesensitizedUtil.userId());
-
         BpmInstance bpmInstance = new BpmInstance()
                 .setInstanceId(instance.getProcessInstanceId())
-                .setModelId(instanceParam.getModelId())
-                .setModelType(bpmModel.getModelType())
-                .setDefId(bpmModel.getDefId())
-                .setDefName(bpmModel.getDefName())
-                .setStartUserId(startUserId)
+                .setStartUserId(userId)
+                .setStartUserName(userName)
                 .setStartTime(LocalDateTimeUtil.of(instance.getStartTime()))
                 .setFormVariables(instanceParam.getFormVariables());
 
@@ -69,7 +80,40 @@ public class BpmInstanceService {
     }
 
     /**
-     * 分页
+     * 我的发起分页
      */
+    public PageResult<InstanceInfo> pageMyApply(PageParam pageParam){
+        ProcessInstanceQuery instanceQuery = runtimeService.createProcessInstanceQuery()
+                .startedBy(String.valueOf(SecurityUtil.getUserId()))
+                .orderByStartTime().desc();
+        long total = instanceQuery.count();
+        List<ProcessInstance> processInstances = instanceQuery.listPage(pageParam.start(), pageParam.getSize());
+        List<InstanceInfo> instanceInfos = this.convertInstanceInfo(processInstances);
+        return new PageResult<InstanceInfo>().setCurrent(pageParam.getCurrent())
+                .setRecords(instanceInfos)
+                .setSize(pageParam.getSize())
+                .setTotal(total);
+    }
+
+
+    /**
+     * 转换 processInstances 为 系统中的对象
+     */
+    public List<InstanceInfo> convertInstanceInfo(List<ProcessInstance> processInstances){
+        List<String> ids = processInstances.stream().map(Execution::getProcessInstanceId).collect(Collectors.toList());
+
+        Map<String, BpmInstance> bpmInstanceMap = bpmInstanceManager.findAllByInstanceIds(ids).stream().collect(Collectors.toMap(BpmInstance::getInstanceId, o -> o));
+        return processInstances.stream().map(o -> {
+            BpmInstance bpmInstance = Optional.ofNullable(bpmInstanceMap.get(o.getProcessInstanceId())).orElse(new BpmInstance());
+            return new InstanceInfo()
+                    .setName(o.getName())
+                    .setInstanceId(o.getProcessInstanceId())
+                    .setStartTime(bpmInstance.getStartTime())
+                    .setEndTime(bpmInstance.getEndTime())
+                    .setStartUserId(bpmInstance.getStartUserId())
+                    .setStartUserName(bpmInstance.getStartUserName())
+                    .setDefMame(o.getProcessDefinitionName());
+        }).collect(Collectors.toList());
+    }
 
 }

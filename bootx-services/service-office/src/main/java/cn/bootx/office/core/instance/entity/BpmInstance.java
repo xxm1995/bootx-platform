@@ -26,18 +26,12 @@ import java.util.Map;
 @TableName(value = "bpm_instance",autoResultMap = true)
 public class BpmInstance extends MpBaseEntity implements EntityBaseFunction<BpmInstanceDto>{
 
-    /** 关联模型id */
-    private Long modelId;
     /** 流程实例的id */
     private String instanceId;
-    /** 流程定义的id */
-    private String defId;
-    /** 流程定义的名称 */
-    private String defName;
-    /** 流程分类 */
-    private String modelType;
     /** 发起人 */
     private Long startUserId;
+    /** 发起人名称 */
+    private String startUserName;
     /** 流程实例的状态 */
     private String state;
     /** 流程实例的执行结果 */
