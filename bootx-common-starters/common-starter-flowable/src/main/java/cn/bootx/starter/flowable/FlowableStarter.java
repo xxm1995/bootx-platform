@@ -1,5 +1,7 @@
 package cn.bootx.starter.flowable;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -10,5 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan
 @ConfigurationPropertiesScan
+@MapperScan(annotationClass = Mapper.class)
 public class FlowableStarter {
 }

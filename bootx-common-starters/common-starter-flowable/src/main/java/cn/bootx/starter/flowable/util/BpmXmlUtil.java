@@ -2,6 +2,7 @@ package cn.bootx.starter.flowable.util;
 
 import cn.hutool.core.collection.CollUtil;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.ItemDefinition;
@@ -23,6 +24,7 @@ import java.util.Map;
 * @author xxm  
 * @date 2020/3/27 15:21
 */
+@Slf4j
 @UtilityClass
 public class BpmXmlUtil {
 
@@ -43,11 +45,12 @@ public class BpmXmlUtil {
             ProcessValidator processValidator = processValidatorFactory.createDefaultProcessValidator();
             List<ValidationError> validate = processValidator.validate(bpmnModel);
             if (CollUtil.isNotEmpty(validate)){
+                validate.forEach(error -> log.error(error.toString()));
                 throw new RuntimeException("Bpmn文件校验失败");
             }
-
             return bpmnModel;
         } catch (XMLStreamException e) {
+            log.error(e.getMessage(),e);
             throw new RuntimeException("Bpmn文件解析失败");
         }
     }

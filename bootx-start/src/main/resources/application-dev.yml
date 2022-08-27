@@ -98,7 +98,9 @@ bootx:
         "[身份识别和管理]": cn.bootx.iam
         "[消息服务]": cn.bootx.notice
         "[商品服务]": cn.bootx.goods
-        "[办公服务]": cn.bootx.office
+        "[办公服务]":
+          - cn.bootx.office
+          - cn.bootx.starter.flowable
         "[支付服务]": cn.bootx.payment
         "[销售服务]": cn.bootx.sales
         "[订单服务]": cn.bootx.order

@@ -17,6 +17,11 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-auth</artifactId>
         </dependency>
+        <!-- mp -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-mybatis-plus</artifactId>
+        </dependency>
         <!-- 工作流 -->
         <dependency>
             <groupId>org.flowable</groupId>

@@ -1,5 +1,6 @@
 package cn.bootx.starter.flowable.behavior;
 
+import cn.bootx.starter.flowable.core.model.dao.BpmModelTaskManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.Activity;
@@ -19,10 +20,11 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
+    private final BpmModelTaskManager bpmModelTaskManager;
 
     @Override
     public UserTaskActivityBehavior createUserTaskActivityBehavior(UserTask userTask) {
-        return new BpmUserTaskActivityBehavior(userTask);
+        return new BpmUserTaskActivityBehavior(userTask,bpmModelTaskManager);
     }
 
     /**
