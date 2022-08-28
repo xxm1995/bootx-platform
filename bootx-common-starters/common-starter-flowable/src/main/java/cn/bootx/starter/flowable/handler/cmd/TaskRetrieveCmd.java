@@ -1,4 +1,4 @@
-package cn.bootx.starter.flowable.cmd;
+package cn.bootx.starter.flowable.handler.cmd;
 
 import com.google.common.collect.Lists;
 import org.flowable.common.engine.impl.interceptor.Command;

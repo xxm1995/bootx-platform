@@ -5,6 +5,9 @@ import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * 流程任务扩展
  * @author xxm
@@ -14,4 +17,22 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class BpmTaskManager extends BaseManager<BpmTaskMapper, BpmTask> {
 
+
+    /**
+     * 根据任务id查询
+     */
+    public List<BpmTask> findAllByTaskIds(List<String> taskIds){
+        return findAllByFields(BpmTask::getTaskId,taskIds);
+    }
+
+
+    /**
+     * 根据实例id和任务id查询
+     */
+    public Optional<BpmTask> findByInstanceIdAndTaskId(String instanceId,String taskId){
+        return lambdaQuery()
+                .eq(BpmTask::getInstanceId,instanceId)
+                .eq(BpmTask::getTaskId,taskId)
+                .oneOpt();
+    }
 }

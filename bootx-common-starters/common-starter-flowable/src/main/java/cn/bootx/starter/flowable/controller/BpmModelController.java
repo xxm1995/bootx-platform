@@ -92,4 +92,10 @@ public class BpmModelController {
         return Res.ok(bpmModelService.findMainProcess());
     }
 
+    @Operation(summary = "根据流程定义id获取模型信息")
+    @GetMapping("/findByDefId")
+    public ResResult<BpmModelDto> findByDefId(String defId){
+        return Res.ok(bpmModelService.findByDefId(defId));
+    }
+
 }

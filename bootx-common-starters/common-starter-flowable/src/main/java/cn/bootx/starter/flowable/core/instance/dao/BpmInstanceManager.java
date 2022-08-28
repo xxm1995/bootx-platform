@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 流程实例扩展
@@ -39,5 +40,12 @@ public class BpmInstanceManager extends BaseManager<BpmInstanceMapper, BpmInstan
      */
     public Collection<BpmInstance> findAllByInstanceIds(List<String> ids) {
         return findAllByFields(BpmInstance::getInstanceId,ids);
+    }
+
+    /**
+     * 根据流程id进行查询
+     */
+    public Optional<BpmInstance> findByInstanceId(String instanceId){
+        return findByField(BpmInstance::getInstanceId,instanceId);
     }
 }

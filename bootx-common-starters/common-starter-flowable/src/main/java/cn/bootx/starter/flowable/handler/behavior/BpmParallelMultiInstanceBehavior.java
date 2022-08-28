@@ -1,4 +1,4 @@
-package cn.bootx.starter.flowable.behavior;
+package cn.bootx.starter.flowable.handler.behavior;
 
 import org.flowable.bpmn.model.Activity;
 import org.flowable.engine.delegate.DelegateExecution;

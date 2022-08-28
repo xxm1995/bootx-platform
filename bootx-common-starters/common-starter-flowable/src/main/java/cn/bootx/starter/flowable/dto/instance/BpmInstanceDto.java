@@ -20,10 +20,10 @@ import java.util.Map;
 @Accessors(chain = true)
 public class BpmInstanceDto extends BaseDto {
 
-    @Schema(description = "关联模型id")
-    private Long modelId;
     @Schema(description = "流程实例的id")
     private String instanceId;
+    @Schema(description = "流程实例名称")
+    private String instanceName;
     @Schema(description = "流程定义的id")
     private String defId;
     @Schema(description = "流程定义的名称")

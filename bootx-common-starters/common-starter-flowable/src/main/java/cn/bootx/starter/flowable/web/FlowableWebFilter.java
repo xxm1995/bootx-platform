@@ -2,6 +2,7 @@ package cn.bootx.starter.flowable.web;
 
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.bootx.starter.flowable.local.BpmContextLocal;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.flowable.common.engine.impl.identity.Authentication;
@@ -37,8 +38,10 @@ public class FlowableWebFilter extends OncePerRequestFilter {
             // 过滤
             chain.doFilter(request, response);
         } finally {
+            BpmContextLocal.clear();
             // 清理
             Authentication.setAuthenticatedUserId(null);
+
         }
     }
 }

@@ -1,6 +1,6 @@
 package cn.bootx.starter.flowable.core.instance.entity;
 
-import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpDelEntity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
@@ -20,16 +20,28 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 @TableName(value = "bpm_task",autoResultMap = true)
-public class BpmTask extends MpBaseEntity {
+public class BpmTask extends MpDelEntity {
 
     /** 任务id */
     private String taskId;
+
+    /** 任务节点id */
+    private String taskNodeId;
+
+    /** 任务节点名称 */
+    private String taskName;
 
     /** 执行 ID */
     private String executionId;
 
     /** 流程id */
     private String instanceId;
+
+    /** 流程标题(业务标题) */
+    private String instanceName;
+
+    /** 流程名称(流程定义标题) */
+    private String defName;
 
     /** 开始时间 */
     private LocalDateTime startTime;
@@ -41,12 +53,15 @@ public class BpmTask extends MpBaseEntity {
     @TableField(typeHandler = JacksonTypeHandler.class)
     private Map<String,Object> formVariables;
 
-    /** 下一步处理人类别 */
-    private String assignType;
-
-    /** 下一步处理人 */
+    /** 当前处理人 */
     private Long userId;
 
-    /** 下一步处理人 */
+    /** 当前处理人 */
     private String userName;
+
+    /** 流程发起人id */
+    private Long startUserId;
+
+    /** 流程发起人名称 */
+    private String startUserName;
 }

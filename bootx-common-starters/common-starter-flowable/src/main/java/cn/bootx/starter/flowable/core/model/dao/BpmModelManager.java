@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 流程模型
@@ -34,7 +35,6 @@ public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
 
     /**
      * 取消主流程
-     * @param defKey
      */
     public void cancelMainProcessByDefKey(String defKey) {
         lambdaUpdate().set(BpmModel::getMainProcess,false)
@@ -48,5 +48,12 @@ public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
      */
     public List<BpmModel> findMainProcess() {
         return findAllByField(BpmModel::getMainProcess,true);
+    }
+
+    /**
+     * 根据流程定义id获取模型信息
+     */
+    public Optional<BpmModel> findByDefId(String defId){
+        return findByField(BpmModel::getDefId,defId);
     }
 }

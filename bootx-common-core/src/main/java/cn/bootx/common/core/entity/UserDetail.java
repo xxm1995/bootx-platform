@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**   
-* 用户类
+* 用户信息类
 * @author xxm  
 * @date 2021/7/30 
 */

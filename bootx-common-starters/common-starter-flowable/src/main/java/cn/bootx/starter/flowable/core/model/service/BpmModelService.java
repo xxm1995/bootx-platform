@@ -44,6 +44,7 @@ import static cn.bootx.starter.flowable.code.ModelCode.*;
 public class BpmModelService {
 
     private final RepositoryService repositoryService;
+
     private final BpmModelManager bpmModelManager;
     private final BpmModelTaskManager bpmModelTaskManager;
 
@@ -176,7 +177,14 @@ public class BpmModelService {
      * 获取单条
      */
     public BpmModelDto findById(Long id){
-        return bpmModelManager.findById(id).map(BpmModel::toDto).orElseThrow(DataNotExistException::new);
+        return bpmModelManager.findById(id).map(BpmModel::toDto).orElseThrow(ModelNotExistException::new);
+    }
+
+    /**
+     * 根据流程定义id获取模型信息
+     */
+    public BpmModelDto findByDefId(String defId){
+        return bpmModelManager.findByDefId(defId).map(BpmModel::toDto).orElseThrow(ModelNotExistException::new);
     }
 
     /**

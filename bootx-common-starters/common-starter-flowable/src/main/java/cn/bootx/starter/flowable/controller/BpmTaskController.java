@@ -1,10 +1,16 @@
 package cn.bootx.starter.flowable.controller;
 
+import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.Res;
+import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.flowable.core.instance.service.BpmTaskService;
+import cn.bootx.starter.flowable.dto.task.TaskInfo;
+import cn.bootx.starter.flowable.param.task.TaskApproveParam;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**   
  *
@@ -16,6 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/bpm/task")
 @RequiredArgsConstructor
 public class BpmTaskController {
-    private BpmTaskService bpmTaskService;
+    private final BpmTaskService bpmTaskService;
+
+    @Operation(summary = "我的待办")
+    @GetMapping("/pageMyTodo")
+    public ResResult<PageResult<TaskInfo>> pageMyTodo(PageParam pageParam){
+        return Res.ok(bpmTaskService.pageMyTodo(pageParam));
+    }
+    @Operation(summary = "我的已办")
+    @GetMapping("/pageMyDone")
+    public ResResult<PageResult<TaskInfo>> pageMyDone(PageParam pageParam){
+        return Res.ok(bpmTaskService.pageMyDone(pageParam));
+    }
+
+    @Operation(summary = "通过任务")
+    @PostMapping("/pass")
+    public ResResult<Void> pass(@RequestBody TaskApproveParam param){
+        bpmTaskService.pass(param);
+        return Res.ok();
+    }
 
 }

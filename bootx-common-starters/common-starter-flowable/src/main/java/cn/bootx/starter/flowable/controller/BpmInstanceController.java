@@ -5,6 +5,7 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.flowable.core.instance.service.BpmInstanceService;
+import cn.bootx.starter.flowable.dto.instance.BpmInstanceDto;
 import cn.bootx.starter.flowable.dto.instance.InstanceInfo;
 import cn.bootx.starter.flowable.param.instance.InstanceStartParam;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,6 +32,13 @@ public class BpmInstanceController {
         bpmInstanceService.start(instanceParam);
         return Res.ok();
     }
+
+    @Operation(summary = "根据流程Id获取详情")
+    @GetMapping("/findByInstanceId")
+    public ResResult<BpmInstanceDto> findByInstanceId(String instanceId){
+        return Res.ok(bpmInstanceService.findByInstanceId(instanceId));
+    }
+
 
     @Operation(summary = "我发起的流程(分页)")
     @GetMapping("/pageMyApply")

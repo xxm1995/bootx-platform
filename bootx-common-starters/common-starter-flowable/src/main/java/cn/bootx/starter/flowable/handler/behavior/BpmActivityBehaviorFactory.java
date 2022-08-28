@@ -1,4 +1,4 @@
-package cn.bootx.starter.flowable.behavior;
+package cn.bootx.starter.flowable.handler.behavior;
 
 import cn.bootx.starter.flowable.core.model.dao.BpmModelTaskManager;
 import lombok.RequiredArgsConstructor;

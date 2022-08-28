@@ -1,6 +1,6 @@
 package cn.bootx.starter.flowable.config;
 
-import cn.bootx.starter.flowable.behavior.BpmActivityBehaviorFactory;
+import cn.bootx.starter.flowable.handler.behavior.BpmActivityBehaviorFactory;
 import cn.hutool.core.collection.ListUtil;
 import org.flowable.common.engine.api.delegate.event.FlowableEventListener;
 import org.flowable.spring.SpringProcessEngineConfiguration;

@@ -1,7 +1,9 @@
 package cn.bootx.iam.core.user.service;
 
+import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.function.UserDetailService;
 import cn.bootx.iam.core.user.dao.UserInfoManager;
 import cn.bootx.iam.core.user.entity.UserInfo;
 import cn.bootx.iam.dto.user.UserInfoDto;
@@ -9,6 +11,8 @@ import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * 用户信息查询服务
@@ -18,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserQueryService {
+public class UserQueryService implements UserDetailService {
     private final UserInfoManager userInfoManager;
     private final UserAssistService userAssistService;
 
@@ -111,4 +115,8 @@ public class UserQueryService {
         return userInfoManager.findByPhone(phone).map(UserInfo::getUsername).orElseThrow(DataNotExistException::new);
     }
 
+    @Override
+    public Optional<UserDetail> findByUserId(Long userId) {
+        return userInfoManager.findById(userId).map(UserInfo::toUserDetail);
+    }
 }
