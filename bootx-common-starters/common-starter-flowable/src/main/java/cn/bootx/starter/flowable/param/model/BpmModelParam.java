@@ -29,4 +29,7 @@ public class BpmModelParam {
     @Schema(description = "备注")
     private String remark;
 
+    @Schema(description = "流程xml")
+    private String modelEditorXml;
+
 }

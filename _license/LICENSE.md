@@ -20,3 +20,6 @@ https://gitee.com/kcz66/k-form-design
 
 Vue微信菜单编辑器: 
 https://github.com/hopex/vue-menu
+
+flowable antd vue 的工作流设计器:
+https://gitee.com/Vincent-Vic/workflow-bpmn-modeler-antdv

@@ -11,10 +11,7 @@ import cn.bootx.starter.flowable.param.model.BpmModelParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -30,14 +27,6 @@ import java.util.List;
 public class BpmModelController {
     private final BpmModelService bpmModelService;
 
-    @SneakyThrows
-    @Operation(summary = "增加流程模型并上传BPMN文件")
-    @PostMapping("/addAndUploadBpmn")
-    public ResResult<Void> addAndUploadBpmn(MultipartFile file, @ParameterObject BpmModelParam flowModelParam){
-        bpmModelService.addAndUploadBpmn(flowModelParam,file.getBytes());
-        return Res.ok();
-    }
-
     @Operation(summary = "增加流程模型")
     @PostMapping("/add")
     public ResResult<Void> add(@RequestBody BpmModelParam flowModelParam){
@@ -45,11 +34,10 @@ public class BpmModelController {
         return Res.ok();
     }
 
-    @SneakyThrows
     @Operation(summary = "上传BPMN文件")
     @PostMapping("/uploadBpmn")
-    public ResResult<Void> uploadBpmn(MultipartFile file,Long id){
-        bpmModelService.uploadBpmn(id,file.getBytes());
+    public ResResult<Void> uploadBpmn(@RequestBody BpmModelParam bpmModelParam){
+        bpmModelService.uploadBpmn(bpmModelParam);
         return Res.ok();
     }
 

@@ -11,15 +11,12 @@ import cn.bootx.starter.flowable.core.model.dao.BpmModelTaskManager;
 import cn.bootx.starter.flowable.core.model.entity.BpmModel;
 import cn.bootx.starter.flowable.core.model.entity.BpmModelTask;
 import cn.bootx.starter.flowable.dto.model.BpmModelDto;
-import cn.bootx.starter.flowable.param.model.BpmModelParam;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
-import cn.bootx.starter.flowable.util.BpmXmlUtil;
+import cn.bootx.starter.flowable.param.model.BpmModelParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.bpmn.model.Process;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.DeploymentBuilder;
@@ -49,26 +46,6 @@ public class BpmModelService {
     private final BpmModelTaskManager bpmModelTaskManager;
 
     /**
-     * 创建模型 并上传BPMN文件
-     */
-    public void addAndUploadBpmn(BpmModelParam bpmModelParam, byte[] bytes){
-        BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(bytes);
-        Process mainProcess = bpmnModel.getMainProcess();
-        BpmModel flowBpmModel = new BpmModel()
-                .setName(bpmModelParam.getName())
-                .setModelType(bpmModelParam.getModelType())
-                .setMainProcess(false)
-                .setPublish(UNPUBLISHED)
-                .setEnable(false)
-                .setModelEditorXml(BpmXmlUtil.convertBpmnModel2Str(bpmnModel))
-                .setDefKey(mainProcess.getId())
-                .setDefName(mainProcess.getName())
-                .setDefRemark(mainProcess.getDocumentation())
-                .setRemark(bpmModelParam.getRemark());
-        bpmModelManager.save(flowBpmModel);
-    }
-
-    /**
      * 创建模型
      */
     public void add(BpmModelParam bpmModelParam){
@@ -77,6 +54,7 @@ public class BpmModelService {
                 .setModelType(bpmModelParam.getModelType())
                 .setMainProcess(false)
                 .setPublish(UNPUBLISHED)
+                .setModelEditorXml(DEFAULT_XML)
                 .setEnable(false)
                 .setRemark(bpmModelParam.getRemark());
         bpmModelManager.save(flowBpmModel);
@@ -85,15 +63,10 @@ public class BpmModelService {
     /**
      * 上传bpm文件
      */
-    public void uploadBpmn(Long id,byte[] bytes){
-        BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
-        BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(bytes);
-        Process mainProcess = bpmnModel.getMainProcess();
-        bpmModel.setModelEditorXml(BpmXmlUtil.convertBpmnModel2Str(bpmnModel))
-                .setPublish(UNPUBLISHED_XML)
-                .setDefKey(mainProcess.getId())
-                .setDefName(mainProcess.getName())
-                .setDefRemark(mainProcess.getDocumentation());
+    public void uploadBpmn(BpmModelParam bpmModelParam){
+        String modelEditorXml = bpmModelParam.getModelEditorXml();
+        BpmModel bpmModel = bpmModelManager.findById(bpmModelParam.getId()).orElseThrow(ModelNotExistException::new);
+        bpmModel.setModelEditorXml(modelEditorXml);
         bpmModelManager.updateById(bpmModel);
     }
 
@@ -140,10 +113,13 @@ public class BpmModelService {
                 .singleResult();
         //回填属性
         bpmModel.setDeployId(deploy.getId())
+                .setDefId(processDefinition.getId())
+                .setDefKey(processDefinition.getKey())
+                .setDefName(processDefinition.getName())
+                .setDefRemark(processDefinition.getDescription())
                 .setMainProcess(true)
                 .setPublish(PUBLISHED)
                 .setEnable(true)
-                .setDefId(processDefinition.getId())
                 .setProcessVersion(processDefinition.getVersion());
         bpmModelManager.cancelMainProcessByDefKey(bpmModel.getDefKey());
         bpmModelManager.updateById(bpmModel);
