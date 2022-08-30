@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**   
  * 流程实例
  * @author xxm  
@@ -33,12 +35,31 @@ public class BpmInstanceController {
         return Res.ok();
     }
 
+    @Operation(summary = "挂起实例")
+    @PostMapping("/suspend")
+    public ResResult<Void> suspend(String instanceId){
+        bpmInstanceService.suspend(instanceId);
+        return Res.ok();
+    }
+
+    @Operation(summary = "激活流程")
+    @PostMapping("/activate")
+    public ResResult<Void> activate(String instanceId){
+        bpmInstanceService.activate(instanceId);
+        return Res.ok();
+    }
+
     @Operation(summary = "根据流程Id获取详情")
     @GetMapping("/findByInstanceId")
     public ResResult<BpmInstanceDto> findByInstanceId(String instanceId){
         return Res.ok(bpmInstanceService.findByInstanceId(instanceId));
     }
 
+    @Operation(summary = "获取当前节点")
+    @GetMapping("/getCurrentNode")
+    public ResResult<List<String>> getCurrentNode(String instanceId){
+        return Res.ok(bpmInstanceService.getCurrentNode(instanceId));
+    }
 
     @Operation(summary = "我发起的流程(分页)")
     @GetMapping("/pageMyApply")

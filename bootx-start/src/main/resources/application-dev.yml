@@ -71,11 +71,6 @@ spring:
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
-# 工作流
-flowable:
-  activityFontName: "宋体"
-  annotation-font-name: "宋体"
-  label-font-name: "宋体"
 
 # 开发时显示debug日志
 logging:

@@ -13,10 +13,16 @@ import cn.bootx.starter.flowable.core.model.entity.BpmModelTask;
 import cn.bootx.starter.flowable.dto.model.BpmModelDto;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
 import cn.bootx.starter.flowable.param.model.BpmModelParam;
+import cn.bootx.starter.flowable.util.BpmXmlUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.bpmn.model.Process;
+import org.flowable.bpmn.model.UserTask;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.DeploymentBuilder;
@@ -49,7 +55,7 @@ public class BpmModelService {
      * 创建模型
      */
     public void add(BpmModelParam bpmModelParam){
-        BpmModel flowBpmModel = new BpmModel()
+        BpmModel bpmModel = new BpmModel()
                 .setName(bpmModelParam.getName())
                 .setModelType(bpmModelParam.getModelType())
                 .setMainProcess(false)
@@ -57,7 +63,7 @@ public class BpmModelService {
                 .setModelEditorXml(DEFAULT_XML)
                 .setEnable(false)
                 .setRemark(bpmModelParam.getRemark());
-        bpmModelManager.save(flowBpmModel);
+        bpmModelManager.save(bpmModel);
     }
 
     /**
@@ -73,9 +79,30 @@ public class BpmModelService {
     /**
      * 复制
      */
+    @Transactional(rollbackFor = Exception.class)
     public void copy(Long id){
-        BpmModel flowBpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
+        BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
+        BpmModel newBpmModel = new BpmModel()
+                .setName(bpmModel.getName())
+                .setModelType(bpmModel.getModelType())
+                .setMainProcess(false)
+                .setPublish(UNPUBLISHED)
+                .setModelEditorXml(bpmModel.getModelEditorXml())
+                .setEnable(false)
+                .setRemark(bpmModel.getRemark());
+        bpmModelManager.save(newBpmModel);
+        List<BpmModelTask> bpmModelTasks = bpmModelTaskManager.findAllByModelId(id);
 
+        List<BpmModelTask> newModelTasks = bpmModelTasks.stream()
+                .map(bpmModelTask -> new BpmModelTask()
+                        .setModelId(bpmModelTask.getModelId())
+                        .setTaskName(bpmModelTask.getTaskName())
+                        .setFormId(bpmModelTask.getFormId())
+                        .setAssignType(bpmModelTask.getAssignType())
+                        .setUserId(bpmModelTask.getUserId())
+                        .setUserName(bpmModelTask.getUserName())
+                ).collect(Collectors.toList());
+        bpmModelTaskManager.saveAll(newModelTasks);
     }
 
     /**
@@ -95,9 +122,8 @@ public class BpmModelService {
     public void publish(Long id){
         BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
 
-        if (Objects.equals(bpmModel.getPublish(), PUBLISHED)){
-            throw new BizException("流程模型已经发布");
-        }
+        // 校验检查
+        this.verifyModel(bpmModel);
         //部署
         DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
 
@@ -184,11 +210,31 @@ public class BpmModelService {
     }
 
     /**
-     * 校验流程
+     * 发布前校验流程
      */
-    public void verifyModel(){
-        // 校验是否有xml文档
+    public void verifyModel(BpmModel bpmModel){
+        // 校验是否已经发布
+        if (Objects.equals(bpmModel.getPublish(), PUBLISHED)){
+            throw new BizException("流程模型已经发布");
+        }
 
         // 校验对应的任务节点是否已经被配置
+        String modelEditorXml = bpmModel.getModelEditorXml();
+        BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(modelEditorXml.getBytes());
+        Process process = bpmnModel.getMainProcess();
+        List<UserTask> userTasks = process.findFlowElementsOfType(UserTask.class);
+        List<BpmModelTask> bpmModelTasks = bpmModelTaskManager.findAllByModelId(bpmModel.getId());
+
+        val bpmModelTaskMap = bpmModelTasks.stream().collect(Collectors.toMap(BpmModelTask::getTaskId, o->o));
+
+        for (val userTask : userTasks) {
+            BpmModelTask modelTask = bpmModelTaskMap.get(userTask.getId());
+            if (Objects.isNull(modelTask)){
+                throw new BizException("流程有任务节点未进行配置，请进行配置");
+            }
+            if (StrUtil.isBlank(modelTask.getAssignType())){
+                throw new BizException(modelTask.getTaskName() + " 任务节点未配置处理人员类型");
+            }
+        }
     }
 }

@@ -16,24 +16,27 @@ import java.time.LocalDateTime;
 @Schema(title = "流程实例信息")
 public class InstanceInfo {
 
-    /** 标题 */
+    @Schema(description = "标题")
     private String name;
 
-    /** 实例ID */
+    @Schema(description = "实例ID")
     private String instanceId;
 
-    /** 流程定义名称 */
+    @Schema(description = "流程定义名称")
     private String defMame;
 
-    /** 开始时间 */
+    @Schema(description = "流程实例的状态")
+    private String state;
+    
+    @Schema(description = "开始时间")
     private LocalDateTime startTime;
 
-    /** 结束时间 */
+    @Schema(description = "结束时间")
     private LocalDateTime endTime;
 
-    /** 发起人id */
+    @Schema(description = "发起人id")
     private Long startUserId;
 
-    /** 发起人名称 */
+    @Schema(description = "发起人名称")
     private String startUserName;
 }

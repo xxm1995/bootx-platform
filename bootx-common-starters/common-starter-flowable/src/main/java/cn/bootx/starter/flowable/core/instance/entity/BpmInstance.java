@@ -4,7 +4,6 @@ import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.starter.flowable.core.instance.convert.BpmInstanceConvert;
 import cn.bootx.starter.flowable.dto.instance.BpmInstanceDto;
-import cn.bootx.starter.flowable.param.instance.BpmInstanceParam;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
@@ -40,8 +39,6 @@ public class BpmInstance extends MpBaseEntity implements EntityBaseFunction<BpmI
     private String startUserName;
     /** 流程实例的状态 */
     private String state;
-    /** 流程实例的执行结果 */
-    private String result;
     /** 开始时间 */
     private LocalDateTime startTime;
     /** 结束时间 */
@@ -49,11 +46,6 @@ public class BpmInstance extends MpBaseEntity implements EntityBaseFunction<BpmI
     /** 提交的表单值 */
     @TableField(typeHandler = JacksonTypeHandler.class)
     private Map<String,Object> formVariables;
-
-    /** 创建对象 */
-    public static BpmInstance init(BpmInstanceParam in) {
-            return BpmInstanceConvert.CONVERT.convert(in);
-    }
 
     /** 转换成dto */
     @Override

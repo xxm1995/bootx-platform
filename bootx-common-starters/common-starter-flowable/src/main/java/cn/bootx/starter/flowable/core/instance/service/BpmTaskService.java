@@ -6,9 +6,11 @@ import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
 import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
 import cn.bootx.starter.flowable.dto.task.TaskInfo;
+import cn.bootx.starter.flowable.handler.TaskRejectHandler;
 import cn.bootx.starter.flowable.local.BpmContext;
 import cn.bootx.starter.flowable.local.BpmContextLocal;
 import cn.bootx.starter.flowable.param.task.TaskApproveParam;
+import cn.bootx.starter.flowable.param.task.TaskReturnParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.HistoryService;
@@ -39,6 +41,8 @@ public class BpmTaskService {
 
     private final BpmTaskManager bpmTaskManager;
 
+    private final TaskRejectHandler taskRejectHandler;
+
     /**
      * 获取自己的代办任务
      */
@@ -59,8 +63,6 @@ public class BpmTaskService {
 
     /**
      * 获取自己已处理的任务
-     *
-     * @return
      */
     public PageResult<TaskInfo> pageMyDone(PageParam pageParam){
         // 查询已办任务
@@ -95,15 +97,25 @@ public class BpmTaskService {
      * 驳回
      */
     public void reject(TaskApproveParam param){
-        Task task = taskService.createTaskQuery().taskId(param.getTaskId()).singleResult();
+        BpmContext bpmContext = BpmContextLocal.get();
+        bpmContext.setReason(param.getReason())
+                .setFormVariables(param.getFormVariables());
+        BpmContextLocal.put(bpmContext);
+        taskRejectHandler.flowTalkBack(param.getTaskId());
+    }
 
+    /**
+     * 流程回退
+     */
+    public void flowReturn(TaskReturnParam param){
+        taskRejectHandler.flowReturn(param.getTaskId(),param.getTargetKey());
     }
 
     /**
      * 重新分配人员
      */
-    public void assignee(){
-
+    public void assignee(String taskId, Long userId){
+        taskService.setAssignee(taskId, String.valueOf(userId));
     }
 
     /**

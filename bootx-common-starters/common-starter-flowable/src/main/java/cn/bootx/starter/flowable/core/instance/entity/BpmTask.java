@@ -43,6 +43,9 @@ public class BpmTask extends MpDelEntity {
     /** 流程名称(流程定义标题) */
     private String defName;
 
+    /** 流程实例的状态 */
+    private String state;
+
     /** 开始时间 */
     private LocalDateTime startTime;
 

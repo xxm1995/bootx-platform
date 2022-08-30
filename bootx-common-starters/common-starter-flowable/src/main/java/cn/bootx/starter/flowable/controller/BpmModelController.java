@@ -41,6 +41,13 @@ public class BpmModelController {
         return Res.ok();
     }
 
+    @Operation(summary = "上传BPMN文件")
+    @PostMapping("/copy")
+    public ResResult<Void> uploadBpmn(Long id){
+        bpmModelService.copy(id);
+        return Res.ok();
+    }
+
     @Operation(summary = "发布")
     @PostMapping("/publish")
     public ResResult<Void> publish(Long id){

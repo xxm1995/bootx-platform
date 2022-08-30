@@ -30,3 +30,8 @@ mybatis-plus:
 sa-token:
   is-print: false
   token-name: AccessToken
+# 工作流
+flowable:
+  activityFontName: "宋体"
+  annotation-font-name: "宋体"
+  label-font-name: "宋体"

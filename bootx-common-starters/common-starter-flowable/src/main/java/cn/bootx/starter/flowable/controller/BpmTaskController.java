@@ -41,5 +41,26 @@ public class BpmTaskController {
         bpmTaskService.pass(param);
         return Res.ok();
     }
+    
+    @Operation(summary = "驳回")
+    @PostMapping("/reject")
+    public ResResult<Void> reject(@RequestBody TaskApproveParam param){
+        bpmTaskService.reject(param);
+        return Res.ok();
+    }
+
+    @Operation(summary = "任务回退")
+    @PostMapping("/flowReturn")
+    public ResResult<Void> flowReturn(@RequestBody TaskApproveParam param){
+        bpmTaskService.reject(param);
+        return Res.ok();
+    }
+
+    @Operation(summary = "重新分配人员")
+    @PostMapping("/assignee")
+    public ResResult<Void> assignee(String taskId,Long userId){
+        bpmTaskService.assignee(taskId,userId);
+        return Res.ok();
+    }
 
 }

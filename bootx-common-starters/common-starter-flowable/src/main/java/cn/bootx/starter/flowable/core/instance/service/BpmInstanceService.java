@@ -76,6 +76,23 @@ public class BpmInstanceService {
                 .start();
     }
 
+
+    /**
+     * 挂起实例
+     */
+    public void suspend(String instanceId){
+        // 激活状态
+        runtimeService.suspendProcessInstanceById(instanceId);
+    }
+
+    /**
+     * 激活流程
+     */
+    public void activate(String instanceId){
+        // 非激活状态
+        runtimeService.activateProcessInstanceById(instanceId);
+    }
+
     /**
      * 我的发起分页
      */
@@ -103,6 +120,20 @@ public class BpmInstanceService {
     }
 
     /**
+     * 获取当前节点
+     */
+    public List<String> getCurrentNode(String instanceId){
+
+        return runtimeService.createExecutionQuery().processInstanceId(instanceId)
+                .list()
+                .stream()
+                .map(Execution::getActivityId)
+                .distinct()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * 转换 processInstances 为 系统中的对象
      */
     public List<InstanceInfo> convertInstanceInfo(List<String> instanceIds){
@@ -112,6 +143,7 @@ public class BpmInstanceService {
             return new InstanceInfo()
                     .setName(bpmInstance.getInstanceName())
                     .setInstanceId(bpmInstance.getInstanceId())
+                    .setState(bpmInstance.getState())
                     .setStartTime(bpmInstance.getStartTime())
                     .setEndTime(bpmInstance.getEndTime())
                     .setStartUserId(bpmInstance.getStartUserId())

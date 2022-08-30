@@ -23,3 +23,6 @@ https://github.com/hopex/vue-menu
 
 flowable antd vue 的工作流设计器:
 https://gitee.com/Vincent-Vic/workflow-bpmn-modeler-antdv
+
+flowable 工作流相关思路和实现 乐之终曲:
+https://blog.csdn.net/qq_37143673

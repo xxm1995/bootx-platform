@@ -1,13 +1,7 @@
 package cn.bootx.starter.flowable.core.instance.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.starter.flowable.param.instance.BpmInstanceParam;
 import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
-import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.mybatisplus.base.MpIdEntity;
-import cn.bootx.common.mybatisplus.util.MpUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -23,17 +17,6 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class BpmInstanceManager extends BaseManager<BpmInstanceMapper, BpmInstance> {
-
-    /**
-    * 分页
-    */
-    public Page<BpmInstance> page(PageParam pageParam, BpmInstanceParam param) {
-        Page<BpmInstance> mpPage = MpUtil.getMpPage(pageParam, BpmInstance.class);
-        return this.lambdaQuery()
-                .select(this.getEntityClass(),MpUtil::excludeBigField)
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
-    }
 
     /**
      * 根据流程实例ID查询
