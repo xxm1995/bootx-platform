@@ -37,6 +37,8 @@ public class BpmUserTaskActivityBehavior  extends UserTaskActivityBehavior {
                                      List<String> candidateUsers, List<String> candidateGroups, TaskEntity task, ExpressionManager expressionManager,
                                      DelegateExecution execution, ProcessEngineConfigurationImpl processEngineConfiguration) {
 
+        // 处理驳回情况的人员分配
+
         // 获取节点配置并设置处理人
         BpmModelTask modelTask = bpmModelTaskManager.findByDefIdAndTaskId(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
         TaskHelper.changeTaskAssignee(task, String.valueOf(modelTask.getUserId()));

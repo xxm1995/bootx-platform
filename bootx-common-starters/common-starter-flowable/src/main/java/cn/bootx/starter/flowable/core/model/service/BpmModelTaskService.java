@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**   
- *
+ * 模型任务节点服务
  * @author xxm  
  * @date 2022/8/25 
  */
