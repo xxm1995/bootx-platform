@@ -1,30 +1,25 @@
 package cn.bootx.starter.flowable.core.instance.service;
 
-import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.bootx.starter.flowable.code.InstanceCode;
+import cn.bootx.starter.flowable.core.instance.convert.BpmActivityConvert;
 import cn.bootx.starter.flowable.core.instance.dao.BpmInstanceManager;
 import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
-import cn.bootx.starter.flowable.core.model.dao.BpmModelManager;
-import cn.bootx.starter.flowable.core.model.entity.BpmModel;
+import cn.bootx.starter.flowable.dto.instance.ActivityInstanceChart;
 import cn.bootx.starter.flowable.dto.instance.BpmInstanceDto;
 import cn.bootx.starter.flowable.dto.instance.InstanceInfo;
-import cn.bootx.starter.flowable.exception.ModelNotExistException;
-import cn.bootx.starter.flowable.exception.ModelNotPublishException;
-import cn.bootx.starter.flowable.local.BpmContext;
-import cn.bootx.starter.flowable.local.BpmContextLocal;
-import cn.bootx.starter.flowable.param.instance.InstanceStartParam;
-import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.history.HistoricActivityInstance;
+import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.Execution;
-import org.flowable.engine.runtime.ProcessInstance;
-import org.flowable.engine.runtime.ProcessInstanceQuery;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -32,78 +27,31 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static cn.bootx.starter.flowable.code.ModelCode.PUBLISHED;
-
 /**
- * 流程实例
+ * 实例查询
  * @author xxm
- * @date 2022/8/23 
+ * @date 2022/8/31 
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class BpmInstanceService {
-    private final BpmModelManager bpmModelManager;
+public class BpmInstanceQueryService {
     private final BpmInstanceManager bpmInstanceManager;
 
     private final RuntimeService runtimeService;
-
-    /**
-     * 启动一个流程
-     */
-    @Transactional(rollbackFor = Exception.class)
-    public void start(InstanceStartParam instanceParam){
-        BpmModel bpmModel = bpmModelManager.findById(instanceParam.getModelId()).orElseThrow(ModelNotExistException::new);
-        // 未发布
-        if (!Objects.equals(bpmModel.getPublish(), PUBLISHED)){
-            throw new ModelNotPublishException();
-        }
-        Optional<UserDetail> currentUser = SecurityUtil.getCurrentUser();
-        String userName = currentUser.map(UserDetail::getName).orElse("未知");
-
-        String title = instanceParam.getName();
-        if (StrUtil.isBlank(title)){
-            title = bpmModel.getName() + "[" + userName +"]";
-        }
-        BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setFormVariables(instanceParam.getFormVariables())
-                .setStartUser(currentUser);
-        BpmContextLocal.put(bpmContext);
-
-        runtimeService.createProcessInstanceBuilder()
-                .processDefinitionId(bpmModel.getDefId())
-                .name(title)
-                .start();
-    }
-
-
-    /**
-     * 挂起实例
-     */
-    public void suspend(String instanceId){
-        // 激活状态
-        runtimeService.suspendProcessInstanceById(instanceId);
-    }
-
-    /**
-     * 激活流程
-     */
-    public void activate(String instanceId){
-        // 非激活状态
-        runtimeService.activateProcessInstanceById(instanceId);
-    }
+    private final HistoryService historyService;
 
     /**
      * 我的发起分页
      */
     public PageResult<InstanceInfo> pageMyApply(PageParam pageParam){
-        ProcessInstanceQuery instanceQuery = runtimeService.createProcessInstanceQuery()
+        val instanceQuery = historyService.createHistoricProcessInstanceQuery()
                 .startedBy(String.valueOf(SecurityUtil.getUserId()))
-                .orderByStartTime().desc();
-        List<ProcessInstance> processInstances = instanceQuery.listPage(pageParam.start(), pageParam.getSize());
+                .orderByProcessInstanceStartTime().desc();
+        val historicProcessInstances = instanceQuery.listPage(pageParam.start(), pageParam.getSize());
         long total = instanceQuery.count();
 
-        List<String> instanceId = processInstances.stream().map(Execution::getProcessInstanceId).collect(Collectors.toList());
+        List<String> instanceId = historicProcessInstances.stream().map(HistoricProcessInstance::getId).collect(Collectors.toList());
         List<InstanceInfo> instanceInfos = this.convertInstanceInfo(instanceId);
         return new PageResult<InstanceInfo>().setCurrent(pageParam.getCurrent())
                 .setRecords(instanceInfos)
@@ -120,9 +68,35 @@ public class BpmInstanceService {
     }
 
     /**
-     * 获取当前节点
+     * 获取流程执行的节点, 用于绘制流程进展图
      */
-    public List<String> getCurrentNode(String instanceId){
+    public List<ActivityInstanceChart> getFlowNodes(String instanceId){
+        List<HistoricActivityInstance> activityList = historyService.createHistoricActivityInstanceQuery()
+                .processInstanceId(instanceId).list();
+
+        // 获取当前执行的节点
+        List<String> currentNodes = this.getCurrentNodes(instanceId);
+
+        // 获取驳回的节点
+
+        // 获取取消的节点
+
+        return activityList.stream().map(activity ->{
+            val convert = BpmActivityConvert.CONVERT.convert(activity);
+            if (currentNodes.contains(convert.getActivityId())){
+                convert.setState(InstanceCode.STATE_RUNNING);
+            } else {
+                convert.setState(InstanceCode.STATE_FINISH);
+            }
+            return convert;
+        }).distinct().collect(Collectors.toList());
+    }
+
+
+    /**
+     * 获取当前执行的节点
+     */
+    public List<String> getCurrentNodes(String instanceId){
 
         return runtimeService.createExecutionQuery().processInstanceId(instanceId)
                 .list()
@@ -151,5 +125,4 @@ public class BpmInstanceService {
                     .setDefMame(bpmInstance.getDefName());
         }).collect(Collectors.toList());
     }
-
 }
