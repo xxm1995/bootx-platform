@@ -32,6 +32,8 @@ public class BpmInstanceDto extends BaseDto {
     private String modelType;
     @Schema(description = "发起人")
     private Long startUserId;
+    @Schema(description = "发起人名称")
+    private String startUserName;
     @Schema(description = "流程实例的状态")
     private String state;
     @Schema(description = "流程实例的执行结果")
