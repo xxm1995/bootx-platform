@@ -1,10 +1,10 @@
 package cn.bootx.iam.param.upms;
 
-import cn.bootx.iam.core.permission.entity.PermMenu;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
@@ -24,10 +24,12 @@ public class RolePermissionParam implements Serializable {
     private Long roleId;
 
     @Schema(description= "终端code")
-    @NotNull(message = "终端不可为空",groups = {PermMenu.class})
+    @NotBlank(message = "终端不可为空",groups = {PermMenu.class})
     private String clientCode;
 
     @Schema(description= "权限id")
     private List<Long> permissionIds;
+
+    public interface PermMenu{};
 
 }

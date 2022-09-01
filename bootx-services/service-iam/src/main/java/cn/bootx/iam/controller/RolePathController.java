@@ -24,7 +24,7 @@ import java.util.List;
 public class RolePathController {
     private final RolePathService rolePathService;
 
-    @Operation(summary = "保存角色权限关联关系")
+    @Operation(summary = "保存角色请求权限关联关系")
     @PostMapping("/save")
     public ResResult<Void> save(@RequestBody RolePermissionParam param){
         ValidationUtil.validateParam(param);
