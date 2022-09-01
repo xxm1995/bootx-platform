@@ -35,4 +35,8 @@ public class BpmTaskManager extends BaseManager<BpmTaskMapper, BpmTask> {
                 .eq(BpmTask::getTaskId,taskId)
                 .oneOpt();
     }
+
+    public List<BpmTask> findAllByInstanceId(String instanceId) {
+        return findAllByField(BpmTask::getInstanceId,instanceId);
+    }
 }

@@ -4,13 +4,17 @@ import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.starter.flowable.core.instance.service.BpmTaskService;
+import cn.bootx.starter.flowable.core.instance.service.BpmTaskOperateService;
+import cn.bootx.starter.flowable.core.instance.service.BpmTaskQueryService;
+import cn.bootx.starter.flowable.dto.task.BpmTaskDto;
 import cn.bootx.starter.flowable.dto.task.TaskInfo;
 import cn.bootx.starter.flowable.param.task.TaskApproveParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**   
  *
@@ -22,44 +26,51 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/bpm/task")
 @RequiredArgsConstructor
 public class BpmTaskController {
-    private final BpmTaskService bpmTaskService;
+    private final BpmTaskOperateService operateService;
+    private final BpmTaskQueryService queryService;
 
     @Operation(summary = "我的待办")
     @GetMapping("/pageMyTodo")
     public ResResult<PageResult<TaskInfo>> pageMyTodo(PageParam pageParam){
-        return Res.ok(bpmTaskService.pageMyTodo(pageParam));
+        return Res.ok(queryService.pageMyTodo(pageParam));
     }
     @Operation(summary = "我的已办")
     @GetMapping("/pageMyDone")
     public ResResult<PageResult<TaskInfo>> pageMyDone(PageParam pageParam){
-        return Res.ok(bpmTaskService.pageMyDone(pageParam));
+        return Res.ok(queryService.pageMyDone(pageParam));
     }
 
     @Operation(summary = "通过任务")
     @PostMapping("/pass")
     public ResResult<Void> pass(@RequestBody TaskApproveParam param){
-        bpmTaskService.pass(param);
+        operateService.pass(param);
         return Res.ok();
+    }
+
+    @Operation(summary = "根据任务实例ID查询任务列表")
+    @GetMapping("/findAllByInstanceId")
+    public ResResult<List<BpmTaskDto>> findAllByInstanceId(String instanceId){
+        return Res.ok(queryService.findAllByInstanceId(instanceId));
     }
     
     @Operation(summary = "驳回")
     @PostMapping("/reject")
     public ResResult<Void> reject(@RequestBody TaskApproveParam param){
-        bpmTaskService.reject(param);
+        operateService.reject(param);
         return Res.ok();
     }
 
     @Operation(summary = "任务回退")
     @PostMapping("/flowReturn")
     public ResResult<Void> flowReturn(@RequestBody TaskApproveParam param){
-        bpmTaskService.reject(param);
+        operateService.reject(param);
         return Res.ok();
     }
 
     @Operation(summary = "重新分配人员")
     @PostMapping("/assignee")
     public ResResult<Void> assignee(String taskId,Long userId){
-        bpmTaskService.assignee(taskId,userId);
+        operateService.assignee(taskId,userId);
         return Res.ok();
     }
 

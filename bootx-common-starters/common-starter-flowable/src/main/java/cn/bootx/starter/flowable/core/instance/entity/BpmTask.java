@@ -1,6 +1,9 @@
 package cn.bootx.starter.flowable.core.instance.entity;
 
+import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpDelEntity;
+import cn.bootx.starter.flowable.core.instance.convert.BpmTaskConvert;
+import cn.bootx.starter.flowable.dto.task.BpmTaskDto;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
@@ -20,7 +23,7 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 @TableName(value = "bpm_task",autoResultMap = true)
-public class BpmTask extends MpDelEntity {
+public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDto> {
 
     /** 任务id */
     private String taskId;
@@ -67,4 +70,10 @@ public class BpmTask extends MpDelEntity {
 
     /** 流程发起人名称 */
     private String startUserName;
+
+    /** 转换成dto */
+    @Override
+    public BpmTaskDto toDto() {
+        return BpmTaskConvert.CONVERT.convert(this);
+    }
 }
