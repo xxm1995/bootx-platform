@@ -22,6 +22,13 @@ public class BpmTaskManager extends BaseManager<BpmTaskMapper, BpmTask> {
     /**
      * 根据任务id查询
      */
+    public Optional<BpmTask> findByTaskId(String taskId){
+        return findByField(BpmTask::getTaskId,taskId);
+    }
+
+    /**
+     * 根据任务id查询
+     */
     public List<BpmTask> findAllByTaskIds(List<String> taskIds){
         return findAllByFields(BpmTask::getTaskId,taskIds);
     }

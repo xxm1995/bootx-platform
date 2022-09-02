@@ -75,10 +75,18 @@ public class BpmTaskQueryService {
     }
 
     /**
-     * 根据实例id查询关联的任务
+     * 根据实例id查询关联的任务 历史记录显示用
      */
     public List<BpmTaskDto> findAllByInstanceId(String instanceId){
         return ResultConvertUtil.dtoListConvert(bpmTaskManager.findAllByInstanceId(instanceId));
+    }
+
+    /**
+     * 获取流程节点的分组任务信息
+     */
+    public Map<String,List<BpmTaskDto>> getNodeTasks(String instanceId){
+        return this.findAllByInstanceId(instanceId).stream()
+                .collect(Collectors.groupingBy(BpmTaskDto::getTaskNodeId));
     }
 
     /**

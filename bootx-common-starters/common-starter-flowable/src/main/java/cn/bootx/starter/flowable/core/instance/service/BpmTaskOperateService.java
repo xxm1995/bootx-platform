@@ -1,6 +1,8 @@
 package cn.bootx.starter.flowable.core.instance.service;
 
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
+import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
 import cn.bootx.starter.flowable.handler.TaskRejectHandler;
 import cn.bootx.starter.flowable.local.BpmContext;
 import cn.bootx.starter.flowable.local.BpmContextLocal;
@@ -12,6 +14,8 @@ import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * 流程任务接口
@@ -33,6 +37,7 @@ public class BpmTaskOperateService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void pass(TaskApproveParam param){
+        BpmTask bpmTask = bpmTaskManager.findByTaskId(param.getTaskId()).orElseThrow(() -> new DataNotExistException("任务不存在"));
         // 查询到任务和扩展属性
         Task task = taskService.createTaskQuery().taskId(param.getTaskId()).singleResult();
         BpmContext bpmContext = BpmContextLocal.get();
@@ -40,16 +45,24 @@ public class BpmTaskOperateService {
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         taskService.complete(task.getId());
+        bpmTask.setReason(param.getReason())
+                .setEndTime(LocalDateTime.now());
+        bpmTaskManager.updateById(bpmTask);
     }
     /**
      * 驳回
      */
+    @Transactional(rollbackFor = Exception.class)
     public void reject(TaskApproveParam param){
+        BpmTask bpmTask = bpmTaskManager.findByTaskId(param.getTaskId()).orElseThrow(() -> new DataNotExistException("任务不存在"));
         BpmContext bpmContext = BpmContextLocal.get();
         bpmContext.setReason(param.getReason())
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         taskRejectHandler.flowTalkBack(param.getTaskId());
+        bpmTask.setReason(param.getReason())
+                .setEndTime(LocalDateTime.now());
+        bpmTaskManager.updateById(bpmTask);
     }
 
     /**

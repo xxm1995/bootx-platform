@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**   
  *
@@ -51,6 +52,12 @@ public class BpmTaskController {
     @GetMapping("/findAllByInstanceId")
     public ResResult<List<BpmTaskDto>> findAllByInstanceId(String instanceId){
         return Res.ok(queryService.findAllByInstanceId(instanceId));
+    }
+
+    @Operation(summary = "获取流程节点的分组任务信息")
+    @GetMapping("/getNodeTasks")
+    public ResResult<Map<String, List<BpmTaskDto>>> getNodeTasks(String instanceId){
+        return Res.ok(queryService.getNodeTasks(instanceId));
     }
     
     @Operation(summary = "驳回")

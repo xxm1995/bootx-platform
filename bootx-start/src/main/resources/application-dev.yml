@@ -52,7 +52,7 @@ spring:
     # 如果 flyway_schema_history 不存在自动创建
     baseline-on-migrate: true
     # 开发模式开启
-    enabled: true
+    enabled: false
   # 定时任务
   quartz:
     # 持久化方式

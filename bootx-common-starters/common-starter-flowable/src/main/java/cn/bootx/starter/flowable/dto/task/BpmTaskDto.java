@@ -36,6 +36,8 @@ public class BpmTaskDto extends BaseDto {
     private String taskName;
     @Schema(description = "流程任务的状态")
     private String state;
+    @Schema(description = "处理意见")
+    private String reason;
     @Schema(description = "开始时间")
     private LocalDateTime startTime;
     @Schema(description = "结束时间")

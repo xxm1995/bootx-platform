@@ -55,6 +55,9 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
     /** 结束时间 */
     private LocalDateTime endTime;
 
+    /** 处理意见 */
+    private String reason;
+
     /** 提交的表单值 */
     @TableField(typeHandler = JacksonTypeHandler.class)
     private Map<String,Object> formVariables;
