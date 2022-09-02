@@ -15,7 +15,7 @@
     <groupId>cn.bootx.platform</groupId>
     <artifactId>bootx-platform</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
 
     <modules>
         <module>bootx-common-core</module>
@@ -33,7 +33,7 @@
         <java.version>1.8</java.version>
 
         <!-- 二方库版本 -->
-        <bootx-platform.version>1.1.0</bootx-platform.version>
+        <bootx-platform.version>1.1.1</bootx-platform.version>
         <!-- 三方库 -->
         <hutool.version>5.8.5</hutool.version>
         <oshi.version>6.2.2</oshi.version>

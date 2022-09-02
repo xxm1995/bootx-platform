@@ -1,5 +1,6 @@
 package cn.bootx.starter.flowable.core.instance.dao;
 
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,9 @@ public class BpmTaskManager extends BaseManager<BpmTaskMapper, BpmTask> {
     }
 
     public List<BpmTask> findAllByInstanceId(String instanceId) {
-        return findAllByField(BpmTask::getInstanceId,instanceId);
+        return lambdaQuery()
+                .eq(BpmTask::getInstanceId,instanceId)
+                .orderByDesc(MpIdEntity::getId)
+                .list();
     }
 }

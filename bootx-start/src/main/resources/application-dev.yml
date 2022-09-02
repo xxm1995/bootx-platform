@@ -84,7 +84,7 @@ bootx:
     swagger:
       enabled: true
       author: bootx
-      version: 1.1.0
+      version: 1.1.1
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
       # 多模块扫码

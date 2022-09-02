@@ -81,7 +81,7 @@ public class BpmModelTaskService {
     @Transactional(rollbackFor = Exception.class)
     public void sync(Long modelId){
         // 已经配置的
-        List<BpmModelTask> taskNodes = bpmModelTaskManager.findAll();
+        List<BpmModelTask> taskNodes = bpmModelTaskManager.findAllByModelId(modelId);
         List<String> taskNodeTaskIds = taskNodes.stream().map(BpmModelTask::getTaskId).collect(Collectors.toList());
         // bpmn文件中的
         List<BpmModelTask> flowNodes = this.getFlowNodes(modelId);

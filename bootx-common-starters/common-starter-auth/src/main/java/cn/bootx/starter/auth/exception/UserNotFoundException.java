@@ -9,4 +9,7 @@ public class UserNotFoundException extends LoginFailureException {
     public UserNotFoundException(String username) {
         super(username,"用户未找到");
     }
+    public UserNotFoundException() {
+        super("用户未找到");
+    }
 }
