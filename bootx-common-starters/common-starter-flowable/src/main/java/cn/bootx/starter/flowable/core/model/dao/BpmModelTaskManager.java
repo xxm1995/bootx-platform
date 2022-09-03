@@ -36,4 +36,11 @@ public class BpmModelTaskManager extends BaseManager<BpmModelTaskMapper, BpmMode
                 .eq(BpmModelTask::getTaskId,taskId)
                 .one();
     }
+
+    /**
+     * 根据模型id删除
+     */
+    public void deleteByModelId(Long modelId){
+        deleteByField(BpmModelTask::getModelId,modelId);
+    }
 }

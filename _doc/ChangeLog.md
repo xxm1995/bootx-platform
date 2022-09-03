@@ -1,5 +1,8 @@
 # CHANGELOG
 ## [v1.1.2] 一号线-工研院
+- 优化: 流程执行信息显示优化
+- 优化: 流行模型发布后不允许被删除
+- fix: 流程模型复制功能不生效
 - fix: plumelog依赖导致的java.lang.NoClassDefFoundError: net/sf/json/JSONException 问题
 - fix: ijpay版本升级导致的 WxPayKit.verifyNotify 方法入参问题
 ## [v1.1.1] 一号线-工研院

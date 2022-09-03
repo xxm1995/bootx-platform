@@ -95,7 +95,7 @@ public class BpmModelService {
 
         List<BpmModelTask> newModelTasks = bpmModelTasks.stream()
                 .map(bpmModelTask -> new BpmModelTask()
-                        .setModelId(bpmModelTask.getModelId())
+                        .setModelId(newBpmModel.getId())
                         .setTaskName(bpmModelTask.getTaskName())
                         .setFormId(bpmModelTask.getFormId())
                         .setAssignType(bpmModelTask.getAssignType())
@@ -161,10 +161,12 @@ public class BpmModelService {
 
         //发布状态删除
         if (Objects.equals(PUBLISHED, flowBpmModel.getPublish())){
+            throw new BizException("流程已发布, 无法删除");
             // 先删除部署以及对应的流程
-            repositoryService.deleteDeployment(flowBpmModel.getDeployId(),true);
-            bpmModelManager.deleteById(id);
+//            repositoryService.deleteDeployment(flowBpmModel.getDeployId(),true);
+//            bpmModelManager.deleteById(id);
         }
+        bpmModelTaskManager.deleteByModelId(id);
         bpmModelManager.deleteById(id);
     }
 
