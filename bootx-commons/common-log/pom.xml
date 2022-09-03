@@ -24,18 +24,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- 不能被排除, 否者会 java.lang.NoClassDefFoundError: net/sf/json/JSONException -->
         <dependency>
             <groupId>com.plumelog</groupId>
             <artifactId>plumelog-lite-spring-boot-starter</artifactId>
             <exclusions>
-                <exclusion>
-                    <artifactId>commons-io</artifactId>
-                    <groupId>commons-io</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-lang</artifactId>
-                    <groupId>commons-lang</groupId>
-                </exclusion>
+                <!-- 不能被排除, 否者会 java.lang.NoClassDefFoundError: net/sf/json/JSONException -->
+<!--                <exclusion>-->
+<!--                    <artifactId>commons-io</artifactId>-->
+<!--                    <groupId>commons-io</groupId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <artifactId>commons-lang</artifactId>-->
+<!--                    <groupId>commons-lang</groupId>-->
+<!--                </exclusion>-->
                 <exclusion>
                     <artifactId>guava</artifactId>
                     <groupId>com.google.guava</groupId>

@@ -1,4 +1,7 @@
 # CHANGELOG
+## [v1.1.2] 一号线-工研院
+- fix: plumelog依赖导致的java.lang.NoClassDefFoundError: net/sf/json/JSONException 问题
+- fix: ijpay版本升级导致的 WxPayKit.verifyNotify 方法入参问题
 ## [v1.1.1] 一号线-工研院
 - 增加最新版本flowable 6.7.2 工作流集成
 - 增加bpmn.js流程设计器集成
