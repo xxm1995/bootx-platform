@@ -24,6 +24,18 @@ import java.util.Optional;
 public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, WeChatPayConfig> {
     private Optional<WeChatPayConfig> weChatPayConfig;
 
+    @Override
+    public WeChatPayConfig saveOrUpdate(WeChatPayConfig entity) {
+        this.clearCache();
+        return super.saveOrUpdate(entity);
+    }
+
+    @Override
+    public WeChatPayConfig updateById(WeChatPayConfig weChatPayConfig) {
+        this.clearCache();
+        return super.updateById(weChatPayConfig);
+    }
+
     /**
      * 获取启用的微信配置
      */

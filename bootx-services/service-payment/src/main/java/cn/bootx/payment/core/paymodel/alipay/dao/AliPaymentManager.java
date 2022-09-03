@@ -16,7 +16,6 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class AliPaymentManager extends BaseManager<AliPaymentMapper,AliPayment> {
-    private final AliPaymentMapper aliPaymentRepository;
 
     public Optional<AliPayment> findByPaymentId(Long paymentId) {
         return this.findByField(BasePayment::getPaymentId,paymentId);

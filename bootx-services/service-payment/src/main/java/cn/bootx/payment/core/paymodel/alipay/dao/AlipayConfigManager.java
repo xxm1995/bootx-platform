@@ -1,8 +1,8 @@
 package cn.bootx.payment.core.paymodel.alipay.dao;
 
+import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
-import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.payment.core.paymodel.alipay.entity.AlipayConfig;
 import cn.bootx.payment.param.paymodel.alipay.AlipayConfigQuery;
 import cn.hutool.core.util.StrUtil;
@@ -22,6 +22,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AlipayConfigManager extends BaseManager<AlipayConfigMapper,AlipayConfig> {
     private Optional<AlipayConfig> alipayConfig;
+
+    @Override
+    public AlipayConfig saveOrUpdate(AlipayConfig entity) {
+        this.clearCache();
+        return super.saveOrUpdate(entity);
+    }
 
     @Override
     public AlipayConfig updateById(AlipayConfig alipayConfig) {

@@ -85,7 +85,7 @@ public class WeChatPayCallbackService extends AbsPayCallbackStrategy {
             log.warn("微信支付配置不存在: {}", callReq);
             return false;
         }
-        return WxPayKit.verifyNotify(params, weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
+        return WxPayKit.verifyNotify(params, weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256, null);
     }
 
 
