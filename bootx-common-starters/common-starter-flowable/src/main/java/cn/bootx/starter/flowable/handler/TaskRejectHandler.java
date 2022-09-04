@@ -1,6 +1,7 @@
 package cn.bootx.starter.flowable.handler;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.starter.flowable.util.FlowableUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +73,7 @@ public class TaskRejectHandler {
         // 获取当前节点的所有父级用户任务节点
         // 深度优先算法思想：延边迭代深入
         List<UserTask> parentUserTaskList = FlowableUtil.iteratorFindParentUserTasks(source, null, null);
-        if (parentUserTaskList == null || parentUserTaskList.size() == 0) {
+        if (CollUtil.isEmpty(parentUserTaskList)) {
             throw new BizException("当前节点为初始任务节点，不能驳回");
         }
         // 获取活动 ID 即节点 Key

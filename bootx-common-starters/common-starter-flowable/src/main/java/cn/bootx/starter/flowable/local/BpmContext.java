@@ -25,5 +25,13 @@ public class BpmContext {
     private Optional<UserDetail> startUser = Optional.empty() ;
 
     /** 处理任务时的审批意见 */
-    private String reason;
+    private String taskReason;
+
+    /**
+     * 当前任务处理状态
+     * @see cn.bootx.starter.flowable.code.TaskCode#STATE_PROCESS
+     */
+    private String taskState;
+
+
 }

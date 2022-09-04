@@ -1,6 +1,5 @@
 package cn.bootx.starter.flowable.dto.instance;
 
-import cn.bootx.starter.flowable.code.InstanceCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -19,9 +18,7 @@ public class ActivityInstanceChart {
     private String activityId;
     @Schema(description = "流程活动的类型")
     private String activityType;
-    /**
-     * @see InstanceCode#STATE_FINISH
-     */
-    @Schema(description = "状态")
-    private String state;
+
+    @Schema(description = "运行中")
+    private boolean running;
 }

@@ -46,7 +46,10 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
     /** 流程名称(流程定义标题) */
     private String defName;
 
-    /** 流程实例的状态 */
+    /**
+     * 任务执行结果
+     * @see cn.bootx.starter.flowable.code.TaskCode#STATE_PROCESS
+     */
     private String state;
 
     /** 开始时间 */

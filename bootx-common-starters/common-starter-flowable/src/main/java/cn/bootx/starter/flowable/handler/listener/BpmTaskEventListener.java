@@ -1,25 +1,14 @@
 package cn.bootx.starter.flowable.handler.listener;
 
-import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.common.core.function.UserDetailService;
 import cn.bootx.common.core.util.CollUtil;
-import cn.bootx.common.core.util.LocalDateTimeUtil;
-import cn.bootx.starter.flowable.core.instance.dao.BpmInstanceManager;
-import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
-import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
-import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
-import cn.bootx.starter.flowable.local.BpmContext;
-import cn.bootx.starter.flowable.local.BpmContextLocal;
-import cn.hutool.core.util.StrUtil;
+import cn.bootx.starter.flowable.handler.service.BpmTaskEventService;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEntityEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
 import org.flowable.engine.delegate.event.AbstractFlowableEngineEventListener;
-import org.flowable.task.api.Task;
+import org.flowable.task.service.impl.persistence.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventType.*;
@@ -32,9 +21,9 @@ import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventT
 @Slf4j
 @Component
 public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
-    private final BpmTaskManager bpmTaskManager;
-    private final BpmInstanceManager bpmInstanceManager;
-    private final UserDetailService userDetailService;
+
+    private final BpmTaskEventService bpmTaskEventService;
+
 
     /** 处理的事件 */
     private static final Set<FlowableEngineEventType> TASK_EVENTS = CollUtil.newHashSet(
@@ -43,11 +32,9 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
             TASK_COMPLETED
     );
 
-    public BpmTaskEventListener(BpmTaskManager bpmTaskManager, BpmInstanceManager bpmInstanceManager, UserDetailService userDetailService){
+    public BpmTaskEventListener(BpmTaskEventService bpmTaskEventService) {
         super(TASK_EVENTS);
-        this.bpmTaskManager = bpmTaskManager;
-        this.bpmInstanceManager = bpmInstanceManager;
-        this.userDetailService = userDetailService;
+        this.bpmTaskEventService = bpmTaskEventService;
     }
 
     /**
@@ -55,28 +42,8 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
      */
     @Override
     protected void taskCreated(FlowableEngineEntityEvent event) {
-        Task task = (Task) event.getEntity();
-        BpmInstance bpmInstance = bpmInstanceManager.findByInstanceId(task.getProcessInstanceId()).orElse(new BpmInstance());
-        BpmTask bpmTask = new BpmTask()
-                .setTaskId(task.getId())
-                .setTaskNodeId(task.getTaskDefinitionKey())
-                .setTaskName(task.getName())
-                .setFormVariables(task.getCaseVariables())
-                .setExecutionId(event.getExecutionId())
-                .setInstanceId(task.getProcessInstanceId())
-                .setInstanceName(bpmInstance.getInstanceName())
-                .setDefName(bpmInstance.getDefName())
-                .setStartUserId(bpmInstance.getStartUserId())
-                .setStartUserName(bpmInstance.getStartUserName())
-                .setStartTime(LocalDateTimeUtil.of(task.getCreateTime()));
-        // 是否分配了用户
-        if (StrUtil.isNotBlank(task.getAssignee())){
-            Long userId = Long.valueOf(task.getAssignee());
-            UserDetail userDetail = userDetailService.findByUserId(userId).orElse(new UserDetail());
-            bpmTask.setUserId(userId)
-                    .setUserName(userDetail.getName());
-        }
-        bpmTaskManager.save(bpmTask);
+        TaskEntity task = (TaskEntity) event.getEntity();
+        bpmTaskEventService.taskCreated(task);
     }
 
     /**
@@ -84,14 +51,8 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
      */
     @Override
     protected void taskCompleted(FlowableEngineEntityEvent event) {
-        Task task = (Task) event.getEntity();
-        Optional<BpmTask> bpmTaskOpt = bpmTaskManager.findByInstanceIdAndTaskId(task.getProcessInstanceId(), task.getId());
-        BpmContext bpmContext = BpmContextLocal.get();
-        bpmTaskOpt.ifPresent(bpmTask -> {
-            bpmTask.setEndTime(LocalDateTime.now())
-                    .setFormVariables(bpmContext.getFormVariables());
-            bpmTaskManager.updateById(bpmTask);
-        });
+        TaskEntity task = (TaskEntity) event.getEntity();
+        bpmTaskEventService.taskCompleted(task);
     }
 
     /**
@@ -99,18 +60,7 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
      */
     @Override
     protected void taskAssigned(FlowableEngineEntityEvent event) {
-        Task task = (Task) event.getEntity();
-
-        // 判断扩展内容是否存在, 存的的话进行更新
-        Optional<BpmTask> bpmTaskOpt = bpmTaskManager.findByInstanceIdAndTaskId(task.getProcessInstanceId(), task.getId());
-        bpmTaskOpt.ifPresent(bpmTask -> {
-            if (StrUtil.isNotBlank(task.getAssignee())){
-                Long userId = Long.valueOf(task.getAssignee());
-                UserDetail userDetail = userDetailService.findByUserId(userId).orElse(new UserDetail());
-                bpmTask.setUserId(userId)
-                        .setUserName(userDetail.getName());
-            }
-            bpmTaskManager.updateById(bpmTask);
-        });
+        TaskEntity task = (TaskEntity) event.getEntity();
+        bpmTaskEventService.taskAssigned(task);
     }
 }

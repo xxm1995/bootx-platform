@@ -1,6 +1,6 @@
 package cn.bootx.starter.flowable.core.model.dao;
 
-import cn.bootx.starter.flowable.core.model.entity.BpmModelTask;
+import cn.bootx.starter.flowable.core.model.entity.BpmModelNode;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2022-08-25
  */
 @Mapper
-public interface BpmModelTaskMapper extends BaseMapper<BpmModelTask> {
+public interface BpmModelNodeMapper extends BaseMapper<BpmModelNode> {
 }

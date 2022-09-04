@@ -4,11 +4,11 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.starter.flowable.core.model.dao.BpmModelManager;
-import cn.bootx.starter.flowable.core.model.dao.BpmModelTaskManager;
+import cn.bootx.starter.flowable.core.model.dao.BpmModelNodeManager;
 import cn.bootx.starter.flowable.core.model.entity.BpmModel;
-import cn.bootx.starter.flowable.core.model.entity.BpmModelTask;
-import cn.bootx.starter.flowable.dto.model.BpmModelTaskDto;
-import cn.bootx.starter.flowable.param.model.BpmModelTaskParam;
+import cn.bootx.starter.flowable.core.model.entity.BpmModelNode;
+import cn.bootx.starter.flowable.dto.model.BpmModelNodeDto;
+import cn.bootx.starter.flowable.param.model.BpmModelNodeParam;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
 import cn.bootx.starter.flowable.util.BpmXmlUtil;
 import cn.hutool.core.bean.BeanUtil;
@@ -18,11 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.Process;
 import org.flowable.bpmn.model.UserTask;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static cn.bootx.starter.flowable.code.CachingCode.NODE_MODEL_ID;
 
 /**   
  * 模型任务节点服务
@@ -32,80 +35,84 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class BpmModelTaskService {
+public class BpmModelNodeService {
     private final BpmModelManager bpmModelManager;
-    private final BpmModelTaskManager bpmModelTaskManager;
+    private final BpmModelNodeManager bpmModelNodeManager;
 
     /**
      * 添加
      */
-    public void add(BpmModelTaskParam param){
-        BpmModelTask bpmModelTask = BpmModelTask.init(param);
-        bpmModelTaskManager.save(bpmModelTask);
+    @CacheEvict(value = NODE_MODEL_ID,key = "#param.modelId")
+    public void add(BpmModelNodeParam param){
+        BpmModelNode bpmModelNode = BpmModelNode.init(param);
+        bpmModelNodeManager.save(bpmModelNode);
     }
 
     /**
      * 修改
      */
-    public void update(BpmModelTaskParam param){
-        BpmModelTask bpmModelTask = bpmModelTaskManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+    @CacheEvict(value = NODE_MODEL_ID, key = "#param.modelId")
+    public void update(BpmModelNodeParam param){
+        BpmModelNode bpmModelNode = bpmModelNodeManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
 
-        BeanUtil.copyProperties(param,bpmModelTask, CopyOptions.create().ignoreNullValue());
-        bpmModelTaskManager.updateById(bpmModelTask);
+        BeanUtil.copyProperties(param, bpmModelNode, CopyOptions.create().ignoreNullValue());
+        bpmModelNodeManager.updateById(bpmModelNode);
     }
 
     /**
      * 获取单条
      */
-    public BpmModelTaskDto findById(Long id){
-        return bpmModelTaskManager.findById(id).map(BpmModelTask::toDto).orElseThrow(DataNotExistException::new);
+    public BpmModelNodeDto findById(Long id){
+        return bpmModelNodeManager.findById(id).map(BpmModelNode::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
-    public List<BpmModelTaskDto> findAllByModelId(Long modelId){
-        return ResultConvertUtil.dtoListConvert(bpmModelTaskManager.findAllByModelId(modelId));
+    public List<BpmModelNodeDto> findAllByModelId(Long modelId){
+        return ResultConvertUtil.dtoListConvert(bpmModelNodeManager.findAllByModelId(modelId));
     }
 
     /**
      * 删除
      */
+    @CacheEvict(value = NODE_MODEL_ID, allEntries = true)
     public void delete(Long id){
-        bpmModelTaskManager.deleteById(id);
+        bpmModelNodeManager.deleteById(id);
     }
 
     /**
      * 同步节点
      */
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(value = NODE_MODEL_ID,key = "#modelId")
     public void sync(Long modelId){
         // 已经配置的
-        List<BpmModelTask> taskNodes = bpmModelTaskManager.findAllByModelId(modelId);
-        List<String> taskNodeTaskIds = taskNodes.stream().map(BpmModelTask::getTaskId).collect(Collectors.toList());
+        List<BpmModelNode> taskNodes = bpmModelNodeManager.findAllByModelId(modelId);
+        List<String> taskNodeTaskIds = taskNodes.stream().map(BpmModelNode::getNodeId).collect(Collectors.toList());
         // bpmn文件中的
-        List<BpmModelTask> flowNodes = this.getFlowNodes(modelId);
-        List<String> flowNodeTaskIds = flowNodes.stream().map(BpmModelTask::getTaskId).collect(Collectors.toList());
+        List<BpmModelNode> flowNodes = this.getFlowNodes(modelId);
+        List<String> flowNodeTaskIds = flowNodes.stream().map(BpmModelNode::getNodeId).collect(Collectors.toList());
         // bpmn中有列表没有的添加, 双方都有的不动
-        List<BpmModelTask> saves = flowNodes.stream()
-                .filter(o -> !taskNodeTaskIds.contains(o.getTaskId()))
+        List<BpmModelNode> saves = flowNodes.stream()
+                .filter(o -> !taskNodeTaskIds.contains(o.getNodeId()))
                 .peek(o -> o.setModelId(modelId))
                 .collect(Collectors.toList());
 
         // bpmn中没有列表有的删除
         List<Long> deleteIds = taskNodes.stream()
-                .filter(o -> !flowNodeTaskIds.contains(o.getTaskId()))
+                .filter(o -> !flowNodeTaskIds.contains(o.getNodeId()))
                 .map(MpIdEntity::getId)
                 .collect(Collectors.toList());
-        bpmModelTaskManager.saveAll(saves);
-        bpmModelTaskManager.deleteByIds(deleteIds);
+        bpmModelNodeManager.saveAll(saves);
+        bpmModelNodeManager.deleteByIds(deleteIds);
     }
 
     /**
      * 查询流程定义各节点
      * 后期需要修改成根据不同节点做不同的处理
      */
-    private List<BpmModelTask> getFlowNodes(Long id){
+    private List<BpmModelNode> getFlowNodes(Long id){
         BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
 
         String modelEditorXml = bpmModel.getModelEditorXml();
@@ -113,11 +120,11 @@ public class BpmModelTaskService {
         Process process = bpmnModel.getMainProcess();
         List<UserTask> userTasks = process.findFlowElementsOfType(UserTask.class);
         return userTasks.stream()
-                .map(userTask -> new BpmModelTask()
+                .map(userTask -> new BpmModelNode()
                         .setModelId(id)
                         .setDefId(bpmModel.getDefId())
                         .setDefKey(bpmModel.getDefKey())
-                        .setTaskId(userTask.getId())
+                        .setNodeId(userTask.getId())
                         .setTaskName(userTask.getName())
                 ).collect(Collectors.toList());
 

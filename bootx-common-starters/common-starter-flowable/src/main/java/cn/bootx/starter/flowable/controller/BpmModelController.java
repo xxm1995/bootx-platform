@@ -55,6 +55,13 @@ public class BpmModelController {
         return Res.ok();
     }
 
+    @Operation(summary = "校验流程")
+    @GetMapping("/verifyModel")
+    public ResResult<Void> verifyModel(Long id){
+        bpmModelService.verifyModel(id);
+        return Res.ok();
+    }
+
     @Operation(summary = "更新")
     @PostMapping("/update")
     public ResResult<Void> update(@RequestBody BpmModelParam param){

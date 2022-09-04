@@ -1,6 +1,7 @@
 package cn.bootx.starter.flowable.core.instance.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.starter.flowable.code.TaskCode;
 import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
 import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
 import cn.bootx.starter.flowable.handler.TaskRejectHandler;
@@ -14,8 +15,6 @@ import org.flowable.engine.TaskService;
 import org.flowable.task.api.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 /**
  * 流程任务接口
@@ -41,13 +40,11 @@ public class BpmTaskOperateService {
         // 查询到任务和扩展属性
         Task task = taskService.createTaskQuery().taskId(param.getTaskId()).singleResult();
         BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setReason(param.getReason())
+        bpmContext.setTaskReason(param.getReason())
+                .setTaskState(TaskCode.STATE_PASS)
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         taskService.complete(task.getId());
-        bpmTask.setReason(param.getReason())
-                .setEndTime(LocalDateTime.now());
-        bpmTaskManager.updateById(bpmTask);
     }
     /**
      * 驳回
@@ -56,13 +53,13 @@ public class BpmTaskOperateService {
     public void reject(TaskApproveParam param){
         BpmTask bpmTask = bpmTaskManager.findByTaskId(param.getTaskId()).orElseThrow(() -> new DataNotExistException("任务不存在"));
         BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setReason(param.getReason())
+
+        bpmContext.setTaskReason(param.getReason())
+                .setTaskState(TaskCode.STATE_REJECT)
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
+
         taskRejectHandler.flowTalkBack(param.getTaskId());
-        bpmTask.setReason(param.getReason())
-                .setEndTime(LocalDateTime.now());
-        bpmTaskManager.updateById(bpmTask);
     }
 
     /**

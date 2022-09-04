@@ -1,6 +1,5 @@
 package cn.bootx.starter.flowable.handler.behavior;
 
-import cn.bootx.starter.flowable.core.model.dao.BpmModelTaskManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.Activity;
@@ -20,11 +19,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
-    private final BpmModelTaskManager bpmModelTaskManager;
+    private final BpmUserTaskAssignService bpmUserTaskAssignService;
+    private final BpmParallelMultiInstanceAssignService assistService;
 
     @Override
     public UserTaskActivityBehavior createUserTaskActivityBehavior(UserTask userTask) {
-        return new BpmUserTaskActivityBehavior(userTask,bpmModelTaskManager);
+        return new BpmUserTaskActivityBehavior(userTask, bpmUserTaskAssignService);
     }
 
     /**
@@ -33,6 +33,6 @@ public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
     @Override
     public ParallelMultiInstanceBehavior createParallelMultiInstanceBehavior(Activity activity,
                                                                              AbstractBpmnActivityBehavior innerActivityBehavior) {
-        return new BpmParallelMultiInstanceBehavior(activity, innerActivityBehavior);
+        return new BpmParallelMultiInstanceBehavior(activity, innerActivityBehavior, assistService);
     }
 }

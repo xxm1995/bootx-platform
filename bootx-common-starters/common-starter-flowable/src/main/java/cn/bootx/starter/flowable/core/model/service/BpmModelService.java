@@ -5,11 +5,14 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.dto.LabelValue;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.base.MpCreateEntity.Create;
+import cn.bootx.common.mybatisplus.base.MpDelEntity.Del;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.flowable.core.model.dao.BpmModelManager;
-import cn.bootx.starter.flowable.core.model.dao.BpmModelTaskManager;
+import cn.bootx.starter.flowable.core.model.dao.BpmModelNodeManager;
 import cn.bootx.starter.flowable.core.model.entity.BpmModel;
-import cn.bootx.starter.flowable.core.model.entity.BpmModelTask;
+import cn.bootx.starter.flowable.core.model.entity.BpmModelNode;
 import cn.bootx.starter.flowable.dto.model.BpmModelDto;
 import cn.bootx.starter.flowable.exception.ModelNotExistException;
 import cn.bootx.starter.flowable.param.model.BpmModelParam;
@@ -49,7 +52,7 @@ public class BpmModelService {
     private final RepositoryService repositoryService;
 
     private final BpmModelManager bpmModelManager;
-    private final BpmModelTaskManager bpmModelTaskManager;
+    private final BpmModelNodeManager bpmModelNodeManager;
 
     /**
      * 创建模型
@@ -84,6 +87,7 @@ public class BpmModelService {
         BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
         BpmModel newBpmModel = new BpmModel()
                 .setName(bpmModel.getName())
+                .setFormId(bpmModel.getFormId())
                 .setModelType(bpmModel.getModelType())
                 .setMainProcess(false)
                 .setPublish(UNPUBLISHED)
@@ -91,18 +95,28 @@ public class BpmModelService {
                 .setEnable(false)
                 .setRemark(bpmModel.getRemark());
         bpmModelManager.save(newBpmModel);
-        List<BpmModelTask> bpmModelTasks = bpmModelTaskManager.findAllByModelId(id);
+        List<BpmModelNode> bpmModelNodes = bpmModelNodeManager.findAllByModelId(id);
 
-        List<BpmModelTask> newModelTasks = bpmModelTasks.stream()
-                .map(bpmModelTask -> new BpmModelTask()
-                        .setModelId(newBpmModel.getId())
-                        .setTaskName(bpmModelTask.getTaskName())
-                        .setFormId(bpmModelTask.getFormId())
-                        .setAssignType(bpmModelTask.getAssignType())
-                        .setUserId(bpmModelTask.getUserId())
-                        .setUserName(bpmModelTask.getUserName())
-                ).collect(Collectors.toList());
-        bpmModelTaskManager.saveAll(newModelTasks);
+        List<BpmModelNode> newModelTasks = bpmModelNodes.stream()
+                .map(bpmModelNode -> {
+                    BpmModelNode node = new BpmModelNode();
+                    BeanUtil.copyProperties(
+                            bpmModelNode,
+                            node,
+                            BpmModelNode.Fields.modelId,
+                            BpmModelNode.Fields.defId,
+                            BpmModelNode.Fields.defKey,
+                            MpIdEntity.Id.id,
+                            Create.createTime,
+                            Create.creator,
+                            Del.lastModifiedTime,
+                            Del.lastModifier,
+                            Del.version
+                    );
+                    node.setModelId(newBpmModel.getId());
+                    return node;
+                }).collect(Collectors.toList());
+        bpmModelNodeManager.saveAll(newModelTasks);
     }
 
     /**
@@ -166,7 +180,7 @@ public class BpmModelService {
 //            repositoryService.deleteDeployment(flowBpmModel.getDeployId(),true);
 //            bpmModelManager.deleteById(id);
         }
-        bpmModelTaskManager.deleteByModelId(id);
+        bpmModelNodeManager.deleteByModelId(id);
         bpmModelManager.deleteById(id);
     }
 
@@ -204,15 +218,23 @@ public class BpmModelService {
      * 更新关联任务节点信息
      */
     private void updateTaskNodes(BpmModel bpmModel){
-        bpmModelTaskManager.lambdaUpdate()
-                .set(BpmModelTask::getDefId,bpmModel.getDefId())
-                .set(BpmModelTask::getDefKey, bpmModel.getDefKey())
-                .eq(BpmModelTask::getModelId,bpmModel.getId())
+        bpmModelNodeManager.lambdaUpdate()
+                .set(BpmModelNode::getDefId,bpmModel.getDefId())
+                .set(BpmModelNode::getDefKey, bpmModel.getDefKey())
+                .eq(BpmModelNode::getModelId,bpmModel.getId())
                 .update();
     }
 
     /**
-     * 发布前校验流程
+     * 校验流程
+     */
+    public void verifyModel(Long modelId){
+        BpmModel bpmModel = bpmModelManager.findById(modelId).orElseThrow(ModelNotExistException::new);
+        this.verifyModel(bpmModel);
+    }
+
+    /**
+     * 校验流程
      */
     public void verifyModel(BpmModel bpmModel){
         // 校验是否已经发布
@@ -225,12 +247,12 @@ public class BpmModelService {
         BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(modelEditorXml.getBytes());
         Process process = bpmnModel.getMainProcess();
         List<UserTask> userTasks = process.findFlowElementsOfType(UserTask.class);
-        List<BpmModelTask> bpmModelTasks = bpmModelTaskManager.findAllByModelId(bpmModel.getId());
+        List<BpmModelNode> bpmModelNodes = bpmModelNodeManager.findAllByModelId(bpmModel.getId());
 
-        val bpmModelTaskMap = bpmModelTasks.stream().collect(Collectors.toMap(BpmModelTask::getTaskId, o->o));
+        val bpmModelNodeMap = bpmModelNodes.stream().collect(Collectors.toMap(BpmModelNode::getNodeId, o->o));
 
         for (val userTask : userTasks) {
-            BpmModelTask modelTask = bpmModelTaskMap.get(userTask.getId());
+            BpmModelNode modelTask = bpmModelNodeMap.get(userTask.getId());
             if (Objects.isNull(modelTask)){
                 throw new BizException("流程有任务节点未进行配置，请进行配置");
             }

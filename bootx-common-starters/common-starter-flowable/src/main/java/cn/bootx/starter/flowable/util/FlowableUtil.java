@@ -1,5 +1,6 @@
 package cn.bootx.starter.flowable.util;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.*;
 import org.flowable.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
@@ -14,13 +15,14 @@ import java.util.*;
 * @date 2019-12-24 13:51
 */
 @Slf4j
+@UtilityClass
 public class FlowableUtil {
     /**
      * 根据节点，获取入口连线
      * @param source
      * @return
      */
-    public static List<SequenceFlow> getElementIncomingFlows(FlowElement source) {
+    public List<SequenceFlow> getElementIncomingFlows(FlowElement source) {
         List<SequenceFlow> sequenceFlows = null;
         if (source instanceof Task) {
             sequenceFlows = ((Task) source).getIncomingFlows();
@@ -41,7 +43,7 @@ public class FlowableUtil {
      * @param source
      * @return
      */
-    public static List<SequenceFlow> getElementOutgoingFlows(FlowElement source) {
+    public List<SequenceFlow> getElementOutgoingFlows(FlowElement source) {
         List<SequenceFlow> sequenceFlows = null;
         if (source instanceof Task) {
             sequenceFlows = ((Task) source).getOutgoingFlows();
@@ -63,7 +65,7 @@ public class FlowableUtil {
      * @param allElements
      * @return
      */
-    public static Collection<FlowElement> getAllElements(Collection<FlowElement> flowElements, Collection<FlowElement> allElements) {
+    public Collection<FlowElement> getAllElements(Collection<FlowElement> flowElements, Collection<FlowElement> allElements) {
         allElements = allElements == null ? new ArrayList<>() : allElements;
 
         for (FlowElement flowElement : flowElements) {
@@ -83,7 +85,7 @@ public class FlowableUtil {
      * @param userTaskList 已找到的用户任务节点
      * @return
      */
-    public static List<UserTask> iteratorFindParentUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
+    public List<UserTask> iteratorFindParentUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
         userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
 
@@ -134,7 +136,7 @@ public class FlowableUtil {
      * @param userTaskList 需要撤回的用户任务列表
      * @return
      */
-    public static List<UserTask> iteratorFindChildUserTasks(FlowElement source, List<String> runTaskKeyList, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
+    public List<UserTask> iteratorFindChildUserTasks(FlowElement source, List<String> runTaskKeyList, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
         userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
 
@@ -183,7 +185,7 @@ public class FlowableUtil {
      * @param userTaskList 需要撤回的用户任务列表
      * @return
      */
-    public static List<UserTask> findChildProcessUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
+    public List<UserTask> findChildProcessUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
         userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
 
@@ -229,7 +231,7 @@ public class FlowableUtil {
      * @param dirtyRoads 确定为脏数据的点，因为不需要重复，因此使用 set 存储
      * @return
      */
-    public static Set<String> iteratorFindDirtyRoads(FlowElement source, List<String> passRoads, Set<String> hasSequenceFlow, List<String> targets, Set<String> dirtyRoads) {
+    public Set<String> iteratorFindDirtyRoads(FlowElement source, List<String> passRoads, Set<String> hasSequenceFlow, List<String> targets, Set<String> dirtyRoads) {
         passRoads = passRoads == null ? new ArrayList<>() : passRoads;
         dirtyRoads = dirtyRoads == null ? new HashSet<>() : dirtyRoads;
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
@@ -283,7 +285,7 @@ public class FlowableUtil {
      * @param dirtyRoads 确定为脏数据的点，因为不需要重复，因此使用 set 存储
      * @return
      */
-    public static Set<String> findChildProcessAllDirtyRoad(FlowElement source, Set<String> hasSequenceFlow, Set<String> dirtyRoads) {
+    public Set<String> findChildProcessAllDirtyRoad(FlowElement source, Set<String> hasSequenceFlow, Set<String> dirtyRoads) {
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
         dirtyRoads = dirtyRoads == null ? new HashSet<>() : dirtyRoads;
 
@@ -320,7 +322,7 @@ public class FlowableUtil {
      * @param inChildProcess 是否存在子流程上，true 是，false 否
      * @return
      */
-    public static Boolean dirtyTargetInChildProcess(FlowElement source, Set<String> hasSequenceFlow, List<String> targets, Boolean inChildProcess) {
+    public Boolean dirtyTargetInChildProcess(FlowElement source, Set<String> hasSequenceFlow, List<String> targets, Boolean inChildProcess) {
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
         inChildProcess = inChildProcess != null && inChildProcess;
 
@@ -361,7 +363,7 @@ public class FlowableUtil {
      * @param targetKsy 目标节点
      * @return
      */
-    public static Boolean iteratorCheckSequentialReferTarget(FlowElement source, String targetKsy, Set<String> hasSequenceFlow, Boolean isSequential) {
+    public Boolean iteratorCheckSequentialReferTarget(FlowElement source, String targetKsy, Set<String> hasSequenceFlow, Boolean isSequential) {
         isSequential = isSequential == null ? true : isSequential;
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
 
@@ -408,7 +410,7 @@ public class FlowableUtil {
      * @param passRoads 已经经过的点集合
      * @param roads 路线
      */
-    public static List<List<UserTask>> findRoad(FlowElement source, List<UserTask> passRoads, Set<String> hasSequenceFlow, List<List<UserTask>> roads) {
+    public List<List<UserTask>> findRoad(FlowElement source, List<UserTask> passRoads, Set<String> hasSequenceFlow, List<List<UserTask>> roads) {
         passRoads = passRoads == null ? new ArrayList<>() : passRoads;
         roads = roads == null ? new ArrayList<>() : roads;
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
@@ -448,7 +450,7 @@ public class FlowableUtil {
      * @param allElements 全部节点信息
      * @param historicTaskInstanceList 历史任务实例信息，数据采用开始时间升序
      */
-    public static List<String> historicTaskInstanceClean(Collection<FlowElement> allElements, List<HistoricTaskInstance> historicTaskInstanceList) {
+    public List<String> historicTaskInstanceClean(Collection<FlowElement> allElements, List<HistoricTaskInstance> historicTaskInstanceList) {
         // 会签节点收集
         List<String> multiTask = new ArrayList<>();
         allElements.forEach(flowElement -> {
@@ -583,5 +585,19 @@ public class FlowableUtil {
         }
         log.info("清洗后的历史节点数据：" + lastHistoricTaskInstanceList);
         return lastHistoricTaskInstanceList;
+    }
+
+    /**
+     * 分配人集合字段名称
+     */
+    public String formatCollectionVariable(String activityId) {
+        return activityId + "_assignees";
+    }
+
+    /**
+     * 分配人字段名称
+     */
+    public String formatCollectionElementVariable(String activityId) {
+        return activityId + "_assignee";
     }
 }

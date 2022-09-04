@@ -4,7 +4,6 @@ import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.auth.util.SecurityUtil;
-import cn.bootx.starter.flowable.code.InstanceCode;
 import cn.bootx.starter.flowable.core.instance.convert.BpmActivityConvert;
 import cn.bootx.starter.flowable.core.instance.dao.BpmInstanceManager;
 import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
@@ -74,22 +73,7 @@ public class BpmInstanceQueryService {
         List<HistoricActivityInstance> activityList = historyService.createHistoricActivityInstanceQuery()
                 .processInstanceId(instanceId).list();
 
-        // 获取当前执行的节点
-        List<String> currentNodes = this.getCurrentNodes(instanceId);
-
-        // 获取驳回的节点
-
-        // 获取取消的节点
-
-        return activityList.stream().map(activity ->{
-            val convert = BpmActivityConvert.CONVERT.convert(activity);
-            if (currentNodes.contains(convert.getActivityId())){
-                convert.setState(InstanceCode.STATE_RUNNING);
-            } else {
-                convert.setState(InstanceCode.STATE_FINISH);
-            }
-            return convert;
-        }).distinct().collect(Collectors.toList());
+        return activityList.stream().map(BpmActivityConvert.CONVERT::convert).distinct().collect(Collectors.toList());
     }
 
 

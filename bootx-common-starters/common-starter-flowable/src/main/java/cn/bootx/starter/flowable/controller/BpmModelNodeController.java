@@ -2,9 +2,9 @@ package cn.bootx.starter.flowable.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.starter.flowable.core.model.service.BpmModelTaskService;
-import cn.bootx.starter.flowable.dto.model.BpmModelTaskDto;
-import cn.bootx.starter.flowable.param.model.BpmModelTaskParam;
+import cn.bootx.starter.flowable.core.model.service.BpmModelNodeService;
+import cn.bootx.starter.flowable.dto.model.BpmModelNodeDto;
+import cn.bootx.starter.flowable.param.model.BpmModelNodeParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,48 +19,48 @@ import java.util.List;
  */
 @Tag(name ="模型任务节点配置")
 @RestController
-@RequestMapping("/bpm/model/task")
+@RequestMapping("/bpm/model/node")
 @RequiredArgsConstructor
-public class BpmModelTaskController {
-    private final BpmModelTaskService bpmModelTaskService;
+public class BpmModelNodeController {
+    private final BpmModelNodeService bpmModelNodeService;
 
     @Operation( summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody BpmModelTaskParam param){
-        bpmModelTaskService.add(param);
+    public ResResult<Void> add(@RequestBody BpmModelNodeParam param){
+        bpmModelNodeService.add(param);
         return Res.ok();
     }
 
     @Operation( summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody BpmModelTaskParam param){
-        bpmModelTaskService.update(param);
+    public ResResult<Void> update(@RequestBody BpmModelNodeParam param){
+        bpmModelNodeService.update(param);
         return Res.ok();
     }
 
     @Operation( summary = "删除")
     @DeleteMapping(value = "/delete")
     public ResResult<Void> delete(Long id){
-        bpmModelTaskService.delete(id);
+        bpmModelNodeService.delete(id);
         return Res.ok();
     }
 
     @Operation( summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<BpmModelTaskDto> findById(Long id){
-        return Res.ok(bpmModelTaskService.findById(id));
+    public ResResult<BpmModelNodeDto> findById(Long id){
+        return Res.ok(bpmModelNodeService.findById(id));
     }
 
     @Operation( summary = "根据模型Id查询所有")
     @GetMapping(value = "/findAllByModelId")
-    public ResResult<List<BpmModelTaskDto>> findAllByModelId(Long modelId){
-        return Res.ok(bpmModelTaskService.findAllByModelId(modelId));
+    public ResResult<List<BpmModelNodeDto>> findAllByModelId(Long modelId){
+        return Res.ok(bpmModelNodeService.findAllByModelId(modelId));
     }
 
     @Operation(summary = "同步")
     @PostMapping("/sync")
     public ResResult<Void> sync(Long modelId){
-        bpmModelTaskService.sync(modelId);
+        bpmModelNodeService.sync(modelId);
         return Res.ok();
     }
 }

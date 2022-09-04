@@ -10,13 +10,7 @@ public interface InstanceCode {
     String STATE_RUNNING = "running";
     /** 已完成 */
     String STATE_FINISH = "finish";
+    /** 取消 */
+    String STATE_CANCEL = "cancel";
 
-    /** 处理中 */
-    String RESULT_PROCESS = "process";
-    /** 通过 */
-    String RESULT_APPROVE = "approve";
-    /** 不通过 */
-    String RESULT_REJECT = "reject";
-    /** 已取消 */
-    String RESULT_CANCEL = "cancel";
 }

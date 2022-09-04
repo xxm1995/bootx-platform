@@ -1,15 +1,12 @@
 package cn.bootx.starter.flowable.handler.behavior;
 
 
-import cn.bootx.starter.flowable.core.model.dao.BpmModelTaskManager;
-import cn.bootx.starter.flowable.core.model.entity.BpmModelTask;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.common.engine.impl.el.ExpressionManager;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.flowable.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.flowable.engine.impl.util.TaskHelper;
 import org.flowable.task.service.TaskService;
 import org.flowable.task.service.impl.persistence.entity.TaskEntity;
 
@@ -22,11 +19,11 @@ import java.util.List;
  */
 @Slf4j
 public class BpmUserTaskActivityBehavior  extends UserTaskActivityBehavior {
-    private final BpmModelTaskManager bpmModelTaskManager;
+    private final BpmUserTaskAssignService bpmUserTaskAssignService;
 
-    public BpmUserTaskActivityBehavior(UserTask userTask, BpmModelTaskManager bpmModelTaskManager) {
+    public BpmUserTaskActivityBehavior(UserTask userTask, BpmUserTaskAssignService bpmUserTaskAssignService) {
         super(userTask);
-        this.bpmModelTaskManager = bpmModelTaskManager;
+        this.bpmUserTaskAssignService = bpmUserTaskAssignService;
     }
 
     /**
@@ -37,10 +34,6 @@ public class BpmUserTaskActivityBehavior  extends UserTaskActivityBehavior {
                                      List<String> candidateUsers, List<String> candidateGroups, TaskEntity task, ExpressionManager expressionManager,
                                      DelegateExecution execution, ProcessEngineConfigurationImpl processEngineConfiguration) {
 
-        // 处理驳回情况的人员分配
-
-        // 获取节点配置并设置处理人
-        BpmModelTask modelTask = bpmModelTaskManager.findByDefIdAndTaskId(task.getProcessDefinitionId(), task.getTaskDefinitionKey());
-        TaskHelper.changeTaskAssignee(task, String.valueOf(modelTask.getUserId()));
+        bpmUserTaskAssignService.handleAssignments(taskService,assignee,owner,candidateUsers,candidateGroups,task,expressionManager,execution,processEngineConfiguration, this );
     }
 }
