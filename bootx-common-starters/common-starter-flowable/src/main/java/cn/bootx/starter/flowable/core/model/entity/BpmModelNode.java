@@ -34,8 +34,8 @@ public class BpmModelNode extends MpDelEntity implements EntityBaseFunction<BpmM
     /** 任务节点id */
     private String nodeId;
     /** 任务节点名称 */
-    private String taskName;
-    /** 是否会签 */
+    private String nodeName;
+    /** 是否多任务 */
     private boolean multi;
     /** 是否自动跳过当前节点(通常用于开始节点) */
     private boolean skip;

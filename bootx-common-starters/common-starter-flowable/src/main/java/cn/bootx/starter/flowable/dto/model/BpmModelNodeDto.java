@@ -26,7 +26,7 @@ public class BpmModelNodeDto extends BaseDto {
     @Schema(description = "任务节点id")
     private String nodeId;
     @Schema(description = "任务节点名称")
-    private String taskName;
+    private String nodeName;
     @Schema(description = "是否会签")
     private boolean multi;
     /** 是否自动跳过当前节点(通常用于开始节点) */

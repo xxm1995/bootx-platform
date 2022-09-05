@@ -257,7 +257,7 @@ public class BpmModelService {
                 throw new BizException("流程有任务节点未进行配置，请进行配置");
             }
             if (StrUtil.isBlank(modelTask.getAssignType())){
-                throw new BizException(modelTask.getTaskName() + " 任务节点未配置处理人员类型");
+                throw new BizException(modelTask.getNodeName() + " 任务节点未配置处理人员类型");
             }
         }
     }

@@ -122,4 +122,11 @@ public class BpmTaskEventService {
                 .setStartUserName(bpmInstance.getStartUserName())
                 .setStartTime(LocalDateTimeUtil.of(task.getCreateTime()));
     }
+
+    /**
+     * 活动取消
+     */
+    public void activityCancelled(String executionId) {
+
+    }
 }

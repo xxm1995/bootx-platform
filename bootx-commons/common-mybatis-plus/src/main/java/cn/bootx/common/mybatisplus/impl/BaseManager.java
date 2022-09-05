@@ -200,7 +200,10 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean updateAllById(Collection<T> entityList) {
-        return updateBatchById(entityList, DEFAULT_BATCH_SIZE);
+        if (CollUtil.isNotEmpty(entityList)){
+            return updateBatchById(entityList, DEFAULT_BATCH_SIZE);
+        }
+        return false;
     }
 
     /**
