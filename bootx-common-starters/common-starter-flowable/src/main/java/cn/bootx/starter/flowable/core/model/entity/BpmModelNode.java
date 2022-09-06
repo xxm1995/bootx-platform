@@ -2,9 +2,12 @@ package cn.bootx.starter.flowable.core.model.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpDelEntity;
+import cn.bootx.common.mybatisplus.handler.JacksonRawTypeHandler;
 import cn.bootx.starter.flowable.core.model.convert.BpmModelNodeConvert;
 import cn.bootx.starter.flowable.dto.model.BpmModelNodeDto;
 import cn.bootx.starter.flowable.param.model.BpmModelNodeParam;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -50,11 +53,12 @@ public class BpmModelNode extends MpDelEntity implements EntityBaseFunction<BpmM
      * @see cn.bootx.starter.flowable.code.ModelNodeCode
      */
     private String assignType;
-    /** 分配的用户(固定人) */
-    private Long userId;
-    /** 分配的用户(固定人) */
-    private String userName;
-
+    /** 分配的原始数据 */
+    @TableField(typeHandler = JacksonRawTypeHandler.class, updateStrategy = FieldStrategy.IGNORED)
+    private Object assignRaw;
+    /** 分配的数据的展示 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    private String assignShow;
     /** 创建对象 */
     public static BpmModelNode init(BpmModelNodeParam in) {
             return BpmModelNodeConvert.CONVERT.convert(in);

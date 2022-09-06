@@ -3,7 +3,7 @@ package cn.bootx.payment.core.payment.entity;
 import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.common.mybatisplus.handler.JacksonListTypeHandler;
+import cn.bootx.common.mybatisplus.handler.JacksonRawTypeHandler;
 import cn.bootx.payment.code.pay.PayStatusCode;
 import cn.bootx.payment.core.payment.convert.PaymentConvert;
 import cn.bootx.payment.dto.payment.PayChannelInfo;
@@ -66,7 +66,7 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
      * 支付通道信息列表
      * @see PayChannelInfo
      */
-    @TableField(typeHandler = JacksonListTypeHandler.class)
+    @TableField(typeHandler = JacksonRawTypeHandler.class)
     @BigField
     private List<PayChannelInfo> payChannelInfo;
 
@@ -74,7 +74,7 @@ public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentD
      * 退款信息列表
      * @see cn.bootx.payment.dto.payment.RefundableInfo
      */
-    @TableField(typeHandler = JacksonListTypeHandler.class)
+    @TableField(typeHandler = JacksonRawTypeHandler.class)
     @BigField
     private List<RefundableInfo> refundableInfo;
 

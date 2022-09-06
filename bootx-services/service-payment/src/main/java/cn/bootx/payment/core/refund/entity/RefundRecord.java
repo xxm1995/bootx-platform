@@ -2,7 +2,7 @@ package cn.bootx.payment.core.refund.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.common.mybatisplus.handler.JacksonListTypeHandler;
+import cn.bootx.common.mybatisplus.handler.JacksonRawTypeHandler;
 import cn.bootx.payment.core.refund.convert.RefundConvert;
 import cn.bootx.payment.dto.payment.RefundableInfo;
 import cn.bootx.payment.dto.refund.RefundRecordDto;
@@ -56,7 +56,7 @@ public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<Ref
     /**
      * 退款信息列表
      */
-    @TableField(typeHandler = JacksonListTypeHandler.class)
+    @TableField(typeHandler = JacksonRawTypeHandler.class)
     private List<RefundableInfo> refundableInfo;
 
     /**

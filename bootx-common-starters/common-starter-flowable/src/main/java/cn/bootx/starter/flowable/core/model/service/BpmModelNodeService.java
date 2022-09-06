@@ -1,6 +1,7 @@
 package cn.bootx.starter.flowable.core.model.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.starter.flowable.core.model.dao.BpmModelManager;
@@ -30,6 +31,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.CachingCode.NODE_MODEL_ID;
+import static cn.bootx.starter.flowable.code.ModelNodeCode.ASSIGN_SELECT;
+import static cn.bootx.starter.flowable.code.ModelNodeCode.ASSIGN_SPONSOR;
 
 /**
  * 模型任务节点服务
@@ -43,6 +46,7 @@ public class BpmModelNodeService {
     private final BpmModelManager bpmModelManager;
     private final BpmModelNodeManager bpmModelNodeManager;
 
+    private final List<String> nodeAssignTypes = CollUtil.toList(ASSIGN_SPONSOR,ASSIGN_SELECT);
     /**
      * 添加
      */
@@ -60,6 +64,13 @@ public class BpmModelNodeService {
         BpmModelNode bpmModelNode = bpmModelNodeManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
 
         BeanUtil.copyProperties(param, bpmModelNode, CopyOptions.create().ignoreNullValue());
+
+        // 预防脏数据
+        if (nodeAssignTypes.contains(bpmModelNode.getAssignType())){
+            bpmModelNode.setAssignRaw(null);
+            bpmModelNode.setAssignShow(null);
+        }
+
         bpmModelNodeManager.updateById(bpmModelNode);
     }
 

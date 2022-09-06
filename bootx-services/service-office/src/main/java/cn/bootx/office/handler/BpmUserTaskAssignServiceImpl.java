@@ -4,6 +4,8 @@ import cn.bootx.starter.flowable.core.model.dao.BpmModelNodeManager;
 import cn.bootx.starter.flowable.core.model.entity.BpmModelNode;
 import cn.bootx.starter.flowable.exception.ModelNodeNotExistException;
 import cn.bootx.starter.flowable.handler.behavior.BpmUserTaskAssignService;
+import cn.bootx.starter.flowable.local.BpmContext;
+import cn.bootx.starter.flowable.local.BpmContextLocal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -19,11 +21,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
-import static cn.bootx.starter.flowable.code.ModelNodeCode.ASSIGN_USER;
+import static cn.bootx.starter.flowable.code.ModelNodeCode.*;
 
-/**   
+/**
  * 处理普通任务人员分配
- * @author xxm  
+ * @author xxm
  * @date 2022/9/4 
  */
 @Slf4j
@@ -42,32 +44,43 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
                                   DelegateExecution execution,
                                   ProcessEngineConfigurationImpl processEngineConfiguration,
                                   UserTaskActivityBehavior userTaskActivityBehavior) {
-        Long taskUserId = null;
+        Long userId = null;
+        BpmContext bpmContext = BpmContextLocal.get();
 
         // 情况一，如果是多实例的任务，例如说会签、串签等情况，已经被分配完毕, 直接从 Variable 中获取。
         val multiInstanceActivityBehavior = userTaskActivityBehavior.getMultiInstanceActivityBehavior();
         if (Objects.nonNull(userTaskActivityBehavior.getMultiInstanceActivityBehavior())) {
-            taskUserId = execution.getVariable(multiInstanceActivityBehavior.getCollectionElementVariable(), Long.class);
-            TaskHelper.changeTaskAssignee(task, String.valueOf(taskUserId));
+            userId = execution.getVariable(multiInstanceActivityBehavior.getCollectionElementVariable(), Long.class);
+            TaskHelper.changeTaskAssignee(task, String.valueOf(userId));
             return;
         }
-        // 处理驳回情况的人员分配
 
-
-        // 情况二，如果非多实例的任务，则计算任务处理人
+        // 情况二，如果非多实例的任务，则获取节点配置并设置处理人
         BpmModelNode modelTask = bpmModelNodeManager.findByDefIdAndTaskId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
                 .orElseThrow(ModelNodeNotExistException::new);
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_USER)){
-            taskUserId = modelTask.getUserId();
+        // 发起人
+        if (Objects.equals(modelTask.getAssignType(),ASSIGN_SPONSOR)){
+
+        }
+        // 用户手动选择
+        if (Objects.equals(modelTask.getAssignType(), ASSIGN_SELECT)){
+            userId = bpmContext.getNextAssignUserId();
         }
 
-        // 获取节点配置并设置处理人
-        // 指定人
+        // 指定用户
+        if (Objects.equals(modelTask.getAssignType(),ASSIGN_USER)){
+            userId = (Long) modelTask.getAssignRaw();
+        }
 
-        // 指定角色
+        // 指定角色 角色有多个, 只会从里面抽一个人
+        if (Objects.equals(modelTask.getAssignType(),ASSIGN_ROLE)){
+            Long roleId = (Long) modelTask.getAssignRaw();
+        }
+        // 部门负责人  负责人有多个, 只会从里面抽一个人
+        if (Objects.equals(modelTask.getAssignType(),ASSIGN_DEPT_LEADER)){
+            Long deptId = (Long) modelTask.getAssignRaw();
 
-        // 部门负责人
-
-        TaskHelper.changeTaskAssignee(task, String.valueOf(taskUserId));
+        }
+        TaskHelper.changeTaskAssignee(task, String.valueOf(userId));
     }
 }

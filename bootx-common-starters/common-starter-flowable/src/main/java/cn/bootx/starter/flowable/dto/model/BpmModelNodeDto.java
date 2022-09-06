@@ -39,9 +39,9 @@ public class BpmModelNodeDto extends BaseDto {
     private boolean retrieve;
     @Schema(description = "分配类型")
     private String assignType;
-    @Schema(description = "分配的用户id(固定人)")
-    private Long userId;
-    @Schema(description = "分配的用户名称(固定人)")
-    private String userName;
+    /** 分配的原始数据 */
+    private Object assignRaw;
+    /** 分配的数据的展示 */
+    private String assignShow;
 
 }

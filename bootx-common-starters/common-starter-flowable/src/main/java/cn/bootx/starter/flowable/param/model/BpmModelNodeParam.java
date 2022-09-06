@@ -1,5 +1,7 @@
 package cn.bootx.starter.flowable.param.model;
 
+import cn.bootx.common.mybatisplus.handler.JacksonRawTypeHandler;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -39,9 +41,9 @@ public class BpmModelNodeParam {
     private boolean retrieve;
     @Schema(description = "分配类型")
     private String assignType;
-    @Schema(description = "分配的用户id(固定人)")
-    private Long userId;
-    @Schema(description = "分配的用户名称(固定人)")
-    private String userName;
+    /** 分配的原始数据 */
+    private Object assignRaw;
+    /** 分配的数据的展示 */
+    private String assignShow;
 
 }

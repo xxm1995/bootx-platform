@@ -16,12 +16,12 @@ import org.apache.ibatis.type.MappedTypes;
 @Slf4j
 @MappedTypes({Object.class})
 @MappedJdbcTypes(JdbcType.VARCHAR)
-public class JacksonListTypeHandler extends AbstractJsonTypeHandler<Object> {
+public class JacksonRawTypeHandler extends AbstractJsonTypeHandler<Object> {
     private final Class<?> type;
 
-    public JacksonListTypeHandler(Class<?> type) {
+    public JacksonRawTypeHandler(Class<?> type) {
         if (log.isTraceEnabled()) {
-            log.trace("JacksonListTypeHandler(" + type + ")");
+            log.trace("JacksonRawTypeHandler(" + type + ")");
         }
         Assert.notNull(type, "Type argument cannot be null");
         this.type = type;
