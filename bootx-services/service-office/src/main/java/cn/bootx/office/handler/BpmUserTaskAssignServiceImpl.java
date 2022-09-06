@@ -44,7 +44,7 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
                                   UserTaskActivityBehavior userTaskActivityBehavior) {
         Long taskUserId = null;
 
-        // 情况一，如果是多实例的任务，例如说会签、或签等情况，已经被分配完毕, 直接从 Variable 中获取。
+        // 情况一，如果是多实例的任务，例如说会签、串签等情况，已经被分配完毕, 直接从 Variable 中获取。
         val multiInstanceActivityBehavior = userTaskActivityBehavior.getMultiInstanceActivityBehavior();
         if (Objects.nonNull(userTaskActivityBehavior.getMultiInstanceActivityBehavior())) {
             taskUserId = execution.getVariable(multiInstanceActivityBehavior.getCollectionElementVariable(), Long.class);

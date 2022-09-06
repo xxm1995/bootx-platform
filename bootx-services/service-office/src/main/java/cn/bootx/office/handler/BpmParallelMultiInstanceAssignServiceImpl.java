@@ -4,9 +4,10 @@ import cn.bootx.starter.flowable.handler.behavior.BpmParallelMultiInstanceAssign
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
+import org.flowable.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**   
@@ -18,8 +19,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BpmParallelMultiInstanceAssignServiceImpl implements BpmParallelMultiInstanceAssignService {
+
     @Override
-    public List<Long> getTaskUsers(DelegateExecution execution, ParallelMultiInstanceBehavior parallelMultiInstanceBehavior) {
-        return null;
+    public List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior multiInstanceActivityBehavior) {
+        return Arrays.asList(1399985191002447872L);
     }
 }

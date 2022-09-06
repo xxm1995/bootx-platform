@@ -1,7 +1,7 @@
 package cn.bootx.starter.flowable.handler.behavior;
 
 import org.flowable.engine.delegate.DelegateExecution;
-import org.flowable.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
+import org.flowable.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public interface BpmParallelMultiInstanceAssignService {
     /**
      * 计算当前执行任务的处理人id集合
      */
-    List<Long> getTaskUsers(DelegateExecution execution, ParallelMultiInstanceBehavior parallelMultiInstanceBehavior);
+    List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior multiInstanceActivityBehavior);
 }

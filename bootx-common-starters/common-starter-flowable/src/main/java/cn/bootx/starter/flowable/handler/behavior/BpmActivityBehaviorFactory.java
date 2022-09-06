@@ -6,6 +6,7 @@ import org.flowable.bpmn.model.Activity;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.flowable.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
+import org.flowable.engine.impl.bpmn.behavior.SequentialMultiInstanceBehavior;
 import org.flowable.engine.impl.bpmn.behavior.UserTaskActivityBehavior;
 import org.flowable.engine.impl.bpmn.parser.factory.DefaultActivityBehaviorFactory;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,9 @@ public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
     private final BpmUserTaskAssignService bpmUserTaskAssignService;
     private final BpmParallelMultiInstanceAssignService assistService;
 
+    /**
+     * 任务人员分配
+     */
     @Override
     public UserTaskActivityBehavior createUserTaskActivityBehavior(UserTask userTask) {
         return new BpmUserTaskActivityBehavior(userTask, bpmUserTaskAssignService);
@@ -31,8 +35,15 @@ public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
      * 创建并行多实例行为
      */
     @Override
-    public ParallelMultiInstanceBehavior createParallelMultiInstanceBehavior(Activity activity,
-                                                                             AbstractBpmnActivityBehavior innerActivityBehavior) {
+    public ParallelMultiInstanceBehavior createParallelMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior) {
         return new BpmParallelMultiInstanceBehavior(activity, innerActivityBehavior, assistService);
+    }
+
+    /**
+     * 创建串行多实例行为
+     */
+    @Override
+    public SequentialMultiInstanceBehavior createSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior) {
+        return new BpmSequentialMultiInstanceBehavior(activity,innerActivityBehavior,assistService);
     }
 }

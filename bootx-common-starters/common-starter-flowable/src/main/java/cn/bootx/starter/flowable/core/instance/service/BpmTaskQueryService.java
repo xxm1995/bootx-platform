@@ -86,7 +86,7 @@ public class BpmTaskQueryService {
      */
     public Map<String,List<BpmTaskDto>> getNodeTasks(String instanceId){
         return this.findAllByInstanceId(instanceId).stream()
-                .collect(Collectors.groupingBy(BpmTaskDto::getTaskNodeId));
+                .collect(Collectors.groupingBy(BpmTaskDto::getNodeId));
     }
 
     /**
@@ -98,7 +98,7 @@ public class BpmTaskQueryService {
             BpmTask bpmTask = Optional.ofNullable(bpmTaskMap.get(taskId)).orElse(new BpmTask());
             return new TaskInfo()
                     .setTaskId(bpmTask.getTaskId())
-                    .setTaskName(bpmTask.getTaskName())
+                    .setNodeName(bpmTask.getNodeName())
                     .setExecutionId(bpmTask.getExecutionId())
                     .setInstanceId(bpmTask.getInstanceId())
                     .setInstanceName(bpmTask.getInstanceName())

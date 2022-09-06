@@ -110,8 +110,8 @@ public class BpmTaskEventService {
     private BpmTask convert(TaskEntity task, BpmInstance bpmInstance){
         return new BpmTask()
                 .setTaskId(task.getId())
-                .setTaskNodeId(task.getTaskDefinitionKey())
-                .setTaskName(task.getName())
+                .setNodeId(task.getTaskDefinitionKey())
+                .setNodeName(task.getName())
                 .setState(STATE_PROCESS)
                 .setFormVariables(task.getCaseVariables())
                 .setExecutionId(task.getExecutionId())

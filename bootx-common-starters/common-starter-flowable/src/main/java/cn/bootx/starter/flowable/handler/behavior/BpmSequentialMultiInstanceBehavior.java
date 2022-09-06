@@ -4,26 +4,24 @@ import cn.bootx.starter.flowable.util.FlowableUtil;
 import org.flowable.bpmn.model.Activity;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
-import org.flowable.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
+import org.flowable.engine.impl.bpmn.behavior.SequentialMultiInstanceBehavior;
 
 import java.util.List;
 
-/**
- *
- * @author xxm
- * @date 2022/8/28
+/**   
+ * 串签处理
+ * @author xxm  
+ * @date 2022/9/6 
  */
-public class BpmParallelMultiInstanceBehavior extends ParallelMultiInstanceBehavior {
+public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceBehavior {
     private final BpmParallelMultiInstanceAssignService assignService;
-    public BpmParallelMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior originalActivityBehavior, BpmParallelMultiInstanceAssignService bpmParallelMultiInstanceAssignService) {
-        super(activity, originalActivityBehavior);
-        this.assignService = bpmParallelMultiInstanceAssignService;
+    public BpmSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior, BpmParallelMultiInstanceAssignService assignService) {
+        super(activity, innerActivityBehavior);
+        this.assignService = assignService;
     }
 
     /**
-     * 忽略原有的 collectionString、collectionElementVariable 表达式，而是采用自己定义的
-     * 获得任务的处理人，并设置到 collectionVariable 中，用于 BpmUserTaskActivityBehavior 从中可以获取任务的处理人
-     * 多个任务实例，每个任务实例对应一个处理人，所以返回的数量就是任务处理人的数量
+     * 多实例创建
      */
     @Override
     protected int resolveNrOfInstances(DelegateExecution execution) {

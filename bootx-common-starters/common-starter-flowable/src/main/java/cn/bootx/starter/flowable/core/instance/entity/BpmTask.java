@@ -29,10 +29,10 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
     private String taskId;
 
     /** 任务节点id */
-    private String taskNodeId;
+    private String nodeId;
 
     /** 任务节点名称 */
-    private String taskName;
+    private String nodeName;
 
     /** 执行 ID */
     private String executionId;

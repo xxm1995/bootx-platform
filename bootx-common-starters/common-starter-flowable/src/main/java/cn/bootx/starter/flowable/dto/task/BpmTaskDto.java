@@ -31,9 +31,9 @@ public class BpmTaskDto extends BaseDto {
     @Schema(description = "流程定义名称")
     private String defName;
     @Schema(description = "任务节点id")
-    private String taskNodeId;
+    private String nodeId;
     @Schema(description = "任务节点名称")
-    private String taskName;
+    private String nodeName;
     @Schema(description = "流程任务的状态")
     private String state;
     @Schema(description = "处理意见")

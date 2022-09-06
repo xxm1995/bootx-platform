@@ -32,7 +32,7 @@ public class TaskInfo {
     private String defName;
 
     @Schema(description = "当前环节名称")
-    private String taskName;
+    private String nodeName;
 
     @Schema(description = "流程任务的状态")
     private String state;
