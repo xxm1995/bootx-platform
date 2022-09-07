@@ -1,9 +1,13 @@
 package cn.bootx.office.handler;
 
+import cn.bootx.iam.core.upms.dao.UserRoleManager;
+import cn.bootx.iam.core.upms.entity.UserRole;
+import cn.bootx.starter.flowable.core.instance.dao.BpmInstanceManager;
+import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
 import cn.bootx.starter.flowable.core.model.dao.BpmModelNodeManager;
 import cn.bootx.starter.flowable.core.model.entity.BpmModelNode;
 import cn.bootx.starter.flowable.exception.ModelNodeNotExistException;
-import cn.bootx.starter.flowable.handler.behavior.BpmParallelMultiInstanceAssignService;
+import cn.bootx.starter.flowable.handler.behavior.BpmMultiInstanceAssignService;
 import cn.bootx.starter.flowable.local.BpmContext;
 import cn.bootx.starter.flowable.local.BpmContextLocal;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +17,10 @@ import org.flowable.engine.impl.bpmn.behavior.MultiInstanceActivityBehavior;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.ModelNodeCode.*;
 
@@ -26,8 +32,10 @@ import static cn.bootx.starter.flowable.code.ModelNodeCode.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class BpmParallelMultiInstanceAssignServiceImpl implements BpmParallelMultiInstanceAssignService {
+public class BpmMultiInstanceAssignServiceImpl implements BpmMultiInstanceAssignService {
     private final BpmModelNodeManager bpmModelNodeManager;
+    private final BpmInstanceManager bpmInstanceManager;
+    private final UserRoleManager userRoleManager;
 
     @Override
     public List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior multiInstanceActivityBehavior) {
@@ -41,7 +49,8 @@ public class BpmParallelMultiInstanceAssignServiceImpl implements BpmParallelMul
 
         // 发起人
         if (Objects.equals(modelTask.getAssignType(),ASSIGN_SPONSOR)){
-
+            Long startUserId = this.getStartUserId(execution.getProcessInstanceId());
+            userIds = Collections.singletonList(startUserId);
         }
         // 用户手动选择
         if (Objects.equals(modelTask.getAssignType(), ASSIGN_SELECT)){
@@ -49,16 +58,33 @@ public class BpmParallelMultiInstanceAssignServiceImpl implements BpmParallelMul
         }
 
         // 指定用户组
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_USER)){
+        if (Objects.equals(modelTask.getAssignType(),ASSIGN_USER_GROUP)){
             //noinspection unchecked
             userIds = (List<Long>) modelTask.getAssignRaw();
         }
 
         // 指定角色
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_ROLE)){
+        if (Objects.equals(modelTask.getAssignType(),ASSIGN_GROUP)){
+            //noinspection unchecked
             List<Long> roleIds = (List<Long>) modelTask.getAssignRaw();
+            userIds = getUserIdsByRole(roleIds);
         }
 
         return userIds;
+    }
+
+    /**
+     * 获取发起人id
+     */
+    private Long getStartUserId(String processInstanceId) {
+        return bpmInstanceManager.findByInstanceId(processInstanceId).map(BpmInstance::getStartUserId)
+                .orElse(null);
+    }
+
+    /**
+     * 根据角色获取人员id集合
+     */
+    private List<Long> getUserIdsByRole(List<Long> roleIds){
+        return userRoleManager.findAllByRoles(roleIds).stream().map(UserRole::getUserId).collect(Collectors.toList());
     }
 }

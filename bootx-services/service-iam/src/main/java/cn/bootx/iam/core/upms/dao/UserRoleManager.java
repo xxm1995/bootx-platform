@@ -31,8 +31,14 @@ public class UserRoleManager extends BaseManager<UserRoleMapper,UserRole> {
         deleteByFields(UserRole::getUserId,userIds);
     }
 
-    public List<UserRole> findRoleIdsByUser(Long userId) {
+    public List<UserRole> findAllByUser(Long userId) {
         return findAllByField(UserRole::getUserId,userId);
+    }
+    public List<UserRole> findAllByRole(Long roleId) {
+        return findAllByField(UserRole::getRoleId,roleId);
+    }
+    public List<UserRole> findAllByRoles(List<Long> roleIds) {
+        return findAllByFields(UserRole::getRoleId,roleIds);
     }
 
     /**

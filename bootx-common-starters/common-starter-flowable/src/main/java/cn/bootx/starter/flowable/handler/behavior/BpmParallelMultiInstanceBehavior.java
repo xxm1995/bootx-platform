@@ -1,6 +1,5 @@
 package cn.bootx.starter.flowable.handler.behavior;
 
-import cn.bootx.starter.flowable.util.FlowableUtil;
 import org.flowable.bpmn.model.Activity;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
@@ -8,16 +7,19 @@ import org.flowable.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
 
 import java.util.List;
 
+import static cn.bootx.starter.flowable.code.BpmnCode.MULTI_COLLECTION;
+import static cn.bootx.starter.flowable.code.BpmnCode.MULTI_COLLECTION_Element;
+
 /**
  *
  * @author xxm
  * @date 2022/8/28
  */
 public class BpmParallelMultiInstanceBehavior extends ParallelMultiInstanceBehavior {
-    private final BpmParallelMultiInstanceAssignService assignService;
-    public BpmParallelMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior originalActivityBehavior, BpmParallelMultiInstanceAssignService bpmParallelMultiInstanceAssignService) {
+    private final BpmMultiInstanceAssignService assignService;
+    public BpmParallelMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior originalActivityBehavior, BpmMultiInstanceAssignService bpmMultiInstanceAssignService) {
         super(activity, originalActivityBehavior);
-        this.assignService = bpmParallelMultiInstanceAssignService;
+        this.assignService = bpmMultiInstanceAssignService;
     }
 
     /**
@@ -28,10 +30,10 @@ public class BpmParallelMultiInstanceBehavior extends ParallelMultiInstanceBehav
     @Override
     protected int resolveNrOfInstances(DelegateExecution execution) {
         // 清空collectionExpression , 它和 collectionVariable 是互斥的
-        super.collectionExpression = null;
+        super.setCollectionExpression(null);
         // 设置 collectionElementVariable(迭代出来的处理人) 和 collectionString(候选人集合)
-        super.collectionString = FlowableUtil.formatCollectionVariable(execution.getCurrentActivityId());
-        super.collectionElementVariable = FlowableUtil.formatCollectionElementVariable(execution.getCurrentActivityId());
+        super.setCollectionString(MULTI_COLLECTION);
+        super.setCollectionElementVariable(MULTI_COLLECTION_Element);
 
         List<Long> taskUsers = assignService.getTaskUsers(execution,this);
         execution.setVariable(super.collectionString, taskUsers);

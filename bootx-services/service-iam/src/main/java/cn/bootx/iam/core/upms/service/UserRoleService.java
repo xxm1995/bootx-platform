@@ -69,7 +69,7 @@ public class UserRoleService {
      * 根据id查询角色id
      */
     public List<Long> findRoleIdsByUser(Long userId) {
-        return userRoleManager.findRoleIdsByUser(userId).stream()
+        return userRoleManager.findAllByUser(userId).stream()
                 .map(UserRole::getRoleId)
                 .distinct()
                 .collect(Collectors.toList());

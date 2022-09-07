@@ -29,7 +29,8 @@
         <!-- 认证模块 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-starter-auth</artifactId>
+            <artifactId>service-iam</artifactId>
+            <version>${bootx-platform.version}</version>
         </dependency>
 
         <!-- 基础功能模块 -->

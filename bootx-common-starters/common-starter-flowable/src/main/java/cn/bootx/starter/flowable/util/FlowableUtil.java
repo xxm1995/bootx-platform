@@ -587,17 +587,4 @@ public class FlowableUtil {
         return lastHistoricTaskInstanceList;
     }
 
-    /**
-     * 分配人集合字段名称
-     */
-    public String formatCollectionVariable(String activityId) {
-        return activityId + "_assignees";
-    }
-
-    /**
-     * 分配人字段名称
-     */
-    public String formatCollectionElementVariable(String activityId) {
-        return activityId + "_assignee";
-    }
 }

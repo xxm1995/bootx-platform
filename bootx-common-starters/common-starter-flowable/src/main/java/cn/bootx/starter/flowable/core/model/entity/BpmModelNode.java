@@ -23,7 +23,7 @@ import lombok.experimental.FieldNameConstants;
 @Data
 @Accessors(chain = true)
 @FieldNameConstants
-@TableName("bpm_model_node")
+@TableName(value = "bpm_model_node",autoResultMap = true)
 public class BpmModelNode extends MpDelEntity implements EntityBaseFunction<BpmModelNodeDto>{
 
     /** 关联模型id */
@@ -40,6 +40,8 @@ public class BpmModelNode extends MpDelEntity implements EntityBaseFunction<BpmM
     private String nodeName;
     /** 是否多任务 */
     private boolean multi;
+    /** 是否串签 */
+    private boolean sequential;
     /** 是否自动跳过当前节点(通常用于开始节点) */
     private boolean skip;
     /** 是否允许驳回 */

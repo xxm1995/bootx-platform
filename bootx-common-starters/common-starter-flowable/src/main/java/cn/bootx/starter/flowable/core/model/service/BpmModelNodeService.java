@@ -165,14 +165,18 @@ public class BpmModelNodeService {
             userTask.setMulti(node.isMulti());
             flag = true;
         }
+        // 是否串行任务
+        if (node.isSequential() != userTask.isSequential()){
+            userTask.setSequential(node.isSequential());
+            flag = true;
+        }
         return flag;
     }
 
     /**
      * 节点转换
-     * @param userTask
+     * @param userTask flowable 任务节点
      * @param bpmModel
-     * @return
      */
     public BpmModelNode convert(UserTask userTask, BpmModel bpmModel){
         BpmModelNode modelNode = new BpmModelNode()
@@ -185,6 +189,7 @@ public class BpmModelNodeService {
         val loopCharacteristics = userTask.getLoopCharacteristics();
         if (Objects.nonNull(loopCharacteristics)){
             modelNode.setMulti(true);
+            modelNode.setSequential(loopCharacteristics.isSequential());
         }
         return modelNode;
     }

@@ -10,7 +10,7 @@ import java.util.List;
  * @author xxm
  * @date 2022/9/4
  */
-public interface BpmParallelMultiInstanceAssignService {
+public interface BpmMultiInstanceAssignService {
 
     /**
      * 计算当前执行任务的处理人id集合
