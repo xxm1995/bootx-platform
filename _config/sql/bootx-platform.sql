@@ -3,13 +3,13 @@
 
  Source Server         : 阿里
  Source Server Type    : MySQL
- Source Schema         : bootx-platform
+ Source Server Version : 50735
 
  Target Server Type    : MySQL
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 22/08/2022 13:53:51
+ Date: 08/09/2022 10:28:00
 */
 
 SET NAMES utf8mb4;
@@ -64,6 +64,7 @@ INSERT INTO `base_dict` VALUES (1561003021674987520, 'SiteMessageReceive', '消�
 INSERT INTO `base_dict` VALUES (1561003189111603200, 'SiteMessageState', '消息发布状态', '站内信', '站内信消息发布状态', 1399985191002447872, '2022-08-20 22:52:17', 1399985191002447872, '2022-08-20 22:52:17', 0, 0);
 INSERT INTO `base_dict` VALUES (1562696107020230656, 'BpmModelPublish', '工作流模型发布状态', '工作流', '工作流模型发布状态', 1399985191002447872, '2022-08-25 14:59:20', 1399985191002447872, '2022-08-25 15:27:55', 0, 1);
 INSERT INTO `base_dict` VALUES (1563083969989423104, 'BpmTaskAssignType', '工作流处理人分配类型', '工作流', '流程任务处理人分配类型', 1399985191002447872, '2022-08-26 16:40:34', 1399985191002447872, '2022-08-26 16:40:53', 0, 1);
+INSERT INTO `base_dict` VALUES (1567091641298386944, 'BpmTaskState', '流程任务状态', '工作流', '流程任务状态', 1399985191002447872, '2022-09-06 18:05:37', 1399985191002447872, '2022-09-06 18:05:47', 0, 1);
 
 -- ----------------------------
 -- Table structure for base_dict_item
@@ -187,7 +188,20 @@ INSERT INTO `base_dict_item` VALUES (1561245469535080448, 1561003189111603200, '
 INSERT INTO `base_dict_item` VALUES (1562696390043475968, 1562696107020230656, 'BpmModelPublish', 'published', '已发布', 0.00, '', 1399985191002447872, '2022-08-25 15:00:28', 1399985191002447872, '2022-08-25 15:00:28', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1562696420561231872, 1562696107020230656, 'BpmModelPublish', 'unpublished', '未发布', 0.00, '未上传xml文档', 1399985191002447872, '2022-08-25 15:00:35', 1399985191002447872, '2022-08-25 15:28:09', 0, 1);
 INSERT INTO `base_dict_item` VALUES (1562703450588028928, 1562696107020230656, 'BpmModelPublish', 'unpublishedXml', '未发布(已上传BPMN)', 0.00, '有xml文档', 1399985191002447872, '2022-08-25 15:28:31', 1399985191002447872, '2022-08-25 15:34:45', 0, 1);
-INSERT INTO `base_dict_item` VALUES (1563087300157747200, 1563083969989423104, 'BpmTaskAssignType', 'user', '指定用户', 0.00, '', 1399985191002447872, '2022-08-26 16:53:48', 1399985191002447872, '2022-08-26 16:53:48', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1563087300157747200, 1563083969989423104, 'BpmTaskAssignType', 'user', '用户', 0.00, '', 1399985191002447872, '2022-08-26 16:53:48', 1399985191002447872, '2022-09-06 22:50:15', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1567091825981980672, 1567091641298386944, 'BpmTaskState', 'running', '处理中', 0.00, '', 1399985191002447872, '2022-09-06 18:06:21', 1399985191002447872, '2022-09-06 18:06:21', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567091863017684992, 1567091641298386944, 'BpmTaskState', 'pass', '通过', 0.00, '', 1399985191002447872, '2022-09-06 18:06:30', 1399985191002447872, '2022-09-06 18:06:30', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567091902414782464, 1567091641298386944, 'BpmTaskState', 'reject', '驳回', 0.00, '', 1399985191002447872, '2022-09-06 18:06:39', 1399985191002447872, '2022-09-06 18:06:51', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1567091993569591296, 1567091641298386944, 'BpmTaskState', 'back', '退回', 0.00, '', 1399985191002447872, '2022-09-06 18:07:01', 1399985191002447872, '2022-09-06 18:07:01', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567092037261656064, 1567091641298386944, 'BpmTaskState', 'retrieve', '取回', 0.00, '', 1399985191002447872, '2022-09-06 18:07:12', 1399985191002447872, '2022-09-06 18:07:22', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1567092124226355200, 1567091641298386944, 'BpmTaskState', 'skip', '跳过', 0.00, '', 1399985191002447872, '2022-09-06 18:07:32', 1399985191002447872, '2022-09-06 18:07:32', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567163310103564288, 1563083969989423104, 'BpmTaskAssignType', 'userGroup', '用户组', 0.00, '', 1399985191002447872, '2022-09-06 22:50:24', 1399985191002447872, '2022-09-06 22:50:24', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567163343288897536, 1563083969989423104, 'BpmTaskAssignType', 'role', '角色', 0.00, '', 1399985191002447872, '2022-09-06 22:50:32', 1399985191002447872, '2022-09-06 22:50:32', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567163380693700608, 1563083969989423104, 'BpmTaskAssignType', 'deptMember', '部门成员', 0.00, '', 1399985191002447872, '2022-09-06 22:50:41', 1399985191002447872, '2022-09-06 22:50:41', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567163412960481280, 1563083969989423104, 'BpmTaskAssignType', 'deptLeader', '部门的负责人', 0.00, '', 1399985191002447872, '2022-09-06 22:50:49', 1399985191002447872, '2022-09-06 22:50:49', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567175558888923136, 1563083969989423104, 'BpmTaskAssignType', 'roleGroup', '角色组', 0.00, '', 1399985191002447872, '2022-09-06 23:39:05', 1399985191002447872, '2022-09-06 23:39:05', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567178994242002944, 1563083969989423104, 'BpmTaskAssignType', 'sponsor', '发起人', 0.00, '', 1399985191002447872, '2022-09-06 23:52:44', 1399985191002447872, '2022-09-06 23:52:44', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1567179143576002560, 1563083969989423104, 'BpmTaskAssignType', 'select', '用户手动选择', 0.00, '', 1399985191002447872, '2022-09-06 23:53:19', 1399985191002447872, '2022-09-07 00:01:22', 0, 1);
 
 -- ----------------------------
 -- Table structure for base_dynamic_form
@@ -212,6 +226,7 @@ CREATE TABLE `base_dynamic_form`  (
 -- Records of base_dynamic_form
 -- ----------------------------
 INSERT INTO `base_dynamic_form` VALUES (1552656018381422592, '测试表单', 'test', '{\"list\":[{\"type\":\"input\",\"label\":\"输入框\",\"options\":{\"type\":\"text\",\"width\":\"100%\",\"defaultValue\":\"\",\"placeholder\":\"请输入\",\"clearable\":true,\"maxLength\":null,\"addonBefore\":\"\",\"addonAfter\":\"\",\"hidden\":false,\"disabled\":false},\"model\":\"aa\",\"key\":\"input_1659059676533\",\"help\":\"测试\",\"rules\":[{\"required\":true,\"message\":\"必填项\"}]},{\"type\":\"textarea\",\"label\":\"文本框\",\"options\":{\"width\":\"100%\",\"minRows\":4,\"maxRows\":6,\"maxLength\":null,\"defaultValue\":\"\",\"clearable\":true,\"hidden\":false,\"disabled\":false,\"placeholder\":\"请输入\"},\"model\":\"bb\",\"key\":\"textarea_1659020414125\",\"help\":\"\",\"rules\":[{\"required\":true,\"message\":\"必填项\"}]},{\"type\":\"slider\",\"label\":\"滑动输入条\",\"options\":{\"width\":\"100%\",\"defaultValue\":34,\"disabled\":false,\"hidden\":false,\"min\":0,\"max\":100,\"step\":1,\"showInput\":false},\"model\":\"cc\",\"key\":\"slider_1659020433092\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]}],\"config\":{\"layout\":\"horizontal\",\"labelCol\":{\"xs\":4,\"sm\":4,\"md\":4,\"lg\":4,\"xl\":4,\"xxl\":4},\"labelWidth\":100,\"labelLayout\":\"flex\",\"wrapperCol\":{\"xs\":18,\"sm\":18,\"md\":18,\"lg\":18,\"xl\":18,\"xxl\":18},\"hideRequiredMark\":false,\"customStyle\":\"\"}}', '测试动态表单', 1399985191002447872, '2022-07-28 22:03:36', 1399985191002447872, '2022-07-29 09:55:22', 0, 7);
+INSERT INTO `base_dynamic_form` VALUES (1552656018381422593, '测试表单1', 'test1', '{\"list\":[{\"type\":\"input\",\"label\":\"申请人\",\"options\":{\"type\":\"text\",\"width\":\"100%\",\"defaultValue\":\"\",\"placeholder\":\"请输入\",\"clearable\":true,\"maxLength\":null,\"addonBefore\":\"\",\"addonAfter\":\"\",\"hidden\":false,\"disabled\":false},\"model\":\"apply_by\",\"key\":\"input_1659059676533\",\"help\":\"测试\",\"rules\":[{\"required\":true,\"message\":\"必填项\"}]},{\"type\":\"input\",\"label\":\"请假天数\",\"options\":{\"type\":\"text\",\"width\":\"100%\",\"defaultValue\":\"\",\"placeholder\":\"请输入\",\"clearable\":false,\"maxLength\":null,\"addonBefore\":\"\",\"addonAfter\":\"\",\"hidden\":false,\"disabled\":false},\"model\":\"leave_days\",\"key\":\"input_1662106166142\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]},{\"type\":\"textarea\",\"label\":\"备注\",\"options\":{\"width\":\"100%\",\"minRows\":4,\"maxRows\":6,\"maxLength\":null,\"defaultValue\":\"\",\"clearable\":true,\"hidden\":false,\"disabled\":false,\"placeholder\":\"请输入\"},\"model\":\"remark\",\"key\":\"textarea_1659020414125\",\"help\":\"\",\"rules\":[{\"required\":true,\"message\":\"必填项\"}]},{\"type\":\"switch\",\"label\":\"开关\",\"options\":{\"defaultValue\":false,\"hidden\":false,\"disabled\":false},\"model\":\"switch_1662108221389\",\"key\":\"switch_1662108221389\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]},{\"type\":\"slider\",\"label\":\"滑动输入条\",\"options\":{\"width\":\"100%\",\"defaultValue\":34,\"disabled\":false,\"hidden\":false,\"min\":0,\"max\":100,\"step\":1,\"showInput\":false},\"model\":\"cc\",\"key\":\"slider_1659020433092\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]},{\"type\":\"table\",\"label\":\"表格布局\",\"trs\":[{\"tds\":[{\"colspan\":1,\"rowspan\":1,\"list\":[]},{\"colspan\":1,\"rowspan\":1,\"list\":[]}]},{\"tds\":[{\"colspan\":1,\"rowspan\":1,\"list\":[{\"type\":\"editor\",\"label\":\"富文本\",\"icon\":\"icon-LC_icon_edit_line_1\",\"list\":[],\"options\":{\"height\":300,\"placeholder\":\"请输入\",\"defaultValue\":\"\",\"chinesization\":true,\"hidden\":false,\"disabled\":false,\"showLabel\":false,\"width\":\"100%\"},\"model\":\"editor_1662106288134\",\"key\":\"editor_1662106288134\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]}]},{\"colspan\":1,\"rowspan\":1,\"list\":[]}]}],\"options\":{\"width\":\"100%\",\"bordered\":true,\"bright\":false,\"small\":true,\"customStyle\":\"\"},\"key\":\"table_1662106283652\"}],\"config\":{\"layout\":\"vertical\",\"labelCol\":{\"xs\":6,\"sm\":6,\"md\":6,\"lg\":6,\"xl\":6,\"xxl\":6},\"labelWidth\":100,\"labelLayout\":\"Grid\",\"wrapperCol\":{\"xs\":18,\"sm\":18,\"md\":18,\"lg\":18,\"xl\":18,\"xxl\":18},\"hideRequiredMark\":false,\"customStyle\":\"\"}}', '测试动态表单', 1399985191002447872, '2022-07-28 22:03:36', 1414143554414059520, '2022-09-02 16:44:01', 0, 12);
 
 -- ----------------------------
 -- Table structure for base_key_value
@@ -265,7 +280,6 @@ INSERT INTO `base_param` VALUES (1529281530059161600, 'websocket服务器地址'
 INSERT INTO `base_param` VALUES (1545765299880448000, '服务器地址', 'ServerUrl', 'http://127.0.0.1:9999', 1, b'1', '', 1399985191002447872, '2022-07-09 21:42:21', 1399985191002447872, '2022-07-09 21:42:21', 0, 0);
 INSERT INTO `base_param` VALUES (1547511252795912192, '微信jsapi支付回调服务地址', 'JsapiRedirectUrl', 'http://127.0.0.1/api/', 1, b'1', '', 1414143554414059520, '2022-07-14 17:20:09', 1414143554414059520, '2022-07-14 17:20:09', 0, 0);
 
-
 -- ----------------------------
 -- Table structure for bpm_instance
 -- ----------------------------
@@ -290,6 +304,10 @@ CREATE TABLE `bpm_instance`  (
                                  `version` int(8) NULL DEFAULT NULL COMMENT '版本',
                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '流程实例扩展' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of bpm_instance
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for bpm_model
@@ -321,21 +339,30 @@ CREATE TABLE `bpm_model`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '流程模型' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Table structure for bpm_model_task
+-- Records of bpm_model
 -- ----------------------------
-DROP TABLE IF EXISTS `bpm_model_task`;
-CREATE TABLE `bpm_model_task`  (
+
+-- ----------------------------
+-- Table structure for bpm_model_node
+-- ----------------------------
+DROP TABLE IF EXISTS `bpm_model_node`;
+CREATE TABLE `bpm_model_node`  (
                                    `id` bigint(20) NOT NULL,
                                    `model_id` bigint(20) NOT NULL COMMENT '关联模型id',
                                    `def_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程定义id',
                                    `def_key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程key',
-                                   `task_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点id',
-                                   `task_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点名称',
-                                   `multi` bit(1) NOT NULL COMMENT '是否会签',
+                                   `node_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点id',
+                                   `node_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点名称',
+                                   `multi` bit(1) NOT NULL COMMENT '是否多任务',
+                                   `sequential` bit(1) NOT NULL COMMENT '是否串签',
+                                   `reject` bit(1) NOT NULL COMMENT '是否允许驳回',
+                                   `back` bit(1) NOT NULL COMMENT '是否允许回退',
+                                   `retrieve` bit(1) NOT NULL COMMENT '是否允许取回',
+                                   `skip` bit(1) NOT NULL COMMENT '是否跳过当前节点',
                                    `form_id` bigint(20) NULL DEFAULT NULL COMMENT '关联表单',
                                    `assign_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '分配类型',
-                                   `user_id` bigint(20) NULL DEFAULT NULL COMMENT '分配的用户id',
-                                   `user_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '分配的用户名称',
+                                   `assign_raw` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT '分配的原始数据',
+                                   `assign_show` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT '分配的数据的展示',
                                    `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
                                    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
                                    `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
@@ -343,6 +370,10 @@ CREATE TABLE `bpm_model_task`  (
                                    `version` int(8) NULL DEFAULT NULL COMMENT '版本',
                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '模型任务节点配置' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of bpm_model_node
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for bpm_task
@@ -355,9 +386,10 @@ CREATE TABLE `bpm_task`  (
                              `instance_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '流程实例的id',
                              `instance_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程名称(业务标题)',
                              `def_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程定义名称',
-                             `task_node_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点id',
-                             `task_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点名称',
-                             `state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程任务的状态',
+                             `node_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点id',
+                             `node_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点名称',
+                             `state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '处理结果',
+                             `reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '处理意见',
                              `start_time` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
                              `end_time` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
                              `user_id` bigint(20) NULL DEFAULT NULL COMMENT '当前处理人',
@@ -373,6 +405,9 @@ CREATE TABLE `bpm_task`  (
                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '流程任务扩展' ROW_FORMAT = DYNAMIC;
 
+-- ----------------------------
+-- Records of bpm_task
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for common_sequence_range
@@ -1106,7 +1141,6 @@ INSERT INTO `iam_perm_menu` VALUES (1537730140522348544, 'admin', 14380618870027
 INSERT INTO `iam_perm_menu` VALUES (1537732440632524800, 'admin', NULL, '个人办公', 'person', '', b'0', 'user', b'0', b'0', 'RouteView', NULL, '/person', '', -99, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:42:38', 1399985191002447872, '2022-08-20 22:15:21', 4, 0);
 INSERT INTO `iam_perm_menu` VALUES (1537733801860333568, 'admin', 1537732440632524800, '我的消息', 'PersonSiteMessage', NULL, b'0', '', b'0', b'0', 'notice/site/receive/SiteMessageList', NULL, '/person/siteMessage', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:48:03', 1399985191002447872, '2022-08-17 21:35:17', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1537735851818024960, 'admin', 1537732440632524800, '待办任务', 'MyTodoTaskList', NULL, b'0', '', b'0', b'0', 'office/mytodo/MyTodoList', NULL, '/person/todo', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-17 17:56:11', 1399985191002447872, '2022-08-30 22:46:47', 6, 0);
-
 INSERT INTO `iam_perm_menu` VALUES (1538160478872625152, 'admin', 1495968302034210816, '富文本编辑', 'WangEditorDemo', NULL, b'0', '', b'0', b'0', 'demo/wangeditor/WangEditorDemo', NULL, '/demo/wangEditor', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-18 22:03:30', 1399985191002447872, '2022-06-18 22:03:31', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1541355214204030976, 'admin', 1541427353886859264, '认证终端', 'Client', '', b'0', '', b'0', b'0', 'system/client/ClientList', NULL, '/system/config/client', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-08-27 10:37:08', 1399985191002447872, '2022-07-05 21:17:45', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1541427353886859264, 'admin', 1414596052497092608, '认证管理', 'Auth', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/system/auth', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-06-27 22:24:54', 1399985191002447872, '2022-06-27 22:24:54', 0, 0);
