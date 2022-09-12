@@ -22,7 +22,7 @@ import static cn.bootx.starter.wecom.code.WeComCode.NOTICE_MSG_ID;
 public class RecallNoticeRequestExecutor implements RequestExecutor<WxError,String> {
 
     @Override
-    public WxError execute(String uri, String data, WxType wxType) throws WxErrorException, IOException {
+    public WxError execute(String uri, String data, WxType wxType) throws WxErrorException {
 
         Map<String,String> map = new HashMap<>(1);
         map.put(NOTICE_MSG_ID,data);

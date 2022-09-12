@@ -48,6 +48,6 @@ public class SequenceProperties {
         /** 数据库 */
         JDBC,
         /** MongoDB */
-        MONGO;
+        MONGO
     }
 }

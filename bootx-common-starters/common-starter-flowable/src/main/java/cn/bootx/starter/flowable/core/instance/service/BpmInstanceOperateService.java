@@ -101,8 +101,9 @@ public class BpmInstanceOperateService {
             String endId = endNodes.get(0).getId();
             //2、执行终止
             List<Execution> executions = runtimeService.createExecutionQuery().parentId(instanceId).list();
-            List<String> executionIds = new ArrayList<>();
-            executions.forEach(execution -> executionIds.add(execution.getId()));
+            List<String> executionIds = executions.stream()
+                    .map(Execution::getId)
+                    .collect(Collectors.toList());
             runtimeService.createChangeActivityStateBuilder().moveExecutionsToSingleActivityId(executionIds, endId)
                     .changeState();
     }

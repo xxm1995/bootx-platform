@@ -30,18 +30,18 @@ public class LinkMsg extends Msg implements Serializable {
 
     public LinkMsg(String title, String msg, String messageUrl) {
         super(DingTalkNoticeCode.MSG_LINK);
-        link = new DingLink(title,msg,messageUrl);
+        link = new DingLink(title, msg, messageUrl);
     }
     public LinkMsg(String title, String msg, String messageUrl, String picUrl){
         super(DingTalkNoticeCode.MSG_LINK);
-        link = new DingLink(title,msg,messageUrl,picUrl);
+        link = new DingLink(title, msg, messageUrl, picUrl);
     }
 
     @Data
     @Accessors(chain = true)
     @Schema(title = "钉钉link")
     @NoArgsConstructor
-    public class DingLink implements Serializable {
+    public static class DingLink implements Serializable {
         private static final long serialVersionUID = 8191181631664337904L;
 
         @Schema(description= "标题")

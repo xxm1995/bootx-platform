@@ -11,8 +11,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-;
-
 /**
 * @author xxm
 * @date 2020/12/8

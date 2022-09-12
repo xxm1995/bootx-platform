@@ -30,7 +30,14 @@ public class BpmModelNodeDto extends BaseDto {
     @Schema(description = "是否多任务")
     private boolean multi;
     @Schema(description = "是否串签")
-    private boolean sequential;
+    private Boolean sequential;
+    /** 是否是或签, 会签情况下使用,一个同意的直接通过这个任务 */
+    private Boolean orSign;
+    /** 是否比例通过 会签情况下使用 */
+    private Boolean ratioPass;
+    /** 通过比例 */
+    private Double passRatio;
+
     @Schema(description = "是否自动跳过当前节点(通常用于开始节点)")
     private boolean skip;
     @Schema(description = "是否允许驳回")

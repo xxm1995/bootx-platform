@@ -10,16 +10,16 @@ import java.util.List;
 import static cn.bootx.starter.flowable.code.BpmnCode.MULTI_COLLECTION;
 import static cn.bootx.starter.flowable.code.BpmnCode.MULTI_COLLECTION_Element;
 
-/**   
- * 串签处理
- * @author xxm  
+/**
+ * Bpm 顺序多实例行为
+ * @author xxm
  * @date 2022/9/6 
  */
 public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceBehavior {
-    private final BpmMultiInstanceAssignService assignService;
-    public BpmSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior, BpmMultiInstanceAssignService assignService) {
+    private final BpmMultiInstanceBehaviorService behaviorService;
+    public BpmSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior, BpmMultiInstanceBehaviorService behaviorService) {
         super(activity, innerActivityBehavior);
-        this.assignService = assignService;
+        this.behaviorService = behaviorService;
     }
 
     /**
@@ -33,7 +33,7 @@ public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceB
         super.setCollectionString(MULTI_COLLECTION);
         super.setCollectionElementVariable(MULTI_COLLECTION_Element);
 
-        List<Long> taskUsers = assignService.getTaskUsers(execution,this);
+        List<Long> taskUsers = behaviorService.getTaskUsers(execution,this);
         execution.setVariable(super.collectionString, taskUsers);
         return taskUsers.size();
     }
@@ -43,6 +43,10 @@ public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceB
      */
     @Override
     public boolean completionConditionSatisfied(DelegateExecution execution) {
+        // 先进行自定义判断处理, 不通过调用原生的处理
+        if (behaviorService.completionConditionSatisfied(execution)){
+            return true;
+        }
         return super.completionConditionSatisfied(execution);
     }
 }

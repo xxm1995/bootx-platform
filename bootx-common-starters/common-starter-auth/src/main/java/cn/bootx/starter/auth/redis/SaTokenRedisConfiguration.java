@@ -146,7 +146,9 @@ public class SaTokenRedisConfiguration {
         return template;
     }
 
-
+    /**   
+     * Sa-Token持久层接口
+     */
     @Bean
     @ConditionalOnMissingBean(SaTokenDao.class)
     public SaTokenDao saTokenDaoRedis(){

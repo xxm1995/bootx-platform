@@ -44,6 +44,16 @@ public class BpmTaskManager extends BaseManager<BpmTaskMapper, BpmTask> {
                 .oneOpt();
     }
 
+    /**
+     * 根据实例id和节点id查询
+     */
+    public List<BpmTask> findByInstanceIdAndNodeId(String instanceId,String nodeId){
+        return lambdaQuery()
+                .eq(BpmTask::getInstanceId,instanceId)
+                .eq(BpmTask::getNodeId,nodeId)
+                .list();
+    }
+
     public List<BpmTask> findAllByInstanceId(String instanceId) {
         return lambdaQuery()
                 .eq(BpmTask::getInstanceId,instanceId)

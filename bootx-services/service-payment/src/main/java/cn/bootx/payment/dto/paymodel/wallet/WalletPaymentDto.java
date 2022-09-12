@@ -2,7 +2,7 @@ package cn.bootx.payment.dto.paymodel.wallet;
 
 import cn.bootx.payment.dto.payment.BasePaymentDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

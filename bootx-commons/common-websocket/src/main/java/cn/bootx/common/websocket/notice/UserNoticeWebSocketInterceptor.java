@@ -28,7 +28,7 @@ public class UserNoticeWebSocketInterceptor implements HandshakeInterceptor {
     private final WsUserAuthService wsUserAuthService;
 
     @Override
-    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
         String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter(ACCESS_TOKEN);
         Long userId = wsUserAuthService.getUserIdByToken(token);
         if (Objects.isNull(userId)){

@@ -15,35 +15,35 @@ public class Res{
     private final static String FAILED = "failed";
 
     public static <T> ResResult<T> ok() {
-        return new ResResult<T>(SUCCESS_CODE, SUCCESS);
+        return new ResResult<>(SUCCESS_CODE, SUCCESS);
     }
 
     public static <T> ResResult<T> okAndMsg(String message) {
-        return new ResResult<T>(SUCCESS_CODE, message);
+        return new ResResult<>(SUCCESS_CODE, message);
     }
 
     public static <T> ResResult<T> ok(T data) {
-        return new ResResult<T>(SUCCESS_CODE, data, SUCCESS);
+        return new ResResult<>(SUCCESS_CODE, data, SUCCESS);
     }
 
     public static <T> ResResult<T> error() {
-        return new ResResult<T>(FAIL_CODE, FAILED);
+        return new ResResult<>(FAIL_CODE, FAILED);
     }
 
     public static <T> ResResult<T> error(String message) {
-        return new ResResult<T>(FAIL_CODE, message);
+        return new ResResult<>(FAIL_CODE, message);
     }
 
     public static <T> ResResult<T> response(int code, String msg) {
-        return new ResResult<T>(code, msg);
+        return new ResResult<>(code, msg);
     }
 
     public static <T> ResResult<T> response(int code, String msg,String traceId) {
-        return new ErrorResult<T>(code, msg,traceId);
+        return new ErrorResult<>(code, msg, traceId);
     }
 
     public static <T> ResResult<T> response(int code, String msg, T data) {
-        return new ResResult<T>(code, data, msg);
+        return new ResResult<>(code, data, msg);
     }
 
 

@@ -166,8 +166,8 @@ public class BpmModelNodeService {
             flag = true;
         }
         // 是否串行任务
-        if (node.isSequential() != userTask.isSequential()){
-            userTask.setSequential(node.isSequential());
+        if (node.getSequential() != userTask.getSequential()){
+            userTask.setSequential(node.getSequential());
             flag = true;
         }
         return flag;

@@ -35,6 +35,12 @@ public class BpmContext {
     private String taskState;
 
     /**
+     * 当前任务处理结果
+     * @see cn.bootx.starter.flowable.code.TaskCode#RESULT_PASS
+     */
+    private String taskResult;
+
+    /**
      * 下一步执行人
      */
     private Long nextAssignUserId;

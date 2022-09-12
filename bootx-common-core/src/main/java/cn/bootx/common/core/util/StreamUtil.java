@@ -30,7 +30,7 @@ public class StreamUtil {
         StringBuilder out = new StringBuilder();
         InputStreamReader reader = new InputStreamReader(in, charset);
         char[] buffer = new char[BUFFER_SIZE];
-        int bytesRead = -1;
+        int bytesRead;
         while ((bytesRead = reader.read(buffer)) != -1) {
             out.append(buffer, 0, bytesRead);
         }

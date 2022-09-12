@@ -2,7 +2,6 @@ package cn.bootx.iam.dto.upms;
 
 import cn.bootx.iam.dto.permission.PermMenuDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

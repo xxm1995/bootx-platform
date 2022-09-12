@@ -6,6 +6,7 @@ import cn.bootx.payment.core.paymodel.union.convert.UnionPayConvert;
 import cn.bootx.payment.dto.paymodel.union.UnionPayConfigDto;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -13,6 +14,7 @@ import lombok.experimental.Accessors;
 * @author xxm
 * @date 2022/3/11
 */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("pay_union_pay_config")

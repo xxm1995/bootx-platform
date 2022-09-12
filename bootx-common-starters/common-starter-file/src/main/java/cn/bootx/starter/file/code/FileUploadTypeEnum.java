@@ -13,6 +13,6 @@ public enum FileUploadTypeEnum {
     /** minio存储 */
     MINIO,
     /** 阿里云 oss存储 */
-    ALIYUN_OSS;
+    ALIYUN_OSS
 
 }

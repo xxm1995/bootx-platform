@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 
-;
-
 /**
 * @author xxm
 * @date 2020/4/10 14:46

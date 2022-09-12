@@ -2,7 +2,7 @@ package cn.bootx.payment.param.paymodel.wallet;
 
 import cn.bootx.payment.code.paymodel.WalletCode;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

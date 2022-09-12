@@ -9,8 +9,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.util.List;
 
-;
-
 /**
 * 钉钉At
 * @author xxm

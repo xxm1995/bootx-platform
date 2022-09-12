@@ -44,7 +44,7 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
      * 关闭
      */
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
         onlineCount.decrementAndGet(); // 在线数减1
         String userId = wsManager.getIdBySession(session);
         wsManager.removeSession(session);

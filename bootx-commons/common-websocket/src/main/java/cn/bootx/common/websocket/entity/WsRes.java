@@ -16,19 +16,19 @@ public class WsRes {
      * 消息通知(普通)
      */
     public <T> WsResult<T> notificationInfo(T data) {
-        return new WsResult<T>(WebsocketCode.NOTIFICATION_INFO, data);
+        return new WsResult<>(WebsocketCode.NOTIFICATION_INFO, data);
     }
     /**
      * 消息通知(警告)
      */
     public <T> WsResult<T> notificationWarn(T data) {
-        return new WsResult<T>(WebsocketCode.NOTIFICATION_WARN, data);
+        return new WsResult<>(WebsocketCode.NOTIFICATION_WARN, data);
     }
     /**
      * 消息通知(错误)
      */
     public <T> WsResult<T> notificationError(T data) {
-        return new WsResult<T>(WebsocketCode.NOTIFICATION_ERROR, data);
+        return new WsResult<>(WebsocketCode.NOTIFICATION_ERROR, data);
     }
 
     /**

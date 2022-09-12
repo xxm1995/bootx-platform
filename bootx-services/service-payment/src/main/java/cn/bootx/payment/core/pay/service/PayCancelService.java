@@ -70,7 +70,7 @@ public class PayCancelService {
         }
 
         // 获取 paymentParam
-        PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);;
+        PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
 
         // 1.获取支付方式，通过工厂生成对应的策略组
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());

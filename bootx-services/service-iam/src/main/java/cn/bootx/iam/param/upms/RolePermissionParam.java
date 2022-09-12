@@ -30,6 +30,6 @@ public class RolePermissionParam implements Serializable {
     @Schema(description= "权限id")
     private List<Long> permissionIds;
 
-    public interface PermMenu{};
+    public interface PermMenu{}
 
 }

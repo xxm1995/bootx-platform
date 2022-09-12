@@ -7,6 +7,7 @@ package cn.bootx.starter.flowable.code;
  */
 public interface TaskCode {
 
+    /* 处理状态 */
     /** 处理中 */
     String STATE_PROCESS = "running";
     /** 通过 */
@@ -19,4 +20,22 @@ public interface TaskCode {
     String STATE_RETRIEVE = "retrieve";
     /** 跳过 */
     String STATE_SKIP = "skip";
+
+
+    /* 处理结果 */
+    /** 通过 */
+    String RESULT_PASS = "pass";
+    /** 不通过 */
+    String RESULT_NOT_PASS = "notPass";
+    /** 弃权 */
+    String RESULT_ABSTAIN = "abstain";
+    /** 驳回 */
+    String RESULT_REJECT = "reject";
+    /** 退回 */
+    String RESULT_BACK = "back";
+    /** 取回 */
+    String RESULT_RETRIEVE = "retrieve";
+
+
+
 }

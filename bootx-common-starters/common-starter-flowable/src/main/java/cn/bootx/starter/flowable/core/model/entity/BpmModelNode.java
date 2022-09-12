@@ -38,10 +38,22 @@ public class BpmModelNode extends MpDelEntity implements EntityBaseFunction<BpmM
     private String nodeId;
     /** 任务节点名称 */
     private String nodeName;
-    /** 是否多任务 */
+
+    /** 是否多实例 */
     private boolean multi;
     /** 是否串签 */
-    private boolean sequential;
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    private Boolean sequential;
+    /** 是否是或签, 会签情况下使用,一个同意的直接通过这个任务 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    private Boolean orSign;
+    /** 是否比例通过 会签情况下使用 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    private Boolean ratioPass;
+    /** 通过比例 */
+    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    private Double passRatio;
+
     /** 是否自动跳过当前节点(通常用于开始节点) */
     private boolean skip;
     /** 是否允许驳回 */

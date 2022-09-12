@@ -38,7 +38,7 @@ public class BpmInstanceController {
         return Res.ok();
     }
 
-    @Operation(summary = "挂起实例")
+    @Operation(summary = "挂起流程")
     @PostMapping("/suspend")
     public ResResult<Void> suspend(String instanceId){
         operateService.suspend(instanceId);
@@ -49,6 +49,13 @@ public class BpmInstanceController {
     @PostMapping("/activate")
     public ResResult<Void> activate(String instanceId){
         operateService.activate(instanceId);
+        return Res.ok();
+    }
+
+    @Operation(summary = "关闭流程")
+    @PostMapping("/close")
+    public ResResult<Void> close(String instanceId){
+        operateService.close(instanceId);
         return Res.ok();
     }
 

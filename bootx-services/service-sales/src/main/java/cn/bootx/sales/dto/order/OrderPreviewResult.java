@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-;
-
 /**
 * @author xxm
 * @date 2020/10/15

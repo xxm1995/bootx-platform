@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class ServerPatternFactory {
     
-    private static Map<String, ServerPattern> serverPatternMap = new HashMap<>();
+    private static final Map<String, ServerPattern> serverPatternMap = new HashMap<>();
 
     static {
         serverPatternMap.put(ServerPattern.SINGLE.getPattern(), ServerPattern.SINGLE);

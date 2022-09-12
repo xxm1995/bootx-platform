@@ -2,7 +2,6 @@ package cn.bootx.iam.dto.auth;
 
 import cn.bootx.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -28,6 +27,6 @@ public class AuthPasswordDto extends BaseDto implements Serializable {
     @Schema(description= "用户密码", required = true)
     private String password;
 
-    @Schema(description= "最后登录时间", readOnly = true)
+    @Schema(description= "最后登录时间")
     private LocalDateTime lastLoginTime;
 }

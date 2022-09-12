@@ -30,7 +30,7 @@ public class DataPermAspectHandler {
      */
     @Around("@annotation(permission)||@within(permission)")
     public Object doAround(ProceedingJoinPoint pjp, Permission permission) throws Throwable {
-        Object obj = null;
+        Object obj;
         // 如果方法和类同时存在, 以方法上的注解为准
         Permission methodAnnotation = AopUtil.getMethodAnnotation(pjp, Permission.class);
         if (Objects.nonNull(methodAnnotation)){
@@ -49,7 +49,7 @@ public class DataPermAspectHandler {
 
     @Around("@annotation(nestedPermission)||@within(nestedPermission)")
     public Object doAround(ProceedingJoinPoint pjp, NestedPermission nestedPermission) throws Throwable {
-        Object obj = null;
+        Object obj;
         // 如果方法和类同时存在, 以方法上的注解为准
         NestedPermission methodAnnotation = AopUtil.getMethodAnnotation(pjp, NestedPermission.class);
         if (Objects.nonNull(methodAnnotation)){

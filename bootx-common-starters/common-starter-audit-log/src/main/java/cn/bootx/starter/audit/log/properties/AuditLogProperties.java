@@ -26,6 +26,6 @@ public class AuditLogProperties {
         /** 数据库 */
         JDBC,
         /** MongoDB */
-        MONGO;
+        MONGO
     }
 }

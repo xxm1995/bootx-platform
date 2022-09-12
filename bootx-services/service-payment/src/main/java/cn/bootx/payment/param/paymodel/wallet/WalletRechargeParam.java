@@ -7,8 +7,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-;
-
 /**
 * @author xxm
 * @date 2020/12/8

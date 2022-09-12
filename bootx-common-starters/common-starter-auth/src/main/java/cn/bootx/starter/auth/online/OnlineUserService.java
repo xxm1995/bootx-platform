@@ -99,6 +99,6 @@ public class OnlineUserService {
      */
     @OperateLog(title = "强退用户",businessType = BusinessType.FORCE, saveParam = true)
     public void logoutByUserId(Long userId){
-        StpUtil.logoutByLoginId(userId);
+        StpUtil.kickout(userId);
     }
 }

@@ -51,7 +51,7 @@ public class SiteMessageService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void save(SendSiteMessageParam param){
-        SiteMessage siteMessage = null;
+        SiteMessage siteMessage;
         if (Objects.nonNull(param.getId())){
             siteMessage = siteMessageManager.findById(param.getId()).orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
             BeanUtil.copyProperties(param,siteMessage, CopyOptions.create().ignoreNullValue());

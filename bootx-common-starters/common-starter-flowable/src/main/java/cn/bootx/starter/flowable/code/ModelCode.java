@@ -16,7 +16,7 @@ public interface ModelCode{
     /** 默认的bpmn20.xml */
     String DEFAULT_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
             "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://www.flowable.org/processdef\">\n" +
-            "  <process id=\"\" name=\"\" />\n" +
+            "  <process id=\"{}\" name=\"{}\" />\n" +
             "  <bpmndi:BPMNDiagram id=\"BPMNDiagram_flow\">\n" +
             "    <bpmndi:BPMNPlane id=\"BPMNPlane_flow\" bpmnElement=\"process_09um68mi\" />\n" +
             "  </bpmndi:BPMNDiagram>\n" +

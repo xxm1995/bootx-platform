@@ -364,7 +364,7 @@ public class FlowableUtil {
      * @return
      */
     public Boolean iteratorCheckSequentialReferTarget(FlowElement source, String targetKsy, Set<String> hasSequenceFlow, Boolean isSequential) {
-        isSequential = isSequential == null ? true : isSequential;
+        isSequential = isSequential == null || isSequential;
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代

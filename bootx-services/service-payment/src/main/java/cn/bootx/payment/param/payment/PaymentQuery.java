@@ -1,7 +1,6 @@
 package cn.bootx.payment.param.payment;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

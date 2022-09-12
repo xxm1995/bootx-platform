@@ -4,7 +4,7 @@ import cn.bootx.sales.param.strategy.CheckRuleParam;
 import cn.bootx.sales.param.strategy.StrategyRegisterParam;
 import cn.hutool.core.date.DatePattern;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

@@ -57,7 +57,7 @@ public class QuartzProperties {
 
         protected Class<? extends DriverDelegate> delegateClass = StdJDBCDelegate.class;
 
-        protected HashMap<String, Calendar> calendarCache = new HashMap<String, Calendar>();
+        protected HashMap<String, Calendar> calendarCache = new HashMap<>();
 
         private DriverDelegate delegate;
 

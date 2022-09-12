@@ -45,11 +45,11 @@ public class TtlMDCAdapter implements MDCAdapter {
     }
 
     private boolean wasLastOpReadOrNull(Integer lastOp) {
-        return lastOp == null || lastOp.intValue() == MAP_COPY_OPERATION;
+        return lastOp == null || lastOp == MAP_COPY_OPERATION;
     }
 
     private Map<String, String> duplicateAndInsertNewMap(Map<String, String> oldMap) {
-        Map<String, String> newMap = Collections.synchronizedMap(new HashMap<String, String>());
+        Map<String, String> newMap = Collections.synchronizedMap(new HashMap<>());
         if (oldMap != null) {
             // we don't want the parent thread modifying oldMap while we are
             // iterating over it
@@ -164,14 +164,14 @@ public class TtlMDCAdapter implements MDCAdapter {
         if (hashMap == null) {
             return null;
         } else {
-            return new HashMap<String, String>(hashMap);
+            return new HashMap<>(hashMap);
         }
     }
 
     public void setContextMap(Map<String, String> contextMap) {
         lastOperation.set(WRITE_OPERATION);
 
-        Map<String, String> newMap = Collections.synchronizedMap(new HashMap<String, String>());
+        Map<String, String> newMap = Collections.synchronizedMap(new HashMap<>());
         newMap.putAll(contextMap);
 
         // the newMap replaces the old one for serialisation's sake

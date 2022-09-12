@@ -16,7 +16,7 @@ public class DemoMqttMessageListener implements IMqttMessageListener {
 
 
     @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
+    public void messageArrived(String topic, MqttMessage message) {
 
     }
 }

@@ -60,6 +60,7 @@ public class BpmTaskEventService {
         if (modelTask.isSkip() && normalTaskStates.contains(bpmContext.getTaskState())){
             TaskHelper.completeTask(task,null,null,null,null, CommandContextUtil.getCommandContext());
             bpmTask.setState(STATE_SKIP)
+                    .setResult(STATE_SKIP)
                     .setEndTime(LocalDateTime.now());
         }
 
@@ -81,6 +82,7 @@ public class BpmTaskEventService {
         bpmTaskOpt.ifPresent(bpmTask -> {
             bpmTask.setEndTime(LocalDateTime.now())
                     .setState(bpmContext.getTaskState())
+                    .setResult(bpmContext.getTaskResult())
                     .setReason(bpmContext.getTaskReason())
                     .setFormVariables(bpmContext.getFormVariables());
             bpmTaskManager.updateById(bpmTask);

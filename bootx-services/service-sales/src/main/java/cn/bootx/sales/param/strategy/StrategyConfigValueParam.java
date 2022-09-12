@@ -3,7 +3,7 @@ package cn.bootx.sales.param.strategy;
 import cn.bootx.common.core.validation.ValidationGroup.add;
 import cn.bootx.common.core.validation.ValidationGroup.edit;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

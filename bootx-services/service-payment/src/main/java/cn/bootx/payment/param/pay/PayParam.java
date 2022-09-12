@@ -9,8 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
-;
-
 /**
 * @author xxm
 * @date 2020/12/9

@@ -19,6 +19,7 @@ import cn.bootx.starter.flowable.param.model.BpmModelParam;
 import cn.bootx.starter.flowable.util.BpmXmlUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,12 +59,14 @@ public class BpmModelService {
      * 创建模型
      */
     public void add(BpmModelParam bpmModelParam){
+
+        String xml = StrUtil.format(DEFAULT_XML, RandomUtil.randomString(8),RandomUtil.randomString(8));
         BpmModel bpmModel = new BpmModel()
                 .setName(bpmModelParam.getName())
                 .setModelType(bpmModelParam.getModelType())
                 .setMainProcess(false)
                 .setPublish(UNPUBLISHED)
-                .setModelEditorXml(DEFAULT_XML)
+                .setModelEditorXml(xml)
                 .setEnable(false)
                 .setRemark(bpmModelParam.getRemark());
         bpmModelManager.save(bpmModel);

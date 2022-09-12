@@ -47,7 +47,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     private final DataPermScopeHandler dataPermScopeHandler;
 
     @Override
-    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
         // 配置是否开启了权限控制
         if (!dataPermProperties.isEnableDataPerm()){
             return;

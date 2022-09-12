@@ -5,6 +5,7 @@ import cn.bootx.sales.dto.activity.ActivityDto;
 import cn.bootx.sales.dto.activity.SimpleActivity;
 import cn.bootx.sales.param.activity.ActivityParam;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
@@ -17,10 +18,13 @@ import org.mapstruct.factory.Mappers;
 public interface ActivityConvert {
     ActivityConvert CONVERT = Mappers.getMapper(ActivityConvert.class);
 
+    @Mapping(target = "activityMutual", ignore = true)
     Activity convert(ActivityParam in);
 
+    @Mapping(target = "creator", ignore = true)
     Activity convert(ActivityDto in);
 
+    @Mapping(target = "configValues", ignore = true)
     ActivityDto convert(Activity in);
 
     SimpleActivity simple(ActivityDto in);

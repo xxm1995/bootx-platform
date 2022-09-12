@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
     private final BpmUserTaskAssignService bpmUserTaskAssignService;
-    private final BpmMultiInstanceAssignService assistService;
+    private final BpmMultiInstanceBehaviorService assistService;
 
     /**
      * 任务人员分配

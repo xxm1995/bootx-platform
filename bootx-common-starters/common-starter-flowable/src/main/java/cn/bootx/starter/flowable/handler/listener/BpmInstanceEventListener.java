@@ -60,10 +60,8 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
                 .setFormVariables(bpmContext.getFormVariables());
 
         // 发起人信息
-        bpmContext.getStartUser().ifPresent(userDetail -> {
-            bpmInstance.setStartUserId(userDetail.getId())
-                    .setStartUserName(userDetail.getName());
-        });
+        bpmContext.getStartUser().ifPresent(userDetail -> bpmInstance.setStartUserId(userDetail.getId())
+                .setStartUserName(userDetail.getName()));
 
         bpmInstanceManager.save(bpmInstance);
     }

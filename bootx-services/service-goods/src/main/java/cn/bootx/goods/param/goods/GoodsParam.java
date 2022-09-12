@@ -6,8 +6,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-;
-
 /**
 * @author xxm
 * @date 2021/2/2
