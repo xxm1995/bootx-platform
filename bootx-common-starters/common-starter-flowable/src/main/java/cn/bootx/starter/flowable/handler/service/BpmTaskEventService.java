@@ -52,7 +52,7 @@ public class BpmTaskEventService {
     public void taskCreated(TaskEntity task){
         BpmContext bpmContext = BpmContextLocal.get();
         BpmInstance bpmInstance = bpmInstanceManager.findByInstanceId(task.getProcessInstanceId()).orElse(new BpmInstance());
-        BpmModelNode modelTask = bpmModelNodeManager.findByDefIdAndTaskId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
+        BpmModelNode modelTask = bpmModelNodeManager.findByDefIdAndNodeId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
                 .orElseThrow(ModelNodeNotExistException::new);
 
         BpmTask bpmTask = this.convert(task, bpmInstance);

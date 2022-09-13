@@ -1,5 +1,6 @@
 package cn.bootx.starter.flowable.core.instance.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.flowable.code.TaskCode;
 import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
 import cn.bootx.starter.flowable.exception.TaskNotExistException;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static cn.bootx.starter.flowable.code.TaskCode.*;
+
 /**
  * 流程任务接口
  * @author xxm
@@ -31,6 +34,28 @@ public class BpmTaskOperateService {
 
     private final TaskRejectHandler taskRejectHandler;
 
+    /**
+     * 处理任务
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void approve(TaskApproveParam param) {
+        switch (param.getType()){
+            case RESULT_PASS:{
+                this.pass(param);
+                break;
+            }
+            case RESULT_NOT_PASS:{
+                this.notPass(param);
+                break;
+            }
+            case RESULT_ABSTAIN:{
+                this.abstain(param);
+                break;
+            }
+            default:throw new BizException("不存在的流程服务处理类型");
+        }
+    }
+
 
     /**
      * 通过
@@ -43,7 +68,7 @@ public class BpmTaskOperateService {
         BpmContext bpmContext = BpmContextLocal.get();
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_PASS)
-                .setTaskResult(TaskCode.RESULT_PASS)
+                .setTaskResult(RESULT_PASS)
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         taskService.complete(task.getId());
@@ -70,7 +95,15 @@ public class BpmTaskOperateService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void notPass(TaskApproveParam param){
-
+        Task task = Optional.ofNullable(taskService.createTaskQuery().taskId(param.getTaskId()).singleResult())
+                .orElseThrow(TaskNotExistException::new);
+        BpmContext bpmContext = BpmContextLocal.get();
+        bpmContext.setTaskReason(param.getReason())
+                .setTaskState(TaskCode.STATE_PASS)
+                .setTaskResult(TaskCode.RESULT_NOT_PASS)
+                .setFormVariables(param.getFormVariables());
+        BpmContextLocal.put(bpmContext);
+        taskService.complete(task.getId());
     }
     /**
      * 驳回
@@ -81,6 +114,7 @@ public class BpmTaskOperateService {
 
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_REJECT)
+                .setTaskResult(TaskCode.RESULT_REJECT)
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
 
@@ -100,5 +134,4 @@ public class BpmTaskOperateService {
     public void assignee(String taskId, Long userId){
         taskService.setAssignee(taskId, String.valueOf(userId));
     }
-
 }

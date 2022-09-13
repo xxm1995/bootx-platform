@@ -75,6 +75,13 @@ public class BpmModelNodeService {
     }
 
     /**
+     * 查询任务节点配置项
+     */
+    public BpmModelNodeDto findByDefIdAndTaskId(String defId, String nodeId){
+        return bpmModelNodeManager.findByDefIdAndNodeId(defId,nodeId).map(BpmModelNode::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
      * 获取单条
      */
     public BpmModelNodeDto findById(Long id){

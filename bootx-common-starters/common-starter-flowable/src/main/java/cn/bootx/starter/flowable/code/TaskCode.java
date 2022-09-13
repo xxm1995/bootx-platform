@@ -36,6 +36,4 @@ public interface TaskCode {
     /** 取回 */
     String RESULT_RETRIEVE = "retrieve";
 
-
-
 }

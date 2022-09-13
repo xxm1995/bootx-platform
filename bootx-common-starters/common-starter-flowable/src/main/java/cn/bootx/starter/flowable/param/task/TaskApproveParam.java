@@ -1,5 +1,6 @@
 package cn.bootx.starter.flowable.param.task;
 
+import cn.bootx.starter.flowable.code.TaskCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -15,6 +16,12 @@ import java.util.Map;
 @Accessors(chain = true)
 @Schema(title = "流程任务审批参数")
 public class TaskApproveParam {
+
+    /**
+     * @see TaskCode#RESULT_PASS
+     */
+    @Schema(description = "处理类型")
+    private String type;
 
     @Schema(description = "任务id")
     private String taskId;

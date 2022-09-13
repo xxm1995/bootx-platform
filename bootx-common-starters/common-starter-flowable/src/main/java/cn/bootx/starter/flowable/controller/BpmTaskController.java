@@ -41,10 +41,10 @@ public class BpmTaskController {
         return Res.ok(queryService.pageMyDone(pageParam));
     }
 
-    @Operation(summary = "通过任务")
-    @PostMapping("/pass")
-    public ResResult<Void> pass(@RequestBody TaskApproveParam param){
-        operateService.pass(param);
+    @Operation(summary = "处理任务")
+    @PostMapping("/approve")
+    public ResResult<Void> approve(@RequestBody TaskApproveParam param){
+        operateService.approve(param);
         return Res.ok();
     }
 

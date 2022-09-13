@@ -51,6 +51,12 @@ public class BpmModelNodeController {
         return Res.ok(bpmModelNodeService.findById(id));
     }
 
+    @Operation( summary = "查询任务节点配置项")
+    @GetMapping(value = "/findByDefIdAndTaskId")
+    public ResResult<BpmModelNodeDto> findByDefIdAndTaskId(String defId, String nodeId){
+        return Res.ok(bpmModelNodeService.findByDefIdAndTaskId(defId,nodeId));
+    }
+
     @Operation( summary = "根据模型Id查询所有")
     @GetMapping(value = "/findAllByModelId")
     public ResResult<List<BpmModelNodeDto>> findAllByModelId(Long modelId){

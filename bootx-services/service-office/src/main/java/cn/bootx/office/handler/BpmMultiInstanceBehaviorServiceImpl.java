@@ -50,7 +50,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
         // TODO 处理驳回情况的人员分配
 
         // 获取节点配置并设置处理人
-        BpmModelNode modelTask = bpmModelNodeManager.findByDefIdAndTaskId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
+        BpmModelNode modelTask = bpmModelNodeManager.findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
                 .orElseThrow(ModelNodeNotExistException::new);
 
         // 发起人
@@ -102,7 +102,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
         BpmContext bpmContext = BpmContextLocal.get();
 
         // 获取节点配置
-        BpmModelNode node = bpmModelNodeManager.findByDefIdAndTaskId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
+        BpmModelNode node = bpmModelNodeManager.findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
                 .orElseThrow(ModelNodeNotExistException::new);
         // 判断是否是或签
         if (Objects.equals(node.getOrSign(),true)){

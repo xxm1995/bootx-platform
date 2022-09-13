@@ -33,13 +33,13 @@ public class BpmModelNodeManager extends BaseManager<BpmModelNodeMapper, BpmMode
      * 查询任务节点配置项
      *
      * @param defId  定义id
-     * @param taskId 任务节点id
+     * @param nodeId 任务节点id
      */
-    @Cacheable(value = NODE_DEF_AND_NODE, key = "#defId+':'+#taskId")
-    public Optional<BpmModelNode> findByDefIdAndTaskId(String defId, String taskId){
+    @Cacheable(value = NODE_DEF_AND_NODE, key = "#defId+':'+#nodeId")
+    public Optional<BpmModelNode> findByDefIdAndNodeId(String defId, String nodeId){
         return lambdaQuery()
                 .eq(BpmModelNode::getDefId,defId)
-                .eq(BpmModelNode::getNodeId,taskId)
+                .eq(BpmModelNode::getNodeId,nodeId)
                 .oneOpt();
     }
 

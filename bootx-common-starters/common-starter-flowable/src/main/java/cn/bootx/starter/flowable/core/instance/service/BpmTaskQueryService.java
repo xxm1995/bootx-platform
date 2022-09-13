@@ -92,7 +92,7 @@ public class BpmTaskQueryService {
     /**
      * 转换
      */
-    private List<TaskInfo> convertInstanceInfo(List<String> taskIds) {
+    public List<TaskInfo> convertInstanceInfo(List<String> taskIds) {
         Map<String, BpmTask> bpmTaskMap = bpmTaskManager.findAllByTaskIds(taskIds).stream().collect(Collectors.toMap(BpmTask::getTaskId, o -> o));
         return taskIds.stream().map(taskId -> {
             BpmTask bpmTask = Optional.ofNullable(bpmTaskMap.get(taskId)).orElse(new BpmTask());
