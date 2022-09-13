@@ -1,6 +1,7 @@
 package cn.bootx.starter.flowable.core.instance.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.starter.flowable.code.BpmnCode;
 import cn.bootx.starter.flowable.code.TaskCode;
 import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
 import cn.bootx.starter.flowable.exception.TaskNotExistException;
@@ -16,6 +17,9 @@ import org.flowable.task.api.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import static cn.bootx.starter.flowable.code.TaskCode.*;
@@ -52,6 +56,10 @@ public class BpmTaskOperateService {
                 this.abstain(param);
                 break;
             }
+            case RESULT_REJECT:{
+                this.reject(param);
+                break;
+            }
             default:throw new BizException("不存在的流程服务处理类型");
         }
     }
@@ -71,7 +79,14 @@ public class BpmTaskOperateService {
                 .setTaskResult(RESULT_PASS)
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
-        taskService.complete(task.getId());
+
+        if (Objects.nonNull(param.getNextNodeId())){
+            Map<String,Object> map = new HashMap<>();
+            map.put(BpmnCode.NEXT_NODE_FLAG, param.getNextNodeId());
+            taskService.complete(task.getId(),null,map);
+        } else {
+            taskService.complete(task.getId());
+        }
     }
 
     /**

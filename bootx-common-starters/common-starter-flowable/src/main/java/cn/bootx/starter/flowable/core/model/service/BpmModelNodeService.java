@@ -18,9 +18,9 @@ import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.Process;
-import org.flowable.bpmn.model.UserTask;
+import org.flowable.bpmn.model.*;
+import org.flowable.engine.RepositoryService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +45,8 @@ import static cn.bootx.starter.flowable.code.ModelNodeCode.ASSIGN_SPONSOR;
 public class BpmModelNodeService {
     private final BpmModelManager bpmModelManager;
     private final BpmModelNodeManager bpmModelNodeManager;
+
+    private final RepositoryService repositoryService;
 
     private final List<String> nodeAssignTypes = CollUtil.toList(ASSIGN_SPONSOR,ASSIGN_SELECT);
     /**
@@ -150,7 +152,10 @@ public class BpmModelNodeService {
         String modelEditorXml = bpmModel.getModelEditorXml();
         BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(modelEditorXml.getBytes());
         Process process = bpmnModel.getMainProcess();
-        List<UserTask> userTasks = process.findFlowElementsOfType(UserTask.class);
+        List<? extends Task> userTasks = process.findFlowElementsOfType(UserTask.class);
+        List<? extends Task> manualTasks = process.findFlowElementsOfType(ManualTask.class);
+        CollUtil.addAll(userTasks,manualTasks);
+
         return userTasks.stream()
                 .map(userTask -> convert(userTask,bpmModel))
                 .collect(Collectors.toList());
@@ -185,7 +190,7 @@ public class BpmModelNodeService {
      * @param userTask flowable 任务节点
      * @param bpmModel
      */
-    public BpmModelNode convert(UserTask userTask, BpmModel bpmModel){
+    public BpmModelNode convert(Task userTask, BpmModel bpmModel){
         BpmModelNode modelNode = new BpmModelNode()
                 .setModelId(bpmModel.getId())
                 .setDefId(bpmModel.getDefId())

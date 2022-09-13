@@ -2,6 +2,7 @@ package cn.bootx.starter.flowable.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.dto.LabelValue;
 import cn.bootx.starter.flowable.core.model.service.BpmModelNodeService;
 import cn.bootx.starter.flowable.dto.model.BpmModelNodeDto;
 import cn.bootx.starter.flowable.param.model.BpmModelNodeParam;
@@ -55,6 +56,12 @@ public class BpmModelNodeController {
     @GetMapping(value = "/findByDefIdAndTaskId")
     public ResResult<BpmModelNodeDto> findByDefIdAndTaskId(String defId, String nodeId){
         return Res.ok(bpmModelNodeService.findByDefIdAndTaskId(defId,nodeId));
+    }
+
+    @Operation( summary = "获取下一步节点列表")
+    @GetMapping(value = "/getNextNodes")
+    public ResResult<List<LabelValue>> getNextNodes(String defId, String nodeId){
+        return Res.ok(bpmModelNodeService.getNextNodes(defId,nodeId));
     }
 
     @Operation( summary = "根据模型Id查询所有")

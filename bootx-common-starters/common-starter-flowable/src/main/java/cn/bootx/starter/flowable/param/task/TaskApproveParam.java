@@ -26,6 +26,9 @@ public class TaskApproveParam {
     @Schema(description = "任务id")
     private String taskId;
 
+    @Schema(description = "下一步节点")
+    private String nextNodeId;
+
     @Schema(description = "表单数据")
     private Map<String,Object> formVariables;
 
