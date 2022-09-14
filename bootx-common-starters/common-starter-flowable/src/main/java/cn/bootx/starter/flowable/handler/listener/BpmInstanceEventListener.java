@@ -54,6 +54,7 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
         BpmInstance bpmInstance = new BpmInstance()
                 .setInstanceId(instance.getProcessInstanceId())
                 .setInstanceName(instance.getName())
+                .setModelId(bpmContext.getModelId())
                 .setDefId(instance.getProcessDefinitionId())
                 .setDefName(instance.getProcessDefinitionName())
                 .setStartTime(LocalDateTimeUtil.of(instance.getStartTime()))

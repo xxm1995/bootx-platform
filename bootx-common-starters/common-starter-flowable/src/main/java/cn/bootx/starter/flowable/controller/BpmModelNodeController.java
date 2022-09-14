@@ -9,8 +9,10 @@ import cn.bootx.starter.flowable.param.model.BpmModelNodeParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -18,6 +20,7 @@ import java.util.List;
  * @author xxm
  * @date 2022-08-25
  */
+@Validated
 @Tag(name ="模型任务节点配置")
 @RestController
 @RequestMapping("/bpm/model/node")
@@ -66,7 +69,7 @@ public class BpmModelNodeController {
 
     @Operation( summary = "根据模型Id查询所有")
     @GetMapping(value = "/findAllByModelId")
-    public ResResult<List<BpmModelNodeDto>> findAllByModelId(Long modelId){
+    public ResResult<List<BpmModelNodeDto>> findAllByModelId(@NotNull(message = "模型ID不能为空") Long modelId){
         return Res.ok(bpmModelNodeService.findAllByModelId(modelId));
     }
 

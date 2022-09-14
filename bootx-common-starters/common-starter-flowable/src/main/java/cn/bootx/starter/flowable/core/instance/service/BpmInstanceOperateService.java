@@ -62,6 +62,7 @@ public class BpmInstanceOperateService {
         }
         BpmContext bpmContext = BpmContextLocal.get();
         bpmContext.setFormVariables(instanceParam.getFormVariables())
+                .setModelId(bpmModel.getId())
                 .setStartUser(currentUser);
         BpmContextLocal.put(bpmContext);
 

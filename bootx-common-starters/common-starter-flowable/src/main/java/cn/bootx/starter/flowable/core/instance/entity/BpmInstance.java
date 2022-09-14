@@ -29,6 +29,8 @@ public class BpmInstance extends MpBaseEntity implements EntityBaseFunction<BpmI
     private String instanceId;
     /** 流程实例名称 */
     private String instanceName;
+    /** 模型id */
+    private Long modelId;
     /** 流程定义ID */
     private String defId;
     /** 流程定义名称 */

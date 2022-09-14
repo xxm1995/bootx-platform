@@ -19,6 +19,9 @@ import java.util.Optional;
 @Accessors(chain = true)
 public class BpmContext {
 
+    /** 流程模型id */
+    private Long modelId;
+
     /** 提交的表单值 */
     private Map<String,Object> formVariables;
 

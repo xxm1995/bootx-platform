@@ -1,6 +1,8 @@
 package cn.bootx.starter.flowable.core.model.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.rest.dto.LabelValue;
 import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
@@ -25,9 +27,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.CachingCode.NODE_MODEL_ID;
@@ -81,6 +81,41 @@ public class BpmModelNodeService {
      */
     public BpmModelNodeDto findByDefIdAndTaskId(String defId, String nodeId){
         return bpmModelNodeManager.findByDefIdAndNodeId(defId,nodeId).map(BpmModelNode::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 获取下一步节点列表
+     */
+    public List<LabelValue> getNextNodes(String defId, String nodeId){
+
+        BpmnModel bpmnModel = Optional.ofNullable(repositoryService.getBpmnModel(defId)).orElseThrow(ModelNotExistException::new);
+        Process process = bpmnModel.getMainProcess();
+        Task taskNode = process.getFlowElements().stream()
+                .filter(o -> Objects.equals(nodeId, o.getId()))
+                .findFirst()
+                .map(o->(Task)o)
+                .orElseThrow(() -> new BizException("节点不存在"));
+        List<SequenceFlow> outgoingFlows = taskNode.getOutgoingFlows();
+        if (outgoingFlows.size() == 1){
+            FlowElement flowElement = outgoingFlows.get(0).getTargetFlowElement();
+            if (flowElement instanceof Gateway){
+                Gateway gateway = (Gateway) flowElement;
+                return gateway.getOutgoingFlows().stream()
+                        .map(SequenceFlow::getTargetFlowElement)
+                        .map(o->new LabelValue(o.getName(),o.getId()))
+                        .collect(Collectors.toList());
+            } else {
+                return Collections.singletonList(new LabelValue(flowElement.getName(), flowElement.getId()));
+            }
+        }
+        else if (outgoingFlows.size()>1){
+            return outgoingFlows.stream()
+                    .map(SequenceFlow::getTargetFlowElement)
+                    .map(o->new LabelValue(o.getName(),o.getId()))
+                    .collect(Collectors.toList());
+        } else {
+            return new ArrayList<>(0);
+        }
     }
 
     /**
@@ -152,9 +187,7 @@ public class BpmModelNodeService {
         String modelEditorXml = bpmModel.getModelEditorXml();
         BpmnModel bpmnModel = BpmXmlUtil.convertByte2BpmnModel(modelEditorXml.getBytes());
         Process process = bpmnModel.getMainProcess();
-        List<? extends Task> userTasks = process.findFlowElementsOfType(UserTask.class);
-        List<? extends Task> manualTasks = process.findFlowElementsOfType(ManualTask.class);
-        CollUtil.addAll(userTasks,manualTasks);
+        List<UserTask> userTasks = process.findFlowElementsOfType(UserTask.class);
 
         return userTasks.stream()
                 .map(userTask -> convert(userTask,bpmModel))
@@ -190,7 +223,7 @@ public class BpmModelNodeService {
      * @param userTask flowable 任务节点
      * @param bpmModel
      */
-    public BpmModelNode convert(Task userTask, BpmModel bpmModel){
+    public BpmModelNode convert(UserTask userTask, BpmModel bpmModel){
         BpmModelNode modelNode = new BpmModelNode()
                 .setModelId(bpmModel.getId())
                 .setDefId(bpmModel.getDefId())

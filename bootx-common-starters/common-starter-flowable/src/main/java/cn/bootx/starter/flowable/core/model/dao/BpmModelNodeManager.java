@@ -49,4 +49,5 @@ public class BpmModelNodeManager extends BaseManager<BpmModelNodeMapper, BpmMode
     public void deleteByModelId(Long modelId){
         deleteByField(BpmModelNode::getModelId,modelId);
     }
+
 }

@@ -3,7 +3,6 @@ package cn.bootx.starter.flowable.core.instance.service;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.flowable.code.BpmnCode;
 import cn.bootx.starter.flowable.code.TaskCode;
-import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
 import cn.bootx.starter.flowable.exception.TaskNotExistException;
 import cn.bootx.starter.flowable.handler.TaskRejectHandler;
 import cn.bootx.starter.flowable.local.BpmContext;
@@ -34,7 +33,6 @@ import static cn.bootx.starter.flowable.code.TaskCode.*;
 @RequiredArgsConstructor
 public class BpmTaskOperateService {
     private final TaskService taskService;
-    private final BpmTaskManager bpmTaskManager;
 
     private final TaskRejectHandler taskRejectHandler;
 
@@ -102,7 +100,13 @@ public class BpmTaskOperateService {
                 .setTaskResult(TaskCode.RESULT_ABSTAIN)
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
-        taskService.complete(task.getId());
+        if (Objects.nonNull(param.getNextNodeId())){
+            Map<String,Object> map = new HashMap<>();
+            map.put(BpmnCode.NEXT_NODE_FLAG, param.getNextNodeId());
+            taskService.complete(task.getId(),null,map);
+        } else {
+            taskService.complete(task.getId());
+        }
     }
 
     /**
@@ -118,7 +122,13 @@ public class BpmTaskOperateService {
                 .setTaskResult(TaskCode.RESULT_NOT_PASS)
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
-        taskService.complete(task.getId());
+        if (Objects.nonNull(param.getNextNodeId())){
+            Map<String,Object> map = new HashMap<>();
+            map.put(BpmnCode.NEXT_NODE_FLAG, param.getNextNodeId());
+            taskService.complete(task.getId(),null,map);
+        } else {
+            taskService.complete(task.getId());
+        }
     }
     /**
      * 驳回
