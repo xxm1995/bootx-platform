@@ -20,7 +20,7 @@ public class TaskApproveParam {
     /**
      * @see TaskCode#RESULT_PASS
      */
-    @Schema(description = "处理类型")
+    @Schema(description = "处理结果")
     private String type;
 
     @Schema(description = "任务id")
@@ -28,6 +28,9 @@ public class TaskApproveParam {
 
     @Schema(description = "下一步节点")
     private String nextNodeId;
+
+    @Schema(description = "下一步执行人")
+    private Object nextAssign;
 
     @Schema(description = "表单数据")
     private Map<String,Object> formVariables;

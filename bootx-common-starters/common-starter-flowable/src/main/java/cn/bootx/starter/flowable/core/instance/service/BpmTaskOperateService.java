@@ -75,6 +75,7 @@ public class BpmTaskOperateService {
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_PASS)
                 .setTaskResult(RESULT_PASS)
+                .setNextAssign(param.getNextAssign())
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
 
@@ -98,6 +99,7 @@ public class BpmTaskOperateService {
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_PASS)
                 .setTaskResult(TaskCode.RESULT_ABSTAIN)
+                .setNextAssign(param.getNextAssign())
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         if (Objects.nonNull(param.getNextNodeId())){
@@ -120,6 +122,7 @@ public class BpmTaskOperateService {
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_PASS)
                 .setTaskResult(TaskCode.RESULT_NOT_PASS)
+                .setNextAssign(param.getNextAssign())
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         if (Objects.nonNull(param.getNextNodeId())){

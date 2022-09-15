@@ -60,7 +60,8 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
         }
         // 用户手动选择
         if (Objects.equals(modelTask.getAssignType(), ASSIGN_SELECT)){
-            userIds = bpmContext.getNextAssignUserIds();
+            //noinspection unchecked
+            userIds = (List<Long>) bpmContext.getNextAssign();
         }
 
         // 指定用户组

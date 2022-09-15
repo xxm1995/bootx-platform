@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -46,12 +45,6 @@ public class BpmContext {
     /**
      * 下一步执行人
      */
-    private Long nextAssignUserId;
-
-    /**
-     * 下一步执行人集合
-     */
-    private List<Long> nextAssignUserIds;
-
+    private Object nextAssign;
 
 }

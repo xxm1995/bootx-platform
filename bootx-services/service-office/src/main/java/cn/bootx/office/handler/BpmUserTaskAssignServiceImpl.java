@@ -71,7 +71,7 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
         }
         // 用户手动选择
         if (Objects.equals(modelTask.getAssignType(), ASSIGN_SELECT)){
-            userId = bpmContext.getNextAssignUserId();
+            userId = Long.valueOf(bpmContext.getNextAssign().toString());
         }
 
         // 指定用户

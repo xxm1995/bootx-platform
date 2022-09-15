@@ -36,6 +36,11 @@ public class BpmTaskDto extends BaseDto {
     private String nodeName;
     @Schema(description = "流程任务的状态")
     private String state;
+    /**
+     *  @see cn.bootx.starter.flowable.code.TaskCode#RESULT_PASS
+     */
+    @Schema(description = "处理结果")
+    private String result;
     @Schema(description = "处理意见")
     private String reason;
     @Schema(description = "开始时间")
