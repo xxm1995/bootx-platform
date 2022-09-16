@@ -31,6 +31,8 @@ public interface TaskCode {
     String RESULT_ABSTAIN = "abstain";
     /** 驳回 */
     String RESULT_REJECT = "reject";
+    /** 自动完成 */
+    String RESULT_AUTO_FINISH = "autoFinish";
     /** 退回 */
     String RESULT_BACK = "back";
     /** 取回 */

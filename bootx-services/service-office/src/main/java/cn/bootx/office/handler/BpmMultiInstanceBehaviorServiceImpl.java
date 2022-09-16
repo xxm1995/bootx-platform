@@ -122,7 +122,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
             long passCount = tasks.stream()
                     .filter(o -> Objects.equals(o.getResult(), RESULT_PASS))
                     .count();
-            double ratio = NumberUtil.div(passCount,tasks.size());
+            double ratio = NumberUtil.div(passCount,tasks.size()) * 100;
             if (ratio >= passRatio){
                 return true;
             }

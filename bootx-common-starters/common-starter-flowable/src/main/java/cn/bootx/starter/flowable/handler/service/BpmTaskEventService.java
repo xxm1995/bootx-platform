@@ -16,6 +16,7 @@ import cn.bootx.starter.flowable.local.BpmContextLocal;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.flowable.engine.delegate.event.FlowableMultiInstanceActivityCompletedEvent;
 import org.flowable.engine.impl.util.CommandContextUtil;
 import org.flowable.engine.impl.util.TaskHelper;
 import org.flowable.task.service.impl.persistence.entity.TaskEntity;
@@ -23,13 +24,15 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.TaskCode.*;
 
-/**   
+/**
  * 任务时间处理
- * @author xxm  
+ * @author xxm
  * @date 2022/9/4 
  */
 @Slf4j
@@ -130,5 +133,19 @@ public class BpmTaskEventService {
      */
     public void activityCancelled(String executionId) {
 
+    }
+
+    /**
+     * 多实例活动完成 更新被自动处理的类
+     */
+    public void multiInstanceActivityCompletedWithCondition(FlowableMultiInstanceActivityCompletedEvent event) {
+
+        List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(event.getProcessInstanceId(), event.getActivityId());
+        List<BpmTask> updateTasks = tasks.stream()
+                .filter(o -> Objects.equals(o.getState(), STATE_PROCESS))
+                .peek(bpmTask -> bpmTask.setResult(RESULT_AUTO_FINISH)
+                        .setState(STATE_PASS))
+                .collect(Collectors.toList());
+        bpmTaskManager.updateAllById(updateTasks);
     }
 }
