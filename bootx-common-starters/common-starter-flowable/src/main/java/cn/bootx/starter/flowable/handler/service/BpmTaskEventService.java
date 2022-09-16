@@ -132,7 +132,7 @@ public class BpmTaskEventService {
      * 活动取消
      */
     public void activityCancelled(String executionId) {
-
+        System.out.println(executionId);
     }
 
     /**

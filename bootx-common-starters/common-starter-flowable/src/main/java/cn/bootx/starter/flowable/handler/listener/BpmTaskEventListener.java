@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEntityEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
 import org.flowable.engine.delegate.event.AbstractFlowableEngineEventListener;
-import org.flowable.engine.delegate.event.FlowableActivityCancelledEvent;
 import org.flowable.engine.delegate.event.FlowableMultiInstanceActivityCompletedEvent;
 import org.flowable.task.service.impl.persistence.entity.TaskEntity;
 import org.springframework.stereotype.Component;
@@ -32,7 +31,6 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
             TASK_CREATED,
             TASK_ASSIGNED,
             TASK_COMPLETED,
-            ACTIVITY_CANCELLED,
             MULTI_INSTANCE_ACTIVITY_COMPLETED_WITH_CONDITION
     );
 
@@ -66,14 +64,6 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
     protected void taskAssigned(FlowableEngineEntityEvent event) {
         TaskEntity task = (TaskEntity) event.getEntity();
         bpmTaskEventService.taskAssigned(task);
-    }
-
-    /**
-     * 活动取消
-     */
-    @Override
-    protected void activityCancelled(FlowableActivityCancelledEvent event) {
-        bpmTaskEventService.activityCancelled(event.getExecutionId());
     }
 
     /**

@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static cn.bootx.starter.flowable.code.InstanceCode.STATE_CANCEL;
 import static cn.bootx.starter.flowable.code.ModelCode.PUBLISHED;
 
 /**
@@ -93,6 +94,9 @@ public class BpmInstanceOperateService {
      * 关闭流程
      */
     public void close(String instanceId) {
+        BpmContext bpmContext = BpmContextLocal.get();
+        bpmContext.setInstanceState(STATE_CANCEL);
+        BpmContextLocal.put(bpmContext);
         ProcessInstance processInstance = Optional.ofNullable(runtimeService.createProcessInstanceQuery()
                 .processInstanceId(instanceId)
                 .singleResult())
@@ -105,7 +109,8 @@ public class BpmInstanceOperateService {
             List<String> executionIds = executions.stream()
                     .map(Execution::getId)
                     .collect(Collectors.toList());
-            runtimeService.createChangeActivityStateBuilder().moveExecutionsToSingleActivityId(executionIds, endId)
+            runtimeService.createChangeActivityStateBuilder()
+                    .moveExecutionsToSingleActivityId(executionIds, endId)
                     .changeState();
     }
 

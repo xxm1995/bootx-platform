@@ -20,6 +20,8 @@ public interface TaskCode {
     String STATE_RETRIEVE = "retrieve";
     /** 跳过 */
     String STATE_SKIP = "skip";
+    /** 取消 */
+    String STATE_CANCEL = "cancel";
 
 
     /* 处理结果 */
@@ -37,5 +39,7 @@ public interface TaskCode {
     String RESULT_BACK = "back";
     /** 取回 */
     String RESULT_RETRIEVE = "retrieve";
+    /** 取消 */
+    String RESULT_CANCEL = "cancel";
 
 }

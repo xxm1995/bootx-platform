@@ -1,6 +1,7 @@
 package cn.bootx.starter.flowable.local;
 
 import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.starter.flowable.code.InstanceCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -26,6 +27,12 @@ public class BpmContext {
 
     /** 启动任务的用户 */
     private Optional<UserDetail> startUser = Optional.empty() ;
+
+    /**
+     * 实例处理状态
+     * @see InstanceCode#STATE_RUNNING
+     */
+    private String instanceState;
 
     /** 处理任务时的审批意见 */
     private String taskReason;

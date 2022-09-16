@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import static cn.bootx.starter.flowable.code.TaskCode.STATE_PROCESS;
+
 /**
  * 流程任务扩展
  * @author xxm
@@ -58,6 +60,16 @@ public class BpmTaskManager extends BaseManager<BpmTaskMapper, BpmTask> {
         return lambdaQuery()
                 .eq(BpmTask::getInstanceId,instanceId)
                 .orderByDesc(MpIdEntity::getId)
+                .list();
+    }
+
+    /**
+     * 获取执行中任务
+     */
+    public List<BpmTask> findRunningByInstanceId(String instanceId) {
+        return lambdaQuery()
+                .eq(BpmTask::getInstanceId,instanceId)
+                .eq(BpmTask::getState,STATE_PROCESS)
                 .list();
     }
 }

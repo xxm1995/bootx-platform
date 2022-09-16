@@ -1,12 +1,7 @@
 package cn.bootx.starter.flowable.handler.listener;
 
-import cn.bootx.common.core.function.UserDetailService;
 import cn.bootx.common.core.util.CollUtil;
-import cn.bootx.common.core.util.LocalDateTimeUtil;
-import cn.bootx.starter.flowable.core.instance.dao.BpmInstanceManager;
-import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
-import cn.bootx.starter.flowable.local.BpmContext;
-import cn.bootx.starter.flowable.local.BpmContextLocal;
+import cn.bootx.starter.flowable.handler.service.BpmInstanceEvenService;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEntityEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
@@ -15,8 +10,6 @@ import org.flowable.engine.delegate.event.FlowableCancelledEvent;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Set;
 
 import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventType.*;
@@ -29,8 +22,7 @@ import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventT
 @Slf4j
 @Component
 public class BpmInstanceEventListener extends AbstractFlowableEngineEventListener {
-    private final BpmInstanceManager bpmInstanceManager;
-    private final UserDetailService userDetailService;
+    private final BpmInstanceEvenService bpmInstanceEvenService;
 
     /** 处理的事件 */
     private static final Set<FlowableEngineEventType> TASK_EVENTS = CollUtil.newHashSet(
@@ -38,10 +30,9 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
             PROCESS_CANCELLED,
             PROCESS_COMPLETED
     );
-    public BpmInstanceEventListener(BpmInstanceManager bpmInstanceManager, UserDetailService userDetailService){
+    public BpmInstanceEventListener(BpmInstanceEvenService bpmInstanceEvenService){
         super(TASK_EVENTS);
-        this.bpmInstanceManager = bpmInstanceManager;
-        this.userDetailService = userDetailService;
+        this.bpmInstanceEvenService = bpmInstanceEvenService;
     }
 
     /**
@@ -50,29 +41,17 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
     @Override
     protected void processCreated(FlowableEngineEntityEvent event) {
         ProcessInstance instance = (ProcessInstance)event.getEntity();
-        BpmContext bpmContext = BpmContextLocal.get();
-        BpmInstance bpmInstance = new BpmInstance()
-                .setInstanceId(instance.getProcessInstanceId())
-                .setInstanceName(instance.getName())
-                .setModelId(bpmContext.getModelId())
-                .setDefId(instance.getProcessDefinitionId())
-                .setDefName(instance.getProcessDefinitionName())
-                .setStartTime(LocalDateTimeUtil.of(instance.getStartTime()))
-                .setFormVariables(bpmContext.getFormVariables());
-
-        // 发起人信息
-        bpmContext.getStartUser().ifPresent(userDetail -> bpmInstance.setStartUserId(userDetail.getId())
-                .setStartUserName(userDetail.getName()));
-
-        bpmInstanceManager.save(bpmInstance);
+        bpmInstanceEvenService.processCreated(instance);
     }
 
     /**
-     * 流程取消
+     * 流程取消(被删除)
+     * 一个进程已被取消。在数据库删除之前由
+     * org.flowable.engine.impl.RuntimeServiceImpl#deleteProcessInstance(java.lang.String, java.lang.String)
+     * 删除流程实例时调度。
      */
     @Override
     protected void processCancelled(FlowableCancelledEvent event) {
-
     }
 
     /**
@@ -81,11 +60,7 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
     @Override
     protected void processCompleted(FlowableEngineEntityEvent event) {
         ProcessInstance instance = (ProcessInstance)event.getEntity();
-        Optional<BpmInstance> bpmInstanceOpt = bpmInstanceManager.findByInstanceId(instance.getProcessInstanceId());
+        bpmInstanceEvenService.processCompleted(instance);
 
-        bpmInstanceOpt.ifPresent(bpmInstance -> {
-            bpmInstance.setEndTime(LocalDateTime.now());
-            bpmInstanceManager.updateById(bpmInstance);
-        });
     }
 }
