@@ -4,6 +4,8 @@ import cn.bootx.common.core.exception.BizException;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.bootx.starter.flowable.code.BpmnCode;
 import cn.bootx.starter.flowable.code.TaskCode;
+import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
+import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
 import cn.bootx.starter.flowable.exception.TaskNotExistException;
 import cn.bootx.starter.flowable.handler.TaskRejectHandler;
 import cn.bootx.starter.flowable.local.BpmContext;
@@ -17,10 +19,9 @@ import org.flowable.task.api.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.TaskCode.*;
 
@@ -34,6 +35,7 @@ import static cn.bootx.starter.flowable.code.TaskCode.*;
 @RequiredArgsConstructor
 public class BpmTaskOperateService {
     private final TaskService taskService;
+    private final BpmTaskManager bpmTaskManager;
 
     private final TaskRejectHandler taskRejectHandler;
 
@@ -148,7 +150,35 @@ public class BpmTaskOperateService {
                 .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
 
-        taskRejectHandler.flowTalkBack(param.getTaskId());
+        taskRejectHandler.flowTalkBack(task);
+        // 更新驳回任务的记录
+        List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(), task.getTaskDefinitionKey());
+        // 当前任务状态为驳回, 其他的为取消
+        Optional<BpmTask> first = tasks.stream()
+                .filter(bpmTask -> Objects.equals(bpmTask.getTaskId(), task.getId()))
+                .findFirst();
+        first.ifPresent(bpmTask -> {
+            bpmTask.setReason(param.getReason())
+                    .setState(STATE_REJECT)
+                    .setResult(RESULT_REJECT)
+                    .setEndTime(LocalDateTime.now());
+            bpmTaskManager.updateById(bpmTask);
+        });
+        List<BpmTask> bpmTasks = tasks.stream()
+                .filter(bpmTask -> !Objects.equals(bpmTask.getTaskId(), task.getId()))
+                .peek(bpmTask -> bpmTask
+                        .setState(STATE_REJECT)
+                        .setResult(RESULT_CANCEL)
+                        .setEndTime(LocalDateTime.now()))
+                .collect(Collectors.toList());
+        bpmTaskManager.updateAllById(bpmTasks);
+    }
+
+    /**
+     * 任务取回 (尝试取回)
+     */
+    public void retrieve(String taskId){
+        //
     }
 
     /**

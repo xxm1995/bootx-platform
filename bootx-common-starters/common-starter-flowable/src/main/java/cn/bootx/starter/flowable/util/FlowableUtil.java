@@ -79,19 +79,19 @@ public class FlowableUtil {
     }
 
     /**
-     * 迭代获取父级任务节点列表，向前找
+     * 迭代获取父级任务节点列表，向前找  获取当前节点的所有父级用户任务节点, 深度优先算法思想：延边迭代深入
      * @param source 起始节点
      * @param hasSequenceFlow 已经经过的连线的 ID，用于判断线路是否重复
      * @param userTaskList 已找到的用户任务节点
      * @return
      */
-    public List<UserTask> iteratorFindParentUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
+    public List<UserTask> findParentUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
         userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof StartEvent && source.getSubProcess() != null) {
-            userTaskList = iteratorFindParentUserTasks(source.getSubProcess(), hasSequenceFlow, userTaskList);
+            userTaskList = findParentUserTasks(source.getSubProcess(), hasSequenceFlow, userTaskList);
         }
 
         // 根据类型，获取入口连线
@@ -122,7 +122,7 @@ public class FlowableUtil {
                     }
                 }
                 // 继续迭代
-                userTaskList = iteratorFindParentUserTasks(sequenceFlow.getSourceFlowElement(), hasSequenceFlow, userTaskList);
+                userTaskList = findParentUserTasks(sequenceFlow.getSourceFlowElement(), hasSequenceFlow, userTaskList);
             }
         }
         return userTaskList;
@@ -136,13 +136,13 @@ public class FlowableUtil {
      * @param userTaskList 需要撤回的用户任务列表
      * @return
      */
-    public List<UserTask> iteratorFindChildUserTasks(FlowElement source, List<String> runTaskKeyList, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
+    public List<UserTask> findChildUserTasks(FlowElement source, List<String> runTaskKeyList, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
         userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof EndEvent && source.getSubProcess() != null) {
-            userTaskList = iteratorFindChildUserTasks(source.getSubProcess(), runTaskKeyList, hasSequenceFlow, userTaskList);
+            userTaskList = findChildUserTasks(source.getSubProcess(), runTaskKeyList, hasSequenceFlow, userTaskList);
         }
 
         // 根据类型，获取出口连线
@@ -164,7 +164,7 @@ public class FlowableUtil {
                 }
                 // 如果节点为子流程节点情况，则从节点中的第一个节点开始获取
                 if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
-                    List<UserTask> childUserTaskList = iteratorFindChildUserTasks((FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements().toArray()[0]), runTaskKeyList, hasSequenceFlow, null);
+                    List<UserTask> childUserTaskList = findChildUserTasks((FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements().toArray()[0]), runTaskKeyList, hasSequenceFlow, null);
                     // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
                     if (childUserTaskList != null && childUserTaskList.size() > 0) {
                         userTaskList.addAll(childUserTaskList);
@@ -172,7 +172,7 @@ public class FlowableUtil {
                     }
                 }
                 // 继续迭代
-                userTaskList = iteratorFindChildUserTasks(sequenceFlow.getTargetFlowElement(), runTaskKeyList, hasSequenceFlow, userTaskList);
+                userTaskList = findChildUserTasks(sequenceFlow.getTargetFlowElement(), runTaskKeyList, hasSequenceFlow, userTaskList);
             }
         }
         return userTaskList;
@@ -231,14 +231,14 @@ public class FlowableUtil {
      * @param dirtyRoads 确定为脏数据的点，因为不需要重复，因此使用 set 存储
      * @return
      */
-    public Set<String> iteratorFindDirtyRoads(FlowElement source, List<String> passRoads, Set<String> hasSequenceFlow, List<String> targets, Set<String> dirtyRoads) {
+    public Set<String> findDirtyRoads(FlowElement source, List<String> passRoads, Set<String> hasSequenceFlow, List<String> targets, Set<String> dirtyRoads) {
         passRoads = passRoads == null ? new ArrayList<>() : passRoads;
         dirtyRoads = dirtyRoads == null ? new HashSet<>() : dirtyRoads;
         hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof StartEvent && source.getSubProcess() != null) {
-            dirtyRoads = iteratorFindDirtyRoads(source.getSubProcess(), passRoads, hasSequenceFlow, targets, dirtyRoads);
+            dirtyRoads = findDirtyRoads(source.getSubProcess(), passRoads, hasSequenceFlow, targets, dirtyRoads);
         }
 
         // 根据类型，获取入口连线
@@ -271,7 +271,7 @@ public class FlowableUtil {
                     }
                 }
                 // 继续迭代
-                dirtyRoads = iteratorFindDirtyRoads(sequenceFlow.getSourceFlowElement(), passRoads, hasSequenceFlow, targets, dirtyRoads);
+                dirtyRoads = findDirtyRoads(sequenceFlow.getSourceFlowElement(), passRoads, hasSequenceFlow, targets, dirtyRoads);
             }
         }
         return dirtyRoads;
@@ -510,7 +510,7 @@ public class FlowableUtil {
                     }
                 }
                 // 获取脏数据线路
-                Set<String> dirtyDataLine = FlowableUtil.iteratorFindDirtyRoads(dirtyTask, null, null, Arrays.asList(dirtyPoint.split(",")), null);
+                Set<String> dirtyDataLine = FlowableUtil.findDirtyRoads(dirtyTask, null, null, Arrays.asList(dirtyPoint.split(",")), null);
                 // 自己本身也是脏线路上的点，加进去
                 dirtyDataLine.add(stack.peek().getTaskDefinitionKey());
                 log.info(stack.peek().getTaskDefinitionKey() + "点脏路线集合：" + dirtyDataLine);
