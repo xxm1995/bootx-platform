@@ -61,13 +61,6 @@ public class BpmTaskController {
         return Res.ok(queryService.getNodeTasks(instanceId));
     }
     
-    @Operation(summary = "驳回")
-    @PostMapping("/reject")
-    public ResResult<Void> reject(@RequestBody TaskApproveParam param){
-        operateService.reject(param);
-        return Res.ok();
-    }
-
     @Operation(summary = "任务回退")
     @PostMapping("/flowReturn")
     public ResResult<Void> flowReturn(@RequestBody TaskReturnParam param){

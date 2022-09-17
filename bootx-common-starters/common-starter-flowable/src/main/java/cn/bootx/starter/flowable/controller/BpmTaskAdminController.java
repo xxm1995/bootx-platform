@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author xxm  
  * @date 2022/9/13 
  */
-@Tag(name = "")
+@Tag(name = "流程任务管理服务")
 @RestController
 @RequestMapping("/bpm/admin/task")
 @RequiredArgsConstructor
@@ -26,14 +26,14 @@ public class BpmTaskAdminController {
     private final BpmTaskAdminService bpmTaskAdminService;
 
     @Operation(summary = "待处理任务")
-    @GetMapping("/pageMyTodo")
-    public ResResult<PageResult<TaskInfo>> pageMyTodo(PageParam pageParam){
-        return Res.ok(bpmTaskAdminService.pageMyTodo(pageParam));
+    @GetMapping("/pageByTodo")
+    public ResResult<PageResult<TaskInfo>> pageByTodo(PageParam pageParam){
+        return Res.ok(bpmTaskAdminService.pageByTodo(pageParam));
     }
 
     @Operation(summary = "已处理任务")
-    @GetMapping("/pageMyDone")
-    public ResResult<PageResult<TaskInfo>> pageMyDone(PageParam pageParam){
-        return Res.ok(bpmTaskAdminService.pageMyDone(pageParam));
+    @GetMapping("/pageByDone")
+    public ResResult<PageResult<TaskInfo>> pageByDone(PageParam pageParam){
+        return Res.ok(bpmTaskAdminService.pageByDone(pageParam));
     }
 }

@@ -38,7 +38,7 @@ public class BpmTaskAdminService {
     /**
      * 待处理任务
      */
-    public PageResult<TaskInfo> pageMyTodo(PageParam pageParam){
+    public PageResult<TaskInfo> pageByTodo(PageParam pageParam){
         // 查询待办任务
         TaskQuery taskQuery = taskService.createTaskQuery()
                 .orderByTaskCreateTime().desc(); // 创建时间倒序
@@ -56,7 +56,7 @@ public class BpmTaskAdminService {
     /**
      * 已处理任务
      */
-    public PageResult<TaskInfo> pageMyDone(PageParam pageParam){
+    public PageResult<TaskInfo> pageByDone(PageParam pageParam){
         // 查询已办任务
         HistoricTaskInstanceQuery taskQuery = historyService.createHistoricTaskInstanceQuery().finished()
                 .taskAssignee(String.valueOf(SecurityUtil.getUserId()))

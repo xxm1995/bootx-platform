@@ -1,6 +1,7 @@
 package cn.bootx.starter.flowable.core.instance.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.bootx.starter.flowable.code.BpmnCode;
 import cn.bootx.starter.flowable.code.TaskCode;
 import cn.bootx.starter.flowable.exception.TaskNotExistException;
@@ -41,21 +42,30 @@ public class BpmTaskOperateService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void approve(TaskApproveParam param) {
+        // 查询到任务和扩展属性
+        Task task = Optional.ofNullable(taskService.createTaskQuery().taskId(param.getTaskId()).singleResult())
+                .orElseThrow(TaskNotExistException::new);
+        // 实际处理人与设置处理人不一致进行更改
+        String userId =  String.valueOf(SecurityUtil.getUserId());
+        if (!Objects.equals(task.getAssignee(),String.valueOf(userId))){
+            taskService.setAssignee(task.getId(),userId);
+        }
+
         switch (param.getType()){
             case RESULT_PASS:{
-                this.pass(param);
+                this.pass(param,task);
                 break;
             }
             case RESULT_NOT_PASS:{
-                this.notPass(param);
+                this.notPass(param,task);
                 break;
             }
             case RESULT_ABSTAIN:{
-                this.abstain(param);
+                this.abstain(param,task);
                 break;
             }
             case RESULT_REJECT:{
-                this.reject(param);
+                this.reject(param,task);
                 break;
             }
             default:throw new BizException("不存在的流程服务处理类型");
@@ -67,10 +77,7 @@ public class BpmTaskOperateService {
      * 通过
      */
     @Transactional(rollbackFor = Exception.class)
-    public void pass(TaskApproveParam param){
-        // 查询到任务和扩展属性
-        Task task = Optional.ofNullable(taskService.createTaskQuery().taskId(param.getTaskId()).singleResult())
-                .orElseThrow(TaskNotExistException::new);
+    public void pass(TaskApproveParam param, Task task){
         BpmContext bpmContext = BpmContextLocal.get();
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_PASS)
@@ -92,9 +99,7 @@ public class BpmTaskOperateService {
      * 弃权
      */
     @Transactional(rollbackFor = Exception.class)
-    public void abstain(TaskApproveParam param){
-        Task task = Optional.ofNullable(taskService.createTaskQuery().taskId(param.getTaskId()).singleResult())
-                .orElseThrow(TaskNotExistException::new);
+    public void abstain(TaskApproveParam param, Task task){
         BpmContext bpmContext = BpmContextLocal.get();
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_PASS)
@@ -115,9 +120,7 @@ public class BpmTaskOperateService {
      * 不同意
      */
     @Transactional(rollbackFor = Exception.class)
-    public void notPass(TaskApproveParam param){
-        Task task = Optional.ofNullable(taskService.createTaskQuery().taskId(param.getTaskId()).singleResult())
-                .orElseThrow(TaskNotExistException::new);
+    public void notPass(TaskApproveParam param, Task task){
         BpmContext bpmContext = BpmContextLocal.get();
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_PASS)
@@ -137,9 +140,8 @@ public class BpmTaskOperateService {
      * 驳回
      */
     @Transactional(rollbackFor = Exception.class)
-    public void reject(TaskApproveParam param){
+    public void reject(TaskApproveParam param, Task task){
         BpmContext bpmContext = BpmContextLocal.get();
-
         bpmContext.setTaskReason(param.getReason())
                 .setTaskState(TaskCode.STATE_REJECT)
                 .setTaskResult(TaskCode.RESULT_REJECT)
