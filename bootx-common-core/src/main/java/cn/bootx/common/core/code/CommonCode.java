@@ -31,6 +31,10 @@ public interface CommonCode {
      * 系统默认用户的 userId，便于定时任务和异步任务时使用
      */
     Long SYSTEM_DEFAULT_USERID = 1L;
+    /**
+     * 系统默认用户的 userId，便于定时任务和异步任务时使用
+     */
+    String SYSTEM_DEFAULT_USERNAME = "系统";
 
     /**
      * 事件路由Key

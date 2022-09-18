@@ -69,7 +69,7 @@ public class SiteMessageController {
         return Res.ok();
     }
 
-    @Operation(summary = "撤回消息")
+    @Operation(summary = "删除消息")
     @DeleteMapping("/delete")
     public ResResult<Void> delete(Long id){
         siteMessageService.delete(id);

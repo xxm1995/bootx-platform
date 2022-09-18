@@ -55,7 +55,6 @@ public class SiteMessageService {
         if (Objects.nonNull(param.getId())){
             siteMessage = siteMessageManager.findById(param.getId()).orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
             BeanUtil.copyProperties(param,siteMessage, CopyOptions.create().ignoreNullValue());
-
         } else {
             siteMessage = new SiteMessage()
                     .setTitle(param.getTitle())
@@ -105,7 +104,6 @@ public class SiteMessageService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void send(SendSiteMessageParam param){
-        val userDetail = SecurityUtil.getCurrentUser();
 
         // 新增站内信内容
         SiteMessage siteMessage = new SiteMessage()
@@ -113,6 +111,8 @@ public class SiteMessageService {
                 .setContent(param.getContent())
                 .setReceiveType(param.getReceiveType())
                 .setEfficientTime(param.getEfficientTime())
+                .setSenderId(param.getSenderId())
+                .setSenderName(param.getSenderName())
                 .setSenderTime(LocalDateTime.now());
         siteMessageManager.save(siteMessage);
         // 添加消息关联人信息
@@ -124,7 +124,6 @@ public class SiteMessageService {
                     .collect(Collectors.toList());
             siteMessageUserManager.saveAll(siteMessageUsers);
         }
-
     }
 
     /**

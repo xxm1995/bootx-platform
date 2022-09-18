@@ -1,5 +1,7 @@
-package cn.bootx.office.handler;
+package cn.bootx.office.handler.behavior;
 
+import cn.bootx.common.core.util.CollUtil;
+import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.iam.core.upms.entity.UserRole;
 import cn.bootx.starter.flowable.core.instance.dao.BpmInstanceManager;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.ModelNodeCode.*;
 import static cn.bootx.starter.flowable.code.TaskCode.RESULT_PASS;
+import static cn.bootx.starter.flowable.code.TaskCode.STATE_REJECT;
 
 /**   
  * Bpm 多实例行为服务
@@ -45,41 +48,90 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
      */
     @Override
     public List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior multiInstanceActivityBehavior) {
-        List<Long> userIds = new ArrayList<>(0);
         BpmContext bpmContext = BpmContextLocal.get();
-        // TODO 处理驳回情况的人员分配
 
         // 获取节点配置并设置处理人
-        BpmModelNode modelTask = bpmModelNodeManager.findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
+        BpmModelNode modelNode = bpmModelNodeManager.findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
                 .orElseThrow(ModelNodeNotExistException::new);
 
+        // 处理驳回情况的人员分配
+        if (Objects.equals(bpmContext.getTaskState(),STATE_REJECT)){
+            return this.reject(execution,modelNode,bpmContext);
+        }
+        // 正常获取配置的处理人
+        return this.getUserIds(execution,modelNode,bpmContext);
+
+    }
+
+    /**
+     * 获取处理人
+     */
+    public List<Long> getUserIds(DelegateExecution execution,BpmModelNode modelNode,BpmContext bpmContext){
+        List<Long> userIds = new ArrayList<>(0);
         // 发起人
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_SPONSOR)){
+        if (Objects.equals(modelNode.getAssignType(),ASSIGN_SPONSOR)){
             Long startUserId = this.getStartUserId(execution.getProcessInstanceId());
             userIds = Collections.singletonList(startUserId);
         }
         // 用户手动选择
-        if (Objects.equals(modelTask.getAssignType(), ASSIGN_SELECT)){
+        if (Objects.equals(modelNode.getAssignType(), ASSIGN_SELECT)){
             //noinspection unchecked
             userIds = (List<Long>) bpmContext.getNextAssign();
         }
 
         // 指定用户组
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_USER_GROUP)){
+        if (Objects.equals(modelNode.getAssignType(),ASSIGN_USER_GROUP)){
             //noinspection unchecked
-            userIds = (List<Long>) modelTask.getAssignRaw();
+            userIds = (List<Long>) modelNode.getAssignRaw();
         }
 
         // 指定角色
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_GROUP)){
+        if (Objects.equals(modelNode.getAssignType(),ASSIGN_GROUP)){
             //noinspection unchecked
-            List<Long> roleIds = (List<Long>) modelTask.getAssignRaw();
+            List<Long> roleIds = (List<Long>) modelNode.getAssignRaw();
             userIds = getUserIdsByRole(roleIds);
         }
 
         return userIds;
     }
 
+    /**
+     * 驳回处理
+     */
+    private List<Long> reject(DelegateExecution execution, BpmModelNode modelNode, BpmContext bpmContext) {
+        // 查询当前环节的任务
+        List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(execution.getProcessInstanceId(), execution.getCurrentActivityId());
+        //noinspection OptionalGetWithoutIsPresent
+        String executionId = tasks.stream()
+                .max(Comparator.comparingLong(MpIdEntity::getId))
+                .map(BpmTask::getExecutionId)
+                .get();
+        // 会签和串签处理方式不同
+        if (Objects.equals(modelNode.getSequential(),true)){
+            // 串签只能拿到之前执行了的任务, 未执行到的不会进行生成
+            List<Long> processedUserIds = tasks.stream()
+                    .filter(task -> Objects.equals(executionId, task.getExecutionId()))
+                    .map(BpmTask::getUserId)
+                    .collect(Collectors.toList());
+
+            // 补全未执行到的任务信息
+            List<Long> userIds = this.getUserIds(execution, modelNode, bpmContext);
+            if (processedUserIds.size() >= userIds.size()){
+                return processedUserIds;
+            } else {
+                int size = processedUserIds.size();
+                // 例如角色一类的分配规则, 重新分配变动了, 可能会出问题, 但我暂时不打算解决
+                return CollUtil.sub(userIds,size,userIds.size());
+            }
+        } else {
+            // 会签可以拿到之前所有的任务
+            return tasks.stream()
+                    .filter(o -> Objects.nonNull(o.getEndTime()))
+                    .filter(task->Objects.equals(executionId,task.getExecutionId()))
+                    .map(BpmTask::getUserId)
+                    .collect(Collectors.toList());
+        }
+    }
     /**
      * 获取发起人id
      */

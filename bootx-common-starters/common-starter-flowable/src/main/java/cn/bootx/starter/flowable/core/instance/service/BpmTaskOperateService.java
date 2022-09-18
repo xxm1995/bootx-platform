@@ -6,8 +6,9 @@ import cn.bootx.starter.flowable.code.BpmnCode;
 import cn.bootx.starter.flowable.code.TaskCode;
 import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
 import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
+import cn.bootx.starter.flowable.event.BpmEventService;
 import cn.bootx.starter.flowable.exception.TaskNotExistException;
-import cn.bootx.starter.flowable.handler.TaskRejectHandler;
+import cn.bootx.starter.flowable.handler.reject.TaskRejectHandler;
 import cn.bootx.starter.flowable.local.BpmContext;
 import cn.bootx.starter.flowable.local.BpmContextLocal;
 import cn.bootx.starter.flowable.param.task.TaskApproveParam;
@@ -36,6 +37,8 @@ import static cn.bootx.starter.flowable.code.TaskCode.*;
 public class BpmTaskOperateService {
     private final TaskService taskService;
     private final BpmTaskManager bpmTaskManager;
+
+    private final BpmEventService bpmEventService;
 
     private final TaskRejectHandler taskRejectHandler;
 
@@ -144,13 +147,10 @@ public class BpmTaskOperateService {
     @Transactional(rollbackFor = Exception.class)
     public void reject(TaskApproveParam param, Task task){
         BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setTaskReason(param.getReason())
-                .setTaskState(TaskCode.STATE_REJECT)
-                .setTaskResult(TaskCode.RESULT_REJECT)
-                .setFormVariables(param.getFormVariables());
+        bpmContext.setTaskState(TaskCode.STATE_REJECT);
+
         BpmContextLocal.put(bpmContext);
 
-        taskRejectHandler.flowTalkBack(task);
         // 更新驳回任务的记录
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(), task.getTaskDefinitionKey());
         // 当前任务状态为驳回, 其他的为取消
@@ -172,17 +172,11 @@ public class BpmTaskOperateService {
                         .setEndTime(LocalDateTime.now()))
                 .collect(Collectors.toList());
         bpmTaskManager.updateAllById(bpmTasks);
+        bpmEventService.taskCancel(tasks);
     }
 
     /**
-     * 任务取回 (尝试取回)
-     */
-    public void retrieve(String taskId){
-        //
-    }
-
-    /**
-     * 流程回退
+     * 流程回退 未实现
      */
     public void flowReturn(TaskReturnParam param){
         taskRejectHandler.flowReturn(param.getTaskId(),param.getTargetKey());
@@ -192,6 +186,6 @@ public class BpmTaskOperateService {
      * 重新分配人员
      */
     public void assignee(String taskId, Long userId){
-        taskService.setAssignee(taskId, String.valueOf(userId));
+        taskService.setOwner(taskId, String.valueOf(userId));
     }
 }

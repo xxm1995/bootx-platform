@@ -1,7 +1,7 @@
 package cn.bootx.starter.flowable.handler.listener;
 
 import cn.bootx.common.core.util.CollUtil;
-import cn.bootx.starter.flowable.handler.service.BpmTaskEventService;
+import cn.bootx.starter.flowable.handler.service.BpmTaskEventListenerService;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEntityEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
@@ -23,7 +23,7 @@ import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventT
 @Component
 public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
 
-    private final BpmTaskEventService bpmTaskEventService;
+    private final BpmTaskEventListenerService bpmTaskEventListenerService;
 
 
     /** 处理的事件 */
@@ -34,9 +34,9 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
             MULTI_INSTANCE_ACTIVITY_COMPLETED_WITH_CONDITION
     );
 
-    public BpmTaskEventListener(BpmTaskEventService bpmTaskEventService) {
+    public BpmTaskEventListener(BpmTaskEventListenerService bpmTaskEventListenerService) {
         super(TASK_EVENTS);
-        this.bpmTaskEventService = bpmTaskEventService;
+        this.bpmTaskEventListenerService = bpmTaskEventListenerService;
     }
 
     /**
@@ -45,7 +45,7 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
     @Override
     protected void taskCreated(FlowableEngineEntityEvent event) {
         TaskEntity task = (TaskEntity) event.getEntity();
-        bpmTaskEventService.taskCreated(task);
+        bpmTaskEventListenerService.taskCreated(task);
     }
 
     /**
@@ -54,7 +54,7 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
     @Override
     protected void taskCompleted(FlowableEngineEntityEvent event) {
         TaskEntity task = (TaskEntity) event.getEntity();
-        bpmTaskEventService.taskCompleted(task);
+        bpmTaskEventListenerService.taskCompleted(task);
     }
 
     /**
@@ -63,7 +63,7 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
     @Override
     protected void taskAssigned(FlowableEngineEntityEvent event) {
         TaskEntity task = (TaskEntity) event.getEntity();
-        bpmTaskEventService.taskAssigned(task);
+        bpmTaskEventListenerService.taskAssigned(task);
     }
 
     /**
@@ -71,6 +71,6 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
      */
     @Override
     protected void multiInstanceActivityCompletedWithCondition(FlowableMultiInstanceActivityCompletedEvent event) {
-        bpmTaskEventService.multiInstanceActivityCompletedWithCondition(event);
+        bpmTaskEventListenerService.multiInstanceActivityCompletedWithCondition(event);
     }
 }

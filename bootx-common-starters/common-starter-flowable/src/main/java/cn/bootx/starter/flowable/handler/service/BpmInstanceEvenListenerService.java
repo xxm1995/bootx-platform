@@ -6,6 +6,7 @@ import cn.bootx.starter.flowable.core.instance.dao.BpmInstanceManager;
 import cn.bootx.starter.flowable.core.instance.dao.BpmTaskManager;
 import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
 import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
+import cn.bootx.starter.flowable.event.BpmEventService;
 import cn.bootx.starter.flowable.local.BpmContext;
 import cn.bootx.starter.flowable.local.BpmContextLocal;
 import cn.hutool.core.util.StrUtil;
@@ -30,9 +31,12 @@ import static cn.bootx.starter.flowable.code.InstanceCode.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class BpmInstanceEvenService {
+public class BpmInstanceEvenListenerService {
     private final BpmInstanceManager bpmInstanceManager;
     private final BpmTaskManager bpmTaskManager;
+
+    private final BpmEventService messageService;
+
 
     /**
      * 流程创建
@@ -54,6 +58,7 @@ public class BpmInstanceEvenService {
                 .setStartUserName(userDetail.getName()));
 
         bpmInstanceManager.save(bpmInstance);
+        messageService.processCreated(bpmInstance);
     }
 
     /**
@@ -72,6 +77,11 @@ public class BpmInstanceEvenService {
             bpmInstance.setEndTime(LocalDateTime.now())
                     .setState(state);
             bpmInstanceManager.updateById(bpmInstance);
+            if (Objects.equals(STATE_FINISH,state)){
+                messageService.processCompleted(bpmInstance);
+            } else {
+                messageService.processCancel(bpmInstance);
+            }
         });
         if (Objects.equals(instanceState,STATE_CANCEL)){
             List<BpmTask> tasks = bpmTaskManager.findRunningByInstanceId(instance.getProcessInstanceId());
@@ -79,6 +89,7 @@ public class BpmInstanceEvenService {
                     .setResult(TaskCode.RESULT_CANCEL)
                     .setEndTime(LocalDateTime.now()));
             bpmTaskManager.updateAllById(tasks);
+            messageService.taskCancel(tasks);
         }
     }
 }

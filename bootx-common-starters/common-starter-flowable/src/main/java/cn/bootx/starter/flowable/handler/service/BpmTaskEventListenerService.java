@@ -10,6 +10,7 @@ import cn.bootx.starter.flowable.core.instance.entity.BpmInstance;
 import cn.bootx.starter.flowable.core.instance.entity.BpmTask;
 import cn.bootx.starter.flowable.core.model.dao.BpmModelNodeManager;
 import cn.bootx.starter.flowable.core.model.entity.BpmModelNode;
+import cn.bootx.starter.flowable.event.BpmEventService;
 import cn.bootx.starter.flowable.exception.ModelNodeNotExistException;
 import cn.bootx.starter.flowable.local.BpmContext;
 import cn.bootx.starter.flowable.local.BpmContextLocal;
@@ -23,6 +24,7 @@ import org.flowable.task.service.impl.persistence.entity.TaskEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,11 +40,13 @@ import static cn.bootx.starter.flowable.code.TaskCode.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class BpmTaskEventService {
+public class BpmTaskEventListenerService {
     private final BpmModelNodeManager bpmModelNodeManager;
     private final BpmTaskManager bpmTaskManager;
     private final BpmInstanceManager bpmInstanceManager;
     private final UserDetailService userDetailService;
+    private final BpmEventService eventService;
+
 
     // 正常执行的状态
     private final List<String> normalTaskStates = CollUtil.newArrayList(
@@ -74,6 +78,12 @@ public class BpmTaskEventService {
         }
 
         bpmTaskManager.save(bpmTask);
+        // 驳回还是普通创建
+        if (Objects.equals(bpmContext.getTaskState(),STATE_REJECT)){
+            eventService.taskReject(bpmTask);
+        } else {
+            eventService.taskCreated(bpmTask);
+        }
     }
 
     /**
@@ -89,6 +99,7 @@ public class BpmTaskEventService {
                     .setReason(bpmContext.getTaskReason())
                     .setFormVariables(bpmContext.getFormVariables());
             bpmTaskManager.updateById(bpmTask);
+            eventService.taskCompleted(Collections.singletonList(bpmTask));
         });
     }
 
@@ -102,10 +113,13 @@ public class BpmTaskEventService {
             if (StrUtil.isNotBlank(task.getAssignee())){
                 Long userId = Long.valueOf(task.getAssignee());
                 UserDetail userDetail = userDetailService.findByUserId(userId).orElse(new UserDetail());
+                Long oldAssign = bpmTask.getUserId();
+                String oldAssignName = bpmTask.getUserName();
                 bpmTask.setUserId(userId)
                         .setUserName(userDetail.getName());
+                bpmTaskManager.updateById(bpmTask);
+                eventService.taskAssign(bpmTask,oldAssign,oldAssignName,userId,userDetail.getName());
             }
-            bpmTaskManager.updateById(bpmTask);
         });
     }
 
@@ -147,5 +161,6 @@ public class BpmTaskEventService {
                         .setState(STATE_PASS))
                 .collect(Collectors.toList());
         bpmTaskManager.updateAllById(updateTasks);
+        eventService.taskCompleted(updateTasks);
     }
 }

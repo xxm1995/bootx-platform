@@ -1,4 +1,4 @@
-package cn.bootx.starter.flowable.handler;
+package cn.bootx.starter.flowable.handler.reject;
 
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.CollUtil;
@@ -21,10 +21,7 @@ import org.flowable.task.api.TaskInfo;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -45,9 +42,9 @@ public class TaskRejectHandler {
     private final HistoryService historyService;
 
     /**
-     * 驳回
+     * 驳回, 返回驳回到的任务节点id
      */
-    public void flowTalkBack(Task task) {
+    public List<String> rejectTalk(Task task) {
         if (task.isSuspended()) {
             throw new BizException("任务处于挂起状态");
         }
@@ -60,13 +57,13 @@ public class TaskRejectHandler {
                 .findAny()
                 .orElse(null);
 
-        // 上级任务节点列表 目的获取所有跳转到的节点 targetIds
-        List<UserTask> parentUserTaskList = FlowableUtil.findParentUserTasks(currentNode, null, null);
-        if (CollUtil.isEmpty(parentUserTaskList)) {
+        // 上级任务列表 目的获取所有跳转到的节点 targetIds
+        List<UserTask> lastUserTaskList = FlowableUtil.findParentUserTasks(currentNode, null, null);
+        if (CollUtil.isEmpty(lastUserTaskList)) {
             throw new BizException("当前节点为初始任务节点，不能驳回");
         }
         // 上级任务节点列表 节点 Key
-        List<String> parentUserTaskKeyList = parentUserTaskList.stream()
+        List<String> lastUserTaskNodeIds = lastUserTaskList.stream()
                 .map(BaseElement::getId)
                 .collect(Collectors.toList());
 
@@ -79,19 +76,19 @@ public class TaskRejectHandler {
                 .list();
 
         // 数据清洗，将回滚导致的脏数据清洗掉
-        List<String> lastHistoricTaskInstanceList = FlowableUtil.historicTaskInstanceClean(flowNodes, historicTaskInstanceList);
+        List<String> lastHistoricTaskNodeIds = FlowableUtil.historicTaskInstanceClean(flowNodes, historicTaskInstanceList);
         // 此时历史任务实例为倒序，获取最后走的节点
-        List<String> targetIds = new ArrayList<>();
+        List<String> rejectIds = new ArrayList<>();
         // 循环结束标识，遇到当前目标节点的次数
         int number = 0;
-        String parentHistoricTaskKey = null;
-        for (String historicTaskInstanceKey : lastHistoricTaskInstanceList) {
+        String lastHistoricTaskNodeId = null;
+        for (String historicTaskNodeId : lastHistoricTaskNodeIds) {
             // 当会签时候会出现特殊的，连续都是同一个节点历史数据的情况，这种时候跳过
-            if (Objects.equals(parentHistoricTaskKey,historicTaskInstanceKey)) {
+            if (Objects.equals(lastHistoricTaskNodeId,historicTaskNodeId)) {
                 continue;
             }
-            parentHistoricTaskKey = historicTaskInstanceKey;
-            if (Objects.equals(historicTaskInstanceKey,task.getTaskDefinitionKey())) {
+            lastHistoricTaskNodeId = historicTaskNodeId;
+            if (Objects.equals(historicTaskNodeId,task.getTaskDefinitionKey())) {
                 number ++;
             }
             // 在数据清洗后，历史节点就是唯一一条从起始到当前节点的历史记录，理论上每个点只会出现一次
@@ -102,14 +99,14 @@ public class TaskRejectHandler {
                 break;
             }
             // 如果当前历史节点，属于父级的节点，说明最后一次经过了这个点，需要退回这个点
-            if (parentUserTaskKeyList.contains(historicTaskInstanceKey)) {
-                targetIds.add(historicTaskInstanceKey);
+            if (lastUserTaskNodeIds.contains(historicTaskNodeId)) {
+                rejectIds.add(historicTaskNodeId);
             }
         }
 
         // 目的获取所有需要被跳转的节点 currentIds
         // 取其中一个父级任务，因为后续要么存在公共网关，要么就是串行公共线路
-        UserTask oneUserTask = parentUserTaskList.get(0);
+        UserTask oneUserTask = lastUserTaskList.get(0);
         // 获取所有正常进行的任务节点 Key，这些任务不能直接使用，需要找出其中需要撤回的任务
         List<Task> runTaskList = taskService.createTaskQuery()
                 .processInstanceId(task.getProcessInstanceId())
@@ -121,26 +118,28 @@ public class TaskRejectHandler {
         // 需驳回任务列表
         List<String> currentIds = currentUserTaskList.stream().map(BaseElement::getId).collect(Collectors.toList());
         // 规定：并行网关之前节点必须需存在唯一用户任务节点，如果出现多个任务节点，则并行网关节点默认为结束节点，原因为不考虑多对多情况
-        if (targetIds.size() > 1 && currentIds.size() > 1) {
+        if (rejectIds.size() > 1 && currentIds.size() > 1) {
             throw new BizException("任务出现多对多情况，无法撤回");
         }
 
         try {
             // 如果父级任务多于 1 个，说明当前节点不是并行节点，原因为不考虑多对多情况
-            if (targetIds.size() > 1) {
+            if (rejectIds.size() > 1) {
                 // 1 对 多任务跳转，currentIds 当前节点(1)，targetIds 跳转到的节点(多)
                 runtimeService.createChangeActivityStateBuilder()
                         .processInstanceId(task.getProcessInstanceId())
-                        .moveSingleActivityIdToActivityIds(currentIds.get(0), targetIds)
+                        .moveSingleActivityIdToActivityIds(currentIds.get(0), rejectIds)
                         .changeState();
+                return rejectIds;
             }
             // 如果父级任务只有一个，因此当前任务可能为网关中的任务
-            if (targetIds.size() == 1) {
+            if (rejectIds.size() == 1) {
                 // 1 对 1 或 多 对 1 情况，currentIds 当前要跳转的节点列表(1或多)，targetIds.get(0) 跳转到的节点(1)
                 runtimeService.createChangeActivityStateBuilder()
                         .processInstanceId(task.getProcessInstanceId())
-                        .moveActivityIdsToSingleActivityId(currentIds, targetIds.get(0))
+                        .moveActivityIdsToSingleActivityId(currentIds, rejectIds.get(0))
                         .changeState();
+                return Collections.singletonList(rejectIds.get(0));
             }
         } catch (FlowableObjectNotFoundException e) {
             log.error(e.getMessage(),e);
@@ -149,6 +148,7 @@ public class TaskRejectHandler {
             log.error(e.getMessage(),e);
             throw new BizException("无法取消或开始活动");
         }
+        return new ArrayList<>(0);
     }
 
     /**

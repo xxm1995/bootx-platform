@@ -1,7 +1,7 @@
 package cn.bootx.starter.flowable.handler.listener;
 
 import cn.bootx.common.core.util.CollUtil;
-import cn.bootx.starter.flowable.handler.service.BpmInstanceEvenService;
+import cn.bootx.starter.flowable.handler.service.BpmInstanceEvenListenerService;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEntityEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
@@ -22,7 +22,7 @@ import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventT
 @Slf4j
 @Component
 public class BpmInstanceEventListener extends AbstractFlowableEngineEventListener {
-    private final BpmInstanceEvenService bpmInstanceEvenService;
+    private final BpmInstanceEvenListenerService bpmInstanceEvenListenerService;
 
     /** 处理的事件 */
     private static final Set<FlowableEngineEventType> TASK_EVENTS = CollUtil.newHashSet(
@@ -30,9 +30,9 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
             PROCESS_CANCELLED,
             PROCESS_COMPLETED
     );
-    public BpmInstanceEventListener(BpmInstanceEvenService bpmInstanceEvenService){
+    public BpmInstanceEventListener(BpmInstanceEvenListenerService bpmInstanceEvenListenerService){
         super(TASK_EVENTS);
-        this.bpmInstanceEvenService = bpmInstanceEvenService;
+        this.bpmInstanceEvenListenerService = bpmInstanceEvenListenerService;
     }
 
     /**
@@ -41,7 +41,7 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
     @Override
     protected void processCreated(FlowableEngineEntityEvent event) {
         ProcessInstance instance = (ProcessInstance)event.getEntity();
-        bpmInstanceEvenService.processCreated(instance);
+        bpmInstanceEvenListenerService.processCreated(instance);
     }
 
     /**
@@ -60,7 +60,7 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
     @Override
     protected void processCompleted(FlowableEngineEntityEvent event) {
         ProcessInstance instance = (ProcessInstance)event.getEntity();
-        bpmInstanceEvenService.processCompleted(instance);
+        bpmInstanceEvenListenerService.processCompleted(instance);
 
     }
 }

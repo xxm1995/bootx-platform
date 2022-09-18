@@ -33,6 +33,13 @@
             <version>${bootx-platform.version}</version>
         </dependency>
 
+        <!-- 认证模块 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-notice</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
         <!-- 基础功能模块 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
