@@ -47,7 +47,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
      * @return
      */
     @Override
-    public List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior multiInstanceActivityBehavior) {
+    public List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior behavior) {
         BpmContext bpmContext = BpmContextLocal.get();
 
         // 获取节点配置并设置处理人
@@ -56,7 +56,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
 
         // 处理驳回情况的人员分配
         if (Objects.equals(bpmContext.getTaskState(),STATE_REJECT)){
-            return this.reject(execution,modelNode,bpmContext);
+            return this.reject(execution,modelNode,bpmContext,behavior);
         }
         // 正常获取配置的处理人
         return this.getUserIds(execution,modelNode,bpmContext);
@@ -98,7 +98,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
     /**
      * 驳回处理
      */
-    private List<Long> reject(DelegateExecution execution, BpmModelNode modelNode, BpmContext bpmContext) {
+    private List<Long> reject(DelegateExecution execution, BpmModelNode modelNode, BpmContext bpmContext, MultiInstanceActivityBehavior behavior) {
         // 查询当前环节的任务
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(execution.getProcessInstanceId(), execution.getCurrentActivityId());
         //noinspection OptionalGetWithoutIsPresent
@@ -125,9 +125,11 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
             }
         } else {
             // 会签可以拿到之前所有的任务
+//            tasks.stream()
+//                    .sorted(Comparator.comparingLong(MpIdEntity::getId))
+//                    .limit(behavior.getLoopVariable(execution,))
+
             return tasks.stream()
-                    .filter(o -> Objects.nonNull(o.getEndTime()))
-                    .filter(task->Objects.equals(executionId,task.getExecutionId()))
                     .map(BpmTask::getUserId)
                     .collect(Collectors.toList());
         }
@@ -151,7 +153,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
      * 是否满足结束条件
      */
     @Override
-    public boolean completionConditionSatisfied(DelegateExecution execution) {
+    public boolean completionConditionSatisfied(DelegateExecution execution, MultiInstanceActivityBehavior behavior) {
         BpmContext bpmContext = BpmContextLocal.get();
 
         // 获取节点配置

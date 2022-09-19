@@ -29,6 +29,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
+import static cn.bootx.starter.flowable.code.BpmnCode.MULTI_TASK_ID;
 import static cn.bootx.starter.flowable.code.ModelNodeCode.*;
 import static cn.bootx.starter.flowable.code.TaskCode.STATE_REJECT;
 
@@ -62,6 +63,11 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
         // 情况一，如果是多实例的任务，例如说会签、串签等情况，已经被分配完毕, 直接从 Variable 中获取。
         val multiInstanceActivityBehavior = userTaskActivityBehavior.getMultiInstanceActivityBehavior();
         if (Objects.nonNull(userTaskActivityBehavior.getMultiInstanceActivityBehavior())) {
+            Object multiId = execution.getVariable(MULTI_TASK_ID);
+            if (Objects.nonNull(multiId)){
+                bpmContext.setTaskMultiId((Long)multiId);
+            }
+
             String userIdStr = execution.getVariable(multiInstanceActivityBehavior.getCollectionElementVariable(), String.class);
             TaskHelper.changeTaskAssignee(task, userIdStr);
             return;

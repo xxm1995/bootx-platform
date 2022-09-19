@@ -148,8 +148,9 @@ public class BpmTaskOperateService {
     public void reject(TaskApproveParam param, Task task){
         BpmContext bpmContext = BpmContextLocal.get();
         bpmContext.setTaskState(TaskCode.STATE_REJECT);
-
         BpmContextLocal.put(bpmContext);
+
+        taskRejectHandler.rejectTalk(task);
 
         // 更新驳回任务的记录
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(), task.getTaskDefinitionKey());

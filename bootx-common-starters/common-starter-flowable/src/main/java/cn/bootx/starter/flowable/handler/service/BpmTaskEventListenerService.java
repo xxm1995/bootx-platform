@@ -63,6 +63,12 @@ public class BpmTaskEventListenerService {
                 .orElseThrow(ModelNodeNotExistException::new);
 
         BpmTask bpmTask = this.convert(task, bpmInstance);
+
+        // 是的多实例
+        if (Objects.nonNull(bpmContext.getTaskMultiId())){
+            System.out.println(bpmContext.getTaskMultiId());
+        }
+
         // 是否跳过该节点, 且是正常情况下
         if (modelTask.isSkip() && normalTaskStates.contains(bpmContext.getTaskState())){
             TaskHelper.completeTask(task,null,null,null,null, CommandContextUtil.getCommandContext());

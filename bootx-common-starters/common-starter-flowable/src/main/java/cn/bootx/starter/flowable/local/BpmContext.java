@@ -50,6 +50,11 @@ public class BpmContext {
     private String taskResult;
 
     /**
+     * 多实例id, 用于串联起多实例任务
+     */
+    private Long taskMultiId;
+
+    /**
      * 下一步执行人
      */
     private Object nextAssign;

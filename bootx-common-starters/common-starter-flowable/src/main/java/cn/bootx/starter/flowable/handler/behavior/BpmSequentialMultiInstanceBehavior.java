@@ -1,5 +1,6 @@
 package cn.bootx.starter.flowable.handler.behavior;
 
+import cn.hutool.core.util.IdUtil;
 import org.flowable.bpmn.model.Activity;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
@@ -7,8 +8,7 @@ import org.flowable.engine.impl.bpmn.behavior.SequentialMultiInstanceBehavior;
 
 import java.util.List;
 
-import static cn.bootx.starter.flowable.code.BpmnCode.MULTI_COLLECTION;
-import static cn.bootx.starter.flowable.code.BpmnCode.MULTI_COLLECTION_Element;
+import static cn.bootx.starter.flowable.code.BpmnCode.*;
 
 /**
  * Bpm 顺序多实例行为
@@ -31,10 +31,11 @@ public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceB
         super.setCollectionExpression(null);
         // 设置 collectionElementVariable(迭代出来的处理人) 和 collectionString(候选人集合)
         super.setCollectionString(MULTI_COLLECTION);
-        super.setCollectionElementVariable(MULTI_COLLECTION_Element);
+        super.setCollectionElementVariable(MULTI_COLLECTION_ELEMENT);
 
         List<Long> taskUsers = behaviorService.getTaskUsers(execution,this);
         execution.setVariable(super.collectionString, taskUsers);
+        execution.setVariable(MULTI_TASK_ID, IdUtil.getSnowflakeNextId());
         return taskUsers.size();
     }
 
@@ -44,9 +45,11 @@ public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceB
     @Override
     public boolean completionConditionSatisfied(DelegateExecution execution) {
         // 先进行自定义判断处理, 不通过调用原生的处理
-        if (behaviorService.completionConditionSatisfied(execution)){
-            return true;
+        boolean conditionSatisfied = behaviorService.completionConditionSatisfied(execution, this) || super.completionConditionSatisfied(execution);
+        if (conditionSatisfied){
+            // 删除多实例id
+            execution.removeVariable(MULTI_TASK_ID);
         }
-        return super.completionConditionSatisfied(execution);
+        return conditionSatisfied;
     }
 }

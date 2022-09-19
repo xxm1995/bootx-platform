@@ -20,6 +20,6 @@ public interface BpmMultiInstanceBehaviorService {
     /**
      * 是否满足结束条件
      */
-    boolean completionConditionSatisfied(DelegateExecution execution);
+    boolean completionConditionSatisfied(DelegateExecution execution, MultiInstanceActivityBehavior behavior);
 
 }

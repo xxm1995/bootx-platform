@@ -24,7 +24,9 @@ public class BpmContextLocal {
      * 获取TTL中的数据
      */
     public static BpmContext get() {
-        return Optional.ofNullable(THREAD_LOCAL_TENANT.get()).orElse(new BpmContext());
+        BpmContext bpmContext = Optional.ofNullable(THREAD_LOCAL_TENANT.get()).orElse(new BpmContext());
+        THREAD_LOCAL_TENANT.set(bpmContext);
+        return bpmContext;
     }
 
     /**
