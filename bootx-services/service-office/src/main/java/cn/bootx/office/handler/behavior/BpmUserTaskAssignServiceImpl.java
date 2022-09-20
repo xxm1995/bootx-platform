@@ -68,8 +68,8 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
                 bpmContext.setTaskMultiId((Long)multiId);
             }
 
-            String userIdStr = execution.getVariable(multiInstanceActivityBehavior.getCollectionElementVariable(), String.class);
-            TaskHelper.changeTaskAssignee(task, userIdStr);
+            val userIdStr = execution.getVariable(multiInstanceActivityBehavior.getCollectionElementVariable());
+            TaskHelper.changeTaskAssignee(task, userIdStr.toString());
             return;
         }
 

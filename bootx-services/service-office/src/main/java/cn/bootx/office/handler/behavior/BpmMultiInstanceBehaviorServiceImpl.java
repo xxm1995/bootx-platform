@@ -47,7 +47,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
      * @return
      */
     @Override
-    public List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior behavior) {
+    public List<String> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior behavior) {
         BpmContext bpmContext = BpmContextLocal.get();
 
         // 获取节点配置并设置处理人
@@ -66,23 +66,23 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
     /**
      * 获取处理人
      */
-    public List<Long> getUserIds(DelegateExecution execution,BpmModelNode modelNode,BpmContext bpmContext){
-        List<Long> userIds = new ArrayList<>(0);
+    public List<String> getUserIds(DelegateExecution execution,BpmModelNode modelNode,BpmContext bpmContext){
+        List<String> userIds = new ArrayList<>(0);
         // 发起人
         if (Objects.equals(modelNode.getAssignType(),ASSIGN_SPONSOR)){
             Long startUserId = this.getStartUserId(execution.getProcessInstanceId());
-            userIds = Collections.singletonList(startUserId);
+            userIds = Collections.singletonList(String.valueOf(startUserId));
         }
         // 用户手动选择
         if (Objects.equals(modelNode.getAssignType(), ASSIGN_SELECT)){
             //noinspection unchecked
-            userIds = (List<Long>) bpmContext.getNextAssign();
+            userIds = (List<String>) bpmContext.getNextAssign();
         }
 
         // 指定用户组
         if (Objects.equals(modelNode.getAssignType(),ASSIGN_USER_GROUP)){
             //noinspection unchecked
-            userIds = (List<Long>) modelNode.getAssignRaw();
+            userIds = (List<String>) modelNode.getAssignRaw();
         }
 
         // 指定角色
@@ -98,24 +98,25 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
     /**
      * 驳回处理
      */
-    private List<Long> reject(DelegateExecution execution, BpmModelNode modelNode, BpmContext bpmContext, MultiInstanceActivityBehavior behavior) {
+    private List<String> reject(DelegateExecution execution, BpmModelNode modelNode, BpmContext bpmContext, MultiInstanceActivityBehavior behavior) {
         // 查询当前环节的任务
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(execution.getProcessInstanceId(), execution.getCurrentActivityId());
         //noinspection OptionalGetWithoutIsPresent
-        String executionId = tasks.stream()
+        Long multiId = tasks.stream()
                 .max(Comparator.comparingLong(MpIdEntity::getId))
-                .map(BpmTask::getExecutionId)
+                .map(BpmTask::getMultiId)
                 .get();
         // 会签和串签处理方式不同
         if (Objects.equals(modelNode.getSequential(),true)){
             // 串签只能拿到之前执行了的任务, 未执行到的不会进行生成
-            List<Long> processedUserIds = tasks.stream()
-                    .filter(task -> Objects.equals(executionId, task.getExecutionId()))
+            List<String> processedUserIds = tasks.stream()
+                    .filter(task -> Objects.equals(multiId, task.getMultiId()))
                     .map(BpmTask::getUserId)
+                    .map(String::valueOf)
                     .collect(Collectors.toList());
 
             // 补全未执行到的任务信息
-            List<Long> userIds = this.getUserIds(execution, modelNode, bpmContext);
+            List<String> userIds = this.getUserIds(execution, modelNode, bpmContext);
             if (processedUserIds.size() >= userIds.size()){
                 return processedUserIds;
             } else {
@@ -125,12 +126,10 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
             }
         } else {
             // 会签可以拿到之前所有的任务
-//            tasks.stream()
-//                    .sorted(Comparator.comparingLong(MpIdEntity::getId))
-//                    .limit(behavior.getLoopVariable(execution,))
-
             return tasks.stream()
+                    .filter(task -> Objects.equals(multiId, task.getMultiId()))
                     .map(BpmTask::getUserId)
+                    .map(String::valueOf)
                     .collect(Collectors.toList());
         }
     }
@@ -138,15 +137,19 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
      * 获取发起人id
      */
     private Long getStartUserId(String processInstanceId) {
-        return bpmInstanceManager.findByInstanceId(processInstanceId).map(BpmInstance::getStartUserId)
+        return bpmInstanceManager.findByInstanceId(processInstanceId)
+                .map(BpmInstance::getStartUserId)
                 .orElse(null);
     }
 
     /**
      * 根据角色获取人员id集合
      */
-    private List<Long> getUserIdsByRole(List<Long> roleIds){
-        return userRoleManager.findAllByRoles(roleIds).stream().map(UserRole::getUserId).collect(Collectors.toList());
+    private List<String> getUserIdsByRole(List<Long> roleIds){
+        return userRoleManager.findAllByRoles(roleIds).stream()
+                .map(UserRole::getUserId)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
     }
 
     /**

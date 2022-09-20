@@ -33,7 +33,7 @@ public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceB
         super.setCollectionString(MULTI_COLLECTION);
         super.setCollectionElementVariable(MULTI_COLLECTION_ELEMENT);
 
-        List<Long> taskUsers = behaviorService.getTaskUsers(execution,this);
+        List<String> taskUsers = behaviorService.getTaskUsers(execution,this);
         execution.setVariable(super.collectionString, taskUsers);
         execution.setVariable(MULTI_TASK_ID, IdUtil.getSnowflakeNextId());
         return taskUsers.size();

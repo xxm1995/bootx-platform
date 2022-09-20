@@ -64,9 +64,9 @@ public class BpmTaskEventListenerService {
 
         BpmTask bpmTask = this.convert(task, bpmInstance);
 
-        // 是的多实例
+        // 是多实例
         if (Objects.nonNull(bpmContext.getTaskMultiId())){
-            System.out.println(bpmContext.getTaskMultiId());
+            bpmTask.setMultiId(bpmContext.getTaskMultiId());
         }
 
         // 是否跳过该节点, 且是正常情况下

@@ -37,6 +37,9 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
     /** 执行 ID */
     private String executionId;
 
+    /** 多实例关联 ID */
+    private Long multiId;
+
     /** 流程id */
     private String instanceId;
 

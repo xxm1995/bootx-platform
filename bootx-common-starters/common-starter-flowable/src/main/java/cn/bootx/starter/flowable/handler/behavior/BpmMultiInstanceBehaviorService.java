@@ -15,7 +15,7 @@ public interface BpmMultiInstanceBehaviorService {
     /**
      * 计算当前执行任务的处理人id集合
      */
-    List<Long> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior multiInstanceActivityBehavior);
+    List<String> getTaskUsers(DelegateExecution execution, MultiInstanceActivityBehavior multiInstanceActivityBehavior);
 
     /**
      * 是否满足结束条件
