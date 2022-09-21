@@ -9,7 +9,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 08/09/2022 10:28:00
+ Date: 21/09/2022 14:31:21
 */
 
 SET NAMES utf8mb4;
@@ -65,6 +65,8 @@ INSERT INTO `base_dict` VALUES (1561003189111603200, 'SiteMessageState', '消息
 INSERT INTO `base_dict` VALUES (1562696107020230656, 'BpmModelPublish', '工作流模型发布状态', '工作流', '工作流模型发布状态', 1399985191002447872, '2022-08-25 14:59:20', 1399985191002447872, '2022-08-25 15:27:55', 0, 1);
 INSERT INTO `base_dict` VALUES (1563083969989423104, 'BpmTaskAssignType', '工作流处理人分配类型', '工作流', '流程任务处理人分配类型', 1399985191002447872, '2022-08-26 16:40:34', 1399985191002447872, '2022-08-26 16:40:53', 0, 1);
 INSERT INTO `base_dict` VALUES (1567091641298386944, 'BpmTaskState', '流程任务状态', '工作流', '流程任务状态', 1399985191002447872, '2022-09-06 18:05:37', 1399985191002447872, '2022-09-06 18:05:47', 0, 1);
+INSERT INTO `base_dict` VALUES (1570343684024705024, 'BpmTaskResult', '流程任务处理结果', '工作流', '', 1399985191002447872, '2022-09-15 17:28:05', 1399985191002447872, '2022-09-15 17:28:05', 0, 0);
+INSERT INTO `base_dict` VALUES (1570764395519111168, 'BpmInstanceState', '流程实例状态', '工作流', '', 1399985191002447872, '2022-09-16 21:19:50', 1399985191002447872, '2022-09-16 21:19:50', 0, 0);
 
 -- ----------------------------
 -- Table structure for base_dict_item
@@ -202,6 +204,18 @@ INSERT INTO `base_dict_item` VALUES (1567163412960481280, 1563083969989423104, '
 INSERT INTO `base_dict_item` VALUES (1567175558888923136, 1563083969989423104, 'BpmTaskAssignType', 'roleGroup', '角色组', 0.00, '', 1399985191002447872, '2022-09-06 23:39:05', 1399985191002447872, '2022-09-06 23:39:05', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1567178994242002944, 1563083969989423104, 'BpmTaskAssignType', 'sponsor', '发起人', 0.00, '', 1399985191002447872, '2022-09-06 23:52:44', 1399985191002447872, '2022-09-06 23:52:44', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1567179143576002560, 1563083969989423104, 'BpmTaskAssignType', 'select', '用户手动选择', 0.00, '', 1399985191002447872, '2022-09-06 23:53:19', 1399985191002447872, '2022-09-07 00:01:22', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1570343731634249728, 1570343684024705024, 'BpmTaskResult', 'pass', '通过', 0.00, '', 1399985191002447872, '2022-09-15 17:28:16', 1399985191002447872, '2022-09-15 17:28:16', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570343761636106240, 1570343684024705024, 'BpmTaskResult', 'notPass', '不通过', 0.00, '', 1399985191002447872, '2022-09-15 17:28:23', 1399985191002447872, '2022-09-15 17:28:23', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570343788056027136, 1570343684024705024, 'BpmTaskResult', 'abstain', '弃权', 0.00, '', 1399985191002447872, '2022-09-15 17:28:29', 1399985191002447872, '2022-09-15 17:28:29', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570343826018672640, 1570343684024705024, 'BpmTaskResult', 'reject', '驳回', 0.00, '', 1399985191002447872, '2022-09-15 17:28:38', 1399985191002447872, '2022-09-15 17:28:38', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570343873737269248, 1570343684024705024, 'BpmTaskResult', 'back', '退回', 0.00, '', 1399985191002447872, '2022-09-15 17:28:50', 1399985191002447872, '2022-09-15 17:28:50', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570343913918701568, 1570343684024705024, 'BpmTaskResult', 'retrieve', '取回', 0.00, '', 1399985191002447872, '2022-09-15 17:28:59', 1399985191002447872, '2022-09-15 17:28:59', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570685888076120064, 1570343684024705024, 'BpmTaskResult', 'autoFinish', '自动完成', 0.00, '', 1399985191002447872, '2022-09-16 16:07:52', 1399985191002447872, '2022-09-16 16:08:02', 0, 1);
+INSERT INTO `base_dict_item` VALUES (1570764765255397376, 1570764395519111168, 'BpmInstanceState', 'running', '运行中', 0.00, '', 1399985191002447872, '2022-09-16 21:21:18', 1399985191002447872, '2022-09-16 21:21:18', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570764802047832064, 1570764395519111168, 'BpmInstanceState', 'finish', '已完成', 0.00, '', 1399985191002447872, '2022-09-16 21:21:27', 1399985191002447872, '2022-09-16 21:21:27', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570764836319490048, 1570764395519111168, 'BpmInstanceState', 'cancel', '取消', 0.00, '', 1399985191002447872, '2022-09-16 21:21:35', 1399985191002447872, '2022-09-16 21:21:35', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570784215744585728, 1570343684024705024, 'BpmTaskResult', 'cancel', '取消', 0.00, '', 1399985191002447872, '2022-09-16 22:38:35', 1399985191002447872, '2022-09-16 22:38:35', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570784331511570432, 1567091641298386944, 'BpmTaskState', 'cancel', '取消', 0.00, '', 1399985191002447872, '2022-09-16 22:39:03', 1399985191002447872, '2022-09-16 22:39:03', 0, 0);
 
 -- ----------------------------
 -- Table structure for base_dynamic_form
@@ -288,6 +302,7 @@ CREATE TABLE `bpm_instance`  (
                                  `id` bigint(20) NOT NULL,
                                  `instance_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '流程实例的id',
                                  `instance_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程标题',
+                                 `model_id` bigint(20) NULL DEFAULT NULL COMMENT '模型id',
                                  `def_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程定义ID',
                                  `def_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程定义名称',
                                  `start_user_id` bigint(20) NULL DEFAULT NULL COMMENT '发起人',
@@ -354,7 +369,10 @@ CREATE TABLE `bpm_model_node`  (
                                    `node_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点id',
                                    `node_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点名称',
                                    `multi` bit(1) NOT NULL COMMENT '是否多任务',
-                                   `sequential` bit(1) NOT NULL COMMENT '是否串签',
+                                   `sequential` bit(1) NULL DEFAULT NULL COMMENT '是否串签',
+                                   `or_sign` bit(1) NULL DEFAULT NULL COMMENT '是否是或签',
+                                   `ratio_pass` bit(1) NULL DEFAULT NULL COMMENT '是否比例通过',
+                                   `pass_ratio` int(3) NULL DEFAULT NULL COMMENT '通过比例',
                                    `reject` bit(1) NOT NULL COMMENT '是否允许驳回',
                                    `back` bit(1) NOT NULL COMMENT '是否允许回退',
                                    `retrieve` bit(1) NOT NULL COMMENT '是否允许取回',
@@ -383,12 +401,14 @@ CREATE TABLE `bpm_task`  (
                              `id` bigint(20) NOT NULL,
                              `task_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '任务ID',
                              `execution_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务执行 ID',
+                             `multi_id` bigint(20) NULL DEFAULT NULL COMMENT '多实例关联id',
                              `instance_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '流程实例的id',
                              `instance_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程名称(业务标题)',
                              `def_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '流程定义名称',
                              `node_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点id',
                              `node_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '任务节点名称',
-                             `state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '处理结果',
+                             `state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '处理状态',
+                             `result` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '处理结果',
                              `reason` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '处理意见',
                              `start_time` datetime(0) NULL DEFAULT NULL COMMENT '开始时间',
                              `end_time` datetime(0) NULL DEFAULT NULL COMMENT '结束时间',
@@ -401,7 +421,7 @@ CREATE TABLE `bpm_task`  (
                              `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
                              `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '更新人',
                              `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-                             `version` int(8) NULL DEFAULT NULL COMMENT '版本',
+                             `version` int(8) NOT NULL COMMENT '版本',
                              PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '流程任务扩展' ROW_FORMAT = DYNAMIC;
 
@@ -1159,6 +1179,9 @@ INSERT INTO `iam_perm_menu` VALUES (1562461289450536960, 'admin', 15624607707535
 INSERT INTO `iam_perm_menu` VALUES (1562461620766998528, 'admin', 1562460770753544192, '流程表单', 'BpmFrom', NULL, b'0', '', b'0', b'0', 'Dev', NULL, '/bpm/form', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-08-24 23:27:34', 1399985191002447872, '2022-08-24 23:27:56', 1, 1);
 INSERT INTO `iam_perm_menu` VALUES (1563092672406859776, 'admin', 1537732440632524800, '我的发起', 'MyApplyList', NULL, b'0', '', b'0', b'0', 'office/myapply/MyApplyList', NULL, '/person/myApply', '', 1, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-08-26 17:15:09', 1399985191002447872, '2022-08-30 22:46:25', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1564626025579462656, 'admin', 1537732440632524800, '已办任务', 'MyDoneTaskList', NULL, b'0', '', b'0', b'0', 'office/mydone/MyDoneList', NULL, '/person/done', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-08-30 22:48:09', 1399985191002447872, '2022-08-30 22:48:29', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1571023702122766336, 'admin', 1562460770753544192, '未处理任务', 'BpmTodoTask', NULL, b'0', '', b'0', b'0', 'bpm/task/TodoTaskList', NULL, '/bpm/todo', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-09-17 14:30:13', 1399985191002447872, '2022-09-17 14:31:23', 2, 0);
+INSERT INTO `iam_perm_menu` VALUES (1571023925834358784, 'admin', 1562460770753544192, '已处理任务', 'BpmDoneTask', NULL, b'0', '', b'0', b'0', 'bpm/task/DoneTaskList', NULL, '/bpm/done', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-09-17 14:31:07', 1399985191002447872, '2022-09-17 14:31:07', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1571024250171498496, 'admin', 1562460770753544192, '流程实例', 'BpmInstance', NULL, b'0', '', b'0', b'0', 'bpm/instance/InstanceList', NULL, '/bpm/instance', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-09-17 14:32:24', 1399985191002447872, '2022-09-17 14:32:24', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -2269,7 +2292,7 @@ CREATE TABLE `qrtz_fired_triggers`  (
 -- ----------------------------
 -- Records of qrtz_fired_triggers
 -- ----------------------------
-INSERT INTO `qrtz_fired_triggers` VALUES ('quartzScheduler', 'NON_CLUSTERED1661137921028', '1546857070483939328', 'DEFAULT', 'NON_CLUSTERED', 1661147655686, 1661147660000, 5, 'ACQUIRED', NULL, NULL, '0', '0');
+INSERT INTO `qrtz_fired_triggers` VALUES ('quartzScheduler', 'NON_CLUSTERED1663741439856', '1546857070483939328', 'DEFAULT', 'NON_CLUSTERED', 1663741920988, 1663741925000, 5, 'ACQUIRED', NULL, NULL, '0', '0');
 
 -- ----------------------------
 -- Table structure for qrtz_job_details
@@ -2429,7 +2452,7 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 -- Records of qrtz_triggers
 -- ----------------------------
-INSERT INTO `qrtz_triggers` VALUES ('quartzScheduler', '1546857070483939328', 'DEFAULT', '1546857070483939328', 'DEFAULT', NULL, 1661147660000, 1661147655000, 5, 'ACQUIRED', 'CRON', 1657634445000, 0, NULL, 0, '');
+INSERT INTO `qrtz_triggers` VALUES ('quartzScheduler', '1546857070483939328', 'DEFAULT', '1546857070483939328', 'DEFAULT', NULL, 1663741925000, 1663741920000, 5, 'ACQUIRED', 'CRON', 1657634445000, 0, NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for sales_activity
