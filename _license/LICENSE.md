@@ -26,3 +26,6 @@ https://gitee.com/Vincent-Vic/workflow-bpmn-modeler-antdv
 
 flowable 工作流相关思路和实现 乐之终曲:
 https://blog.csdn.net/qq_37143673
+
+GoView 一个Vue3搭建的低代码数据可视化开发平台:
+https://gitee.com/dromara/go-view
