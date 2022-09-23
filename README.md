@@ -14,12 +14,12 @@
 
 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
 致力将开源版打造成超越商业版后台管理框架的项目。前端分为vue2版和vue3版，vue2使用 [ANTD PRO VUE](https://pro.antdv.com/) 作为脚手架，vue3使用 [Vben-Admin-Next](https://vvbin.cn/doc-next/) 作为脚手架。
-移动端使用 [taro](https://taro.jd.com/) vue3+TS为技术栈。
+移动端使用 [Taro](https://taro.jd.com/) vue3+TS为技术栈。
 
 ## 🍒文档
 
 - 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)
+- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) [前端项目(vue3开发中)](https://gitee.com/bootx/bootx-platfrom-vue3)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove) [PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
