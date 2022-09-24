@@ -14,9 +14,11 @@ import java.util.List;
 @Getter
 public class TaskCompletedEvent extends ApplicationEvent {
     private final List<BpmTask> bpmTasks;
+    private final boolean multi;
 
-    public TaskCompletedEvent(Object source, List<BpmTask> bpmTasks) {
+    public TaskCompletedEvent(Object source, List<BpmTask> bpmTasks, boolean multi) {
         super(source);
         this.bpmTasks = bpmTasks;
+        this.multi = multi;
     }
 }

@@ -75,9 +75,9 @@ public class BpmEventService {
     /**
      * 任务完成事件
      */
-    public void taskCompleted(List<BpmTask> tasks){
+    public void taskCompleted(List<BpmTask> tasks,boolean multi){
         this.afterCommit(() -> {
-            eventPublisher.publishEvent(new TaskCompletedEvent(this,tasks));
+            eventPublisher.publishEvent(new TaskCompletedEvent(this,tasks, multi));
         });
     }
 

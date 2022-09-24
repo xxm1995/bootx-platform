@@ -27,10 +27,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static cn.bootx.common.core.code.CommonCode.SYSTEM_DEFAULT_USERID;
+import static cn.bootx.common.core.code.CommonCode.SYSTEM_DEFAULT_USERNAME;
 import static cn.bootx.notice.code.SiteMessageCode.*;
 
 /**
@@ -124,6 +127,33 @@ public class SiteMessageService {
                     .collect(Collectors.toList());
             siteMessageUserManager.saveAll(siteMessageUsers);
         }
+    }
+
+    /**
+     * 发送给单个用户信息, 发送人为系统
+     */
+    public void sendSingleUserBySystem(String title, String content,Long userId){
+        val param = new SendSiteMessageParam()
+                .setTitle(title)
+                .setContent(content)
+                .setSenderId(SYSTEM_DEFAULT_USERID)
+                .setSenderName(SYSTEM_DEFAULT_USERNAME)
+                .setReceiveType(RECEIVE_USER)
+                .setReceiveIds(Collections.singletonList(userId));
+        this.send(param);
+    }
+    /**
+     * 发送给多个用户信息, 发送人为系统
+     */
+    public void sendMultiUserBySystem(String title, String content,List<Long> userIds){
+        val param = new SendSiteMessageParam()
+                .setTitle(title)
+                .setContent(content)
+                .setSenderId(SYSTEM_DEFAULT_USERID)
+                .setSenderName(SYSTEM_DEFAULT_USERNAME)
+                .setReceiveType(RECEIVE_USER)
+                .setReceiveIds(userIds);
+        this.send(param);
     }
 
     /**

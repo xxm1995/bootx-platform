@@ -105,7 +105,7 @@ public class BpmTaskEventListenerService {
                     .setReason(bpmContext.getTaskReason())
                     .setFormVariables(bpmContext.getFormVariables());
             bpmTaskManager.updateById(bpmTask);
-            eventService.taskCompleted(Collections.singletonList(bpmTask));
+            eventService.taskCompleted(Collections.singletonList(bpmTask),false);
         });
     }
 
@@ -167,6 +167,6 @@ public class BpmTaskEventListenerService {
                         .setState(STATE_PASS))
                 .collect(Collectors.toList());
         bpmTaskManager.updateAllById(updateTasks);
-        eventService.taskCompleted(updateTasks);
+        eventService.taskCompleted(updateTasks,true);
     }
 }

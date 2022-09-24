@@ -7,6 +7,9 @@ package cn.bootx.notice.code;
 */
 public interface MessageTemplateCode {
 
+    /** 站内信 */
+    int SITE = 0;
+
     /** 钉钉 */
     int DING_TALK = 1;
 
