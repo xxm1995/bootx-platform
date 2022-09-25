@@ -187,6 +187,6 @@ public class BpmTaskOperateService {
      * 重新分配人员
      */
     public void assignee(String taskId, Long userId){
-        taskService.setOwner(taskId, String.valueOf(userId));
+        taskService.setAssignee(taskId, String.valueOf(userId));
     }
 }
