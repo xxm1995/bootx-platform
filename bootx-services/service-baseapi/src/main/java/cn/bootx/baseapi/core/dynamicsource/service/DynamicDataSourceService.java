@@ -12,7 +12,7 @@ import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
-import com.baomidou.dynamic.datasource.creator.DruidDataSourceCreator;
+import com.baomidou.dynamic.datasource.creator.DataSourceCreator;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ import java.util.List;
 public class DynamicDataSourceService {
     private final DynamicDataSourceManager dynamicDataSourceManager;
 
-    private final DruidDataSourceCreator dataSourceCreator;
+    private final DataSourceCreator hikariDataSourceCreator;
     private final DynamicRoutingDataSource dynamicRoutingDataSource;
 
 
@@ -91,7 +91,7 @@ public class DynamicDataSourceService {
         dataSourceProperty.setPassword(dbPassword);
         dataSourceProperty.setDriverClassName(dynamicDataSource.getDbDriver());
         dataSourceProperty.setUsername(dynamicDataSource.getDbUsername());
-        DataSource dataSource = dataSourceCreator.createDataSource(dataSourceProperty);
+        DataSource dataSource = hikariDataSourceCreator.createDataSource(dataSourceProperty);
         try {
             dynamicRoutingDataSource.addDataSource(dynamicDataSource.getCode(), dataSource);
         } catch (Exception e) {

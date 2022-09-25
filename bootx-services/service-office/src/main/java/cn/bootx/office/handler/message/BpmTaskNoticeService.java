@@ -73,7 +73,7 @@ public class BpmTaskNoticeService {
             // 发送给新处理人
             Map<String,Object> newMap = new HashMap<>();
             String newTitle = StrUtil.format("{} {} 任务已经被完成",bpmTask.getInstanceName(),bpmTask.getNodeName());
-            String newContent = messageTemplateService.rendering(NoticeMessageCode.BPM_TASK_ASSIGN_CREATED, newMap);
+            String newContent = messageTemplateService.rendering(NoticeMessageCode.BPM_TASK_COMPLETED, newMap);
             messageService.sendSingleUserBySystem(newTitle,newContent,bpmTask.getUserId());
         }
     }
@@ -83,7 +83,12 @@ public class BpmTaskNoticeService {
      */
     @EventListener
     public void taskCancel(TaskCancelEvent event){
-
+        for (BpmTask bpmTask : event.getBpmTasks()) {
+            Map<String,Object> map = new HashMap<>();
+            String title = StrUtil.format("{} {} 任务已经被完成",bpmTask.getInstanceName(),bpmTask.getNodeName());
+            String content = messageTemplateService.rendering(NoticeMessageCode.BPM_TASK_CANCEL, map);
+            messageService.sendSingleUserBySystem(title,content,bpmTask.getUserId());
+        }
     }
 
     /**
@@ -91,6 +96,10 @@ public class BpmTaskNoticeService {
      */
     @EventListener
     public void taskReject(TaskRejectEvent event){
-
+        BpmTask bpmTask = event.getBpmTask();
+        Map<String,Object> map = new HashMap<>();
+        String title = StrUtil.format("{} {} 任务已经被被驳回",bpmTask.getInstanceName(),bpmTask.getNodeName());
+        String content = messageTemplateService.rendering(NoticeMessageCode.BPM_TASK_REJECT, map);
+        messageService.sendSingleUserBySystem(title,content,bpmTask.getUserId());
     }
 }

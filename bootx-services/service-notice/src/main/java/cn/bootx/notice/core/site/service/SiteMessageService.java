@@ -112,6 +112,7 @@ public class SiteMessageService {
         SiteMessage siteMessage = new SiteMessage()
                 .setTitle(param.getTitle())
                 .setContent(param.getContent())
+                .setSendState(STATE_SENT)
                 .setReceiveType(param.getReceiveType())
                 .setEfficientTime(param.getEfficientTime())
                 .setSenderId(param.getSenderId())
@@ -120,12 +121,14 @@ public class SiteMessageService {
         siteMessageManager.save(siteMessage);
         // 添加消息关联人信息
         if (Objects.equals(RECEIVE_USER,param.getReceiveType())){
+
             List<SiteMessageUser> siteMessageUsers = param.getReceiveIds().stream()
                     .map(userId -> new SiteMessageUser()
                             .setMessageId(siteMessage.getId())
                             .setReceiveId(userId))
                     .collect(Collectors.toList());
             siteMessageUserManager.saveAll(siteMessageUsers);
+            userWsNoticeService.sendMessageByUsers(WsRes.eventNotice(EVENT_MESSAGE_UPDATE),param.getReceiveIds());
         }
     }
 
@@ -195,7 +198,6 @@ public class SiteMessageService {
      */
     public PageResult<SiteMessageInfo> pageByReceive(PageParam pageParam,SiteMessageInfo query){
         Long userId = SecurityUtil.getUserId();
-//        Long userId = 0L;
         return MpUtil.convert2PageResult(siteMessageManager.pageByReceive(pageParam,query,userId));
     }
     /**
@@ -203,7 +205,6 @@ public class SiteMessageService {
      */
     public PageResult<SiteMessageDto> pageBySender(PageParam pageParam,SiteMessageInfo query){
         Long userId = SecurityUtil.getUserId();
-//        Long userId = 0L;
         return MpUtil.convert2DtoPageResult(siteMessageManager.pageBySender(pageParam,query,userId));
     }
 
