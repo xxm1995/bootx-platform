@@ -216,6 +216,34 @@ INSERT INTO `base_dict_item` VALUES (1570764802047832064, 1570764395519111168, '
 INSERT INTO `base_dict_item` VALUES (1570764836319490048, 1570764395519111168, 'BpmInstanceState', 'cancel', '取消', 0.00, '', 1399985191002447872, '2022-09-16 21:21:35', 1399985191002447872, '2022-09-16 21:21:35', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1570784215744585728, 1570343684024705024, 'BpmTaskResult', 'cancel', '取消', 0.00, '', 1399985191002447872, '2022-09-16 22:38:35', 1399985191002447872, '2022-09-16 22:38:35', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1570784331511570432, 1567091641298386944, 'BpmTaskState', 'cancel', '取消', 0.00, '', 1399985191002447872, '2022-09-16 22:39:03', 1399985191002447872, '2022-09-16 22:39:03', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1573665422392098816, 1439961232651034624, 'MessageTemplateCode', '0', '站内信', -11.00, 'SITE', 1399985191002447872, '2022-09-24 21:27:29', 1399985191002447872, '2022-09-24 21:27:39', 0, 1);
+
+
+-- ----------------------------
+-- Table structure for base_dynamic_data_source
+-- ----------------------------
+CREATE TABLE `base_dynamic_data_source`  (
+                                             `id` bigint(20) NOT NULL,
+                                             `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据源编码',
+                                             `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据源名称',
+                                             `database_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据库类型',
+                                             `db_driver` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '驱动类',
+                                             `db_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据库地址',
+                                             `db_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据库名称',
+                                             `db_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '用户名',
+                                             `db_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '密码',
+                                             `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '备注',
+                                             `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+                                             `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                             `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修改人',
+                                             `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+                                             `version` int(11) NOT NULL COMMENT '版本',
+                                             `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
+                                             PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '动态数据源管理' ROW_FORMAT = Dynamic;
+-- ----------------------------
+-- Records of base_dynamic_data_source
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for base_dynamic_form
@@ -1182,6 +1210,7 @@ INSERT INTO `iam_perm_menu` VALUES (1564626025579462656, 'admin', 15377324406325
 INSERT INTO `iam_perm_menu` VALUES (1571023702122766336, 'admin', 1562460770753544192, '未处理任务', 'BpmTodoTask', NULL, b'0', '', b'0', b'0', 'bpm/task/TodoTaskList', NULL, '/bpm/todo', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-09-17 14:30:13', 1399985191002447872, '2022-09-17 14:31:23', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1571023925834358784, 'admin', 1562460770753544192, '已处理任务', 'BpmDoneTask', NULL, b'0', '', b'0', b'0', 'bpm/task/DoneTaskList', NULL, '/bpm/done', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-09-17 14:31:07', 1399985191002447872, '2022-09-17 14:31:07', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1571024250171498496, 'admin', 1562460770753544192, '流程实例', 'BpmInstance', NULL, b'0', '', b'0', b'0', 'bpm/instance/InstanceList', NULL, '/bpm/instance', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-09-17 14:32:24', 1399985191002447872, '2022-09-17 14:32:24', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1573669546890297344, 'admin', 1552207982510706688, '动态数据源', 'DynamicSource', NULL, b'0', '', b'0', b'0', 'develop/dynamicsource/DynamicDataSourceList', NULL, '/develop/source', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-09-24 21:43:52', 1399985191002447872, '2022-09-24 21:43:52', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -1501,6 +1530,13 @@ CREATE TABLE `notice_message_template`  (
 -- Records of notice_message_template
 -- ----------------------------
 INSERT INTO `notice_message_template` VALUES (1424936204932169730, 'cs', '测试', 'hello ${msg}6666666666666666666666666666', 1, '测试模板', 0, '2021-08-10 11:30:40', 0, '2021-08-10 11:30:40', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1573951326893510656, 'BpmTaskCreated', '流程任务创建事件', '流程任务创建事件', 0, '', 1399985191002447872, '2022-09-25 16:23:34', 1399985191002447872, '2022-09-25 16:23:34', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1573951515616219136, 'BpmTaskAssignCreated', '流程任务更改处理人事件(新处理人)', '流程任务更改处理人事件(新处理人)', 0, '', 1399985191002447872, '2022-09-25 16:24:19', 1399985191002447872, '2022-09-25 16:27:09', 1, 0);
+INSERT INTO `notice_message_template` VALUES (1573952505056727040, 'BpmTaskAssignCancel', '流程任务更改处理人事件(原处理人)', '流程任务更改处理人事件(原处理人)', 0, '', 1399985191002447872, '2022-09-25 16:28:14', 1399985191002447872, '2022-09-25 16:28:14', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1573952568654958592, 'BpmTaskCancel', '流程任务取消事件', '流程任务取消事件', 0, '', 1399985191002447872, '2022-09-25 16:28:30', 1399985191002447872, '2022-09-25 16:28:30', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1573952621826150400, 'BpmTaskReject', '流程任务驳回事件', '流程任务驳回事件', 0, '', 1399985191002447872, '2022-09-25 16:28:42', 1399985191002447872, '2022-09-25 16:28:42', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1573952709432578048, 'BpmInstanceCompleted', '流程完成时通知发起人', '流程完成时通知发起人', 0, '', 1399985191002447872, '2022-09-25 16:29:03', 1399985191002447872, '2022-09-25 16:29:03', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1573952762507300864, 'BpmInstanceCancel', '流程取消时通知发起人', '流程取消时通知发起人', 0, '', 1399985191002447872, '2022-09-25 16:29:16', 1399985191002447872, '2022-09-25 16:29:16', 0, 0);
 
 -- ----------------------------
 -- Table structure for notice_site_message
