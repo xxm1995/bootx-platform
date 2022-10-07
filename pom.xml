@@ -222,12 +222,6 @@
                 <artifactId>common-cache</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-            <!-- MQTT -->
-            <dependency>
-                <groupId>cn.bootx.platform</groupId>
-                <artifactId>common-mqtt</artifactId>
-                <version>${bootx-platform.version}</version>
-            </dependency>
             <!-- websocket -->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>

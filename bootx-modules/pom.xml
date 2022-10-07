@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <description>解决方案实现</description>
     <modules>
-        <module>module-eshop</module>
+<!--        <module>module-eshop</module>-->
     </modules>
 
     <dependencies>

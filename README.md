@@ -4,7 +4,7 @@
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
  <img src="https://img.shields.io/badge/Boot%20Platform-1.1.4-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
- <img src="https://img.shields.io/badge/Spring%20Boot-2.7.3-blue.svg" alt="Downloads"/>
+ <img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
 
@@ -50,7 +50,7 @@
 - 集成Flowable+Bpmn.js工作流全家桶，方便OA相关功能的开发
 
 ## 🚅 路线图
-- 工作流功能完善           9 月
+- 工作流功能完善          
   - [x] 更灵活的节点用户配置，可配置发起人、指定用户、指定角色等
   - [x] 会签处理
   - [x] 串签处理
@@ -58,14 +58,8 @@
   - [x] 会签比例通过处理
   - [x] 驳回处理
   - [ ] 任意节点退回
-  - [ ] 关联消息通知
+  - [x] 关联消息通知
   - [x] 更方便与现有业务整合
-
-- 移动端脚手架【taro TS+Vue3】       10 月
-  - [x] 扩展新登录方式和管理策略
-  - [ ] 消息通知
-  - [ ] 任务处理
-  - [ ] 个人信息管理
 
 ## 🥂 Quick Start
 

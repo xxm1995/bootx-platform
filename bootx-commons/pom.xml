@@ -29,7 +29,7 @@
         <module>common-xxl-job</module>
         <module>common-mongo</module>
         <module>common-websocket</module>
-        <module>common-mqtt</module>
+<!--        <module>common-mqtt</module>-->
         <module>common-rabbitmq</module>
         <module>common-lock</module>
     </modules>
