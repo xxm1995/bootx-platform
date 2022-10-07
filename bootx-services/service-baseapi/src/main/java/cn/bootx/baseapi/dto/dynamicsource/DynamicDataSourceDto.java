@@ -1,10 +1,8 @@
 package cn.bootx.baseapi.dto.dynamicsource;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-
+import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
+import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,6 +33,7 @@ public class DynamicDataSourceDto extends BaseDto {
     private String dbName;
     @Schema(description = "用户名")
     private String dbUsername;
+    @SensitiveInfo(SensitiveType.PASSWORD)
     @Schema(description = "密码")
     private String dbPassword;
     @Schema(description = "备注")

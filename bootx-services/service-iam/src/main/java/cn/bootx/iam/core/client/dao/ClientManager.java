@@ -6,6 +6,7 @@ import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.client.entity.Client;
 import cn.bootx.iam.param.client.ClientParam;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,10 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
     */
     public Page<Client> page(PageParam pageParam, ClientParam param) {
         Page<Client> mpPage = MpUtil.getMpPage(pageParam, Client.class);
-        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
+        return lambdaQuery()
+                .like(StrUtil.isNotBlank(param.getCode()),Client::getCode,param.getCode())
+                .like(StrUtil.isNotBlank(param.getName()),Client::getName,param.getName())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
     public Optional<Client> findByCode(String code) {

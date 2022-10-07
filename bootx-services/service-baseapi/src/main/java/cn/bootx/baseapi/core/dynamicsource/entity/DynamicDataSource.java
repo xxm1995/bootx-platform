@@ -1,17 +1,12 @@
 package cn.bootx.baseapi.core.dynamicsource.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
+import cn.bootx.baseapi.core.dynamicsource.convert.DynamicDataSourceConvert;
+import cn.bootx.baseapi.dto.dynamicsource.DynamicDataSourceDto;
+import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
+import cn.bootx.common.core.annotation.EncryptionField;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
-import cn.bootx.baseapi.dto.dynamicsource.DynamicDataSourceDto;
-import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
-import cn.bootx.baseapi.core.dynamicsource.convert.DynamicDataSourceConvert;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -42,6 +37,7 @@ public class DynamicDataSource extends MpBaseEntity implements EntityBaseFunctio
     /** 用户名 */
     private String dbUsername;
     /** 密码 */
+    @EncryptionField
     private String dbPassword;
     /** 备注 */
     private String remark;

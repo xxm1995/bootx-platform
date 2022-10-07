@@ -23,7 +23,7 @@
           label="$column.comments"
           prop="$column.name"
         >
-          <a-input v-model="form.$column.name" :disabled="showable"/>
+          <a-input v-model="form.$column.name" :disabled="showable"  placeholder="请输入$column.comments"/>
         </a-form-model-item>
   #end
       </a-form-model>
