@@ -78,6 +78,9 @@ public class CodeGenData {
         /** java类型 */
         private String javaType;
 
+        /** ts类型 */
+        private String tsType;
+
         /** 备注 */
         private String comments;
     }

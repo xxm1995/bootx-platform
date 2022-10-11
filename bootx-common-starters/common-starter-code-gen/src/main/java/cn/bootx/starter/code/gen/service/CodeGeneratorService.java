@@ -111,6 +111,7 @@ public class CodeGeneratorService {
                 .map(databaseColumn -> new CodeGenColumnData()
                         .setComments(databaseColumn.getColumnComment())
                         .setJavaType(CodeGenColumnTypeEnum.convertJavaType(databaseColumn.getDataType()))
+                        .setTsType(CodeGenColumnTypeEnum.convertTsType(databaseColumn.getDataType()))
                         .setName(NamingCase.toCamelCase(databaseColumn.getColumnName())))
                 .filter(codeGenColumn->!entityFilterFields.contains(codeGenColumn.getName()))
                 .collect(Collectors.toList());

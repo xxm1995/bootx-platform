@@ -1,0 +1,72 @@
+import { defHttp } from '/@/utils/http/axios'
+import { PageResult, Result } from '/#/axios'
+import { BaseEntity } from '/#/web'
+
+/**
+ * 分页
+ */
+export const page = (params) => {
+  return defHttp.get<Result<PageResult<${entityUpName}>>>({
+    url: '${requestPath}/page',
+    params,
+  })
+}
+
+/**
+ * 获取单条
+ */
+export const get = (id) => {
+  return defHttp.get<Result<${entityUpName}>>({
+    url: '${requestPath}/findById',
+    params: { id },
+  })
+}
+
+/**
+ * 添加
+ */
+export const add = (obj: ${entityUpName}) => {
+  return defHttp.post({
+    url: '${requestPath}/add',
+    data: obj,
+  })
+}
+
+/**
+ * 更新
+ */
+export const update = (obj: ${entityUpName}) => {
+  return defHttp.post({
+    url: '${requestPath}/update',
+    data: obj,
+  })
+}
+
+/**
+ * 删除
+ */
+export const del = (id) => {
+  return defHttp.delete({
+    url: '${requestPath}/delete',
+    params: { id },
+  })
+}
+
+/**
+ * 查询全部
+ */
+export const findAll = () => {
+  return defHttp.get<Result<Array<${entityUpName}>>>({
+    url: '${requestPath}/findAll',
+  })
+}
+
+/**
+ * 实体类接口
+ */
+export interface ${entityUpName} extends BaseEntity {
+#foreach ($column in $columns)
+    // $column.comments
+    $column.name: $column.tsType,
+#end
+}
