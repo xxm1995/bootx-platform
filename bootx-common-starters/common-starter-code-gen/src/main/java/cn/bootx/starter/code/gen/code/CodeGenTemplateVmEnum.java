@@ -25,10 +25,10 @@ public enum CodeGenTemplateVmEnum {
     CONVERT("convert","codegen/template/java/convert.java.vm","Convert.java"),
     API_V2("api_v2","codegen/template/vue2/api.js.vm",".js"),
     LIST_V2("list_v2","codegen/template/vue2/list.vue.vm","List.vue"),
-    EDIT_V2("edit_v2","codegen/template/vue2/edit.vue.vm","Edit.vue");
-//    API_V3("api_v3","codegen/template/vue3/api.js.vm","V3.js"),
-//    LIST_V3("list_v3","codegen/template/vue3/list.vue.vm","ListV3.vue"),
-//    EDIT_V3("edit_v3","codegen/template/vue3/edit.vue.vm","EditV3.vue");
+    EDIT_V2("edit_v2","codegen/template/vue2/edit.vue.vm","Edit.vue"),
+    API_V3("api_v3","codegen/template/vue3/api.ts.vm","V3.ts"),
+    LIST_V3("list_v3","codegen/template/vue3/list.vue.vm","List.vue"),
+    EDIT_V3("edit_v3","codegen/template/vue3/edit.vue.vm","Edit.vue");
 
     /** 名称 */
     private final String name;

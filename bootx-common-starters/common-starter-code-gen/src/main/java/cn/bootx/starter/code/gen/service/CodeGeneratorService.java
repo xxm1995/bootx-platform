@@ -31,10 +31,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -77,6 +74,7 @@ public class CodeGeneratorService {
         Map<String, Object> map = this.getCodeGenInfo(codeGenParam);
         // 遍历生成代码预览
         return Arrays.stream(CodeGenTemplateVmEnum.values())
+                .filter(o->filterVue(o,codeGenParam.getVueVersion()))
                 .map(vmEnum -> {
                     VelocityContext context = new VelocityContext(map);
                     StringWriter sw = new StringWriter();
@@ -86,6 +84,19 @@ public class CodeGeneratorService {
                             .setName(vmEnum.getName())
                             .setContent(sw.toString());
                 }).collect(Collectors.toList());
+    }
+
+    /**
+     * 过滤vue文件
+     */
+    private boolean filterVue(CodeGenTemplateVmEnum vmEnum,String vueVersion){
+        if (Objects.equals(vueVersion,"v3")){
+            // vue3时不生成vue2的代码
+            return !StrUtil.endWith(vmEnum.getName(),"v2");
+        } else {
+            // vue2时不生成vue3的代码
+            return !StrUtil.endWith(vmEnum.getName(),"v3");
+        }
     }
 
     /**

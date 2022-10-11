@@ -1,0 +1,101 @@
+<template>
+    <div>
+        <div class="m-3 p-3 pt-5 bg-white">
+            <b-query :query-params="model.queryParam" :fields="fields" @query="queryPage" @reset="resetQueryParams" />
+        </div>
+        <div class="m-3 p-3 bg-white">
+            <vxe-toolbar>
+                <template #buttons>
+                    <a-space>
+                        <a-button type="primary" @click="add">新建</a-button>
+                    </a-space>
+                </template>
+            </vxe-toolbar>
+            <vxe-table row-id="id" :data="pagination.records" :loading="loading">
+                <vxe-column type="seq" width="60" />
+            #foreach ($column in $columns)
+                <vxe-column field="$column.name" title="$column.comments"/>
+            #end
+                <vxe-column field="createTime" title="创建时间" />
+                <vxe-column fixed="right" width="150" :showOverflow="false" title="操作">
+                    <template #default="{ row }">
+            <span>
+              <a href="javascript:" @click="show(row)">查看</a>
+            </span>
+                        <a-divider type="vertical" />
+                        <span>
+              <a href="javascript:" @click="edit(row)">编辑</a>
+            </span>
+                        <a-divider type="vertical" />
+                        <a-popconfirm title="是否删除" @confirm="remove(row)" okText="是" cancelText="否">
+                            <a href="javascript:" style="color: red">删除</a>
+                        </a-popconfirm>
+                    </template>
+                </vxe-column>
+            </vxe-table>
+            <vxe-pager
+                    size="medium"
+                    :loading="loading"
+                    :current-page="pagination.current"
+                    :page-size="pagination.size"
+                    :total="pagination.total"
+                    @page-change="handleTableChange"
+            />
+            <${entityDashName}-edit ref="${entityLowName}Edit" @ok="handleOk"/>
+        </div>
+    </div>
+</template>
+
+<script lang="ts" setup>
+    import { onMounted, ref } from 'vue'
+    import { del, page } from './${entityUpName}.api'
+    import useTablePage from '/@/hooks/bootx/useTablePage'
+    import ${entityUpName}Edit from './${entityUpName}Edit.vue'
+    import BQuery from '/@/components/Bootx/Query/BQuery.vue'
+    import { FormEditType } from '/@/enums/formTypeEnum'
+    import { useMessage } from '/@/hooks/web/useMessage'
+
+    // 使用hooks
+    const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading } = useTablePage(queryPage)
+    const ${entityLowName} = ref()
+    // 查询条件
+    const fields = []
+
+    onMounted(() => {
+        queryPage()
+    })
+
+    // 分页查询
+    function queryPage() {
+        loading.value = true
+        page({
+            ...model.queryParam,
+            ...pages,
+        }).then(({ data }) => {
+            pageQueryResHandel(data)
+        })
+    }
+    // 新增
+    function add() {
+        ${entityLowName}.value.init(null, FormEditType.Add)
+    }
+    // 查看
+    function edit(record) {
+        ${entityLowName}.value.init(record.id, FormEditType.Edit)
+    }
+    // 查看
+    function show(record) {
+        ${entityLowName}.value.init(record.id, FormEditType.Show)
+    }
+
+    // 删除
+    const { notification } = useMessage()
+    function remove(record) {
+        del(record.id).then(() => {
+            notification.success({ message: '删除成功' })
+        })
+        queryPage()
+    }
+</script>
+
+<style lang="less" scoped></style>

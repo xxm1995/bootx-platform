@@ -23,6 +23,9 @@ public class CodeGenParam {
     @Schema(description = "基于什么类型的基类")
     private String baseEntity;
 
+    @Schema(description = "vue版本")
+    private String vueVersion;
+
     @Schema(description = "core目录(service/entity/dao等所在的包)")
     private String corePack;
 
