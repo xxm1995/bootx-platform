@@ -15,35 +15,6 @@
                 <a-form-item label="编码" v-bind="validateInfos.code" name="code">
                     <a-input v-model:value="form.code" :disabled="showable" placeholder="请输入编码" />
                 </a-form-item>
-                <a-form-item label="名称" v-bind="validateInfos.name" name="name">
-                    <a-input v-model:value="form.name" :disabled="showable" placeholder="请输入名称" />
-                </a-form-item>
-                <a-form-item label="启用状态" v-bind="validateInfos.enable" name="enable">
-                    <a-switch checked-children="开" un-checked-children="关" v-model:checked="form.enable" :disabled="showable || form.system" />
-                </a-form-item>
-                <a-form-item label="系统内置" name="system">
-                    <a-tag v-if="form.system" color="green">是</a-tag>
-                    <a-tag v-else color="red">否</a-tag>
-                </a-form-item>
-                <a-form-item label="关联登录方式" name="loginTypeIdList">
-                    <a-select
-                            allowClear
-                            mode="multiple"
-                            v-model:value="form.loginTypeIdList"
-                            :default-value="form.loginTypeIdList"
-                            :filter-option="search"
-                            :disabled="showable"
-                            style="width: 100%"
-                            placeholder="选择关联的登录方式"
-                    >
-                        <a-select-option v-for="o in loginTypes" :key="o.id">
-                            {{ o.name }}
-                        </a-select-option>
-                    </a-select>
-                </a-form-item>
-                <a-form-item label="描述" name="description">
-                    <a-textarea v-model:value="form.description" :disabled="showable" placeholder="请输入描述" />
-                </a-form-item>
             </a-form>
         </a-spin>
         <div class="drawer-button">

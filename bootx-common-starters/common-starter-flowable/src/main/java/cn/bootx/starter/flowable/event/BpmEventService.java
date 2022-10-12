@@ -105,6 +105,15 @@ public class BpmEventService {
     public void taskReject(BpmTask task){
         this.afterCommit(() -> {
             eventPublisher.publishEvent(new TaskRejectEvent(this,task));
-        });  }
+        });
+    }
+    /**
+     * 退回回
+     */
+    public void taskBack(BpmTask task){
+        this.afterCommit(() -> {
+            eventPublisher.publishEvent(new TaskBackEvent(this,task));
+        });
+    }
 
 }

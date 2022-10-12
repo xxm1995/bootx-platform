@@ -73,9 +73,9 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
             return;
         }
 
-        // 情况二，驳回处理
+        // 情况二，驳回/退回处理
         if (Objects.equals(bpmContext.getTaskState(),STATE_REJECT)){
-            Long rejectUserId = this.getRejectUserId(task);
+            Long rejectUserId = this.getRejectOrBackUserId(task);
             TaskHelper.changeTaskAssignee(task, String.valueOf(rejectUserId));
             return;
         }
@@ -111,9 +111,9 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
     }
 
     /**
-     * 获取被驳回人的用户id
+     * 获取被驳回/退回人的用户id
      */
-    private Long getRejectUserId(TaskEntity task) {
+    private Long getRejectOrBackUserId(TaskEntity task) {
         // 查询当前环节的历史任务
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(), task.getTaskDefinitionKey());
         //noinspection OptionalGetWithoutIsPresent

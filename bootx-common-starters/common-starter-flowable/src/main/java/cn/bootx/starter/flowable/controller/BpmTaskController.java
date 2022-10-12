@@ -9,7 +9,6 @@ import cn.bootx.starter.flowable.core.instance.service.BpmTaskQueryService;
 import cn.bootx.starter.flowable.dto.task.BpmTaskDto;
 import cn.bootx.starter.flowable.dto.task.TaskInfo;
 import cn.bootx.starter.flowable.param.task.TaskApproveParam;
-import cn.bootx.starter.flowable.param.task.TaskReturnParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -61,13 +60,6 @@ public class BpmTaskController {
         return Res.ok(queryService.getNodeTasks(instanceId));
     }
     
-    @Operation(summary = "任务回退")
-    @PostMapping("/flowReturn")
-    public ResResult<Void> flowReturn(@RequestBody TaskReturnParam param){
-        operateService.flowReturn(param);
-        return Res.ok();
-    }
-
     @Operation(summary = "重新分配人员")
     @PostMapping("/assignee")
     public ResResult<Void> assignee(String taskId,Long userId){

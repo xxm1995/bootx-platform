@@ -29,7 +29,7 @@
         <knife4j.version>3.0.3</knife4j.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <logstash-logback.version>7.2</logstash-logback.version>
-        <fastjson.version>1.2.83</fastjson.version>
+        <fastjson.version>1.2.83_noneautotype</fastjson.version>
         <kryo.serializers.version>0.41</kryo.serializers.version>
         <asyncTool.version>V1.4-SNAPSHOT</asyncTool.version>
     </properties>

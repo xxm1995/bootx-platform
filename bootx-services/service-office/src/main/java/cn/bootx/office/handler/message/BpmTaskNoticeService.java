@@ -98,8 +98,20 @@ public class BpmTaskNoticeService {
     public void taskReject(TaskRejectEvent event){
         BpmTask bpmTask = event.getBpmTask();
         Map<String,Object> map = new HashMap<>();
-        String title = StrUtil.format("{} {} 任务已经被被驳回",bpmTask.getInstanceName(),bpmTask.getNodeName());
+        String title = StrUtil.format("{} {} 任务已经被驳回",bpmTask.getInstanceName(),bpmTask.getNodeName());
         String content = messageTemplateService.rendering(NoticeMessageCode.BPM_TASK_REJECT, map);
+        messageService.sendSingleUserBySystem(title,content,bpmTask.getUserId());
+    }
+
+    /**
+     * 流程任务驳回事件
+     */
+    @EventListener
+    public void taskBack(TaskBackEvent event){
+        BpmTask bpmTask = event.getBpmTask();
+        Map<String,Object> map = new HashMap<>();
+        String title = StrUtil.format("{} {} 任务已经被退回",bpmTask.getInstanceName(),bpmTask.getNodeName());
+        String content = messageTemplateService.rendering(NoticeMessageCode.BPM_TASK_BACK, map);
         messageService.sendSingleUserBySystem(title,content,bpmTask.getUserId());
     }
 }

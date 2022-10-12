@@ -56,7 +56,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
 
         // 处理驳回情况的人员分配
         if (Objects.equals(bpmContext.getTaskState(),STATE_REJECT)){
-            return this.reject(execution,modelNode,bpmContext,behavior);
+            return this.rejectOrBack(execution,modelNode,bpmContext,behavior);
         }
         // 正常获取配置的处理人
         return this.getUserIds(execution,modelNode,bpmContext);
@@ -98,7 +98,7 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
     /**
      * 驳回处理
      */
-    private List<String> reject(DelegateExecution execution, BpmModelNode modelNode, BpmContext bpmContext, MultiInstanceActivityBehavior behavior) {
+    private List<String> rejectOrBack(DelegateExecution execution, BpmModelNode modelNode, BpmContext bpmContext, MultiInstanceActivityBehavior behavior) {
         // 查询当前环节的任务
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(execution.getProcessInstanceId(), execution.getCurrentActivityId());
         //noinspection OptionalGetWithoutIsPresent

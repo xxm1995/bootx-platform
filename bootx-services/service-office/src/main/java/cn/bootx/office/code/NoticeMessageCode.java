@@ -13,6 +13,7 @@ public interface NoticeMessageCode {
     String BPM_TASK_COMPLETED = "BpmTaskCompleted";
     String BPM_TASK_CANCEL = "BpmTaskCancel";
     String BPM_TASK_REJECT = "BpmTaskReject";
+    String BPM_TASK_BACK = "BpmTaskBack";
 
     String BPM_INSTANCE_COMPLETED = "BpmInstanceCompleted";
     String BPM_INSTANCE_CANCEL = "BpmInstanceCancel";

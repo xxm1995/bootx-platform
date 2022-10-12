@@ -62,7 +62,7 @@ export const findAll = () => {
 }
 
 /**
- * 实体类接口
+ * ${comments}
  */
 export interface ${entityUpName} extends BaseEntity {
 #foreach ($column in $columns)

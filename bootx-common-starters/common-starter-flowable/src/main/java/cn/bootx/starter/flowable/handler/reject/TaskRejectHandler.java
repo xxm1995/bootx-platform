@@ -44,7 +44,7 @@ public class TaskRejectHandler {
     /**
      * 驳回, 返回驳回到的任务节点id
      */
-    public List<String> rejectTalk(Task task) {
+    public void rejectTalk(Task task) {
         if (task.isSuspended()) {
             throw new BizException("任务处于挂起状态");
         }
@@ -130,7 +130,6 @@ public class TaskRejectHandler {
                         .processInstanceId(task.getProcessInstanceId())
                         .moveSingleActivityIdToActivityIds(currentIds.get(0), rejectIds)
                         .changeState();
-                return rejectIds;
             }
             // 如果父级任务只有一个，因此当前任务可能为网关中的任务
             if (rejectIds.size() == 1) {
@@ -139,7 +138,6 @@ public class TaskRejectHandler {
                         .processInstanceId(task.getProcessInstanceId())
                         .moveActivityIdsToSingleActivityId(currentIds, rejectIds.get(0))
                         .changeState();
-                return Collections.singletonList(rejectIds.get(0));
             }
         } catch (FlowableObjectNotFoundException e) {
             log.error(e.getMessage(),e);
@@ -148,24 +146,24 @@ public class TaskRejectHandler {
             log.error(e.getMessage(),e);
             throw new BizException("无法取消或开始活动");
         }
-        return new ArrayList<>(0);
     }
 
     /**
      * 流程回退
-     * @param taskId 当前任务ID
+     * @param task 当前任务
      * @param targetKey 要回退的任务 Key
      */
-    public void flowReturn(String taskId,String targetKey) {
-        if (taskService.createTaskQuery().taskId(taskId).singleResult().isSuspended()) {
+    public void flowReturn(Task task, String targetKey) {
+        if (task.isSuspended()) {
             throw new BizException("任务处于挂起状态");
         }
-        // 当前任务 task
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         // 获取流程定义信息
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(task.getProcessDefinitionId()).singleResult();
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionId(task.getProcessDefinitionId()).singleResult();
         // 获取所有节点信息
-        Process process = repositoryService.getBpmnModel(processDefinition.getId()).getProcesses().get(0);
+        Process process = repositoryService.getBpmnModel(processDefinition.getId())
+                .getProcesses()
+                .get(0);
         // 获取全部节点列表，包含子节点
         Collection<FlowElement> allElements = FlowableUtil.getAllElements(process.getFlowElements(), null);
         // 获取当前任务节点元素

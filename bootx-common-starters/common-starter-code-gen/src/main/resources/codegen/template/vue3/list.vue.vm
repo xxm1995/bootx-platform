@@ -57,7 +57,7 @@
 
   // 使用hooks
   const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading } = useTablePage(queryPage)
-  const ${entityLowName} = ref()
+  const ${entityLowName}Edit = ref()
   // 查询条件
   const fields = []
 
@@ -77,15 +77,15 @@
   }
   // 新增
   function add() {
-    ${entityLowName}.value.init(null, FormEditType.Add)
+    ${entityLowName}Edit.value.init(null, FormEditType.Add)
   }
   // 查看
   function edit(record) {
-    ${entityLowName}.value.init(record.id, FormEditType.Edit)
+    ${entityLowName}Edit.value.init(record.id, FormEditType.Edit)
   }
   // 查看
   function show(record) {
-    ${entityLowName}.value.init(record.id, FormEditType.Show)
+    ${entityLowName}Edit.value.init(record.id, FormEditType.Show)
   }
 
   // 删除

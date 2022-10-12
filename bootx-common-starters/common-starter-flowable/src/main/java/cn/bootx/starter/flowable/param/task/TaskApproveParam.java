@@ -29,6 +29,9 @@ public class TaskApproveParam {
     @Schema(description = "下一步节点")
     private String nextNodeId;
 
+    @Schema(description = "退回节点节点")
+    private String backNodeId;
+
     @Schema(description = "下一步执行人")
     private Object nextAssign;
 

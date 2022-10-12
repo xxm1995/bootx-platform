@@ -3,6 +3,7 @@ package cn.bootx.starter.flowable.controller;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.dto.LabelValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.flowable.core.instance.service.BpmInstanceQueryService;
 import cn.bootx.starter.flowable.core.instance.service.BpmInstanceOperateService;
@@ -69,6 +70,11 @@ public class BpmInstanceController {
     @GetMapping("/getCurrentNodes")
     public ResResult<List<String>> getCurrentNodes(String instanceId){
         return Res.ok(queryService.getCurrentNodes(instanceId));
+    }
+    @Operation(summary = "获取可回退节点")
+    @GetMapping("/getBackNodes")
+    public ResResult<List<LabelValue>> getBackNodes(String instanceId){
+        return Res.ok(queryService.getBackNodes(instanceId));
     }
 
     @Operation(summary = "获取流程执行的节点, 用于绘制流程图")

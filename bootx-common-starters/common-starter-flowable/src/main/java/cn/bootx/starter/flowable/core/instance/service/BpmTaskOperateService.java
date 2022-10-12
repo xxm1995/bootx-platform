@@ -12,7 +12,6 @@ import cn.bootx.starter.flowable.handler.reject.TaskRejectHandler;
 import cn.bootx.starter.flowable.local.BpmContext;
 import cn.bootx.starter.flowable.local.BpmContextLocal;
 import cn.bootx.starter.flowable.param.task.TaskApproveParam;
-import cn.bootx.starter.flowable.param.task.TaskReturnParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.flowable.engine.TaskService;
@@ -73,10 +72,13 @@ public class BpmTaskOperateService {
                 this.reject(param,task);
                 break;
             }
+            case RESULT_BACK:{
+                this.back(param,task);
+                break;
+            }
             default:throw new BizException("不存在的流程服务处理类型");
         }
     }
-
 
     /**
      * 通过
@@ -153,34 +155,51 @@ public class BpmTaskOperateService {
         taskRejectHandler.rejectTalk(task);
 
         // 更新驳回任务的记录
+        this.rejectOrBackAfter(task,param.getReason(),STATE_REJECT);
+    }
+
+    /**
+     * 流程回退
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void back(TaskApproveParam param, Task task) {
+        BpmContext bpmContext = BpmContextLocal.get();
+        bpmContext.setTaskState(STATE_BACK);
+        taskRejectHandler.flowReturn(task,param.getBackNodeId());
+
+        // 更新回退任务的记录
+        this.rejectOrBackAfter(task,param.getReason(),STATE_BACK);
+    }
+
+    /**
+     * 任务回退或驳回后处理
+     * @param reason 原因
+     * @param result 处理结果 STATE_BACK/STATE_BACK
+     */
+    private void rejectOrBackAfter(Task task,String reason,String result){
+        // 更新驳回任务的记录
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(), task.getTaskDefinitionKey());
         // 当前任务状态为驳回, 其他的为取消
         Optional<BpmTask> first = tasks.stream()
                 .filter(bpmTask -> Objects.equals(bpmTask.getTaskId(), task.getId()))
                 .findFirst();
         first.ifPresent(bpmTask -> {
-            bpmTask.setReason(param.getReason())
-                    .setState(STATE_REJECT)
-                    .setResult(RESULT_REJECT)
+            bpmTask.setReason(reason)
+                    .setState(result)
+                    .setResult(result)
                     .setEndTime(LocalDateTime.now());
             bpmTaskManager.updateById(bpmTask);
         });
+        // 其他的设置为取消
         List<BpmTask> bpmTasks = tasks.stream()
                 .filter(bpmTask -> !Objects.equals(bpmTask.getTaskId(), task.getId()))
                 .peek(bpmTask -> bpmTask
-                        .setState(STATE_REJECT)
+                        .setState(result)
                         .setResult(RESULT_CANCEL)
                         .setEndTime(LocalDateTime.now()))
                 .collect(Collectors.toList());
         bpmTaskManager.updateAllById(bpmTasks);
         bpmEventService.taskCancel(tasks);
-    }
-
-    /**
-     * 流程回退 未实现
-     */
-    public void flowReturn(TaskReturnParam param){
-        taskRejectHandler.flowReturn(param.getTaskId(),param.getTargetKey());
     }
 
     /**

@@ -24,10 +24,7 @@ import org.flowable.task.service.impl.persistence.entity.TaskEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.TaskCode.*;
@@ -84,9 +81,11 @@ public class BpmTaskEventListenerService {
         }
 
         bpmTaskManager.save(bpmTask);
-        // 驳回还是普通创建
+        // 驳回/退回还是普通创建
         if (Objects.equals(bpmContext.getTaskState(),STATE_REJECT)){
             eventService.taskReject(bpmTask);
+        } else if (Objects.equals(bpmContext.getTaskState(),RESULT_BACK)){
+            eventService.taskBack(bpmTask);
         } else {
             eventService.taskCreated(bpmTask);
         }
