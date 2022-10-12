@@ -1,124 +1,113 @@
 <template>
-    <a-drawer
-            :title="title"
-            :width="modalWidth"
-            :visible="visible"
-            :mask-closable="showable"
-            @close="handleCancel"
-            :confirmLoading="confirmLoading"
-    >
-        <a-spin :spinning="confirmLoading">
-            <a-form class="small-from-item" :label-col="labelCol" :wrapper-col="wrapperCol">
-                <a-form-item label="主键" :hidden="true">
-                    <a-input v-model:value="form.id" :disabled="showable" />
-                </a-form-item>
-                <a-form-item label="编码" v-bind="validateInfos.code" name="code">
-                    <a-input v-model:value="form.code" :disabled="showable" placeholder="请输入编码" />
-                </a-form-item>
-            </a-form>
-        </a-spin>
-        <div class="drawer-button">
-            <a-space>
-                <a-button key="cancel" @click="handleCancel">取消</a-button>
-                <a-button v-if="!showable" key="forward" :loading="confirmLoading" type="primary" @click="handleOk">保存</a-button>
-            </a-space>
-        </div>
-    </a-drawer>
+  <a-drawer
+    :title="title"
+    :width="modalWidth"
+    :visible="visible"
+    :mask-closable="showable"
+    @close="handleCancel"
+    :confirmLoading="confirmLoading"
+  >
+    <a-spin :spinning="confirmLoading">
+      <a-form class="small-from-item" :label-col="labelCol" :wrapper-col="wrapperCol">
+        <a-form-item label="主键" :hidden="true">
+          <Input v-model:value="form.id" :disabled="showable" />
+        </a-form-item>
+      #foreach ($column in $columns)
+        <a-form-item label="$column.comments" name="$column.name">
+          <Input v-model:value="form.$column.name" :disabled="showable" placeholder="请输入$column.name" />
+        </a-form-item>
+      #end
+      </a-form>
+    </a-spin>
+    <div class="drawer-button">
+      <a-space>
+        <a-button key="cancel" @click="handleCancel">取消</a-button>
+        <a-button v-if="!showable" key="forward" :loading="confirmLoading" type="primary" @click="handleOk">保存</a-button>
+      </a-space>
+    </div>
+  </a-drawer>
 </template>
 
 <script lang="ts" setup>
-    import { nextTick, reactive, ref } from 'vue'
-    import useFormEdit from '/@/hooks/bootx/useFormEdit'
-    import { add, Client, get, update } from './Client.api'
-    import { useForm } from 'ant-design-vue/lib/form'
-    import { FormEditType } from '/@/enums/formTypeEnum'
+  import { nextTick, reactive, ref } from 'vue'
+  import useFormEdit from '/@/hooks/bootx/useFormEdit'
+  import { add, Client, get, update, ${entityUpName} } from './${entityUpName}.api'
+  import { FormInstance, Rule } from 'ant-design-vue/lib/form'
+  import { FormEditType } from '/@/enums/formTypeEnum'
 
-    const {
-        initFormModel,
-        handleCancel,
-        search,
-        labelCol,
-        wrapperCol,
-        title,
-        modalWidth,
-        confirmLoading,
-        visible,
-        editable,
-        showable,
-        formEditType,
-    } = useFormEdit()
-    const loginTypes = ref([])
-    const form = ref({
-        id: null,
-        code: '',
-        name: '',
-        system: false,
-        enable: true,
-        loginTypeIdList: [],
-        description: '',
-    } as Client)
-    // 校验状态
-    const rules = reactive({
-        code: [
-            { required: true, message: '请输入应用编码' },
-            { validator: validateCode, trigger: 'blur' },
-        ],
-        name: [{ required: true, message: '请输入应用名称' }],
-        enable: [{ required: true, message: '请选择启用状态' }],
+  const {
+    initFormModel,
+    handleCancel,
+    search,
+    labelCol,
+    wrapperCol,
+    title,
+    modalWidth,
+    confirmLoading,
+    visible,
+    editable,
+    showable,
+    formEditType,
+  } = useFormEdit()
+  // 表单
+  const formRef = ref<FormInstance>()
+  const form = ref({
+    id: null,
+#foreach ($column in $columns)
+    $column.name: null,
+#end
+  } as ${entityUpName})
+  // 校验状态
+  const rules = reactive({} as Record<string, Rule[]>)
+  function validateCode(rule, value) {
+    console.log(rule, value)
+    return Promise.resolve()
+  }
+  // 事件
+  const emits = defineEmits(['ok'])
+  // 入口
+  function init(id, editType: FormEditType) {
+    initFormModel(id, editType)
+    resetForm()
+    getInfo(id, editType)
+  }
+  // 获取信息
+  function getInfo(id, editType: FormEditType) {
+    // this.initLoginTypes()
+    if ([FormEditType.Edit, FormEditType.Show].includes(editType)) {
+      confirmLoading.value = true
+      get(id).then(({ data }) => {
+        form.value = data
+        confirmLoading.value = false
+      })
+    } else {
+      confirmLoading.value = false
+    }
+  }
+  // 保存
+  function handleOk() {
+    formRef.value!.validate().then(async () => {
+      confirmLoading.value = true
+      if (formEditType.value === FormEditType.Add) {
+        await add(form.value)
+      } else if (formEditType.value === FormEditType.Edit) {
+        await update(form.value)
+      }
+      confirmLoading.value = false
+      handleCancel()
+      emits('ok')
     })
-    function validateCode(rule, value) {
-        console.log(rule, value)
-        return Promise.resolve()
-    }
+  }
 
-    // 表单
-    const { resetFields, validate, validateInfos } = useForm(form, rules)
-    // 事件
-    const emits = defineEmits(['ok'])
-
-    // 入口
-    function init(id, editType: FormEditType) {
-        initFormModel(id, editType)
-        resetForm()
-        getInfo(id, editType)
-    }
-    // 获取信息
-    function getInfo(id, editType: FormEditType) {
-        // this.initLoginTypes()
-        if ([FormEditType.Edit, FormEditType.Show].includes(editType)) {
-            confirmLoading.value = true
-            get(id).then(({ data }) => {
-                form.value = data
-                confirmLoading.value = false
-            })
-        } else {
-            confirmLoading.value = false
-        }
-    }
-    // 保存
-    function handleOk() {
-        validate().then(async () => {
-            confirmLoading.value = true
-            if (formEditType.value === FormEditType.Add) {
-                await add(form.value)
-            } else if (formEditType.value === FormEditType.Edit) {
-                await update(form.value)
-            }
-            confirmLoading.value = false
-            handleCancel()
-            emits('ok')
-        })
-    }
-
-    // 重置表单的校验
-    function resetForm() {
-        nextTick(() => {
-            resetFields()
-        })
-    }
-    defineExpose({
-        init,
+  // 重置表单的校验
+  function resetForm() {
+    nextTick(() => {
+      formRef.value!.resetFields()
     })
+  }
+  defineExpose({
+    init,
+  })
 </script>
 
 <style lang="less" scoped></style>
