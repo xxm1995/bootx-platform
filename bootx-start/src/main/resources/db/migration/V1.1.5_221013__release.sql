@@ -9,7 +9,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 21/09/2022 14:31:21
+ Date: 13/10/2022 10:02:27
 */
 
 SET NAMES utf8mb4;
@@ -218,10 +218,10 @@ INSERT INTO `base_dict_item` VALUES (1570784215744585728, 1570343684024705024, '
 INSERT INTO `base_dict_item` VALUES (1570784331511570432, 1567091641298386944, 'BpmTaskState', 'cancel', '取消', 0.00, '', 1399985191002447872, '2022-09-16 22:39:03', 1399985191002447872, '2022-09-16 22:39:03', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1573665422392098816, 1439961232651034624, 'MessageTemplateCode', '0', '站内信', -11.00, 'SITE', 1399985191002447872, '2022-09-24 21:27:29', 1399985191002447872, '2022-09-24 21:27:39', 0, 1);
 
-
 -- ----------------------------
 -- Table structure for base_dynamic_data_source
 -- ----------------------------
+DROP TABLE IF EXISTS `base_dynamic_data_source`;
 CREATE TABLE `base_dynamic_data_source`  (
                                              `id` bigint(20) NOT NULL,
                                              `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '数据源编码',
@@ -240,7 +240,8 @@ CREATE TABLE `base_dynamic_data_source`  (
                                              `version` int(11) NOT NULL COMMENT '版本',
                                              `deleted` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0:未删除。1:已删除',
                                              PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '动态数据源管理' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '动态数据源管理' ROW_FORMAT = DYNAMIC;
+
 -- ----------------------------
 -- Records of base_dynamic_data_source
 -- ----------------------------
@@ -1145,7 +1146,7 @@ INSERT INTO `iam_perm_menu` VALUES (1450826890318135296, 'admin', 14508256158578
 INSERT INTO `iam_perm_menu` VALUES (1450827159626006528, 'admin', 1450825615857893376, '退款订单', 'ReturnOrder', '', b'0', '', b'0', b'0', 'payment/order/refund/RefundRecordList', NULL, '/payment/order/return', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:12:05', 1399985191002447872, '2022-03-04 15:44:06', 4, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450827308515409920, 'admin', 1450825615857893376, '转账订单', 'TransferOrder', '', b'0', '', b'1', b'0', 'payment/order/transfer/TransferList', NULL, '/payment/order/transfer', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:12:40', 1399985191002447872, '2022-03-04 15:33:31', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1450827660459458560, 'admin', 1438061887002759168, '微信', 'NoticeWeChat', '', b'0', '', b'0', b'0', 'Dev', NULL, '/notice/wechat', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-20 22:14:04', 1399985191002447872, '2022-06-21 20:53:04', 1, 1);
-INSERT INTO `iam_perm_menu` VALUES (1452567897717321728, 'admin', 1414596052497092608, '审计日志', 'auditLog', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/log', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:29:09', 1399985191002447872, '2021-10-25 17:29:09', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1452567897717321728, 'admin', 1431152689832525824, '审计日志', 'auditLog', '', b'0', '', b'0', b'0', 'RouteView', NULL, '/system/log', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:29:09', 1399985191002447872, '2022-10-07 12:57:05', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452569339987472384, 'admin', 1414596052497092608, '权限管理', 'permission', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/permission', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:34:53', 1399985191002447872, '2021-10-25 17:34:53', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452569691537256448, 'admin', 1414596052497092608, '用户信息', 'userAuth', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/userAuth', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:36:17', 1399985191002447872, '2021-10-25 17:36:17', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1452571269199540224, 'admin', 1414596052497092608, '系统配置', 'systemConfig', '', NULL, '', b'0', b'0', 'RouteView', NULL, '/system/config', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2021-10-25 17:42:33', 1399985191002447872, '2021-10-25 17:42:33', 2, 0);
@@ -1171,7 +1172,7 @@ INSERT INTO `iam_perm_menu` VALUES (1506911113394913280, 'admin', 14959690999879
 INSERT INTO `iam_perm_menu` VALUES (1507998458886197248, 'admin', 1495968302034210816, 'WS演示', 'WebsocketDemo', NULL, b'0', '', b'0', b'0', 'demo/ws/WebsocketDemo', NULL, '/demo/ws', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-27 16:30:25', 1399985191002447872, '2022-03-27 16:30:25', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1509488473583562752, 'admin', 1495968302034210816, '幂等请求演示', 'IdempotentDemo', NULL, b'0', '', b'0', b'0', 'demo/idempotent/Idempotent', NULL, '/demo/idempotent', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-03-31 19:11:12', 1399985191002447872, '2022-05-27 17:35:00', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1511266086400524288, 'admin', 1450822511087271936, '钉钉配置', 'DingTalkConfig', NULL, b'0', '', b'1', b'0', 'third/dingtalk/config/DingTalkConfigList', NULL, '/third/dingtalk/config', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-04-05 16:54:48', 1399985191002447872, '2022-07-26 13:34:44', 3, 0);
-INSERT INTO `iam_perm_menu` VALUES (1523860792695283712, 'admin', NULL, '商品管理', 'GoodsManager', NULL, b'0', 'car', b'0', b'0', 'RouteView', NULL, '/goods', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 11:01:40', 1399985191002447872, '2022-05-10 11:02:45', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1523860792695283712, 'admin', NULL, '商品管理', 'GoodsManager', NULL, b'0', 'car', b'1', b'0', 'RouteView', NULL, '/goods', '', 0, 0, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 11:01:40', 1399985191002447872, '2022-10-07 12:38:50', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1523941932282114048, 'admin', 1523860792695283712, '类目管理', 'CategoryManager', NULL, b'0', '', b'0', b'0', 'RouteView', NULL, '/goods/category', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 16:24:05', 1399985191002447872, '2022-05-10 16:24:17', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1523942130555252736, 'admin', 1523941932282114048, '类目', 'Category', NULL, b'0', '', b'0', b'0', 'goods/category/CategoryList', NULL, '/goods/category/category', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 16:24:52', 1399985191002447872, '2022-05-10 16:25:23', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1524044195818278912, 'admin', 1523941932282114048, '品牌', 'Brand', NULL, b'0', '', b'0', b'0', 'goods/brand/BrandList', NULL, '/goods/category/brand', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2022-05-10 23:10:26', 1399985191002447872, '2022-05-10 23:14:20', 4, 0);
@@ -1537,6 +1538,7 @@ INSERT INTO `notice_message_template` VALUES (1573952568654958592, 'BpmTaskCance
 INSERT INTO `notice_message_template` VALUES (1573952621826150400, 'BpmTaskReject', '流程任务驳回事件', '流程任务驳回事件', 0, '', 1399985191002447872, '2022-09-25 16:28:42', 1399985191002447872, '2022-09-25 16:28:42', 0, 0);
 INSERT INTO `notice_message_template` VALUES (1573952709432578048, 'BpmInstanceCompleted', '流程完成时通知发起人', '流程完成时通知发起人', 0, '', 1399985191002447872, '2022-09-25 16:29:03', 1399985191002447872, '2022-09-25 16:29:03', 0, 0);
 INSERT INTO `notice_message_template` VALUES (1573952762507300864, 'BpmInstanceCancel', '流程取消时通知发起人', '流程取消时通知发起人', 0, '', 1399985191002447872, '2022-09-25 16:29:16', 1399985191002447872, '2022-09-25 16:29:16', 0, 0);
+INSERT INTO `notice_message_template` VALUES (1580083314274070528, 'BpmTaskBack', '流程任务回退事件', '流程任务驳回事件', 0, '', 1399985191002447872, '2022-10-12 14:29:53', 1399985191002447872, '2022-10-12 14:30:11', 1, 0);
 
 -- ----------------------------
 -- Table structure for notice_site_message
