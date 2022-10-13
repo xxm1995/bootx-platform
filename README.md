@@ -1,8 +1,8 @@
-# Bootx-Platform (v1.1.4)
+# Bootx-Platform (v1.1.5)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.1.4-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.1.5-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
@@ -13,12 +13,16 @@
 ## 🍈项目介绍
 
 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
-致力将开源版打造成超越商业版后台管理框架的项目。前端分为vue2版和vue3版，vue2使用 [ANTD PRO VUE](https://pro.antdv.com/) 作为脚手架，vue3使用 [Vben-Admin-Next](https://vvbin.cn/doc-next/) 作为脚手架。
-移动端使用 [Taro](https://taro.jd.com/) vue3+TS为技术栈。
+致力将开源版打造成超越商业版后台管理框架的项目。
+
+- Spring Cloud版本使用Spring Cloud Alibaba技术栈
+- vue2使用 [ANTD PRO VUE](https://pro.antdv.com/) 作为脚手架
+- vue3使用 [Vben-Admin](https://vvbin.cn/doc-next/) 作为脚手架
+- 移动端使用 [Taro](https://taro.jd.com/) vue3+TS为技术栈。
 
 ## 🍒文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) [前端项目(vue3开发中)](https://gitee.com/bootx/bootx-platfrom-vue3)
+- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) [前端项目(vue3开发中)](http://v3.platform.bootx.cn/)
 - 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) [前端项目(vue3开发中)](https://gitee.com/bootx/bootx-platfrom-vue3)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove) [PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
@@ -32,7 +36,7 @@
 ![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
 
 集成最新版本的Flowable 6.7.2 工作流，并基于Bpmn.js定制流程设计器，相较于自带modeler更贴近业务和易用，通过关联动态表单可通过托拉拽实现业务审批流的业务
-![](https://oscimg.oschina.net/oscnet/up-6a021b64002a32c69c9f4c12b1c047f6b5c.png)
+![](https://oscimg.oschina.net/oscnet/up-22b8de0f4951ee6165e2ae604ad77b0af44.png)
 
 ## 🍎特色功能
 - 支持单通道支付、聚合支付、组合支付、部分和全部退款等支付功能
@@ -51,16 +55,16 @@
 
 ## 🚅 路线图
 - 工作流功能完善          
-  - [x] 更灵活的节点用户配置，可配置发起人、指定用户、指定角色等
-  - [x] 会签处理
-  - [x] 串签处理
-  - [x] 或签处理
-  - [x] 会签比例通过处理
-  - [x] 驳回处理
-  - [ ] 任意节点退回
-  - [x] 关联消息通知
-  - [x] 更方便与现有业务整合
-
+  - [x] 更灵活的节点用户配置，可配置发起人、指定用户、指定角色等，关联消息通知
+  - [x] 会签处理、串签处理、或签处理、驳回处理、任意节点退回、会签比例通过处理
+- Vue3版本前端
+  - [ ] 登录模块移植
+  - [x] 认证终端移植
+  - [ ] 组件移植和Mixin转换为Hooks、
+- Spring Cloud版本
+  - [ ] 代码组织结构调整
+  - [x] 网关定制开发
+  - [ ] 功能模块移植
 ## 🥂 Quick Start
 
 - 下载项目并切换到master分支，或者下载发行版后导入IDEA中，下载对应的Maven依赖
@@ -109,7 +113,7 @@ bootx-platform
        ├── common-lock -- 分布式锁
        ├── common-log -- 日志配置
        ├── common-mongo -- MongoDB配置
-       ├── common-mqtt -- mqtt配置
+       ├── common-mqtt -- mqtt配置（停用）
        ├── common-mybatis-plus -- Mybatis Plus扩展
        ├── common-rabbitmq -- rabbitmq消息队列
        ├── common-redis-client -- Redis客户端封装和配置
@@ -120,17 +124,17 @@ bootx-platform
        ├── common-websocket  -- websocket封装
        ├── common-xxl-job -- XXL-JOB定时任务
     ├── bootx-demo -- demo示例模块
-    ├── bootx-modules -- 业务系统
-       ├── eshop -- 网上商城
+    ├── bootx-modules -- 业务系统（暂停）
+       ├── eshop -- 网上商城（暂停）
     ├── bootx-services -- 业务服务模块
        ├── service-baseapi -- 基础api功能服务
-       ├── service-goods -- 商品中心服务(进行中)
+       ├── service-goods -- 商品中心服务(停用)
        ├── service-iam -- 身份识别与访问管理
        ├── service-notice -- 消息通知服务
-       ├── service-office -- 办公服务(进行中)
-       ├── service-order -- 订单服务(未完成)
+       ├── service-office -- 办公服务
+       ├── service-order -- 订单服务(停用)
        ├── service-payment -- 支付服务
-       ├── service-sales -- 销售中心(未完成)
+       ├── service-sales -- 销售中心(停用)
     ├── bootx-start -- 启动模块
 ```
 ## 🍇模块结构说明
@@ -211,10 +215,6 @@ ELK日志
 支付宝支付配置
 
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-5c4fd5380463596db224c3d27329c494ace.png)
-
-站内信消息通知
-
-![输入图片说明](https://oscimg.oschina.net/oscnet/up-7019d597108f0f96910a0775bd26b542ede.png)
 
 ##  🥪 关于我们
 
