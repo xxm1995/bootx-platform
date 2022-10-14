@@ -156,7 +156,7 @@ public class TokenService {
         AuthClient authClient = context.getAuthClient();
         SaLoginModel saLoginModel = new SaLoginModel()
                 .setDevice(authClient.getCode())
-                .setTimeout(authLoginType.getTimeout() * 1000 * 60);
+                .setTimeout(authLoginType.getTimeout() * 60);
 
         authInfoResult.setClient(authClient.getCode())
                 .setLoginType(authLoginType.getCode());
