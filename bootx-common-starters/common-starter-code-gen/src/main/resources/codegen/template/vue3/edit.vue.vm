@@ -10,11 +10,11 @@
     <a-spin :spinning="confirmLoading">
       <a-form class="small-from-item" :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-form-item label="主键" :hidden="true">
-          <Input v-model:value="form.id" :disabled="showable" />
+          <a-input v-model:value="form.id" :disabled="showable" />
         </a-form-item>
       #foreach ($column in $columns)
         <a-form-item label="$column.comments" name="$column.name">
-          <Input v-model:value="form.$column.name" :disabled="showable" placeholder="请输入$column.name" />
+          <a-input v-model:value="form.$column.name" :disabled="showable" placeholder="请输入$column.comments" />
         </a-form-item>
       #end
       </a-form>
@@ -57,12 +57,8 @@
     $column.name: null,
 #end
   } as ${entityUpName})
-  // 校验状态
+  // 校验
   const rules = reactive({} as Record<string, Rule[]>)
-  function validateCode(rule, value) {
-    console.log(rule, value)
-    return Promise.resolve()
-  }
   // 事件
   const emits = defineEmits(['ok'])
   // 入口

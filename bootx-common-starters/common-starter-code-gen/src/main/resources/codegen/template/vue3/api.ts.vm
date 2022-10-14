@@ -67,6 +67,6 @@ export const findAll = () => {
 export interface ${entityUpName} extends BaseEntity {
 #foreach ($column in $columns)
     // $column.comments
-    $column.name: $column.tsType,
+    $column.name: $column.tsType
 #end
 }

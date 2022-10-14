@@ -2,6 +2,8 @@ package cn.bootx.starter.auth.exception;
 
 import cn.bootx.common.core.exception.BizException;
 
+import static cn.bootx.common.core.code.CommonErrorCode.AUTHENTICATION_FAIL;
+
 /**
 * 未登录异常
 * @author xxm
@@ -10,10 +12,10 @@ import cn.bootx.common.core.exception.BizException;
 public class NotLoginException extends BizException {
 
     public NotLoginException(String msg){
-        super(msg);
+        super(AUTHENTICATION_FAIL,msg);
     }
 
     public NotLoginException() {
-        super("未登录");
+        super(AUTHENTICATION_FAIL,"未登录");
     }
 }
