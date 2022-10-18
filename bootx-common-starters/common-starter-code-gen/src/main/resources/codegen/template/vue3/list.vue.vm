@@ -4,14 +4,14 @@
       <b-query :query-params="model.queryParam" :fields="fields" @query="queryPage" @reset="resetQueryParams" />
     </div>
     <div class="m-3 p-3 bg-white">
-      <vxe-toolbar :refresh="{ query: queryPage }">
+      <vxe-toolbar ref="xToolbar" custom :refresh="{ query: queryPage }">
         <template #buttons>
           <a-space>
             <a-button type="primary" @click="add">新建</a-button>
           </a-space>
         </template>
       </vxe-toolbar>
-      <vxe-table row-id="id" :data="pagination.records" :loading="loading">
+      <vxe-table row-id="id" ref="xTable" :data="pagination.records" :loading="loading">
         <vxe-column type="seq" width="60" />
       #foreach ($column in $columns)
         <vxe-column field="$column.name" title="$column.comments" />
@@ -48,9 +48,11 @@
 
 <script lang="ts" setup>
   import { onMounted, ref } from 'vue'
+  import { $ref } from 'vue/macros'
   import { del, page } from './${entityUpName}.api'
   import useTablePage from '/@/hooks/bootx/useTablePage'
   import ${entityUpName}Edit from './${entityUpName}Edit.vue'
+  import { VxeTableInstance, VxeToolbarInstance } from 'vxe-table'
   import BQuery from '/@/components/Bootx/Query/BQuery.vue'
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { useMessage } from '/@/hooks/web/useMessage'
@@ -60,10 +62,16 @@
   const ${entityLowName}Edit = ref()
   // 查询条件
   const fields = []
+  let xTable = $ref<VxeTableInstance>()
+  let xToolbar = $ref<VxeToolbarInstance>()
 
   onMounted(() => {
+    vxeBind()
     queryPage()
   })
+  function vxeBind() {
+      xTable.connect(xToolbar)
+  }
 
   // 分页查询
   function queryPage() {
