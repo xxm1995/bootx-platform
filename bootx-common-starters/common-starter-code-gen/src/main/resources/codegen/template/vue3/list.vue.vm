@@ -56,14 +56,14 @@
   import BQuery from '/@/components/Bootx/Query/BQuery.vue'
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { useMessage } from '/@/hooks/web/useMessage'
-  import { STRING } from '/@/components/Bootx/Query/SuperQueryCode'
+  import { QueryField } from '/@/components/Bootx/Query/SuperQueryCode'
 
   // 使用hooks
   const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading } = useTablePage(queryPage)
   const { notification, createWarningModal, createMessage } = useMessage()
 
   // 查询条件
-  const fields = []
+  const fields = [] as QueryField[]
 
   const xTable = $ref<VxeTableInstance>()
   const xToolbar = $ref<VxeToolbarInstance>()
