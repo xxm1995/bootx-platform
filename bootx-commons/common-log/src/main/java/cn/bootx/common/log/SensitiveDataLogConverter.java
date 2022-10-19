@@ -34,7 +34,7 @@ public class SensitiveDataLogConverter extends MessageConverter {
      * 过滤敏感信息
      */
     private static String convert(String msg) {
-        if (StrUtil.isNotBlank(msg)){
+        if (StrUtil.isBlank(msg)){
             return msg;
         }
         for (Map.Entry<String, String> entry : REPLACE_RULES.entrySet()) {
