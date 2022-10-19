@@ -6,7 +6,8 @@
     :title="title"
     :visible="visible"
     :mask-closable="showable"
-    @cancel="handleCancel">
+    @cancel="handleCancel"
+  >
     <a-form class="small-from-item" ref="formRef" :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol">
       <a-form-item label="主键" :hidden="true">
         <a-input v-model:value="form.id" :disabled="showable" />
@@ -18,10 +19,10 @@
     #end
     </a-form>
     <template #footer>
-     <a-space>
-       <a-button key="cancel" @click="handleCancel">取消</a-button>
-       <a-button v-if="!showable" key="forward" :loading="confirmLoading" type="primary" @click="handleOk">保存</a-button>
-     </a-space>
+      <a-space>
+        <a-button key="cancel" @click="handleCancel">取消</a-button>
+        <a-button v-if="!showable" key="forward" :loading="confirmLoading" type="primary" @click="handleOk">保存</a-button>
+      </a-space>
     </template>
   </basic-modal>
 </template>
