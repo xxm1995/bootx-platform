@@ -29,3 +29,6 @@ https://blog.csdn.net/qq_37143673
 
 GoView 一个Vue3搭建的低代码数据可视化开发平台:
 https://gitee.com/dromara/go-view
+
+easy-cron 这是基于Vue.js和iviewui封装一个crontab表达式的组件:
+https://gitee.com/toktok/easy-cron
