@@ -60,7 +60,7 @@
 
   // 使用hooks
   const { handleTableChange, pageQueryResHandel, resetQueryParams, pagination, pages, model, loading } = useTablePage(queryPage)
-  const { notification, createMessage } = useMessage()
+  const { notification, createMessage, createConfirm } = useMessage()
 
   // 查询条件
   const fields = [] as QueryField[]
@@ -91,7 +91,7 @@
   function add() {
     ${entityLowName}Edit.init(null, FormEditType.Add)
   }
-  // 查看
+  // 编辑
   function edit(record) {
     ${entityLowName}Edit.init(record.id, FormEditType.Edit)
   }
