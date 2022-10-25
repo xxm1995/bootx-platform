@@ -61,8 +61,8 @@ public class MessageTemplateService {
     /**
      * 分页
      */
-    public PageResult<MessageTemplateDto> page(PageParam pageParam){
-        return MpUtil.convert2DtoPageResult(messageTemplateManager.page(pageParam));
+    public PageResult<MessageTemplateDto> page(PageParam pageParam, MessageTemplateParam query){
+        return MpUtil.convert2DtoPageResult(messageTemplateManager.page(pageParam,query));
     }
 
     /**

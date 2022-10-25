@@ -40,8 +40,8 @@ public class MessageTemplateController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<MessageTemplateDto>> page(PageParam pageParam){
-        return Res.ok(messageTemplateService.page(pageParam));
+    public ResResult<PageResult<MessageTemplateDto>> page(PageParam pageParam,MessageTemplateParam query){
+        return Res.ok(messageTemplateService.page(pageParam,query));
     }
 
     @Operation(summary = "获取详情")

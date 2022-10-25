@@ -5,6 +5,8 @@ import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.notice.core.template.entity.MessageTemplate;
+import cn.bootx.notice.param.template.MessageTemplateParam;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +36,11 @@ public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, M
         return existedByField(MessageTemplate::getCode,code,id);
     }
 
-    public Page<MessageTemplate> page(PageParam pageParam) {
+    public Page<MessageTemplate> page(PageParam pageParam, MessageTemplateParam query) {
         Page<MessageTemplate> mpPage = MpUtil.getMpPage(pageParam, MessageTemplate.class);
         return lambdaQuery()
+                .like(StrUtil.isNotBlank(query.getCode()), MessageTemplate::getCode,query.getCode())
+                .like(StrUtil.isNotBlank(query.getName()), MessageTemplate::getName,query.getName())
                 .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }
