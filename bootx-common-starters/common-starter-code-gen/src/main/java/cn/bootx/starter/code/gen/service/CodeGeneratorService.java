@@ -123,6 +123,8 @@ public class CodeGeneratorService {
                 .setEntityDashName(NamingCase.toKebabCase(codeGenParam.getEntityName()))
                 .setBaseClass(codeGenParam.getBaseEntity())
                 .setCorePack(codeGenParam.getCorePack())
+                .setEditType(codeGenParam.getEditType())
+                .setDeleteType(codeGenParam.getDeleteType())
                 .setParamPack(codeGenParam.getParamPack())
                 .setDtoPack(codeGenParam.getDtoPack())
                 .setControllerPack(codeGenParam.getControllerPack())

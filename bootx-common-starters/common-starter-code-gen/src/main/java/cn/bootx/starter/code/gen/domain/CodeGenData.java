@@ -31,6 +31,12 @@ public class CodeGenData {
     /** 基类 */
     private String baseClass;
 
+    /** 编辑窗类型 */
+    private String editType;
+
+    /** 编辑窗类型 */
+    private String deleteType;
+
     /** 核心包名(service/entity/dao等所在的包) */
     private String corePack;
 

@@ -23,6 +23,12 @@ public class CodeGenParam {
     @Schema(description = "基于什么类型的基类")
     private String baseEntity;
 
+    @Schema(description = "编辑窗类型")
+    private String editType;
+
+    @Schema(description = "编辑窗类型")
+    private String deleteType;
+
     @Schema(description = "vue版本")
     private String vueVersion;
 

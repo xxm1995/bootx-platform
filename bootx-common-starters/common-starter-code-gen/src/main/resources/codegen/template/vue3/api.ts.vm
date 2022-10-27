@@ -5,7 +5,7 @@ import { BaseEntity } from '/#/web'
 /**
  * 分页
  */
-export const page = (params) => {
+export function page(params){
   return defHttp.get<Result<PageResult<${entityUpName}>>>({
     url: '${requestPath}/page',
     params,
@@ -15,7 +15,7 @@ export const page = (params) => {
 /**
  * 获取单条
  */
-export const get = (id) => {
+export function get(id){
   return defHttp.get<Result<${entityUpName}>>({
     url: '${requestPath}/findById',
     params: { id },
@@ -25,7 +25,7 @@ export const get = (id) => {
 /**
  * 添加
  */
-export const add = (obj: ${entityUpName}) => {
+export function add(obj: ${entityUpName}){
   return defHttp.post({
     url: '${requestPath}/add',
     data: obj,
@@ -35,7 +35,7 @@ export const add = (obj: ${entityUpName}) => {
 /**
  * 更新
  */
-export const update = (obj: ${entityUpName}) => {
+export function update(obj: ${entityUpName}){
   return defHttp.post({
     url: '${requestPath}/update',
     data: obj,
@@ -45,7 +45,7 @@ export const update = (obj: ${entityUpName}) => {
 /**
  * 删除
  */
-export const del = (id) => {
+export function del(id){
   return defHttp.delete({
     url: '${requestPath}/delete',
     params: { id },
@@ -55,7 +55,7 @@ export const del = (id) => {
 /**
  * 查询全部
  */
-export const findAll = () => {
+export function findAll() {
   return defHttp.get<Result<Array<${entityUpName}>>>({
     url: '${requestPath}/findAll',
   })

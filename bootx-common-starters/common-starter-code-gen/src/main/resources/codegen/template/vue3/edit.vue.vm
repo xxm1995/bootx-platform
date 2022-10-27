@@ -1,14 +1,31 @@
 <template>
+#if($editType == "modal")
   <basic-modal
     v-bind="$attrs"
     :loading="confirmLoading"
-    :width="modalWidth"
     :title="title"
+    :width="modalWidth"
     :visible="visible"
     :mask-closable="showable"
     @cancel="handleCancel"
   >
-    <a-form
+#end
+#if($editType == "drawer")
+  <basic-drawer
+    showFooter
+    v-bind="$attrs"
+    :title="title"
+    :width="modalWidth"
+    :visible="visible"
+    :maskClosable="false"
+    :loading="confirmLoading"
+    @close="handleCancel"
+  >
+#end
+#if($editType == "drawer")
+    <a-spin :spinning="confirmLoading">
+#end
+      <a-form
       class="small-from-item"
       ref="formRef"
       :validate-trigger="['blur', 'change']"
@@ -26,13 +43,21 @@
       </a-form-item>
     #end
     </a-form>
+#if($editType == "drawer")
+    </a-spin>
+#end
     <template #footer>
       <a-space>
         <a-button key="cancel" @click="handleCancel">取消</a-button>
         <a-button v-if="!showable" key="forward" :loading="confirmLoading" type="primary" @click="handleOk">保存</a-button>
       </a-space>
     </template>
+#if($editType == "modal")
   </basic-modal>
+#end
+#if($editType == "drawer")
+  </basic-drawer>
+#end
 </template>
 
 <script lang="ts" setup>
@@ -42,8 +67,12 @@
   import { add, get, update, ${entityUpName} } from './${entityUpName}.api'
   import { FormInstance, Rule } from 'ant-design-vue/lib/form'
   import { FormEditType } from '/@/enums/formTypeEnum'
+#if($editType == "modal")
   import { BasicModal } from '/@/components/Modal'
-
+#end
+#if($editType == "drawer")
+  import { BasicDrawer } from '/@/components/Drawer'
+#end
   const {
     initFormModel,
     handleCancel,
