@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.4</version>
+        <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -40,7 +40,7 @@
         <jackson.version>2.12.3</jackson.version>
         <lang3.version>3.11</lang3.version>
         <collections4.version>4.4</collections4.version>
-        <text.version>1.9</text.version>
+        <text.version>1.10.0</text.version>
         <commons-io.version>2.11.0</commons-io.version>
         <guava.version>31.1-jre</guava.version>
         <servlet-api.version>4.0.1</servlet-api.version>
@@ -53,7 +53,7 @@
         <logback-classic.version>1.2.11</logback-classic.version>
         <plumelog.version>3.5.3</plumelog.version>
         <xxl-job.version>2.3.1</xxl-job.version>
-        <IJPay.version>2.9.2</IJPay.version>
+        <IJPay.version>2.9.3</IJPay.version>
         <sa-token.version>1.31.0</sa-token.version>
         <justauth.version>1.16.5</justauth.version>
         <justauth..spring.boot.version>1.4.0</justauth..spring.boot.version>
@@ -61,7 +61,7 @@
         <dynamic-datasource.version>3.5.2</dynamic-datasource.version>
         <springdoc.version>1.6.11</springdoc.version>
         <redisson.version>3.17.6</redisson.version>
-        <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <mapstruct.version>1.5.3.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <velocity.version>2.3</velocity.version>
         <wxjava.version>4.4.1.B</wxjava.version>
