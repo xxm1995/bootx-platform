@@ -1,10 +1,10 @@
-# Bootx-Platform (v1.1.5)
+# Bootx-Platform (v1.1.6)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.1.5-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.1.6-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
- <img src="https://img.shields.io/badge/Spring%20Boot-2.7.4-blue.svg" alt="Downloads"/>
+ <img src="https://img.shields.io/badge/Spring%20Boot-2.7.5-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
 
@@ -22,8 +22,8 @@
 
 ## 🍒文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) [管理平台(vue3开发中)](http://v3.platform.bootx.cn/)
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) [前端项目(vue3开发中)](https://gitee.com/bootx/bootx-platfrom-vue3)
+- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) [管理平台(vue3)](http://v3.platform.bootx.cn/)
+- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) [前端项目(vue3)](https://gitee.com/bootx/bootx-platfrom-vue3)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove) [PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
@@ -168,6 +168,9 @@ service-iam
 
 ## 🍌项目展示
 
+Vue3版本管理端
+![输入图片说明](https://oscimg.oschina.net/oscnet/up-f073982714da2b2151090f0c1cbf3680159.png)
+
 支付结算台
 
 ![简单支付](https://oscimg.oschina.net/oscnet/up-2afe305355141ae9398e3b056052596e1f8.png)
@@ -208,13 +211,6 @@ ELK日志
 
 ![输入图片说明](https://oscimg.oschina.net/oscnet/up-97b10943138e572258ac1cb1f31365f72db.png)
 
-数据权限配置
-
-![输入图片说明](https://oscimg.oschina.net/oscnet/up-1dbbb058d0d00b0a8d36998ccf26208fc7e.png)
-
-支付宝支付配置
-
-![输入图片说明](https://oscimg.oschina.net/oscnet/up-5c4fd5380463596db224c3d27329c494ace.png)
 
 ##  🥪 关于我们
 
