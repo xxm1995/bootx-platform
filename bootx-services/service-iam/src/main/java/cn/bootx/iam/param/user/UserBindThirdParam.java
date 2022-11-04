@@ -20,9 +20,9 @@ public class UserBindThirdParam {
     @Schema(description = "授权码")
     private String authCode;
 
-    @NotBlank(message = "终端类型不可为空")
-    @Schema(description = "终端类型")
-    private String clientCode;
+    @NotBlank(message = "第三方开放平台登录不可为空")
+    @Schema(description = "第三方开放平台登录类型")
+    private String loginType;
 
 //    @NotBlank(message = "state不可为空")
     @Schema(description = "state")

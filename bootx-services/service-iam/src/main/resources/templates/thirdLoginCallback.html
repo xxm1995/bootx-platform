@@ -11,7 +11,7 @@
     setTimeout(function (){
         window.opener.postMessage({
             authCode: authCode.code,
-            clientCode: authCode.clientCode,
+            loginType: authCode.loginType,
             state: authCode.state
         }, "*");
         window.close();

@@ -57,7 +57,7 @@ public class UserThirdController {
     @PostMapping("/bind")
     public ResResult<Void> bind(@RequestBody UserBindThirdParam param){
         ValidationUtil.validateParam(param);
-        userThirdBindService.bind(param.getAuthCode(),param.getClientCode(),param.getState());
+        userThirdBindService.bind(param.getAuthCode(),param.getLoginType(),param.getState());
         return Res.ok();
     }
 

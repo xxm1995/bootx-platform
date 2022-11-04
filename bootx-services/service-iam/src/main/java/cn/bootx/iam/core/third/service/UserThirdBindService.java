@@ -36,8 +36,8 @@ public class UserThirdBindService {
      * 绑定账号
      */
     @Transactional(rollbackFor = Exception.class)
-    public void bind(String authCode, String clientCode, String state){
-        OpenIdAuthentication openIdAuthentication = this.getOpenIdAuthentication(clientCode);
+    public void bind(String authCode, String loginType, String state){
+        OpenIdAuthentication openIdAuthentication = this.getOpenIdAuthentication(loginType);
         openIdAuthentication.bindUser(authCode, state);
     }
 
@@ -45,13 +45,13 @@ public class UserThirdBindService {
      * 解除绑定
      */
     @Transactional
-    public void unbind(String clientCode) {
+    public void unbind(String loginType) {
         Long userId = SecurityUtil.getUserId();
         if (!userThirdManager.existsByUserId(userId)){
            throw new DataNotExistException("用户绑定关系不存");
         }
-        userThirdInfoManager.deleteByUserAndClientCode(userId, clientCode);
-        switch (clientCode) {
+        userThirdInfoManager.deleteByUserAndClientCode(userId, loginType);
+        switch (loginType) {
             case WE_CHAT: {
                 userThirdManager.unbind(userId, UserThird::getWeChatId);
                 break;
