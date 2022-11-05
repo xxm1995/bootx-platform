@@ -28,9 +28,9 @@
       <a-form
       class="small-from-item"
       ref="formRef"
-      :validate-trigger="['blur', 'change']"
       :model="form"
       :rules="rules"
+      :validate-trigger="['blur', 'change']"
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
     >
