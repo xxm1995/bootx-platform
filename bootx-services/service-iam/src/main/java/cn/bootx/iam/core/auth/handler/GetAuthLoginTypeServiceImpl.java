@@ -25,8 +25,8 @@ public class GetAuthLoginTypeServiceImpl implements GetAuthLoginTypeService {
      * 获取认证终端信息
      */
     @Override
-    public AuthLoginType getAuthLoginType(String authClientCode) {
-        LonginType longinType = loginTypeManager.findByCode(authClientCode).orElseThrow(ClientNotFoundException::new);
+    public AuthLoginType getAuthLoginType(String loginType) {
+        LonginType longinType = loginTypeManager.findByCode(loginType).orElseThrow(ClientNotFoundException::new);
         AuthLoginType authLoginType = new AuthLoginType();
         BeanUtil.copyProperties(longinType, authLoginType);
         return authLoginType;
