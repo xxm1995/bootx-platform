@@ -134,7 +134,7 @@ public class UserInfoController {
     @PostMapping("/forgetPasswordByPhone")
     public ResResult<Void> forgetPasswordByPhone(@RequestBody UserForgetPhoneParam param){
         ValidationUtil.validateParam(param);
-        userInfoService.forgetPasswordByPhone(param.getPhone(),param.getCaptcha(),param.getCaptcha());
+        userInfoService.forgetPasswordByPhone(param.getPhone(),param.getCaptcha(),param.getPassword());
         return Res.ok();
     }
 
@@ -142,7 +142,7 @@ public class UserInfoController {
     @PostMapping("/forgetPasswordByEmail")
     public ResResult<Void> forgetPasswordByEmail(@RequestBody UserForgetEmailParam param){
         ValidationUtil.validateParam(param);
-        userInfoService.forgetPasswordByEmail(param.getEmail(),param.getCaptcha(),param.getCaptcha());
+        userInfoService.forgetPasswordByEmail(param.getEmail(),param.getCaptcha(),param.getPassword());
         return Res.ok();
     }
 

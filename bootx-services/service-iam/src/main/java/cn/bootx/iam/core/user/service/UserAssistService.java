@@ -111,7 +111,6 @@ public class UserAssistService {
     public void sendPhoneForgetCaptcha(String phone){
         UserInfo userInfo = userInfoManager.findByPhone(phone).orElseThrow(UserInfoNotExistsException::new);
         int captcha = captchaService.sendSmsCaptcha(userInfo.getPhone(), 15 * 60, forgetPhoneType);
-        log.info("忘记密码手机验证码: {}", captcha);
 
     }
 
