@@ -13,6 +13,15 @@ export function page(params) {
 }
 
 /**
+ * 查询全部
+ */
+export function findAll() {
+    return defHttp.get<Result<Array<${entityUpName}>>>({
+        url: '${requestPath}/findAll',
+    })
+}
+
+/**
  * 获取单条
  */
 export function get(id) {
@@ -49,15 +58,6 @@ export function del(id) {
   return defHttp.delete({
     url: '${requestPath}/delete',
     params: { id },
-  })
-}
-
-/**
- * 查询全部
- */
-export function findAll() {
-  return defHttp.get<Result<Array<${entityUpName}>>>({
-    url: '${requestPath}/findAll',
   })
 }
 

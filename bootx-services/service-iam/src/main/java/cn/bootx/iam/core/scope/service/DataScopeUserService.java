@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.bootx.iam.code.CachingCode.USER_DATA_SCOPE;
@@ -40,7 +41,7 @@ public class DataScopeUserService {
      */
     public List<DataScopeUserInfoDto> findUsersByDataScopeId(Long dataScopeId){
         Map<Long, DataScopeUser> dataScopeUserMap = dataScopeUserManager.findByDateScopeId(dataScopeId).stream()
-                .collect(Collectors.toMap(DataScopeUser::getUserId, o -> o));
+                .collect(Collectors.toMap(DataScopeUser::getUserId, Function.identity(),(o1, o2) -> o2));
         // 查询出用户id
         List<Long> userIds = dataScopeUserMap.values().stream()
                 .map(DataScopeUser::getUserId)

@@ -20,7 +20,7 @@ public enum CodeGenColumnTypeEnum {
     MEDIUMINT("mediumint","Integer","number"),
     INT("int","Integer","number"),
     INTEGER("integer","Integer","number"),
-    BIGINT("bigint","Long","number"),
+    BIGINT("bigint","Long","string"),
     FLOAT("float","Float","number"),
     DOUBLE("double","Double","number"),
     DECIMAL("decimal","BigDecimal","number"),
