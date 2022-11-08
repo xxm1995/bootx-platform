@@ -18,7 +18,6 @@
     :width="modalWidth"
     :visible="visible"
     :maskClosable="false"
-    :loading="confirmLoading"
     @close="handleCancel"
   >
 #end
@@ -132,7 +131,7 @@
     })
   }
 
-  // 重置表单的校验
+  // 重置表单
   function resetForm() {
     nextTick(() => {
       formRef.resetFields()

@@ -1,7 +1,6 @@
 package cn.bootx.iam.dto.dept;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -33,10 +32,7 @@ public class DeptTreeResult implements Serializable {
     private Double sortNo;
 
     @Schema(description= "机构类别 1组织机构，2岗位")
-    private String orgCategory;
-
-    @Schema(description= "机构类型")
-    private String orgType;
+    private Integer orgCategory;
 
     @Schema(description= "机构编码")
     private String orgCode;

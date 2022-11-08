@@ -16,9 +16,9 @@ export function page(params) {
  * 查询全部
  */
 export function findAll() {
-    return defHttp.get<Result<Array<${entityUpName}>>>({
-        url: '${requestPath}/findAll',
-    })
+  return defHttp.get<Result<${entityUpName}[]>>({
+    url: '${requestPath}/findAll',
+  })
 }
 
 /**
