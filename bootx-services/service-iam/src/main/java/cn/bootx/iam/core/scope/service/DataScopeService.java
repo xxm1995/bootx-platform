@@ -1,8 +1,10 @@
 package cn.bootx.iam.core.scope.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -21,13 +23,13 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static cn.bootx.iam.code.CachingCode.USER_DATA_SCOPE;
@@ -89,9 +91,9 @@ public class DataScopeService {
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
     public void saveDeptAssign(DataScopeDeptParam param){
-        DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(() -> new BizException("数据不存在"));
-        if (!Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_SCOPE.getCode())
-                &&  Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())){
+        DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(DataNotExistException::new);
+        val scope = CollUtil.newArrayList(DataScopeEnum.DEPT_SCOPE.getCode(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode());
+        if (!scope.contains(dataScope.getType())){
             throw new BizException("非法操作");
         }
 
