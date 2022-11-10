@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**   
 *
@@ -31,8 +32,11 @@ public class UserDataScopeManager extends BaseManager<UserDataScopeMapper, UserD
         this.deleteByFields(UserDataScope::getUserId,userIds);
     }
 
-    public List<UserDataScope> findByUserId(Long userId){
+    public List<UserDataScope> findAllByUserId(Long userId){
         return this.findAllByField(UserDataScope::getUserId,userId);
+    }
+    public Optional<UserDataScope> findByUserId(Long userId){
+        return this.findByField(UserDataScope::getUserId,userId);
     }
 
     @Override

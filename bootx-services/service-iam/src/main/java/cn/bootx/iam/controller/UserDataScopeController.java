@@ -12,8 +12,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
 * @author xxm
 * @date 2022/1/2
@@ -40,16 +38,16 @@ public class UserDataScopeController {
         return Res.ok();
     }
 
-    @Operation( summary = "根据用户ID获取到部门集合")
-    @GetMapping(value = "/findAllByUser")
-    public ResResult<List<DataScopeDto>> findAllByUser(Long id) {
-        return Res.ok(dataScopeService.findDataScopeListByUser(id));
+    @Operation( summary = "根据用户ID获取到数据权限")
+    @GetMapping(value = "/findDataScopeByUser")
+    public ResResult<DataScopeDto> findDataScopeByUser(Long id) {
+        return Res.ok(dataScopeService.findDataScopeByUser(id));
     }
 
-    @Operation( summary = "根据用户ID获取到部门id集合")
-    @GetMapping(value = "/findIdsByUser")
-    public ResResult<List<Long>> findDataScopeIdsByUser(Long id) {
-        return Res.ok(dataScopeService.findDataScopeIdsByUser(id));
+    @Operation( summary = "根据用户ID获取到数据权限Id")
+    @GetMapping(value = "/findDataScopeIdByUser")
+    public ResResult<Long> findDataScopeIdByUser(Long id) {
+        return Res.ok(dataScopeService.findDataScopeIdByUser(id));
     }
 
 }

@@ -31,4 +31,5 @@ public class DataScopeManager extends BaseManager<DataScopeMapper, DataScope> {
     public boolean existsByName(String name, Long id) {
         return this.existedByField(DataScope::getName,name,id);
     }
+    
 }

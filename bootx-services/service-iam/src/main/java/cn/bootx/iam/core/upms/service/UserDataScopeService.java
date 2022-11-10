@@ -3,7 +3,7 @@ package cn.bootx.iam.core.upms.service;
 import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.core.util.ResultConvertUtil;
+import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.dept.entity.Dept;
@@ -83,17 +83,22 @@ public class UserDataScopeService {
     /**
      * 查询用户所对应的数据权限信息
      */
-    public List<DataScopeDto> findDataScopeListByUser(Long userId) {
-        return ResultConvertUtil.dtoListConvert(dataScopeManager.findAllByIds(this.findDataScopeIdsByUser(userId)));
+    public DataScopeDto findDataScopeByUser(Long userId) {
+        if (Objects.isNull(this.findDataScopeIdByUser(userId))){
+            return new DataScopeDto();
+        }
+        return dataScopeManager.findById(this.findDataScopeIdByUser(userId)).map(DataScope::toDto)
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 查询用户所对应的数据权限id
      */
-    public List<Long> findDataScopeIdsByUser(Long userId) {
-        return userDataScopeManager.findByUserId(userId).stream()
+    public Long findDataScopeIdByUser(Long userId) {
+        return userDataScopeManager.findByUserId(userId)
                 .map(UserDataScope::getDataScopeId)
-                .collect(Collectors.toList());
+                .orElse(null);
+
     }
 
     /**
@@ -104,7 +109,7 @@ public class UserDataScopeService {
     @Cacheable(value = USER_DATA_SCOPE,key = "#userId")
     public DataPermScope getDataPermScopeByUser(Long userId){
         DataPermScope dataPermScope = new DataPermScope();
-        List<UserDataScope> userDataScopes = userDataScopeManager.findByUserId(userId);
+        List<UserDataScope> userDataScopes = userDataScopeManager.findAllByUserId(userId);
 
         if (CollUtil.isEmpty(userDataScopes)){
             return dataPermScope.setScopeType(DataScopeEnum.SELF);
