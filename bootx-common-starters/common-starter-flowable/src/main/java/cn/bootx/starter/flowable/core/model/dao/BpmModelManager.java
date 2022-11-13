@@ -6,6 +6,7 @@ import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.flowable.core.model.entity.BpmModel;
 import cn.bootx.starter.flowable.param.model.BpmModelParam;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -29,6 +30,7 @@ public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
         Page<BpmModel> mpPage = MpUtil.getMpPage(pageParam, BpmModel.class);
         return this.lambdaQuery()
                 .select(this.getEntityClass(),MpUtil::excludeBigField)
+                .like(StrUtil.isNotBlank(param.getName()),BpmModel::getName,param.getName())
                 .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }

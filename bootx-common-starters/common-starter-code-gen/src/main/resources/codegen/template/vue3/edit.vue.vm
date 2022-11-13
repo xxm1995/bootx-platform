@@ -24,7 +24,7 @@
 #if($editType == "drawer")
     <a-spin :spinning="confirmLoading">
 #end
-      <a-form
+    <a-form
       class="small-from-item"
       ref="formRef"
       :model="form"
@@ -73,7 +73,7 @@
   import { BasicDrawer } from '/@/components/Drawer'
 #end
   const {
-    initFormModel,
+    initFormEditType,
     handleCancel,
     search,
     labelCol,
@@ -100,7 +100,7 @@
   const emits = defineEmits(['ok'])
   // 入口
   function init(id, editType: FormEditType) {
-    initFormModel(id, editType)
+    initFormEditType(editType)
     resetForm()
     getInfo(id, editType)
   }

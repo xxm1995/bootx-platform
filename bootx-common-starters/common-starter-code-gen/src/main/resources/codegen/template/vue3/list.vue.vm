@@ -20,16 +20,21 @@
         <vxe-column fixed="right" width="150" :showOverflow="false" title="操作">
           <template #default="{ row }">
             <span>
-              <a href="javascript:" @click="show(row)">查看</a>
+              <a-link @click="show(row)">查看</a>
             </span>
             <a-divider type="vertical" />
             <span>
-              <a href="javascript:" @click="edit(row)">编辑</a>
+              <a-link @click="edit(row)">编辑</a>
             </span>
             <a-divider type="vertical" />
+#if($deleteType == "confirm")
+            <a-link danger >删除</a>
+#end
+#if($deleteType == "popconfirm")
             <a-popconfirm title="是否删除" @confirm="remove(row)" okText="是" cancelText="否">
-              <a href="javascript:" style="color: red">删除</a>
+              <a-link danger >删除</a>
             </a-popconfirm>
+#end
           </template>
         </vxe-column>
       </vxe-table>
