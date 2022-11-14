@@ -29,7 +29,6 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
     private String taskId;
 
     /** 任务节点id */
-    @TableField("任务节点")
     private String nodeId;
 
     /** 任务节点名称 */
