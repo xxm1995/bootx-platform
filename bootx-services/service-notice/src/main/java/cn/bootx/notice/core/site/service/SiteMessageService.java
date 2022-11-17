@@ -50,10 +50,10 @@ public class SiteMessageService {
     private final UserWsNoticeService userWsNoticeService;
 
     /**
-     * 保存草稿
+     * 保存或更新草稿
      */
     @Transactional(rollbackFor = Exception.class)
-    public void save(SendSiteMessageParam param){
+    public void saveOrUpdate(SendSiteMessageParam param){
         SiteMessage siteMessage;
         if (Objects.nonNull(param.getId())){
             siteMessage = siteMessageManager.findById(param.getId()).orElseThrow(() -> new DataNotExistException("站内信信息不存在"));

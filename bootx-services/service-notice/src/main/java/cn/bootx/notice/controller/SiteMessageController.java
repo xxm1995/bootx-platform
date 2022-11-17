@@ -26,9 +26,9 @@ public class SiteMessageController {
     private final SiteMessageService siteMessageService;
 
     @Operation(summary = "保存站内信草稿")
-    @PostMapping("/save")
-    public ResResult<Void> save(@RequestBody SendSiteMessageParam param){
-        siteMessageService.save(param);
+    @PostMapping("/saveOrUpdate")
+    public ResResult<Void> saveOrUpdate(@RequestBody SendSiteMessageParam param){
+        siteMessageService.saveOrUpdate(param);
         return Res.ok();
     }
     @Operation(summary = "发送站内信")
