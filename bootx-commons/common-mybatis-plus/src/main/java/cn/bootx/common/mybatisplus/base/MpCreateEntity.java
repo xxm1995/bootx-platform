@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @FieldNameConstants(innerTypeName="Create")
-public class MpCreateEntity extends MpIdEntity{
+public abstract class MpCreateEntity extends MpIdEntity{
 
     /** 创建者ID */
     @TableField(fill = FieldFill.INSERT)

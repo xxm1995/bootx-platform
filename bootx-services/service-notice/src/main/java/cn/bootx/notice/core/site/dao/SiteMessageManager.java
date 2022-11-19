@@ -87,6 +87,7 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
                 .like(StrUtil.isNotBlank(query.getTitle()),SiteMessage::getSenderId,query.getTitle())
                 .eq(StrUtil.isNotBlank(query.getSendState()),SiteMessage::getSendState,query.getSendState())
                 .eq(StrUtil.isNotBlank(query.getReceiveType()),SiteMessage::getReceiveType,query.getReceiveType())
+                .orderByDesc(SiteMessage::getId)
                 .page(mpPage);
     }
 }

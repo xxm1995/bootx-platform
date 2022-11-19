@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @FieldNameConstants(innerTypeName = "Id")
-public class MpIdEntity implements Serializable {
+public abstract class MpIdEntity implements Serializable {
 
     private static final long serialVersionUID = 3982181843202226124L;
 

@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @FieldNameConstants(innerTypeName="Del")
-public class MpDelEntity extends MpCreateEntity{
+public abstract class MpDelEntity extends MpCreateEntity{
 
     /** 最后修者ID */
     @TableField(fill = FieldFill.INSERT_UPDATE)
