@@ -24,24 +24,24 @@
 #if($editType == "drawer")
     <a-spin :spinning="confirmLoading">
 #end
-    <a-form
-      class="small-from-item"
-      ref="formRef"
-      :model="form"
-      :rules="rules"
-      :validate-trigger="['blur', 'change']"
-      :label-col="labelCol"
-      :wrapper-col="wrapperCol"
-    >
-      <a-form-item label="主键" :hidden="true">
-        <a-input v-model:value="form.id" :disabled="showable" />
-      </a-form-item>
-    #foreach ($column in $columns)
-      <a-form-item label="$column.comments" name="$column.name">
-        <a-input v-model:value="form.$column.name" :disabled="showable" placeholder="请输入$column.comments" />
-      </a-form-item>
-    #end
-    </a-form>
+      <a-form
+        class="small-from-item"
+        ref="formRef"
+        :model="form"
+        :rules="rules"
+        :validate-trigger="['blur', 'change']"
+        :label-col="labelCol"
+        :wrapper-col="wrapperCol"
+      >
+        <a-form-item label="主键" :hidden="true">
+          <a-input v-model:value="form.id" :disabled="showable" />
+        </a-form-item>
+      #foreach ($column in $columns)
+        <a-form-item label="$column.comments" name="$column.name">
+          <a-input v-model:value="form.$column.name" :disabled="showable" placeholder="请输入$column.comments" />
+        </a-form-item>
+      #end
+      </a-form>
 #if($editType == "drawer")
     </a-spin>
 #end
