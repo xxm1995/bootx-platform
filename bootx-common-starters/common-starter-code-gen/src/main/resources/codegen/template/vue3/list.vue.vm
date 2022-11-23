@@ -28,7 +28,7 @@
             </span>
             <a-divider type="vertical" />
 #if($deleteType == "confirm")
-            <a-link danger >删除</a-link>
+            <a-link danger @click="remove(row)" >删除</a-link>
 #end
 #if($deleteType == "popconfirm")
             <a-popconfirm title="是否删除" @confirm="remove(row)" okText="是" cancelText="否">
@@ -125,8 +125,8 @@
         createMessage.success('删除成功')
         queryPage()
       })
-    }
     #end
+    }
 </script>
 
 <style lang="less" scoped></style>
