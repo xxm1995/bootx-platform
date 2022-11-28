@@ -34,7 +34,7 @@ public enum CodeGenColumnTypeEnum {
     LONGTEXT("longtext","String","string"),
     DATE("date","LocalDate","string"),
     DATETIME("datetime","LocalDateTime","string"),
-    TIME("time","LocalTime",""),
+    TIME("time","LocalTime","string"),
     TIMESTAMP("timestamp","LocalDateTime","string");
 
     private final String columnType;

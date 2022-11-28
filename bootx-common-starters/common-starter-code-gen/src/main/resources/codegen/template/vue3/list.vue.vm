@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { onMounted, ref } from 'vue'
+  import { onMounted } from 'vue'
   import { $ref } from 'vue/macros'
   import { del, page } from './${entityUpName}.api'
   import useTablePage from '/@/hooks/bootx/useTablePage'
@@ -79,7 +79,7 @@
     queryPage()
   })
   function vxeBind() {
-    xTable.connect(xToolbar)
+    xTable?.connect(xToolbar as VxeToolbarInstance)
   }
 
   // 分页查询
