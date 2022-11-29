@@ -82,7 +82,7 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-     * 手动注册swagger docket bean
+     * 手动注册swagger docket bean, 如果晚于swagger加载后, 再注入的bean将不会生效
      */
     @Override
     public void postProcessBeanDefinitionRegistry(@NotNull BeanDefinitionRegistry registry) throws BeansException {
@@ -103,7 +103,7 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
     }
 
     /**
-     * 获取环境变量并设置到swaggerProperties对象中
+     * 获取环境变量并设置到swaggerProperties对象中, bean注册时, 参数还未进行绑定
      */
     @Override
     public void setEnvironment(@NotNull Environment environment) {

@@ -88,12 +88,12 @@
   } = useFormEdit()
   // 表单
   const formRef = $ref<FormInstance>()
-  let form = $ref({
+  let form = $ref<${entityUpName}>({
     id: null,
 #foreach ($column in $columns)
     $column.name: null,
 #end
-  } as ${entityUpName})
+  })
   // 校验
   const rules = reactive({} as Record<string, Rule[]>)
   // 事件
