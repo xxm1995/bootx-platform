@@ -32,7 +32,7 @@
 #end
 #if($deleteType == "popconfirm")
             <a-popconfirm title="是否删除" @confirm="remove(row)" okText="是" cancelText="否">
-              <a-link danger >删除</a-link>
+              <a-link danger>删除</a-link>
             </a-popconfirm>
 #end
           </template>
