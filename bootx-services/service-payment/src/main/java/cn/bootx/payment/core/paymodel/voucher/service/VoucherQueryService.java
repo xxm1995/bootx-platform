@@ -12,10 +12,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/**   
+/**
 * 储值卡查询
-* @author xxm  
-* @date 2022/3/14 
+* @author xxm
+* @date 2022/3/14
 */
 @Slf4j
 @Service
@@ -34,13 +34,13 @@ public class VoucherQueryService {
      * 根据id查询
      */
     public VoucherDto findById(Long id) {
-        return voucherManager.findById(id).map(Voucher::toDto).orElseThrow(DataNotExistException::new);
+        return voucherManager.findById(id).map(Voucher::toDto).orElseThrow(() -> new DataNotExistException("储值卡不存在"));
     }
 
     /**
      * 根据卡号查询
      */
     public VoucherDto findByCardNo(String cardNo){
-        return voucherManager.findByCardNo(cardNo).map(Voucher::toDto).orElseThrow(DataNotExistException::new);
+        return voucherManager.findByCardNo(cardNo).map(Voucher::toDto).orElseThrow(() -> new DataNotExistException("储值卡不存在"));
     }
 }

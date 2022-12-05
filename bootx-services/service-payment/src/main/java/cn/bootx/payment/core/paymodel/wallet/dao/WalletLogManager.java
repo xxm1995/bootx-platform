@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -46,10 +47,12 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
     /**
      * 分页查询
      */
-    public Page<WalletLog> page(PageParam pageParam, WalletLogQueryParam param) {
+    public Page<WalletLog> page(PageParam pageParam, WalletLogQueryParam query) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
         return this.lambdaQuery()
                 .orderByDesc(MpIdEntity::getId)
+                .like(Objects.nonNull(query.getUserId()),WalletLog::getUserId,query.getUserId())
+                .like(Objects.nonNull(query.getWalletId()),WalletLog::getWalletId,query.getWalletId())
                 .page(mpPage);
     }
     /**
