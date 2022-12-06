@@ -2,9 +2,9 @@
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.1.7-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.1.8-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
- <img src="https://img.shields.io/badge/Spring%20Boot-2.7.5-blue.svg" alt="Downloads"/>
+ <img src="https://img.shields.io/badge/Spring%20Boot-2.7.6-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
 
@@ -58,9 +58,11 @@
   - [x] 更灵活的节点用户配置，可配置发起人、指定用户、指定角色等，关联消息通知
   - [x] 会签处理、串签处理、或签处理、驳回处理、任意节点退回、会签比例通过处理
 - Vue3版本前端
-  - [ ] 登录模块移植
-  - [x] 认证终端移植
-  - [ ] 组件移植和Mixin转换为Hooks、
+  - [x] 登录模块移植
+  - [x] 基础功能移植已完成
+  - [x] 组件移植和Mixin转换为Hooks、
+  - [x] 支付功能移植基本完成
+  - [ ] 工作流功能移植除流程设计器外已完成
 - Spring Cloud版本
   - [ ] 代码组织结构调整
   - [x] 网关定制开发
@@ -79,10 +81,9 @@
 | 备备注注组件 | 是否必须配置 | 备注                                          |
 | ------------ | ------------ |---------------------------------------------|
 | MySQL        | 是           | 不设置无法启动                                     |
-| Redis        | 是           | 不设置无法启动                                     |
-| RabbitMQ     | 否           | 支付消息通知在使用                                   |
+| Redis        | 是           | 不设置启动后无法正常使用                                |
+| RabbitMQ     | 否           | 支付消息通知在使用                             |
 | MongoDB      | 否           | 默认审计日志和文件管理使用持久化方式为Mono，可在配置文件中配置切换成其他持久化方式 |
-| MQTT         | 否           |                                             |
 | plumelog     | 是           | 默认项目自带lite版plumelog，不需要额外配置中间件，直接就可以使用      |
 
 ## 🥞项目整体结构
@@ -124,8 +125,8 @@ bootx-platform
        ├── common-websocket  -- websocket封装
        ├── common-xxl-job -- XXL-JOB定时任务
     ├── bootx-demo -- demo示例模块
-    ├── bootx-modules -- 业务系统（暂停）
-       ├── eshop -- 网上商城（暂停）
+    ├── bootx-modules -- 业务系统（停用）
+       ├── eshop -- 网上商城（停用）
     ├── bootx-services -- 业务服务模块
        ├── service-baseapi -- 基础api功能服务
        ├── service-goods -- 商品中心服务(停用)
