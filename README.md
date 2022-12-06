@@ -1,4 +1,4 @@
-# Bootx-Platform (v1.1.7)
+# Bootx-Platform (v1.1.8)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
