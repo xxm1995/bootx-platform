@@ -11,10 +11,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-/**   
+import java.util.List;
+
+/**
 * 字典
 * @author xxm
-* @date 2020/11/13 
+* @date 2020/11/13
 */
 @Repository
 @AllArgsConstructor
@@ -42,5 +44,9 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
                 .like(StrUtil.isNotBlank(param.getName()),Dictionary::getName,param.getName())
                 .like(StrUtil.isNotBlank(param.getGroupTag()),Dictionary::getGroupTag,param.getGroupTag())
                 .page(mpPage);
+    }
+
+    public List<Dictionary> findAllByEnable(boolean enable){
+        return lambdaQuery().eq(Dictionary::getEnable,enable).list();
     }
 }

@@ -26,6 +26,9 @@ public class DictionaryDto extends BaseDto implements Serializable {
 	@Schema(description= "名称")
 	private String name;
 
+    @Schema(description= "启用状态")
+    private Boolean enable;
+
     @Schema(description= "分类标签")
     private String groupTag;
 

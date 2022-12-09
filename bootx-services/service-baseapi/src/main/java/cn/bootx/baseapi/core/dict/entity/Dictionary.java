@@ -9,10 +9,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-/**   
+/**
 * 字典
-* @author xxm  
-* @date 2020/11/13 
+* @author xxm
+* @date 2020/11/13
 */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -30,6 +30,9 @@ public class Dictionary extends MpBaseEntity implements EntityBaseFunction<Dicti
 
 	/** 备注 */
 	private String remark;
+
+    /** 是否启用 */
+    private Boolean enable;
 
 	public static Dictionary init(DictionaryParam in){
 		return DictionaryConvert.CONVERT.convert(in);

@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 字典项
@@ -39,7 +38,7 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
     }
 
     /**
-     * 查询指定目录下的所有内容
+     * 查询指定字典下的所有内容
      */
     public List<DictionaryItem> findByDictId(Long dictId) {
         return findAllByField(DictionaryItem::getDictId,dictId);
@@ -63,10 +62,9 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
                 .update();
     }
 
-    public Optional<DictionaryItem> findByDictCodeAndCode(String dictCode, String itemCode) {
+    public List<DictionaryItem> findAllByEnable(boolean enable){
         return lambdaQuery()
-                .eq(DictionaryItem::getDictCode,dictCode)
-                .eq(DictionaryItem::getCode,itemCode)
-                .oneOpt();
+                .eq(DictionaryItem::getEnable,enable)
+                .list();
     }
 }

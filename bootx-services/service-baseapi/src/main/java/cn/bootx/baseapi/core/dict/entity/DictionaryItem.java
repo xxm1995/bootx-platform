@@ -37,6 +37,9 @@ public class DictionaryItem extends MpBaseEntity implements EntityBaseFunction<D
     /** 字典项排序 */
     private Double sortNo;
 
+    /** 是否启用 */
+    private Boolean enable;
+
     /** 备注 */
     private String remark;
 

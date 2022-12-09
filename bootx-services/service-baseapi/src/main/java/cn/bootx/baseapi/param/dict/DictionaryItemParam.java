@@ -11,10 +11,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.io.Serializable;
 
-/**   
+/**
 * 字典项参数
-* @author xxm  
-* @date 2021/8/4 
+* @author xxm
+* @date 2021/8/4
 */
 @Data
 @Accessors(chain = true)
@@ -41,6 +41,10 @@ public class DictionaryItemParam implements Serializable {
     @NotEmpty(message = "字典项编码不可为空",groups = add.class)
     @Schema(description= "名称")
     private String name;
+
+    @NotEmpty(message = "启用状态不可为空",groups = add.class)
+    @Schema(description= "启用状态")
+    private Boolean enable;
 
     @Schema(description= "字典项排序")
     private Double sortNo;

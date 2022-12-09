@@ -131,5 +131,25 @@ public class DictionaryItemService {
                 .map(DictionaryItem::toSimpleDto)
                 .collect(Collectors.toList());
     }
+    /**
+     * 获取启用的字典项列表
+     */
+    public List<DictionaryItemSimpleDto> findAllByEnable(){
+
+        // 获取被停用的字典
+        List<Long> unEnableDictIds = dictionaryManager.findAllByEnable(false).stream()
+                .map(MpIdEntity::getId)
+                .collect(Collectors.toList());
+
+        // 过滤掉被停用的字典项
+        return dictionaryItemManager.findAllByEnable(true).stream()
+                .filter(o->!unEnableDictIds.contains(o.getDictId()))
+                .sorted(Comparator.comparing(DictionaryItem::getDictId)
+                        .thenComparing(DictionaryItem::getSortNo)
+                        .thenComparing(MpIdEntity::getId)
+                )
+                .map(DictionaryItem::toSimpleDto)
+                .collect(Collectors.toList());
+    }
 
 }

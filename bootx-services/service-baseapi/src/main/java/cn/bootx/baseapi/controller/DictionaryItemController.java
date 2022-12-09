@@ -70,11 +70,17 @@ public class DictionaryItemController {
         return Res.ok(dictionaryItemService.pageByDictionaryId(dictId,pageParam));
     }
 
-    @IgnoreAuth
     @Operation( summary = "获取全部字典项")
     @GetMapping("/findAll")
     public ResResult<List<DictionaryItemSimpleDto>> findAll() {
         return Res.ok(dictionaryItemService.findAll());
+    }
+
+    @IgnoreAuth
+    @Operation( summary = "获取启用的字典项列表")
+    @GetMapping("/findAllByEnable")
+    public ResResult<List<DictionaryItemSimpleDto>> findAllByEnable() {
+        return Res.ok(dictionaryItemService.findAllByEnable());
     }
 
     @Operation( summary = "编码是否被使用")

@@ -32,6 +32,9 @@ public class DictionaryItemDto extends BaseDto implements Serializable {
     @Schema(description= "名称")
     private String name;
 
+    @Schema(description= "启用状态")
+    private Boolean enable;
+
     @Schema(description= "字典项排序")
     private Double sortNo;
 
