@@ -29,6 +29,9 @@ public class SystemParameterDto extends BaseDto {
     @Schema(description= "参数类型")
     private Integer type;
 
+    @Schema(description= "启用状态")
+    private Boolean enable;
+
     @Schema(description= "是否系统参数")
     private boolean internal;
 

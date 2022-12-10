@@ -12,10 +12,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
+/**
 * 系统参数
-* @author xxm  
-* @date 2021/10/25 
+* @author xxm
+* @date 2021/10/25
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -35,7 +35,10 @@ public class SystemParameter extends MpBaseEntity implements EntityBaseFunction<
     /** 参数类型 */
     private Integer type;
 
-    /** 系统内置参数 */
+    /** 是否启用 */
+    private Boolean enable;
+
+    /** 内置参数 */
     @TableField(updateStrategy = FieldStrategy.IGNORED)
     private boolean internal;
 

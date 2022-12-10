@@ -9,10 +9,10 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-/**   
+/**
 * 系统参数
-* @author xxm  
-* @date 2021/10/25 
+* @author xxm
+* @date 2021/10/25
 */
 @Data
 @Accessors(chain = true)
@@ -36,6 +36,11 @@ public class SystemParameterParam {
     @NotEmpty(message = "参数值不可为空",groups = ValidationGroup.add.class)
     @Schema(description = "参数值")
     private String value;
+
+    @NotNull(message = "启用状态不可为空",groups = ValidationGroup.add.class)
+    @Schema(description= "启用状态")
+    private Boolean enable;
+
 
     @Schema(description = "参数键类型")
     private Integer type;

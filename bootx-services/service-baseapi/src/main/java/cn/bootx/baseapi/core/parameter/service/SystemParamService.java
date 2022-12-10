@@ -14,13 +14,16 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**   
+import java.util.Objects;
+
+/**
 * 系统参数
-* @author xxm  
-* @date 2021/10/25 
+* @author xxm
+* @date 2021/10/25
 */
 @Slf4j
 @Service
@@ -72,19 +75,15 @@ public class SystemParamService implements ParamService {
     }
 
     /**
-     * 根据key获取单条
-     */
-    public String get(String key) {
-        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue)
-                .orElse(null);
-    }
-
-    /**
      * 根据键名获取键值
      */
     public String findByParamKey(String key) {
-        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue)
+        val param = systemParamManager.findByParamKey(key)
                 .orElseThrow(DataNotExistException::new);
+        if (Objects.equals(param.getEnable(),false)){
+            throw new BizException("该参数已停用");
+        }
+        return param.getValue();
     }
 
     /**
