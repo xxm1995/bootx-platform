@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -125,7 +126,7 @@ public class VoucherPayService {
         // 查找支付记录日志
         List<VoucherLog> voucherLogs = voucherLogManager.findByPaymentIdAndType(paymentId, VoucherCode.LOG_PAY);
         // 查出关联的储值卡
-        Map<Long, VoucherLog> voucherLogMap = voucherLogs.stream().collect(Collectors.toMap(VoucherLog::getVoucherId, o -> o));
+        Map<Long, VoucherLog> voucherLogMap = voucherLogs.stream().collect(Collectors.toMap(VoucherLog::getVoucherId, Function.identity()));
         List<Voucher> vouchers = voucherManager.findAllByIds(voucherLogMap.keySet());
         // 执行退款并记录日志
         List<VoucherLog> logs = new ArrayList<>();

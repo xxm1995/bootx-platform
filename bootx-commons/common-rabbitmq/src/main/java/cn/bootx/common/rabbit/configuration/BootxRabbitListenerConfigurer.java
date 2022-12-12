@@ -20,4 +20,6 @@ public class BootxRabbitListenerConfigurer implements RabbitListenerConfigurer {
     public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
         registrar.setMessageHandlerMethodFactory(jsonHandlerMethodFactory);
     }
+
+
 }

@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -147,7 +148,7 @@ public class QuartzJobService {
      */
     public void syncJobStatus(){
         Map<String, QuartzJob> quartzJobMap = quartzJobManager.findRunning().stream()
-                .collect(Collectors.toMap(o->o.getId().toString(), o -> o));
+                .collect(Collectors.toMap(o->o.getId().toString(), Function.identity()));
 
         List<Trigger> triggers = jobScheduler.findTriggers();
 

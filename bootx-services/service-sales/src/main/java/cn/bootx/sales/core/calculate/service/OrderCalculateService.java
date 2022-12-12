@@ -115,7 +115,7 @@ public class OrderCalculateService {
         Map<Long, StrategyRegister> strategyRegisterMap = calculateCache.getStrategyRegisterMap();
         Map<Long, StrategyRegister> srMap = strategyRegisterIds.stream()
                 .map(strategyRegisterMap::get)
-                .collect(Collectors.toMap(StrategyRegister::getId, o -> o));
+                .collect(Collectors.toMap(StrategyRegister::getId, Function.identity()));
 
         // 根据策略注册Id对订单明细进行分组
         Map<Long, List<OrderDetailCache>> odMap = new TreeMap<>();

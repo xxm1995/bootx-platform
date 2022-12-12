@@ -57,7 +57,7 @@ public class OrderFindActivityService {
                 .collect(Collectors.toList());
         List<Activity> activities = activityManager.findByStrategyRegister(srIds);
         Map<Long, Activity> activityBySrMap = activities.stream()
-                .collect(Collectors.toMap(Activity::getStrategyRegisterId, o -> o));
+                .collect(Collectors.toMap(Activity::getStrategyRegisterId, Function.identity()));
         // 注入检查规则
         checkRuleInjector.injectionActivity(activities, CheckRuleCode.RULE_TYPE_ACTIVITY_CHECK);
 

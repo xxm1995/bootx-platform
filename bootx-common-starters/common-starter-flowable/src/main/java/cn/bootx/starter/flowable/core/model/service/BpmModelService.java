@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.ModelCode.*;
@@ -43,7 +44,7 @@ import static cn.bootx.starter.flowable.code.ModelCode.*;
 /**
  * 流程模型
  * @author xxm
- * @date 2022/8/23 
+ * @date 2022/8/23
  */
 @Slf4j
 @Service
@@ -252,7 +253,7 @@ public class BpmModelService {
         List<UserTask> userTasks = process.findFlowElementsOfType(UserTask.class);
         List<BpmModelNode> bpmModelNodes = bpmModelNodeManager.findAllByModelId(bpmModel.getId());
 
-        val bpmModelNodeMap = bpmModelNodes.stream().collect(Collectors.toMap(BpmModelNode::getNodeId, o->o));
+        val bpmModelNodeMap = bpmModelNodes.stream().collect(Collectors.toMap(BpmModelNode::getNodeId, Function.identity()));
 
         for (val userTask : userTasks) {
             BpmModelNode modelTask = bpmModelNodeMap.get(userTask.getId());

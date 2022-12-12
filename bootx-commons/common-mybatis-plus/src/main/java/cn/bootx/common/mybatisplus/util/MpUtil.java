@@ -7,6 +7,7 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
@@ -18,6 +19,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.reflection.property.PropertyNamer;
 
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +77,7 @@ public class MpUtil {
 
     /**
      * 获取行名称
-     * @param function Lambda表达式
+     * @param function 对象字段对应的读取方法的Lambda表达式
      * @return 字段名
      */
     public static <T> String getColumnName(SFunction<T,?> function){
@@ -83,6 +85,25 @@ public class MpUtil {
         Map<String, ColumnCache> columnMap = LambdaUtils.getColumnMap(meta.getInstantiatedClass());
         Assert.notEmpty(columnMap, "错误:无法执行.因为无法获取到实体类的表对应缓存!");
         String fieldName = PropertyNamer.methodToProperty(meta.getImplMethodName());
+        ColumnCache columnCache = columnMap.get(LambdaUtils.formatKey(fieldName));
+        return columnCache.getColumn();
+    }
+
+    /**
+     * 获取行名称
+     * @param readMethod 对象字段对应的读取方法对象
+     * @param clazz 实体类类型. 辅助进行判断, 可以为空, 传多个只有第一个生效
+     * @return 字段名
+     */
+    public static <T> String getColumnName(Method readMethod, Class<T> ...clazz){
+        Class<?> beanClass = readMethod.getDeclaringClass();
+        if (ArrayUtil.isNotEmpty(clazz)){
+            beanClass = clazz[0];
+        }
+
+        Map<String, ColumnCache> columnMap = LambdaUtils.getColumnMap(beanClass);
+        Assert.notEmpty(columnMap, "错误:无法执行.因为无法获取到实体类的表对应缓存!");
+        String fieldName = PropertyNamer.methodToProperty(readMethod.getName());
         ColumnCache columnCache = columnMap.get(LambdaUtils.formatKey(fieldName));
         return columnCache.getColumn();
     }

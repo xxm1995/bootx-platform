@@ -5,12 +5,16 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.query.entity.QueryParams;
+import cn.bootx.common.query.generator.QueryGenerator;
 import cn.bootx.demo.core.query.entity.SuperQueryDemo;
 import cn.bootx.demo.core.query.service.SuperQueryDemoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 /**
 *
@@ -61,5 +65,18 @@ public class SuperQueryDemoController {
     @PostMapping(value = "/superQuery")
     public ResResult<PageResult<SuperQueryDemo>> superQuery(PageParam pageParam, @RequestBody QueryParams queryParams){
         return Res.ok(superQueryDemoService.superQuery(pageParam,queryParams));
+    }
+
+    @Operation(summary = "MP查询生成器测试")
+    @GetMapping("/mpGenerator")
+    public ResResult<Void> mpGenerator(){
+        SuperQueryDemo queryDemo = new SuperQueryDemo()
+                .setName("222")
+                .setAge(24)
+                .setVip(true)
+                .setRegistrationTime(LocalDateTime.now());
+        val generator = QueryGenerator.generator(queryDemo, SuperQueryDemo.class);
+        System.out.println(generator);
+        return Res.ok();
     }
 }

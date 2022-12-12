@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.bootx.starter.flowable.code.CachingCode.NODE_MODEL_ID;
@@ -37,7 +38,7 @@ import static cn.bootx.starter.flowable.code.ModelNodeCode.ASSIGN_SPONSOR;
 /**
  * 模型任务节点服务
  * @author xxm
- * @date 2022/8/25 
+ * @date 2022/8/25
  */
 @Slf4j
 @Service
@@ -152,7 +153,7 @@ public class BpmModelNodeService {
         // bpmn文件中的
         List<BpmModelNode> flowNodes = this.getFlowNodes(modelId);
         List<String> flowNodeIds = flowNodes.stream().map(BpmModelNode::getNodeId).collect(Collectors.toList());
-        Map<String, BpmModelNode> flowNodeMap = flowNodes.stream().collect(Collectors.toMap(BpmModelNode::getNodeId, o -> o));
+        Map<String, BpmModelNode> flowNodeMap = flowNodes.stream().collect(Collectors.toMap(BpmModelNode::getNodeId, Function.identity()));
         // bpmn中有列表没有的添加, 双方都有的不动
         List<BpmModelNode> saves = flowNodes.stream()
                 .filter(o -> !taskNodeIds.contains(o.getNodeId()))

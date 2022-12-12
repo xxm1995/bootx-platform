@@ -6,14 +6,15 @@ import cn.bootx.common.query.entity.QueryBetweenParam;
 import cn.bootx.common.query.entity.QueryOrder;
 import cn.bootx.common.query.entity.QueryParam;
 import cn.bootx.common.query.entity.QueryParams;
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.beans.PropertyDescriptor;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 查询条件生成器
@@ -23,7 +24,7 @@ import java.util.Optional;
 public class QueryGenerator {
 
     /**
-     * 生成查询条件
+     * 生成查询条件 (根据查询参数对象生成)
      * @param queryParams 参数
      * @param <T> 泛型
      * @return 查询器
@@ -197,5 +198,73 @@ public class QueryGenerator {
             return paramName;
         }
     }
+
+    /**
+     * 生成查询条件 (根据实体对象生成), 生成的多个查询条件之间用And连接
+     * @param queryParams 参数
+     * @param <T> 泛型
+     * @return 查询器
+     */
+    public static <T> QueryWrapper<T> generator(Object queryParams) {
+        QueryWrapper<T> wrapper = new QueryWrapper<>();
+
+        if (Objects.isNull(queryParams)){
+            return wrapper;
+        }
+
+        // 读取实体类上的查询注解注解
+
+
+        // 读取实体类对象里的字段
+
+
+        // 处理字段上的注解
+
+        return wrapper;
+    }
+
+    /**
+     * 生成查询条件 (根据实体对象生成), 生成的多个查询条件之间用And连接
+     * @param queryParams 参数
+     * @param clazz 数据库Entity类
+     * @param <T> 泛型
+     * @return 查询器
+     */
+    public static <T> QueryWrapper<T> generator(Object queryParams,Class<T> clazz) {
+        QueryWrapper<T> wrapper = new QueryWrapper<>();
+        if (Objects.isNull(queryParams)){
+            return wrapper;
+        }
+
+        // 分别读取参数对象和实体类上的字段
+        List<PropertyDescriptor> paramProps = Arrays.stream(BeanUtil.getPropertyDescriptors(queryParams.getClass()))
+                .collect(Collectors.toList());
+
+        // 读取实体类对象里的字段
+        Map<String, PropertyDescriptor> entityPropMap = Arrays.stream(BeanUtil.getPropertyDescriptors(clazz))
+                .collect(Collectors.toMap(PropertyDescriptor::getName, Function.identity(), (o1, o2) -> o2));
+
+        List<QueryParam> params = new ArrayList<>();
+
+        // 遍历参数上的对象, 生成
+        for (PropertyDescriptor paramProp : paramProps) {
+            Object property = BeanUtil.getProperty(queryParams, paramProp.getName());
+            if (!StrUtil.isBlankIfStr(property)){
+                // 获取查询注解  clazz 类上 < clazz 字段 < queryParams 类上 < clazz 字段
+
+                paramProp.getPropertyEditorClass();
+
+                System.out.println(paramProp.getName()+" : "+property);
+            }
+        }
+
+        // 处理字段上的注解
+
+        // 生成方法
+        initQueryParam(wrapper,params);
+
+        return wrapper;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package cn.bootx.payment.mq;
 
+import cn.bootx.common.rabbit.conditional.ConditionalOnRabbit;
 import cn.bootx.payment.code.PaymentEventCode;
 import cn.bootx.payment.core.pay.service.PayExpiredTimeService;
 import cn.bootx.payment.event.PayCancelEvent;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@ConditionalOnRabbit
 @RequiredArgsConstructor
 public class PaymentMessageListener {
     private final PayExpiredTimeService payExpiredTimeService;

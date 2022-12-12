@@ -20,6 +20,7 @@ spring:
     host: 127.0.0.1
     port: 6379
     database: 1
+  # 如果不使用MQ的话, 可以将项目中 @EnableRabbit 给注释掉, 就不会一直报错了
   rabbitmq:
     # 虚拟主机
 #    virtual-host: bootx-platform
@@ -132,6 +133,9 @@ bootx:
     # 异常
     exception:
       show-full-message: true
+    # 是否启用Rabbit
+    rabbit:
+      enable: false
   starter:
     # 三方平台
     third:

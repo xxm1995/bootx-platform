@@ -18,14 +18,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.bootx.starter.auth.code.AuthLoginTypeCode.*;
 
-/**   
+/**
 * 用户三方账号查询
-* @author xxm  
-* @date 2022/4/2 
+* @author xxm
+* @date 2022/4/2
 */
 @Slf4j
 @Service
@@ -56,7 +57,7 @@ public class UserThirdQueryService {
         Long userId = SecurityUtil.getUserId();
         UserThirdBindInfo userThirdBindInfo = new UserThirdBindInfo();
         Map<String, UserThirdInfo> thirdInfoMap = userThirdInfoManager.findAllByUser(userId).stream()
-                .collect(Collectors.toMap(UserThirdInfo::getClientCode, o -> o));
+                .collect(Collectors.toMap(UserThirdInfo::getClientCode, Function.identity()));
         userThirdBindInfo.setWeChat(getBindInfo(thirdInfoMap,WE_CHAT));
         userThirdBindInfo.setWeChatOpen(getBindInfo(thirdInfoMap,WE_CHAT_OPEN));
         userThirdBindInfo.setWeCom(getBindInfo(thirdInfoMap,WE_COM));

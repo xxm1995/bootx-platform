@@ -31,12 +31,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
  * 实例查询
  * @author xxm
- * @date 2022/8/31 
+ * @date 2022/8/31
  */
 @Slf4j
 @Service
@@ -128,7 +129,7 @@ public class BpmInstanceQueryService {
      * 转换 processInstances 为 系统中的对象
      */
     public List<InstanceInfo> convertInstanceInfo(List<String> instanceIds){
-        Map<String, BpmInstance> bpmInstanceMap = bpmInstanceManager.findAllByInstanceIds(instanceIds).stream().collect(Collectors.toMap(BpmInstance::getInstanceId, o -> o));
+        Map<String, BpmInstance> bpmInstanceMap = bpmInstanceManager.findAllByInstanceIds(instanceIds).stream().collect(Collectors.toMap(BpmInstance::getInstanceId, Function.identity()));
         return instanceIds.stream().map(instanceId -> {
             BpmInstance bpmInstance = Optional.ofNullable(bpmInstanceMap.get(instanceId)).orElse(new BpmInstance());
             return new InstanceInfo()

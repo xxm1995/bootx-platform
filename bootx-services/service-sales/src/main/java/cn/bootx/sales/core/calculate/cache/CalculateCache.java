@@ -74,7 +74,7 @@ public class CalculateCache {
             this.strategyMap = new HashMap<>();
         }
         Map<Long, Strategy> collect = strategies.stream()
-                .collect(Collectors.toMap(Strategy::getId,o->o));
+                .collect(Collectors.toMap(Strategy::getId,Function.identity()));
         strategyMap.putAll(collect);
         return this;
     }
@@ -91,7 +91,7 @@ public class CalculateCache {
         }
         for (List<StrategyRegister> strategyRegisters : list) {
             Map<Long, StrategyRegister> collect = strategyRegisters.stream()
-                    .collect(Collectors.toMap(StrategyRegister::getId,o->o));
+                    .collect(Collectors.toMap(StrategyRegister::getId,Function.identity()));
             this.strategyRegisterMap.putAll(collect);
             this.strategyRegisters.addAll(strategyRegisters);
 
@@ -123,7 +123,7 @@ public class CalculateCache {
             this.activities = new ArrayList<>();
         }
         Map<Long,Activity> collect = activities.stream()
-                .collect(Collectors.toMap(Activity::getId,o -> o));
+                .collect(Collectors.toMap(Activity::getId,Function.identity()));
         this.activityMap.putAll(collect);
         this.activities.addAll(activities);
         return this;
@@ -139,7 +139,7 @@ public class CalculateCache {
             this.coupons = new ArrayList<>();
         }
         Map<Long,Coupon> collect = coupons.stream()
-                .collect(Collectors.toMap(Coupon::getId,o -> o));
+                .collect(Collectors.toMap(Coupon::getId,Function.identity()));
         this.couponMap.putAll(collect);
         this.coupons.addAll(coupons);
         return this;
@@ -155,7 +155,7 @@ public class CalculateCache {
             this.couponTemplates = new ArrayList<>();
         }
         Map<Long,CouponTemplate> collect = couponTemplates.stream()
-                .collect(Collectors.toMap(CouponTemplate::getId,o -> o));
+                .collect(Collectors.toMap(CouponTemplate::getId,Function.identity()));
         this.couponTemplateMap.putAll(collect);
         this.couponTemplates.addAll(couponTemplates);
         return this;

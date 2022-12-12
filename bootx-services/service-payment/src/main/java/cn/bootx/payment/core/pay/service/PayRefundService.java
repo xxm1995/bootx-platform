@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.bootx.payment.code.pay.PayStatusCode.*;
@@ -177,7 +178,7 @@ public class PayRefundService {
         if (CollUtil.isEmpty(refundModeParams)){
             throw new PayFailureException("传入的退款参数不合法");
         }
-        Map<Integer, RefundableInfo> payModeMap = refundableInfos.stream().collect(Collectors.toMap(RefundableInfo::getPayChannel, o -> o));
+        Map<Integer, RefundableInfo> payModeMap = refundableInfos.stream().collect(Collectors.toMap(RefundableInfo::getPayChannel, Function.identity()));
         for (RefundModeParam refundPayMode : refundModeParams) {
             this.payModeCheck(refundPayMode,payModeMap.get(refundPayMode.getPayChannel()));
         }

@@ -21,12 +21,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**   
+/**
  * 流程任务查询
- * @author xxm  
- * @date 2022/9/1 
+ * @author xxm
+ * @date 2022/9/1
  */
 @Slf4j
 @Service
@@ -93,7 +94,7 @@ public class BpmTaskQueryService {
      * 转换
      */
     public List<TaskInfo> convertInstanceInfo(List<String> taskIds) {
-        Map<String, BpmTask> bpmTaskMap = bpmTaskManager.findAllByTaskIds(taskIds).stream().collect(Collectors.toMap(BpmTask::getTaskId, o -> o));
+        Map<String, BpmTask> bpmTaskMap = bpmTaskManager.findAllByTaskIds(taskIds).stream().collect(Collectors.toMap(BpmTask::getTaskId, Function.identity()));
         return taskIds.stream().map(taskId -> {
             BpmTask bpmTask = Optional.ofNullable(bpmTaskMap.get(taskId)).orElse(new BpmTask());
             return new TaskInfo()

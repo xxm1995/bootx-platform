@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.bootx.iam.code.CachingCode.USER_DATA_SCOPE;
@@ -167,7 +168,7 @@ public class UserDataScopeService {
         Set<Long> deptIds = userDeptManager.findDeptIdsByUser(userId).stream()
                 .map(UserDept::getDeptId)
                 .collect(Collectors.toSet());
-        Map<Long, Dept> deptMap = deptManager.findAll().stream().collect(Collectors.toMap(MpIdEntity::getId, dept -> dept));
+        Map<Long, Dept> deptMap = deptManager.findAll().stream().collect(Collectors.toMap(MpIdEntity::getId, Function.identity()));
         Set<String> deptOrgCodes = deptIds.stream().map(deptMap::get).map(Dept::getOrgCode).collect(Collectors.toSet());
         return deptMap.values().stream()
                 .filter(dept -> this.judgeSubDept(dept.getOrgCode(), deptOrgCodes))

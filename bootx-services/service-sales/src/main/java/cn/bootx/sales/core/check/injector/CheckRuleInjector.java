@@ -80,7 +80,7 @@ public class CheckRuleInjector {
         // 注入策略属性
         Map<Long, Strategy> strategyMap = strategyManager.findAllByIds(strategyIds)
                 .stream()
-                .collect(Collectors.toMap(Strategy::getId, o->o));
+                .collect(Collectors.toMap(Strategy::getId, Function.identity()));
         for (CheckRuleConfig checkRule : checkRules) {
             Strategy strategy = strategyMap.get(checkRule.getStrategyId());
             checkRule.setRuleScript(strategy.getRuleScript())
