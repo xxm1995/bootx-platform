@@ -3,7 +3,8 @@ package cn.bootx.common.core.annotation;
 import java.lang.annotation.*;
 
 /**
- * 查询参数 (方法)
+ * 查询参数
+ * 生效顺序 QueryParams 查询参数字段 > Entity 数据库实体字段 > QueryParams 查询类 > Entity 数据库实体类
  * @author xxm
  * @date 2022/12/12
  */
@@ -18,11 +19,25 @@ public @interface QueryParam {
      */
     CompareTypeEnum type() default CompareTypeEnum.EQ;
 
+    /**
+     * 是否忽略
+     */
+    boolean ignore() default false;
+
+    /**
+     * 名称转换类型, 默认为下划线
+     */
+    NamingCaseEnum namingCase() default NamingCaseEnum.UNDER_LINE;
+
+    /**
+     * 自定义查询字段对应的数据库字段名称. 只可以在字段上注解时使用
+     */
+    String fieldName() default "";
 
     /**
      * 匹配类型
      */
-    enum CompareTypeEnum{
+    enum CompareTypeEnum {
         /** 大于 */
         GT,
 
@@ -49,5 +64,21 @@ public @interface QueryParam {
 
         /** 是否为空, 只作用在布尔类型上, true 代表 is null, false 代表 not null */
         IS_NULL;
+    }
+
+    /**
+     * 名称转换类型
+     */
+    enum NamingCaseEnum {
+        /** lambda方式读取对应数据库字段名称 */
+        LAMBDA,
+        /** 转换为下划线 */
+        UNDER_LINE,
+        /** 在注解中自定义 */
+        ANNOTATION,
+        /** 等等再加接的类型 */
+        /** 不进行处理 */
+        NONE;
+
     }
 }
