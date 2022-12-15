@@ -15,6 +15,7 @@ import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
 *
@@ -69,14 +70,15 @@ public class SuperQueryDemoController {
 
     @Operation(summary = "MP查询生成器测试")
     @GetMapping("/mpGenerator")
-    public ResResult<Void> mpGenerator(){
+    public ResResult<String> mpGenerator(){
         SuperQueryDemo queryDemo = new SuperQueryDemo()
                 .setName("222")
                 .setAge(24)
+                .setWorkTime(LocalTime.now())
                 .setVip(true)
                 .setRegistrationTime(LocalDateTime.now());
-        val generator = QueryGenerator.generator(queryDemo, SuperQueryDemo.class);
-        System.out.println(generator);
-        return Res.ok();
+        queryDemo.setId(1122L);
+        val generator = QueryGenerator.generator(queryDemo);
+        return Res.ok(generator.getTargetSql());
     }
 }

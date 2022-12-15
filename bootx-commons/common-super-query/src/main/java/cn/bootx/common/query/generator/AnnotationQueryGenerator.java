@@ -111,8 +111,6 @@ public class AnnotationQueryGenerator {
             }
         }
 
-
-
         return wrapper;
     }
 
@@ -175,9 +173,11 @@ public class AnnotationQueryGenerator {
         if (AnnotationUtil.hasAnnotation(paramField,QueryParam.class)) {
             return Optional.ofNullable(AnnotationUtil.getAnnotation(paramField, QueryParam.class));
         }
-        Field entityField = ClassUtil.getDeclaredField(entityClass, entityDescriptor.getName());
-        if (AnnotationUtil.hasAnnotation(entityField,QueryParam.class)) {
-            return Optional.ofNullable(AnnotationUtil.getAnnotation(entityField, QueryParam.class));
+        if (Objects.nonNull(entityDescriptor)){
+            Field entityField = ClassUtil.getDeclaredField(entityClass, entityDescriptor.getName());
+            if (AnnotationUtil.hasAnnotation(entityField,QueryParam.class)) {
+                return Optional.ofNullable(AnnotationUtil.getAnnotation(entityField, QueryParam.class));
+            }
         }
         if (AnnotationUtil.hasAnnotation(paramClass,QueryParam.class)) {
             return Optional.ofNullable(AnnotationUtil.getAnnotation(paramClass, QueryParam.class));
