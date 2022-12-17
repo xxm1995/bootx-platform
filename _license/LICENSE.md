@@ -32,3 +32,6 @@ https://gitee.com/dromara/go-view
 
 easy-cron 这是基于Vue.js和iviewui封装一个crontab表达式的组件:
 https://gitee.com/toktok/easy-cron
+
+ACTable是对Mybatis做的增强功能，通过配置model注解的方式来创建表，修改表结构，并且实现了共通的CUDR功能提升开发效率：
+https://gitee.com/sunchenbin/mybatis-enhance
