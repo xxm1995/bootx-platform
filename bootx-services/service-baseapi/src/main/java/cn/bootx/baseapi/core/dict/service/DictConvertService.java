@@ -23,7 +23,7 @@ public class DictConvertService {
     public void convert(Object o){
         // 遍历字段
 
-        // 筛选出
+        // 筛选出带注解的
 
 
     }

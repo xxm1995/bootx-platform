@@ -51,7 +51,7 @@ public class RedissonLoadListener implements ApplicationListener<ApplicationRead
         beanDefinitionRegistry.registerBeanDefinition(redissonClientName, beanDefinitionBuilder.getBeanDefinition());
 
         //这里相当于初始化加载使用
-        configurableApplicationContext.getBean(redissonClientName);
+        configurableApplicationContext. getBean(redissonClientName);
 
     }
 

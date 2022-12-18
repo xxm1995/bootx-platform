@@ -3,6 +3,7 @@ package cn.bootx.starter.audit.log;
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -15,7 +16,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @ComponentScan
 @ConfigurationPropertiesScan
 @EnableMongoRepositories
-@AutoConfiguration
+@AutoConfigurationPackage
 @MapperScan(annotationClass = Mapper.class)
 public class AuditLogAutoConfiguration {
 }

@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
-import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-import static cn.bootx.starter.wechat.WeChatCode.EVENT_KEY_QRSCENE;
+import static cn.bootx.starter.wechat.code.WeChatCode.EVENT_KEY_QRSCENE;
 
 /**
 * 新增关注订阅消息
