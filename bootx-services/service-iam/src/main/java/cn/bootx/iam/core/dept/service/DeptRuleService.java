@@ -20,7 +20,7 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor
-public class DeptUtilService {
+public class DeptRuleService {
     private final DeptManager deptManager;
 
     /**

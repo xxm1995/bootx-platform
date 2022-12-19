@@ -33,7 +33,7 @@ import static cn.bootx.iam.code.CachingCode.USER_DATA_SCOPE;
 @AllArgsConstructor
 public class DeptService {
     private final DeptManager deptManager;
-    private final DeptUtilService deptUtilService;
+    private final DeptRuleService deptRuleService;
     private final ApplicationEventPublisher eventPublisher;
 
     /**
@@ -47,7 +47,7 @@ public class DeptService {
         Long parentId = param.getParentId();
 
         // 部门code生成
-        dept.setOrgCode(deptUtilService.generateOrgCode(parentId));
+        dept.setOrgCode(deptRuleService.generateOrgCode(parentId));
 
         return deptManager.save(dept).toDto();
     }
@@ -57,7 +57,7 @@ public class DeptService {
      */
     public List<DeptTreeResult> tree() {
         List<Dept> list = deptManager.findAll();
-        return deptUtilService.buildTreeList(list);
+        return deptRuleService.buildTreeList(list);
     }
 
     /**

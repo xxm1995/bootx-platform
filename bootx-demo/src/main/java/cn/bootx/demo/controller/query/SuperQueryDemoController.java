@@ -8,10 +8,10 @@ import cn.bootx.common.query.entity.QueryParams;
 import cn.bootx.common.query.generator.QueryGenerator;
 import cn.bootx.demo.core.query.entity.SuperQueryDemo;
 import cn.bootx.demo.core.query.service.SuperQueryDemoService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -78,7 +78,8 @@ public class SuperQueryDemoController {
                 .setVip(true)
                 .setRegistrationTime(LocalDateTime.now());
         queryDemo.setId(1122L);
-        val generator = QueryGenerator.generator(queryDemo);
+        QueryWrapper<SuperQueryDemo> generator = QueryGenerator.generator(queryDemo);
+        generator = QueryGenerator.generator(queryDemo,SuperQueryDemo.class);
         return Res.ok(generator.getTargetSql());
     }
 }
