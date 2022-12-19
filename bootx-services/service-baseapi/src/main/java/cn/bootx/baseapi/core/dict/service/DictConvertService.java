@@ -41,22 +41,34 @@ public class DictConvertService {
     }
 
     /**
+     * 字典值字段翻译转换
+     */
+    public void convert(Iterable<?> objects){
+        List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
+        objects.forEach(object -> this.convert(object,dictItems));
+    }
+
+    /**
      * 转换
      */
     private void convert(Object object, List<DictionaryItemSimpleDto> dictItems){
+        if (Objects.isNull(object)){
+            return;
+        }
+
         // 遍历字段, 判断是否有嵌套对象
         Map<String, DictConvertInfo> convertInfoMap = Arrays.stream(BeanUtil.getPropertyDescriptors(object.getClass()))
                 .map(this::initConvertInfo)
                 .collect(Collectors.toMap(DictConvertInfo::getName, Function.identity(), (o1, o2) -> o2));
-        // 加注解的对象进行递归处理
+        // 加注解的嵌套对象进行递归处理
         convertInfoMap.values().stream()
                 .filter(o-> Objects.nonNull(o.getDictConvertModel()))
-                        .forEach(o->{
-                            Object fieldValue = BeanUtil.getFieldValue(object, o.getName());
-                            if (Objects.nonNull(fieldValue)){
-                                this.convert(fieldValue,dictItems);
-                            }
-                        });
+                .forEach(o->{
+                    Object fieldValue = BeanUtil.getFieldValue(object, o.getName());
+                    if (Objects.nonNull(fieldValue)){
+                        this.convert(fieldValue,dictItems);
+                    }
+                });
 
         // 筛选出带翻译注解的进行字段翻译
         convertInfoMap.values().stream()
