@@ -1,6 +1,6 @@
 package cn.bootx.common.jackson;
 
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**   
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 * @author xxm  
 * @date 2021/12/2 
 */
-@AutoConfigurationPackage
+@AutoConfiguration
 @ComponentScan
 public class JacksonAutoConfiguration {
 }

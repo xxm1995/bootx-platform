@@ -66,6 +66,7 @@
         <velocity.version>2.3</velocity.version>
         <wxjava.version>4.4.5.B</wxjava.version>
         <ding-talk.version>1.3.81</ding-talk.version>
+        <lock4j.version>2.2.3</lock4j.version>
     </properties>
 
     <!-- 项目依赖版本管理 -->

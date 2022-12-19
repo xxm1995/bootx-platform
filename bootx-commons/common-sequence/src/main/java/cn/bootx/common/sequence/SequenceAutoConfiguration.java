@@ -2,7 +2,7 @@ package cn.bootx.common.sequence;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**   
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 * @date 2021/12/14 
 */
 @ComponentScan
-@AutoConfigurationPackage
+@AutoConfiguration
 @MapperScan(annotationClass = Mapper.class)
 public class SequenceAutoConfiguration {
 }

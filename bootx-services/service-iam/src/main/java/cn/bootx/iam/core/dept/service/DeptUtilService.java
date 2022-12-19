@@ -1,13 +1,13 @@
 package cn.bootx.iam.core.dept.service;
 
 import cn.bootx.common.core.exception.BizException;
-import cn.bootx.common.lock.annotation.Lock;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.iam.core.dept.dao.DeptManager;
 import cn.bootx.iam.core.dept.entity.Dept;
 import cn.bootx.iam.dto.dept.DeptTreeResult;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.lock.annotation.Lock4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class DeptUtilService {
      * 生成机构代码 根机构_子机构_子子机构
      * 使用分布式锁
      */
-    @Lock(keys = "#parentId")
+    @Lock4j(keys = "#parentId")
     public String generateOrgCode(Long parentId) {
         // 顶级机构
         if (Objects.isNull(parentId)) {

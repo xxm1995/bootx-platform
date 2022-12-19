@@ -17,6 +17,20 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-redis-client</artifactId>
         </dependency>
+
+        <!--若使用redisTemplate作为分布式锁底层，则需要引入-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>lock4j-redis-template-spring-boot-starter</artifactId>
+            <version>${lock4j.version}</version>
+        </dependency>
+        <!--若使用redisson作为分布式锁底层，则需要引入-->
+<!--        <dependency>-->
+<!--            <groupId>com.baomidou</groupId>-->
+<!--            <artifactId>lock4j-redisson-spring-boot-starter</artifactId>-->
+<!--            <version>${lock4j.version}</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>

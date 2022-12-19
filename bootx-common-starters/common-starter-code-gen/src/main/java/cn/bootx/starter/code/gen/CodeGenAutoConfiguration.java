@@ -2,7 +2,7 @@ package cn.bootx.starter.code.gen;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**   
@@ -12,6 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 */
 @ComponentScan
 @MapperScan(annotationClass = Mapper.class)
-@AutoConfigurationPackage
+@AutoConfiguration
 public class CodeGenAutoConfiguration {
 }

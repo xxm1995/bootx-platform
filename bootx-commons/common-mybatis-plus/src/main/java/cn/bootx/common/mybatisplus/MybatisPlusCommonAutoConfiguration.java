@@ -1,6 +1,6 @@
 package cn.bootx.common.mybatisplus;
 
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 /**
@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
  * @author xxm
  * @date 2021/7/27
  */
-@AutoConfigurationPackage
+@AutoConfiguration
 @ConfigurationPropertiesScan
 public class MybatisPlusCommonAutoConfiguration {
 }

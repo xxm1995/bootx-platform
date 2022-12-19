@@ -1,6 +1,6 @@
 package cn.bootx.starter.auth;
 
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -11,6 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 */
 @ComponentScan
 @ConfigurationPropertiesScan
-@AutoConfigurationPackage
+@AutoConfiguration
 public class AuthAutoConfiguration {
 }

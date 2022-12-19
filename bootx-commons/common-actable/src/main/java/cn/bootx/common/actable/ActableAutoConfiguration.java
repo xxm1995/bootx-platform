@@ -11,6 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan
 @ConfigurationPropertiesScan
-@AutoConfigurationPackage
+@AutoConfiguration
 public class ActableAutoConfiguration {
 }

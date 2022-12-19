@@ -8,13 +8,20 @@ import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.Config;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**   
+ * Redisson 自动配置
+ * @author xxm  
+ * @date 2022/12/19 
+ */
 @Configuration
+@ConditionalOnBean(name = "org.redisson.Redisson")
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @AllArgsConstructor
 public class RedissonConfiguration {

@@ -1,6 +1,6 @@
 package cn.bootx.starter.monitor;
 
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -9,6 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 * @date 2022/6/10 
 */
 @ComponentScan
-@AutoConfigurationPackage
+@AutoConfiguration
 public class MonitorAutoConfiguration {
 }

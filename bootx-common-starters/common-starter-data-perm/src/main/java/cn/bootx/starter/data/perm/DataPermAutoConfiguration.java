@@ -2,7 +2,7 @@ package cn.bootx.starter.data.perm;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -14,6 +14,6 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan
 @ConfigurationPropertiesScan
 @MapperScan(annotationClass = Mapper.class)
-@AutoConfigurationPackage
+@AutoConfiguration
 public class DataPermAutoConfiguration {
 }

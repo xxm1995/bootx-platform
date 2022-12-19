@@ -10,18 +10,20 @@ import org.redisson.config.Config;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
-/**   
+/**
  * 项目启动时Redisson替换RedissonClient的实现, Redisson连接失败是会导致项目无法启动, 选择改为项目启动成功后, 替换掉原有的Bean
- * @author xxm  
- * @date 2022/11/30 
+ * @author xxm
+ * @date 2022/11/30
  */
 @Component
+@ConditionalOnBean(name = "org.redisson.Redisson")
 @RequiredArgsConstructor
 public class RedissonLoadListener implements ApplicationListener<ApplicationReadyEvent> {
     private final ConfigurableApplicationContext configurableApplicationContext;
@@ -51,8 +53,7 @@ public class RedissonLoadListener implements ApplicationListener<ApplicationRead
         beanDefinitionRegistry.registerBeanDefinition(redissonClientName, beanDefinitionBuilder.getBeanDefinition());
 
         //这里相当于初始化加载使用
-        configurableApplicationContext. getBean(redissonClientName);
-
+        configurableApplicationContext.getBean(redissonClientName);
     }
 
 

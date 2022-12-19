@@ -1,6 +1,6 @@
 package cn.bootx.common.rabbit;
 
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 * @date 2022/5/3 
 */
 @ComponentScan
-@AutoConfigurationPackage
+@AutoConfiguration
 @ConfigurationPropertiesScan
 public class RabbitMqCommonAutoConfiguration {
 }

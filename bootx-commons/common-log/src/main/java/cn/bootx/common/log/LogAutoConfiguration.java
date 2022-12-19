@@ -1,12 +1,14 @@
 package cn.bootx.common.log;
 
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
 * 日志扫描
 * @author xxm
 * @date 2022/6/6
 */
-@AutoConfigurationPackage
+@ComponentScan
+@AutoConfiguration
 public class LogAutoConfiguration {
 }
