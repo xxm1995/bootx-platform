@@ -1,4 +1,4 @@
-package cn.bootx.baseapi.handler;
+package cn.bootx.baseapi.handler.mp;
 
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;

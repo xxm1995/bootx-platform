@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DictConvert {
+public @interface Dict {
 
     /**
      * 字典编码

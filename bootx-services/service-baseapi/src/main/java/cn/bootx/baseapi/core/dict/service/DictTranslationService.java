@@ -1,8 +1,8 @@
 package cn.bootx.baseapi.core.dict.service;
 
 import cn.bootx.baseapi.dto.dict.DictionaryItemSimpleDto;
-import cn.bootx.common.core.annotation.DictConvert;
-import cn.bootx.common.core.annotation.DictConvertModel;
+import cn.bootx.common.core.annotation.Dict;
+import cn.bootx.common.core.annotation.DictTranslation;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ClassUtil;
@@ -28,30 +28,30 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DictConvertService {
+public class DictTranslationService {
     private final DictionaryItemService dictionaryItemService;
 
 
     /**
      * 字典值字段翻译转换
      */
-    public void convert(Object object){
+    public void translation(Object object){
         List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
-        this.convert(object,dictItems);
+        this.translation(object,dictItems);
     }
 
     /**
      * 字典值字段翻译转换
      */
-    public void convert(Iterable<?> objects){
+    public void translation(Iterable<?> objects){
         List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
-        objects.forEach(object -> this.convert(object,dictItems));
+        objects.forEach(object -> this.translation(object,dictItems));
     }
 
     /**
      * 转换
      */
-    private void convert(Object object, List<DictionaryItemSimpleDto> dictItems){
+    private void translation(Object object, List<DictionaryItemSimpleDto> dictItems){
         if (Objects.isNull(object)){
             return;
         }
@@ -62,18 +62,18 @@ public class DictConvertService {
                 .collect(Collectors.toMap(DictConvertInfo::getName, Function.identity(), (o1, o2) -> o2));
         // 加注解的嵌套对象进行递归处理
         convertInfoMap.values().stream()
-                .filter(o-> Objects.nonNull(o.getDictConvertModel()))
+                .filter(o-> Objects.nonNull(o.getDictTranslation()))
                 .forEach(o->{
                     Object fieldValue = BeanUtil.getFieldValue(object, o.getName());
                     if (Objects.nonNull(fieldValue)){
-                        this.convert(fieldValue,dictItems);
+                        this.translation(fieldValue,dictItems);
                     }
                 });
 
         // 筛选出带翻译注解的进行字段翻译
         convertInfoMap.values().stream()
-                .filter(o-> Objects.nonNull(o.getDictConvert()))
-                .forEach(o-> this.convert(o,object,dictItems));
+                .filter(o-> Objects.nonNull(o.getDict()))
+                .forEach(o-> this.translation(o,object,dictItems));
     }
 
     /**
@@ -82,30 +82,30 @@ public class DictConvertService {
      * @param convertObject 要进行字典转换的对象
      * @param dictItems 字典列表
      */
-    private void convert(DictConvertInfo convertInfo,Object convertObject,List<DictionaryItemSimpleDto> dictItems){
-        DictConvert dictConvert = convertInfo.getDictConvert();
+    private void translation(DictConvertInfo convertInfo, Object convertObject, List<DictionaryItemSimpleDto> dictItems){
+        Dict dict = convertInfo.getDict();
         // 直接在当前字段上进行转换
-        if (StrUtil.isAllBlank(dictConvert.source(),dictConvert.target())){
+        if (StrUtil.isAllBlank(dict.source(), dict.target())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
             if (!StrUtil.isBlankIfStr(fieldValue)){
-                String dictValue = this.getDictValue(dictConvert.dicCode(), fieldValue.toString(), dictItems);
+                String dictValue = this.getDictValue(dict.dicCode(), fieldValue.toString(), dictItems);
                 BeanUtil.setFieldValue(convertObject,convertInfo.getName(), dictValue);
             }
         }
         // 通过配置的源字段进行转换并赋值到当前字段
-        if (StrUtil.isNotBlank(dictConvert.source())){
-            Object fieldValue = BeanUtil.getFieldValue(convertObject, dictConvert.source());
+        if (StrUtil.isNotBlank(dict.source())){
+            Object fieldValue = BeanUtil.getFieldValue(convertObject, dict.source());
             if (!StrUtil.isBlankIfStr(fieldValue)){
-                String dictValue = this.getDictValue(dictConvert.dicCode(), fieldValue.toString(), dictItems);
+                String dictValue = this.getDictValue(dict.dicCode(), fieldValue.toString(), dictItems);
                 BeanUtil.setFieldValue(convertObject,convertInfo.getName(), dictValue);
             }
         }
         // 将当前字段转换到其他字段上
-        if (StrUtil.isNotBlank(dictConvert.target())){
+        if (StrUtil.isNotBlank(dict.target())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
             if (!StrUtil.isBlankIfStr(fieldValue)){
-                String dictValue = this.getDictValue(dictConvert.dicCode(), fieldValue.toString(), dictItems);
-                BeanUtil.setFieldValue(convertObject,dictConvert.target(), dictValue);
+                String dictValue = this.getDictValue(dict.dicCode(), fieldValue.toString(), dictItems);
+                BeanUtil.setFieldValue(convertObject, dict.target(), dictValue);
             }
         }
     }
@@ -115,14 +115,14 @@ public class DictConvertService {
      */
     private DictConvertInfo initConvertInfo(PropertyDescriptor descriptor){
         Field field = ClassUtil.getDeclaredField(descriptor.getReadMethod().getDeclaringClass(), descriptor.getName());
-        DictConvert dictConvert = AnnotationUtil.getAnnotation(field, DictConvert.class);
-        DictConvertModel dictConvertModel = AnnotationUtil.getAnnotation(field, DictConvertModel.class);
+        Dict dict = AnnotationUtil.getAnnotation(field, Dict.class);
+        DictTranslation dictTranslation = AnnotationUtil.getAnnotation(field, DictTranslation.class);
 
         return new DictConvertInfo()
                 .setName(descriptor.getName())
                 .setField(field)
-                .setDictConvert(dictConvert)
-                .setDictConvertModel(dictConvertModel);
+                .setDict(dict)
+                .setDictTranslation(dictTranslation);
     }
 
     /**
@@ -139,9 +139,18 @@ public class DictConvertService {
     /**
      * 转换成map
      */
-    public Map<String,Object> convertToMap(Object o){
-
+    public Map<String,Object> translationToMap(Object o){
+        List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
         return new HashMap<>();
+    }
+
+    /**
+     * 转换成map
+     */
+    public Iterable<Map<String,Object>> translationToMap(Iterable<?> objects){
+        List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
+
+        return new ArrayList<>();
     }
 
     /**
@@ -156,8 +165,8 @@ public class DictConvertService {
         // 所属字段属性
         private Field field;
         // 翻译注解
-        private DictConvert dictConvert;
+        private Dict dict;
         // 嵌套翻译注解
-        private DictConvertModel dictConvertModel;
+        private DictTranslation dictTranslation;
     }
 }

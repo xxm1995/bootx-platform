@@ -25,15 +25,6 @@
         <!--        <module>service-order</module>-->
     </modules>
 
-    <properties>
-        <knife4j.version>3.0.3</knife4j.version>
-        <easy-captcha.version>1.6.2</easy-captcha.version>
-        <logstash-logback.version>7.2</logstash-logback.version>
-        <fastjson.version>1.2.83_noneautotype</fastjson.version>
-        <kryo.serializers.version>0.41</kryo.serializers.version>
-        <asyncTool.version>V1.4-SNAPSHOT</asyncTool.version>
-    </properties>
-
     <dependencies>
         <!-- 公共包 -->
         <dependency>
@@ -120,10 +111,10 @@
             <version>${fastjson.version}</version>
         </dependency>
 
-        <!-- knife4j -->
+        <!-- knife4j -ui -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-springdoc-ui</artifactId>
+            <artifactId>knife4j-openapi3-ui</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
 
