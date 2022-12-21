@@ -44,6 +44,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <guava.version>31.1-jre</guava.version>
         <servlet-api.version>4.0.1</servlet-api.version>
+        <spring.checkstyle.version>0.0.35</spring.checkstyle.version>
         <slf4j.version>1.7.30</slf4j.version>
         <ttl.version>2.14.2</ttl.version>
         <flyway.version>7.15.0</flyway.version>
@@ -353,6 +354,12 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
+            </plugin>
+            <!--代码格式插件，默认使用spring 规则-->
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>${spring.checkstyle.version}</version>
             </plugin>
             <!-- 打包Excel等资源文件损坏问题 -->
             <plugin>

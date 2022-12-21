@@ -14,31 +14,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**   
- * 
- * @author xxm  
- * @date 2022/8/3 
+/**
+ * @author xxm
+ * @date 2022/8/3
  */
 @Tag(name = "测试消息队列")
 @RestController
 @RequestMapping("/demo/notice/email")
 @RequiredArgsConstructor
 public class EmailSendDemoController {
+
     private final EmailSendDemoService service;
-    
+
     @Operation(summary = "简单邮件发送")
     @PostMapping("/sentSimpleMail")
-    public ResResult<Void>sentSimpleMail(@RequestBody SendSimpleEmailDemoParam param){
+    public ResResult<Void> sentSimpleMail(@RequestBody SendSimpleEmailDemoParam param) {
         ValidationUtil.validateParam(param);
-        service.sentSimpleMail(param.getEmail(),param.getSubject(),param.getMessage());
+        service.sentSimpleMail(param.getEmail(), param.getSubject(), param.getMessage());
         return Res.ok();
     }
 
     @Operation(summary = "标准邮件发送")
     @PostMapping("/sentMail")
-    public ResResult<Void> sentMail(@RequestBody SendMailParam mailParam){
+    public ResResult<Void> sentMail(@RequestBody SendMailParam mailParam) {
         ValidationUtil.validateParam(mailParam);
         service.sentMail(mailParam);
         return Res.ok();
     }
+
 }

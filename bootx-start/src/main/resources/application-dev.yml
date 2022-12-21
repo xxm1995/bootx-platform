@@ -89,6 +89,9 @@ bootx:
       version: 1.1.1
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
+      # basic认证
+      basic:
+        enable: true
       # 多模块扫码
       base-packages:
         "[基础API]": cn.bootx.baseapi

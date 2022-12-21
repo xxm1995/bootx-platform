@@ -7,9 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-
 /**
- *
  * @author xxm
  * @date 2022/5/30
  */
@@ -24,6 +22,7 @@ public class DemoRabbitMqMessageListener {
      */
     @RabbitListener(queues = "demo.testMq")
     public void payCancel(ResResult<String> hello) {
-        log.info("测试MQ消息 :{}",hello);
+        log.info("测试MQ消息 :{}", hello);
     }
+
 }

@@ -12,47 +12,49 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
-* 数据权限演示
-* @author xxm
-* @date 2022/2/21
-*/
+ * 数据权限演示
+ *
+ * @author xxm
+ * @date 2022/2/21
+ */
 @Tag(name = "数据权限演示")
 @RestController
 @RequestMapping("/demo/data/perm")
 @RequiredArgsConstructor
 public class DataPermDemoController {
+
     private final DataPermDemoService dataPermDemoService;
 
-    @Operation( summary = "添加")
+    @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody DataPermDemo param){
+    public ResResult<Void> add(@RequestBody DataPermDemo param) {
         dataPermDemoService.add(param);
         return Res.ok();
     }
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody DataPermDemo param){
+    public ResResult<Void> update(@RequestBody DataPermDemo param) {
         dataPermDemoService.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         dataPermDemoService.delete(id);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<DataPermDemo> findById(Long id){
+    public ResResult<DataPermDemo> findById(Long id) {
         return Res.ok(dataPermDemoService.findById(id));
     }
 
-    @Operation( summary = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<DataPermDemo>> page(PageParam pageParam){
+    public ResResult<PageResult<DataPermDemo>> page(PageParam pageParam) {
         return Res.ok(dataPermDemoService.page(pageParam));
     }
 

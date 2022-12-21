@@ -126,6 +126,93 @@ public class DictTranslationService {
     }
 
     /**
+     * 转换成map
+     */
+    public Map<String,Object> translationToMap(Object o){
+        List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
+        return this.translationToMap(o,dictItems);
+    }
+
+    /**
+     * 转换成map
+     */
+    public Iterable<Map<String,Object>> translationToMap(Iterable<?> objects){
+        List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
+        return dictItems.stream().map(o->this.translationToMap(o,dictItems)).collect(Collectors.toList());
+    }
+
+    /**
+     * 翻译后并转换成Map对象
+     * @param object 要翻译转换的对象
+     * @param dictItems 字典列表
+     * @return 转换后的Map对象
+     */
+    private Map<String,Object> translationToMap(Object object,List<DictionaryItemSimpleDto> dictItems){
+        if (Objects.isNull(object)){
+            return null;
+        }
+        // 转换后的对象
+        Map<String, Object> map = BeanUtil.beanToMap(object);
+
+        // 遍历字段, 判断是否有嵌套对象
+        Map<String, DictConvertInfo> convertInfoMap = Arrays.stream(BeanUtil.getPropertyDescriptors(object.getClass()))
+                .map(this::initConvertInfo)
+                .collect(Collectors.toMap(DictConvertInfo::getName, Function.identity(), (o1, o2) -> o2));
+
+        // 加注解的嵌套对象进行递归处理
+        convertInfoMap.values().stream()
+                .filter(o-> Objects.nonNull(o.getDictTranslation()))
+                .forEach(o->{
+                    Object fieldValue = BeanUtil.getFieldValue(object, o.getName());
+                    if (Objects.nonNull(fieldValue)){
+                        // 将转换后的Map进行赋值
+                        map.put(o.getName(),this.translationToMap(fieldValue,dictItems));
+                    }
+                });
+
+        // 筛选出带翻译注解的进行字段翻译转换
+        convertInfoMap.values().stream()
+                .filter(o-> Objects.nonNull(o.getDict()))
+                .forEach(o-> this.translationToMap(o,object,map,dictItems));
+        return map;
+    }
+
+    /**
+     * 字典转换
+     * @param convertInfo 转换所需的元信息
+     * @param convertObject 要进行字典转换的对象
+     * @param map 要写入的map对象
+     * @param dictItems 字典列表
+     */
+    private void translationToMap(DictConvertInfo convertInfo, Object convertObject, Map<String,Object> map, List<DictionaryItemSimpleDto> dictItems) {
+        Dict dict = convertInfo.getDict();
+        // 直接在当前字段上进行转换
+        if (StrUtil.isAllBlank(dict.source(), dict.target())){
+            Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
+            if (!StrUtil.isBlankIfStr(fieldValue)){
+                String dictValue = this.getDictValue(dict.dicCode(), fieldValue.toString(), dictItems);
+                map.put(convertInfo.getName(), dictValue);
+            }
+        }
+        // 通过配置的源字段进行转换并赋值到当前字段
+        if (StrUtil.isNotBlank(dict.source())){
+            Object fieldValue = BeanUtil.getFieldValue(convertObject, dict.source());
+            if (!StrUtil.isBlankIfStr(fieldValue)){
+                String dictValue = this.getDictValue(dict.dicCode(), fieldValue.toString(), dictItems);
+                map.put(convertInfo.getName(), dictValue);
+            }
+        }
+        // 将当前字段转换到其他字段上
+        if (StrUtil.isNotBlank(dict.target())){
+            Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
+            if (!StrUtil.isBlankIfStr(fieldValue)){
+                String dictValue = this.getDictValue(dict.dicCode(), fieldValue.toString(), dictItems);
+                map.put(dict.target(), dictValue);
+            }
+        }
+    }
+
+    /**
      * 获取字典值
      */
     private String getDictValue(String dictCode, String dictItemCode, List<DictionaryItemSimpleDto> dictItems){
@@ -134,23 +221,6 @@ public class DictTranslationService {
                 .findFirst()
                 .map(DictionaryItemSimpleDto::getName)
                 .orElse(null);
-    }
-
-    /**
-     * 转换成map
-     */
-    public Map<String,Object> translationToMap(Object o){
-        List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
-        return new HashMap<>();
-    }
-
-    /**
-     * 转换成map
-     */
-    public Iterable<Map<String,Object>> translationToMap(Iterable<?> objects){
-        List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
-
-        return new ArrayList<>();
     }
 
     /**

@@ -11,21 +11,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**   
-* @author xxm
-* @date 2022/6/10 
-*/
+/**
+ * @author xxm
+ * @date 2022/6/10
+ */
 @Tag(name = "全局websocket通知demo")
 @RestController
 @RequestMapping("/demo/global/ws")
 @RequiredArgsConstructor
 public class GlobalWebsocketDemoController {
+
     private final UserWsNoticeService userWsNoticeService;
 
     @Operation(summary = "发送消息")
     @PostMapping("/send")
-    public ResResult<Void> send(Long userId,String msg){
-        userWsNoticeService.sendMessageByUser(WsRes.eventNotice(msg,"event_test_websocket"),userId);
+    public ResResult<Void> send(Long userId, String msg) {
+        userWsNoticeService.sendMessageByUser(WsRes.eventNotice(msg, "event_test_websocket"), userId);
         return Res.ok();
     }
+
 }

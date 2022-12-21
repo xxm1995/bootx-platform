@@ -32,13 +32,16 @@ import javax.validation.constraints.NotNull;
 @Validated
 @IgnoreAuth
 @Slf4j
-@Tag(name ="测试控制器")
+@Tag(name = "测试控制器")
 @RestController
 @RequestMapping("/test")
 @RequiredArgsConstructor
 public class TestController {
+
     private final Sequence sequence;
+
     private final SeqRangeManager seqRangeManager;
+
     private final UserWsNoticeService userWsNoticeService;
 
     @OperateLog(title = "测试日志")
@@ -46,59 +49,55 @@ public class TestController {
     @Idempotent
     @Operation(summary = "测试")
     @GetMapping("/hello")
-    public ResResult<String> hello(){
+    public ResResult<String> hello() {
         return Res.ok("hello");
     }
 
     @OperateLog(title = "测试回声日志", saveParam = true, saverReturn = true)
     @Operation(summary = "测试回声")
     @GetMapping("/say")
-    public ResResult<String> say(String msg){
+    public ResResult<String> say(String msg) {
         return Res.ok(msg);
     }
 
-
     @Operation(summary = "序列生成器")
     @GetMapping("/sequence")
-    public ResResult<String> sequence(){
+    public ResResult<String> sequence() {
         long cs = sequence.next("cs");
         return Res.ok(String.valueOf(cs));
     }
 
     @Operation(summary = "序列生成器自定义")
     @GetMapping("/sequenceZdy")
-    public ResResult<Long> sequenceZdy(){
-        SeqRangeConfig seqRangeConfig = new SeqRangeConfig()
-                .setStep(5)
-                .setRangeStart(0)
-                .setRangeStep(5);
+    public ResResult<Long> sequenceZdy() {
+        SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(5).setRangeStart(0).setRangeStep(5);
         DefaultRangeSequence defaultRangeSequence = new DefaultRangeSequence(seqRangeManager, seqRangeConfig);
         return Res.ok(defaultRangeSequence.next("aa"));
     }
 
     @Operation(summary = "校验测试")
     @GetMapping("/validation")
-    public ResResult<Void> validation(@NotBlank(message = "校验测试") String msg, @NotNull(message = "不为空") Integer a){
+    public ResResult<Void> validation(@NotBlank(message = "校验测试") String msg, @NotNull(message = "不为空") Integer a) {
         return Res.ok();
     }
 
     @Operation(summary = "用户全局ws消息通知测试")
     @GetMapping("/userNotice")
-    public ResResult<Void> userNotice(Long id){
+    public ResResult<Void> userNotice(Long id) {
 
         // 推送消息通知框
         WsResult<String> result = WsRes.notificationError("警告");
-        userWsNoticeService.sendMessageByUser(result,id);
+        userWsNoticeService.sendMessageByUser(result, id);
 
         // 推送消息事件(通常由指定页面进行监听)
         result = WsRes.eventNotice("hello", "cs");
-        userWsNoticeService.sendMessageByUser(result,id);
+        userWsNoticeService.sendMessageByUser(result, id);
         return Res.ok();
     }
 
     @Operation(summary = "轮训测试")
     @GetMapping("/rotationSync")
-    public ResResult<Void> rotationSync(){
+    public ResResult<Void> rotationSync() {
         for (int i = 0; i < 20; i++) {
             SpringUtil.getBean(getClass()).rotationSyncFun(String.valueOf(i));
         }
@@ -110,8 +109,9 @@ public class TestController {
      */
     @Retryable(value = RetryableException.class, maxAttempts = 20, backoff = @Backoff(value = 5000L))
     @Async("asyncExecutor")
-    public void rotationSyncFun(String i){
+    public void rotationSyncFun(String i) {
         log.info(i);
         throw new RetryableException();
     }
+
 }

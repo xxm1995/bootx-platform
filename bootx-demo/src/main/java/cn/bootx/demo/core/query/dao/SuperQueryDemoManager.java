@@ -12,11 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-/**   
-* 超级查询
-* @author xxm  
-* @date 2022/2/21 
-*/
+/**
+ * 超级查询
+ *
+ * @author xxm
+ * @date 2022/2/21
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -25,19 +26,18 @@ public class SuperQueryDemoManager extends BaseManager<SuperQueryDemoMapper, Sup
     /**
      * 分页
      */
-    public Page<SuperQueryDemo> page(PageParam pageParam){
+    public Page<SuperQueryDemo> page(PageParam pageParam) {
         Page<SuperQueryDemo> mpPage = MpUtil.getMpPage(pageParam, SuperQueryDemo.class);
-        return lambdaQuery()
-                .orderByDesc(SuperQueryDemo::getCreateTime)
-                .page(mpPage);
+        return lambdaQuery().orderByDesc(SuperQueryDemo::getCreateTime).page(mpPage);
     }
 
     /**
      * 分页 超级查询
      */
-    public Page<SuperQueryDemo> superQuery(PageParam pageParam, QueryParams queryParams){
+    public Page<SuperQueryDemo> superQuery(PageParam pageParam, QueryParams queryParams) {
         QueryWrapper<SuperQueryDemo> generator = QueryGenerator.generator(queryParams);
         Page<SuperQueryDemo> mpPage = MpUtil.getMpPage(pageParam, SuperQueryDemo.class);
-        return this.page(mpPage,generator);
+        return this.page(mpPage, generator);
     }
+
 }

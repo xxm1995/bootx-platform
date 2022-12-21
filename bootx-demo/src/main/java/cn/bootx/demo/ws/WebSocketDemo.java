@@ -13,6 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * websocket demo
+ *
  * @author xxm
  * @date 2022/3/27
  */
@@ -20,7 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 @ServerEndpoint("/test/ws/{userId}")
 public class WebSocketDemo {
+
     private final WebSocketSessionManager wsManager = new WebSocketSessionManager();
+
     /** 记录当前在线连接数 */
     private static final AtomicInteger onlineCount = new AtomicInteger(0);
 
@@ -28,8 +31,8 @@ public class WebSocketDemo {
      * 连接建立成功调用的方法
      */
     @OnOpen
-    public void onOpen(@PathParam("userId") Long userId,Session session) {
-        wsManager.addSession(String.valueOf(userId),session);
+    public void onOpen(@PathParam("userId") Long userId, Session session) {
+        wsManager.addSession(String.valueOf(userId), session);
         onlineCount.incrementAndGet(); // 在线数加1
         log.info("有新连接加入：{}，当前在线人数为：{}", userId, onlineCount.get());
     }
@@ -47,19 +50,18 @@ public class WebSocketDemo {
 
     /**
      * 收到客户端消息后调用的方法
-     *
      * @param message 客户端发送过来的消息
      */
     @OnMessage
     public void onMessage(String message, Session session) {
         Long userId = Long.valueOf(wsManager.getIdBySession(session));
         log.info("服务端收到客户端[{}]的消息:{}", userId, message);
-        this.sendMessage("响应: "+message,userId);
+        this.sendMessage("响应: " + message, userId);
     }
 
     @OnError
     public void onError(Session session, Throwable error) {
-        log.error("{} 发生错误",session.getId());
+        log.error("{} 发生错误", session.getId());
         error.printStackTrace();
     }
 
@@ -73,7 +75,8 @@ public class WebSocketDemo {
             for (Session session : sessions) {
                 session.getBasicRemote().sendText(message);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("服务端发送消息给客户端失败：", e);
         }
     }
@@ -87,7 +90,8 @@ public class WebSocketDemo {
             for (Session session : sessions) {
                 session.getBasicRemote().sendText(message);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("服务端发送消息给客户端失败：", e);
         }
     }

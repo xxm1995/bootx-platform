@@ -7,12 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 /**
-*
-* @author xxm
-* @date 2022/3/24
-*/
+ * @author xxm
+ * @date 2022/3/24
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class DataSensitiveDemoManager extends BaseManager<DataSensitiveDemoMapper,DataSensitiveDemo> {
+public class DataSensitiveDemoManager extends BaseManager<DataSensitiveDemoMapper, DataSensitiveDemo> {
+
 }

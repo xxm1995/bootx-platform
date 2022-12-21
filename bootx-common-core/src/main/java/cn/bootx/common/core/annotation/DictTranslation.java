@@ -22,7 +22,7 @@ public @interface DictTranslation {
     boolean enable() default true;
 
     /**
-     * 翻译类型, 只可以用在方法返回类中, 在字段上标注不发生效果
+     * 翻译类型, 只可以用在方法上, 在字段上标注不发生效果
      */
     ConvertType convertType() default ConvertType.OBJECT;
 

@@ -11,48 +11,49 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
-*
-* @author xxm
-* @date 2022/3/24
-*/
+ * @author xxm
+ * @date 2022/3/24
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DataEncryptDemoService {
+
     private final DataEncryptDemoManager manager;
 
     /**
      * 新增
      */
-    public void add(DataEncryptDemo param){
+    public void add(DataEncryptDemo param) {
         manager.save(param);
     }
 
     /**
      * 更新
      */
-    public void update(DataEncryptDemo param){
+    public void update(DataEncryptDemo param) {
         manager.updateById(param);
     }
 
     /**
      * 删除
      */
-    public void delete(Long id){
+    public void delete(Long id) {
         manager.deleteById(id);
     }
 
     /**
      * 分页
      */
-    public PageResult<DataEncryptDemo> page(PageParam pageParam){
-        return MpUtil.convert2PageResult(manager.page(MpUtil.getMpPage(pageParam,DataEncryptDemo.class)));
+    public PageResult<DataEncryptDemo> page(PageParam pageParam) {
+        return MpUtil.convert2PageResult(manager.page(MpUtil.getMpPage(pageParam, DataEncryptDemo.class)));
     }
 
     /**
      * 单条
      */
-    public DataEncryptDemo findById(Long id){
+    public DataEncryptDemo findById(Long id) {
         return manager.findById(id).orElseThrow(DataNotExistException::new);
     }
+
 }

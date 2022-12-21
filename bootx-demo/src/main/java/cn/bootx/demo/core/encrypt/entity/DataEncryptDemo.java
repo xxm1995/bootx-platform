@@ -12,6 +12,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 权限显示demo
+ *
  * @author xxm
  * @date 2022/2/21
  */
@@ -30,6 +31,7 @@ public class DataEncryptDemo extends MpBaseEntity {
     private String content;
 
     @Schema(description = "加密后的内容")
-    @TableField(value = "content",updateStrategy = FieldStrategy.NEVER,insertStrategy = FieldStrategy.NEVER)
+    @TableField(value = "content", updateStrategy = FieldStrategy.NEVER, insertStrategy = FieldStrategy.NEVER)
     private String contentEncryption;
+
 }

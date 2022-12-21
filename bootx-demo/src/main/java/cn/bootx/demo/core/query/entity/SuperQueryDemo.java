@@ -11,11 +11,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-/**   
-* 超级查询演示
-* @author xxm  
-* @date 2022/2/21 
-*/
+/**
+ * 超级查询演示
+ *
+ * @author xxm
+ * @date 2022/2/21
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)

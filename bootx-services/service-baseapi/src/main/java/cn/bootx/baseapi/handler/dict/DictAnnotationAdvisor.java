@@ -9,7 +9,7 @@ import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 import org.springframework.stereotype.Component;
 
 /**
- * 抽象切入点
+ * 字段翻译切入点配置
  * @author xxm
  * @date 2022/12/20
  */

@@ -22,10 +22,16 @@ public class SwaggerProperties {
      * 是否开启
      */
     private boolean enabled;
+
     /**
      * 业务模块模块
      */
     private Map<String, List<String>> basePackages = new LinkedHashMap<>();
+
+    /**
+     * Basic 认证控制
+     */
+    private Basic basic = new Basic();
     /**
      * 标题
      */
@@ -58,4 +64,26 @@ public class SwaggerProperties {
      */
     private String licenseUrl = "https://www.apache.org/licenses/LICENSE-2.0";
 
+    /**
+     * Basic 认证控制
+     */
+    @Getter
+    @Setter
+    public static class Basic{
+
+        /**
+         * basic是否开启,默认为false
+         */
+        private boolean enable = false;
+
+        /**
+         * basic 用户名
+         */
+        private String username = "bootx";
+
+        /**
+         * basic 密码
+         */
+        private String password = "123456";
+    }
 }

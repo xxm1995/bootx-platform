@@ -10,10 +10,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 数据脱敏
-* @author xxm
-* @date 2022/3/24
-*/
+ * 数据脱敏
+ *
+ * @author xxm
+ * @date 2022/3/24
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -48,4 +49,5 @@ public class DataSensitiveDemo extends MpBaseEntity {
     @Schema(description = "其他")
     @SensitiveInfo(SensitiveType.OTHER)
     private String other;
+
 }

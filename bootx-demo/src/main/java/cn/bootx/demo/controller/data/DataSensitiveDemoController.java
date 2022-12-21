@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 数据脱敏演示
+ *
  * @author xxm
  * @date 2022/3/24
  */
@@ -21,38 +22,39 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/demo/data/sensitive")
 @RequiredArgsConstructor
 public class DataSensitiveDemoController {
+
     private final DataSensitiveDemoService service;
 
-    @Operation( summary = "添加")
+    @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody DataSensitiveDemo param){
+    public ResResult<Void> add(@RequestBody DataSensitiveDemo param) {
         service.add(param);
         return Res.ok();
     }
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody DataSensitiveDemo param){
+    public ResResult<Void> update(@RequestBody DataSensitiveDemo param) {
         service.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         service.delete(id);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<DataSensitiveDemo> findById(Long id){
+    public ResResult<DataSensitiveDemo> findById(Long id) {
         return Res.ok(service.findById(id));
     }
 
-    @Operation( summary = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<DataSensitiveDemo>> page(PageParam pageParam){
+    public ResResult<PageResult<DataSensitiveDemo>> page(PageParam pageParam) {
         return Res.ok(service.page(pageParam));
     }
 

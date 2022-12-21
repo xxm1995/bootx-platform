@@ -17,28 +17,29 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.TimeUnit;
 
 /**
-* 幂等控制演示
-* @author xxm
-* @date 2022/3/31
-*/
+ * 幂等控制演示
+ *
+ * @author xxm
+ * @date 2022/3/31
+ */
 @Slf4j
-@Tag(name ="幂等控制演示")
+@Tag(name = "幂等控制演示")
 @RestController
 @RequestMapping("/demo/lock")
 @RequiredArgsConstructor
 public class IdempotencyDemoController {
 
-    @Idempotent(name = "idempotent",timeout = 1000)
+    @Idempotent(name = "idempotent", timeout = 1000)
     @Operation(summary = "幂等演示")
     @PostMapping("/idempotency")
-    public ResResult<String> idempotency(){
+    public ResResult<String> idempotency() {
         return Res.ok("幂等演示");
     }
 
     @Operation(summary = "分布式锁(暂停5秒)")
     @GetMapping("/lock5")
-    @Lock4j(name = "test:lock",keys = "#a",acquireTimeout = 60000)
-    public ResResult<Void> lock5(Integer a){
+    @Lock4j(name = "test:lock", keys = "#a", acquireTimeout = 60000)
+    public ResResult<Void> lock5(Integer a) {
         log.info("开始");
         System.out.println(1);
         ThreadUtil.sleep(5, TimeUnit.SECONDS);
@@ -48,8 +49,8 @@ public class IdempotencyDemoController {
 
     @Operation(summary = "分布式锁(暂停20秒)")
     @GetMapping("/lock20")
-    @Lock4j(name = "test:lock",keys = "#a",acquireTimeout = 60000)
-    public ResResult<Void> lock20(Integer a){
+    @Lock4j(name = "test:lock", keys = "#a", acquireTimeout = 60000)
+    public ResResult<Void> lock20(Integer a) {
         log.info("开始");
         System.out.println(2);
         ThreadUtil.sleep(20, TimeUnit.SECONDS);
@@ -60,7 +61,7 @@ public class IdempotencyDemoController {
     @Operation(summary = "分布式锁(不暂停)")
     @PostMapping("/lock0")
     @Lock4j(name = "test:lock")
-    public ResResult<Void> lock0(){
+    public ResResult<Void> lock0() {
         return Res.ok();
     }
 

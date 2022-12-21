@@ -18,68 +18,65 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
-*
-* @author xxm
-* @date 2022/2/21
-*/
+ * @author xxm
+ * @date 2022/2/21
+ */
 @Tag(name = "超级查询演示")
 @RestController
 @RequestMapping("/demo/super/query")
 @RequiredArgsConstructor
 public class SuperQueryDemoController {
+
     private final SuperQueryDemoService superQueryDemoService;
 
-    @Operation( summary = "添加")
+    @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody SuperQueryDemo param){
+    public ResResult<Void> add(@RequestBody SuperQueryDemo param) {
         superQueryDemoService.add(param);
         return Res.ok();
     }
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody SuperQueryDemo param){
+    public ResResult<Void> update(@RequestBody SuperQueryDemo param) {
         superQueryDemoService.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         superQueryDemoService.delete(id);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<SuperQueryDemo> findById(Long id){
+    public ResResult<SuperQueryDemo> findById(Long id) {
         return Res.ok(superQueryDemoService.findById(id));
     }
 
-    @Operation( summary = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<SuperQueryDemo>> page(PageParam pageParam){
+    public ResResult<PageResult<SuperQueryDemo>> page(PageParam pageParam) {
         return Res.ok(superQueryDemoService.page(pageParam));
     }
 
-    @Operation( summary = "超级查询(分页)")
+    @Operation(summary = "超级查询(分页)")
     @PostMapping(value = "/superQuery")
-    public ResResult<PageResult<SuperQueryDemo>> superQuery(PageParam pageParam, @RequestBody QueryParams queryParams){
-        return Res.ok(superQueryDemoService.superQuery(pageParam,queryParams));
+    public ResResult<PageResult<SuperQueryDemo>> superQuery(PageParam pageParam, @RequestBody QueryParams queryParams) {
+        return Res.ok(superQueryDemoService.superQuery(pageParam, queryParams));
     }
 
     @Operation(summary = "MP查询生成器测试")
     @GetMapping("/mpGenerator")
-    public ResResult<String> mpGenerator(){
-        SuperQueryDemo queryDemo = new SuperQueryDemo()
-                .setName("222")
-                .setAge(24)
-                .setWorkTime(LocalTime.now())
-                .setVip(true)
-                .setRegistrationTime(LocalDateTime.now());
+    public ResResult<String> mpGenerator() {
+        SuperQueryDemo queryDemo = new SuperQueryDemo().setName("222").setAge(24).setWorkTime(LocalTime.now())
+                .setVip(true).setRegistrationTime(LocalDateTime.now());
         queryDemo.setId(1122L);
         QueryWrapper<SuperQueryDemo> generator = QueryGenerator.generator(queryDemo);
-        generator = QueryGenerator.generator(queryDemo,SuperQueryDemo.class);
+        generator = QueryGenerator.generator(queryDemo, SuperQueryDemo.class);
         return Res.ok(generator.getTargetSql());
     }
+
 }

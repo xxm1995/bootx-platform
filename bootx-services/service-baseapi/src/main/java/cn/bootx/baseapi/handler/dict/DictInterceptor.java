@@ -28,6 +28,9 @@ public class DictInterceptor implements MethodInterceptor {
     @Nullable
     @Override
     public Object invoke(@NotNull MethodInvocation invocation) throws Throwable {
+        if (Objects.isNull(invocation)){
+            return null;
+        }
         // 使用其他aop组件时,aop切了两次.
         Class<?> cls = AopProxyUtils.ultimateTargetClass(invocation.getThis());
         if (!cls.equals(invocation.getThis().getClass())) {
