@@ -35,3 +35,6 @@ https://gitee.com/toktok/easy-cron
 
 ACTable是对Mybatis做的增强功能，通过配置model注解的方式来创建表，修改表结构，并且实现了共通的CUDR功能提升开发效率：
 https://gitee.com/sunchenbin/mybatis-enhance
+
+Knife4j是一个集Swagger2 和 OpenAPI3为一体的增强解决方案：
+https://gitee.com/xiaoym/knife4j
