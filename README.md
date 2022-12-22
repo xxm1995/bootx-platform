@@ -25,8 +25,8 @@
 - 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) [管理平台(vue3)](http://v3.platform.bootx.cn/)
 - 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) [前端项目(vue3)](https://gitee.com/bootx/bootx-platfrom-vue3)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
-- 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove) [PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
-- 项目文档：[项目使用指南文档](https://www.yuque.com/bootx/bootx-platform/)
+- 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove)、[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
+- 项目文档：[项目使用指南文档](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 ## 🛠️功能亮点
 支持支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务
@@ -78,13 +78,13 @@
 
 **中间件配置**
 
-| 备备注注组件 | 是否必须配置 | 备注                                          |
-| ------------ | ------------ |---------------------------------------------|
-| MySQL        | 是           | 不设置无法启动                                     |
-| Redis        | 是           | 不设置启动后无法正常使用                                |
-| RabbitMQ     | 否           | 支付消息通知在使用                             |
-| MongoDB      | 否           | 默认审计日志和文件管理使用持久化方式为Mono，可在配置文件中配置切换成其他持久化方式 |
-| plumelog     | 是           | 默认项目自带lite版plumelog，不需要额外配置中间件，直接就可以使用      |
+| 组件 | 是否必须配置 | 备注                                          |
+| -------- | ------------ |---------------------------------------------|
+| MySQL    | 是           | 不设置无法启动                                     |
+| Redis    | 是           | 不设置启动后无法正常使用                                |
+| RabbitMQ | 否           | 支付消息通知在使用                             |
+| MongoDB  | 否           | 默认审计日志和文件管理使用持久化方式为Mono，可在配置文件中配置切换成其他持久化方式 |
+| plumelog | 是           | 默认项目自带lite版plumelog，不需要额外配置中间件，直接就可以使用      |
 
 ## 🥞项目整体结构
 ```lua
