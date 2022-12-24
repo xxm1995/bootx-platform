@@ -22,11 +22,11 @@
 
 ## 🍒文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/) [管理平台(vue3)](http://v3.platform.bootx.cn/)
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui) [前端项目(vue3)](https://gitee.com/bootx/bootx-platfrom-vue3)
+- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)、[管理平台(vue3)](http://v3.platform.bootx.cn/)
+- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)、[前端项目(vue3)](https://gitee.com/bootx/bootx-platfrom-vue3)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove)、[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
-- 项目文档：[项目使用指南文档](https://doc.bootx.cn/)
+- 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 ## 🛠️功能亮点
 支持支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务

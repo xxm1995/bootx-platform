@@ -1,0 +1,23 @@
+package cn.bootx.baseapi.core.region.dao;
+
+import cn.bootx.baseapi.core.region.entity.City;
+import cn.bootx.common.mybatisplus.impl.BaseManager;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * 城市表
+ * @author xxm
+ * @date 2022-12-24
+ */
+@Repository
+@RequiredArgsConstructor
+public class CityManager extends BaseManager<CityMapper, City> {
+
+
+    public List<City> findAllByPid(Integer pid){
+        return findAllByField(City::getPid,pid);
+    }
+}

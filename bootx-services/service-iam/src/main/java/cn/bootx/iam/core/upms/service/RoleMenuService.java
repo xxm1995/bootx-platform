@@ -2,6 +2,8 @@ package cn.bootx.iam.core.upms.service;
 
 import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.common.core.rest.dto.BaseDto;
+import cn.bootx.common.core.util.TreeBuildUtil;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.service.PermMenuService;
@@ -12,7 +14,6 @@ import cn.bootx.iam.dto.upms.MenuAndResourceDto;
 import cn.bootx.starter.auth.exception.NotLoginException;
 import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.collection.CollectionUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -80,14 +81,14 @@ public class RoleMenuService {
         List<PermMenuDto> permissionsByNotButton = permissions.stream()
                 .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
                 .collect(Collectors.toList());
-        return this.recursiveBuildTree(permissionsByNotButton, null);
+        return this.recursiveBuildTree(permissionsByNotButton);
     }
 
     /**
      * 获取权限树, 包含菜单和资源权限
      */
     public List<PermMenuDto> findAllTree(String clientCode){
-        return this.recursiveBuildTree(this.findPermissions(clientCode), null);
+        return this.recursiveBuildTree(this.findPermissions(clientCode));
     }
 
     /**
@@ -125,7 +126,7 @@ public class RoleMenuService {
                 .collect(Collectors.toList());
         return new MenuAndResourceDto()
                 .setResourcePerms(resourcePerms)
-                .setMenus(this.recursiveBuildTree(menus, null));
+                .setMenus(this.recursiveBuildTree(menus));
     }
 
     /**
@@ -170,21 +171,11 @@ public class RoleMenuService {
      * 递归建树
      *
      * @param permissions 查询出的菜单数据
-     * @param parentId    父节点ID
      * @return 递归后的树列表
      */
-    private List<PermMenuDto> recursiveBuildTree(List<PermMenuDto> permissions, Long parentId) {
-        List<PermMenuDto> children = permissions.stream()
-                .filter(m -> Objects.equals(m.getParentId(),parentId))
-                .collect(Collectors.toList());
-        if (CollectionUtil.isEmpty(children)) {
-            return new ArrayList<>(0);
-        }
-        for (PermMenuDto permission : children) {
-            permission.setChildren(recursiveBuildTree(permissions, permission.getId()));
-        }
-        children.sort(Comparator.comparingDouble(PermMenuDto::getSortNo));
-        return children;
+    private List<PermMenuDto> recursiveBuildTree(List<PermMenuDto> permissions) {
+        return TreeBuildUtil.build(permissions, null, BaseDto::getId,PermMenuDto::getParentId,PermMenuDto::setChildren,Comparator.comparingDouble(PermMenuDto::getSortNo));
+
     }
 
 }

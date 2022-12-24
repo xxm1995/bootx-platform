@@ -121,22 +121,18 @@ bootx:
     cache:
       # 默认超时时间 30分钟
       default-ttl: 1800
-      # 对Key设置超时间
+      # 对Key设置超时间 (秒)
       keys-ttl:
         "[iam:user:path]" : 5200
-        "[iam:ignore:path]" : 5200
+        "[iam:ignore:path]" : 28800
+        "[base:china:region]" : 28800
     # 序列生成器
     sequence:
       type: jdbc
-    mqtt:
-      url: tcp://127.0.0.1:1883
-      client-id: clientId
-      # 自动追加终端id后缀 client@xxx
-      auto-client-id-suffix: true
     # 异常
     exception:
       show-full-message: true
-    # 是否启用Rabbit
+    # 是否启用Rabbit, 并不是停用了Rabbit, 需配合 ConditionalOnRabbit 注解使用
     rabbit:
       enable: false
   starter:
@@ -195,11 +191,13 @@ bootx:
           client-secret: ??
     # 审计日志存储
     audit-log:
-      store: mongo
+      store: jdbc
     # 文件上传
     file-upload:
-      upload-type: mongo
+      upload-type: local
       server-url: http://127.0.0.1:8080
+      local:
+        local-path: /data/file
       mongo:
         bucket: fs
     # 数据权限
