@@ -23,7 +23,7 @@
 ## 🍒文档
 
 - 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)、[管理平台(vue3)](http://v3.platform.bootx.cn/)
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)、[前端项目(vue3)](https://gitee.com/bootx/bootx-platfrom-vue3)
+- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove)、[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
