@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  *
  * 使用场景: 在不使用Rabbit中间件的场合里, 但未去除Rabbit相关代码的情况下, 通过配置文件中关闭Rabbit选项, 来实现系统的正常使用,
  * 不这样处理会导致RabbitMQ进行无限尝试重连服务器
- * 需要在使用 @RabbitListener 标注方法的类上加上这个注解, 让这个对象不注册到系统中
+ * 需要在使用 @RabbitListener 标注方法的类上加上这个注解, 让这个对象不注册到Spring容器中
  * @author xxm
  * @date 2022/12/12
  */

@@ -1,6 +1,5 @@
 package cn.bootx.notice.dto.mail;
 
-import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -38,7 +37,7 @@ public class MailConfigDto extends BaseDto implements Serializable {
     private String username;
 
     @Schema(description= "password")
-    @SensitiveInfo(SensitiveType.PASSWORD)
+    @SensitiveInfo(SensitiveInfo.SensitiveType.PASSWORD)
     private String password;
 
     @Schema(description= "sender")

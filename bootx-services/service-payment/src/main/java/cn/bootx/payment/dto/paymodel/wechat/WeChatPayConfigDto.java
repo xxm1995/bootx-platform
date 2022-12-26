@@ -1,6 +1,5 @@
 package cn.bootx.payment.dto.paymodel.wechat;
 
-import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -48,10 +47,10 @@ public class WeChatPayConfigDto extends BaseDto implements Serializable {
     @Schema(description = "API 证书中的 p12 文件id")
     private Long p12;
     @Schema(description = "API 证书中的 cert.pem 证书")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
+    @SensitiveInfo(value = SensitiveInfo.SensitiveType.OTHER, front = 15)
     private String certPem;
     @Schema(description = "API 证书中的 key.pem 私钥")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
+    @SensitiveInfo(value = SensitiveInfo.SensitiveType.OTHER, front = 15)
     private String keyPem;
 
     @Schema(description = "应用域名，回调中会使用此参数")

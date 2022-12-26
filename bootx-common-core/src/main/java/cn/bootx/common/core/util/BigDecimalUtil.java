@@ -20,7 +20,7 @@ public class BigDecimalUtil {
     /**
      * 价钱保留几位小数
      */
-    public static final int CURRENCY_DECIMAL_PLACES = 2;
+    public final int CURRENCY_DECIMAL_PLACES = 2;
 
     /**
      * 加法
@@ -29,7 +29,7 @@ public class BigDecimalUtil {
      * @param lastArgs 加数
      * @return 结果
      */
-    public static BigDecimal add(BigDecimal first, BigDecimal... lastArgs) {
+    public BigDecimal add(BigDecimal first, BigDecimal... lastArgs) {
 
         int argsLength = lastArgs.length;
         BigDecimal result = new BigDecimal("0.00");
@@ -51,7 +51,7 @@ public class BigDecimalUtil {
      * @param lastArgs 减数
      * @return 结果
      */
-    public static BigDecimal subtract(BigDecimal first, BigDecimal... lastArgs) {
+    public BigDecimal subtract(BigDecimal first, BigDecimal... lastArgs) {
 
         int argsLength = lastArgs.length;
         BigDecimal result = new BigDecimal("0.00");
@@ -73,7 +73,7 @@ public class BigDecimalUtil {
      * @param lastArgs 乘数
      * @return 结果
      */
-    public static BigDecimal multiply(BigDecimal first, BigDecimal... lastArgs) {
+    public BigDecimal multiply(BigDecimal first, BigDecimal... lastArgs) {
 
         int argsLength = lastArgs.length;
         BigDecimal result = new BigDecimal("0.00");
@@ -98,7 +98,7 @@ public class BigDecimalUtil {
      * @param lastArgs 除数
      * @return 结果
      */
-    public static BigDecimal divide(BigDecimal first, BigDecimal... lastArgs) {
+    public BigDecimal divide(BigDecimal first, BigDecimal... lastArgs) {
 
         int argsLength = lastArgs.length;
         BigDecimal result = new BigDecimal("0.00");
@@ -124,7 +124,7 @@ public class BigDecimalUtil {
      * @param last  数字2
      * @return first > last =1 / first == last = 0 / first < last = -1
      */
-    public static int compareTo(BigDecimal first, BigDecimal last) {
+    public int compareTo(BigDecimal first, BigDecimal last) {
         BigDecimal newFirst = BigDecimal.ZERO;
         BigDecimal newLast = BigDecimal.ZERO;
         if (first != null) {
@@ -141,7 +141,7 @@ public class BigDecimalUtil {
      *
      * @return 两位小数的Zero
      */
-    public static BigDecimal getZero() {
+    public BigDecimal getZero() {
 
         BigDecimal result = new BigDecimal("0.00");
         result = result.setScale(CURRENCY_DECIMAL_PLACES, RoundingMode.UP);
@@ -154,7 +154,7 @@ public class BigDecimalUtil {
      * @param first 要转换的字符串
      * @return BigDecimal两位小数
      */
-    public static BigDecimal convertStringToBigDecimal(String first) {
+    public BigDecimal convertStringToBigDecimal(String first) {
 
         return BigDecimal.valueOf(Double.parseDouble(first)).setScale(CURRENCY_DECIMAL_PLACES,
                 RoundingMode.UP);
@@ -166,7 +166,7 @@ public class BigDecimalUtil {
      * @param first 要转换的bigDecimal
      * @return 转换后的字符串
      */
-    public static String toString(BigDecimal first) {
+    public String toString(BigDecimal first) {
 
         NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.US);
         if (first == null) {
@@ -183,7 +183,7 @@ public class BigDecimalUtil {
      * @param items       需要拆分的项，以及每项所占的比例
      * @return 拆分后每项的价格
      */
-    public static <E> Map<E, BigDecimal> averageNumber(BigDecimal totalNumber, Map<E, BigDecimal> items) {
+    public <E> Map<E, BigDecimal> averageNumber(BigDecimal totalNumber, Map<E, BigDecimal> items) {
         return averageNumber(totalNumber, items, 2, RoundingMode.UP);
     }
 
@@ -196,7 +196,7 @@ public class BigDecimalUtil {
      * @param roundingMode 舍入模式
      * @return 拆分后每项的数字
      */
-    public static <E> Map<E, BigDecimal> averageNumber(BigDecimal totalNumber, Map<E, BigDecimal> items, int scale, RoundingMode roundingMode) {
+    public <E> Map<E, BigDecimal> averageNumber(BigDecimal totalNumber, Map<E, BigDecimal> items, int scale, RoundingMode roundingMode) {
         BigDecimal number = items.values().stream().reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal remainderNumber = totalNumber;
         Map<E, BigDecimal> result = new LinkedHashMap<>();

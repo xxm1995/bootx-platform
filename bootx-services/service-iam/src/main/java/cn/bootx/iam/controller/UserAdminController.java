@@ -1,7 +1,6 @@
 package cn.bootx.iam.controller;
 
 import cn.bootx.common.core.annotation.OperateLog;
-import cn.bootx.common.core.enums.BusinessType;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
@@ -74,7 +73,7 @@ public class UserAdminController {
     }
 
     @Operation(summary = "重置密码")
-    @OperateLog(title = "重置密码",businessType= BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "重置密码",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
     @PostMapping("/restartPassword")
     public ResResult<Void> restartPassword(@NotNull(message = "用户不可为空") Long userId,
                                            @NotBlank(message = "新密码不能为空") String newPassword){
@@ -82,7 +81,7 @@ public class UserAdminController {
         return Res.ok();
     }
 
-    @OperateLog(title = "锁定用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "锁定用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "锁定用户")
     @PostMapping("/lock")
     public ResResult<Void> lock(Long userId){
@@ -90,7 +89,7 @@ public class UserAdminController {
         return Res.ok();
     }
 
-    @OperateLog(title = "批量锁定用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "批量锁定用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "批量锁定用户")
     @PostMapping("/lockBatch")
     public ResResult<Void> lockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds){
@@ -98,7 +97,7 @@ public class UserAdminController {
         return Res.ok();
     }
 
-    @OperateLog(title = "解锁用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "解锁用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "解锁用户")
     @PostMapping("/unlock")
     public ResResult<Void> unlock(@NotNull(message = "用户不可为空") Long userId){
@@ -106,7 +105,7 @@ public class UserAdminController {
         return Res.ok();
     }
 
-    @OperateLog(title = "批量解锁用户",businessType= BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "批量解锁用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "批量解锁用户")
     @PostMapping("/unlockBatch")
     public ResResult<Void> unlockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds){

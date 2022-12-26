@@ -5,7 +5,10 @@ import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.common.mybatisplus.base.MpCreateEntity;
+import cn.bootx.common.mybatisplus.base.MpDelEntity;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
@@ -125,28 +128,36 @@ public class MpUtil {
     }
 
     /**
-     * 初始化数据库Entity
+     * 初始化数据库Entity, 通常配合 executeBatch 使用
      * @param entityList 对象列表
-     * @param userId 用户id
+     * @param userId 用户id, 可以为空
      * @param <T> 泛型 MpIdEntity
      */
     public static <T extends MpIdEntity> void initEntityList(List<? extends MpIdEntity> entityList,Long userId){
         for (MpIdEntity t : entityList) {
             // 设置id
             t.setId(IdUtil.getSnowflakeNextId());
-            if (t instanceof MpBaseEntity){
-                MpBaseEntity entity = (MpBaseEntity) t;
+            if (t instanceof MpCreateEntity) {
+                MpCreateEntity entity = (MpCreateEntity) t;
                 entity.setCreator(userId);
                 entity.setCreateTime(LocalDateTime.now());
+            }
+            if (t instanceof MpDelEntity) {
+                MpDelEntity entity = (MpDelEntity) t;
                 entity.setLastModifier(userId);
                 entity.setLastModifiedTime(LocalDateTime.now());
                 entity.setVersion(0);
             }
+            if (t instanceof MpBaseEntity) {
+                MpBaseEntity entity = (MpBaseEntity) t;
+                entity.setDeleted(false);
+            }
+
         }
     }
 
     /**
-     * 字段存在长文本注解则在查询时被排除
+     * 字段是否存在长文本注解
      */
     public static boolean excludeBigField(TableFieldInfo tableFieldInfo) {
         BigField annotation = tableFieldInfo.getField().getAnnotation(BigField.class);
@@ -154,12 +165,14 @@ public class MpUtil {
     }
 
     /**
-     * 获取最新的一条
+     * 获取的一条数据, 有多条取第一条
      */
-    public static  <T> Optional<T> findOne(LambdaQueryChainWrapper<T> lambdaQuery){
+    public static <T> Optional<T> findOne(LambdaQueryChainWrapper<T> lambdaQuery){
         Page<T> mpPage = new Page<>(0,1);
         Page<T> page = lambdaQuery.page(mpPage);
-        if (page.getTotal() > 0) {
+        // 关闭 count 查询
+        page.setSearchCount(false);
+        if (CollUtil.isNotEmpty(page.getRecords())) {
             return Optional.of(page.getRecords().get(0));
         }
         return Optional.empty();

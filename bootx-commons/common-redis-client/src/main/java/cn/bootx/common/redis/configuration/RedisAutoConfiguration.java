@@ -55,6 +55,7 @@ public class RedisAutoConfiguration {
     /**
      * 默认 RedisTemplate
      */
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     @Primary
     public RedisTemplate<String,?> redisTemplate(RedisConnectionFactory redisConnectionFactory,

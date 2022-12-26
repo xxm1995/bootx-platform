@@ -31,6 +31,7 @@ import java.util.Locale;
 public class IdempotentAop {
     private final RedisClient redisClient;
     private final List<String> METHODS = Arrays.asList(Method.GET.name(),Method.POST.name(),Method.PUT.name(),Method.DELETE.name());
+
     /**
      * 幂等切面
      */

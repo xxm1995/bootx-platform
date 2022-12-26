@@ -3,7 +3,6 @@ package cn.bootx.starter.auth.online;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.common.core.enums.BusinessType;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -97,7 +96,7 @@ public class OnlineUserService {
     /**
      * 下线
      */
-    @OperateLog(title = "强退用户",businessType = BusinessType.FORCE, saveParam = true)
+    @OperateLog(title = "强退用户",businessType = OperateLog.BusinessType.FORCE, saveParam = true)
     public void logoutByUserId(Long userId){
         StpUtil.kickout(userId);
     }

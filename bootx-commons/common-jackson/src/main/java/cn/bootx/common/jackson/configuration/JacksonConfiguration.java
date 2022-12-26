@@ -29,7 +29,7 @@ import org.springframework.context.annotation.Primary;
 public class JacksonConfiguration {
 
     /**
-     * 对象映射
+     * 对象映射, 不会记录被序列化的类型信息, 就是最常见的那种json格式数据
      */
     @Bean
     @Primary

@@ -1,7 +1,6 @@
 package cn.bootx.iam.dto.user;
 
 import cn.bootx.common.core.entity.UserDetail;
-import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import cn.bootx.iam.code.UserStatusCode;
@@ -38,15 +37,15 @@ public class UserInfoDto extends BaseDto implements Serializable {
     private String username;
 
     @Schema(description= "密码")
-    @SensitiveInfo(SensitiveType.PASSWORD)
+    @SensitiveInfo(SensitiveInfo.SensitiveType.PASSWORD)
     private String password;
 
     @Schema(description= "手机号")
-    @SensitiveInfo(SensitiveType.MOBILE_PHONE)
+    @SensitiveInfo(SensitiveInfo.SensitiveType.MOBILE_PHONE)
     private String phone;
 
     @Schema(description= "邮箱")
-    @SensitiveInfo(SensitiveType.EMAIL)
+    @SensitiveInfo(SensitiveInfo.SensitiveType.EMAIL)
     private String email;
 
     @Schema(description= "终端id列表")

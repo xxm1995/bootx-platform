@@ -17,6 +17,10 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "bootx.common.cache")
 public class CachingProperties {
 
+
+    /** 序列化时是否保留数据类型数据(变更后需要清除历史数据,否则会报错) */
+    private boolean retainType = true;
+
     /** 默认超时时间 30分钟 */
     private Integer defaultTtl = 60*30;
 

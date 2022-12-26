@@ -1,6 +1,5 @@
 package cn.bootx.payment.dto.paymodel.alipay;
 
-import cn.bootx.common.core.enums.SensitiveType;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.starter.data.perm.sensitive.SensitiveInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,23 +44,23 @@ public class AlipayConfigDto extends BaseDto implements Serializable {
     private String signType;
 
     @Schema(description = "支付宝公钥")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
+    @SensitiveInfo(value = SensitiveInfo.SensitiveType.OTHER, front = 15)
     private String alipayPublicKey;
 
     @Schema(description = "私钥")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
+    @SensitiveInfo(value = SensitiveInfo.SensitiveType.OTHER, front = 15)
     private String privateKey;
 
     @Schema(description = "应用公钥证书")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
+    @SensitiveInfo(value = SensitiveInfo.SensitiveType.OTHER, front = 15)
     private String appCert;
 
     @Schema(description = "支付宝公钥证书文件")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
+    @SensitiveInfo(value = SensitiveInfo.SensitiveType.OTHER, front = 15)
     private String alipayCert;
 
     @Schema(description = "支付宝CA根证书文件")
-    @SensitiveInfo(value = SensitiveType.OTHER, front = 15)
+    @SensitiveInfo(value = SensitiveInfo.SensitiveType.OTHER, front = 15)
     private String alipayRootCert;
 
     @Schema(description = "超时配置")

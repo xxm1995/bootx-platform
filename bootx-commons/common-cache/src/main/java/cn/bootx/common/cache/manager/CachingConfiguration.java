@@ -35,10 +35,14 @@ public class CachingConfiguration extends CachingConfigurerSupport {
 
     private final CachingProperties cachingProperties;
     private final ObjectMapper typeObjectMapper;
+    private final ObjectMapper objectMapper;
 
-    public CachingConfiguration(CachingProperties cachingProperties, @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper) {
+    public CachingConfiguration(CachingProperties cachingProperties,
+                                @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper,
+                                @Qualifier("objectMapper") ObjectMapper objectMapper) {
         this.cachingProperties = cachingProperties;
         this.typeObjectMapper = typeObjectMapper;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -54,6 +58,7 @@ public class CachingConfiguration extends CachingConfigurerSupport {
      */
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
+
         BootxRedisCacheManager bootxRedisCacheManager = new BootxRedisCacheManager(
                 //Redis 缓存写入器
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
@@ -71,7 +76,13 @@ public class CachingConfiguration extends CachingConfigurerSupport {
     private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Duration duration) {
         // 序列化方式
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-        jackson2JsonRedisSerializer.setObjectMapper(typeObjectMapper);
+
+        // 缓存是否需要记录对象数据的类型
+        if (cachingProperties.isRetainType()){
+            jackson2JsonRedisSerializer.setObjectMapper(typeObjectMapper);
+        } else {
+            jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+        }
 
         // redis缓存配置
         return RedisCacheConfiguration

@@ -1,7 +1,6 @@
 package cn.bootx.payment.controller;
 
 import cn.bootx.common.core.annotation.OperateLog;
-import cn.bootx.common.core.enums.BusinessType;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
@@ -48,7 +47,7 @@ public class WalletController {
     }
 
     @Operation(summary = "解锁钱包")
-    @OperateLog(title = "解锁钱包",businessType= BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "解锁钱包",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
     @PostMapping("/unlock")
     public ResResult<Void> unlock(Long walletId){
         walletService.unlock(walletId);
@@ -56,7 +55,7 @@ public class WalletController {
     }
 
     @Operation(summary = "锁定钱包")
-    @OperateLog(title = "锁定钱包",businessType= BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "锁定钱包",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
     @PostMapping("/lock")
     public ResResult<Void> lock(Long walletId){
         walletService.lock(walletId);

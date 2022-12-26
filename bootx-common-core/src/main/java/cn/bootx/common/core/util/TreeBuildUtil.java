@@ -21,6 +21,11 @@ public class TreeBuildUtil {
 
     /**
      * 构建成树
+     * @param list 要进行转换的列表
+     * @param pid 一级节点的父级id，通常为null
+     * @param getId 获取主键的方法方法引用
+     * @param getPid 获取关联父级节点主键的方法引用
+     * @param setChildren 设置子节点列表的方法引用
      */
     public <T> List<T> build(List<T> list,
                              Object pid,
@@ -31,7 +36,13 @@ public class TreeBuildUtil {
     }
 
     /**
-     * 构建成树
+     * 构建成树 (带排序)
+     * @param list 要进行转换的列表
+     * @param pid 一级节点的父级id，通常为null
+     * @param getId 获取主键的方法方法引用
+     * @param getPid 获取关联父级节点主键的方法引用
+     * @param setChildren 设置子节点列表的方法引用
+     * @param comparator 节点顺序的排序规则
      */
     public <T> List<T> build(List<T> list,
                              Object pid,
