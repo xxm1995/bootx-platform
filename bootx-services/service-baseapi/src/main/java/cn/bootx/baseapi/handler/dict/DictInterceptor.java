@@ -1,6 +1,6 @@
 package cn.bootx.baseapi.handler.dict;
 
-import cn.bootx.common.core.annotation.DictTranslation;
+import cn.bootx.common.core.annotation.TranslationResult;
 import cn.hutool.core.util.TypeUtil;
 import lombok.RequiredArgsConstructor;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -36,17 +36,17 @@ public class DictInterceptor implements MethodInterceptor {
         if (!cls.equals(invocation.getThis().getClass())) {
             return invocation.proceed();
         }
-        DictTranslation dictTranslation = invocation.getMethod().getAnnotation(DictTranslation.class);
+        TranslationResult translationResult = invocation.getMethod().getAnnotation(TranslationResult.class);
         Object proceed = invocation.proceed();
         // 返回值为空和未开启字典翻译直接结束
-        if (Objects.isNull(proceed)||!dictTranslation.enable()){
+        if (Objects.isNull(proceed)||!translationResult.enable()){
             return null;
         }
         // 获取返回类型, 基础类型Type为class, 泛型类型为 ParameterizedType
         Type returnType = TypeUtil.getReturnType(invocation.getMethod());
         for (DictTranslationHandler dictTranslationHandler : dictTranslationHandlers) {
             if (dictTranslationHandler.adaptation(returnType)){
-                dictTranslationHandler.translation(proceed,returnType,dictTranslation);
+                dictTranslationHandler.translation(proceed,returnType, translationResult);
             }
         }
         return proceed;

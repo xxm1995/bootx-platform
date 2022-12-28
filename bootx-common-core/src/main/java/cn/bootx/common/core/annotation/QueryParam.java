@@ -30,7 +30,8 @@ public @interface QueryParam {
     NamingCaseEnum namingCase() default NamingCaseEnum.UNDER_LINE;
 
     /**
-     * 自定义查询字段对应的数据库字段名称. 只可以在字段上注解时使用
+     * 自定义查询字段对应的数据库字段名称. 只可以在字段上标注时使用，标注在类上不生效
+     * 配置后，namingCase配置将会无效，会以这项配置数据库字段名称为准
      */
     String fieldName() default "";
 
@@ -70,13 +71,10 @@ public @interface QueryParam {
      * 名称转换类型
      */
     enum NamingCaseEnum {
-        /** lambda方式读取对应数据库字段名称 */
+        /** 获取数据库实体类配置的数据库字段名称，只可以用在数据库实体类字段上 */
         LAMBDA,
         /** 转换为下划线 */
         UNDER_LINE,
-        /** 在注解中自定义 */
-        ANNOTATION,
-        /** 等等再加接的类型 */
         /** 不进行处理 */
         NONE;
 

@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.handler.dict;
 
 import cn.bootx.baseapi.core.dict.service.DictTranslationService;
-import cn.bootx.common.core.annotation.DictTranslation;
+import cn.bootx.common.core.annotation.TranslationResult;
 import cn.bootx.common.core.rest.ResResult;
 import cn.hutool.core.util.ClassUtil;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +44,10 @@ public class ResultPageIterableTranslationHandler implements DictTranslationHand
 
     @SuppressWarnings("unchecked")
     @Override
-    public void translation(Object object, Type type, DictTranslation dictTranslation) {
+    public void translation(Object object, Type type, TranslationResult translationResult) {
         ResResult<Iterable<?>> resResult = (ResResult<Iterable<?>>) object;
         Iterable<?> iterable = resResult.getData();
-        if (dictTranslation.convertType()== DictTranslation.ConvertType.OBJECT){
+        if (translationResult.convertType()== TranslationResult.ConvertType.OBJECT){
             dictTranslationService.translation(iterable);
         } else {
             Iterable<Map<String, Object>> maps = dictTranslationService.translationToMap(iterable);

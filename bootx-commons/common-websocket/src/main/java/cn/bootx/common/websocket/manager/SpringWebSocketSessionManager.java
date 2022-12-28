@@ -17,22 +17,22 @@ import java.util.stream.Collectors;
 public class SpringWebSocketSessionManager {
     // session缓存
     protected static final Map<String, WebSocketSession> sessionPool = new ConcurrentHashMap<>();
-    // sessionId 与 连接id 的映射关系 n:1
-    protected static final Map<String, String> sid2id = new ConcurrentHashMap<>();
-    // 连接id 与 sessionId 的映射关系 1:n
-    protected static final Map<String, List<String>> id2sid = new ConcurrentHashMap<>();
+    // sessionId 与 用户标识id 的映射关系 n:1
+    protected static final Map<String, String> sid2uid = new ConcurrentHashMap<>();
+    // 用户标识id 与 sessionId 的映射关系 1:n
+    protected static final Map<String, List<String>> uid2sid = new ConcurrentHashMap<>();
 
     /**
      * 添加会话session关联
      */
-    public void addSession(String id, WebSocketSession session) {
+    public void addSession(String userId, WebSocketSession session) {
         try {
-            sid2id.put(session.getId(),id);
+            sid2uid.put(session.getId(),userId);
             sessionPool.put(session.getId(),session);
-            List<String> list = Optional.ofNullable(id2sid.get(id))
+            List<String> list = Optional.ofNullable(uid2sid.get(userId))
                     .orElse(new CopyOnWriteArrayList<>());
             list.add(session.getId());
-            id2sid.put(id,list);
+            uid2sid.put(userId,list);
         } catch (Exception ignored) {
         }
     }
@@ -42,25 +42,25 @@ public class SpringWebSocketSessionManager {
      */
     public void removeSession(WebSocketSession session) {
         sessionPool.remove(session.getId());
-        String id = sid2id.remove(session.getId());
-        Optional.ofNullable(id2sid.get(id))
+        String id = sid2uid.remove(session.getId());
+        Optional.ofNullable(uid2sid.get(id))
                 .ifPresent(list->list.removeIf(s-> Objects.equals(s,session.getId())));
     }
     /**
      * 删除
      */
     public void removeSessionById(String id){
-        List<String> sessionIds = Optional.ofNullable(id2sid.get(id)).orElse(Lists.newArrayList());
+        List<String> sessionIds = Optional.ofNullable(uid2sid.get(id)).orElse(Lists.newArrayList());
         sessionIds.forEach(sessionPool::remove);
-        sessionIds.forEach(sid2id::remove);
-        id2sid.remove(id);
+        sessionIds.forEach(sid2uid::remove);
+        uid2sid.remove(id);
 
     }
     /**
      * 根据id获取关联的session列表
      */
     public List<WebSocketSession> getSessionsById(String id){
-        List<String> sessionIds = Optional.ofNullable(id2sid.get(id)).orElse(Lists.newArrayList());
+        List<String> sessionIds = Optional.ofNullable(uid2sid.get(id)).orElse(Lists.newArrayList());
         return sessionIds.stream().map(sessionPool::get)
                 .collect(Collectors.toList());
     }
@@ -68,7 +68,7 @@ public class SpringWebSocketSessionManager {
     /**
      * 获取所有连接session
      */
-    public ArrayList<WebSocketSession> getSessions(){
+    public List<WebSocketSession> getSessions(){
         return ListUtil.toList(sessionPool.values());
     }
 
@@ -77,13 +77,13 @@ public class SpringWebSocketSessionManager {
      * 根据session获取连接id
      */
     public String getIdBySession(WebSocketSession session){
-        return sid2id.get(session.getId());
+        return sid2uid.get(session.getId());
     }
 
     /**
      * 根据session获取连接id
      */
     public String getIdBySessionId(String sessionId){
-        return sid2id.get(sessionId);
+        return sid2uid.get(sessionId);
     }
 }

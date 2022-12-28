@@ -5,10 +5,10 @@ import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
 import cn.bootx.common.sequence.range.SeqRangeManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * 序列化生成器
@@ -18,11 +18,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SequenceProperties.class)
-public class SequenceAutoConfiguration {
+public class SequenceConfiguration {
     private final SequenceProperties sequenceProperties;
 
     @Bean
-    @ConditionalOnMissingBean(Sequence.class)
+    @Primary
     public Sequence sequence(SeqRangeManager seqRangeManager){
         SeqRangeConfig seqRangeConfig = new SeqRangeConfig()
                 .setStep(sequenceProperties.getStep())

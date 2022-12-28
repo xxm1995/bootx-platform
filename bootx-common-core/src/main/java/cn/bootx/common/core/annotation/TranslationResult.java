@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DictTranslation {
+public @interface TranslationResult {
 
     /**
      * 是否启用

@@ -42,7 +42,7 @@ public class SpringProperties {
     @Data
     public static class Cors {
         /** 允许跨域发送身份凭证 */
-        private String enable;
+        private boolean enable = false;
 
         /** 预检请求有效期(秒) */
         private Integer maxAge = 3600;

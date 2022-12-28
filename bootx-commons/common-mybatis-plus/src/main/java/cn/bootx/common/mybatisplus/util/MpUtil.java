@@ -95,13 +95,15 @@ public class MpUtil {
     /**
      * 获取行名称
      * @param readMethod 对象字段对应的读取方法对象
-     * @param clazz 实体类类型. 辅助进行判断, 可以为空, 传多个只有第一个生效
+     * @param clazz 实体类类型. 辅助进行判断, 传多个只有第一个生效，可以为空, 为空时使用读取方法对应的Class类，
      * @return 字段名
      */
     public static <T> String getColumnName(Method readMethod, Class<T> ...clazz){
-        Class<?> beanClass = readMethod.getDeclaringClass();
+        Class<?> beanClass ;
         if (ArrayUtil.isNotEmpty(clazz)){
             beanClass = clazz[0];
+        } else {
+            beanClass = readMethod.getDeclaringClass();
         }
 
         Map<String, ColumnCache> columnMap = LambdaUtils.getColumnMap(beanClass);

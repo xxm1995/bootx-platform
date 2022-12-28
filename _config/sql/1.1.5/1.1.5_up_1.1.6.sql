@@ -69,7 +69,7 @@ INSERT INTO `iam_perm_menu` VALUES (1582302542955769856, 'adminv3', 158225301180
 
 INSERT INTO `iam_perm_menu` VALUES (1582302764129808384, 'adminv3', 1582253011803262976, '部门管理', 'DeptList', NULL, b'0', '', b'0', b'0', '/modules/system/dept/DeptList.vue', NULL, '/system/user/dept', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:29:11', 1414143554414059520, '2022-10-18 17:32:26', 1, 0);
 
-INSERT INTO `iam_perm_menu` VALUES (1582303143110340608, 'adminv3', 1582253152903843840, '数据字典', 'DictList', NULL, b'0', '', b'0', b'0', '/modules/system/dict/DictList.vue', NULL, '/system/config/dict', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:30:42', 1414143554414059520, '2022-10-18 17:30:42', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1582303143110340608, 'adminv3', 1582253152903843840, '数据字典', 'DictList', NULL, b'0', '', b'0', b'0', '/modules/system/translate/DictList.vue', NULL, '/system/config/translate', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:30:42', 1414143554414059520, '2022-10-18 17:30:42', 0, 0);
 
 INSERT INTO `iam_perm_menu` VALUES (1582303290070364160, 'adminv3', 1582253152903843840, '定时任务', 'QuartzJobList', NULL, b'0', '', b'0', b'0', '/modules/system/quartz/QuartzJobList.vue', NULL, '/system/config/quartz', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:31:17', 1414143554414059520, '2022-10-18 17:32:12', 1, 0);
 

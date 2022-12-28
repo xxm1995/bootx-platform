@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 public class QueryGenerator {
 
     /**
-     * 生成查询条件 (根据查询参数对象生成)
+     * 根据接收的前端超级查询参数对象进行生成
      * @param queryParams 参数
      * @param <T> 泛型
      * @return 查询器
@@ -28,8 +28,8 @@ public class QueryGenerator {
 
 
     /**
-     * 生成查询条件 (根据实体对象生成), 生成的多个查询条件之间用And连接
-     * @param queryParams 参数
+     * 根据查询对象数据和该类上标注的注解进行生成, 生成的多个查询条件之间用And连接
+     * @param queryParams 参数对象
      * @param <T> 泛型
      * @return 查询器
      */
@@ -38,8 +38,8 @@ public class QueryGenerator {
     }
 
     /**
-     * 生成查询条件 (根据实体对象生成), 生成的多个查询条件之间用And连接
-     * @param queryParams 参数
+     * 根据查询对象数据，以及参数对象类和数据库Entity类上标注的注解进行生成, 生成的多个查询条件之间用And连接
+     * @param queryParams 参数对象
      * @param clazz 数据库Entity类
      * @param <T> 泛型
      * @return 查询器

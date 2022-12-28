@@ -14,10 +14,10 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.time.Duration;
 
-/**   
+/**
 * 跨域处理
-* @author xxm  
-* @date 2021/7/14 
+* @author xxm
+* @date 2021/7/14
 */
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
@@ -26,7 +26,7 @@ public class SpringCorsConfiguration {
     private final SpringProperties springProperties;
 
     @Bean
-    @ConditionalOnProperty(prefix = "bootx.common.spring.cors", value = "enable", havingValue = "true",matchIfMissing = true)
+    @ConditionalOnProperty(prefix = "bootx.common.spring.cors", value = "enable", havingValue = "true",matchIfMissing = false)
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
     public FilterRegistrationBean<CorsFilter> corsWebFilter() {
         SpringProperties.Cors cors = springProperties.getCors();

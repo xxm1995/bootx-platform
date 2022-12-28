@@ -47,7 +47,7 @@ public class SeqRange {
 	 * @return 下一个序列号，如果返回-1表示序列号分配完毕
 	 */
 	public long getAndIncrement() {
-		long currentValue = value.getAndIncrement();
+		long currentValue = value.getAndAdd(step);
 		if (currentValue > max) {
 			over = true;
 			return -1;

@@ -2,6 +2,8 @@ package cn.bootx.common.core.exception;
 
 import java.io.Serializable;
 
+import static cn.bootx.common.core.code.CommonErrorCode.SYSTEM_ERROR;
+
 /**
  * 致命异常基类
  * <p>
@@ -14,6 +16,10 @@ public class FatalException extends ErrorCodeRuntimeException implements Seriali
 
     public FatalException(int code, String message) {
         super(code, message);
+    }
+
+    public FatalException(String msg){
+        super(SYSTEM_ERROR,msg);
     }
 
     public FatalException(){

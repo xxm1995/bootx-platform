@@ -192,17 +192,17 @@ public class AnnotationQueryGenerator {
      * 获取字段对应的数据库字段名
      */
     public String getDatabaseFieldName(PropertyDescriptor paramDescriptor, Class<?> paramClass, PropertyDescriptor entityDescriptor, Class<?> entityClass, NamingCaseEnum namingCase){
+        // 读取注解， 判断有没有自定义字段名, 有自定义字段名直接返回
+        val queryParam = getQueryParamAnnotation(paramDescriptor, paramClass, entityDescriptor, entityClass);
+        if (queryParam.map(QueryParam::fieldName).isPresent()){
+            return queryParam.map(QueryParam::fieldName).get();
+        }
         switch (namingCase) {
             case LAMBDA:{
                 return MpUtil.getColumnName(entityDescriptor.getReadMethod(),entityClass);
             }
             case UNDER_LINE:{
                 return NamingCase.toUnderlineCase(paramDescriptor.getName());
-            }
-            case ANNOTATION:{
-                // 读取注解
-                val annotation = getQueryParamAnnotation(paramDescriptor, paramClass, entityDescriptor, entityClass);
-                return annotation.map(QueryParam::fieldName).orElse("");
             }
             case NONE: {
                 return paramDescriptor.getName();

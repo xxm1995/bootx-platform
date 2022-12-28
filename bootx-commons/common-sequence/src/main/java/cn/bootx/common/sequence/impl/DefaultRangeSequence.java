@@ -84,11 +84,4 @@ public class DefaultRangeSequence implements Sequence {
         return value;
     }
 
-    /**
-     * 下一个生成序号（带格式）
-     */
-    @Override
-    public String nextValue(String name) throws SeqException {
-        return String.valueOf(this.next(name));
-    }
 }

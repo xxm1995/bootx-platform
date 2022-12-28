@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -86,7 +85,7 @@ public class WebSocketDemo {
      */
     public void sendMessage(String message) {
         try {
-            ArrayList<Session> sessions = wsManager.getSessions();
+            List<Session> sessions = wsManager.getSessions();
             for (Session session : sessions) {
                 session.getBasicRemote().sendText(message);
             }
@@ -95,5 +94,4 @@ public class WebSocketDemo {
             log.error("服务端发送消息给客户端失败：", e);
         }
     }
-
 }

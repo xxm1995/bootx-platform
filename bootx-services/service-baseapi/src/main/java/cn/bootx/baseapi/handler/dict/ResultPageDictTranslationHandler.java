@@ -1,7 +1,7 @@
 package cn.bootx.baseapi.handler.dict;
 
 import cn.bootx.baseapi.core.dict.service.DictTranslationService;
-import cn.bootx.common.core.annotation.DictTranslation;
+import cn.bootx.common.core.annotation.TranslationResult;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.util.CollUtil;
 import cn.hutool.core.util.ClassUtil;
@@ -47,10 +47,10 @@ public class ResultPageDictTranslationHandler implements DictTranslationHandler{
 
     @SuppressWarnings("unchecked")
     @Override
-    public void translation(Object object, Type type, DictTranslation dictTranslation) {
+    public void translation(Object object, Type type, TranslationResult translationResult) {
         ResResult<IPage<?>> resResult = (ResResult<IPage<?>>) object;
         IPage<?> page = resResult.getData();
-        if (dictTranslation.convertType()== DictTranslation.ConvertType.OBJECT){
+        if (translationResult.convertType()== TranslationResult.ConvertType.OBJECT){
             List<?> records = page.getRecords();
             dictTranslationService.translation(records);
         } else {

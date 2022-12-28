@@ -1,6 +1,6 @@
 package cn.bootx.baseapi.handler.dict;
 
-import cn.bootx.common.core.annotation.DictTranslation;
+import cn.bootx.common.core.annotation.TranslationResult;
 
 import java.lang.reflect.Type;
 
@@ -22,7 +22,7 @@ public interface DictTranslationHandler {
     /**
      * 翻译
      */
-    void translation(Object object, Type type, DictTranslation dictTranslation);
+    void translation(Object object, Type type, TranslationResult translationResult);
 
 
 }

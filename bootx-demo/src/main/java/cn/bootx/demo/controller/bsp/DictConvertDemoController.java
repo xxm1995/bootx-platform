@@ -1,8 +1,8 @@
 package cn.bootx.demo.controller.bsp;
 
 import cn.bootx.baseapi.core.dict.service.DictTranslationService;
-import cn.bootx.common.core.annotation.Dict;
-import cn.bootx.common.core.annotation.DictTranslation;
+import cn.bootx.common.core.annotation.Translate;
+import cn.bootx.common.core.annotation.TranslationResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
@@ -34,7 +34,7 @@ public class DictConvertDemoController {
 
     @Operation(summary = "转换测试(对象吧)")
     @GetMapping("/convert")
-    @DictTranslation
+    @TranslationResult
     public ResResult<DictDemo> convert() {
         DictDemo dictDemo = new DictDemo()
                 .setSex("1")
@@ -46,7 +46,7 @@ public class DictConvertDemoController {
     }
     @Operation(summary = "转换测试(map)")
     @GetMapping("/c1")
-    @DictTranslation(convertType = DictTranslation.ConvertType.MAP)
+    @TranslationResult(convertType = TranslationResult.ConvertType.MAP)
     public ResResult<DictDemo> c1() {
         DictDemo dictDemo = new DictDemo()
                 .setSex("1")
@@ -60,14 +60,14 @@ public class DictConvertDemoController {
 
     @Operation(summary = "c2")
     @GetMapping("/c2")
-    @DictTranslation
+    @TranslationResult
     public String c2() {
         return "123";
     }
 
     @Operation(summary = "c4")
     @GetMapping("/c4")
-    @DictTranslation
+    @TranslationResult
     public ResResult<List<String>> c4() {
         return Res.ok(new ArrayList<>());
     }
@@ -78,14 +78,14 @@ public class DictConvertDemoController {
     public static class DictDemo extends MpBaseEntity {
 
         /** 性别 */
-        @Dict(dicCode = "Sex")
+        @Translate(dicCode = "Sex")
         private String sex;
 
         /** 三方系统类别 */
-        @Dict(dicCode = "SocialType")
+        @Translate(dicCode = "SocialType")
         private String socialType;
 
-        @DictTranslation
+        @TranslationResult
         private Person person;
 
     }
@@ -99,11 +99,11 @@ public class DictConvertDemoController {
         private Integer sexCode;
 
         /** 性别 */
-        @Dict(dicCode = "Sex",source = Fields.sexCode)
+        @Translate(dicCode = "Sex",source = Fields.sexCode)
         private String sexName;
 
         /** 三方系统类别 */
-        @Dict(dicCode = "DataScopePerm")
+        @Translate(dicCode = "DataScopePerm")
         private Integer dataScopePerm;
 
     }

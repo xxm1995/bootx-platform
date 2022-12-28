@@ -1,6 +1,6 @@
 package cn.bootx.baseapi.handler.dict;
 
-import cn.bootx.common.core.annotation.DictTranslation;
+import cn.bootx.common.core.annotation.TranslationResult;
 import lombok.RequiredArgsConstructor;
 import org.aopalliance.aop.Advice;
 import org.springframework.aop.Pointcut;
@@ -19,7 +19,7 @@ public class DictAnnotationAdvisor extends AbstractPointcutAdvisor {
 
     private final DictInterceptor dictInterceptor;
 
-    private final Pointcut pointcut = AnnotationMatchingPointcut.forMethodAnnotation(DictTranslation.class);
+    private final Pointcut pointcut = AnnotationMatchingPointcut.forMethodAnnotation(TranslationResult.class);
 
     /**
      * 切入点
