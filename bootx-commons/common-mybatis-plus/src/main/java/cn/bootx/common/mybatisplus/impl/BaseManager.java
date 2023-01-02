@@ -390,25 +390,9 @@ public class BaseManager<M extends BaseMapper<T>, T>{
         return lambdaQuery().eq(field,fieldValue).count();
     }
 
-    /**
-     * 根据主键进行删除
-     */
-    public boolean deleteById(Serializable id){
-        return SqlHelper.retBool(baseMapper.deleteById(id));
-    }
 
     /**
-     * 根据主键集合进行删除
-     */
-    public boolean deleteByIds(Collection<? extends Serializable> idList){
-        if (CollUtil.isNotEmpty(idList)) {
-            return  SqlHelper.retBool(baseMapper.deleteBatchIds(idList));
-        }
-        return false;
-    }
-
-    /**
-     * 根据指定字段值进行删除
+     * 根据指定字段值进行删除, 逻辑删除时不会记录更新时间和更新人
      * @param field 字段
      * @param fieldValue 字段数据
      * @return boolean
@@ -418,7 +402,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     }
 
     /**
-     * 根据指定字段值集合进行删除
+     * 根据指定字段值集合进行删除 逻辑删除时不会记录更新时间和更新人
      * @param field 字段
      * @param fieldValues 字段数据集合
      * @return boolean
@@ -428,5 +412,75 @@ public class BaseManager<M extends BaseMapper<T>, T>{
             return false;
         }
         return lambdaUpdate().in(field,fieldValues).remove();
+    }
+
+    /**
+     * 逻辑删除时会记录更新时间和更新人
+     */
+    public boolean deleteById(Serializable id) {
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
+        if (tableInfo.isWithLogicDelete() && tableInfo.isWithUpdateFill()) {
+            return deleteById(id, true);
+        }
+        return SqlHelper.retBool(getBaseMapper().deleteById(id));
+    }
+
+    /**
+     *逻辑删除时会记录更新时间和更新人
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteByIds(Collection<?> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return false;
+        }
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
+        if (tableInfo.isWithLogicDelete() && tableInfo.isWithUpdateFill()) {
+            return deleteBatchByIds(list, DEFAULT_BATCH_SIZE,true);
+        }
+        return SqlHelper.retBool(getBaseMapper().deleteBatchIds(list));
+    }
+
+    /**
+     * 删除
+     * @param id 主键
+     * @param useFill 是否启用填充(为true的情况,会将入参转换实体进行delete删除)
+     * @return 删除结果
+     */
+    private boolean deleteById(Serializable id, boolean useFill) {
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
+        if (useFill && tableInfo.isWithLogicDelete()) {
+            if (!getEntityClass().isAssignableFrom(id.getClass())) {
+                T instance = tableInfo.newInstance();
+                tableInfo.setPropertyValue(instance, tableInfo.getKeyProperty(), id);
+                return SqlHelper.retBool(getBaseMapper().deleteById(instance));
+            }
+        }
+        return SqlHelper.retBool(getBaseMapper().deleteById(id));
+    }
+
+    /**
+     * 批量删除(jdbc批量提交)
+     *
+     * @param list    主键ID或实体列表(主键ID类型必须与实体类型字段保持一致)
+     * @param useFill 是否启用填充(为true的情况,会将入参转换实体进行delete删除)
+     * @return 删除结果
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBatchByIds(Collection<?> list, int batchSize, boolean useFill) {
+        String sqlStatement = getSqlStatement(SqlMethod.DELETE_BY_ID);
+        TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
+        return executeBatch(list, batchSize, (sqlSession, e) -> {
+            if (useFill && tableInfo.isWithLogicDelete()) {
+                if (getEntityClass().isAssignableFrom(e.getClass())) {
+                    sqlSession.update(sqlStatement, e);
+                } else {
+                    T instance = tableInfo.newInstance();
+                    tableInfo.setPropertyValue(instance, tableInfo.getKeyProperty(), e);
+                    sqlSession.update(sqlStatement, instance);
+                }
+            } else {
+                sqlSession.update(sqlStatement, e);
+            }
+        });
     }
 }

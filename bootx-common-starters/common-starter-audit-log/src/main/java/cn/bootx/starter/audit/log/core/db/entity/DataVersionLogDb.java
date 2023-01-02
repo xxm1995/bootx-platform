@@ -23,6 +23,9 @@ import java.time.LocalDateTime;
 @TableName("starter_audit_data_version")
 public class DataVersionLogDb extends MpIdEntity implements EntityBaseFunction<DataVersionLogDto> {
 
+    @Schema(description = "表名称")
+    private String tableName;
+
     @Schema(description = "数据名称")
     private String dataName;
 

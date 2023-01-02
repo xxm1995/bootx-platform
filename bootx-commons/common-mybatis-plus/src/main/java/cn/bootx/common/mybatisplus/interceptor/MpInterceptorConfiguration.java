@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
 * 插件容器
-* @author xxm  
-* @date 2021/12/21 
+* @author xxm
+* @date 2021/12/21
 */
 @Configuration
 public class MpInterceptorConfiguration {
@@ -38,4 +38,5 @@ public class MpInterceptorConfiguration {
     public MpInterceptor blockAttackInnerInterceptor(){
         return new MpInterceptor(new BlockAttackInnerInterceptor(),2);
     }
+
 }

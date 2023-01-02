@@ -14,10 +14,10 @@ import java.util.HashMap;
 
 import static org.quartz.impl.jdbcjobstore.Constants.DEFAULT_TABLE_PREFIX;
 
-/**   
+/**
 * 支持配置文件自动提示
-* @author xxm  
-* @date 2021/12/2 
+* @author xxm
+* @date 2021/12/2
 */
 @Getter
 @Setter
@@ -30,6 +30,7 @@ public class QuartzProperties {
     /**  */
     private JobStore jobStore;
 
+    /** 线程池 */
     private ThreadPool threadPool;
 
 

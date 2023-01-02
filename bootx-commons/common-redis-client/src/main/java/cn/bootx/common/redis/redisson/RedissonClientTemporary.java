@@ -471,6 +471,11 @@ public class RedissonClientTemporary implements RedissonClient {
         return null;
     }
 
+    @Override
+    public RFencedLock getFencedLock(String s) {
+        return null;
+    }
+
     /**
      * @param rLocks
      * @return

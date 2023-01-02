@@ -19,6 +19,9 @@ public class DataVersionLogDto {
     @Schema(description = "主键")
     private Long id;
 
+    @Schema(description = "表名称")
+    private String tableName;
+
     @Schema(description = "数据名称")
     private String dataName;
 

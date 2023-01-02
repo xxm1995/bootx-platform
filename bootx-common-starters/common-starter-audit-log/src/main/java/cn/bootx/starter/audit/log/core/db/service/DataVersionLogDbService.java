@@ -37,14 +37,19 @@ public class DataVersionLogDbService implements DataVersionLogService {
     @Override
     @Transactional
     public void add(DataVersionLogParam param) {
-        int maxVersion = manager.getMaxVersion(param.getDataName(), param.getDataId());
+        int maxVersion = manager.getMaxVersion(param.getTableName(), param.getDataId());
         DataVersionLogDb dataVersionLog = new DataVersionLogDb()
+                .setTableName(param.getTableName())
                 .setDataName(param.getDataName())
                 .setDataId(param.getDataId())
-                .setDataContent(JacksonUtil.toJson(param))
                 .setCreator(SecurityUtil.getUserIdOrDefaultId())
                 .setCreateTime(LocalDateTime.now())
                 .setVersion(maxVersion+1);
+        if (param.getDataContent() instanceof String){
+            dataVersionLog.setDataContent((String) param.getDataContent());
+        } else {
+            dataVersionLog.setDataContent(JacksonUtil.toJson(param.getDataContent()));
+        }
         manager.save(dataVersionLog);
     }
 

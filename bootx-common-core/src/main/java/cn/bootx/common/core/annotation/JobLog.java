@@ -4,10 +4,10 @@ import java.lang.annotation.*;
 
 /**
 * 定时任务日志
-* @author xxm  
-* @date 2022/7/12 
+* @author xxm
+* @date 2022/7/12
 */
-@Target({ElementType.METHOD,ElementType.TYPE})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited

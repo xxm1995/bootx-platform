@@ -23,7 +23,9 @@ import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.expression.operators.relational.InExpression;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.schema.Table;
+import net.sf.jsqlparser.statement.delete.Delete;
 import net.sf.jsqlparser.statement.select.*;
+import net.sf.jsqlparser.statement.update.Update;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -31,7 +33,6 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
 
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -88,6 +89,31 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
             selectBodyList.forEach(s -> this.setWhere((PlainSelect) s));
         }
     }
+
+
+    /**
+     * update 语句处理
+     */
+    @Override
+    protected void processUpdate(Update update, int index, String sql, Object obj) {
+        Expression where = update.getWhere();
+        final Expression sqlSegment = this.dataScope(where);
+        if (null != sqlSegment) {
+            update.setWhere(sqlSegment);
+        }
+    }
+
+    /**
+     * delete 语句处理
+     */
+    @Override
+    protected void processDelete(Delete delete, int index, String sql, Object obj) {
+        final Expression sqlSegment = this.dataScope(delete.getWhere());
+        if (null != sqlSegment) {
+            delete.setWhere(sqlSegment);
+        }
+    }
+
 
     /**
      * 设置 where 条件

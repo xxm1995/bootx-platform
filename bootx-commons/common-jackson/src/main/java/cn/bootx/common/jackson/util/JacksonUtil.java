@@ -6,10 +6,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
-/**   
+import java.util.List;
+
+/**
 * jackson常用工具类封装
-* @author xxm  
-* @date 2020/11/29 
+* @author xxm
+* @date 2020/11/29
 */
 @Slf4j
 public class JacksonUtil {
@@ -66,6 +68,18 @@ public class JacksonUtil {
         }
     }
 
+    /**
+     * JSON字符串转为实体类对象列表，转换异常将被抛出
+     */
+    public static <T> List<T> toList(String content,Class<T> valueType){
+        try {
+            return objectMapper.readValue(content, objectMapper.getTypeFactory().constructCollectionType(List.class, valueType));
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage(),e);
+            throw new RuntimeException("json反序列化失败");
+        }
+    }
+
 
     /**
      * 对象序列化为json字符串,转换异常将被抛出(携带类型信息)
@@ -89,4 +103,18 @@ public class JacksonUtil {
             throw new RuntimeException("json反序列化失败");
         }
     }
+
+
+    /**
+     * JSON字符串转为实体类对象列表，转换异常将被抛出
+     */
+    public static <T> List<T> toTypeList(String content,Class<T> valueType){
+        try {
+            return typeObjectMapper.readValue(content, typeObjectMapper.getTypeFactory().constructCollectionType(List.class, valueType));
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage(),e);
+            throw new RuntimeException("json反序列化失败");
+        }
+    }
+
 }

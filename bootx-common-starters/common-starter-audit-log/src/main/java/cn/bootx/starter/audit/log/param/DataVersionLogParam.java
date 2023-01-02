@@ -4,14 +4,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
+/**
 * @author xxm
-* @date 2022/1/10 
+* @date 2022/1/10
 */
 @Data
 @Accessors(chain = true)
 @Schema(title = "数据版本日志")
 public class DataVersionLogParam {
+
+    @Schema(description = "表名称")
+    private String tableName;
 
     @Schema(description = "数据名称")
     private String dataName;

@@ -13,22 +13,23 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
 
-/**   
+/**
 *
-* @author xxm  
-* @date 2022/1/10 
+* @author xxm
+* @date 2022/1/10
 */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class DataVersionLogDbManager extends BaseManager<DataVersionLogDbMapper, DataVersionLogDb> {
     private final DataVersionLogDbMapper mapper;
+
     /**
      * 获取最新版本号
      */
     public int getMaxVersion(String dataName, String dataId) {
         Integer maxVersion = mapper.getMaxVersion(dataName, dataId);
-        return Objects.isNull(maxVersion)?0:maxVersion;
+        return Objects.isNull(maxVersion) ? 0 : maxVersion;
     }
 
     /**

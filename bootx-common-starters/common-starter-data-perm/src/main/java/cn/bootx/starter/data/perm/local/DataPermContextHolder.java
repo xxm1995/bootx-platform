@@ -8,7 +8,7 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 import java.util.Optional;
 
 /**   
-* 忽略数据上下文
+* 忽略鉴权数据上下文
 * @author xxm  
 * @date 2021/12/22 
 */

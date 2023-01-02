@@ -26,10 +26,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**   
+/**
 *
-* @author xxm  
-* @date 2022/1/10 
+* @author xxm
+* @date 2022/1/10
 */
 @Slf4j
 @Service
@@ -45,7 +45,7 @@ public class DataVersionLogMongoService implements DataVersionLogService {
     @Override
     public void add(DataVersionLogParam param) {
         // 查询数据最新版本
-        Criteria criteria = Criteria.where(DataVersionLogMongo.Fields.dataName).is(param.getDataName())
+        Criteria criteria = Criteria.where(DataVersionLogMongo.Fields.tableName).is(param.getDataName())
                 .and(DataVersionLogMongo.Fields.dataId).is(param.getDataId());
         Sort sort = Sort.by(Sort.Order.desc(DataVersionLogMongo.Fields.version));
         Query query = new Query().addCriteria(criteria).with(sort).limit(1);
@@ -53,12 +53,17 @@ public class DataVersionLogMongoService implements DataVersionLogService {
         Integer maxVersion = Optional.ofNullable(one).map(DataVersionLogMongo::getVersion).orElse(0);
 
         DataVersionLogMongo dataVersionLog = new DataVersionLogMongo()
+                .setTableName(param.getTableName())
                 .setDataName(param.getDataName())
                 .setDataId(param.getDataId())
-                .setDataContent(JacksonUtil.toJson(param))
                 .setCreator(SecurityUtil.getUserIdOrDefaultId())
                 .setCreateTime(LocalDateTime.now())
                 .setVersion(maxVersion+1);
+        if (param.getDataContent() instanceof String){
+            dataVersionLog.setDataContent((String) param.getDataContent());
+        } else {
+            dataVersionLog.setDataContent(JacksonUtil.toJson(param.getDataContent()));
+        }
         dataVersionLog.setId(IdUtil.getSnowflakeNextId());
         repository.save(dataVersionLog);
     }
