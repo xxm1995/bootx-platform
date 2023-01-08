@@ -1,5 +1,6 @@
 package cn.bootx.demo.core.perm.entity;
 
+import cn.bootx.common.core.annotation.DataVersionLog;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,6 +14,7 @@ import lombok.experimental.Accessors;
  * @author xxm
  * @date 2022/2/21
  */
+@DataVersionLog(title = "数据权限演示")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)

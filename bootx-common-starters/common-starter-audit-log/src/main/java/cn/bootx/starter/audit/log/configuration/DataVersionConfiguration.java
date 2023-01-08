@@ -1,8 +1,7 @@
 package cn.bootx.starter.audit.log.configuration;
 
 import cn.bootx.common.mybatisplus.interceptor.MpInterceptor;
-import cn.bootx.starter.audit.log.handler.DataVersionRecordHandler;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import cn.bootx.common.mybatisplus.extension.DataChangeRecorderInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +16,7 @@ public class DataVersionConfiguration {
      * 数据变更记录
      */
     @Bean
-    public MpInterceptor dataChangeRecorderInnerInterceptor(DataVersionRecordHandler dataVersionRecordHandler){
-        return new MpInterceptor(dataVersionRecordHandler,2);
+    public MpInterceptor dataChangeRecorderInnerInterceptor(DataChangeRecorderInnerInterceptor dataChangeRecorderInnerInterceptor){
+        return new MpInterceptor(dataChangeRecorderInnerInterceptor,2);
     }
 }
