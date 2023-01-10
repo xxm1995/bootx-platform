@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
 * 数据版本日志数据库实现
@@ -49,6 +50,13 @@ public class DataVersionLogDbService implements DataVersionLogService {
             dataVersionLog.setDataContent((String) param.getDataContent());
         } else {
             dataVersionLog.setDataContent(JacksonUtil.toJson(param.getDataContent()));
+        }
+        if (param.getChangeContent() instanceof String){
+            dataVersionLog.setDataContent((String) param.getChangeContent());
+        } else {
+            if (Objects.nonNull(param.getChangeContent())) {
+                dataVersionLog.setChangeContent(JacksonUtil.toJson(param.getDataContent()));
+            }
         }
         manager.save(dataVersionLog);
     }

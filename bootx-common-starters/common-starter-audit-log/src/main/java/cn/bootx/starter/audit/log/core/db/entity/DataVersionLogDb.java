@@ -35,6 +35,9 @@ public class DataVersionLogDb extends MpIdEntity implements EntityBaseFunction<D
     @Schema(description = "数据内容")
     private String dataContent;
 
+    @Schema(description = "本次变动的数据内容")
+    private Object changeContent;
+
     @Schema(description = "数据版本")
     private Integer version;
 

@@ -136,7 +136,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
     /**
      * 获取关联的 TableInfo
      */
-    private TableInfo getTableInfo(String tableName){
+    protected TableInfo getTableInfo(String tableName){
         for (TableInfo tableInfo : TableInfoHelper.getTableInfos()) {
             if (tableName.equalsIgnoreCase(tableInfo.getTableName())) {
                 return tableInfo;
@@ -158,7 +158,6 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         result.setOperation("insert");
         result.setTableName(insertStmt.getTable().getName());
         result.setRecordStatus(true);
-        TableInfo tableInfo = getTableInfo(result.getTableName());
         result.setChangedRecords(compareAndGetUpdatedColumnDatas(result.getTableName(), boundSql, insertStmt, null));
         return result;
     }

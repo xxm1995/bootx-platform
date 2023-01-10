@@ -24,4 +24,7 @@ public class DataVersionLogParam {
 
     @Schema(description = "数据内容对象")
     private Object dataContent;
+
+    @Schema(description = "本次变动的数据内容")
+    private Object changeContent;
 }

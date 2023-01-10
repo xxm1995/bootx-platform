@@ -1,14 +1,13 @@
 package cn.bootx.starter.audit.log.core.mongo.entity;
 
 import cn.bootx.common.core.function.EntityBaseFunction;
-import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.starter.audit.log.core.mongo.convert.LogConvert;
 import cn.bootx.starter.audit.log.dto.DataVersionLogDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldNameConstants;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -18,12 +17,14 @@ import java.time.LocalDateTime;
 * @author xxm
 * @date 2022/1/10
 */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
 @Document("starter_audit_data_version")
-public class DataVersionLogMongo extends MpIdEntity implements EntityBaseFunction<DataVersionLogDto> {
+public class DataVersionLogMongo implements EntityBaseFunction<DataVersionLogDto> {
+
+    @Id
+    private Long id;
 
     @Schema(description = "表名称")
     private String tableName;
@@ -36,6 +37,9 @@ public class DataVersionLogMongo extends MpIdEntity implements EntityBaseFunctio
 
     @Schema(description = "数据内容")
     private String dataContent;
+
+    @Schema(description = "本次变动的数据内容")
+    private Object changeContent;
 
     @Schema(description = "数据版本")
     private Integer version;

@@ -2,7 +2,9 @@ package cn.bootx.starter.audit.log.handler;
 
 import cn.bootx.common.core.annotation.DataVersionLog;
 import cn.bootx.common.mybatisplus.extension.DataChangeRecorderInnerInterceptor;
+import cn.bootx.starter.audit.log.param.DataVersionLogParam;
 import cn.bootx.starter.audit.log.service.DataVersionLogService;
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -35,22 +37,37 @@ public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor
             // 原始数据
             List<DataColumnChangeResult> originalColumns = Optional.ofNullable(changedRecord.getOriginalColumns())
                     .orElse(new ArrayList<>(0));
-            Map<String,Object> map = new HashMap<>();
+            Map<String,Object> dataRecord = new HashMap<>();
+            Map<String,Object> updateRecord = new HashMap<>();
             // 遍历原始数据的所有字段
             for (DataColumnChangeResult originalColumn : originalColumns) {
                 System.out.println(originalColumn.getColumnName()+":"+originalColumn.getOriginalValue());
-                map.put(originalColumn.getColumnName(),originalColumn.getOriginalValue());
+                dataRecord.put(originalColumn.getColumnName(),originalColumn.getOriginalValue());
             }
             // 用新数据进行替换
             List<DataColumnChangeResult> updatedColumns = Optional.ofNullable(changedRecord.getUpdatedColumns())
                     .orElse(new ArrayList<>(0));
             for (DataColumnChangeResult updatedColumn : updatedColumns) {
-                map.put(updatedColumn.getColumnName(),updatedColumn.getUpdateValue());
+                dataRecord.put(updatedColumn.getColumnName(),updatedColumn.getUpdateValue());
+                updateRecord.put(updatedColumn.getColumnName(),updatedColumn.getUpdateValue());
             }
-            // 主键
             Object pkColumnVal = changedRecord.getPkColumnVal();
-            System.out.println(map);
-            System.out.println(pkColumnVal);
+            // insert手动获取下主键值
+            if ("insert".equals(operationResult.getOperation())){
+                String keyProperty = Optional.ofNullable(this.getTableInfo(operationResult.getTableName()))
+                        .map(TableInfo::getKeyProperty)
+                        .map(String::toUpperCase)
+                        .orElse(null);
+                pkColumnVal = dataRecord.get(keyProperty);
+            }
+            // 保存记录
+            DataVersionLogParam dataVersionLogParam = new DataVersionLogParam()
+                    .setDataId(pkColumnVal.toString())
+                    .setDataName(annotation.title())
+                    .setDataContent(dataRecord)
+                    .setChangeContent(updateRecord)
+                    .setTableName(operationResult.getTableName());
+            dataVersionLogService.add(dataVersionLogParam);
         }
     }
 }

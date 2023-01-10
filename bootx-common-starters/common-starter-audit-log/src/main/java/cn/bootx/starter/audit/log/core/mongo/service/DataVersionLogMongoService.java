@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,13 @@ public class DataVersionLogMongoService implements DataVersionLogService {
             dataVersionLog.setDataContent((String) param.getDataContent());
         } else {
             dataVersionLog.setDataContent(JacksonUtil.toJson(param.getDataContent()));
+        }
+        if (param.getChangeContent() instanceof String){
+            dataVersionLog.setDataContent((String) param.getChangeContent());
+        } else {
+            if (Objects.nonNull(param.getChangeContent())) {
+                dataVersionLog.setChangeContent(JacksonUtil.toJson(param.getDataContent()));
+            }
         }
         dataVersionLog.setId(IdUtil.getSnowflakeNextId());
         repository.save(dataVersionLog);
