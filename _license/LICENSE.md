@@ -40,4 +40,4 @@ Knife4j是一个集Swagger2 和 OpenAPI3为一体的增强解决方案：
 https://gitee.com/xiaoym/knife4j
 
 easy_trans 一个注解搞定数据翻译：
-https://gitee.com/fhs-opensource/easy_trans
+https://gitee.com/dromara/easy_trans

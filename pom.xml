@@ -248,6 +248,18 @@
                 <artifactId>common-lock</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 自动建表 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-actable</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
+            <!-- 数据翻译 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-data-translate</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
 
             <!-- starters -->
             <!-- 权限认证 -->

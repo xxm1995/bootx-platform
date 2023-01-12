@@ -3,7 +3,6 @@ package cn.bootx.common.actable.dao.system;
 import cn.bootx.common.actable.command.SysMysqlColumns;
 import cn.bootx.common.actable.command.SysMysqlTable;
 import cn.bootx.common.actable.command.TableConfig;
-import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +17,7 @@ import java.util.Set;
  *
  */
 @Mapper
-@InterceptorIgnore(tenantLine = "true")
+//@InterceptorIgnore(tenantLine = "true")
 public interface CreateMysqlTablesMapper {
 
 	/**

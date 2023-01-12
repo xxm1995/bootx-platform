@@ -74,6 +74,13 @@ spring:
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
 
+actable:
+  table:
+    auto: update
+  model:
+    pack: cn.bootx.**.entity
+  database:
+    type: mysql
 # 开发时显示debug日志
 logging:
   level:
@@ -86,7 +93,7 @@ bootx:
     swagger:
       enabled: true
       author: bootx
-      version: 1.1.1
+      version: 1.1.9
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
       # basic认证

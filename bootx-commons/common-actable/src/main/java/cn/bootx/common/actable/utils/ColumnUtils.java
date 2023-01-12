@@ -265,11 +265,8 @@ public class ColumnUtils {
 
     public static boolean hasTableAnnotation(Class<?> clasz){
         Table tableName = clasz.getAnnotation(Table.class);
-        TableName tableNamePlus = clasz.getAnnotation(TableName.class);
-        if (tableName == null && tableNamePlus == null){
-            return false;
-        }
-        return true;
+//        TableName tableNamePlus = clasz.getAnnotation(TableName.class);
+        return tableName != null;
     }
 
     public static boolean hasIgnoreTableAnnotation(Class<?> clasz){

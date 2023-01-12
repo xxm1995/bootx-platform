@@ -31,7 +31,7 @@ public class ClassScaner implements ResourceLoaderAware {
     private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
     private MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(this.resourcePatternResolver);
 
-    public static Set<Class> scan(String[] basePackages,
+    public static Set<Class<?>> scan(String[] basePackages,
                                   Class<? extends Annotation>... annotations) {
         ClassScaner cs = new ClassScaner();
 
@@ -41,13 +41,13 @@ public class ClassScaner implements ResourceLoaderAware {
             }
         }
 
-        Set<Class> classes = new HashSet<Class>();
+        Set<Class<?>> classes = new HashSet<>();
         for (String s : basePackages)
             classes.addAll(cs.doScan(s));
         return classes;
     }
 
-    public static Set<Class> scan(String basePackages, Class<? extends Annotation>... annotations) {
+    public static Set<Class<?>> scan(String basePackages, Class<? extends Annotation>... annotations) {
         return ClassScaner.scan(StringUtils.tokenizeToStringArray(basePackages, ",; \t\n"), annotations);
     }
 
@@ -75,8 +75,8 @@ public class ClassScaner implements ResourceLoaderAware {
         this.excludeFilters.clear();
     }
 
-    public Set<Class> doScan(String basePackage) {
-        Set<Class> classes = new HashSet<Class>();
+    public Set<Class<?>> doScan(String basePackage) {
+        Set<Class<?>> classes = new HashSet<>();
         try {
             String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
                     + org.springframework.util.ClassUtils
@@ -86,8 +86,7 @@ public class ClassScaner implements ResourceLoaderAware {
             Resource[] resources = this.resourcePatternResolver
                     .getResources(packageSearchPath);
 
-            for (int i = 0; i < resources.length; i++) {
-                Resource resource = resources[i];
+            for (Resource resource : resources) {
                 if (resource.isReadable()) {
                     MetadataReader metadataReader = this.metadataReaderFactory.getMetadataReader(resource);
                     if ((includeFilters.size() == 0 && excludeFilters.size() == 0)

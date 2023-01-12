@@ -57,5 +57,9 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-quartz</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-actable</artifactId>
+        </dependency>
     </dependencies>
 </project>

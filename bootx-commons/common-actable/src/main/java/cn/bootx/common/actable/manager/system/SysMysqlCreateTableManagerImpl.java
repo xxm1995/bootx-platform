@@ -1,5 +1,6 @@
 package cn.bootx.common.actable.manager.system;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
 import cn.bootx.common.actable.annotation.IgnoreUpdate;
 import cn.bootx.common.actable.annotation.Index;
@@ -28,14 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * 项目启动时自动扫描配置的目录中的model，根据配置的规则自动创建或更新表 该逻辑只适用于mysql，其他数据库尚且需要另外扩展，因为sql的语法不同
@@ -89,7 +84,7 @@ public class SysMysqlCreateTableManagerImpl implements SysMysqlCreateTableManage
 		String[] packs = pack.split(",|;");
 
 		// 从包package中获取所有的Class
-		Set<Class> classes = ClassScaner.scan(packs, Table.class, TableName.class);
+		Set<Class<?>> classes = ClassScaner.scan(packs, Table.class, TableName.class);
 
 		// 初始化用于存储各种操作表结构的容器
 		Map<String, Map<String, TableConfig>> baseTableMap = initTableMap();
@@ -102,7 +97,7 @@ public class SysMysqlCreateTableManagerImpl implements SysMysqlCreateTableManage
 
 			// 没有打注解不需要创建表 或者配置了忽略建表的注解
 			if (!ColumnUtils.hasTableAnnotation(clas) || ColumnUtils.hasIgnoreTableAnnotation(clas)) {
-				log.warn("{}，没有@Table或配置了@IgnoreTable注解直接跳过", clas.getName());
+				log.debug("{}，没有@Table或配置了@IgnoreTable注解直接跳过", clas.getName());
 				continue;
 			}
 			// 禁止出现重名表
@@ -129,25 +124,25 @@ public class SysMysqlCreateTableManagerImpl implements SysMysqlCreateTableManage
 	 * @return 初始化map
 	 */
 	private Map<String, Map<String, TableConfig>> initTableMap() {
-		Map<String, Map<String, TableConfig>> baseTableMap = new HashMap<String, Map<String, TableConfig>>();
+		Map<String, Map<String, TableConfig>> baseTableMap = new HashMap<>();
 		// 1.用于存需要创建的表名+（字段结构/表信息）
-		baseTableMap.put(Constants.NEW_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.NEW_TABLE_MAP, new HashMap<>());
 		// 2.用于存需要更新字段类型等的表名+结构
-		baseTableMap.put(Constants.MODIFY_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.MODIFY_TABLE_MAP, new HashMap<>());
 		// 3.用于存需要增加字段的表名+结构
-		baseTableMap.put(Constants.ADD_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.ADD_TABLE_MAP, new HashMap<>());
 		// 4.用于存需要删除字段的表名+结构
-		baseTableMap.put(Constants.REMOVE_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.REMOVE_TABLE_MAP, new HashMap<>());
 		// 5.用于存需要删除主键的表名+结构
-		baseTableMap.put(Constants.DROPKEY_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.DROPKEY_TABLE_MAP, new HashMap<>());
 		// 6.用于存需要删除唯一约束的表名+结构
-		baseTableMap.put(Constants.DROPINDEXANDUNIQUE_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.DROPINDEXANDUNIQUE_TABLE_MAP, new HashMap<>());
 		// 7.用于存需要增加的索引
-		baseTableMap.put(Constants.ADDINDEX_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.ADDINDEX_TABLE_MAP, new HashMap<>());
 		// 8.用于存需要增加的唯一约束
-		baseTableMap.put(Constants.ADDUNIQUE_TABLE_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.ADDUNIQUE_TABLE_MAP, new HashMap<>());
 		// 9.更新表注释
-		baseTableMap.put(Constants.MODIFY_TABLE_PROPERTY_MAP, new HashMap<String, TableConfig>());
+		baseTableMap.put(Constants.MODIFY_TABLE_PROPERTY_MAP, new HashMap<>());
 		return baseTableMap;
 	}
 
@@ -212,9 +207,9 @@ public class SysMysqlCreateTableManagerImpl implements SysMysqlCreateTableManage
 			baseTableMap.get(Constants.ADDUNIQUE_TABLE_MAP).put(tableName, new TableConfig(getAddUniqueList(null, allFieldList)));
 			return;
 		}else{
-			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map = new HashMap<>();
 			// 判断表注释是否要更新
-			if (!StringUtils.isEmpty(tableComment) && !tableComment.equals(table.getTable_comment())){
+			if (StrUtil.isNotBlank(tableComment) && !Objects.equals(tableComment,table.getTable_comment())){
 				map.put(SysMysqlTable.TABLE_COMMENT_KEY, tableComment);
 			}
 			// 判断表字符集是否要更新
