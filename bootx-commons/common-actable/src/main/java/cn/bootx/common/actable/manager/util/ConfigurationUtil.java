@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.lang.reflect.Method;
 import java.util.Properties;
 
-
 @Component
 public class ConfigurationUtil implements ApplicationContextAware {
 
