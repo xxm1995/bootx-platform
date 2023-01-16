@@ -19,16 +19,26 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * 行工具类
+ * @author xxm
+ * @date 2023/1/16
+ */
 public class ColumnUtils {
 
-    public static final String DEFAULTVALUE = "DEFAULT";
+    /** 默认值 */
+    public static final String DEFAULT_VALUE = "DEFAULT";
+    /** SQL 转义字符 */
     public static final String SQL_ESCAPE_CHARACTER = "`";
 
-    public static String getTableName(Class<?> clasz){
-        Table tableName = clasz.getAnnotation(Table.class);
-        TableName tableNamePlus = clasz.getAnnotation(TableName.class);
-        EnableTimeSuffix enableTimeSuffix = clasz.getAnnotation(EnableTimeSuffix.class);
-        if (!hasTableAnnotation(clasz)){
+    /**
+     * 获取表名称
+     */
+    public static String getTableName(Class<?> clazz){
+        Table tableName = clazz.getAnnotation(Table.class);
+        TableName tableNamePlus = clazz.getAnnotation(TableName.class);
+        EnableTimeSuffix enableTimeSuffix = clazz.getAnnotation(EnableTimeSuffix.class);
+        if (!hasTableAnnotation(clazz)){
             return null;
         }
         String finalTableName = "";
@@ -43,7 +53,7 @@ public class ColumnUtils {
         }
         if (StrUtil.isBlank(finalTableName)) {
             // 都为空时采用类名按照驼峰格式转会为表名
-            finalTableName = getBuildLowerName(clasz.getSimpleName());
+            finalTableName = getBuildLowerName(clazz.getSimpleName());
         }
         if(null != enableTimeSuffix && enableTimeSuffix.value()){
             finalTableName = appendTimeSuffix(finalTableName, enableTimeSuffix.pattern());
@@ -51,10 +61,13 @@ public class ColumnUtils {
         return finalTableName;
     }
 
-    public static String getTableComment(Class<?> clasz){
-        Table table = clasz.getAnnotation(Table.class);
-        TableComment tableComment = clasz.getAnnotation(TableComment.class);
-        if (!hasTableAnnotation(clasz)){
+    /**
+     * 获取表备注
+     */
+    public static String getTableComment(Class<?> clazz){
+        Table table = clazz.getAnnotation(Table.class);
+        TableComment tableComment = clazz.getAnnotation(TableComment.class);
+        if (!hasTableAnnotation(clazz)){
             return "";
         }
         if (table != null && StrUtil.isNotBlank(table.comment())){
@@ -66,10 +79,13 @@ public class ColumnUtils {
         return "";
     }
 
-    public static MySqlCharsetConstant getTableCharset(Class<?> clasz){
-        Table table = clasz.getAnnotation(Table.class);
-        TableCharset charset = clasz.getAnnotation(TableCharset.class);
-        if (!hasTableAnnotation(clasz)){
+    /**
+     * 获取表字符集
+     */
+    public static MySqlCharsetConstant getTableCharset(Class<?> clazz){
+        Table table = clazz.getAnnotation(Table.class);
+        TableCharset charset = clazz.getAnnotation(TableCharset.class);
+        if (!hasTableAnnotation(clazz)){
             return null;
         }
         if (table != null && table.charset() != MySqlCharsetConstant.DEFAULT){
@@ -81,10 +97,13 @@ public class ColumnUtils {
         return null;
     }
 
-    public static MySqlEngineConstant getTableEngine(Class<?> clasz){
-        Table table = clasz.getAnnotation(Table.class);
-        TableEngine engine = clasz.getAnnotation(TableEngine.class);
-        if (!hasTableAnnotation(clasz)){
+    /**
+     * 获取表引擎类型
+     */
+    public static MySqlEngineConstant getTableEngine(Class<?> clazz){
+        Table table = clazz.getAnnotation(Table.class);
+        TableEngine engine = clazz.getAnnotation(TableEngine.class);
+        if (!hasTableAnnotation(clazz)){
             return null;
         }
         if (table != null && table.engine() != MySqlEngineConstant.DEFAULT){
@@ -96,11 +115,15 @@ public class ColumnUtils {
         return null;
     }
 
-    public static String getColumnName(Field field, Class<?> clasz){
-        Column column = getColumn(field, clasz);
+    /**
+     * 获取行名称
+     * @return
+     */
+    public static String getColumnName(Field field, Class<?> clazz){
+        Column column = getColumn(field, clazz);
         TableField tableField = field.getAnnotation(TableField.class);
         TableId tableId = field.getAnnotation(TableId.class);
-        if(!hasColumnAnnotation(field, clasz)){
+        if(!hasColumnAnnotation(field, clazz)){
             return null;
         }
         if (column != null && StrUtil.isNotBlank(column.name())){
@@ -118,14 +141,20 @@ public class ColumnUtils {
         return getBuildLowerName(field.getName()).replace(SQL_ESCAPE_CHARACTER, "");
     }
 
+    /**
+     * 获取构建小写表名称
+     */
     private static String getBuildLowerName(String name) {
         return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE,
                 name).toLowerCase();
     }
 
-    public static boolean isKey(Field field, Class<?> clasz){
-        Column column = getColumn(field, clasz);
-        if(!hasColumnAnnotation(field,clasz)){
+    /**
+     * 是否是主键
+     */
+    public static boolean isKey(Field field, Class<?> clazz){
+        Column column = getColumn(field, clazz);
+        if(!hasColumnAnnotation(field,clazz)){
             return false;
         }
         IsKey isKey = field.getAnnotation(IsKey.class);
@@ -140,9 +169,12 @@ public class ColumnUtils {
         return false;
     }
 
-    public static boolean isAutoIncrement(Field field, Class<?> clasz){
-        Column column = getColumn(field, clasz);
-        if(!hasColumnAnnotation(field, clasz)){
+    /**
+     * 是否是自增主键
+     */
+    public static boolean isAutoIncrement(Field field, Class<?> clazz){
+        Column column = getColumn(field, clazz);
+        if(!hasColumnAnnotation(field, clazz)){
             return false;
         }
         IsAutoIncrement isAutoIncrement = field.getAnnotation(IsAutoIncrement.class);
@@ -154,14 +186,20 @@ public class ColumnUtils {
         return false;
     }
 
-    public static Boolean isNull(Field field, Class<?> clasz){
-        Column column = getColumn(field, clasz);
-        if(!hasColumnAnnotation(field,clasz)){
+    /**
+     *
+     * @param field
+     * @param clazz
+     * @return
+     */
+    public static Boolean isNull(Field field, Class<?> clazz){
+        Column column = getColumn(field, clazz);
+        if(!hasColumnAnnotation(field,clazz)){
             return true;
         }
-        boolean iskey = isKey(field, clasz);
+        boolean isKey = isKey(field, clazz);
         // 主键默认为非空
-        if (iskey){
+        if (isKey){
             return false;
         }
 
@@ -174,10 +212,13 @@ public class ColumnUtils {
         return true;
     }
 
-    public static String getComment(Field field, Class<?> clasz){
-        Column column = getColumn(field, clasz);
+    /**
+     * 获取字段的备注
+     */
+    public static String getComment(Field field, Class<?> clazz){
+        Column column = getColumn(field, clazz);
         ColumnComment comment = field.getAnnotation(ColumnComment.class);
-        if(!hasColumnAnnotation(field,clasz)){
+        if(!hasColumnAnnotation(field,clazz)){
             return null;
         }
         if (column != null && StrUtil.isNotBlank(column.comment())){
@@ -189,13 +230,16 @@ public class ColumnUtils {
         return "";
     }
 
-    public static String getDefaultValue(Field field, Class<?> clasz){
-        Column column = getColumn(field,clasz);
+    /**
+     * 获取默认值
+     */
+    public static String getDefaultValue(Field field, Class<?> clazz){
+        Column column = getColumn(field,clazz);
         DefaultValue defaultValue = field.getAnnotation(DefaultValue.class);
-        if(!hasColumnAnnotation(field,clasz)){
+        if(!hasColumnAnnotation(field,clazz)){
             return null;
         }
-        if (column != null && !DEFAULTVALUE.equals(column.defaultValue())){
+        if (column != null && !DEFAULT_VALUE.equals(column.defaultValue())){
             return column.defaultValue();
         }
         if (defaultValue != null){
@@ -204,7 +248,10 @@ public class ColumnUtils {
         return null;
     }
 
-    public static boolean getDefaultValueNative(Field field, Class<?> clasz){
+    /**
+     * 获取 开启默认值原生模式
+     */
+    public static boolean getDefaultValueNative(Field field, Class<?> clazz){
         IsNativeDefValue isNativeDefValue = field.getAnnotation(IsNativeDefValue.class);
         if (isNativeDefValue != null){
             return isNativeDefValue.value();
@@ -218,10 +265,13 @@ public class ColumnUtils {
         return true;
     }
 
-    public static MySqlTypeAndLength getMySqlTypeAndLength(Field field, Class<?> clasz){
-        Column column = getColumn(field,clasz);
+    /**
+     * Mysql 类型和长度
+     */
+    public static MySqlTypeAndLength getMySqlTypeAndLength(Field field, Class<?> clazz){
+        Column column = getColumn(field,clazz);
         ColumnType type = field.getAnnotation(ColumnType.class);
-        if(!hasColumnAnnotation(field, clasz)){
+        if(!hasColumnAnnotation(field, clazz)){
             throw new RuntimeException("字段名：" + field.getName() +"没有字段标识的注解，异常抛出！");
         }
         if (column != null && column.type() != MySqlTypeConstant.DEFAULT){
@@ -247,6 +297,9 @@ public class ColumnUtils {
         return buildMySqlTypeAndLength(field, sqlType, 255, 0);
     }
 
+    /**
+     * 构建 Mysql 类型和长度
+     */
     private static MySqlTypeAndLength buildMySqlTypeAndLength(Field field, String type, int length, int decimalLength) {
         MySqlTypeAndLength mySqlTypeAndLength = MySqlTypeConstant.mySqlTypeAndLengthMap.get(type);
         if (mySqlTypeAndLength == null) {
@@ -263,25 +316,30 @@ public class ColumnUtils {
         return targetMySqlTypeAndLength;
     }
 
-    public static boolean hasTableAnnotation(Class<?> clasz){
-        Table tableName = clasz.getAnnotation(Table.class);
-//        TableName tableNamePlus = clasz.getAnnotation(TableName.class);
+    /**
+     * 是否有 Table 注解
+     */
+    public static boolean hasTableAnnotation(Class<?> clazz){
+        Table tableName = clazz.getAnnotation(Table.class);
         return tableName != null;
     }
 
-    public static boolean hasIgnoreTableAnnotation(Class<?> clasz){
-        IgnoreTable ignoreTable = clasz.getAnnotation(IgnoreTable.class);
-        if (ignoreTable == null){
-            return false;
-        }
-        return true;
+    /**
+     * 具有忽略表注释
+     */
+    public static boolean hasIgnoreTableAnnotation(Class<?> clazz){
+        IgnoreTable ignoreTable = clazz.getAnnotation(IgnoreTable.class);
+        return ignoreTable != null;
     }
 
-    public static boolean hasColumnAnnotation(Field field, Class<?> clasz){
+    /**
+     * 具有 列注释
+     */
+    public static boolean hasColumnAnnotation(Field field, Class<?> clazz){
         // 是否开启simple模式
-        boolean isSimple = isSimple(clasz);
+        boolean isSimple = isSimple(clazz);
         // 不参与建表的字段
-        String[] excludeFields = excludeFields(clasz);
+        String[] excludeFields = excludeFields(clazz);
         // 当前属性名在排除建表的字段内
         if (Arrays.asList(excludeFields).contains(field.getName())){
             return false;
@@ -297,9 +355,12 @@ public class ColumnUtils {
         return true;
     }
 
-    private static Column getColumn(Field field, Class<?> clasz){
+    /**
+     * 获取列注解
+     */
+    private static Column getColumn(Field field, Class<?> clazz){
         // 不参与建表的字段
-        String[] excludeFields = excludeFields(clasz);
+        String[] excludeFields = excludeFields(clazz);
         if (Arrays.asList(excludeFields).contains(field.getName())){
             return null;
         }
@@ -308,7 +369,7 @@ public class ColumnUtils {
             return column;
         }
         // 是否开启simple模式
-        boolean isSimple = isSimple(clasz);
+        boolean isSimple = isSimple(clazz);
         // 开启了simple模式
         if (isSimple){
             return new ColumnImpl();
@@ -316,18 +377,24 @@ public class ColumnUtils {
         return null;
     }
 
-    private static String[] excludeFields(Class<?> clasz) {
+    /**
+     * 排除字段
+     */
+    private static String[] excludeFields(Class<?> clazz) {
         String[] excludeFields = {};
-        Table tableName = clasz.getAnnotation(Table.class);
+        Table tableName = clazz.getAnnotation(Table.class);
         if (tableName != null){
             excludeFields = tableName.excludeFields();
         }
         return excludeFields;
     }
 
-    private static boolean isSimple(Class<?> clasz) {
+    /**
+     * 是否是简单模式
+     */
+    private static boolean isSimple(Class<?> clazz) {
         boolean isSimple = false;
-        Table tableName = clasz.getAnnotation(Table.class);
+        Table tableName = clazz.getAnnotation(Table.class);
         if (tableName != null){
             isSimple = tableName.isSimple();
         }
@@ -343,7 +410,7 @@ public class ColumnUtils {
      * @return
      */
     public static String appendTimeSuffix(String tableName, String pattern) {
-        String suffix = "";
+        String suffix;
         try {
             suffix = DateFormatUtils.format(new Date(), pattern);
         } catch (Exception e) {

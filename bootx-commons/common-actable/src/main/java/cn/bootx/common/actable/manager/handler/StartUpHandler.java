@@ -1,9 +1,9 @@
 package cn.bootx.common.actable.manager.handler;
 
 
-import cn.bootx.common.actable.constants.Constants;
+import cn.bootx.common.actable.configuration.ActableProperties;
+import cn.bootx.common.actable.constants.DatabaseType;
 import cn.bootx.common.actable.manager.system.SysMysqlCreateTableManager;
-import cn.bootx.common.actable.manager.util.ConfigurationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,24 +20,7 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 public class StartUpHandler {
 
-
-    private final ConfigurationUtil springContextUtil;
-
-    /** 数据库类型：mysql */
-    public static String MYSQL = "mysql";
-
-    /** 数据库类型：oracle */
-    public static String ORACLE = "oracle";
-
-    /** 数据库类型：sqlserver */
-    public static String SQLSERVER = "sqlserver";
-
-    /** 数据库类型：postgresql */
-    public static String POSTGRESQL = "postgresql";
-
-    /** 数据库类型  */
-    private static String databaseType = null;
-
+    private final ActableProperties actableProperties;
     private final SysMysqlCreateTableManager sysMysqlCreateTableManager;
 
     /**
@@ -46,17 +29,16 @@ public class StartUpHandler {
     @PostConstruct
     public void startHandler() {
         // 获取配置信息
-        databaseType = springContextUtil.getConfig(Constants.DATABASE_TYPE_KEY) == null ? MYSQL : springContextUtil.getConfig(Constants.DATABASE_TYPE_KEY);
-
+        DatabaseType databaseType = actableProperties.getDatabaseType();
         // 执行mysql的处理方法
-        if (MYSQL.equals(databaseType)) {
+        if (DatabaseType.MYSQL == databaseType) {
             log.info("databaseType=mysql，开始执行mysql的处理方法");
             sysMysqlCreateTableManager.createMysqlTable();
-        }else if (ORACLE.equals(databaseType)) {
+        }else if (DatabaseType.ORACLE == databaseType) {
             log.info("databaseType=oracle，开始执行oracle的处理方法");
-        }else if (SQLSERVER.equals(databaseType)) {
+        }else if (DatabaseType.SQLSERVER == databaseType) {
             log.info("databaseType=sqlserver，开始执行sqlserver的处理方法");
-        }else if (POSTGRESQL.equals(databaseType)) {
+        }else if (DatabaseType.POSTGRESQL == databaseType) {
             log.info("databaseType=postgresql，开始执行postgresql的处理方法");
         }else{
             log.info("没有找到符合条件的处理方法！");

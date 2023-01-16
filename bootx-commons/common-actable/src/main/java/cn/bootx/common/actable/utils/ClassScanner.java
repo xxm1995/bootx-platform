@@ -12,7 +12,7 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.core.type.filter.TypeFilter;
-import org.springframework.util.StringUtils;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.SystemPropertyUtils;
 
 import java.io.IOException;
@@ -22,37 +22,34 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-public class ClassScaner implements ResourceLoaderAware {
+/**
+ * 类扫描器
+ * @author xxm
+ * @date 2023/1/16
+ */
+public class ClassScanner implements ResourceLoaderAware {
 
     //保存过滤规则要排除的注解
-    private final List<TypeFilter> includeFilters = new LinkedList<TypeFilter>();
-    private final List<TypeFilter> excludeFilters = new LinkedList<TypeFilter>();
+    private final List<TypeFilter> includeFilters = new LinkedList<>();
+    private final List<TypeFilter> excludeFilters = new LinkedList<>();
 
     private ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
     private MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory(this.resourcePatternResolver);
 
-    public static Set<Class<?>> scan(String[] basePackages,
-                                  Class<? extends Annotation>... annotations) {
-        ClassScaner cs = new ClassScaner();
+    public static Set<Class<?>> scan(String[] basePackages, Class<? extends Annotation>... annotations) {
+        ClassScanner cs = new ClassScanner();
 
-        if(annotations != null && annotations.length > 0) {
-            for (Class anno : annotations) {
+        if(annotations != null) {
+            for (Class<? extends Annotation> anno : annotations) {
                 cs.addIncludeFilter(new AnnotationTypeFilter(anno));
             }
         }
 
         Set<Class<?>> classes = new HashSet<>();
-        for (String s : basePackages)
-            classes.addAll(cs.doScan(s));
+        for (String basePackage : basePackages) {
+            classes.addAll(cs.doScan(basePackage));
+        }
         return classes;
-    }
-
-    public static Set<Class<?>> scan(String basePackages, Class<? extends Annotation>... annotations) {
-        return ClassScaner.scan(StringUtils.tokenizeToStringArray(basePackages, ",; \t\n"), annotations);
-    }
-
-    public final ResourceLoader getResourceLoader() {
-        return this.resourcePatternResolver;
     }
 
     public void setResourceLoader(ResourceLoader resourceLoader) {
@@ -66,21 +63,11 @@ public class ClassScaner implements ResourceLoaderAware {
         this.includeFilters.add(includeFilter);
     }
 
-    public void addExcludeFilter(TypeFilter excludeFilter) {
-        this.excludeFilters.add(0, excludeFilter);
-    }
-
-    public void resetFilters(boolean useDefaultFilters) {
-        this.includeFilters.clear();
-        this.excludeFilters.clear();
-    }
-
     public Set<Class<?>> doScan(String basePackage) {
         Set<Class<?>> classes = new HashSet<>();
         try {
             String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-                    + org.springframework.util.ClassUtils
-                    .convertClassNameToResourcePath(SystemPropertyUtils
+                    + ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils
                             .resolvePlaceholders(basePackage))
                     + "/**/*.class";
             Resource[] resources = this.resourcePatternResolver

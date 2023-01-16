@@ -2,6 +2,11 @@ package cn.bootx.common.actable.command;
 
 import java.util.Date;
 
+/**   
+ * 
+ * @author xxm  
+ * @date 2023/1/16 
+ */
 public class SysMysqlTable {
 
     /**

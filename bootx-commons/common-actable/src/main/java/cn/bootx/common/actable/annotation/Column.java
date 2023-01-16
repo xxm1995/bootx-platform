@@ -87,7 +87,7 @@ public @interface Column{
 	 * 1.3.0版本支持，也可通过注解实现：cn.bootx.common.actable.annotation.DefaultValue
 	 * @return 默认值
 	 */
-	String defaultValue() default ColumnUtils.DEFAULTVALUE;
+	String defaultValue() default ColumnUtils.DEFAULT_VALUE;
 
 	/**
 	 * 数据表字段备注

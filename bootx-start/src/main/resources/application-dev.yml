@@ -138,10 +138,19 @@ bootx:
       type: jdbc
     # 异常
     exception:
+      # 显示详细异常
       show-full-message: true
     # 是否启用Rabbit, 并不是停用了Rabbit, 需配合 ConditionalOnRabbit 注解使用
     rabbit:
       enable: false
+    # 表结构自动维护
+    actable:
+      # 数据库类型
+      database-type: mysql
+      # 更新类型
+      update-type: create
+      # 扫描包路径, 可以用 ,和 ; 分隔
+      scan-package: cn.bootx.**.entity
   starter:
     # 三方平台
     third:

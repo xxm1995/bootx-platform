@@ -5,6 +5,11 @@ import cn.bootx.common.actable.constants.MySqlTypeConstant;
 import java.util.HashMap;
 import java.util.Map;
 
+/**   
+ * 
+ * @author xxm  
+ * @date 2023/1/16 
+ */
 public class JavaToMysqlType {
     public static Map<String, MySqlTypeConstant> javaToMysqlTypeMap = new HashMap<String, MySqlTypeConstant>();
     static {

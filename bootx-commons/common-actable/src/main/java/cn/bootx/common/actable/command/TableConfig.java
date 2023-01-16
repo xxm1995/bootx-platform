@@ -5,11 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 表配置
+ * @author xxm
+ * @date 2023/1/16
+ */
 public class TableConfig {
 
-    private List<Object> list = new ArrayList<Object>();
+    private List<Object> list = new ArrayList<>();
 
-    private Map<String,Object> map = new HashMap<String, Object>();
+    private Map<String,Object> map = new HashMap<>();
 
     public TableConfig(List<Object> list, Map<String, Object> map) {
         if (list != null){

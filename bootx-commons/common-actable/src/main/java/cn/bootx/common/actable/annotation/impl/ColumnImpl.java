@@ -109,7 +109,7 @@ public class ColumnImpl implements Column {
      */
     @Override
     public String defaultValue() {
-        return ColumnUtils.DEFAULTVALUE;
+        return ColumnUtils.DEFAULT_VALUE;
     }
 
 //    /**

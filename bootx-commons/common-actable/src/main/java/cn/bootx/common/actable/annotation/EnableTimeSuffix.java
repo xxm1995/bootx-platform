@@ -1,6 +1,6 @@
 package cn.bootx.common.actable.annotation;
 
-import cn.bootx.common.actable.constants.DateTimeFormatConstant;
+import cn.hutool.core.date.DatePattern;
 
 import java.lang.annotation.*;
 
@@ -22,8 +22,8 @@ public @interface EnableTimeSuffix {
 
     /**
      * 时间后缀格式
-     * <br> 使用常量类 {@link DateTimeFormatConstant}
+     * <br> 使用常量类 {@link DatePattern}
      * @return
      */
-    String pattern() default DateTimeFormatConstant.DATE_MONTH;
+    String pattern() default DatePattern.SIMPLE_MONTH_PATTERN;
 }
