@@ -1,13 +1,13 @@
-package cn.bootx.common.actable.annotation;
+package cn.bootx.common.core.annotation.actable;
 
 import java.lang.annotation.*;
 
 
 /**
- * 标志该字段需要设置自增
- * 也可通过注解：cn.bootx.common.actable.annotation.Column的isAutoIncrement属性实现
+ * 字段的备注
+ *
  * @author sunchenbin
- * @version 2020年5月26日 下午6:13:15
+ * @version 2020年11月09日 下午6:13:37
  */
 // 该注解用于方法声明
 @Target(ElementType.FIELD)
@@ -15,5 +15,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 // 将此注解包含在javadoc中
 @Documented
-public @interface IsAutoIncrement {
+public @interface ColumnComment {
+
+	/**
+	 * 字段备注
+	 * @return 字段备注
+	 */
+	String value();
 }

@@ -1,7 +1,4 @@
-package cn.bootx.common.actable.annotation;
-
-import cn.bootx.common.actable.constants.MySqlCharsetConstant;
-import cn.bootx.common.actable.constants.MySqlEngineConstant;
+package cn.bootx.common.core.annotation.actable;
 
 import java.lang.annotation.*;
 

@@ -13,8 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MySqlTypeAndLength {
+    /** 长度数 */
     private Integer lengthCount;
+    /** 长度 */
     private Integer length;
+    /** 小数长度 */
     private Integer decimalLength;
-    private String  type;
+    /** 类型 */
+    private String type;
 }

@@ -1,11 +1,11 @@
-package cn.bootx.common.actable.annotation;
+package cn.bootx.common.core.annotation.actable;
 
 import java.lang.annotation.*;
 
 
 /**
- * 标志该字段不允许为空
- * 也可通过注解：cn.bootx.common.actable.annotation.Column的isNull属性实现
+ * 标志该字段需要设置自增
+ * 也可通过注解：cn.bootx.common.actable.annotation.Column的isAutoIncrement属性实现
  * @author sunchenbin
  * @version 2020年5月26日 下午6:13:15
  */
@@ -15,5 +15,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 // 将此注解包含在javadoc中
 @Documented
-public @interface IsNotNull {
+public @interface IsAutoIncrement {
 }

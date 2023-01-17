@@ -1,4 +1,4 @@
-package cn.bootx.common.actable.constants;
+package cn.bootx.common.core.code.actable;
 
 /**
  * 数据库类型

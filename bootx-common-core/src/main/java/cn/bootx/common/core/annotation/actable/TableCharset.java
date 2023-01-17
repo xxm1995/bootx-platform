@@ -1,12 +1,12 @@
-package cn.bootx.common.actable.annotation;
+package cn.bootx.common.core.annotation.actable;
 
-import cn.bootx.common.actable.constants.MySqlEngineConstant;
+import cn.bootx.common.core.code.actable.MySqlCharsetConstant;
 
 import java.lang.annotation.*;
 
 
 /**
- * 表引擎
+ * 表字符集
  *
  * @author sunchenbin
  * @version 2020年11月11日 下午6:13:37
@@ -17,12 +17,12 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 //将此注解包含在javadoc中
 @Documented
-public @interface TableEngine {
+public @interface TableCharset {
 
     /**
-     * 表引擎
-	 * 仅支持cn.bootx.common.actable.constants.MySqlEngineConstant中的存储引擎枚举
+     * 表注释
+	 * 仅支持cn.bootx.common.actable.constants.MySqlCharsetConstant中的枚举字符集
 	 * @return
      */
-	MySqlEngineConstant value();
+	MySqlCharsetConstant value();
 }

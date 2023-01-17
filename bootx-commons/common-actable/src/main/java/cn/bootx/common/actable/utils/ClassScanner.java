@@ -1,5 +1,6 @@
 package cn.bootx.common.actable.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.io.Resource;
@@ -27,6 +28,7 @@ import java.util.Set;
  * @author xxm
  * @date 2023/1/16
  */
+@Slf4j
 public class ClassScanner implements ResourceLoaderAware {
 
     //保存过滤规则要排除的注解
@@ -63,6 +65,11 @@ public class ClassScanner implements ResourceLoaderAware {
         this.includeFilters.add(includeFilter);
     }
 
+    /**
+     * 搜索类
+     * @param basePackage
+     * @return
+     */
     public Set<Class<?>> doScan(String basePackage) {
         Set<Class<?>> classes = new HashSet<>();
         try {
@@ -82,7 +89,7 @@ public class ClassScanner implements ResourceLoaderAware {
                             classes.add(Class.forName(metadataReader
                                     .getClassMetadata().getClassName()));
                         } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
+                            log.error("类不存在",e);
                         }
                     }
                 }

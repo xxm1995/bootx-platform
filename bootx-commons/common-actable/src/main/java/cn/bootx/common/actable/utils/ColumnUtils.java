@@ -1,12 +1,12 @@
 package cn.bootx.common.actable.utils;
 
-import cn.bootx.common.actable.annotation.*;
 import cn.bootx.common.actable.annotation.impl.ColumnImpl;
 import cn.bootx.common.actable.command.JavaToMysqlType;
 import cn.bootx.common.actable.command.MySqlTypeAndLength;
-import cn.bootx.common.actable.constants.MySqlCharsetConstant;
-import cn.bootx.common.actable.constants.MySqlEngineConstant;
-import cn.bootx.common.actable.constants.MySqlTypeConstant;
+import cn.bootx.common.core.annotation.actable.*;
+import cn.bootx.common.core.code.actable.MySqlCharsetConstant;
+import cn.bootx.common.core.code.actable.MySqlEngineConstant;
+import cn.bootx.common.core.code.actable.MySqlTypeConstant;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -16,8 +16,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.BeanUtils;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Date;
+import java.lang.reflect.Modifier;
+import java.util.*;
 
 /**
  * 行工具类
@@ -30,6 +30,11 @@ public class ColumnUtils {
     public static final String DEFAULT_VALUE = "DEFAULT";
     /** SQL 转义字符 */
     public static final String SQL_ESCAPE_CHARACTER = "`";
+    /**
+     * 获取Mysql的类型，以及类型需要设置几个长度，这里构建成map的样式
+     * 构建Map(字段名(小写),需要设置几个长度(0表示不需要设置，1表示需要设置一个，2表示需要设置两个))
+     */
+    public static final Map<String, MySqlTypeAndLength> mySqlTypeAndLengthMap;
 
     /**
      * 获取表名称
@@ -123,7 +128,7 @@ public class ColumnUtils {
         Column column = getColumn(field, clazz);
         TableField tableField = field.getAnnotation(TableField.class);
         TableId tableId = field.getAnnotation(TableId.class);
-        if(!hasColumnAnnotation(field, clazz)){
+        if(!hasColumn(field, clazz)){
             return null;
         }
         if (column != null && StrUtil.isNotBlank(column.name())){
@@ -142,6 +147,18 @@ public class ColumnUtils {
     }
 
     /**
+     * 获取数据库字段的排序
+     * @return
+     */
+    public static int getColumnOrder(Field field, Class<?> clazz){
+        Column column = getColumn(field, clazz);
+        if(!hasColumn(field,clazz)){
+            return 0;
+        }
+        return Optional.ofNullable(column).map(Column::order).orElse(0);
+    }
+
+    /**
      * 获取构建小写表名称
      */
     private static String getBuildLowerName(String name) {
@@ -154,7 +171,7 @@ public class ColumnUtils {
      */
     public static boolean isKey(Field field, Class<?> clazz){
         Column column = getColumn(field, clazz);
-        if(!hasColumnAnnotation(field,clazz)){
+        if(!hasColumn(field,clazz)){
             return false;
         }
         IsKey isKey = field.getAnnotation(IsKey.class);
@@ -174,7 +191,7 @@ public class ColumnUtils {
      */
     public static boolean isAutoIncrement(Field field, Class<?> clazz){
         Column column = getColumn(field, clazz);
-        if(!hasColumnAnnotation(field, clazz)){
+        if(!hasColumn(field, clazz)){
             return false;
         }
         IsAutoIncrement isAutoIncrement = field.getAnnotation(IsAutoIncrement.class);
@@ -187,14 +204,14 @@ public class ColumnUtils {
     }
 
     /**
-     *
+     * 是否可以为空
      * @param field
      * @param clazz
      * @return
      */
     public static Boolean isNull(Field field, Class<?> clazz){
         Column column = getColumn(field, clazz);
-        if(!hasColumnAnnotation(field,clazz)){
+        if(!hasColumn(field,clazz)){
             return true;
         }
         boolean isKey = isKey(field, clazz);
@@ -218,7 +235,7 @@ public class ColumnUtils {
     public static String getComment(Field field, Class<?> clazz){
         Column column = getColumn(field, clazz);
         ColumnComment comment = field.getAnnotation(ColumnComment.class);
-        if(!hasColumnAnnotation(field,clazz)){
+        if(!hasColumn(field,clazz)){
             return null;
         }
         if (column != null && StrUtil.isNotBlank(column.comment())){
@@ -236,7 +253,7 @@ public class ColumnUtils {
     public static String getDefaultValue(Field field, Class<?> clazz){
         Column column = getColumn(field,clazz);
         DefaultValue defaultValue = field.getAnnotation(DefaultValue.class);
-        if(!hasColumnAnnotation(field,clazz)){
+        if(!hasColumn(field,clazz)){
             return null;
         }
         if (column != null && !DEFAULT_VALUE.equals(column.defaultValue())){
@@ -271,7 +288,7 @@ public class ColumnUtils {
     public static MySqlTypeAndLength getMySqlTypeAndLength(Field field, Class<?> clazz){
         Column column = getColumn(field,clazz);
         ColumnType type = field.getAnnotation(ColumnType.class);
-        if(!hasColumnAnnotation(field, clazz)){
+        if(!hasColumn(field, clazz)){
             throw new RuntimeException("字段名：" + field.getName() +"没有字段标识的注解，异常抛出！");
         }
         if (column != null && column.type() != MySqlTypeConstant.DEFAULT){
@@ -301,7 +318,7 @@ public class ColumnUtils {
      * 构建 Mysql 类型和长度
      */
     private static MySqlTypeAndLength buildMySqlTypeAndLength(Field field, String type, int length, int decimalLength) {
-        MySqlTypeAndLength mySqlTypeAndLength = MySqlTypeConstant.mySqlTypeAndLengthMap.get(type);
+        MySqlTypeAndLength mySqlTypeAndLength = mySqlTypeAndLengthMap.get(type);
         if (mySqlTypeAndLength == null) {
             throw new RuntimeException("字段名：" + field.getName() + "使用的" + type + "类型，没有配置对应的MySqlTypeConstant，只支持创建MySqlTypeConstant中类型的字段，异常抛出！");
         }
@@ -333,9 +350,9 @@ public class ColumnUtils {
     }
 
     /**
-     * 具有 列注释
+     * 本行是否需要进行处理,
      */
-    public static boolean hasColumnAnnotation(Field field, Class<?> clazz){
+    public static boolean hasColumn(Field field, Class<?> clazz){
         // 是否开启simple模式
         boolean isSimple = isSimple(clazz);
         // 不参与建表的字段
@@ -344,12 +361,20 @@ public class ColumnUtils {
         if (Arrays.asList(excludeFields).contains(field.getName())){
             return false;
         }
+        // 排除静态字段
+        if (Modifier.isStatic(field.getModifiers())){
+            return false;
+        }
         Column column = field.getAnnotation(Column.class);
         TableField tableField = field.getAnnotation(TableField.class);
         IsKey isKey = field.getAnnotation(IsKey.class);
         TableId tableId = field.getAnnotation(TableId.class);
+        // 判断是否忽略该字段
+        if (column != null && column.ignore()){
+            return false;
+        }
+        // 开启了simple模式
         if(column == null && (tableField == null || !tableField.exist()) && isKey == null && tableId == null){
-            // 开启了simple模式
             return isSimple;
         }
         return true;
@@ -369,9 +394,8 @@ public class ColumnUtils {
             return column;
         }
         // 是否开启simple模式
-        boolean isSimple = isSimple(clazz);
         // 开启了simple模式
-        if (isSimple){
+        if (isSimple(clazz)){
             return new ColumnImpl();
         }
         return null;
@@ -418,4 +442,20 @@ public class ColumnUtils {
         }
         return tableName + "_" + suffix;
     }
+
+    /**
+     * 初始化 mysql的类型
+     */
+    static {
+        mySqlTypeAndLengthMap = new HashMap<>();
+        for (MySqlTypeConstant type: MySqlTypeConstant.values()) {
+            mySqlTypeAndLengthMap.put(type.toString().toLowerCase(),
+                    new MySqlTypeAndLength(type.getLengthCount(),
+                            type.getLengthDefault(),
+                            type.getDecimalLengthDefault(),
+                            type.toString().toLowerCase()));
+        }
+    }
+
+
 }

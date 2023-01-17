@@ -2,7 +2,7 @@ package cn.bootx.common.actable.manager.handler;
 
 
 import cn.bootx.common.actable.configuration.ActableProperties;
-import cn.bootx.common.actable.constants.DatabaseType;
+import cn.bootx.common.core.code.actable.DatabaseType;
 import cn.bootx.common.actable.manager.system.SysMysqlCreateTableManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

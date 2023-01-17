@@ -1,4 +1,4 @@
-package cn.bootx.common.actable.annotation;
+package cn.bootx.common.core.annotation.actable;
 
 import cn.hutool.core.date.DatePattern;
 

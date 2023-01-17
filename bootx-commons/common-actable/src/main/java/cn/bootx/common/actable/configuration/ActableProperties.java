@@ -1,6 +1,6 @@
 package cn.bootx.common.actable.configuration;
 
-import cn.bootx.common.actable.constants.DatabaseType;
+import cn.bootx.common.core.code.actable.DatabaseType;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;

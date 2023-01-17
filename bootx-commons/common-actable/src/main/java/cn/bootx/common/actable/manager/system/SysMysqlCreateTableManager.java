@@ -1,21 +1,22 @@
 package cn.bootx.common.actable.manager.system;
 
 
-import cn.bootx.common.actable.annotation.IgnoreUpdate;
-import cn.bootx.common.actable.annotation.Index;
-import cn.bootx.common.actable.annotation.Table;
-import cn.bootx.common.actable.annotation.Unique;
 import cn.bootx.common.actable.command.*;
 import cn.bootx.common.actable.configuration.ActableProperties;
 import cn.bootx.common.actable.configuration.ActableProperties.UpdateType;
 import cn.bootx.common.actable.constants.Constants;
-import cn.bootx.common.actable.constants.MySqlCharsetConstant;
-import cn.bootx.common.actable.constants.MySqlEngineConstant;
-import cn.bootx.common.actable.constants.MySqlTypeConstant;
 import cn.bootx.common.actable.dao.system.CreateMysqlTablesMapper;
 import cn.bootx.common.actable.utils.ClassScanner;
 import cn.bootx.common.actable.utils.ClassTools;
 import cn.bootx.common.actable.utils.ColumnUtils;
+import cn.bootx.common.core.annotation.actable.IgnoreUpdate;
+import cn.bootx.common.core.annotation.actable.Index;
+import cn.bootx.common.core.annotation.actable.Table;
+import cn.bootx.common.core.annotation.actable.Unique;
+import cn.bootx.common.core.code.actable.MySqlCharsetConstant;
+import cn.bootx.common.core.code.actable.MySqlEngineConstant;
+import cn.bootx.common.core.code.actable.MySqlTypeConstant;
+import cn.bootx.common.core.exception.FatalException;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.RequiredArgsConstructor;
@@ -76,20 +77,18 @@ public class SysMysqlCreateTableManager {
 
         // 循环全部的model
         for (Class<?> clas : classes) {
-
             // 没有打注解不需要创建表 或者配置了忽略建表的注解
             if (!ColumnUtils.hasTableAnnotation(clas) || ColumnUtils.hasIgnoreTableAnnotation(clas)) {
-                log.debug("{}，没有@Table或配置了@IgnoreTable注解直接跳过", clas.getName());
                 continue;
             }
             // 禁止出现重名表
-            checkTableName(tableNames, clas);
+            this.checkTableName(tableNames, clas);
             // 构建出全部表的增删改的map
-            buildTableMapConstruct(clas, baseTableMap,updateType);
+            this.buildTableMapConstruct(clas, baseTableMap,updateType);
         }
 
         // 根据传入的map，分别去创建或修改表结构
-        createOrModifyTableConstruct(baseTableMap,updateType);
+        this.createOrModifyTableConstruct(baseTableMap,updateType);
     }
 
     /**
@@ -98,7 +97,7 @@ public class SysMysqlCreateTableManager {
     private void checkTableName(List<String> tableNames, Class<?> clas) {
         String tableName = ColumnUtils.getTableName(clas);
         if (tableNames.contains(tableName)){
-            throw new RuntimeException(tableName + "表名出现重复，禁止创建！");
+            throw new FatalException(tableName + "表名出现重复，禁止创建！");
         }
         tableNames.add(tableName);
     }
@@ -156,14 +155,14 @@ public class SysMysqlCreateTableManager {
         // 1. 用于存表的全部字段
         List<Object> allFieldList;
         try{
-            allFieldList = getAllFields(clas);
+            allFieldList = this.getAllFields(clas);
             if (allFieldList.size() == 0) {
                 log.warn("扫描发现" + clas.getName() + "没有建表字段请检查！");
                 return;
             }
         }catch (Exception e){
             log.error("表：{}，初始化字段结构失败！", tableName);
-            throw new RuntimeException(e);
+            throw new FatalException(e.getMessage());
         }
 
         // 如果配置文件配置的是DROP_CREATE，表示将所有的表删掉重新创建
@@ -384,7 +383,7 @@ public class SysMysqlCreateTableManager {
         for (SysMysqlColumns sysColumn : tableColumnList) {
             // 数据库中有该字段时，验证是否有更新
             CreateTableParam createTableParam = fieldMap.get(sysColumn.getColumn_name().toLowerCase());
-            if (createTableParam != null && !createTableParam.getIgnoreUpdate()) {
+            if (createTableParam != null && !createTableParam.isIgnoreUpdate()) {
                 // 该复制操作时为了解决multiple primary key defined的同时又不会drop primary key
                 CreateTableParam modifyTableParam = createTableParam.clone();
                 // 1.验证主键
@@ -547,17 +546,18 @@ public class SysMysqlCreateTableManager {
     public List<Object> getAllFields(Class<?> clas) {
         String idxPrefix = actableProperties.getPrefixIndex();
         String uniPrefix = actableProperties.getPrefixUnique();
-        List<Object> fieldList = new ArrayList<>();
+        List<CreateTableParam> fieldList = new ArrayList<>();
         Field[] fields = clas.getDeclaredFields();
 
         // 判断是否有父类，如果有拉取父类的field，这里只支持多层继承
-        fields = recursionParents(clas, fields);
+        fields = this.recursionParents(clas, fields);
 
         for (Field field : fields) {
             // 判断方法中是否有指定注解类型的注解
-            if (ColumnUtils.hasColumnAnnotation(field,clas)) {
+            if (ColumnUtils.hasColumn(field,clas)) {
                 CreateTableParam param = new CreateTableParam();
                 param.setFieldName(ColumnUtils.getColumnName(field,clas));
+                param.setOrder(ColumnUtils.getColumnOrder(field,clas));
                 MySqlTypeAndLength mySqlTypeAndLength = ColumnUtils.getMySqlTypeAndLength(field,clas);
                 param.setFieldType(mySqlTypeAndLength.getType().toLowerCase());
                 param.setFileTypeLength(mySqlTypeAndLength.getLengthCount());
@@ -602,7 +602,9 @@ public class SysMysqlCreateTableManager {
                 fieldList.add(param);
             }
         }
-        return fieldList;
+        // 进行排序
+        fieldList.sort(Comparator.comparingInt(CreateTableParam::getOrder));
+        return new ArrayList<>(fieldList);
     }
 
     /**
@@ -882,14 +884,12 @@ public class SysMysqlCreateTableManager {
      */
     private void createTableByMap(Map<String, TableConfig> newTableMap) {
         // 做创建表操作
-        if (newTableMap.size() > 0) {
-            for (Map.Entry<String, TableConfig> entry : newTableMap.entrySet()) {
-                Map<String, TableConfig> map = new HashMap<>();
-                map.put(entry.getKey(), entry.getValue());
-                log.info("开始创建表：" + entry.getKey());
-                createMysqlTablesMapper.createTable(map);
-                log.info("完成创建表：" + entry.getKey());
-            }
+        for (Map.Entry<String, TableConfig> entry : newTableMap.entrySet()) {
+            Map<String, TableConfig> map = new HashMap<>();
+            map.put(entry.getKey(), entry.getValue());
+            log.info("开始创建表：" + entry.getKey());
+            createMysqlTablesMapper.createTable(map);
+            log.info("完成创建表：" + entry.getKey());
         }
     }
 

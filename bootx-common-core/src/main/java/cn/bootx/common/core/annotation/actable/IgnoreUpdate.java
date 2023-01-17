@@ -1,4 +1,4 @@
-package cn.bootx.common.actable.annotation;
+package cn.bootx.common.core.annotation.actable;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

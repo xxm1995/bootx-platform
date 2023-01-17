@@ -1,6 +1,6 @@
-package cn.bootx.common.actable.annotation;
+package cn.bootx.common.core.annotation.actable;
 
-import cn.bootx.common.actable.constants.MySqlTypeConstant;
+import cn.bootx.common.core.code.actable.MySqlTypeConstant;
 
 import java.lang.annotation.*;
 

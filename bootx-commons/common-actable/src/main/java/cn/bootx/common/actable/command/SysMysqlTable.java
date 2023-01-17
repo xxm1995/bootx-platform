@@ -2,16 +2,12 @@ package cn.bootx.common.actable.command;
 
 import java.util.Date;
 
-/**   
- * 
- * @author xxm  
- * @date 2023/1/16 
+/**
+ * 表注释
+ * @author xxm
+ * @date 2023/1/16
  */
 public class SysMysqlTable {
-
-    /**
-     * 表注释
-     */
     /** 字符集的后缀 */
     public static final String TABLE_COLLATION_SUFFIX = "_general_ci";
     /** 字符集 */

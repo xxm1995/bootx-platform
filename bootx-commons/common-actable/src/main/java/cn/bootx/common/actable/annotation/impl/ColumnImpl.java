@@ -1,11 +1,16 @@
 package cn.bootx.common.actable.annotation.impl;
 
-import cn.bootx.common.actable.annotation.Column;
-import cn.bootx.common.actable.constants.MySqlTypeConstant;
+import cn.bootx.common.core.annotation.actable.Column;
+import cn.bootx.common.core.code.actable.MySqlTypeConstant;
 import cn.bootx.common.actable.utils.ColumnUtils;
 
 import java.lang.annotation.Annotation;
 
+/**
+ * 实现行注解
+ * @author xxm
+ * @date 2023/1/17
+ */
 public class ColumnImpl implements Column {
     /**
      * 字段名
@@ -30,10 +35,18 @@ public class ColumnImpl implements Column {
     }
 
     /**
+     * 数据库字段排序, 数字小的在前面
+     */
+    @Override
+    public int order() {
+        return 0;
+    }
+
+    /**
      * 字段类型：不填默认使用属性的数据类型进行转换，转换失败的字段不会添加
      * 仅支持cn.bootx.common.actable.constants.MySqlTypeConstant中的枚举数据类型
      * 不填默认转换类：cn.bootx.common.actable.command.JavaToMysqlType
-     * 1.3.0版本支持，也可通过注解实现：cn.bootx.common.actable.annotation.ColumnType
+     * 1.3.0版本支持，也可通过注解实现：cn.bootx.common.core.annotation.actable.ColumnType
      *
      * @return 字段类型
      */
@@ -44,7 +57,7 @@ public class ColumnImpl implements Column {
 
     /**
      * 字段长度，默认是255
-     * 类型默认长度参考：cn.bootx.common.actable.constants.MySqlTypeConstant
+     * 类型默认长度参考：cn.bootx.common.core.code.actable.MySqlTypeConstant
      * 1.3.0版本支持，类同javax.persistence.Column.length
      *
      * @return 默认字段长度，默认是255
@@ -56,7 +69,7 @@ public class ColumnImpl implements Column {
 
     /**
      * 小数点长度，默认是0
-     * 类型默认长度参考：cn.bootx.common.actable.constants.MySqlTypeConstant
+     * 类型默认长度参考：cn.bootx.common.core.code.actable.MySqlTypeConstant
      * 1.3.0版本支持，类同javax.persistence.Column.scale
      *
      * @return 小数点长度，默认是0
@@ -68,7 +81,7 @@ public class ColumnImpl implements Column {
 
     /**
      * 是否为可以为null，true是可以，false是不可以，默认为true
-     * 也可通过注解实现：cn.bootx.common.actable.annotation.IsNotNull
+     * 也可通过注解实现：cn.bootx.common.core.annotation.actable.IsNotNull
      * 1.3.0版本支持，类同javax.persistence.Column.nullable
      *
      * @return 是否为可以为null，true是可以，false是不可以，默认为true
@@ -80,7 +93,7 @@ public class ColumnImpl implements Column {
 
     /**
      * 是否是主键，默认false
-     * 也可通过注解实现：cn.bootx.common.actable.annotation.IsKey
+     * 也可通过注解实现：cn.bootx.common.core.annotation.actable.IsKey
      * 1.3.0版本支持，类同javax.persistence.Id
      *
      * @return 是否是主键，默认false
@@ -92,7 +105,7 @@ public class ColumnImpl implements Column {
 
     /**
      * 是否自动递增，默认false
-     * 也可通过注解实现：cn.bootx.common.actable.annotation.IsAutoIncrement
+     * 也可通过注解实现：cn.bootx.common.core.annotation.actable.IsAutoIncrement
      *
      * @return 是否自动递增，默认false 只有主键才能使用
      */
@@ -103,7 +116,7 @@ public class ColumnImpl implements Column {
 
     /**
      * 默认值，默认为null
-     * 1.3.0版本支持，也可通过注解实现：cn.bootx.common.actable.annotation.DefaultValue
+     * 1.3.0版本支持，也可通过注解实现：cn.bootx.common.core.annotation.actable.DefaultValue
      *
      * @return 默认值
      */
@@ -133,6 +146,14 @@ public class ColumnImpl implements Column {
     @Override
     public String comment() {
         return "";
+    }
+
+    /**
+     * 是否排除该字段, 默认不排除
+     */
+    @Override
+    public boolean ignore() {
+        return false;
     }
 
     /**

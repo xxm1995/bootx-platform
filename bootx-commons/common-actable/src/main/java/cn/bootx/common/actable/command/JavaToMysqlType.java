@@ -1,14 +1,14 @@
 package cn.bootx.common.actable.command;
 
-import cn.bootx.common.actable.constants.MySqlTypeConstant;
+import cn.bootx.common.core.code.actable.MySqlTypeConstant;
 
 import java.util.HashMap;
 import java.util.Map;
 
-/**   
- * 
- * @author xxm  
- * @date 2023/1/16 
+/**
+ *
+ * @author xxm
+ * @date 2023/1/16
  */
 public class JavaToMysqlType {
     public static Map<String, MySqlTypeConstant> javaToMysqlTypeMap = new HashMap<String, MySqlTypeConstant>();

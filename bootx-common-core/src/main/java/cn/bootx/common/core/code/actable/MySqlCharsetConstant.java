@@ -1,4 +1,4 @@
-package cn.bootx.common.actable.constants;
+package cn.bootx.common.core.code.actable;
 
 /**
  * mysql支持的字符集
