@@ -16,7 +16,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum MySqlTypeConstant {
+public enum MySqlFieldType {
 
 	DEFAULT(null,null,null),
 	INT(1, 11, null),

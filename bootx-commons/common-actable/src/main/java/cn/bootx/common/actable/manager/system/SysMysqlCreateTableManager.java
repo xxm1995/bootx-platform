@@ -13,9 +13,9 @@ import cn.bootx.common.core.annotation.actable.IgnoreUpdate;
 import cn.bootx.common.core.annotation.actable.Index;
 import cn.bootx.common.core.annotation.actable.Table;
 import cn.bootx.common.core.annotation.actable.Unique;
-import cn.bootx.common.core.code.actable.MySqlCharsetConstant;
-import cn.bootx.common.core.code.actable.MySqlEngineConstant;
-import cn.bootx.common.core.code.actable.MySqlTypeConstant;
+import cn.bootx.common.core.code.actable.MySqlCharset;
+import cn.bootx.common.core.code.actable.MySqlEngine;
+import cn.bootx.common.core.code.actable.MySqlFieldType;
 import cn.bootx.common.core.exception.FatalException;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -78,7 +78,7 @@ public class SysMysqlCreateTableManager {
         // 循环全部的model
         for (Class<?> clas : classes) {
             // 没有打注解不需要创建表 或者配置了忽略建表的注解
-            if (!ColumnUtils.hasTableAnnotation(clas) || ColumnUtils.hasIgnoreTableAnnotation(clas)) {
+            if (!ColumnUtils.hasTableAnnotation(clas)) {
                 continue;
             }
             // 禁止出现重名表
@@ -147,10 +147,10 @@ public class SysMysqlCreateTableManager {
         String tableComment = ColumnUtils.getTableComment(clas);
 
         // 获取表字符集
-        MySqlCharsetConstant tableCharset = ColumnUtils.getTableCharset(clas);
+        MySqlCharset tableCharset = ColumnUtils.getTableCharset(clas);
 
         // 获取表引擎
-        MySqlEngineConstant tableEngine = ColumnUtils.getTableEngine(clas);
+        MySqlEngine tableEngine = ColumnUtils.getTableEngine(clas);
 
         // 1. 用于存表的全部字段
         List<Object> allFieldList;
@@ -180,10 +180,10 @@ public class SysMysqlCreateTableManager {
             if (StrUtil.isNotBlank(tableComment)){
                 map.put(SysMysqlTable.TABLE_COMMENT_KEY, tableComment);
             }
-            if (tableCharset != null && tableCharset != MySqlCharsetConstant.DEFAULT){
+            if (tableCharset != null && tableCharset != MySqlCharset.DEFAULT){
                 map.put(SysMysqlTable.TABLE_COLLATION_KEY, tableCharset.toString().toLowerCase());
             }
-            if (tableEngine != null && tableEngine != MySqlEngineConstant.DEFAULT){
+            if (tableEngine != null && tableEngine != MySqlEngine.DEFAULT){
                 map.put(SysMysqlTable.TABLE_ENGINE_KEY, tableEngine.toString());
             }
             baseTableMap.get(Constants.NEW_TABLE_MAP).put(tableName, new TableConfig(allFieldList, map));
@@ -196,11 +196,11 @@ public class SysMysqlCreateTableManager {
                 map.put(SysMysqlTable.TABLE_COMMENT_KEY, tableComment);
             }
             // 判断表字符集是否要更新
-            if (tableCharset != null && tableCharset != MySqlCharsetConstant.DEFAULT && !tableCharset.toString().toLowerCase().equals(table.getTable_collation().replace(SysMysqlTable.TABLE_COLLATION_SUFFIX, ""))){
+            if (tableCharset != null && tableCharset != MySqlCharset.DEFAULT && !tableCharset.toString().toLowerCase().equals(table.getTable_collation().replace(SysMysqlTable.TABLE_COLLATION_SUFFIX, ""))){
                 map.put(SysMysqlTable.TABLE_COLLATION_KEY, tableCharset.toString().toLowerCase());
             }
             // 判断表引擎是否要更新
-            if (tableEngine != null && tableEngine != MySqlEngineConstant.DEFAULT && !tableEngine.toString().equals(table.getEngine())){
+            if (tableEngine != null && tableEngine != MySqlEngine.DEFAULT && !tableEngine.toString().equals(table.getEngine())){
                 map.put(SysMysqlTable.TABLE_ENGINE_KEY, tableEngine.toString());
             }
             baseTableMap.get(Constants.MODIFY_TABLE_PROPERTY_MAP).put(tableName, new TableConfig(map));
@@ -435,7 +435,7 @@ public class SysMysqlCreateTableManager {
                         continue;
                     }
                 } else if (!sysColumn.getColumn_default().equals(createTableParam.getFieldDefaultValue())) {
-                    if (MySqlTypeConstant.BIT.toString().toLowerCase().equals(createTableParam.getFieldType()) && !createTableParam.isFieldDefaultValueNative()){
+                    if (MySqlFieldType.BIT.toString().toLowerCase().equals(createTableParam.getFieldType()) && !createTableParam.isFieldDefaultValueNative()){
                         if(("true".equals(createTableParam.getFieldDefaultValue()) || "1".equals(createTableParam.getFieldDefaultValue()))
                                 && !"b'1'".equals(sysColumn.getColumn_default())){
                             // 两者不相等时，需要更新该字段

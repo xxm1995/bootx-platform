@@ -1,7 +1,7 @@
 package cn.bootx.common.actable.annotation.impl;
 
 import cn.bootx.common.core.annotation.actable.Column;
-import cn.bootx.common.core.code.actable.MySqlTypeConstant;
+import cn.bootx.common.core.code.actable.MySqlFieldType;
 import cn.bootx.common.actable.utils.ColumnUtils;
 
 import java.lang.annotation.Annotation;
@@ -51,13 +51,13 @@ public class ColumnImpl implements Column {
      * @return 字段类型
      */
     @Override
-    public MySqlTypeConstant type() {
-        return MySqlTypeConstant.DEFAULT;
+    public MySqlFieldType type() {
+        return MySqlFieldType.DEFAULT;
     }
 
     /**
      * 字段长度，默认是255
-     * 类型默认长度参考：cn.bootx.common.core.code.actable.MySqlTypeConstant
+     * 类型默认长度参考：cn.bootx.common.core.code.actable.MySqlFieldType
      * 1.3.0版本支持，类同javax.persistence.Column.length
      *
      * @return 默认字段长度，默认是255
@@ -69,7 +69,7 @@ public class ColumnImpl implements Column {
 
     /**
      * 小数点长度，默认是0
-     * 类型默认长度参考：cn.bootx.common.core.code.actable.MySqlTypeConstant
+     * 类型默认长度参考：cn.bootx.common.core.code.actable.MySqlFieldType
      * 1.3.0版本支持，类同javax.persistence.Column.scale
      *
      * @return 小数点长度，默认是0
@@ -116,7 +116,6 @@ public class ColumnImpl implements Column {
 
     /**
      * 默认值，默认为null
-     * 1.3.0版本支持，也可通过注解实现：cn.bootx.common.core.annotation.actable.DefaultValue
      *
      * @return 默认值
      */

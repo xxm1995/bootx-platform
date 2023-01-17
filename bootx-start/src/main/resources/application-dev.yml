@@ -74,13 +74,6 @@ spring:
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
 
-actable:
-  table:
-    auto: update
-  model:
-    pack: cn.bootx.**.entity
-  database:
-    type: mysql
 # 开发时显示debug日志
 logging:
   level:
@@ -148,9 +141,13 @@ bootx:
       # 数据库类型
       database-type: mysql
       # 更新类型
-      update-type: create
+      update-type: update
       # 扫描包路径, 可以用 ,和 ; 分隔
       scan-package: cn.bootx.**.entity
+      # 指定生成索引前缀
+      prefix-index: actable_idx_
+      # 指定生成唯一约束前缀
+      prefix-unique: actable_uni_
   starter:
     # 三方平台
     third:

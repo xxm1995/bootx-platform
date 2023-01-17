@@ -16,6 +16,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ActableProperties {
 
     /**
+     * 数据库类型
+     */
+    private DatabaseType databaseType = DatabaseType.MYSQL;
+
+    /**
      * 更新模式
      */
     private UpdateType updateType = UpdateType.NONE;
@@ -24,11 +29,6 @@ public class ActableProperties {
      * 扫描包路径, 可以用 ,和 ; 分隔
      */
     private String scanPackage;
-
-    /**
-     * 数据库类型
-     */
-    private DatabaseType databaseType;
 
     /**
      * 指定生成索引前缀

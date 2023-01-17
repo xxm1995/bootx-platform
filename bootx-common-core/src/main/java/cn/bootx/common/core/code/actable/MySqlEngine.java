@@ -3,7 +3,7 @@ package cn.bootx.common.core.code.actable;
 /**
  * mysql支持的引擎
  */
-public enum MySqlEngineConstant {
+public enum MySqlEngine {
 
     DEFAULT,
     ARCHIVE,

@@ -3,7 +3,7 @@ package cn.bootx.common.core.code.actable;
 /**
  * mysql支持的字符集
  */
-public enum MySqlCharsetConstant {
+public enum MySqlCharset {
     DEFAULT,
     ARMSCII8,
     ASCII,

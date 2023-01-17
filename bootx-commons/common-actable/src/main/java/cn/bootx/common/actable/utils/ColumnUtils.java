@@ -4,9 +4,9 @@ import cn.bootx.common.actable.annotation.impl.ColumnImpl;
 import cn.bootx.common.actable.command.JavaToMysqlType;
 import cn.bootx.common.actable.command.MySqlTypeAndLength;
 import cn.bootx.common.core.annotation.actable.*;
-import cn.bootx.common.core.code.actable.MySqlCharsetConstant;
-import cn.bootx.common.core.code.actable.MySqlEngineConstant;
-import cn.bootx.common.core.code.actable.MySqlTypeConstant;
+import cn.bootx.common.core.code.actable.MySqlCharset;
+import cn.bootx.common.core.code.actable.MySqlEngine;
+import cn.bootx.common.core.code.actable.MySqlFieldType;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -40,18 +40,18 @@ public class ColumnUtils {
      * 获取表名称
      */
     public static String getTableName(Class<?> clazz){
-        Table tableName = clazz.getAnnotation(Table.class);
+        Table table = clazz.getAnnotation(Table.class);
         TableName tableNamePlus = clazz.getAnnotation(TableName.class);
         EnableTimeSuffix enableTimeSuffix = clazz.getAnnotation(EnableTimeSuffix.class);
         if (!hasTableAnnotation(clazz)){
             return null;
         }
         String finalTableName = "";
-        if (tableName != null && StrUtil.isNotBlank(tableName.name())) {
-            finalTableName = tableName.name();
+        if (table != null && StrUtil.isNotBlank(table.name())) {
+            finalTableName = table.name();
         }
-        if (tableName != null && StrUtil.isNotBlank(tableName.value())) {
-            finalTableName = tableName.value();
+        if (table != null && StrUtil.isNotBlank(table.value())) {
+            finalTableName = table.value();
         }
         if (tableNamePlus != null && StrUtil.isNotBlank(tableNamePlus.value())) {
             finalTableName = tableNamePlus.value();
@@ -71,15 +71,11 @@ public class ColumnUtils {
      */
     public static String getTableComment(Class<?> clazz){
         Table table = clazz.getAnnotation(Table.class);
-        TableComment tableComment = clazz.getAnnotation(TableComment.class);
         if (!hasTableAnnotation(clazz)){
             return "";
         }
         if (table != null && StrUtil.isNotBlank(table.comment())){
             return table.comment();
-        }
-        if (tableComment != null && StrUtil.isNotBlank(tableComment.value())){
-            return tableComment.value();
         }
         return "";
     }
@@ -87,17 +83,13 @@ public class ColumnUtils {
     /**
      * 获取表字符集
      */
-    public static MySqlCharsetConstant getTableCharset(Class<?> clazz){
+    public static MySqlCharset getTableCharset(Class<?> clazz){
         Table table = clazz.getAnnotation(Table.class);
-        TableCharset charset = clazz.getAnnotation(TableCharset.class);
         if (!hasTableAnnotation(clazz)){
             return null;
         }
-        if (table != null && table.charset() != MySqlCharsetConstant.DEFAULT){
+        if (table != null && table.charset() != MySqlCharset.DEFAULT){
             return table.charset();
-        }
-        if (charset != null && !StrUtil.isBlankIfStr(charset.value())){
-            return charset.value();
         }
         return null;
     }
@@ -105,17 +97,13 @@ public class ColumnUtils {
     /**
      * 获取表引擎类型
      */
-    public static MySqlEngineConstant getTableEngine(Class<?> clazz){
+    public static MySqlEngine getTableEngine(Class<?> clazz){
         Table table = clazz.getAnnotation(Table.class);
-        TableEngine engine = clazz.getAnnotation(TableEngine.class);
         if (!hasTableAnnotation(clazz)){
             return null;
         }
-        if (table != null && table.engine() != MySqlEngineConstant.DEFAULT){
+        if (table != null && table.engine() != MySqlEngine.DEFAULT){
             return table.engine();
-        }
-        if (engine != null && !StrUtil.isBlankIfStr(engine.value())){
-            return engine.value();
         }
         return null;
     }
@@ -174,16 +162,12 @@ public class ColumnUtils {
         if(!hasColumn(field,clazz)){
             return false;
         }
-        IsKey isKey = field.getAnnotation(IsKey.class);
         TableId tableId = field.getAnnotation(TableId.class);
-        if(null != isKey){
+        if(column != null && column.isKey()){
             return true;
-        }else if(column != null && column.isKey()){
-            return true;
-        }else if(null != tableId){
-            return true;
+        } else {
+            return null != tableId;
         }
-        return false;
     }
 
     /**
@@ -194,13 +178,7 @@ public class ColumnUtils {
         if(!hasColumn(field, clazz)){
             return false;
         }
-        IsAutoIncrement isAutoIncrement = field.getAnnotation(IsAutoIncrement.class);
-        if(null != isAutoIncrement){
-            return true;
-        }else if(column != null && column.isAutoIncrement()){
-            return true;
-        }
-        return false;
+        return column != null && column.isAutoIncrement();
     }
 
     /**
@@ -219,11 +197,7 @@ public class ColumnUtils {
         if (isKey){
             return false;
         }
-
-        IsNotNull isNotNull = field.getAnnotation(IsNotNull.class);
-        if(null != isNotNull){
-            return false;
-        }else if(column != null){
+        if(column != null){
             return column.isNull();
         }
         return true;
@@ -234,15 +208,11 @@ public class ColumnUtils {
      */
     public static String getComment(Field field, Class<?> clazz){
         Column column = getColumn(field, clazz);
-        ColumnComment comment = field.getAnnotation(ColumnComment.class);
         if(!hasColumn(field,clazz)){
             return null;
         }
         if (column != null && StrUtil.isNotBlank(column.comment())){
             return column.comment();
-        }
-        if (comment != null && StrUtil.isNotBlank(comment.value())){
-            return comment.value();
         }
         return "";
     }
@@ -252,15 +222,11 @@ public class ColumnUtils {
      */
     public static String getDefaultValue(Field field, Class<?> clazz){
         Column column = getColumn(field,clazz);
-        DefaultValue defaultValue = field.getAnnotation(DefaultValue.class);
         if(!hasColumn(field,clazz)){
             return null;
         }
         if (column != null && !DEFAULT_VALUE.equals(column.defaultValue())){
             return column.defaultValue();
-        }
-        if (defaultValue != null){
-            return defaultValue.value();
         }
         return null;
     }
@@ -287,18 +253,14 @@ public class ColumnUtils {
      */
     public static MySqlTypeAndLength getMySqlTypeAndLength(Field field, Class<?> clazz){
         Column column = getColumn(field,clazz);
-        ColumnType type = field.getAnnotation(ColumnType.class);
         if(!hasColumn(field, clazz)){
             throw new RuntimeException("字段名：" + field.getName() +"没有字段标识的注解，异常抛出！");
         }
-        if (column != null && column.type() != MySqlTypeConstant.DEFAULT){
+        if (column != null && column.type() != MySqlFieldType.DEFAULT){
             return buildMySqlTypeAndLength(field, column.type().toString().toLowerCase(), column.length(), column.decimalLength());
         }
-        if (type != null && type.value() != null && type.value() != MySqlTypeConstant.DEFAULT){
-            return buildMySqlTypeAndLength(field, type.value().toString().toLowerCase(), type.length(), type.decimalLength());
-        }
         // 类型为空根据字段类型去默认匹配类型
-        MySqlTypeConstant mysqlType = JavaToMysqlType.javaToMysqlTypeMap.get(field.getGenericType().toString());
+        MySqlFieldType mysqlType = JavaToMysqlType.javaToMysqlTypeMap.get(field.getGenericType().toString());
         if (mysqlType == null){
             throw new RuntimeException("字段名：" + field.getName() +"不支持" + field.getGenericType().toString() + "类型转换到mysql类型，仅支持JavaToMysqlType类中的类型默认转换，异常抛出！");
         }
@@ -306,10 +268,6 @@ public class ColumnUtils {
         // 默认类型可以使用column来设置长度
         if (column != null){
             return buildMySqlTypeAndLength(field, sqlType, column.length(), column.decimalLength());
-        }
-        // 默认类型可以使用type来设置长度
-        if (type != null){
-            return buildMySqlTypeAndLength(field, sqlType, type.length(), type.decimalLength());
         }
         return buildMySqlTypeAndLength(field, sqlType, 255, 0);
     }
@@ -337,16 +295,8 @@ public class ColumnUtils {
      * 是否有 Table 注解
      */
     public static boolean hasTableAnnotation(Class<?> clazz){
-        Table tableName = clazz.getAnnotation(Table.class);
-        return tableName != null;
-    }
-
-    /**
-     * 具有忽略表注释
-     */
-    public static boolean hasIgnoreTableAnnotation(Class<?> clazz){
-        IgnoreTable ignoreTable = clazz.getAnnotation(IgnoreTable.class);
-        return ignoreTable != null;
+        Table table = clazz.getAnnotation(Table.class);
+        return table != null;
     }
 
     /**
@@ -367,14 +317,13 @@ public class ColumnUtils {
         }
         Column column = field.getAnnotation(Column.class);
         TableField tableField = field.getAnnotation(TableField.class);
-        IsKey isKey = field.getAnnotation(IsKey.class);
         TableId tableId = field.getAnnotation(TableId.class);
         // 判断是否忽略该字段
         if (column != null && column.ignore()){
             return false;
         }
         // 开启了simple模式
-        if(column == null && (tableField == null || !tableField.exist()) && isKey == null && tableId == null){
+        if(column == null && (tableField == null || !tableField.exist())  && tableId == null){
             return isSimple;
         }
         return true;
@@ -448,7 +397,7 @@ public class ColumnUtils {
      */
     static {
         mySqlTypeAndLengthMap = new HashMap<>();
-        for (MySqlTypeConstant type: MySqlTypeConstant.values()) {
+        for (MySqlFieldType type: MySqlFieldType.values()) {
             mySqlTypeAndLengthMap.put(type.toString().toLowerCase(),
                     new MySqlTypeAndLength(type.getLengthCount(),
                             type.getLengthDefault(),

@@ -1,7 +1,7 @@
 package cn.bootx.common.core.annotation.actable;
 
-import cn.bootx.common.core.code.actable.MySqlCharsetConstant;
-import cn.bootx.common.core.code.actable.MySqlEngineConstant;
+import cn.bootx.common.core.code.actable.MySqlCharset;
+import cn.bootx.common.core.code.actable.MySqlEngine;
 
 import java.lang.annotation.*;
 
@@ -40,18 +40,18 @@ public @interface Table {
 	 * 表字符集，也可以使用@TableCharset注解代替
 	 * 仅支持cn.bootx.common.actable.constants.MySqlCharsetConstant中的枚举字符集
 	 */
-	MySqlCharsetConstant charset() default MySqlCharsetConstant.UTF8MB4;
+	MySqlCharset charset() default MySqlCharset.UTF8MB4;
 
 	/**
 	 * 表引擎，也可以使用@TableEngine注解代替
 	 * 仅支持cn.bootx.common.actable.constants.MySqlEngineConstant中的存储引擎枚举
 	 */
-	MySqlEngineConstant engine() default MySqlEngineConstant.InnoDB;
+	MySqlEngine engine() default MySqlEngine.InnoDB;
 
 	/**
-	 * 是否开启simple模式配置，默认不开启，开启后Field不写注解@Column也可以采用默认的驼峰转换法创建字段
+	 * 是否开启simple模式配置，开启后字段不写注解@Column也可以采用默认的驼峰转换法创建字段
 	 */
-	boolean isSimple() default false;
+	boolean isSimple() default true;
 
 	/**
 	 * 需要排除的属性名，排除掉的属性不参与建表, 静态字段默认会被排除
