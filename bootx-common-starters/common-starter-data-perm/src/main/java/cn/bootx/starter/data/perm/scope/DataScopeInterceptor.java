@@ -29,6 +29,7 @@ import net.sf.jsqlparser.statement.update.Update;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
@@ -47,33 +48,37 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     private final DataPermProperties dataPermProperties;
     private final DataPermScopeHandler dataPermScopeHandler;
 
-    @Override
-    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
+
+    protected boolean checkPermission(){
         // 配置是否开启了权限控制
         if (!dataPermProperties.isEnableDataPerm()){
-            return;
+            return false;
         }
         // 判断是否在嵌套执行环境中
         NestedPermission nestedPermission = DataPermContextHolder.getNestedPermission();
         if (Objects.nonNull(nestedPermission) && !nestedPermission.dataScope()){
-            return;
+            return false;
         }
         // 是否添加了对应的注解来开启数据权限控制
         Permission permission = DataPermContextHolder.getPermission();
         if (Objects.isNull(permission) || !permission.dataScope()){
-            return;
+            return false;
         }
-        // 检查是否已经登录和是否是超级管理员
-        boolean admin = DataPermContextHolder.getUserDetail()
+        // 检查是否已经登录和是否是超级管理员, 管理员跳过权限控制
+        return !DataPermContextHolder.getUserDetail()
                 .map(UserDetail::isAdmin)
                 .orElseThrow(NotLoginPermException::new);
-        // 是否超级管理员
-        if (admin){
+    }
+
+    @Override
+    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
+        if (!this.checkPermission()){
             return;
         }
         PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
         mpBs.sql(this.parserSingle(mpBs.sql(), ms.getId()));
     }
+
 
     /**
      * 查询处理
@@ -89,6 +94,27 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
             selectBodyList.forEach(s -> this.setWhere((PlainSelect) s));
         }
     }
+
+
+    /**
+     * 更新处理
+     */
+    @Override
+    public void beforeUpdate(Executor executor, MappedStatement ms, Object parameter) {
+        if (!this.checkPermission()){
+            return;
+        }
+        // 插入操作不处理
+        if (ms.getSqlCommandType() == SqlCommandType.INSERT){
+            return;
+        }
+        // 更新处理 和 删除处理
+        BoundSql boundSql = ms.getBoundSql(parameter);
+        System.out.println(boundSql.getSql());
+        PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
+        mpBs.sql(this.parserSingle(mpBs.sql(), ms.getId()));
+    }
+
 
 
     /**
