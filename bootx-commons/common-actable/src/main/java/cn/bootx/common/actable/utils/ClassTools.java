@@ -1,8 +1,5 @@
 package cn.bootx.common.actable.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +12,6 @@ import java.util.List;
  * @version 2016年6月23日 下午5:55:18
  */
 public class ClassTools{
-
-	private static final Logger log = LoggerFactory.getLogger(ClassTools.class);
 
 	/**
 	 * 取出list对象中的某个属性的值作为list返回
