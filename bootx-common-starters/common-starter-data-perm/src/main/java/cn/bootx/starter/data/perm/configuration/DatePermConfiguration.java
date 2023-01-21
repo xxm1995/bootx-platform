@@ -8,10 +8,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**   
+/**
 * 数据权限配置
-* @author xxm  
-* @date 2021/12/21 
+* @author xxm
+* @date 2021/12/21
 */
 @Configuration
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class DatePermConfiguration {
      */
     @Bean
     @ConditionalOnProperty(prefix = "bootx.starter.data-perm", value = "enableSelectFieldPerm", havingValue = "true",matchIfMissing = true)
-    public MpInterceptor selectFieldPermInterceptorMp(SelectFieldPermInterceptor bootxDataPermissionHandler) {
-        return new MpInterceptor(bootxDataPermissionHandler);
+    public MpInterceptor selectFieldPermInterceptorMp(SelectFieldPermInterceptor selectFieldPermInterceptor) {
+        return new MpInterceptor(selectFieldPermInterceptor);
     }
 }

@@ -270,7 +270,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     }
 
     /**
-     * 判断是否有权限注解, 需不需要进行数据权限控制
+     * 判断是否需要进行数据权限控制
      */
     protected boolean checkPermission(){
         // 配置是否开启了权限控制
@@ -311,7 +311,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     protected boolean checkTableCreator(String tableName){
         TableInfo tableInfo = getTableInfo(tableName);
         if (tableInfo == null){
-            log.warn("'{}' 数据表未找到对应的MybatisPlus实体类，将不会启用数据权限控制，，请检查配置",tableName);
+            log.warn("'{}' 数据表未找到对应的MybatisPlus实体类，将不会启用数据权限控制，请检查配置",tableName);
             return false;
         }
         // 查看实体类上是否关闭了数据权限控制
