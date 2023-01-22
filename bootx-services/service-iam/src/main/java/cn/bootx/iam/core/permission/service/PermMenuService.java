@@ -18,7 +18,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +26,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**   
+import static cn.bootx.iam.code.CachingCode.USER_PERM_CODE;
+
+/**
 * 权限
-* @author xxm  
-* @date 2021/8/3 
+* @author xxm
+* @date 2021/8/3
 */
 @Slf4j
 @Service
@@ -56,6 +58,7 @@ public class PermMenuService {
     /**
      * 更新
      */
+    @CacheEvict(value = {USER_PERM_CODE},allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public PermMenuDto update(PermMenuParam param){
         PermMenu permMenu = permMenuManager.findById(param.getId())
@@ -94,9 +97,15 @@ public class PermMenuService {
     }
 
     /**
+     * 资源(权限码)列表
+     */
+    public List<PermMenuDto> findAllByResource() {
+        return ResultConvertUtil.dtoListConvert(permMenuManager.findAllByResource());
+    }
+
+    /**
      * 根据id集合查询
      */
-    @ConditionalOnProperty
     public List<PermMenuDto> findByIds(List<Long> permissionIds) {
         return ResultConvertUtil.dtoListConvert(permMenuManager.findAllByIds(permissionIds));
     }
@@ -104,6 +113,7 @@ public class PermMenuService {
     /**
      * 删除
      */
+    @CacheEvict(value = {USER_PERM_CODE},allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id){
         // 有子菜单不可以删除
@@ -115,7 +125,7 @@ public class PermMenuService {
     }
 
     /**
-     * 根据菜单id获取资源列表
+     * 根据菜单id获取资源(权限码)列表
      */
     public List<PermMenuDto> findResourceByMenuId(Long menuId) {
         UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);

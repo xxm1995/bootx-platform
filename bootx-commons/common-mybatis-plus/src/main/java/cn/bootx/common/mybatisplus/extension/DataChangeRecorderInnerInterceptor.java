@@ -16,6 +16,7 @@
 package cn.bootx.common.mybatisplus.extension;
 
 import cn.bootx.common.core.annotation.DataVersionLog;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
@@ -126,23 +127,11 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             return null;
         }
 
-        TableInfo tableInfo = this.getTableInfo(tableName);
+        TableInfo tableInfo = MpUtil.getTableInfo(tableName);
         if (Objects.isNull(tableInfo)){
             return null;
         }
         return tableInfo.getEntityType().getAnnotation(DataVersionLog.class);
-    }
-
-    /**
-     * 获取关联的 TableInfo
-     */
-    protected TableInfo getTableInfo(String tableName){
-        for (TableInfo tableInfo : TableInfoHelper.getTableInfos()) {
-            if (tableName.equalsIgnoreCase(tableInfo.getTableName())) {
-                return tableInfo;
-            }
-        }
-        return null;
     }
 
     /**

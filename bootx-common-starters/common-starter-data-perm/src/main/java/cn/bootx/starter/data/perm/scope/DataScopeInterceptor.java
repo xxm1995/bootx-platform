@@ -6,6 +6,7 @@ import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.util.CollUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.data.perm.code.DataScopeEnum;
 import cn.bootx.starter.data.perm.configuration.DataPermProperties;
 import cn.bootx.starter.data.perm.exception.NotLoginPermException;
@@ -13,7 +14,6 @@ import cn.bootx.starter.data.perm.local.DataPermContextHolder;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
-import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.parser.JsqlParserSupport;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
@@ -81,7 +81,6 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
         }
         // 更新处理 和 删除处理
         BoundSql boundSql = ms.getBoundSql(parameter);
-        System.out.println(boundSql.getSql());
         PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
         mpBs.sql(this.parserSingle(mpBs.sql(), ms.getId()));
     }
@@ -294,22 +293,10 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     }
 
     /**
-     * 获取关联的 TableInfo
-     */
-    protected TableInfo getTableInfo(String tableName){
-        for (TableInfo tableInfo : TableInfoHelper.getTableInfos()) {
-            if (tableName.equalsIgnoreCase(tableInfo.getTableName())) {
-                return tableInfo;
-            }
-        }
-        return null;
-    }
-
-    /**
      * 语句中是否有 创建人字段 creator , 没有的话为了不影响系统执行, 将不进行权限控制, 只报警告
      */
     protected boolean checkTableCreator(String tableName){
-        TableInfo tableInfo = getTableInfo(tableName);
+        TableInfo tableInfo = MpUtil.getTableInfo(tableName);
         if (tableInfo == null){
             log.warn("'{}' 数据表未找到对应的MybatisPlus实体类，将不会启用数据权限控制，请检查配置",tableName);
             return false;

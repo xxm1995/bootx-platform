@@ -1,6 +1,5 @@
 package cn.bootx.iam.core.upms.service;
 
-import cn.bootx.common.core.annotation.CountTime;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.common.core.util.TreeBuildUtil;
@@ -16,6 +15,8 @@ import cn.bootx.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static cn.bootx.iam.code.CachingCode.USER_PERM_CODE;
+
 /**
  * 角色权限菜单关系
  * @author xxm
@@ -33,7 +36,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RoleMenuService {
+public class RolePermService {
     private final RoleMenuManager roleMenuManager;
 
     private final UserRoleService userRoleService;
@@ -42,7 +45,7 @@ public class RoleMenuService {
     /**
      * 保存角色菜单授权
      */
-    @CountTime
+    @CacheEvict(value = {USER_PERM_CODE},allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void save(Long roleId, String clientCode, List<Long> permissionIds){
         // 先删后增
@@ -60,7 +63,6 @@ public class RoleMenuService {
                 .collect(Collectors.toList());
         roleMenuManager.deleteByIds(deleteIds);
         roleMenuManager.saveAll(roleMenus);
-
     }
 
     /**
@@ -74,7 +76,7 @@ public class RoleMenuService {
     }
 
     /**
-     * 获取菜单权限树, 不包含资源权限
+     * 获取菜单权限树, 不包含资源权限(权限码)
      */
     public List<PermMenuDto> findMenuTree(String clientCode){
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
@@ -85,14 +87,14 @@ public class RoleMenuService {
     }
 
     /**
-     * 获取权限树, 包含菜单和资源权限
+     * 获取权限树, 包含菜单和资源权限(权限码)
      */
     public List<PermMenuDto> findAllTree(String clientCode){
         return this.recursiveBuildTree(this.findPermissions(clientCode));
     }
 
     /**
-     * 获取权限菜单id列表,不包含资源权限
+     * 获取权限菜单id列表,不包含资源权限(权限码)
      */
     public List<Long> findMenuIds(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
@@ -103,17 +105,7 @@ public class RoleMenuService {
     }
 
     /**
-     * 获取权限id列表,包含菜单和资源权限
-     */
-    public List<Long> findPermissionIds(String clientCode) {
-        List<PermMenuDto> permissions = this.findPermissions(clientCode);
-        return permissions.stream()
-                .map(PermMenuDto::getId)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * 获取菜单和资源权限
+     * 获取菜单和资源权限(权限码)
      */
     public MenuAndResourceDto getPermissions(String clientCode){
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
@@ -144,6 +136,19 @@ public class RoleMenuService {
             permissions = this.findPermissionsByUser(userDetail.getId());
         }
         return permissions;
+    }
+
+    /**
+     * 获取资源(权限码)列表(后端使用,直接获取所有终端的权限码)
+     */
+    @Cacheable(value = USER_PERM_CODE,key = "#userId")
+    public List<String> findPermCodesByUserId(Long userId){
+        // 获取关联的的权限码
+        List<PermMenuDto> permissions = this.findPermissionsByUser(userId);
+        return permissions.stream()
+                .filter(o -> Objects.equals(o.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
+                .map(PermMenuDto::getPermCode)
+                .collect(Collectors.toList());
     }
 
     /**

@@ -13,6 +13,8 @@ import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.support.ColumnCache;
@@ -178,5 +180,17 @@ public class MpUtil {
             return Optional.of(page.getRecords().get(0));
         }
         return Optional.empty();
+    }
+
+    /**
+     * 获取关联的 TableInfo
+     */
+    public static TableInfo getTableInfo(String tableName){
+        for (TableInfo tableInfo : TableInfoHelper.getTableInfos()) {
+            if (tableName.equalsIgnoreCase(tableInfo.getTableName())) {
+                return tableInfo;
+            }
+        }
+        return null;
     }
 }

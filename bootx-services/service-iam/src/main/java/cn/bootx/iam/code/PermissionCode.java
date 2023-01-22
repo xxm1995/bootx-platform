@@ -1,9 +1,9 @@
 package cn.bootx.iam.code;
 
-/**   
+/**
 * 权限相关编码
-* @author xxm  
-* @date 2021/7/12 
+* @author xxm
+* @date 2021/7/12
 */
 public interface PermissionCode {
     /**
@@ -11,11 +11,11 @@ public interface PermissionCode {
      */
     Integer MENU_TYPE_TOP = 0;
     /**
-     *  1：子菜单 
+     *  1：子菜单
      */
     Integer MENU_TYPE_SUB = 1;
     /**
-     *  2：资源权限
+     *  2：资源权限 权限码
      */
     Integer MENU_TYPE_RESOURCE = 2;
 }

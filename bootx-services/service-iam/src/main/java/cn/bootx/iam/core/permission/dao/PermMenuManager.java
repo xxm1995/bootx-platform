@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.permission.dao;
 
 import cn.bootx.common.mybatisplus.impl.BaseManager;
+import cn.bootx.iam.code.PermissionCode;
 import cn.bootx.iam.core.permission.entity.PermMenu;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,10 @@ public class PermMenuManager extends BaseManager<PermMenuMapper, PermMenu> {
 
     public List<PermMenu> findAllByClientCode(String clientCode) {
         return findAllByField(PermMenu::getClientCode,clientCode);
+    }
+
+    public List<PermMenu> findAllByResource() {
+        return findAllByField(PermMenu::getMenuType, PermissionCode.MENU_TYPE_RESOURCE);
     }
 
 }

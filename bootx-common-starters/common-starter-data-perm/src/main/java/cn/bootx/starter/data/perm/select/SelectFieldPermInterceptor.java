@@ -2,10 +2,14 @@ package cn.bootx.starter.data.perm.select;
 
 import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.annotation.Permission;
+import cn.bootx.common.core.code.CommonCode;
 import cn.bootx.common.core.entity.UserDetail;
+import cn.bootx.common.core.util.CollUtil;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.data.perm.configuration.DataPermProperties;
 import cn.bootx.starter.data.perm.exception.NotLoginPermException;
 import cn.bootx.starter.data.perm.local.DataPermContextHolder;
+import com.baomidou.mybatisplus.core.metadata.TableFieldInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
@@ -37,6 +41,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SelectFieldPermInterceptor extends JsqlParserSupport implements InnerInterceptor {
     private final DataPermProperties dataPermProperties;
+    private final SelectFieldPermHandler selectFieldPermHandler;
+
     /**
      * 查询语句判断
      */
@@ -58,8 +64,15 @@ public class SelectFieldPermInterceptor extends JsqlParserSupport implements Inn
 
         if (selectBody instanceof PlainSelect) {
             PlainSelect plainSelect = (PlainSelect) selectBody;
+            // 关联表直接排除
+            if (CollUtil.isNotEmpty(plainSelect.getJoins())){
+                return;
+            }
+            String tableName = plainSelect.getFromItem().toString();
             List<SelectItem> selectItems = plainSelect.getSelectItems();
-            plainSelect.setSelectItems(selectItems);
+            // 过滤掉没有权限查看的字段
+            List<SelectItem> newSelectItems = selectFieldPermHandler.filterFields(selectItems, tableName);
+            plainSelect.setSelectItems(newSelectItems);
         }
     }
 
@@ -87,15 +100,4 @@ public class SelectFieldPermInterceptor extends JsqlParserSupport implements Inn
                 .orElseThrow(NotLoginPermException::new);
     }
 
-    /**
-     * 获取关联的 TableInfo
-     */
-    protected TableInfo getTableInfo(String tableName){
-        for (TableInfo tableInfo : TableInfoHelper.getTableInfos()) {
-            if (tableName.equalsIgnoreCase(tableInfo.getTableName())) {
-                return tableInfo;
-            }
-        }
-        return null;
-    }
 }

@@ -39,7 +39,7 @@ public class PermMenuParam implements Serializable {
     @Schema(description = "路由名称，建议唯一")
     private String name;
 
-    @Schema(description = "菜单权限编码")
+    @Schema(description = "资源编码(权限码)")
     private String permCode;
 
     @Schema(description = "是否有效")

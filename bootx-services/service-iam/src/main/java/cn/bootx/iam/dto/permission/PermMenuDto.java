@@ -32,7 +32,7 @@ public class PermMenuDto extends BaseDto implements Serializable {
     @Schema(description = "路由名称，建议唯一")
     private String name;
 
-    @Schema(description = "资源权限编码")
+    @Schema(description = "资源编码(权限码)")
     private String permCode;
 
     @Schema(description = "是否有效")
@@ -63,7 +63,7 @@ public class PermMenuDto extends BaseDto implements Serializable {
     private Integer menuType;
 
     /**
-     * meta
+     * meta 元信息
      */
     @Schema(description = "是否缓存页面")
     private boolean keepAlive;

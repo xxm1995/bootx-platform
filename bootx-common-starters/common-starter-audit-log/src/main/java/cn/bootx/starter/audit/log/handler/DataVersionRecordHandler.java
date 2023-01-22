@@ -2,6 +2,7 @@ package cn.bootx.starter.audit.log.handler;
 
 import cn.bootx.common.core.annotation.DataVersionLog;
 import cn.bootx.common.mybatisplus.extension.DataChangeRecorderInnerInterceptor;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.audit.log.param.DataVersionLogParam;
 import cn.bootx.starter.audit.log.service.DataVersionLogService;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
@@ -54,7 +55,7 @@ public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor
             Object pkColumnVal = changedRecord.getPkColumnVal();
             // insert手动获取下主键值
             if ("insert".equals(operationResult.getOperation())){
-                String keyProperty = Optional.ofNullable(this.getTableInfo(operationResult.getTableName()))
+                String keyProperty = Optional.ofNullable(MpUtil.getTableInfo(operationResult.getTableName()))
                         .map(TableInfo::getKeyProperty)
                         .map(String::toUpperCase)
                         .orElse(null);

@@ -3,7 +3,7 @@ package cn.bootx.iam.controller;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.iam.core.permission.service.PermMenuService;
-import cn.bootx.iam.core.upms.service.RoleMenuService;
+import cn.bootx.iam.core.upms.service.RolePermService;
 import cn.bootx.iam.dto.permission.PermMenuDto;
 import cn.bootx.iam.param.permission.PermMenuParam;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PermMenuController {
     private final PermMenuService permissionService;
-    private final RoleMenuService rolePermissionService;
+    private final RolePermService rolePermissionService;
 
     @Operation(summary = "添加菜单权限")
     @PostMapping("/add")
@@ -49,7 +49,7 @@ public class PermMenuController {
         return Res.ok(rolePermissionService.findAllTree(clientCode));
     }
 
-    @Operation(summary = "资源列表")
+    @Operation(summary = "资源(权限码)列表")
     @GetMapping("/resourceList")
     public ResResult<List<PermMenuDto>> resourceList(Long menuId){
         return Res.ok(permissionService.findResourceByMenuId(menuId));

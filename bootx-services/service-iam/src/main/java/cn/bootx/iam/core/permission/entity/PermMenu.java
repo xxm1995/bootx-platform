@@ -13,10 +13,10 @@ import lombok.experimental.Accessors;
 
 import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
 
-/**   
+/**
 * 权限配置
-* @author xxm  
-* @date 2021/8/3 
+* @author xxm
+* @date 2021/8/3
 */
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -37,7 +37,7 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     /** 路由名称，建议唯一 */
     private String name;
 
-    /** 菜单权限编码 */
+    /** 资源编码(权限码) */
     private String permCode;
 
     /** 是否有效 */
