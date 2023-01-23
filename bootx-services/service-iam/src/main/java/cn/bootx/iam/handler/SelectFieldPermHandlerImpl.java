@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jsqlparser.statement.select.SelectItem;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class SelectFieldPermHandlerImpl implements SelectFieldPermHandler {
+    @Lazy
     private final RolePermService rolePermService;
 
     /**
