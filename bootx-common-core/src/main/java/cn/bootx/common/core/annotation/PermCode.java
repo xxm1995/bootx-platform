@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * @author xxm
  * @date 2023/1/22
  */
-@Target({ElementType.METHOD,ElementType.TYPE})
+@Target({ElementType.METHOD,ElementType.FIELD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited

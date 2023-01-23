@@ -63,7 +63,7 @@ public class PermCodeRouterCheck implements RouterCheck {
         if (!UserDetailOpt.isPresent()){
             return false;
         }
-        List<String> userPermCodes = rolePermService.findPermCodesByUserId(UserDetailOpt.get().getId());
+        List<String> userPermCodes = rolePermService.findEffectPermCodesByUserId(UserDetailOpt.get().getId());
         return userPermCodes.stream()
                 .anyMatch(permCodes::contains);
     }

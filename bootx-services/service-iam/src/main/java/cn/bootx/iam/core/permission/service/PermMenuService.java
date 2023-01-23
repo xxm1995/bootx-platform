@@ -97,13 +97,6 @@ public class PermMenuService {
     }
 
     /**
-     * 资源(权限码)列表
-     */
-    public List<PermMenuDto> findAllByResource() {
-        return ResultConvertUtil.dtoListConvert(permMenuManager.findAllByResource());
-    }
-
-    /**
      * 根据id集合查询
      */
     public List<PermMenuDto> findByIds(List<Long> permissionIds) {

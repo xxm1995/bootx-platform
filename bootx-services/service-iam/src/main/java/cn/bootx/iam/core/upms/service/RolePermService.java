@@ -1,5 +1,6 @@
 package cn.bootx.iam.core.upms.service;
 
+import cn.bootx.common.core.annotation.NestedPermission;
 import cn.bootx.common.core.entity.UserDetail;
 import cn.bootx.common.core.rest.dto.BaseDto;
 import cn.bootx.common.core.util.TreeBuildUtil;
@@ -111,6 +112,7 @@ public class RolePermService {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
         List<String> resourcePerms = permissions.stream()
                 .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+                .filter(PermMenuDto::isEffect)
                 .map(PermMenuDto::getPermCode)
                 .collect(Collectors.toList());
         List<PermMenuDto> menus = permissions.stream()
@@ -139,14 +141,16 @@ public class RolePermService {
     }
 
     /**
-     * 获取资源(权限码)列表(后端使用,直接获取所有终端的权限码)
+     * 获取有效的资源(权限码)列表(后端使用,直接获取所有终端的权限码)
      */
     @Cacheable(value = USER_PERM_CODE,key = "#userId")
-    public List<String> findPermCodesByUserId(Long userId){
+    @NestedPermission
+    public List<String> findEffectPermCodesByUserId(Long userId){
         // 获取关联的的权限码
         List<PermMenuDto> permissions = this.findPermissionsByUser(userId);
         return permissions.stream()
                 .filter(o -> Objects.equals(o.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
+                .filter(PermMenuDto::isEffect)
                 .map(PermMenuDto::getPermCode)
                 .collect(Collectors.toList());
     }

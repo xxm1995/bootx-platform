@@ -1,6 +1,7 @@
 package cn.bootx.demo.core.perm.entity;
 
 import cn.bootx.common.core.annotation.DataVersionLog;
+import cn.bootx.common.core.annotation.PermCode;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,6 +26,7 @@ public class DataPermDemo extends MpBaseEntity {
     @Schema(description = "名称")
     private String name;
 
+    @PermCode("123")
     @Schema(description = "创建人名称")
     private String creatorName;
 

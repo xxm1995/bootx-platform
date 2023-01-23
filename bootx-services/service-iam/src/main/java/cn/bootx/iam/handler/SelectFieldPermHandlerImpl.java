@@ -48,7 +48,7 @@ public class SelectFieldPermHandlerImpl implements SelectFieldPermHandler {
 
         // 获取类注解
         List<String> userPermCodes = currentUser.map(UserDetail::getId)
-                .map(rolePermService::findPermCodesByUserId)
+                .map(rolePermService::findEffectPermCodesByUserId)
                 .orElse(new ArrayList<>(0));
 
         Class<?> entityType = tableInfo.getEntityType();
@@ -68,9 +68,9 @@ public class SelectFieldPermHandlerImpl implements SelectFieldPermHandler {
                         return true;
                     }
                     PermCode permCode = tableField.getField().getAnnotation(PermCode.class);
-                    if (!Objects.isNull(permCode)){
+                    if (Objects.nonNull(permCode)){
                         // 用户没有对应的权限码时, 过滤掉这个字段
-                        return Arrays.stream(permCode.value()).noneMatch(userPermCodes::contains);
+                        return Arrays.stream(permCode.value()).anyMatch(userPermCodes::contains);
                     } else {
                         return true;
                     }
