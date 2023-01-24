@@ -135,7 +135,9 @@ public class RolePermService {
             permissions = permMenuService.findAllByClientCode(clientCode);
         } else {
             // 非管理员获取自身拥有的权限
-            permissions = this.findPermissionsByUser(userDetail.getId());
+            permissions = this.findPermissionsByUser(userDetail.getId()).stream()
+                    .filter(o->Objects.equals(clientCode,o.getClientCode()))
+                    .collect(Collectors.toList());
         }
         return permissions;
     }
@@ -156,7 +158,7 @@ public class RolePermService {
     }
 
     /**
-     * 查询用户查询拥有的权限信息
+     * 查询用户查询拥有的权限信息(直接获取所有终端的权限码)
      */
     private List<PermMenuDto> findPermissionsByUser(Long userId){
         List<PermMenuDto> permissions = new ArrayList<>(0);

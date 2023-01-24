@@ -122,9 +122,9 @@
     #end
     #if($deleteType == "popconfirm")
     del(record.id).then(() => {
-        createMessage.success('删除成功')
-        queryPage()
-      })
+      createMessage.success('删除成功')
+      queryPage()
+    })
     #end
     }
 </script>
