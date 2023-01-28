@@ -58,7 +58,7 @@
         <sa-token.version>1.33.0</sa-token.version>
         <justauth.version>1.16.5</justauth.version>
         <justauth..spring.boot.version>1.4.0</justauth..spring.boot.version>
-        <mybatis-plus.version>3.5.3</mybatis-plus.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <dynamic-datasource.version>3.5.2</dynamic-datasource.version>
         <springdoc.version>1.6.13</springdoc.version>
         <redisson.version>3.19.0</redisson.version>
