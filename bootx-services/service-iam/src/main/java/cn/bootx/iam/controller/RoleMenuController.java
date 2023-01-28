@@ -1,6 +1,7 @@
 package cn.bootx.iam.controller;
 
 import cn.bootx.common.core.annotation.IgnoreAuth;
+import cn.bootx.common.core.annotation.PermCode;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.util.ValidationUtil;
