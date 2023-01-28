@@ -80,6 +80,13 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- mysql 不知道为什么构建就报错了, 需要显式声明一下 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
             <!-- 三方库 -->
             <!-- TTL容器 -->
             <dependency>
