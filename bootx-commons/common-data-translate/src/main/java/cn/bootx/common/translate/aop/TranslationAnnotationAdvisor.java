@@ -1,4 +1,4 @@
-package cn.bootx.baseapi.handler.dict;
+package cn.bootx.common.translate.aop;
 
 import cn.bootx.common.core.annotation.TranslationResult;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +15,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class DictAnnotationAdvisor extends AbstractPointcutAdvisor {
+public class TranslationAnnotationAdvisor extends AbstractPointcutAdvisor {
 
-    private final DictInterceptor dictInterceptor;
+    private final TranslationInterceptor translationInterceptor;
 
     private final Pointcut pointcut = AnnotationMatchingPointcut.forMethodAnnotation(TranslationResult.class);
 
     /**
      * 切入点
-     * @return
      */
     @Override
     public Pointcut getPointcut() {
@@ -32,11 +31,10 @@ public class DictAnnotationAdvisor extends AbstractPointcutAdvisor {
 
     /**
      * 切点处理适配器
-     * @return
      */
     @Override
     public Advice getAdvice() {
-        return dictInterceptor;
+        return translationInterceptor;
     }
 
 }

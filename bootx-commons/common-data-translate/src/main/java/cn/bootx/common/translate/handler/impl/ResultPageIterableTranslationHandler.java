@@ -1,14 +1,16 @@
-package cn.bootx.baseapi.handler.dict;
+package cn.bootx.common.translate.handler.impl;
 
-import cn.bootx.baseapi.core.dict.service.DictTranslationService;
 import cn.bootx.common.core.annotation.TranslationResult;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.translate.handler.TranslationHandler;
+import cn.bootx.common.translate.service.FieldTranslationService;
 import cn.hutool.core.util.ClassUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -18,8 +20,8 @@ import java.util.Map;
  */
 @Component
 @RequiredArgsConstructor
-public class ResultPageIterableTranslationHandler implements DictTranslationHandler{
-    private final DictTranslationService dictTranslationService;
+public class ResultPageIterableTranslationHandler implements TranslationHandler {
+    private final FieldTranslationService translationService;
 
     /**
      * ResResult类型, 泛型 T 为 Iterable 的实现, 比如 List
@@ -34,7 +36,7 @@ public class ResultPageIterableTranslationHandler implements DictTranslationHand
             if (rawType instanceof ParameterizedType ){
                 // 看类型是否为分页
                 Type actualType = ((ParameterizedType) rawType).getActualTypeArguments()[0];
-                if (actualType instanceof Class<?> && ClassUtil.isAssignable((Class<?>) actualType, Iterable.class)) {
+                if (actualType instanceof Class<?> && ClassUtil.isAssignable((Class<?>) actualType, Collection.class)) {
                     return true;
                 }
             }
@@ -45,12 +47,12 @@ public class ResultPageIterableTranslationHandler implements DictTranslationHand
     @SuppressWarnings("unchecked")
     @Override
     public void translation(Object object, Type type, TranslationResult translationResult) {
-        ResResult<Iterable<?>> resResult = (ResResult<Iterable<?>>) object;
-        Iterable<?> iterable = resResult.getData();
+        ResResult<Collection<?>> resResult = (ResResult<Collection<?>>) object;
+        Collection<?> collection = resResult.getData();
         if (translationResult.convertType()== TranslationResult.ConvertType.OBJECT){
-            dictTranslationService.translation(iterable);
+            translationService.translation(collection);
         } else {
-            Iterable<Map<String, Object>> maps = dictTranslationService.translationToMap(iterable);
+            Collection<Map<String, Object>> maps = translationService.translationToMap(collection);
             resResult.setData(maps);
         }
     }

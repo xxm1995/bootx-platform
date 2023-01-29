@@ -1,8 +1,9 @@
-package cn.bootx.baseapi.handler.dict;
+package cn.bootx.common.translate.handler.impl;
 
-import cn.bootx.baseapi.core.dict.service.DictTranslationService;
 import cn.bootx.common.core.annotation.TranslationResult;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.translate.handler.TranslationHandler;
+import cn.bootx.common.translate.service.FieldTranslationService;
 import cn.hutool.core.util.ClassUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,8 +19,8 @@ import java.util.Map;
  */
 @Component
 @RequiredArgsConstructor
-public class ResultObjectDictTranslationHandler implements DictTranslationHandler{
-    private final DictTranslationService dictTranslationService;
+public class ResultObjectTranslationHandler implements TranslationHandler {
+    private final FieldTranslationService translationService;
 
     /**
      * ResResult类型, 原始包装的普通类型
@@ -44,9 +45,9 @@ public class ResultObjectDictTranslationHandler implements DictTranslationHandle
         ResResult<?> resResult = (ResResult<?>) object;
         Object data = resResult.getData();
         if (translationResult.convertType()== TranslationResult.ConvertType.OBJECT){
-            dictTranslationService.translation(data);
+            translationService.translation(data);
         } else {
-            Map<String, Object> stringObjectMap = dictTranslationService.translationToMap(data);
+            Map<String, Object> stringObjectMap = translationService.translationToMap(data);
             ((ResResult<Map<String, Object>>)resResult).setData(stringObjectMap);
         }
     }

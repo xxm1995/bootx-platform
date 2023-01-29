@@ -14,10 +14,16 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Translate {
 
+
+    /**
+     * 翻译类型
+     */
+    Type type();
+
     /**
      * 字典编码
      */
-    String dicCode();
+    String dicCode() default "";
 
     /**
      * 来源字段 默认为自身
@@ -29,5 +35,15 @@ public @interface Translate {
      */
     String target() default "";
 
-
+    /**
+     * 翻译类型
+     */
+    enum Type{
+        /** 字典 */
+        DICT,
+        /** 数据表 */
+        TABLE,
+        /** 枚举 */
+        ENUM;
+    }
 }

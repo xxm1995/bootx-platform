@@ -1,4 +1,4 @@
-package cn.bootx.baseapi.handler.dict;
+package cn.bootx.common.translate.handler;
 
 import cn.bootx.common.core.annotation.TranslationResult;
 
@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
  * @author xxm
  * @date 2022/12/20
  */
-public interface DictTranslationHandler {
+public interface TranslationHandler {
 
     /**
      * 匹配

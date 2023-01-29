@@ -1,6 +1,7 @@
-package cn.bootx.baseapi.handler.dict;
+package cn.bootx.common.translate.aop;
 
 import cn.bootx.common.core.annotation.TranslationResult;
+import cn.bootx.common.translate.handler.TranslationHandler;
 import cn.hutool.core.util.TypeUtil;
 import lombok.RequiredArgsConstructor;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -15,15 +16,15 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 字典翻译切点
+ * 字段翻译切点
  * @author xxm
  * @date 2022/12/20
  */
 @Component
 @RequiredArgsConstructor
-public class DictInterceptor implements MethodInterceptor {
+public class TranslationInterceptor implements MethodInterceptor {
 
-    private final List<DictTranslationHandler> dictTranslationHandlers;
+    private final List<TranslationHandler> translationHandlers;
 
     @Nullable
     @Override
@@ -44,9 +45,9 @@ public class DictInterceptor implements MethodInterceptor {
         }
         // 获取返回类型, 基础类型Type为class, 泛型类型为 ParameterizedType
         Type returnType = TypeUtil.getReturnType(invocation.getMethod());
-        for (DictTranslationHandler dictTranslationHandler : dictTranslationHandlers) {
-            if (dictTranslationHandler.adaptation(returnType)){
-                dictTranslationHandler.translation(proceed,returnType, translationResult);
+        for (TranslationHandler translationHandler : translationHandlers) {
+            if (translationHandler.adaptation(returnType)){
+                translationHandler.translation(proceed,returnType, translationResult);
             }
         }
         return proceed;

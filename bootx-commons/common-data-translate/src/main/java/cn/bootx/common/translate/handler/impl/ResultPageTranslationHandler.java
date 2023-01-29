@@ -1,9 +1,10 @@
-package cn.bootx.baseapi.handler.dict;
+package cn.bootx.common.translate.handler.impl;
 
-import cn.bootx.baseapi.core.dict.service.DictTranslationService;
 import cn.bootx.common.core.annotation.TranslationResult;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.util.CollUtil;
+import cn.bootx.common.translate.handler.TranslationHandler;
+import cn.bootx.common.translate.service.FieldTranslationService;
 import cn.hutool.core.util.ClassUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ import java.util.Map;
  */
 @Component
 @RequiredArgsConstructor
-public class ResultPageDictTranslationHandler implements DictTranslationHandler{
-    private final DictTranslationService dictTranslationService;
+public class ResultPageTranslationHandler implements TranslationHandler {
+    private final FieldTranslationService translationService;
 
     /**
      * ResResult类型, T 为分页类
@@ -52,10 +53,10 @@ public class ResultPageDictTranslationHandler implements DictTranslationHandler{
         IPage<?> page = resResult.getData();
         if (translationResult.convertType()== TranslationResult.ConvertType.OBJECT){
             List<?> records = page.getRecords();
-            dictTranslationService.translation(records);
+            translationService.translation(records);
         } else {
             List<?> records = page.getRecords();
-            Iterable<Map<String, Object>> maps = dictTranslationService.translationToMap(records);
+            Iterable<Map<String, Object>> maps = translationService.translationToMap(records);
             List<Map<String, Object>> list = CollUtil.newArrayList(maps);
             ((IPage<Map<String, Object>>)page).setRecords(list);
         }

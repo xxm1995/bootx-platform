@@ -1,6 +1,6 @@
 package cn.bootx.demo.controller.bsp;
 
-import cn.bootx.baseapi.core.dict.service.DictTranslationService;
+import cn.bootx.baseapi.core.dict.service.DictTranslationServiceImpl;
 import cn.bootx.common.core.annotation.Translate;
 import cn.bootx.common.core.annotation.TranslationResult;
 import cn.bootx.common.core.rest.Res;
@@ -30,7 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DictConvertDemoController {
 
-    private final DictTranslationService dictTranslationService;
+    private final DictTranslationServiceImpl dictTranslationService;
 
     @Operation(summary = "转换测试(对象吧)")
     @GetMapping("/convert")
@@ -78,11 +78,11 @@ public class DictConvertDemoController {
     public static class DictDemo extends MpBaseEntity {
 
         /** 性别 */
-        @Translate(dicCode = "Sex")
+        @Translate(type = Translate.Type.DICT,dicCode = "Sex")
         private String sex;
 
         /** 三方系统类别 */
-        @Translate(dicCode = "SocialType")
+        @Translate(type = Translate.Type.DICT,dicCode = "SocialType")
         private String socialType;
 
         @TranslationResult
@@ -99,11 +99,11 @@ public class DictConvertDemoController {
         private Integer sexCode;
 
         /** 性别 */
-        @Translate(dicCode = "Sex",source = Fields.sexCode)
+        @Translate(type = Translate.Type.DICT,dicCode = "Sex",source = Fields.sexCode)
         private String sexName;
 
         /** 三方系统类别 */
-        @Translate(dicCode = "DataScopePerm")
+        @Translate(type = Translate.Type.DICT,dicCode = "DataScopePerm")
         private Integer dataScopePerm;
 
     }

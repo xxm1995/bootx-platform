@@ -42,6 +42,11 @@
             <artifactId>common-websocket</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-data-translate</artifactId>
+        </dependency>
+
         <!--数学验证码-->
         <dependency>
             <groupId>com.github.whvcse</groupId>

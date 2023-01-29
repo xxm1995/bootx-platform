@@ -3,6 +3,7 @@ package cn.bootx.baseapi.core.dict.service;
 import cn.bootx.baseapi.dto.dict.DictionaryItemSimpleDto;
 import cn.bootx.common.core.annotation.Translate;
 import cn.bootx.common.core.annotation.TranslationResult;
+import cn.bootx.common.translate.service.DictTranslationService;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ClassUtil;
@@ -16,7 +17,10 @@ import org.springframework.stereotype.Service;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,13 +32,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DictTranslationService {
+public class DictTranslationServiceImpl implements DictTranslationService {
     private final DictionaryItemService dictionaryItemService;
 
 
     /**
      * 字典值字段翻译转换
      */
+    @Override
     public void translation(Object object){
         List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
         this.translation(object,dictItems);
@@ -43,6 +48,7 @@ public class DictTranslationService {
     /**
      * 字典值字段翻译转换
      */
+    @Override
     public void translation(Iterable<?> objects){
         List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
         objects.forEach(object -> this.translation(object,dictItems));
@@ -128,6 +134,7 @@ public class DictTranslationService {
     /**
      * 转换成map
      */
+    @Override
     public Map<String,Object> translationToMap(Object o){
         List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
         return this.translationToMap(o,dictItems);
@@ -136,6 +143,7 @@ public class DictTranslationService {
     /**
      * 转换成map
      */
+    @Override
     public Iterable<Map<String,Object>> translationToMap(Iterable<?> objects){
         List<DictionaryItemSimpleDto> dictItems = dictionaryItemService.findAllByEnable();
         return dictItems.stream().map(o->this.translationToMap(o,dictItems)).collect(Collectors.toList());
@@ -239,4 +247,5 @@ public class DictTranslationService {
         // 嵌套翻译注解
         private TranslationResult translationResult;
     }
+
 }
