@@ -21,7 +21,7 @@ import java.io.IOException;
 @Component
 @RequiredArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class SessionCacheInterceptor extends OncePerRequestFilter {
+public class SessionCacheFilter extends OncePerRequestFilter {
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {

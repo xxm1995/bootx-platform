@@ -16,16 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**   
+/**
 * 针对请求生成链路追踪ID
-* @author xxm  
-* @date 2021/4/20 
+* @author xxm
+* @date 2021/4/20
 */
 @Order(value = Integer.MIN_VALUE)
 @Component
 @RequiredArgsConstructor
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-public class LogTraceHeaderHolderInterceptor extends OncePerRequestFilter {
+public class LogTraceHeaderHolderFilter extends OncePerRequestFilter {
 
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {

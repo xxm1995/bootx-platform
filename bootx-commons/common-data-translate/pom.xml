@@ -16,6 +16,10 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-mybatis-plus</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-spring</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

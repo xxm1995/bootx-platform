@@ -9,26 +9,26 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 * @date 2022/1/8
 */
 public final class SessionCacheLocal {
-    private static final ThreadLocal<UserDetail> THREAD_LOCAL_TENANT = new TransmittableThreadLocal<>();
+    private static final ThreadLocal<UserDetail> THREAD_LOCAL = new TransmittableThreadLocal<>();
 
     /**
      * TTL 设置数据
      */
     public static void put(UserDetail userDetail) {
-       THREAD_LOCAL_TENANT.set(userDetail);
+       THREAD_LOCAL.set(userDetail);
     }
 
     /**
      * 获取TTL中的数据
      */
     public static UserDetail get() {
-        return THREAD_LOCAL_TENANT.get();
+        return THREAD_LOCAL.get();
     }
 
     /**
      * 清除
      */
     public static void clear() {
-        THREAD_LOCAL_TENANT.remove();
+        THREAD_LOCAL.remove();
     }
 }
