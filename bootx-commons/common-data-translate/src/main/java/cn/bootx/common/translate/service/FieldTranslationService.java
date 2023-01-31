@@ -18,6 +18,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -74,7 +75,26 @@ public class FieldTranslationService {
         // 筛选出带翻译注解的进行字段翻译
         list.stream()
                 .filter(o-> Objects.nonNull(o.getTranslate()))
+                .peek(convertInfo -> isAndGetFieldType(convertInfo,object))
                 .forEach(o-> this.translation0(o,object));
+    }
+
+    /**
+     * 翻译前和翻译后的类型是否一致
+     */
+    private Class<?> isAndGetFieldType(ConvertInfo convertInfo, Object convertObject){
+        Translate translate = convertInfo.getTranslate();
+        // 直接在当前字段上进行转换才进行处理
+        if (StrUtil.isAllBlank(translate.source(), translate.target())){
+            Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
+            if (!Objects.isNull(fieldValue)){
+                Object value = this.getTranslationValue(translate, fieldValue);
+                 if (Objects.nonNull(value) && !ClassUtil.isAssignable(convertInfo.getField().getType(),value.getClass())){
+                    return value.getClass();
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -87,25 +107,25 @@ public class FieldTranslationService {
         // 直接在当前字段上进行转换
         if (StrUtil.isAllBlank(translate.source(), translate.target())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
-            if (!StrUtil.isBlankIfStr(fieldValue)){
-                Object dictValue = this.getTranslationValue(translate, fieldValue.toString());
-                BeanUtil.setFieldValue(convertObject,convertInfo.getName(), dictValue);
+            if (!Objects.isNull(fieldValue)){
+                Object dictValue = this.getTranslationValue(translate, fieldValue);
+                this.setFieldValue(convertObject,convertInfo.getName(), dictValue);
             }
         }
         // 通过配置的源字段进行转换并赋值到当前字段
         if (StrUtil.isNotBlank(translate.source())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, translate.source());
-            if (!StrUtil.isBlankIfStr(fieldValue)){
-                Object dictValue = this.getTranslationValue(translate, fieldValue.toString());
-                BeanUtil.setFieldValue(convertObject,convertInfo.getName(), dictValue);
+            if (!Objects.isNull(fieldValue)){
+                Object dictValue = this.getTranslationValue(translate, fieldValue);
+                this.setFieldValue(convertObject,convertInfo.getName(), dictValue);
             }
         }
         // 将当前字段转换到其他字段上
         if (StrUtil.isNotBlank(translate.target())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
-            if (!StrUtil.isBlankIfStr(fieldValue)){
-                Object dictValue = this.getTranslationValue(translate, fieldValue.toString());
-                BeanUtil.setFieldValue(convertObject, translate.target(), dictValue);
+            if (!Objects.isNull(fieldValue)){
+                Object dictValue = this.getTranslationValue(translate, fieldValue);
+                this.setFieldValue(convertObject, translate.target(), dictValue);
             }
         }
     }
@@ -190,24 +210,24 @@ public class FieldTranslationService {
         // 直接在当前字段上进行转换
         if (StrUtil.isAllBlank(translate.source(), translate.target())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
-            if (!StrUtil.isBlankIfStr(fieldValue)){
-                Object dictValue = this.getTranslationValue(translate, fieldValue.toString());
+            if (!Objects.isNull(fieldValue)){
+                Object dictValue = this.getTranslationValue(translate, fieldValue);
                 map.put(convertInfo.getName(), dictValue);
             }
         }
         // 通过配置的源字段进行转换并赋值到当前字段
         if (StrUtil.isNotBlank(translate.source())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, translate.source());
-            if (!StrUtil.isBlankIfStr(fieldValue)){
-                Object dictValue = this.getTranslationValue(translate, fieldValue.toString());
+            if (!Objects.isNull(fieldValue)){
+                Object dictValue = this.getTranslationValue(translate, fieldValue);
                 map.put(convertInfo.getName(), dictValue);
             }
         }
         // 将当前字段转换到其他字段上
         if (StrUtil.isNotBlank(translate.target())){
             Object fieldValue = BeanUtil.getFieldValue(convertObject, convertInfo.getName());
-            if (!StrUtil.isBlankIfStr(fieldValue)){
-                Object dictValue = this.getTranslationValue(translate, fieldValue.toString());
+            if (!Objects.isNull(fieldValue)){
+                Object dictValue = this.getTranslationValue(translate, fieldValue);
                 map.put(translate.target(), dictValue);
             }
         }
@@ -216,14 +236,22 @@ public class FieldTranslationService {
     /**
      * 获取翻译值
      */
-    private Object getTranslationValue(Translate translate,String fieldValue){
+    private Object getTranslationValue(Translate translate,Object fieldValue){
+        // 集合
+        if (fieldValue instanceof Collection){
+            return ((Collection<?>) fieldValue).stream()
+                    .map(o -> this.getTranslationValue(translate,o))
+                    .collect(getCollectorType(fieldValue));
+        }
+
+        // 普通
         switch (translate.type()) {
             case DICT:
-                return this.getDictValue(translate,fieldValue);
+                return this.getDictValue(translate,fieldValue.toString());
             case TABLE:
                 return this.getTableValue(translate,fieldValue);
             case ENUM:
-                return this.getEnumValue(translate,fieldValue);
+                return this.getEnumValue(translate,fieldValue.toString());
             default:
                 return null;
         }
@@ -241,17 +269,38 @@ public class FieldTranslationService {
     /**
      * 数据表取值
      */
-    private Object getTableValue(Translate translate,String fieldValue){
+    private Object getTableValue(Translate translate,Object fieldValue){
         Cache cache = TranslationCacheLocal.get();
 
         return "cache.getTableValue()";
     }
 
     /**
-     * 数据表取值
+     * 枚举取值
      */
     private String getEnumValue(Translate translate,String fieldValue){
         return "123";
+    }
+
+    /**
+     * 赋值
+     */
+    private void setFieldValue(Object bean, String fieldNameOrIndex, Object value){
+        try {
+            BeanUtil.setFieldValue(bean,fieldNameOrIndex,value);
+        } catch (Exception e) {
+            log.warn("类 {} 的 字段名称或下标: {}，赋值错误，值类型是字段类型不匹配",bean.getClass().getName(),fieldNameOrIndex);
+        }
+    }
+
+    /**
+     * 获取集合类型
+     */
+    private Collector<Object, ?, ?> getCollectorType(Object fieldValue){
+        if (fieldValue instanceof Set){
+            return Collectors.toSet();
+        }
+        return Collectors.toList();
     }
 
 }

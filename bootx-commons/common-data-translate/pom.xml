@@ -20,6 +20,11 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-spring</artifactId>
         </dependency>
+        <!-- 字节码增强 -->
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

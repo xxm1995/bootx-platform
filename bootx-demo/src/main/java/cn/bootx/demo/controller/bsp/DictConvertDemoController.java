@@ -33,12 +33,20 @@ public class DictConvertDemoController {
 
     private final DictTranslationServiceImpl dictTranslationService;
 
-    @Operation(summary = "转换测试(对象吧)")
+    @Operation(summary = "转换测试(对象)")
     @GetMapping("/convert")
     @TranslationResult
-    public ResResult<DictDemo> convert() {
+    public ResResult<DictDemo> convert() throws NoSuchMethodException {
+//        DynamicType.Unloaded<DictDemo> sexInt = new ByteBuddy()
+//                .redefine(DictDemo.class)
+//                .name("cn.bootx.xx.Demo")
+//                .defineField("sexInt", String.class)
+//                .make();
+
+
         DictDemo dictDemo = new DictDemo()
                 .setSex("1")
+                .setSexInt(1)
                 .setSocialType("DingTalk")
                 .setSocialTypes(Arrays.asList("123","DingTalk"))
                 .setPerson(new Person()
@@ -83,6 +91,10 @@ public class DictConvertDemoController {
         /** 性别 */
         @Translate(type = Translate.Type.DICT,dicCode = "Sex")
         private String sex;
+
+        /** 性别 */
+        @Translate(type = Translate.Type.DICT,dicCode = "Sex")
+        private Integer sexInt;
 
         /** 三方系统类别 */
         @Translate(type = Translate.Type.DICT,dicCode = "SocialType")
