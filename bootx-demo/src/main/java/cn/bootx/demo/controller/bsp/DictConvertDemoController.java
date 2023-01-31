@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,6 +40,7 @@ public class DictConvertDemoController {
         DictDemo dictDemo = new DictDemo()
                 .setSex("1")
                 .setSocialType("DingTalk")
+                .setSocialTypes(Arrays.asList("123","DingTalk"))
                 .setPerson(new Person()
                         .setSexCode(1));
 
@@ -51,6 +53,7 @@ public class DictConvertDemoController {
         DictDemo dictDemo = new DictDemo()
                 .setSex("1")
                 .setSocialType("DingTalk")
+                .setSocialTypes(Arrays.asList("123","DingTalk"))
                 .setPerson(new Person()
                         .setSexCode(1)
                         .setDataScopePerm(1));
@@ -87,6 +90,9 @@ public class DictConvertDemoController {
 
         @TranslationResult
         private Person person;
+
+        @Translate(type = Translate.Type.DICT,dicCode = "SocialType")
+        private List<String> socialTypes;
 
     }
 

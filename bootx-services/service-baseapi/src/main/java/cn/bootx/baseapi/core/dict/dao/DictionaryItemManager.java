@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 字典项
@@ -45,6 +46,16 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
     }
 
     /**
+     * 查询指定字典下的所有内容
+     */
+    public List<DictionaryItem> findByDictCodeAndEnable(String dictCode,boolean enable) {
+        return lambdaQuery()
+                .eq(DictionaryItem::getDictCode,dictCode)
+                .eq(DictionaryItem::getEnable,enable)
+                .list();
+    }
+
+    /**
      * 分页查询,根据字典Id
      */
     public Page<DictionaryItem> findAllByDictionaryId(Long dictId, PageParam pageParam) {
@@ -66,5 +77,13 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
         return lambdaQuery()
                 .eq(DictionaryItem::getEnable,enable)
                 .list();
+    }
+
+    public Optional<DictionaryItem> findByCodeAndEnable(String dictCode, String code, boolean enable) {
+        return lambdaQuery()
+                .eq(DictionaryItem::getDictCode,dictCode)
+                .eq(DictionaryItem::getCode,code)
+                .eq(DictionaryItem::getEnable,enable)
+                .oneOpt();
     }
 }

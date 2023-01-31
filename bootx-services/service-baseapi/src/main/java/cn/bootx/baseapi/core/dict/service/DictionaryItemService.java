@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -87,12 +88,29 @@ public class DictionaryItemService {
     }
 
     /**
+     * 根据字典编码和字典项编码查询启用的菜单项
+     */
+    public Optional<DictionaryItem> findEnableByCode(String dictCode, String code){
+        return dictionaryItemManager.findByCodeAndEnable(dictCode,code,true);
+    }
+
+    /**
      * 查询指定目录下的所有内容
      */
     public List<DictionaryItemDto> findByDictionaryId(Long dictionaryId) {
         return dictionaryItemManager.findByDictId(dictionaryId)
                 .stream()
                 .sorted(Comparator.comparingDouble(DictionaryItem::getSortNo))
+                .map(DictionaryItem::toDto)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * 查询指定目录下的所有内容
+     */
+    public List<DictionaryItemDto> findEnableByDictCode(String dictCode) {
+        return dictionaryItemManager.findByDictCodeAndEnable(dictCode,true)
+                .stream()
                 .map(DictionaryItem::toDto)
                 .collect(Collectors.toList());
     }

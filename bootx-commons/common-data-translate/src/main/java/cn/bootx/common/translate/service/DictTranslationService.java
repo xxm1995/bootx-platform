@@ -7,7 +7,9 @@ package cn.bootx.common.translate.service;
  */
 public interface DictTranslationService {
     /**
-     * 字典值字段翻译转换
+     * 初始化字典值字段翻译缓存
      */
-    String translation(String dicCode, String fieldValue);
+    void initDictTranslationCache();
+
+
 }
