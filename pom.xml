@@ -52,7 +52,8 @@
         <flowable.version>6.7.2</flowable.version>
         <!-- 升级新版本会有兼容性问题 -->
         <logback-classic.version>1.2.11</logback-classic.version>
-        <plumelog.version>3.5.3</plumelog.version>
+        <!-- 3.5.3 不可用 -->
+        <plumelog.version>3.5.2</plumelog.version>
         <xxl-job.version>2.3.1</xxl-job.version>
         <IJPay.version>2.9.4</IJPay.version>
         <sa-token.version>1.33.0</sa-token.version>
@@ -99,12 +100,6 @@
             <dependency>
                 <groupId>com.plumelog</groupId>
                 <artifactId>plumelog-lite-spring-boot-starter</artifactId>
-                <version>${plumelog.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.plumelog</groupId>
-                <artifactId>plumelog-trace</artifactId>
                 <version>${plumelog.version}</version>
             </dependency>
 
