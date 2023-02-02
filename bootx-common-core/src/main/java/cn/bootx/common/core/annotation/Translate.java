@@ -41,9 +41,7 @@ public @interface Translate {
     enum Type{
         /** 字典 */
         DICT,
-        /** 数据表 */
-        TABLE,
-        /** 枚举 */
-        ENUM;
+        /** 数据表 暂未实现 */
+        TABLE;
     }
 }

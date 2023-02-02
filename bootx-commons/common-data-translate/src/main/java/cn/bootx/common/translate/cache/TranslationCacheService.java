@@ -92,8 +92,6 @@ public class TranslationCacheService {
                 break;
             case TABLE:
                 break;
-            case ENUM:
-                break;
         }
     }
 

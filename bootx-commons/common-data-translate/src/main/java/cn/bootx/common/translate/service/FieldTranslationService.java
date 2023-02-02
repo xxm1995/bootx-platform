@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FieldTranslationService {
 
-    private final DictTranslationService dictTranslationService;
     private final TranslationCacheService translationCacheService;
 
     /**
@@ -250,8 +249,6 @@ public class FieldTranslationService {
                 return this.getDictValue(translate,fieldValue.toString());
             case TABLE:
                 return this.getTableValue(translate,fieldValue);
-            case ENUM:
-                return this.getEnumValue(translate,fieldValue.toString());
             default:
                 return null;
         }
@@ -273,13 +270,6 @@ public class FieldTranslationService {
         Cache cache = TranslationCacheLocal.get();
 
         return "cache.getTableValue()";
-    }
-
-    /**
-     * 枚举取值
-     */
-    private String getEnumValue(Translate translate,String fieldValue){
-        return "123";
     }
 
     /**

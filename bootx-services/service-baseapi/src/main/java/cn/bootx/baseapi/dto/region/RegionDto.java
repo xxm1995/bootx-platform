@@ -24,12 +24,15 @@ public class RegionDto {
     @Schema(description = "主键编码")
     @NonNull
     private Integer id;
+
     @Schema(description = "名称")
     @NonNull
     private String name;
+
     @Schema(description = "级别")
     @NonNull
     private Integer level;
+
     @Schema(description = "上级id")
     private Integer pid;
 

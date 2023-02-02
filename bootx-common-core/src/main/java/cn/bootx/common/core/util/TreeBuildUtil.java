@@ -3,7 +3,6 @@ package cn.bootx.common.core.util;
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.experimental.UtilityClass;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -54,9 +53,8 @@ public class TreeBuildUtil {
                 .filter(m -> Objects.equals(getPid.apply(m),pid))
                 .collect(Collectors.toList());
         if (CollectionUtil.isEmpty(children)) {
-            return new ArrayList<>(0);
+            return null;
         }
-        //
         for (T region : children) {
             List<T> childrenList = build(list, getId.apply(region), getId, getPid, setChildren);
             setChildren.accept(region,childrenList);

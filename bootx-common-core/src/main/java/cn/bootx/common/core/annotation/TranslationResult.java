@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * 字典翻译标识注解,
  * 1. 标注在字段上, 在翻译的时候会对这个字段进行递归翻译
- * 2. 标注在方法上, 会对返回值进行翻译转换处理, 推荐只在 Controller 层配合 ResResult 使用, 其他场合使用 DictConvertService 进行手动处理
+ * 2. 标注在方法上, 会对返回值进行翻译转换处理, 推荐只在 Controller 层配合 ResResult 使用, 其他场合使用 FieldTranslationService 进行手动处理
  * @author xxm
  * @date 2022/12/15
  */
@@ -31,7 +31,7 @@ public @interface TranslationResult {
      */
     enum ConvertType{
         /**
-         * 将目标对象转换成MAP, 限定只能使用在类似 ResResult 容器情况下, 可以处理字典项code与name类型不一致问题, 但会导致字段元信息的丢失, 导致后续的处理出问题
+         * 将目标对象转换成MAP, 限定只能使用在类似 ResResult 容器情况下, 可以处理翻译值前后类型不一致问题, 但会导致字段元信息的丢失, 导致后续的处理出问题
          */
         MAP,
         /**
