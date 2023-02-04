@@ -42,6 +42,7 @@
             <artifactId>common-websocket</artifactId>
         </dependency>
 
+        <!-- 数据翻译 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-data-translate</artifactId>
@@ -51,6 +52,12 @@
         <dependency>
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
+        </dependency>
+
+        <!-- 表格操作 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
         </dependency>
     </dependencies>
 

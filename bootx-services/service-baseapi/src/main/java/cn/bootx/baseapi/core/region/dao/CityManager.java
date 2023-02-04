@@ -18,6 +18,6 @@ public class CityManager extends BaseManager<CityMapper, City> {
 
 
     public List<City> findAllByPid(Integer pid){
-        return findAllByField(City::getPid,pid);
+        return findAllByField(City::getProvinceCode,pid);
     }
 }

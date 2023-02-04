@@ -279,7 +279,7 @@ public class FieldTranslationService {
         try {
             BeanUtil.setFieldValue(bean,fieldNameOrIndex,value);
         } catch (Exception e) {
-            log.warn("类 {} 的 字段名称或下标: {}，赋值错误，值类型是字段类型不匹配",bean.getClass().getName(),fieldNameOrIndex);
+            log.warn("类 {} 的 字段名称或下标: {}，赋值错误，可能是值类型与字段类型不匹配",bean.getClass().getName(),fieldNameOrIndex);
         }
     }
 

@@ -37,12 +37,6 @@ public class DictConvertDemoController {
     @GetMapping("/convert")
     @TranslationResult
     public ResResult<DictDemo> convert() throws NoSuchMethodException {
-//        DynamicType.Unloaded<DictDemo> sexInt = new ByteBuddy()
-//                .redefine(DictDemo.class)
-//                .name("cn.bootx.xx.Demo")
-//                .defineField("sexInt", String.class)
-//                .make();
-
 
         DictDemo dictDemo = new DictDemo()
                 .setSex("1")

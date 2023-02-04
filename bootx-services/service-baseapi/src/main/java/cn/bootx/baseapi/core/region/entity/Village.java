@@ -7,24 +7,24 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 街道/乡镇表
-* @author xxm
-* @date 2022-12-24
-*/
+ * 村庄/社区
+ * @author xxm
+ * @date 2023/2/3
+ */
 @Data
 @Accessors(chain = true)
-@TableName("base_street")
-public class Street{
+@TableName("base_village")
+public class Village {
 
     /** 街道code */
     @TableId
     private String code;
     /** 街道名称 */
     private String name;
-    /** 区县code */
-    private String areaCode;
+    /** 社区/乡镇 */
+    private String streetCode;
     /** 转换成dto */
     public RegionDto toDto() {
-        return new RegionDto(code,name,4).setParentCode(areaCode);
+        return new RegionDto(code,name,4).setParentCode(streetCode);
     }
 }

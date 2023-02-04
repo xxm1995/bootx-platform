@@ -16,15 +16,15 @@ import lombok.experimental.Accessors;
 @TableName("base_city")
 public class City {
 
-    /** 区域id */
+    /** 市/地区编码 */
     @TableId
-    private Integer id;
+    private String code;
     /** 城市名称 */
     private String name;
-    /** 省份id */
-    private Integer pid;
+    /** 省份code */
+    private String provinceCode;
     /** 转换成dto */
     public RegionDto toDto() {
-        return new RegionDto(id,name,2).setPid(pid);
+        return new RegionDto(code,name,2).setParentCode(provinceCode);
     }
 }

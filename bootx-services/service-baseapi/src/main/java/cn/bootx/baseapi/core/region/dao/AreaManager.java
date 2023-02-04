@@ -17,6 +17,6 @@ import java.util.List;
 public class AreaManager extends BaseManager<AreaMapper, Area> {
 
     public List<Area> findAllByPid(Integer pid){
-        return findAllByField(Area::getPid,pid);
+        return findAllByField(Area::getCityCode,pid);
     }
 }

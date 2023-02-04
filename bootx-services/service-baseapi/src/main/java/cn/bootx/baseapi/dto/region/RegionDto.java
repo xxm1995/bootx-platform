@@ -23,7 +23,7 @@ public class RegionDto {
 
     @Schema(description = "主键编码")
     @NonNull
-    private Integer id;
+    private String code;
 
     @Schema(description = "名称")
     @NonNull
@@ -34,7 +34,7 @@ public class RegionDto {
     private Integer level;
 
     @Schema(description = "上级id")
-    private Integer pid;
+    private String parentCode;
 
     @Schema(description = "下一级行政区域")
     private List<RegionDto> children;

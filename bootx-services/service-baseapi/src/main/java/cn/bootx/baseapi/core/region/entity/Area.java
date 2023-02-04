@@ -16,16 +16,16 @@ import lombok.experimental.Accessors;
 @TableName("base_area")
 public class Area{
 
-    /** 区域id */
+    /** d */
     @TableId
-    private Integer id;
-    /** 区域名称 */
+    private String code;
+    /** 名称 */
     private String name;
-    /** 城市id */
-    private Integer pid;
+    /** 城市code */
+    private String cityCode;
 
     /** 转换成dto */
     public RegionDto toDto() {
-        return new RegionDto(id,name,3).setPid(pid);
+        return new RegionDto(code,name,3).setParentCode(cityCode);
     }
 }
