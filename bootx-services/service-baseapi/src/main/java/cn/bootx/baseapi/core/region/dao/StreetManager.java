@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StreetManager extends BaseManager<StreetMapper, Street> {
 
-    public List<Street> findAllByPid(Integer pid){
-        return findAllByField(Street::getAreaCode,pid);
+    public List<Street> findAllByAreaCode(String areaCode){
+        return findAllByField(Street::getAreaCode,areaCode);
     }
 }

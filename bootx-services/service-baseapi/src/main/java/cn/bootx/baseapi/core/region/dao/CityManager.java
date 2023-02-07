@@ -17,7 +17,7 @@ import java.util.List;
 public class CityManager extends BaseManager<CityMapper, City> {
 
 
-    public List<City> findAllByPid(Integer pid){
-        return findAllByField(City::getProvinceCode,pid);
+    public List<City> findAllByProvinceCode(String provinceCode){
+        return findAllByField(City::getProvinceCode, provinceCode);
     }
 }

@@ -4,7 +4,6 @@ import cn.bootx.baseapi.dto.region.RegionDto;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 /**
  * 村庄/社区
@@ -12,7 +11,6 @@ import lombok.experimental.Accessors;
  * @date 2023/2/3
  */
 @Data
-@Accessors(chain = true)
 @TableName("base_village")
 public class Village {
 

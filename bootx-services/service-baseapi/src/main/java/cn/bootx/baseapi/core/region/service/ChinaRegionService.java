@@ -1,30 +1,18 @@
 package cn.bootx.baseapi.core.region.service;
 
-import cn.bootx.baseapi.core.region.dao.AreaManager;
-import cn.bootx.baseapi.core.region.dao.CityManager;
-import cn.bootx.baseapi.core.region.dao.ProvinceManager;
-import cn.bootx.baseapi.core.region.dao.StreetManager;
-import cn.bootx.baseapi.core.region.entity.Area;
-import cn.bootx.baseapi.core.region.entity.City;
-import cn.bootx.baseapi.core.region.entity.Province;
-import cn.bootx.baseapi.core.region.entity.Street;
+import cn.bootx.baseapi.code.ChinaRegionCode;
+import cn.bootx.baseapi.core.region.dao.*;
+import cn.bootx.baseapi.core.region.entity.*;
 import cn.bootx.baseapi.dto.region.RegionDto;
 import cn.bootx.common.core.util.TreeBuildUtil;
-import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.read.listener.PageReadListener;
-import com.alibaba.excel.support.ExcelTypeEnum;
-import com.alibaba.fastjson.JSON;
-import lombok.*;
-import lombok.experimental.Accessors;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.zip.ZipInputStream;
 
 import static cn.bootx.baseapi.code.CachingCode.CHINA_REGION;
 
@@ -41,33 +29,21 @@ public class ChinaRegionService {
     private final CityManager cityManager;
     private final AreaManager areaManager;
     private final StreetManager streetManager;
-
-    /**
-     * 导入文件 格式为压缩包
-     */
-    @SneakyThrows
-    public void importCsv(MultipartFile file){
-        try (ZipInputStream zis = new ZipInputStream(file.getInputStream())) {
-            EasyExcel.read("C://data/provinces.csv", ProvinceCsv.class,new PageReadListener<ProvinceCsv>(dataList -> {
-                for (val demoData : dataList) {
-                    log.info("读取到一条数据{}", JSON.toJSONString(demoData));
-                }
-            })).excelType(ExcelTypeEnum.CSV).sheet().doRead();
-        }
-    }
-
+    private final VillageManager villageManager;
 
     /**
      * 根据区划级别和上级区划代码获取当前行政区划的列表
      */
-    @Cacheable(value = CHINA_REGION, key = "#pid+':'+#level")
-    public List<RegionDto> findAllRegionByPid(Integer pid, Integer level){
-        if(level == 2){
-            return cityManager.findAllByPid(pid).stream().map(City::toDto).collect(Collectors.toList());
-        } else if(level == 3){
-            return areaManager.findAllByPid(pid).stream().map(Area::toDto).collect(Collectors.toList());
-        } else if(level == 4){
-            return streetManager.findAllByPid(pid).stream().map(Street::toDto).collect(Collectors.toList());
+    @Cacheable(value = CHINA_REGION, key = "#parentCode")
+    public List<RegionDto> findAllRegionByParentCode(String parentCode){
+        if(parentCode.length() == ChinaRegionCode.IMPORT_TYPE_PROVINCE.getLength()){
+            return cityManager.findAllByProvinceCode(parentCode).stream().map(City::toDto).collect(Collectors.toList());
+        } else if(parentCode.length() == ChinaRegionCode.IMPORT_TYPE_CITY.getLength()){
+            return areaManager.findAllByCityCode(parentCode).stream().map(Area::toDto).collect(Collectors.toList());
+        } else if(parentCode.length() == ChinaRegionCode.IMPORT_TYPE_AREA.getLength()){
+            return streetManager.findAllByAreaCode(parentCode).stream().map(Street::toDto).collect(Collectors.toList());
+        } else if(parentCode.length() == ChinaRegionCode.IMPORT_TYPE_STREET.getLength()){
+            return villageManager.findAllByStreetCode(parentCode).stream().map(Village::toDto).collect(Collectors.toList());
         } else {
             return new ArrayList<>(0);
         }
@@ -113,62 +89,4 @@ public class ChinaRegionService {
         // 构建树
         return TreeBuildUtil.build(regions,null,RegionDto::getCode,RegionDto::getParentCode,RegionDto::setChildren);
     }
-
-    /**
-     * 省份表导入
-     * easyExcel要求不可以Setter返回值必须为void
-     */
-    @Getter
-    @Setter
-    @Accessors(chain = false)
-    public static class ProvinceCsv{
-        private String code;
-        private String name;
-        private String provinceCode;
-    }
-    /**
-     * 城市表导入
-     */
-    @Getter
-    @Setter
-    @Accessors(chain = false)
-    public static class CityCsv{
-        private String code;
-        private String name;
-        private String provinceCode;
-    }
-    /**
-     * 区域表(县区)导入
-     */
-    @Getter
-    @Setter
-    @Accessors(chain = false)
-    public static class AreaCsv{
-        private String code;
-        private String name;
-        private String cityCode;
-    }
-    /**
-     * 街道/乡镇表导入
-     */
-    @Getter
-    @Setter
-    @Accessors(chain = false)
-    public static class StreetCsv{
-        private String code;
-        private String name;
-        private String areaCode;
-    }
-    /**
-     * 街道/乡镇表导入
-     */
-    @Getter
-    @Setter
-    @Accessors(chain = false)
-    public static class VillageCsv{
-        private String code;
-        private String name;
-        private String streetCode;
-    }
-
 }

@@ -33,10 +33,10 @@ public class ChinaRegionController {
         return Res.ok(chinaRegionService.findAllProvince());
     }
 
-    @Operation(summary = "根据区划级别和上级区划代码获取当前行政区划的列表")
-    @GetMapping("/findAllRegionByPid")
-    public ResResult<List<RegionDto>> findAllRegionByPid(Integer pid,Integer level){
-        return Res.ok(chinaRegionService.findAllRegionByPid(pid,level));
+    @Operation(summary = "根据代码获取下一级行政区划的列表")
+    @GetMapping("/findAllRegionByParentCode")
+    public ResResult<List<RegionDto>> findAllRegionByPid(String parentCode){
+        return Res.ok(chinaRegionService.findAllRegionByParentCode(parentCode));
     }
 
     @Operation(summary = "获取省市二级联动列表")
@@ -49,13 +49,6 @@ public class ChinaRegionController {
     @GetMapping("/findAllProvinceAndCityAndArea")
     public ResResult<List<RegionDto>> findAllProvinceAndCityAndArea(){
         return Res.ok(chinaRegionService.findAllProvinceAndCityAndArea());
-    }
-
-    @Operation(summary = "导入区划信息")
-    @PostMapping("/")
-    public ResResult<Void> importCsv(MultipartFile file){
-        chinaRegionService.importCsv(file);
-        return Res.ok();
     }
 
 }

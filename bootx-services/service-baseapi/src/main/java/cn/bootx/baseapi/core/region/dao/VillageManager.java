@@ -5,6 +5,8 @@ import cn.bootx.common.mybatisplus.impl.BaseManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 村庄/社区
  * @author xxm
@@ -13,4 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class VillageManager extends BaseManager<VillageMapper, Village> {
+
+    public List<Village> findAllByStreetCode(String streetCode){
+        return findAllByField(Village::getStreetCode,streetCode);
+    }
 }

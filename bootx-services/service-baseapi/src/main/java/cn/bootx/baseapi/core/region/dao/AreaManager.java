@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AreaManager extends BaseManager<AreaMapper, Area> {
 
-    public List<Area> findAllByPid(Integer pid){
-        return findAllByField(Area::getCityCode,pid);
+    public List<Area> findAllByCityCode(String cityCode){
+        return findAllByField(Area::getCityCode,cityCode);
     }
 }

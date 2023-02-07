@@ -102,8 +102,6 @@ bootx:
           - cn.bootx.office
           - cn.bootx.starter.flowable
         "[支付服务]": cn.bootx.payment
-        "[销售服务]": cn.bootx.sales
-        "[订单服务]": cn.bootx.order
         "[演示模块]": cn.bootx.demo
         "[第三方对接]":
           - cn.bootx.starter.dingtalk
