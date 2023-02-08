@@ -29,11 +29,11 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class IdempotencyDemoController {
 
-    @Idempotent(name = "idempotent", timeout = 1000)
+    @Idempotent(name = "idempotent", timeout = 3000)
     @Operation(summary = "幂等演示")
     @PostMapping("/idempotency")
     public ResResult<String> idempotency() {
-        return Res.ok("幂等演示");
+        return Res.ok("幂等演示...");
     }
 
     @Operation(summary = "分布式锁(暂停5秒)")
