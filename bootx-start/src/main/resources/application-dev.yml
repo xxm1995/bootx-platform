@@ -138,7 +138,7 @@ bootx:
     actable:
       # 数据库类型
       database-type: mysql
-      # 更新类型
+      # 更新类型 none为不进行任何操作
       update-type: update
       # 扫描包路径, 可以用 ,和 ; 分隔
       scan-package: cn.bootx.**.entity
