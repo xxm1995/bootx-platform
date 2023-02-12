@@ -86,7 +86,7 @@ bootx:
     swagger:
       enabled: true
       author: bootx
-      version: 1.2.0
+      version: 1.2.1
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
       # basic认证
