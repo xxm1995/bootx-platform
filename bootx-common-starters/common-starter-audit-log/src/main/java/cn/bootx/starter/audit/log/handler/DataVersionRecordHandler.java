@@ -42,15 +42,15 @@ public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor
             Map<String,Object> updateRecord = new HashMap<>();
             // 遍历原始数据的所有字段
             for (DataColumnChangeResult originalColumn : originalColumns) {
-                System.out.println(originalColumn.getColumnName()+":"+originalColumn.getOriginalValue());
                 dataRecord.put(originalColumn.getColumnName(),originalColumn.getOriginalValue());
             }
             // 用新数据进行替换
             List<DataColumnChangeResult> updatedColumns = Optional.ofNullable(changedRecord.getUpdatedColumns())
                     .orElse(new ArrayList<>(0));
             for (DataColumnChangeResult updatedColumn : updatedColumns) {
+                // 更新记录列表记录变更前的数据
+                updateRecord.put(updatedColumn.getColumnName(),dataRecord.get(updatedColumn.getColumnName()));
                 dataRecord.put(updatedColumn.getColumnName(),updatedColumn.getUpdateValue());
-                updateRecord.put(updatedColumn.getColumnName(),updatedColumn.getUpdateValue());
             }
             Object pkColumnVal = changedRecord.getPkColumnVal();
             // insert手动获取下主键值
