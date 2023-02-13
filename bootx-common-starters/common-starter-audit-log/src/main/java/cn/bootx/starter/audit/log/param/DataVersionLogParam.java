@@ -27,4 +27,7 @@ public class DataVersionLogParam {
 
     @Schema(description = "本次变动的数据内容")
     private Object changeContent;
+
+    @Schema(description = "版本")
+    private Integer version;
 }

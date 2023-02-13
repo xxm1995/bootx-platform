@@ -43,7 +43,9 @@ public class DataVersionLogDbManager extends BaseManager<DataVersionLogDbMapper,
         return lambdaQuery()
                 .orderByDesc(DataVersionLogDb::getId)
                 .like(StrUtil.isNotBlank(param.getDataName()), DataVersionLogDb::getDataName,param.getDataName())
+                .like(StrUtil.isNotBlank(param.getTableName()), DataVersionLogDb::getTableName,param.getTableName())
                 .like(StrUtil.isNotBlank(param.getDataId()), DataVersionLogDb::getDataId,param.getDataId())
+                .eq(Objects.nonNull(param.getVersion()), DataVersionLogDb::getVersion,param.getVersion())
                 .page(mpPage);
     }
 }

@@ -66,7 +66,7 @@ public class DataVersionLogMongoService implements DataVersionLogService {
             dataVersionLog.setDataContent(JacksonUtil.toJson(param.getDataContent()));
         }
         if (param.getChangeContent() instanceof String){
-            dataVersionLog.setDataContent((String) param.getChangeContent());
+            dataVersionLog.setChangeContent(param.getChangeContent());
         } else {
             if (Objects.nonNull(param.getChangeContent())) {
                 dataVersionLog.setChangeContent(JacksonUtil.toJson(param.getDataContent()));
@@ -83,7 +83,10 @@ public class DataVersionLogMongoService implements DataVersionLogService {
 
     @Override
     public PageResult<DataVersionLogDto> page(PageParam pageParam, DataVersionLogParam param) {
-        DataVersionLogMongo dataVersionLogMongo = new DataVersionLogMongo().setDataId(param.getDataId())
+        DataVersionLogMongo dataVersionLogMongo = new DataVersionLogMongo()
+                .setDataId(param.getDataId())
+                .setVersion(param.getVersion())
+                .setTableName(param.getTableName())
                 .setDataName(param.getDataName());
         // 查询条件
         ExampleMatcher matching = ExampleMatcher.matching()
