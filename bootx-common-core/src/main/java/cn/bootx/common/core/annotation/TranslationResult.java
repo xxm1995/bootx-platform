@@ -35,7 +35,7 @@ public @interface TranslationResult {
          */
         MAP,
         /**
-         * 不对目标对象的类型进行修改, 只对字典值进行翻译, 但遇到注解标注的字段出现字典项code与name类型不一致, 会抛出异常
+         * 不对目标对象的类型进行修改, 只对字典值进行翻译, 但遇到注解标注的字段出现字典项code与name类型不一致, 会进行忽略
          */
         OBJECT
     }
