@@ -140,12 +140,12 @@ public class TokenService {
      * 认证
      */
     private @NotNull AuthInfoResult authentication(LoginAuthContext context){
-        String clientCode = context.getAuthLoginType().getCode();
+        String loginType = context.getAuthLoginType().getCode();
         return abstractAuthentications.stream()
-                .filter(o->o.adaptation(clientCode))
+                .filter(o->o.adaptation(loginType))
                 .findFirst()
                 .map(o->o.authentication(context))
-                .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
+                .orElseThrow(() -> new LoginFailureException("未找到对应的登录认证器"));
     }
 
     /**

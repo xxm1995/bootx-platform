@@ -20,9 +20,7 @@
         <module>service-payment</module>
         <module>service-notice</module>
         <module>service-office</module>
-        <!--        <module>service-goods</module>-->
-        <!--        <module>service-sales</module>-->
-        <!--        <module>service-order</module>-->
+        <module>service-visualization</module>
     </modules>
 
     <dependencies>

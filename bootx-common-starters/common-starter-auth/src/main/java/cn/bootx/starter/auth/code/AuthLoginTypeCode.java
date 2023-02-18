@@ -1,9 +1,9 @@
 package cn.bootx.starter.auth.code;
 
-/**   
+/**
 * 认证录方式
-* @author xxm  
-* @date 2021/8/2 
+* @author xxm
+* @date 2021/8/2
 */
 public interface AuthLoginTypeCode {
 
@@ -19,8 +19,12 @@ public interface AuthLoginTypeCode {
     int SUCCESS = 2000;
 
 
-    /** 账号密码登录 */
+    /* 登录方式 */
+    /** 账号密码登录(普通) */
     String PASSWORD = "password";
+
+    /** 账号密码登录(GoView) */
+    String PASSWORD_GO_VIEW = "passwordGoView";
 
     /** 手机号登录 */
     String PHONE = "phone";
@@ -38,6 +42,9 @@ public interface AuthLoginTypeCode {
 
     /** 码云 */
     String GITEE = "gitee";
+
+    /** 飞书 */
+    String FEISHU = "feishu";
 
     /** 钉钉登录 */
     String DING_TALK = "dingTalk";

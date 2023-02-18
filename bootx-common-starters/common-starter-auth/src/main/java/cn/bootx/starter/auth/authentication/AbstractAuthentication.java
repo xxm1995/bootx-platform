@@ -23,7 +23,7 @@ public interface AbstractAuthentication {
     String getLoginType();
 
     /**
-     * openId类型是否匹配
+     * 登录类型是否匹配
      */
     default boolean adaptation(String loginType){
         return Objects.equals(getLoginType(),loginType);
