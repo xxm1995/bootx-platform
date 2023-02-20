@@ -103,11 +103,11 @@ public class MinioUploadService implements UploadService {
      */
     @SneakyThrows
     @Override
-    public void delete(Long id) {
+    public void delete(UpdateFileInfo updateFileInfo) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         client.removeObject(RemoveObjectArgs.builder()
                 .bucket(minio.getBucket()) // bucket 必须传递
-                .object(String.valueOf(id)) // 相对路径作为 key
+                .object(updateFileInfo.getExternalStorageId()) // 相对路径作为 key
                 .build());
     }
 
