@@ -31,4 +31,9 @@ public interface UploadService {
      * 下载文件
      */
     InputStream download(UpdateFileInfo updateFileInfo);
+
+    /**
+     * 删除文件
+     */
+    void delete(UpdateFileInfo updateFileInfo );
 }

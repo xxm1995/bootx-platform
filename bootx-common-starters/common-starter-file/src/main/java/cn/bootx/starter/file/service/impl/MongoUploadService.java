@@ -82,4 +82,14 @@ public class MongoUploadService implements UploadService {
         GridFsResource resource = gridFsTemplate.getResource(gridFSFile);
         return  resource.getInputStream();
     }
+
+    /**
+     * 删除文件
+     */
+    @Override
+    public void delete(UpdateFileInfo updateFileInfo) {
+        Criteria criteria = Criteria.where("_id").is(new ObjectId(updateFileInfo.getExternalStorageId()));
+        Query query = new Query(criteria);
+        gridFsTemplate.delete(query);
+    }
 }

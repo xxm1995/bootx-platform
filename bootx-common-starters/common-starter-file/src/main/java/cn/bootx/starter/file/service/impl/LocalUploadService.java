@@ -25,10 +25,10 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Optional;
 
-/**   
+/**
 * 上传文件本地存储
-* @author xxm  
-* @date 2022/1/12 
+* @author xxm
+* @date 2022/1/12
 */
 @Slf4j
 @Service
@@ -88,5 +88,14 @@ public class LocalUploadService implements UploadService {
             throw new BizException("文件不存在");
         }
         return Files.newInputStream(file.toPath());
+    }
+
+    /**
+     * 删除文件
+     */
+    @Override
+    public void delete(UpdateFileInfo updateFileInfo) {
+        String storePath = fileUploadProperties.getLocal().getLocalPath() + updateFileInfo.getFilePath();
+        FileUtil.del(storePath);
     }
 }

@@ -30,5 +30,11 @@
             <artifactId>common-mybatis-plus</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- minio客户端 -->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
+        </dependency>
     </dependencies>
 </project>

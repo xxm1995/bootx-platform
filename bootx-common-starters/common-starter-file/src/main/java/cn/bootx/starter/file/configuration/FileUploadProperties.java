@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import javax.validation.constraints.NotNull;
+
 /**
 * 文件上传配置
 * @author xxm
@@ -31,6 +33,9 @@ public class FileUploadProperties {
     /** mongo存储配置 */
     private Mongo mongo = new Mongo();
 
+    /** minio存储配置 */
+    private Minio minio = new Minio();
+
     /**
      * 本地存储
      */
@@ -49,5 +54,23 @@ public class FileUploadProperties {
     public static class Mongo{
         /** 存储桶 */
         private String bucket = "fs";
+    }
+
+    /**
+     * Minio存储配置
+     */
+    @Getter
+    @Setter
+    public static class Minio{
+        /** 端点地址 */
+        private String endpoint;
+        /** 区域 */
+        private String region;
+        /** 访问 key */
+        private String accessKey;
+        /** 访问 Secret */
+        private String accessSecret;
+        /** 存储桶 */
+        private String bucket = "bootx";
     }
 }
