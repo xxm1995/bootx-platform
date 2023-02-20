@@ -6,7 +6,6 @@ import cn.bootx.starter.file.entity.UpdateFileInfo;
 import cn.bootx.starter.file.entity.UploadFileContext;
 import cn.bootx.starter.file.service.UploadService;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.util.IdUtil;
 import io.minio.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -54,7 +53,7 @@ public class MinioUploadService implements UploadService {
         PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                 .bucket(minio.getBucket()) // bucket 必须传递
                 .contentType(file.getContentType())
-                .object(IdUtil.getSnowflakeNextIdStr()) // 相对路径作为 key
+                .object(context.getFileId()+"."+context.getFileSuffix())
                 .stream(file.getInputStream(), file.getSize(), -1) // 文件内容
                 .build();
         // 执行上传
@@ -73,8 +72,8 @@ public class MinioUploadService implements UploadService {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         String storageId = updateFileInfo.getExternalStorageId();
         GetObjectResponse inputStream = client.getObject(GetObjectArgs.builder()
-                .bucket(minio.getBucket()) // bucket 必须传递
-                .object(storageId) // 相对路径作为 key
+                .bucket(minio.getBucket())
+                .object(storageId)
                 .build());
         //获取响应输出流
         ServletOutputStream os = response.getOutputStream();
