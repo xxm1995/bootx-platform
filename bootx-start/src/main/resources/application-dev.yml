@@ -211,6 +211,15 @@ bootx:
         local-path: /data/file
       mongo:
         bucket: fs
+      minio:
+        # 地址
+        endpoint: http://127.0.0.1:9000
+        # 账号
+        access-key: root
+        # 密码
+        access-secret: password
+        # 存储桶 需要至少三位
+        bucket: bootx
     # 数据权限
     data-perm:
       field-decrypt-key: "UCrtxSCwYZNCIlav"

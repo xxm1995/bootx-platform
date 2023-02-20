@@ -7,8 +7,6 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import javax.validation.constraints.NotNull;
-
 /**
 * 文件上传配置
 * @author xxm
@@ -70,7 +68,7 @@ public class FileUploadProperties {
         private String accessKey;
         /** 访问 Secret */
         private String accessSecret;
-        /** 存储桶 */
+        /** 存储桶 需要至少三位 */
         private String bucket = "bootx";
     }
 }
