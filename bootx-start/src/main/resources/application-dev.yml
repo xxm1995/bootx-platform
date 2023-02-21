@@ -103,6 +103,7 @@ bootx:
           - cn.bootx.starter.flowable
         "[支付服务]": cn.bootx.payment
         "[演示模块]": cn.bootx.demo
+        "[可视化大屏]": cn.bootx.visualization
         "[第三方对接]":
           - cn.bootx.starter.dingtalk
           - cn.bootx.starter.wecom

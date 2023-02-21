@@ -39,6 +39,11 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-visualization</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
             <artifactId>common-starter-file</artifactId>
         </dependency>
         <dependency>
