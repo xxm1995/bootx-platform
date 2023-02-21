@@ -144,9 +144,9 @@ bootx:
       # 扫描包路径, 可以用 ,和 ; 分隔
       scan-package: cn.bootx.**.entity
       # 指定生成索引前缀
-      prefix-index: actable_idx_
+      prefix-index: idx_
       # 指定生成唯一约束前缀
-      prefix-unique: actable_uni_
+      prefix-unique: uni_
   starter:
     # 三方平台
     third:

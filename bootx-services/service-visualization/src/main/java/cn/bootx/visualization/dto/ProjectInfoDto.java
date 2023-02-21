@@ -15,21 +15,21 @@ import lombok.experimental.Accessors;
 public class ProjectInfoDto {
 
     @Schema(description = "主键")
-    private Long projectId;
+    private Long id;
 
     @Schema(description = "项目名称")
-    private String name;
+    private String projectName;
 
     @Schema(description = "发布状态")
-    private Integer status;
+    private Integer state;
 
     @Schema(description = "报表内容")
     private String content;
 
-    @Schema(description = "预览图片 URL")
-    private String picUrl;
+    @Schema(description = "预览图片(完整)")
+    private String indexImage;
 
     @Schema(description = "项目备注")
-    private String remark;
+    private String remarks;
 
 }

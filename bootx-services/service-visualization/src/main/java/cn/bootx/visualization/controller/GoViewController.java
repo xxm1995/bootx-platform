@@ -2,15 +2,13 @@ package cn.bootx.visualization.controller;
 
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
-import cn.bootx.starter.file.configuration.FileUploadProperties;
+import cn.bootx.visualization.core.service.ProjectInfoService;
 import cn.bootx.visualization.dto.OssInfo;
 import cn.bootx.visualization.dto.PageResult;
 import cn.bootx.visualization.dto.ProjectInfoDto;
-import cn.bootx.visualization.param.CreateProjectParam;
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.util.IdUtil;
+import cn.bootx.visualization.param.CreateParam;
+import cn.bootx.visualization.param.ProjectInfoParam;
+import cn.bootx.visualization.param.PublishParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * GoView可视化大屏对接接口
@@ -33,48 +29,50 @@ import java.util.Map;
 @RequestMapping("/goview")
 @RequiredArgsConstructor
 public class GoViewController {
-    private final FileUploadProperties uploadProperties;
+    private final ProjectInfoService projectInfoService;
 
 
     @PostMapping("/create")
     @Operation(summary = "创建项目")
-    public ResResult<ProjectInfoDto> createProject(@Valid @RequestBody CreateProjectParam param) {
-        long id = IdUtil.getSnowflakeNextId();
-        ProjectInfoDto info = new ProjectInfoDto()
-                .setName("csAAA")
-                .setId(id);
-        map.put(id,info);
-        return Res.ok(info);
+    public ResResult<ProjectInfoDto> create(@Valid @RequestBody CreateParam param) {
+        return Res.ok(projectInfoService.create(param));
     }
 
     @Operation(summary = "获取文件上传oss信息")
     @GetMapping("/getOssInfo")
     public ResResult<OssInfo> getOssInfo(){
-        OssInfo ossInfo = new OssInfo()
-                .setBucketURL(uploadProperties.getServerUrl());
-        return Res.ok(ossInfo);
+        return Res.ok(projectInfoService.getOssInfo());
     }
     @Operation(summary = "获取项目列表分页 ")
     @GetMapping("/page")
     public PageResult<List<ProjectInfoDto>> page(Integer page, Integer limit){
-        PageResult<List<ProjectInfoDto>> pageResult = new PageResult<>();
-        pageResult.setCount(map.size());
-        pageResult.setData(ListUtil.toList(map.values()));
-        return pageResult;
+        return projectInfoService.page(page,limit);
     }
 
-    @Operation(summary = "获取数据")
-    @GetMapping("/get")
+    @Operation(summary = "获取数据(报表内容为空返回null)")
+    @GetMapping("/getData")
     public ResResult<ProjectInfoDto> getData(Long projectId) {
-        return Res.ok(map.get(projectId));
+        return Res.ok(projectInfoService.getData(projectId));
     }
 
-    @Operation(summary = "保存项目数据")
-    @PostMapping("/save")
-    public ResResult<ProjectInfoDto> getData(@RequestBody ProjectInfoDto info) {
+    @Operation(summary = "更新数据")
+    @PostMapping("/update")
+    public ResResult<Void> update(@RequestBody ProjectInfoParam param) {
+        projectInfoService.update(param);
+        return Res.ok();
+    }
 
-        ProjectInfoDto projectInfoDto = map.get(info.getProjectId());
-        BeanUtil.copyProperties(info, projectInfoDto, CopyOptions.create().ignoreNullValue());
+    @Operation(summary = "发布/取消发布")
+    @PutMapping("/publish")
+    public ResResult<Void> publish(@RequestBody PublishParam param) {
+        projectInfoService.publish(param);
+        return Res.ok();
+    }
+
+    @Operation(summary = "删除")
+    @DeleteMapping("/delete")
+    public ResResult<Void> delete(Long ids) {
+        projectInfoService.delete(ids);
         return Res.ok();
     }
 

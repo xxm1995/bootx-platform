@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public abstract class MpDelEntity extends MpCreateEntity{
 
     /** 最后修者ID */
-    @Column(comment = "最后修者ID",order = Integer.MAX_VALUE-400)
+    @Column(comment = "最后修者ID",length = 20,order = Integer.MAX_VALUE-400)
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long lastModifier;
 

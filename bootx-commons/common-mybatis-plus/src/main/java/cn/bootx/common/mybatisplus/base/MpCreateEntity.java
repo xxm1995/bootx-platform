@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public abstract class MpCreateEntity extends MpIdEntity{
 
     /** 创建者ID */
-    @Column(comment = "创建者ID",order = Integer.MAX_VALUE-600)
+    @Column(comment = "创建者ID",length = 20,order = Integer.MAX_VALUE-600)
     @TableField(fill = FieldFill.INSERT)
     private Long creator;
 

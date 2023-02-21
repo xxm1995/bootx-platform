@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 @Accessors(chain = true)
 @Schema(title = "更新参数")
-public class ProjectInfoUpdateParam {
+public class ProjectInfoParam {
 
     @Schema(description = "主键")
     private Long projectId;
@@ -22,12 +22,15 @@ public class ProjectInfoUpdateParam {
     @Schema(description = "项目名称")
     private String name;
 
+    @Schema(description = "状态")
+    private Integer status;
+
     @Schema(description = "报表内容")
     private Map<String,Object> content;
 
-    @Schema(description = "预览图片 URL")
+    @Schema(description = "预览图片地址")
     private String picUrl;
 
-    @Schema(description = "项目备注")
+    @Schema(description = "备注")
     private String remark;
 }

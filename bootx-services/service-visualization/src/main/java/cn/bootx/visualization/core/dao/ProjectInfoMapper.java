@@ -1,7 +1,6 @@
-package cn.bootx.visualization.dao;
+package cn.bootx.visualization.core.dao;
 
-import cn.bootx.visualization.dto.ProjectInfoDto;
-import cn.bootx.visualization.entity.ProjectInfo;
+import cn.bootx.visualization.core.entity.ProjectInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

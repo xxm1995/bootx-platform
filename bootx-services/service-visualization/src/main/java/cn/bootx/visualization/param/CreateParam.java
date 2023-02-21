@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @Schema(description = "GoView项目创建参数")
-public class CreateProjectParam {
+public class CreateParam {
 
     @Schema(description = "项目名称")
     private String projectName;
