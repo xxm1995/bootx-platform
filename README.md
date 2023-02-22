@@ -20,6 +20,7 @@
 - vue3使用 [Vben-Admin](https://vvbin.cn/doc-next/) 作为脚手架
 - 移动端使用 [Taro](https://taro.jd.com/) vue3+TS为技术栈。
 
+
 ## 🍒文档
 
 - 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)、[管理平台(vue3)](http://v3.platform.bootx.cn/)
@@ -34,6 +35,10 @@
 结算台演示地址：[http://web.platform.bootx.cn/cashier](http://web.platform.bootx.cn/cashier)
 
 ![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
+
+
+低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏展板。
+![](https://oscimg.oschina.net/oscnet/up-43cd6c0ac952c938863db303d0c2e644827.png)
 
 集成最新版本的Flowable 6.7.2 工作流，并基于Bpmn.js定制流程设计器，相较于自带modeler更贴近业务和易用，通过关联动态表单可通过托拉拽实现业务审批流的业务
 ![](https://oscimg.oschina.net/oscnet/up-22b8de0f4951ee6165e2ae604ad77b0af44.png)
@@ -52,29 +57,20 @@
 - 支持站内信、微信、钉钉、企业微信、微信公众号的消息推送
 - 支持微信自定义菜单、素材、消息模板等资源的管理
 - 集成Flowable+Bpmn.js工作流全家桶，方便OA相关功能的开发
+- 基于GoView打造低代码可视化大屏平台，快速生成各种数据展板或大屏
 
 ## 🚅 路线图
-- 工作流功能完善          
-  - [x] 更灵活的节点用户配置，可配置发起人、指定用户、指定角色等，关联消息通知
-  - [x] 会签处理、串签处理、或签处理、驳回处理、任意节点退回、会签比例通过处理
-- Vue3版本前端
-  - [x] 登录模块移植
-  - [x] 基础功能移植已完成
-  - [x] 组件移植和Mixin转换为Hooks、
-  - [x] 支付功能移植基本完成
-  - [ ] 工作流功能移植除流程设计器外已完成
-- Spring Cloud版本
-  - [ ] 代码组织结构调整
-  - [x] 网关定制开发
-  - [ ] 功能模块移植
+- 功能
+  - [x] 基于`GoView`的低代码可视化大屏平台 (90%)
+  - [ ] Vue3工作流功能移植除流程设计器
+  - [ ] 短信通知
 ## 🥂 Quick Start
 
-- 下载项目并切换到master分支，或者下载发行版后导入IDEA中，下载对应的Maven依赖
-- 配置好各种必要的数据库中间件地址(见下方中间表)，直接启动项目。注：不需要导入Sql脚本到数据库中，默认启用`flyway`会自动对数据库进行初始化
-- 如果使用`_config/sql`导入到数据库中的方式，则需要在项目启动前将`spring.flyway.enabled`设为`false`后启动项目，推荐使用`flyway`对数据库进行数据管理
-- 后端启动启动成功，开始启动前端
-- 安装依赖 `yarn install`，node版本需要12以上，推荐使用16
-- 启动前端 `yarn serve`，进行访问
+[后端](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
+
+Vue2前端: [Vue2前端](http://)
+
+Vue3后端: [](http://)
 
 **中间件配置**
 
