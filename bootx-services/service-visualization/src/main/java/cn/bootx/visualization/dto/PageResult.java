@@ -16,5 +16,5 @@ import lombok.ToString;
 public class PageResult<T> extends ResResult<T> {
 
     /** 数据条数 */
-    private long count;
+    private int count;
 }

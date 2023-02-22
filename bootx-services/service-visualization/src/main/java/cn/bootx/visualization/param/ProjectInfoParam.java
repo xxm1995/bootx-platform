@@ -28,8 +28,8 @@ public class ProjectInfoParam {
     @Schema(description = "报表内容")
     private Map<String,Object> content;
 
-    @Schema(description = "预览图片地址")
-    private String picUrl;
+    @Schema(description = "预览图片id")
+    private Long indexImage;
 
     @Schema(description = "备注")
     private String remark;

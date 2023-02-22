@@ -2,13 +2,12 @@ package cn.bootx.visualization.core.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtil;
-import cn.bootx.starter.file.configuration.FileUploadProperties;
+import cn.bootx.starter.file.service.FileUploadService;
 import cn.bootx.visualization.core.dao.ProjectInfoManager;
 import cn.bootx.visualization.core.entity.ProjectInfo;
 import cn.bootx.visualization.dto.OssInfo;
 import cn.bootx.visualization.dto.PageResult;
-import cn.bootx.visualization.dto.ProjectInfoDto;
+import cn.bootx.visualization.dto.ProjectInfoResult;
 import cn.bootx.visualization.param.CreateParam;
 import cn.bootx.visualization.param.ProjectInfoParam;
 import cn.bootx.visualization.param.PublishParam;
@@ -23,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 自定义大屏数据
@@ -33,49 +33,51 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProjectInfoService {
-    private final FileUploadProperties uploadProperties;
+    private final FileUploadService fileUploadService;
 
     private final ProjectInfoManager projectInfoManager;
 
     /**
      * 创建项目
      */
-    public ProjectInfoDto create(CreateParam param) {
+    public ProjectInfoResult create(CreateParam param) {
         ProjectInfo info = new ProjectInfo()
                 .setState(-1)
                 .setName(DateUtil.now());
         projectInfoManager.save(info);
-        return info.toDto();
+        return this.toResult(info);
     }
 
     /**
      * 获取文件上传oss信息
      */
     public OssInfo getOssInfo(){
-        return new OssInfo().setBucketURL(uploadProperties.getServerUrl());
+        String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
+        return new OssInfo().setBucketURL(filePreviewUrlPrefix);
     }
 
     /**
      * 获取项目列表分页
      */
-    public PageResult<List<ProjectInfoDto>> page(Integer page, Integer limit){
+    public PageResult<List<ProjectInfoResult>> page(Integer page, Integer limit){
 
         Page<ProjectInfo> infoPage = projectInfoManager.page(new PageParam(page, limit));
-        PageResult<List<ProjectInfoDto>> pageResult = new PageResult<>();
-        pageResult.setCount(infoPage.getTotal());
-        pageResult.setData(ResultConvertUtil.dtoListConvert(infoPage.getRecords()));
+        PageResult<List<ProjectInfoResult>> pageResult = new PageResult<>();
+        pageResult.setCount(Math.toIntExact(infoPage.getTotal()));
+        List<ProjectInfoResult> projectInfoResults = infoPage.getRecords().stream().map(this::toResult).collect(Collectors.toList());
+        pageResult.setData(projectInfoResults);
         return pageResult;
     }
 
     /**
      * 获取数据 报表内容为空返回null
      */
-    public ProjectInfoDto getData(Long projectId) {
-        ProjectInfoDto projectInfoDto = projectInfoManager.findById(projectId).map(ProjectInfo::toDto).orElseThrow(DataNotExistException::new);
-        if (StrUtil.isBlank(projectInfoDto.getContent())){
+    public ProjectInfoResult getData(Long projectId) {
+        ProjectInfoResult projectInfoResult = projectInfoManager.findById(projectId).map(this::toResult).orElseThrow(DataNotExistException::new);
+        if (StrUtil.isBlank(projectInfoResult.getContent())){
             return null;
         }
-        return projectInfoDto;
+        return projectInfoResult;
     }
 
     /**
@@ -112,9 +114,18 @@ public class ProjectInfoService {
 
 
     /**
-     * 转换成dto
+     * 转换成Result
      */
-    private ProjectInfoDto toDto(){
-        return null;
+    private ProjectInfoResult toResult(ProjectInfo projectInfo){
+        ProjectInfoResult projectInfoResult = new ProjectInfoResult()
+                .setId(projectInfo.getId())
+                .setProjectName(projectInfo.getName())
+                .setState(projectInfo.getState())
+                .setContent(projectInfo.getContent())
+                .setRemarks(projectInfo.getRemark());
+        // 转换访问地址
+        String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
+        projectInfoResult.setIndexImage(filePreviewUrlPrefix+ projectInfo.getIndexImage());
+        return projectInfoResult;
     }
 }

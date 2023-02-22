@@ -4,11 +4,9 @@ import cn.bootx.common.core.annotation.BigField;
 import cn.bootx.common.core.annotation.actable.Column;
 import cn.bootx.common.core.annotation.actable.Table;
 import cn.bootx.common.core.code.actable.MySqlFieldType;
-import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.visualization.dto.ProjectInfoDto;
 import cn.bootx.visualization.param.ProjectInfoParam;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -25,7 +23,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @TableName("report_project_info")
-public class ProjectInfo extends MpBaseEntity implements EntityBaseFunction<ProjectInfoDto> {
+public class ProjectInfo extends MpBaseEntity {
 
     /** 项目名称 */
     @Column(comment = "项目名称")
@@ -40,30 +38,19 @@ public class ProjectInfo extends MpBaseEntity implements EntityBaseFunction<Proj
     @Column(comment = "报表内容",type = MySqlFieldType.LONGTEXT)
     private String content;
 
-    /** 预览图片 */
+    /** 预览图片id */
     @Column(comment = "预览图片id")
-    private String picUrl;
+    private Long indexImage;
 
     /** 备注 */
     @Column(comment = "备注")
     private String remark;
 
 
-    @Override
-    public ProjectInfoDto toDto() {
-        return new ProjectInfoDto()
-                .setId(getId())
-                .setProjectName(name)
-                .setState(state)
-                .setContent(content)
-                .setIndexImage(picUrl)
-                .setRemarks(remark);
-    }
-
     public static ProjectInfo init(ProjectInfoParam param){
         ProjectInfo entity = new ProjectInfo()
                 .setName(param.getName())
-                .setPicUrl(param.getPicUrl())
+                .setIndexImage(param.getIndexImage())
                 .setRemark(param.getRemark());
         entity.setId(param.getProjectId());
         if (CollUtil.isNotEmpty(param.getContent())){

@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @Schema(description = "项目大屏信息")
-public class ProjectInfoDto {
+public class ProjectInfoResult {
 
     @Schema(description = "主键")
     private Long id;
@@ -26,7 +26,7 @@ public class ProjectInfoDto {
     @Schema(description = "报表内容")
     private String content;
 
-    @Schema(description = "预览图片(完整)")
+    @Schema(description = "预览图片(会拼接成完整请求地址)")
     private String indexImage;
 
     @Schema(description = "项目备注")

@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
 @Schema(title = "文件上传oss信息")
 public class OssInfo {
     private String bucketName;
-    /** bucket 文件访问地址 */
+    /** bucket 文件访预览地址 */
     private String bucketURL;
 
 }
