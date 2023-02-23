@@ -15,16 +15,17 @@
 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
 致力将开源版打造成超越商业版后台管理框架的项目。
 
-- Spring Cloud版本使用Spring Cloud Alibaba技术栈
+- 单体版本使用Spring Boot相关技术栈
+- 分布式版本使用Spring Cloud Alibaba技术栈
 - vue2使用 [ANTD PRO VUE](https://pro.antdv.com/) 作为脚手架
 - vue3使用 [Vben-Admin](https://vvbin.cn/doc-next/) 作为脚手架
-- 移动端使用 [Taro](https://taro.jd.com/) vue3+TS为技术栈。
-
+- 可视化大屏使用 [Go-VIew](https://gitee.com/dromara/go-view) 作为基础框架
+- 移动端使用 [Taro](https://taro.jd.com/)、[NutUI](https://nutui.jd.com/) vue3+TS为技术栈。
 
 ## 🍒文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)、[管理平台(vue3)](http://v3.platform.bootx.cn/)
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)
+- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)、[管理平台(vue3)](http://v3.platform.bootx.cn/)、[可视化大屏](http://visualization.platform.bootx.cn/)
+- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)、[可视化大屏](https://gitee.com/bootx/bootx-platform-visualization)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove)、[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
@@ -36,8 +37,7 @@
 
 ![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
 
-
-低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏展板。
+低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏，可以用上快速开打各种数据看板的场景。
 ![](https://oscimg.oschina.net/oscnet/up-43cd6c0ac952c938863db303d0c2e644827.png)
 
 集成最新版本的Flowable 6.7.2 工作流，并基于Bpmn.js定制流程设计器，相较于自带modeler更贴近业务和易用，通过关联动态表单可通过托拉拽实现业务审批流的业务
@@ -68,19 +68,21 @@
 
 [后端](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
 
-Vue2前端: [Vue2前端](http://)
+Vue2前端: [Vue2前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备)
 
-Vue3后端: [](http://)
+Vue3后端: [Vue3前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备-1)
+
+可视化大屏: [可视化大屏启动流程](http://)
 
 **中间件配置**
 
-| 组件 | 是否必须配置 | 备注                                          |
-| -------- | ------------ |---------------------------------------------|
-| MySQL    | 是           | 不设置无法启动                                     |
-| Redis    | 是           | 不设置启动后无法正常使用                                |
-| RabbitMQ | 否           | 支付消息通知在使用                             |
-| MongoDB  | 否           | 默认审计日志和文件管理使用持久化方式为Mono，可在配置文件中配置切换成其他持久化方式 |
-| plumelog | 是           | 默认项目自带lite版plumelog，不需要额外配置中间件，直接就可以使用      |
+| 组件       | 是否必须配置 | 备注                                          |
+|----------|--------|---------------------------------------------|
+| MySQL    | 是      | 不设置无法启动                                     |
+| Redis    | 是      | 不设置启动后无法正常使用                                |
+| RabbitMQ | 否      | 支付消息通知在使用                                   |
+| MongoDB  | 否      | 默认审计日志和文件管理使用持久化方式为Mono，可在配置文件中配置切换成其他持久化方式 |
+| plumelog | 是      | 默认项目自带lite版plumelog，不需要额外配置中间件，直接就可以使用      |
 
 ## 🥞项目整体结构
 ```lua
@@ -121,17 +123,13 @@ bootx-platform
        ├── common-websocket  -- websocket封装
        ├── common-xxl-job -- XXL-JOB定时任务
     ├── bootx-demo -- demo示例模块
-    ├── bootx-modules -- 业务系统（停用）
-       ├── eshop -- 网上商城（停用）
     ├── bootx-services -- 业务服务模块
        ├── service-baseapi -- 基础api功能服务
-       ├── service-goods -- 商品中心服务(停用)
        ├── service-iam -- 身份识别与访问管理
        ├── service-notice -- 消息通知服务
        ├── service-office -- 办公服务
-       ├── service-order -- 订单服务(停用)
+       ├── service-visualization 可视化大屏管理
        ├── service-payment -- 支付服务
-       ├── service-sales -- 销售中心(停用)
     ├── bootx-start -- 启动模块
 ```
 ## 🍇模块结构说明
@@ -155,7 +153,7 @@ service-iam
 **core核心包业务代码分包**
 
 ```lua
-├───code 
+├───core 
     ├── business -- 业务模块
         ├── convert -- 实体类转换
         ├── dao -- 持久化类
