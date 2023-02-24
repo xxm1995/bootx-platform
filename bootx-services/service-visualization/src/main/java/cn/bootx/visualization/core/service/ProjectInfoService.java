@@ -1,19 +1,23 @@
 package cn.bootx.visualization.core.service;
 
 import cn.bootx.common.core.exception.DataNotExistException;
+import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
+import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.file.service.FileUploadService;
+import cn.bootx.visualization.code.GoVIewCode;
 import cn.bootx.visualization.core.dao.ProjectInfoManager;
+import cn.bootx.visualization.core.dao.ProjectInfoPublishManager;
 import cn.bootx.visualization.core.entity.ProjectInfo;
+import cn.bootx.visualization.core.entity.ProjectInfoPublish;
+import cn.bootx.visualization.dto.GoVIewPageResult;
 import cn.bootx.visualization.dto.OssInfo;
-import cn.bootx.visualization.dto.PageResult;
+import cn.bootx.visualization.dto.ProjectInfoDto;
 import cn.bootx.visualization.dto.ProjectInfoResult;
 import cn.bootx.visualization.param.CreateParam;
-import cn.bootx.visualization.param.ProjectInfoParam;
-import cn.bootx.visualization.param.PublishParam;
+import cn.bootx.visualization.param.ProjectInfoSave;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +26,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * 自定义大屏数据
+ * 自定义大屏数据接口
  * @author xxm
  * @date 2023/2/21
  */
@@ -36,17 +41,7 @@ public class ProjectInfoService {
     private final FileUploadService fileUploadService;
 
     private final ProjectInfoManager projectInfoManager;
-
-    /**
-     * 创建项目
-     */
-    public ProjectInfoResult create(CreateParam param) {
-        ProjectInfo info = new ProjectInfo()
-                .setState(-1)
-                .setName(DateUtil.now());
-        projectInfoManager.save(info);
-        return this.toResult(info);
-    }
+    private final ProjectInfoPublishManager publishManager;
 
     /**
      * 获取文件上传oss信息
@@ -56,13 +51,30 @@ public class ProjectInfoService {
         return new OssInfo().setBucketURL(filePreviewUrlPrefix);
     }
 
-    /**
-     * 获取项目列表分页
-     */
-    public PageResult<List<ProjectInfoResult>> page(Integer page, Integer limit){
 
-        Page<ProjectInfo> infoPage = projectInfoManager.page(new PageParam(page, limit));
-        PageResult<List<ProjectInfoResult>> pageResult = new PageResult<>();
+    /**
+     * 创建项目
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public ProjectInfoResult create(CreateParam param) {
+        ProjectInfo info = new ProjectInfo()
+                .setState(GoVIewCode.STATE_UN_PUBLISH)
+                .setEdit(false)
+                .setName(param.getProjectName())
+                .setRemark(param.getRemark());
+        projectInfoManager.save(info);
+        ProjectInfoPublish projectInfoPublish = new ProjectInfoPublish();
+        projectInfoPublish.setId(info.getId());
+        publishManager.save(projectInfoPublish);
+        return this.toResult(info);
+    }
+
+    /**
+     * 获取项目列表分页 (大屏)
+     */
+    public GoVIewPageResult<List<ProjectInfoResult>> pageByGoVIew(Integer page, Integer limit){
+        Page<ProjectInfo> infoPage = projectInfoManager.page(new PageParam(page, limit),new ProjectInfoSave());
+        GoVIewPageResult<List<ProjectInfoResult>> pageResult = new GoVIewPageResult<>();
         pageResult.setCount(Math.toIntExact(infoPage.getTotal()));
         List<ProjectInfoResult> projectInfoResults = infoPage.getRecords().stream().map(this::toResult).collect(Collectors.toList());
         pageResult.setData(projectInfoResults);
@@ -70,14 +82,34 @@ public class ProjectInfoService {
     }
 
     /**
-     * 获取数据 报表内容为空返回null
+     * 获取项目列表分页 (后台)
      */
-    public ProjectInfoResult getData(Long projectId) {
+    public PageResult<ProjectInfoDto> pageByAdmin(PageParam pageParam, ProjectInfoSave query){
+        Page<ProjectInfo> infoPage = projectInfoManager.page(pageParam,query);
+        return MpUtil.convert2DtoPageResult(infoPage);
+    }
+
+    /**
+     * 获取预览(已发布)数据
+     */
+    public ProjectInfoResult getPublishData(Long projectId) {
         ProjectInfoResult projectInfoResult = projectInfoManager.findById(projectId).map(this::toResult).orElseThrow(DataNotExistException::new);
-        if (StrUtil.isBlank(projectInfoResult.getContent())){
+        ProjectInfoPublish projectInfoPublish = publishManager.findById(projectId).orElseThrow(DataNotExistException::new);
+        if (StrUtil.isBlank(projectInfoPublish.getContent())){
             return null;
         }
-        return projectInfoResult;
+        if (Objects.equals(projectInfoResult.getState(),GoVIewCode.STATE_UN_PUBLISH)){
+            return null;
+        }
+        return projectInfoResult.setContent(projectInfoPublish.getContent());
+    }
+
+    /**
+     * 获取编辑数据
+     */
+    public ProjectInfoResult getEditData(Long projectId){
+        ProjectInfo projectInfo = projectInfoManager.findById(projectId).orElseThrow(DataNotExistException::new);
+        return this.toResult(projectInfo);
     }
 
     /**
@@ -85,31 +117,68 @@ public class ProjectInfoService {
      */
     @SuppressWarnings("unchecked")
     @Transactional(rollbackFor = Exception.class)
-    public void update(ProjectInfoParam param) {
+    public void update(ProjectInfoSave param) {
         ProjectInfo init = ProjectInfo.init(param);
         ProjectInfo projectInfo = projectInfoManager.findById(param.getProjectId()).orElseThrow(DataNotExistException::new);
         CopyOptions copyOptions = CopyOptions.create()
                 .ignoreNullValue()
                 .setIgnoreProperties(ProjectInfo::getVersion);
         BeanUtil.copyProperties(init,projectInfo,copyOptions);
+        projectInfo.setEdit(true);
         projectInfoManager.updateById(projectInfo);
     }
 
     /**
-     * 发布/未发布
+     * 发布
      */
     @Transactional(rollbackFor = Exception.class)
-    public void publish(PublishParam param){
-        ProjectInfo projectInfo = projectInfoManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-        projectInfo.setState(param.getState());
+    public void publish(Long id){
+        ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
+        projectInfo.setState(GoVIewCode.STATE_PUBLISH)
+                .setEdit(false);
         projectInfoManager.updateById(projectInfo);
     }
+
+    /**
+     * 取消发布
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void unPublish(Long id){
+        ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
+        projectInfo.setState(GoVIewCode.STATE_UN_PUBLISH);
+        projectInfoManager.updateById(projectInfo);
+    }
+
+    /**
+     * 复制
+     */
+    public void copy(Long id){
+        ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
+        ProjectInfoPublish projectInfoPublish = publishManager.findById(id).orElseThrow(DataNotExistException::new);
+
+    }
+
+
+    /**
+     * 保存编辑中的信息
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void enableEditContent(Long id){
+        ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
+        projectInfo.setEdit(false);
+        ProjectInfoPublish publish = publishManager.findById(id).orElseThrow(DataNotExistException::new);
+        publish.setContent(projectInfo.getContent());
+        projectInfoManager.updateById(projectInfo);
+        publishManager.updateById(publish);
+    }
+
     /**
      * 删除
      */
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id){
         projectInfoManager.deleteById(id);
+        publishManager.deleteById(id);
     }
 
 
@@ -125,7 +194,9 @@ public class ProjectInfoService {
                 .setRemarks(projectInfo.getRemark());
         // 转换访问地址
         String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
-        projectInfoResult.setIndexImage(filePreviewUrlPrefix+ projectInfo.getIndexImage());
+        if (Objects.nonNull(projectInfo.getIndexImage())) {
+            projectInfoResult.setIndexImage(filePreviewUrlPrefix + projectInfo.getIndexImage());
+        }
         return projectInfoResult;
     }
 }

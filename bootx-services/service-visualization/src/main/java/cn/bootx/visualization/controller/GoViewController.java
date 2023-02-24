@@ -5,18 +5,15 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.visualization.core.service.ProjectInfoService;
 import cn.bootx.visualization.dto.OssInfo;
-import cn.bootx.visualization.dto.PageResult;
+import cn.bootx.visualization.dto.GoVIewPageResult;
 import cn.bootx.visualization.dto.ProjectInfoResult;
-import cn.bootx.visualization.param.CreateParam;
-import cn.bootx.visualization.param.ProjectInfoParam;
-import cn.bootx.visualization.param.PublishParam;
+import cn.bootx.visualization.param.ProjectInfoSave;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -32,13 +29,6 @@ import java.util.List;
 public class GoViewController {
     private final ProjectInfoService projectInfoService;
 
-
-    @PostMapping("/create")
-    @Operation(summary = "创建项目")
-    public ResResult<ProjectInfoResult> create(@Valid @RequestBody CreateParam param) {
-        return Res.ok(projectInfoService.create(param));
-    }
-
     @IgnoreAuth
     @Operation(summary = "获取文件oss存储信息")
     @GetMapping("/getOssInfo")
@@ -47,36 +37,27 @@ public class GoViewController {
     }
     @Operation(summary = "获取项目列表分页 ")
     @GetMapping("/page")
-    public PageResult<List<ProjectInfoResult>> page(Integer page, Integer limit){
-        return projectInfoService.page(page,limit);
+    public GoVIewPageResult<List<ProjectInfoResult>> page(Integer page, Integer limit){
+        return projectInfoService.pageByGoVIew(page,limit);
     }
 
     @IgnoreAuth
-    @Operation(summary = "获取数据(报表内容为空返回null)")
-    @GetMapping("/getData")
-    public ResResult<ProjectInfoResult> getData(Long projectId) {
-        return Res.ok(projectInfoService.getData(projectId));
+    @Operation(summary = "获取发布的数据(报表内容为空返回null)")
+    @GetMapping("/getPublishData")
+    public ResResult<ProjectInfoResult> getPublishData(Long projectId) {
+        return Res.ok(projectInfoService.getPublishData(projectId));
+    }
+
+    @Operation(summary = "获取编辑时的数据(报表内容为空返回null)")
+    @GetMapping("/getEditData")
+    public ResResult<ProjectInfoResult> getEditData(Long projectId) {
+        return Res.ok(projectInfoService.getEditData(projectId));
     }
 
     @Operation(summary = "更新数据")
     @PostMapping("/update")
-    public ResResult<Void> update(@RequestBody ProjectInfoParam param) {
+    public ResResult<Void> update(@RequestBody ProjectInfoSave param) {
         projectInfoService.update(param);
         return Res.ok();
     }
-
-    @Operation(summary = "发布/取消发布")
-    @PutMapping("/publish")
-    public ResResult<Void> publish(@RequestBody PublishParam param) {
-        projectInfoService.publish(param);
-        return Res.ok();
-    }
-
-    @Operation(summary = "删除")
-    @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long ids) {
-        projectInfoService.delete(ids);
-        return Res.ok();
-    }
-
 }

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PageResult<T> extends ResResult<T> {
+public class GoVIewPageResult<T> extends ResResult<T> {
 
     /** 数据条数 */
     private int count;

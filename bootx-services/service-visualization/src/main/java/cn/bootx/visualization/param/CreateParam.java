@@ -15,9 +15,6 @@ public class CreateParam {
     @Schema(description = "项目名称")
     private String projectName;
 
-    @Schema(description = "预览图片")
-    private String indexImage;
-
     @Schema(description = "备注")
     private String remark;
 
