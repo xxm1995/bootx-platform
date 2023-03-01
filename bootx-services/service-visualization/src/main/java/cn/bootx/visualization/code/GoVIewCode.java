@@ -1,7 +1,7 @@
 package cn.bootx.visualization.code;
 
 /**
- *
+ * GoVIew大屏相关常量
  * @author xxm
  * @date 2023/2/21
  */
