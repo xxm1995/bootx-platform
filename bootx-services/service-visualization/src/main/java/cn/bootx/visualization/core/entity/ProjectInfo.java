@@ -8,6 +8,7 @@ import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.visualization.core.convert.GoViewConvert;
 import cn.bootx.visualization.dto.ProjectInfoDto;
 import cn.bootx.visualization.param.ProjectInfoSave;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -73,6 +74,6 @@ public class ProjectInfo extends MpBaseEntity implements EntityBaseFunction<Proj
      */
     @Override
     public ProjectInfoDto toDto() {
-        return null;
+        return GoViewConvert.CONVERT.convert(this);
     }
 }

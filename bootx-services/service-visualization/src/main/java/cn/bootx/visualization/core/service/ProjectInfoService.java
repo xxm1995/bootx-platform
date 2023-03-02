@@ -6,6 +6,7 @@ import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.bootx.starter.file.service.FileUploadService;
 import cn.bootx.visualization.code.GoVIewCode;
+import cn.bootx.visualization.configuration.VisualizationProperties;
 import cn.bootx.visualization.core.dao.ProjectInfoManager;
 import cn.bootx.visualization.core.dao.ProjectInfoPublishManager;
 import cn.bootx.visualization.core.entity.ProjectInfo;
@@ -39,6 +40,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ProjectInfoService {
     private final FileUploadService fileUploadService;
+    private final VisualizationProperties visualizationProperties;
 
     private final ProjectInfoManager projectInfoManager;
     private final ProjectInfoPublishManager publishManager;
@@ -87,6 +89,22 @@ public class ProjectInfoService {
     public PageResult<ProjectInfoDto> pageByAdmin(PageParam pageParam, ProjectInfoSave query){
         Page<ProjectInfo> infoPage = projectInfoManager.page(pageParam,query);
         return MpUtil.convert2DtoPageResult(infoPage);
+    }
+
+    /**
+     * 查询详情(后台)
+     */
+    public ProjectInfoDto findById(Long id) {
+        return projectInfoManager.findById(id).map(ProjectInfo::toDto)
+                .orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 查询详情(后台)
+     */
+    public ProjectInfoDto getGoViewUrl(Long id) {
+        return projectInfoManager.findById(id).map(ProjectInfo::toDto)
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -152,12 +170,23 @@ public class ProjectInfoService {
     /**
      * 复制
      */
+    @Transactional(rollbackFor = Exception.class)
     public void copy(Long id){
         ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
         ProjectInfoPublish projectInfoPublish = publishManager.findById(id).orElseThrow(DataNotExistException::new);
-
+        ProjectInfo newProjectInfo = new ProjectInfo()
+                .setName(projectInfo.getName())
+                .setContent(projectInfo.getContent())
+                .setRemark(projectInfo.getRemark())
+                .setState(projectInfo.getState())
+                .setEdit(false)
+                .setIndexImage(projectInfo.getIndexImage());
+        projectInfoManager.save(newProjectInfo);
+        ProjectInfoPublish newProjectInfoPublish = new ProjectInfoPublish()
+                .setContent(projectInfoPublish.getContent());
+        newProjectInfoPublish.setId(newProjectInfo.getId());
+        publishManager.save(newProjectInfoPublish);
     }
-
 
     /**
      * 保存编辑中的信息
@@ -181,7 +210,6 @@ public class ProjectInfoService {
         publishManager.deleteById(id);
     }
 
-
     /**
      * 转换成Result
      */
@@ -199,4 +227,12 @@ public class ProjectInfoService {
         }
         return projectInfoResult;
     }
+
+    /**
+     * GoView服务地址
+     */
+    public String getGoViewUrl(){
+        return visualizationProperties.getGoViewUrl();
+    }
+
 }

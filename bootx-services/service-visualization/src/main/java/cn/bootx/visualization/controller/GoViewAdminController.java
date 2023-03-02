@@ -5,7 +5,6 @@ import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.visualization.core.service.ProjectInfoService;
-import cn.bootx.visualization.dto.GoVIewPageResult;
 import cn.bootx.visualization.dto.ProjectInfoDto;
 import cn.bootx.visualization.dto.ProjectInfoResult;
 import cn.bootx.visualization.param.CreateParam;
@@ -17,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * GoView可视化大屏管理接口
@@ -33,8 +31,8 @@ public class GoViewAdminController {
     private final ProjectInfoService projectInfoService;
 
     @Operation(summary = "创建项目")
-    @PostMapping("/create")
-    public ResResult<ProjectInfoResult> create(@Valid @RequestBody CreateParam param) {
+    @PostMapping("/add")
+    public ResResult<ProjectInfoResult> add(@Valid @RequestBody CreateParam param) {
         return Res.ok(projectInfoService.create(param));
     }
 
@@ -44,6 +42,12 @@ public class GoViewAdminController {
         return Res.ok(projectInfoService.pageByAdmin(pageParam,query));
     }
 
+    @Operation(summary = "获取详情")
+    @GetMapping("/findById")
+    public ResResult<ProjectInfoDto> findById(Long id){
+        return Res.ok(projectInfoService.findById(id));
+    }
+
     @Operation(summary = "更新数据")
     @PostMapping("/update")
     public ResResult<Void> update(@RequestBody ProjectInfoSave param) {
@@ -51,7 +55,14 @@ public class GoViewAdminController {
         return Res.ok();
     }
 
-    @Operation(summary = "发布发布")
+    @Operation(summary = "复制")
+    @PostMapping("/copy")
+    public ResResult<Void> copy(Long id) {
+        projectInfoService.copy(id);
+        return Res.ok();
+    }
+
+    @Operation(summary = "发布")
     @PostMapping("/publish")
     public ResResult<Void> publish(Long id) {
         projectInfoService.publish(id);
@@ -72,9 +83,16 @@ public class GoViewAdminController {
         return Res.ok();
     }
 
+    @Operation(summary = "获取GoView服务的地址")
+    @GetMapping("/getGoViewUrl")
+    public ResResult<String> getGoViewUrl(){
+        return Res.ok(projectInfoService.getGoViewUrl());
+    }
+
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long ids) {
+    public ResResult<Void> delete(Long id) {
+        projectInfoService.delete(id);
         return Res.ok();
     }
 }
