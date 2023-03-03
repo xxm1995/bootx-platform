@@ -8,6 +8,7 @@ import cn.bootx.visualization.core.service.ProjectInfoService;
 import cn.bootx.visualization.dto.ProjectInfoDto;
 import cn.bootx.visualization.dto.ProjectInfoResult;
 import cn.bootx.visualization.param.CreateParam;
+import cn.bootx.visualization.param.ProjectInfoParam;
 import cn.bootx.visualization.param.ProjectInfoSave;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -50,8 +51,8 @@ public class GoViewAdminController {
 
     @Operation(summary = "更新数据")
     @PostMapping("/update")
-    public ResResult<Void> update(@RequestBody ProjectInfoSave param) {
-        projectInfoService.update(param);
+    public ResResult<Void> update(@RequestBody ProjectInfoParam param) {
+        projectInfoService.updateByAdmin(param);
         return Res.ok();
     }
 

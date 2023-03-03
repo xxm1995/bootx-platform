@@ -1,5 +1,6 @@
 package cn.bootx.visualization.core.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -16,6 +17,7 @@ import cn.bootx.visualization.dto.OssInfo;
 import cn.bootx.visualization.dto.ProjectInfoDto;
 import cn.bootx.visualization.dto.ProjectInfoResult;
 import cn.bootx.visualization.param.CreateParam;
+import cn.bootx.visualization.param.ProjectInfoParam;
 import cn.bootx.visualization.param.ProjectInfoSave;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
@@ -100,14 +102,6 @@ public class ProjectInfoService {
     }
 
     /**
-     * 查询详情(后台)
-     */
-    public ProjectInfoDto getGoViewUrl(Long id) {
-        return projectInfoManager.findById(id).map(ProjectInfo::toDto)
-                .orElseThrow(DataNotExistException::new);
-    }
-
-    /**
      * 获取预览(已发布)数据
      */
     public ProjectInfoResult getPublishData(Long projectId) {
@@ -127,6 +121,9 @@ public class ProjectInfoService {
      */
     public ProjectInfoResult getEditData(Long projectId){
         ProjectInfo projectInfo = projectInfoManager.findById(projectId).orElseThrow(DataNotExistException::new);
+        if (StrUtil.isBlank(projectInfo.getContent())){
+            return null;
+        }
         return this.toResult(projectInfo);
     }
 
@@ -143,6 +140,16 @@ public class ProjectInfoService {
                 .setIgnoreProperties(ProjectInfo::getVersion);
         BeanUtil.copyProperties(init,projectInfo,copyOptions);
         projectInfo.setEdit(true);
+        projectInfoManager.updateById(projectInfo);
+    }
+    /**
+     * 更新项目数据 (后台)
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void updateByAdmin(ProjectInfoParam param) {
+        ProjectInfo projectInfo = projectInfoManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+        projectInfo.setName(param.getName())
+                        .setRemark(param.getRemark());
         projectInfoManager.updateById(projectInfo);
     }
 
@@ -165,6 +172,13 @@ public class ProjectInfoService {
         ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
         projectInfo.setState(GoVIewCode.STATE_UN_PUBLISH);
         projectInfoManager.updateById(projectInfo);
+    }
+
+    /**
+     * 重置编辑数据为已发布的内容
+     */
+    public void reset(){
+
     }
 
     /**
@@ -206,6 +220,10 @@ public class ProjectInfoService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id){
+        ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
+        if (Objects.equals(projectInfo.getState(),GoVIewCode.STATE_PUBLISH)){
+            throw new BizException("已发布的无法删除");
+        }
         projectInfoManager.deleteById(id);
         publishManager.deleteById(id);
     }
