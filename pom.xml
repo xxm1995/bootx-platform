@@ -15,7 +15,7 @@
     <groupId>cn.bootx.platform</groupId>
     <artifactId>bootx-platform</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
 
     <modules>
         <module>bootx-common-core</module>
@@ -32,7 +32,7 @@
         <java.version>1.8</java.version>
 
         <!-- 二方库版本 -->
-        <bootx-platform.version>1.2.1</bootx-platform.version>
+        <bootx-platform.version>1.2.2</bootx-platform.version>
         <!-- 三方库 -->
         <hutool.version>5.8.11</hutool.version>
         <oshi.version>6.4.0</oshi.version>
@@ -50,7 +50,7 @@
         <xml-apis.version>1.4.01</xml-apis.version>
         <flowable.version>6.7.2</flowable.version>
         <!-- 升级新版本会有兼容性问题 -->
-        <logback-classic.version>1.2.11</logback-classic.version>
+        <logback-classic.version>1.2.21</logback-classic.version>
         <!-- 3.5.3 有bug -->
         <plumelog.version>3.5.2</plumelog.version>
         <easyexcel.version>3.2.0</easyexcel.version>

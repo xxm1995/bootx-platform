@@ -1,8 +1,8 @@
-# Bootx-Platform (v1.2.1)
+# Bootx-Platform (v1.2.2)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.2.1-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.2.2-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Spring%20Boot-2.7.8-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
@@ -31,17 +31,18 @@
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 ## 🛠️功能亮点
-支持支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务
-
-结算台演示地址：[http://web.platform.bootx.cn/cashier](http://web.platform.bootx.cn/cashier)
-
-![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
 
 低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏，可以用上快速开打各种数据看板的场景。
 ![](https://oscimg.oschina.net/oscnet/up-43cd6c0ac952c938863db303d0c2e644827.png)
 
 集成最新版本的Flowable 6.7.2 工作流，并基于Bpmn.js定制流程设计器，相较于自带modeler更贴近业务和易用，通过关联动态表单可通过托拉拽实现业务审批流的业务
 ![](https://oscimg.oschina.net/oscnet/up-22b8de0f4951ee6165e2ae604ad77b0af44.png)
+
+支持支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务
+
+结算台演示地址：[http://web.platform.bootx.cn/cashier](http://web.platform.bootx.cn/cashier)
+
+![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
 
 ## 🍎特色功能
 - 支持单通道支付、聚合支付、组合支付、部分和全部退款等支付功能
