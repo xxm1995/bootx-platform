@@ -58,7 +58,6 @@
         <IJPay.version>2.9.4</IJPay.version>
         <sa-token.version>1.33.0</sa-token.version>
         <justauth.version>1.16.5</justauth.version>
-        <justauth..spring.boot.version>1.4.0</justauth..spring.boot.version>
         <minio.version>8.4.6</minio.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <dynamic-datasource.version>3.5.2</dynamic-datasource.version>

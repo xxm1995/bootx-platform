@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @Accessors(chain = true)
-@ConfigurationProperties(prefix = "bootx.common.visualization")
+@ConfigurationProperties(prefix = "bootx.service.visualization")
 public class VisualizationProperties {
     /** GoView大屏服务地址 */
     private String goViewUrl = "http://localhost:6000";

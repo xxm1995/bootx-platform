@@ -224,3 +224,7 @@ bootx:
     # 数据权限
     data-perm:
       field-decrypt-key: "UCrtxSCwYZNCIlav"
+  service:
+    # 可视化平台
+    visualization:
+      go-view-url: http://localhost:6000
