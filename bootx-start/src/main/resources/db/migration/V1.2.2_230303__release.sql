@@ -4444,6 +4444,7 @@ INSERT INTO `iam_perm_menu` VALUES (1623156857846034432, 'adminv3', 158227651690
 INSERT INTO `iam_perm_menu` VALUES (1623325795944439808, 'adminv3', 1599378992811429888, '邮件通知', 'EmailSenderDemo', NULL, b'0', '', b'0', b'0', '/modules/demo/notice/email/EmailSenderDemo.vue', NULL, '/demo/notice/email', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-02-08 22:20:04', 1414143554414059520, '2023-02-20 10:38:55', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1623494586215579648, 'admin', 1552207982510706688, '行政区划', 'ChinaRegion', NULL, b'0', '', b'1', b'0', 'develop/region/ChinaRegionList', NULL, '/develop/region', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2023-02-09 09:30:47', 1399985191002447872, '2023-02-09 17:50:05', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1629039360928075776, 'adminv3', 1582276341792985088, '可视化大屏', 'ProjectInfoList', NULL, b'0', '', b'0', b'0', '/modules/develop/report/ProjectInfoList', NULL, '/develop/report', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-02-24 16:43:44', 1414143554414059520, '2023-02-24 16:44:17', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1631946120891707392, 'admin', 1552207982510706688, '可视化大屏', 'ProjectInfoList', NULL, b'0', '', b'0', b'0', 'develop/report/ProjectInfoList', NULL, '/develop/report', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2023-03-04 17:14:10', 1399985191002447872, '2023-03-04 17:14:10', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path

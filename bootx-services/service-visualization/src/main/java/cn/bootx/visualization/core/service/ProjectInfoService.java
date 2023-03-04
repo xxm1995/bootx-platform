@@ -189,7 +189,7 @@ public class ProjectInfoService {
         ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
         ProjectInfoPublish projectInfoPublish = publishManager.findById(id).orElseThrow(DataNotExistException::new);
         ProjectInfo newProjectInfo = new ProjectInfo()
-                .setName(projectInfo.getName())
+                .setName(projectInfo.getName()+"复制")
                 .setContent(projectInfo.getContent())
                 .setRemark(projectInfo.getRemark())
                 .setState(projectInfo.getState())
@@ -203,7 +203,7 @@ public class ProjectInfoService {
     }
 
     /**
-     * 保存编辑中的信息
+     * 应用编辑中的信息
      */
     @Transactional(rollbackFor = Exception.class)
     public void enableEditContent(Long id){
@@ -213,6 +213,18 @@ public class ProjectInfoService {
         publish.setContent(projectInfo.getContent());
         projectInfoManager.updateById(projectInfo);
         publishManager.updateById(publish);
+    }
+
+    /**
+     * 重置编辑中的信息
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void resetEditContent(Long id){
+        ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
+        projectInfo.setEdit(false);
+        ProjectInfoPublish publish = publishManager.findById(id).orElseThrow(DataNotExistException::new);
+        projectInfo.setContent(publish.getContent());
+        projectInfoManager.updateById(projectInfo);
     }
 
     /**

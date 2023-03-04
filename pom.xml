@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.8</version>
+        <version>2.7.9</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -34,7 +34,7 @@
         <!-- 二方库版本 -->
         <bootx-platform.version>1.2.2</bootx-platform.version>
         <!-- 三方库 -->
-        <hutool.version>5.8.11</hutool.version>
+        <hutool.version>5.8.13</hutool.version>
         <oshi.version>6.4.0</oshi.version>
         <jackson.version>2.12.3</jackson.version>
         <lang3.version>3.11</lang3.version>
@@ -53,21 +53,21 @@
         <logback-classic.version>1.2.4</logback-classic.version>
         <!-- 3.5.3 有bug -->
         <plumelog.version>3.5.2</plumelog.version>
-        <easyexcel.version>3.2.0</easyexcel.version>
+        <easyexcel.version>3.2.1</easyexcel.version>
         <xxl-job.version>2.3.1</xxl-job.version>
-        <IJPay.version>2.9.4</IJPay.version>
+        <IJPay.version>2.9.3</IJPay.version>
         <sa-token.version>1.33.0</sa-token.version>
         <justauth.version>1.16.5</justauth.version>
         <minio.version>8.4.6</minio.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <dynamic-datasource.version>3.5.2</dynamic-datasource.version>
-        <springdoc.version>1.6.13</springdoc.version>
-        <redisson.version>3.19.0</redisson.version>
+        <springdoc.version>1.6.14</springdoc.version>
+        <redisson.version>3.20.0</redisson.version>
         <knife4j.version>4.0.0</knife4j.version>
         <mapstruct.version>1.5.3.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <logstash-logback.version>7.2</logstash-logback.version>
+        <logstash-logback.version>7.3</logstash-logback.version>
         <fastjson.version>1.2.83_noneautotype</fastjson.version>
         <kryo.serializers.version>0.41</kryo.serializers.version>
         <asyncTool.version>V1.4-SNAPSHOT</asyncTool.version>
@@ -357,10 +357,10 @@
             </snapshots>
         </repository>
         <!-- jitpack镜像库 -->
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
+<!--        <repository>-->
+<!--            <id>jitpack.io</id>-->
+<!--            <url>https://jitpack.io</url>-->
+<!--        </repository>-->
     </repositories>
     <build>
         <plugins>

@@ -77,10 +77,17 @@ public class GoViewAdminController {
         return Res.ok();
     }
 
-    @Operation(summary = "将发布中的数据更新为正在编辑中的信息")
+    @Operation(summary = "应用编辑中的信息")
     @PostMapping("/enableEditContent")
     public ResResult<Void> enableEditContent(Long id) {
         projectInfoService.enableEditContent(id);
+        return Res.ok();
+    }
+
+    @Operation(summary = "重置编辑中的信息")
+    @PostMapping("/resetEditContent")
+    public ResResult<Void> resetEditContent(Long id) {
+        projectInfoService.resetEditContent(id);
         return Res.ok();
     }
 
