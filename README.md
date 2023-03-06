@@ -32,7 +32,7 @@
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 ## 🛠️功能亮点
 
-低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏，可以用上快速开打各种数据看板的场景。
+低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏，可以适用于需要快速开发各种数据看板的场景。
 ![](https://oscimg.oschina.net/oscnet/up-43cd6c0ac952c938863db303d0c2e644827.png)
 
 集成最新版本的Flowable 6.7.2 工作流，并基于Bpmn.js定制流程设计器，相较于自带modeler更贴近业务和易用，通过关联动态表单可通过托拉拽实现业务审批流的业务
@@ -129,7 +129,7 @@ bootx-platform
        ├── service-iam -- 身份识别与访问管理
        ├── service-notice -- 消息通知服务
        ├── service-office -- 办公服务
-       ├── service-visualization 可视化大屏管理
+       ├── service-visualization -- 可视化大屏管理
        ├── service-payment -- 支付服务
     ├── bootx-start -- 启动模块
 ```
