@@ -59,6 +59,12 @@ public class DynamicDataSourceController {
         return Res.ok(dynamicDataSourceService.findAll());
     }
 
+    @Operation( summary = "测试连接")
+    @PostMapping(value = "/testConnection")
+    public ResResult<String> testConnection(@RequestBody DynamicDataSourceParam param){
+        return Res.ok(dynamicDataSourceService.testConnection(param));
+    }
+
     @Operation( summary = "分页查询")
     @GetMapping(value = "/page")
     public ResResult<PageResult<DynamicDataSourceDto>> page(PageParam pageParam, DynamicDataSourceParam dynamicDataSourceParam){

@@ -28,8 +28,6 @@ public class DynamicDataSourceDto extends BaseDto {
     private String dbDriver;
     @Schema(description = "数据库地址")
     private String dbUrl;
-    @Schema(description = "数据库名称")
-    private String dbName;
     @Schema(description = "用户名")
     private String dbUsername;
     @SensitiveInfo(SensitiveInfo.SensitiveType.PASSWORD)

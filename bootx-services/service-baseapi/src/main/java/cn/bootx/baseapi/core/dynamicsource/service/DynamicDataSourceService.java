@@ -11,6 +11,10 @@ import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.db.Entity;
+import cn.hutool.db.ds.simple.SimpleDataSource;
+import cn.hutool.db.handler.EntityHandler;
+import cn.hutool.db.sql.SqlExecutor;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceCreator;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
@@ -19,12 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.util.List;
 
-/**   
+/**
  * 动态数据源管理
- * @author xxm  
- * @date 2022/9/24 
+ * @author xxm
+ * @date 2022/9/24
  */
 @Slf4j
 @Service
@@ -76,6 +81,21 @@ public class DynamicDataSourceService {
     }
 
     /**
+     * 测试连接
+     */
+    public String testConnection(DynamicDataSourceParam param){
+        try(
+                SimpleDataSource ds = new SimpleDataSource(param.getDbUrl(), param.getDbUsername(), param.getDbPassword(),param.getDbDriver());
+                Connection connection = ds.getConnection();
+        ) {
+            Entity query = SqlExecutor.query(connection, "SELECT 1", new EntityHandler());
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        return null;
+    }
+
+    /**
      * 删除
      */
     public void delete(Long id){
@@ -83,7 +103,7 @@ public class DynamicDataSourceService {
     }
 
     /**
-     * 添加数据源
+     * 添加数据源到多数据集合中
      */
     private void addDynamicDataSource(DynamicDataSource dynamicDataSource, String dbPassword) {
         DataSourceProperty dataSourceProperty = new DataSourceProperty();
@@ -98,5 +118,7 @@ public class DynamicDataSourceService {
             e.printStackTrace();
         }
     }
+
+
 
 }

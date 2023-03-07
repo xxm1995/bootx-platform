@@ -32,16 +32,16 @@ public class StartUpHandler {
         DatabaseType databaseType = actableProperties.getDatabaseType();
         // 执行mysql的处理方法
         if (DatabaseType.MYSQL == databaseType) {
-            log.info("databaseType=mysql，开始执行mysql的处理方法");
+            log.debug("databaseType=mysql，开始执行mysql的处理方法");
             sysMysqlCreateTableManager.createMysqlTable();
         }else if (DatabaseType.ORACLE == databaseType) {
-            log.info("databaseType=oracle，开始执行oracle的处理方法");
+            log.debug("databaseType=oracle，开始执行oracle的处理方法");
         }else if (DatabaseType.SQLSERVER == databaseType) {
-            log.info("databaseType=sqlserver，开始执行sqlserver的处理方法");
+            log.debug("databaseType=sqlserver，开始执行sqlserver的处理方法");
         }else if (DatabaseType.POSTGRESQL == databaseType) {
-            log.info("databaseType=postgresql，开始执行postgresql的处理方法");
+            log.debug("databaseType=postgresql，开始执行postgresql的处理方法");
         }else{
-            log.info("没有找到符合条件的处理方法！");
+            log.debug("没有找到符合条件的处理方法！");
         }
     }
 }
