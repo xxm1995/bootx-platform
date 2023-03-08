@@ -1,14 +1,13 @@
 package cn.bootx.baseapi.core.dynamicsource.dao;
 
-import cn.bootx.common.mybatisplus.impl.BaseManager;
-import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
 import cn.bootx.baseapi.core.dynamicsource.entity.DynamicDataSource;
+import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.common.mybatisplus.impl.BaseManager;
 import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +22,18 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DynamicDataSourceManager extends BaseManager<DynamicDataSourceMapper, DynamicDataSource> {
 
+    public Optional<DynamicDataSource> findByCode(String code){
+        return findByField(DynamicDataSource::getCode,code);
+    }
+
+    public boolean existsByCode(String code){
+        return existedByField(DynamicDataSource::getCode,code);
+    }
+
+    public boolean existsByCode(String code,Long id){
+        return existedByField(DynamicDataSource::getCode,code,id);
+    }
+
     /**
     * 分页
     */
@@ -30,6 +41,9 @@ public class DynamicDataSourceManager extends BaseManager<DynamicDataSourceMappe
         Page<DynamicDataSource> mpPage = MpUtil.getMpPage(pageParam, DynamicDataSource.class);
         return this.lambdaQuery()
                 .select(this.getEntityClass(),MpUtil::excludeBigField)
+                .eq(StrUtil.isNotBlank(param.getDatabaseType()),DynamicDataSource::getDatabaseType,param.getDatabaseType())
+                .like(StrUtil.isNotBlank(param.getCode()),DynamicDataSource::getCode,param.getCode())
+                .like(StrUtil.isNotBlank(param.getName()),DynamicDataSource::getName,param.getName())
                 .orderByDesc(MpIdEntity::getId)
                 .page(mpPage);
     }

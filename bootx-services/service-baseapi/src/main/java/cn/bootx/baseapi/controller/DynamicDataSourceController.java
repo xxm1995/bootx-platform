@@ -1,12 +1,12 @@
 package cn.bootx.baseapi.controller;
 
+import cn.bootx.baseapi.core.dynamicsource.service.DynamicDataSourceService;
+import cn.bootx.baseapi.dto.dynamicsource.DynamicDataSourceDto;
+import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
 import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.baseapi.core.dynamicsource.service.DynamicDataSourceService;
-import cn.bootx.baseapi.dto.dynamicsource.DynamicDataSourceDto;
-import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -40,11 +40,10 @@ public class DynamicDataSourceController {
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
-    @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
-        dynamicDataSourceService.delete(id);
-        return Res.ok();
+    @Operation( summary = "分页查询")
+    @GetMapping(value = "/page")
+    public ResResult<PageResult<DynamicDataSourceDto>> page(PageParam pageParam, DynamicDataSourceParam dynamicDataSourceParam){
+        return Res.ok(dynamicDataSourceService.page(pageParam,dynamicDataSourceParam));
     }
 
     @Operation( summary = "通过ID查询")
@@ -53,21 +52,60 @@ public class DynamicDataSourceController {
         return Res.ok(dynamicDataSourceService.findById(id));
     }
 
+    @Operation(summary = "编码是否被使用")
+    @GetMapping("/existsByCode")
+    public ResResult<Boolean> existsByCode(String code) {
+        return Res.ok(dynamicDataSourceService.existsByCode(code));
+    }
+
+    @Operation(summary = "编码是否被使用(不包含自己)")
+    @GetMapping("/existsByCodeNotId")
+    public ResResult<Boolean> existsByCode(String code,Long id) {
+        return Res.ok(dynamicDataSourceService.existsByCode(code,id));
+    }
+
+    @Operation( summary = "是否已经添加到连接池中")
+    @GetMapping(value = "/existsByDataSourceKey")
+    public ResResult<Boolean> existsByDataSourceKey(String code){
+        return Res.ok(dynamicDataSourceService.existsByDataSourceKey(code));
+    }
+
+    @Operation( summary = "查询当前数据源列表")
+    @GetMapping(value = "/findAllDataSource")
+    public ResResult<List<String>> findAllDataSource(){
+        return Res.ok(dynamicDataSourceService.findAllDataSource());
+    }
+
     @Operation( summary = "查询所有")
     @GetMapping(value = "/findAll")
     public ResResult<List<DynamicDataSourceDto>> findAll(){
         return Res.ok(dynamicDataSourceService.findAll());
     }
 
-    @Operation( summary = "测试连接")
+    @Operation( summary = "删除")
+    @DeleteMapping(value = "/delete")
+    public ResResult<Void> delete(Long id){
+        dynamicDataSourceService.delete(id);
+        return Res.ok();
+    }
+
+    @Operation( summary = "测试连接(根据参数)")
     @PostMapping(value = "/testConnection")
     public ResResult<String> testConnection(@RequestBody DynamicDataSourceParam param){
         return Res.ok(dynamicDataSourceService.testConnection(param));
     }
 
-    @Operation( summary = "分页查询")
-    @GetMapping(value = "/page")
-    public ResResult<PageResult<DynamicDataSourceDto>> page(PageParam pageParam, DynamicDataSourceParam dynamicDataSourceParam){
-        return Res.ok(dynamicDataSourceService.page(pageParam,dynamicDataSourceParam));
+    @Operation( summary = "测试连接(根据主键ID)")
+    @GetMapping(value = "/testConnectionById")
+    public ResResult<String> testConnectionById(Long id){
+        return Res.ok(dynamicDataSourceService.testConnection(id));
     }
+
+    @Operation( summary = "根据id进行添加到连接池中")
+    @PostMapping(value = "/addDynamicDataSourceById")
+    public ResResult<String> addDynamicDataSourceById(Long id){
+        dynamicDataSourceService.addDynamicDataSourceById(id);
+        return Res.ok();
+    }
+
 }

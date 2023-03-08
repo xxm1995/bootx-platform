@@ -4,6 +4,7 @@ import cn.bootx.baseapi.core.dynamicsource.dao.DynamicDataSourceManager;
 import cn.bootx.baseapi.core.dynamicsource.entity.DynamicDataSource;
 import cn.bootx.baseapi.dto.dynamicsource.DynamicDataSourceDto;
 import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
@@ -24,7 +25,9 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 动态数据源管理
@@ -46,6 +49,9 @@ public class DynamicDataSourceService {
      */
     public void add(DynamicDataSourceParam param){
         DynamicDataSource dynamicDataSource = DynamicDataSource.init(param);
+        if (dynamicDataSourceManager.existsByCode(param.getCode())){
+            throw new BizException("编码重复");
+        }
         dynamicDataSourceManager.save(dynamicDataSource);
     }
 
@@ -54,7 +60,9 @@ public class DynamicDataSourceService {
      */
     public void update(DynamicDataSourceParam param){
         DynamicDataSource dynamicDataSource = dynamicDataSourceManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-
+        if (dynamicDataSourceManager.existsByCode(param.getCode(),param.getId())){
+            throw new BizException("编码重复");
+        }
         BeanUtil.copyProperties(param,dynamicDataSource, CopyOptions.create().ignoreNullValue());
         dynamicDataSourceManager.updateById(dynamicDataSource);
     }
@@ -71,6 +79,20 @@ public class DynamicDataSourceService {
      */
     public DynamicDataSourceDto findById(Long id){
         return dynamicDataSourceManager.findById(id).map(DynamicDataSource::toDto).orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 编码查重
+     */
+    public boolean existsByCode(String code){
+        return dynamicDataSourceManager.existsByCode(code);
+    }
+
+    /**
+     * 编码查重 (不包含id)
+     */
+    public boolean existsByCode(String code,Long id){
+        return dynamicDataSourceManager.existsByCode(code,id);
     }
 
     /**
@@ -96,6 +118,16 @@ public class DynamicDataSourceService {
     }
 
     /**
+     * 根据数据源id测试连接
+     */
+    public String testConnection(Long id){
+        DynamicDataSource dataSource = dynamicDataSourceManager.findById(id).orElseThrow(DataNotExistException::new);
+        DynamicDataSourceParam sourceParam = new DynamicDataSourceParam();
+        BeanUtil.copyProperties(dataSource,sourceParam);
+        return this.testConnection(sourceParam);
+    }
+
+    /**
      * 删除
      */
     public void delete(Long id){
@@ -105,10 +137,10 @@ public class DynamicDataSourceService {
     /**
      * 添加数据源到多数据集合中
      */
-    private void addDynamicDataSource(DynamicDataSource dynamicDataSource, String dbPassword) {
+    private void addDynamicDataSource(DynamicDataSource dynamicDataSource) {
         DataSourceProperty dataSourceProperty = new DataSourceProperty();
         dataSourceProperty.setUrl(dynamicDataSource.getDbUrl());
-        dataSourceProperty.setPassword(dbPassword);
+        dataSourceProperty.setPassword(dynamicDataSource.getDbPassword());
         dataSourceProperty.setDriverClassName(dynamicDataSource.getDbDriver());
         dataSourceProperty.setUsername(dynamicDataSource.getDbUsername());
         DataSource dataSource = hikariDataSourceCreator.createDataSource(dataSourceProperty);
@@ -119,6 +151,36 @@ public class DynamicDataSourceService {
         }
     }
 
+    /**
+     * 根据id进行添加
+     */
+    public void addDynamicDataSourceById(Long id){
+        DynamicDataSource dataSource = dynamicDataSourceManager.findById(id).orElseThrow(DataNotExistException::new);
+        this.addDynamicDataSource(dataSource);
+    }
 
+    /**
+     * 根据编码进行添加
+     */
+    public void addDynamicDataSourceByCode(String code){
+        DynamicDataSource dataSource = dynamicDataSourceManager.findByCode(code).orElseThrow(DataNotExistException::new);
+        this.addDynamicDataSource(dataSource);
+    }
+
+    /**
+     * 判断该数据源当前是否已经添加
+     */
+    public boolean existsByDataSourceKey(String key){
+        Map<String, DataSource> dataSources = dynamicRoutingDataSource.getDataSources();
+        return dataSources.containsKey(key);
+    }
+
+    /**
+     * 查询当前数据源列表
+     */
+    public List<String> findAllDataSource(){
+        Map<String, DataSource> dataSources = dynamicRoutingDataSource.getDataSources();
+        return new ArrayList<>(dataSources.keySet());
+    }
 
 }

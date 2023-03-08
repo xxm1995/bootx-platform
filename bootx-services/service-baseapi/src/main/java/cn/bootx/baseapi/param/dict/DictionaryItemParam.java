@@ -42,7 +42,7 @@ public class DictionaryItemParam implements Serializable {
     @Schema(description= "名称")
     private String name;
 
-    @NotEmpty(message = "启用状态不可为空",groups = add.class)
+    @NotNull(message = "启用状态不可为空",groups = add.class)
     @Schema(description= "启用状态")
     private Boolean enable;
 
