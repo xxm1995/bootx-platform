@@ -19,6 +19,7 @@ import cn.hutool.db.sql.SqlExecutor;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DataSourceCreator;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
+import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 动态数据源管理
@@ -42,6 +44,7 @@ public class DynamicDataSourceService {
 
     private final DataSourceCreator hikariDataSourceCreator;
     private final DynamicRoutingDataSource dynamicRoutingDataSource;
+    private final DynamicDataSourceProperties dynamicDataSourceProperties;
 
 
     /**
@@ -49,6 +52,10 @@ public class DynamicDataSourceService {
      */
     public void add(DynamicDataSourceParam param){
         DynamicDataSource dynamicDataSource = DynamicDataSource.init(param);
+        if (Objects.equals(dynamicDataSourceProperties.getPrimary(),param.getCode())){
+            throw new BizException("名称不可为 "+dynamicDataSourceProperties.getPrimary());
+        }
+
         if (dynamicDataSourceManager.existsByCode(param.getCode())){
             throw new BizException("编码重复");
         }
@@ -60,6 +67,9 @@ public class DynamicDataSourceService {
      */
     public void update(DynamicDataSourceParam param){
         DynamicDataSource dynamicDataSource = dynamicDataSourceManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+        if (Objects.equals(dynamicDataSourceProperties.getPrimary(),param.getCode())){
+            throw new BizException("名称不可为 "+dynamicDataSourceProperties.getPrimary());
+        }
         if (dynamicDataSourceManager.existsByCode(param.getCode(),param.getId())){
             throw new BizException("编码重复");
         }
@@ -85,6 +95,9 @@ public class DynamicDataSourceService {
      * 编码查重
      */
     public boolean existsByCode(String code){
+        if (Objects.equals(dynamicDataSourceProperties.getPrimary(),code)){
+           return true;
+        }
         return dynamicDataSourceManager.existsByCode(code);
     }
 
@@ -92,6 +105,9 @@ public class DynamicDataSourceService {
      * 编码查重 (不包含id)
      */
     public boolean existsByCode(String code,Long id){
+        if (Objects.equals(dynamicDataSourceProperties.getPrimary(),code)){
+            return true;
+        }
         return dynamicDataSourceManager.existsByCode(code,id);
     }
 
@@ -103,7 +119,7 @@ public class DynamicDataSourceService {
     }
 
     /**
-     * 测试连接
+     * 测试连接 根据参数
      */
     public String testConnection(DynamicDataSourceParam param){
         try(
@@ -168,6 +184,14 @@ public class DynamicDataSourceService {
     }
 
     /**
+     * 查询当前数据源列表
+     */
+    public List<String> findAllDataSource(){
+        Map<String, DataSource> dataSources = dynamicRoutingDataSource.getDataSources();
+        return new ArrayList<>(dataSources.keySet());
+    }
+
+    /**
      * 判断该数据源当前是否已经添加
      */
     public boolean existsByDataSourceKey(String key){
@@ -176,11 +200,12 @@ public class DynamicDataSourceService {
     }
 
     /**
-     * 查询当前数据源列表
+     * 删除数据源里的数据
      */
-    public List<String> findAllDataSource(){
-        Map<String, DataSource> dataSources = dynamicRoutingDataSource.getDataSources();
-        return new ArrayList<>(dataSources.keySet());
+    public void removeDataSourceByKey(String key){
+        if (Objects.equals(dynamicDataSourceProperties.getPrimary(),key)){
+            throw new BizException(key + " 数据源不可被删除");
+        }
     }
 
 }

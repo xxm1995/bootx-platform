@@ -63,19 +63,6 @@ public class DynamicDataSourceController {
     public ResResult<Boolean> existsByCode(String code,Long id) {
         return Res.ok(dynamicDataSourceService.existsByCode(code,id));
     }
-
-    @Operation( summary = "是否已经添加到连接池中")
-    @GetMapping(value = "/existsByDataSourceKey")
-    public ResResult<Boolean> existsByDataSourceKey(String code){
-        return Res.ok(dynamicDataSourceService.existsByDataSourceKey(code));
-    }
-
-    @Operation( summary = "查询当前数据源列表")
-    @GetMapping(value = "/findAllDataSource")
-    public ResResult<List<String>> findAllDataSource(){
-        return Res.ok(dynamicDataSourceService.findAllDataSource());
-    }
-
     @Operation( summary = "查询所有")
     @GetMapping(value = "/findAll")
     public ResResult<List<DynamicDataSourceDto>> findAll(){
@@ -105,6 +92,26 @@ public class DynamicDataSourceController {
     @PostMapping(value = "/addDynamicDataSourceById")
     public ResResult<String> addDynamicDataSourceById(Long id){
         dynamicDataSourceService.addDynamicDataSourceById(id);
+        return Res.ok();
+    }
+
+
+    @Operation( summary = "是否已经添加到连接池中")
+    @GetMapping(value = "/existsByDataSourceKey")
+    public ResResult<Boolean> existsByDataSourceKey(String code){
+        return Res.ok(dynamicDataSourceService.existsByDataSourceKey(code));
+    }
+
+    @Operation( summary = "查询当前数据源列表")
+    @GetMapping(value = "/findAllDataSource")
+    public ResResult<List<String>> findAllDataSource(){
+        return Res.ok(dynamicDataSourceService.findAllDataSource());
+    }
+
+    @Operation(summary = "从数据源列表中删除指定数据源")
+    @DeleteMapping("/removeDataSourceByKey")
+    public ResResult<Void> removeDataSourceByKey(String key){
+        dynamicDataSourceService.removeDataSourceByKey(key);
         return Res.ok();
     }
 
