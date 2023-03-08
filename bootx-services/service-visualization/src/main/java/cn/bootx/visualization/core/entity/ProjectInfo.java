@@ -21,7 +21,6 @@ import lombok.experimental.Accessors;
  * @author xxm
  * @date 2023/2/21
  */
-@Table(comment = "自定义大屏信息")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -29,31 +28,25 @@ import lombok.experimental.Accessors;
 public class ProjectInfo extends MpBaseEntity implements EntityBaseFunction<ProjectInfoDto> {
 
     /** 项目名称 */
-    @Column(comment = "项目名称")
     private String name;
 
     /**
      * 发布状态
      * @see cn.bootx.visualization.code.GoVIewCode
      */
-    @Column(comment = "发布状态")
     private Integer state;
 
     /** 是否在编辑中 */
-    @Column(comment = "是否在编辑中")
     private Boolean edit;
 
     /** 报表内容 */
     @BigField
-    @Column(comment = "报表内容",type = MySqlFieldType.LONGTEXT)
     private String content;
 
     /** 预览图片id */
-    @Column(comment = "预览图片id")
     private Long indexImage;
 
     /** 备注 */
-    @Column(comment = "备注")
     private String remark;
 
 
