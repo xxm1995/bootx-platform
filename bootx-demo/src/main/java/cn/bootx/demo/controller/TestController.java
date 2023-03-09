@@ -5,6 +5,8 @@ import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.log.db.DbAppender;
+import cn.bootx.common.log.db.LogInfo;
 import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Validated
 @IgnoreAuth
@@ -112,6 +115,14 @@ public class TestController {
     public void rotationSyncFun(String i) {
         log.info(i);
         throw new RetryableException();
+    }
+
+    @Operation(summary = "测试日志")
+    @GetMapping("/logDbTest")
+    public ResResult<Void> logDbTest() {
+        List<LogInfo> logs = DbAppender.getLogs();
+        System.out.println(logs);
+        return Res.ok();
     }
 
 }
