@@ -6,6 +6,7 @@ import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -104,7 +105,7 @@ public class DynamicDataSourceController {
 
     @Operation( summary = "查询当前数据源列表")
     @GetMapping(value = "/findAllDataSource")
-    public ResResult<List<String>> findAllDataSource(){
+    public ResResult<List<KeyValue>> findAllDataSource(){
         return Res.ok(dynamicDataSourceService.findAllDataSource());
     }
 

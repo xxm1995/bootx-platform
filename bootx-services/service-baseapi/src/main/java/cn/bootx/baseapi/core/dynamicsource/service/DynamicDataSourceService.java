@@ -7,6 +7,7 @@ import cn.bootx.baseapi.param.dynamicsource.DynamicDataSourceParam;
 import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.rest.PageResult;
+import cn.bootx.common.core.rest.dto.KeyValue;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
@@ -26,10 +27,10 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * 动态数据源管理
@@ -186,9 +187,11 @@ public class DynamicDataSourceService {
     /**
      * 查询当前数据源列表
      */
-    public List<String> findAllDataSource(){
+    public List<KeyValue> findAllDataSource(){
         Map<String, DataSource> dataSources = dynamicRoutingDataSource.getDataSources();
-        return new ArrayList<>(dataSources.keySet());
+        return dataSources.keySet().stream()
+                .map(s -> new KeyValue().setKey(s))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -206,6 +209,7 @@ public class DynamicDataSourceService {
         if (Objects.equals(dynamicDataSourceProperties.getPrimary(),key)){
             throw new BizException(key + " 数据源不可被删除");
         }
+        dynamicRoutingDataSource.removeDataSource(key);
     }
 
 }
