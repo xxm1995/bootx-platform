@@ -53,12 +53,12 @@ public class QuerySql extends MpBaseEntity {
 
 
     /** SQL查询参数 */
-    @Column(comment = "",type = MySqlFieldType.LONGTEXT)
+    @Column(comment = "SQL查询参数",type = MySqlFieldType.LONGTEXT)
     @TableField(typeHandler = JacksonRawTypeHandler.class)
     private List<SqlParam> params;
 
     /** SQL查询结果字段 */
-    @Column(comment = "",type = MySqlFieldType.LONGTEXT)
+    @Column(comment = "SQL查询结果字段",type = MySqlFieldType.LONGTEXT)
     @TableField(typeHandler = JacksonRawTypeHandler.class)
     private List<SqlField> fields;
 

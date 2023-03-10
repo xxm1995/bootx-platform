@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * SQL查询
  * @author xxm
@@ -31,10 +33,10 @@ public class QuerySqlController {
         return Res.ok();
     }
 
-    @Operation(summary = "测试SQL解析和执行")
+    @Operation(summary = "通过SQL查出结果字段")
     @PostMapping("/queryFieldBySql")
-    public ResResult<Void> queryFieldBySql(@RequestBody QueryFieldParam param){
-        querySqlService.queryFieldBySql(param);
-        return Res.ok();
+    public ResResult<List<String>> queryFieldBySql(@RequestBody QueryFieldParam param){
+        return Res.ok(querySqlService.queryFieldBySql(param));
     }
+
 }

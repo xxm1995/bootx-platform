@@ -13,11 +13,12 @@ import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.parsing.GenericTokenParser;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.util.Objects;
+import java.util.*;
 
 /**
  *
@@ -38,22 +39,32 @@ public class QuerySqlService {
      * SQL查询
      */
     public void querySql(){
+        Map<String,String> map = new HashMap<>();
+        map.put("code","hello");
         // 获取SQL语句, 将 #{} 和 ${} 元素进行解析和替换
-        String sql = "select * from iam_client";
+        String sql = "select * from iam_client where code = ${code}";
+        GenericTokenParser tokenParser = new GenericTokenParser("${","}",content -> {
+            return "?";
+        });
+        String parse = tokenParser.parse(sql);
+        System.out.println(parse);
+
         // 将参数添加到语句中
     }
 
     /**
-     * 通过SQL查出结果
+     * 通过SQL查出结果字段
      */
     @SneakyThrows
-    public void queryFieldBySql(QueryFieldParam param){
+    public List<String> queryFieldBySql(QueryFieldParam param){
         String sql = "select * from iam_client";
         DataSource dataSource = this.getDataSource(param.getDatabaseId());
         Connection connection = dataSource.getConnection();
         Entity query = SqlExecutor.query(connection, sql, new EntityHandler());
         System.out.println(query);
+        return new ArrayList<>(query.keySet());
     }
+
 
     /**
      * 获取数据源

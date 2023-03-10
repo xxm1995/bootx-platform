@@ -13,7 +13,6 @@ import cn.bootx.common.core.util.ResultConvertUtil;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.db.Entity;
 import cn.hutool.db.ds.simple.SimpleDataSource;
 import cn.hutool.db.handler.EntityHandler;
 import cn.hutool.db.sql.SqlExecutor;
@@ -127,7 +126,7 @@ public class DynamicDataSourceService {
                 SimpleDataSource ds = new SimpleDataSource(param.getDbUrl(), param.getDbUsername(), param.getDbPassword(),param.getDbDriver());
                 Connection connection = ds.getConnection();
         ) {
-            Entity query = SqlExecutor.query(connection, "SELECT 1", new EntityHandler());
+            SqlExecutor.query(connection, "SELECT 1", new EntityHandler());
         } catch (Exception e) {
             return e.getMessage();
         }
