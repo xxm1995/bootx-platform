@@ -26,6 +26,8 @@ public interface CommonErrorCode {
     int DATA_NOT_EXIST = 10010;
     /** 不支持的操作 */
     int UN_SUPPORTED_OPERATE = 10011;
+    /** 危险SQL异常,  */
+    int DANGER_SQL = 10012;
 
     // 未知异常
     int UNKNOWN_ERROR = -1;

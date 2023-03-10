@@ -154,18 +154,14 @@ public class DynamicDataSourceService {
     /**
      * 添加数据源到多数据集合中
      */
-    private void addDynamicDataSource(DynamicDataSource dynamicDataSource) {
+    public void addDynamicDataSource(DynamicDataSource dynamicDataSource) {
         DataSourceProperty dataSourceProperty = new DataSourceProperty();
         dataSourceProperty.setUrl(dynamicDataSource.getDbUrl());
         dataSourceProperty.setPassword(dynamicDataSource.getDbPassword());
         dataSourceProperty.setDriverClassName(dynamicDataSource.getDbDriver());
         dataSourceProperty.setUsername(dynamicDataSource.getDbUsername());
         DataSource dataSource = hikariDataSourceCreator.createDataSource(dataSourceProperty);
-        try {
-            dynamicRoutingDataSource.addDataSource(dynamicDataSource.getCode(), dataSource);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        dynamicRoutingDataSource.addDataSource(dynamicDataSource.getCode(), dataSource);
     }
 
     /**
