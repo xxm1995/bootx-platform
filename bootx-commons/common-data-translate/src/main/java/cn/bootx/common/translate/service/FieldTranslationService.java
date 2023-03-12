@@ -2,6 +2,7 @@ package cn.bootx.common.translate.service;
 
 import cn.bootx.common.core.annotation.Translate;
 import cn.bootx.common.core.annotation.TranslationResult;
+import cn.bootx.common.core.function.CollectorsFunction;
 import cn.bootx.common.translate.cache.TranslationCacheLocal;
 import cn.bootx.common.translate.cache.TranslationCacheLocal.Cache;
 import cn.bootx.common.translate.cache.TranslationCacheService;
@@ -178,7 +179,7 @@ public class FieldTranslationService {
         // 遍历字段, 判断是否有嵌套对象
         Map<String, ConvertInfo> convertInfoMap = Arrays.stream(BeanUtil.getPropertyDescriptors(object.getClass()))
                 .map(this::initConvertInfo)
-                .collect(Collectors.toMap(ConvertInfo::getName, Function.identity(), (o1, o2) -> o2));
+                .collect(Collectors.toMap(ConvertInfo::getName, Function.identity(), CollectorsFunction::retainLatest));
 
         // 加注解的嵌套对象进行递归处理
         convertInfoMap.values().stream()

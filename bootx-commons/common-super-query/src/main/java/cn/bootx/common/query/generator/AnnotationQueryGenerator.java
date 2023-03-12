@@ -2,6 +2,7 @@ package cn.bootx.common.query.generator;
 
 import cn.bootx.common.core.annotation.QueryParam;
 import cn.bootx.common.core.annotation.QueryParam.NamingCaseEnum;
+import cn.bootx.common.core.function.CollectorsFunction;
 import cn.bootx.common.mybatisplus.util.MpUtil;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;
@@ -49,7 +50,7 @@ public class AnnotationQueryGenerator {
 
         // 读取实体类对象的字段
         Map<String, PropertyDescriptor> entityClassPropMap = Arrays.stream(BeanUtil.getPropertyDescriptors(clazz))
-                .collect(Collectors.toMap(PropertyDescriptor::getName, Function.identity(), (o1, o2) -> o2));
+                .collect(Collectors.toMap(PropertyDescriptor::getName, Function.identity(), CollectorsFunction::retainLatest));
 
         // 遍历参数上的对象, 生成查询构造器条件
         for (PropertyDescriptor paramProp : paramClassProps) {

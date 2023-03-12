@@ -70,7 +70,12 @@ public class QuerySql extends MpBaseEntity {
     @Setter
     public static class SqlParam {
         /** 参数名称 */
-        private String paramName;
+        private String name;
+        /**
+         * 类型
+         * @see cn.bootx.baseapi.code.QuerySqlCode
+         */
+        private String type;
     }
 
     /**

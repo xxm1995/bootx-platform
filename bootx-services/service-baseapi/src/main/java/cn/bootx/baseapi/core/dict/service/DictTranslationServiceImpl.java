@@ -3,6 +3,7 @@ package cn.bootx.baseapi.core.dict.service;
 import cn.bootx.baseapi.core.dict.entity.DictionaryItem;
 import cn.bootx.baseapi.dto.dict.DictionaryItemDto;
 import cn.bootx.baseapi.dto.dict.DictionaryItemSimpleDto;
+import cn.bootx.common.core.function.CollectorsFunction;
 import cn.bootx.common.translate.cache.TranslationCacheLocal;
 import cn.bootx.common.translate.service.DictTranslationService;
 import com.google.common.base.Objects;
@@ -11,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -52,7 +52,7 @@ public class DictTranslationServiceImpl implements DictTranslationService {
             val dictCodes = dictItems.stream().map(TranslationCacheLocal.DictItem::getDictCode).collect(Collectors.toList());
             for (val dictCode : dictCodes) {
                 Map<String, DictionaryItemDto> itemMap = dictionaryItemService.findEnableByDictCode(dictCode).stream()
-                        .collect(Collectors.toMap(DictionaryItemDto::getCode, Function.identity(), (o1, o2) -> o2));
+                        .collect(Collectors.toMap(DictionaryItemDto::getCode, Function.identity(), CollectorsFunction::retainLatest));
                 val collect = dictItems.stream().filter(item -> Objects.equal(dictCode, item.getDictCode()))
                         .collect(Collectors.toList());
                 for (val dictItem : collect) {

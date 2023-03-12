@@ -1,6 +1,7 @@
 package cn.bootx.iam.core.scope.service;
 
 import cn.bootx.common.core.exception.BizException;
+import cn.bootx.common.core.function.CollectorsFunction;
 import cn.bootx.iam.core.scope.dao.DataScopeManager;
 import cn.bootx.iam.core.scope.dao.DataScopeUserManager;
 import cn.bootx.iam.core.scope.entity.DataScope;
@@ -41,7 +42,7 @@ public class DataScopeUserService {
      */
     public List<DataScopeUserInfoDto> findUsersByDataScopeId(Long dataScopeId){
         Map<Long, DataScopeUser> dataScopeUserMap = dataScopeUserManager.findByDateScopeId(dataScopeId).stream()
-                .collect(Collectors.toMap(DataScopeUser::getUserId, Function.identity(),(o1, o2) -> o2));
+                .collect(Collectors.toMap(DataScopeUser::getUserId, Function.identity(), CollectorsFunction::retainLatest));
         // 查询出用户id
         List<Long> userIds = dataScopeUserMap.values().stream()
                 .map(DataScopeUser::getUserId)
