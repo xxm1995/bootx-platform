@@ -26,14 +26,16 @@ import java.nio.file.Files;
 import java.util.Optional;
 
 /**
-* 上传文件本地存储
-* @author xxm
-* @date 2022/1/12
-*/
+ * 上传文件本地存储
+ *
+ * @author xxm
+ * @date 2022/1/12
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class LocalUploadService implements UploadService {
+
     private final FileUploadProperties fileUploadProperties;
 
     @Override
@@ -46,14 +48,12 @@ public class LocalUploadService implements UploadService {
      */
     @SneakyThrows
     @Override
-    public UpdateFileInfo upload(MultipartFile file, UploadFileContext context){
+    public UpdateFileInfo upload(MultipartFile file, UploadFileContext context) {
         String fileSuffix = Optional.ofNullable(context.getFileSuffix()).map(s -> "." + s).orElse("");
         String filePath = DateUtil.today() + "/" + IdUtil.getSnowflakeNextIdStr() + fileSuffix;
-        String storePath = fileUploadProperties.getLocal().getLocalPath()+filePath;
-        FileUtil.writeFromStream(file.getInputStream(),storePath);
-        return new UpdateFileInfo()
-                .setFilePath(filePath)
-                .setFileSize(file.getSize());
+        String storePath = fileUploadProperties.getLocal().getLocalPath() + filePath;
+        FileUtil.writeFromStream(file.getInputStream(), storePath);
+        return new UpdateFileInfo().setFilePath(filePath).setFileSize(file.getSize());
     }
 
     /**
@@ -61,14 +61,14 @@ public class LocalUploadService implements UploadService {
      */
     @SneakyThrows
     @Override
-    public void preview(UpdateFileInfo updateFileInfo, HttpServletResponse response){
+    public void preview(UpdateFileInfo updateFileInfo, HttpServletResponse response) {
         String storePath = fileUploadProperties.getLocal().getLocalPath() + updateFileInfo.getFilePath();
         File file = new File(storePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new BizException("文件不存在");
         }
         FileInputStream is = new FileInputStream(file);
-        //获取响应输出流
+        // 获取响应输出流
         ServletOutputStream os = response.getOutputStream();
         IoUtil.copy(is, os);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, updateFileInfo.getFileType());
@@ -81,10 +81,10 @@ public class LocalUploadService implements UploadService {
      */
     @SneakyThrows
     @Override
-    public InputStream download(UpdateFileInfo updateFileInfo){
+    public InputStream download(UpdateFileInfo updateFileInfo) {
         String storePath = fileUploadProperties.getLocal().getLocalPath() + updateFileInfo.getFilePath();
         File file = new File(storePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new BizException("文件不存在");
         }
         return Files.newInputStream(file.toPath());
@@ -98,4 +98,5 @@ public class LocalUploadService implements UploadService {
         String storePath = fileUploadProperties.getLocal().getLocalPath() + updateFileInfo.getFilePath();
         FileUtil.del(storePath);
     }
+
 }

@@ -14,15 +14,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-/**   
+/**
  * 微信扫码事件
- * @author xxm  
+ *
+ * @author xxm
  * @date 2022/8/4
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WeChatQrScanHandler implements WeChatMpMessageHandler{
+public class WeChatQrScanHandler implements WeChatMpMessageHandler {
+
     private final WeChatQrLoginService weChatQrLoginService;
 
     @Override
@@ -31,16 +33,16 @@ public class WeChatQrScanHandler implements WeChatMpMessageHandler{
     }
 
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> map, WxMpService wxMpService, WxSessionManager wxSessionManager) {
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> map, WxMpService wxMpService,
+            WxSessionManager wxSessionManager) {
         // 扫描用户的OpenId
         String openId = wxMessage.getFromUser();
         // 二维码key值
         String qrCodeKey = wxMessage.getEventKey();
-        weChatQrLoginService.setOpenId(qrCodeKey,openId);
+        weChatQrLoginService.setOpenId(qrCodeKey, openId);
 
-        return new TextBuilder()
-                .fromUser(wxMessage.getToUser())
-                .toUser(wxMessage.getFromUser())
-                .content("感谢关注").build();
+        return new TextBuilder().fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser()).content("感谢关注")
+                .build();
     }
+
 }

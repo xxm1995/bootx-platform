@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 处理普通任务人员分配
+ *
  * @author xxm
  * @date 2022/9/4
  */
@@ -19,7 +20,9 @@ public interface BpmUserTaskAssignService {
     /**
      * 处理任务人员分配
      */
-    void handleAssignments(TaskService taskService, String assignee, String owner,
-                           List<String> candidateUsers, List<String> candidateGroups, TaskEntity task, ExpressionManager expressionManager,
-                           DelegateExecution execution, ProcessEngineConfigurationImpl processEngineConfiguration, UserTaskActivityBehavior userTaskActivityBehavior);
+    void handleAssignments(TaskService taskService, String assignee, String owner, List<String> candidateUsers,
+            List<String> candidateGroups, TaskEntity task, ExpressionManager expressionManager,
+            DelegateExecution execution, ProcessEngineConfigurationImpl processEngineConfiguration,
+            UserTaskActivityBehavior userTaskActivityBehavior);
+
 }

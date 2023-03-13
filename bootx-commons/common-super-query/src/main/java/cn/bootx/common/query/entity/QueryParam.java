@@ -17,30 +17,31 @@ import java.util.List;
 @Schema(title = "查询项")
 public class QueryParam {
 
-    @Schema(description= "拼接条件是否为或")
+    @Schema(description = "拼接条件是否为或")
     private boolean or;
 
-    @Schema(description= "参数名称")
+    @Schema(description = "参数名称")
     private String paramName;
 
     /**
      * @see CompareTypeEnum
      */
-    @Schema(description= "比较类型")
+    @Schema(description = "比较类型")
     private String compareType;
 
     /**
      * @see ParamTypeEnum
      */
-    @Schema(description= "参数类型")
+    @Schema(description = "参数类型")
     private String paramType;
 
-    @Schema(description= "参数值")
+    @Schema(description = "参数值")
     private Object paramValue;
 
-    @Schema(description= "参数名称是否需要转换成下划线命名")
+    @Schema(description = "参数名称是否需要转换成下划线命名")
     private boolean underLine = true;
 
-    @Schema(description= "嵌套查询")
+    @Schema(description = "嵌套查询")
     private List<QueryParam> nestedParams;
+
 }

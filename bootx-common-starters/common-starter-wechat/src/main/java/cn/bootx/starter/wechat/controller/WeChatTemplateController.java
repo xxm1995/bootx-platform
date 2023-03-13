@@ -22,39 +22,41 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/wechat/template")
 @RequiredArgsConstructor
 public class WeChatTemplateController {
+
     private final WeChatTemplateService weChatTemplateService;
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody WeChatTemplateParam param){
+    public ResResult<Void> update(@RequestBody WeChatTemplateParam param) {
         weChatTemplateService.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<WeChatTemplateDto> findById(Long id){
+    public ResResult<WeChatTemplateDto> findById(Long id) {
         return Res.ok(weChatTemplateService.findById(id));
     }
 
-    @Operation( summary = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<WeChatTemplateDto>> page(PageParam pageParam, WeChatTemplateParam weChatTemplateParam){
-        return Res.ok(weChatTemplateService.page(pageParam,weChatTemplateParam));
+    public ResResult<PageResult<WeChatTemplateDto>> page(PageParam pageParam, WeChatTemplateParam weChatTemplateParam) {
+        return Res.ok(weChatTemplateService.page(pageParam, weChatTemplateParam));
     }
 
     @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
-    public ResResult<Boolean> existsByCode(String code,Long id) {
-        return Res.ok(weChatTemplateService.existsByCode(code,id));
+    public ResResult<Boolean> existsByCode(String code, Long id) {
+        return Res.ok(weChatTemplateService.existsByCode(code, id));
     }
-    
+
     @Operation(summary = "同步消息模板数据")
     @PostMapping("/sync")
-    public ResResult<Void> sync(){
+    public ResResult<Void> sync() {
         // 为了获取用户生效, 测试用
         SecurityUtil.getUserId();
         weChatTemplateService.sync();
         return Res.ok();
     }
+
 }

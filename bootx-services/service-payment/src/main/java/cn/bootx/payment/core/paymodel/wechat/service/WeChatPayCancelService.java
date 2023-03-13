@@ -27,6 +27,7 @@ import java.util.Optional;
 
 /**
  * 微信支付关闭和退款
+ *
  * @author xxm
  * @date 2021/6/21
  */
@@ -34,19 +35,18 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class WeChatPayCancelService {
+
     private final FileUploadService uploadService;
+
     /**
      * 关闭支付
      */
     @Retryable(value = RetryableException.class)
     public void cancelRemote(Payment payment, WeChatPayConfig weChatPayConfig) {
         // 只有部分需要调用微信网关进行关闭
-        Map<String, String> params = CloseOrderModel.builder()
-                .appid(weChatPayConfig.getAppId())
-                .mch_id(weChatPayConfig.getMchId())
-                .out_trade_no(String.valueOf(payment.getId()))
-                .nonce_str(WxPayKit.generateStr())
-                .build()
+        Map<String, String> params = CloseOrderModel.builder().appid(weChatPayConfig.getAppId())
+                .mch_id(weChatPayConfig.getMchId()).out_trade_no(String.valueOf(payment.getId()))
+                .nonce_str(WxPayKit.generateStr()).build()
                 .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
         String xmlResult = WxPayApi.closeOrder(params);
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
@@ -56,20 +56,16 @@ public class WeChatPayCancelService {
     /**
      * 退款
      */
-    public void refund(Payment payment, WeChatPayment weChatPayment, BigDecimal amount, WeChatPayConfig weChatPayConfig) {
+    public void refund(Payment payment, WeChatPayment weChatPayment, BigDecimal amount,
+            WeChatPayConfig weChatPayConfig) {
         String totalFee = weChatPayment.getAmount().multiply(BigDecimal.valueOf(100)).toBigInteger().toString();
         String refundFee = amount.multiply(BigDecimal.valueOf(100)).toBigInteger().toString();
         // 设置退款号
         AsyncRefundLocal.set(IdUtil.getSnowflakeNextIdStr());
-        Map<String, String> params = RefundModel.builder()
-                .appid(weChatPayConfig.getAppId())
-                .mch_id(weChatPayConfig.getMchId())
-                .out_trade_no(String.valueOf(payment.getId()))
-                .out_refund_no(AsyncRefundLocal.get())
-                .total_fee(totalFee)
-                .refund_fee(refundFee)
-                .nonce_str(WxPayKit.generateStr())
-                .build()
+        Map<String, String> params = RefundModel.builder().appid(weChatPayConfig.getAppId())
+                .mch_id(weChatPayConfig.getMchId()).out_trade_no(String.valueOf(payment.getId()))
+                .out_refund_no(AsyncRefundLocal.get()).total_fee(totalFee).refund_fee(refundFee)
+                .nonce_str(WxPayKit.generateStr()).build()
                 .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
         // 获取证书文件流
         byte[] fileBytes = uploadService.getFileBytes(weChatPayConfig.getP12());
@@ -79,15 +75,16 @@ public class WeChatPayCancelService {
         Map<String, String> result = WxPayKit.xmlToMap(xmlResult);
         this.verifyErrorMsg(result);
     }
+
     /**
      * 验证错误信息
      */
-    private void verifyErrorMsg(Map<String, String> result){
+    private void verifyErrorMsg(Map<String, String> result) {
         String returnCode = result.get(WeChatPayCode.RETURN_CODE);
         String resultCode = result.get(WeChatPayCode.RESULT_CODE);
-        if (!WxPayKit.codeIsOk(returnCode)||!WxPayKit.codeIsOk(resultCode)) {
+        if (!WxPayKit.codeIsOk(returnCode) || !WxPayKit.codeIsOk(resultCode)) {
             String errorMsg = result.get(WeChatPayCode.ERR_CODE_DES);
-            if (StrUtil.isBlank(errorMsg)){
+            if (StrUtil.isBlank(errorMsg)) {
                 errorMsg = result.get(WeChatPayCode.RETURN_MSG);
             }
             log.error("订单退款/关闭失败 {}", errorMsg);
@@ -96,4 +93,5 @@ public class WeChatPayCancelService {
             throw new PayFailureException(errorMsg);
         }
     }
+
 }

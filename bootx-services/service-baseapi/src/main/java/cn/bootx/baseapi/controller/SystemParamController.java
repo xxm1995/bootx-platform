@@ -17,28 +17,31 @@ import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
-/**   
-* 系统参数
-* @author xxm  
-* @date 2021/10/25 
-*/
-@Tag(name ="系统参数")
+/**
+ * 系统参数
+ *
+ * @author xxm
+ * @date 2021/10/25
+ */
+@Tag(name = "系统参数")
 @RestController
 @RequestMapping("/system/param")
 @RequiredArgsConstructor
 public class SystemParamController {
+
     private final SystemParamService systemParamService;
 
     @Operation(summary = "添加")
     @PostMapping("/add")
-    public ResResult<Void> add(@RequestBody SystemParameterParam param){
+    public ResResult<Void> add(@RequestBody SystemParameterParam param) {
         ValidationUtil.validateParam(param, ValidationGroup.add.class);
         systemParamService.add(param);
         return Res.ok();
     }
+
     @Operation(summary = "更新")
     @PostMapping("/update")
-    public ResResult<Void> update(@RequestBody SystemParameterParam param){
+    public ResResult<Void> update(@RequestBody SystemParameterParam param) {
         ValidationUtil.validateParam(param, ValidationGroup.edit.class);
         systemParamService.update(param);
         return Res.ok();
@@ -47,39 +50,40 @@ public class SystemParamController {
     @Operation(summary = "分页")
     @GetMapping("/page")
     public ResResult<PageResult<SystemParameterDto>> page(@ParameterObject PageParam pageParam,
-                                                          @ParameterObject SystemParameterParam param){
-        return Res.ok(systemParamService.page(pageParam,param));
+            @ParameterObject SystemParameterParam param) {
+        return Res.ok(systemParamService.page(pageParam, param));
     }
 
     @Operation(summary = "获取单条")
     @GetMapping("/findById")
-    public ResResult<SystemParameterDto> findById(@Parameter(description = "主键") Long id){
+    public ResResult<SystemParameterDto> findById(@Parameter(description = "主键") Long id) {
         return Res.ok(systemParamService.findById(id));
     }
 
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         systemParamService.delete(id);
         return Res.ok();
     }
-    
+
     @Operation(summary = "判断编码是否存在")
     @GetMapping("/existsByKey")
-    public ResResult<Boolean> existsByKey(String key){
+    public ResResult<Boolean> existsByKey(String key) {
         return Res.ok(systemParamService.existsByKey(key));
     }
 
     @Operation(summary = "判断编码是否存在(不包含自己)")
     @GetMapping("/existsByKeyNotId")
-    public ResResult<Boolean> existsByKeyNotId(String key,Long id){
-        return Res.ok(systemParamService.existsByKey(key,id));
+    public ResResult<Boolean> existsByKeyNotId(String key, Long id) {
+        return Res.ok(systemParamService.existsByKey(key, id));
     }
 
     @IgnoreAuth
     @Operation(summary = "根据键名获取键值")
     @GetMapping("/findByParamKey")
-    public ResResult<String> findByParamKey(String key){
+    public ResResult<String> findByParamKey(String key) {
         return Res.ok(systemParamService.findByParamKey(key));
     }
+
 }

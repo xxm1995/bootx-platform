@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
  * @author xxm
  * @date 2023/1/16
  */
 public class JavaToMysqlType {
+
     public static Map<String, MySqlFieldType> javaToMysqlTypeMap = new HashMap<String, MySqlFieldType>();
     static {
         javaToMysqlTypeMap.put("class java.lang.String", MySqlFieldType.VARCHAR);
@@ -37,4 +37,5 @@ public class JavaToMysqlType {
         javaToMysqlTypeMap.put("short", MySqlFieldType.SMALLINT);
         javaToMysqlTypeMap.put("char", MySqlFieldType.VARCHAR);
     }
+
 }

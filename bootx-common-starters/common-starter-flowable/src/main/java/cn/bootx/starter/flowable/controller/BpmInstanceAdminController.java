@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 流程实例管理服务
+ *
  * @author xxm
  * @date 2022/9/17
  */
@@ -24,11 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/bpm/admin/instance")
 @RequiredArgsConstructor
 public class BpmInstanceAdminController {
+
     private final BpmInstanceAdminService adminService;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<InstanceInfo>> page(@ParameterObject PageParam pageParam){
+    public ResResult<PageResult<InstanceInfo>> page(@ParameterObject PageParam pageParam) {
         return Res.ok(adminService.page(pageParam));
     }
+
 }

@@ -33,6 +33,7 @@ import java.util.Objects;
 
 /**
  * 查询字段权限处理器
+ *
  * @author xxm
  * @date 2022/12/29
  */
@@ -40,15 +41,18 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class SelectFieldPermInterceptor extends JsqlParserSupport implements InnerInterceptor {
+
     private final DataPermProperties dataPermProperties;
+
     private final SelectFieldPermHandler selectFieldPermHandler;
 
     /**
      * 查询语句判断
      */
     @Override
-    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
-        if (!this.checkPermission()){
+    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
+            ResultHandler resultHandler, BoundSql boundSql) {
+        if (!this.checkPermission()) {
             return;
         }
         PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
@@ -65,7 +69,7 @@ public class SelectFieldPermInterceptor extends JsqlParserSupport implements Inn
         if (selectBody instanceof PlainSelect) {
             PlainSelect plainSelect = (PlainSelect) selectBody;
             // 关联表直接排除
-            if (CollUtil.isNotEmpty(plainSelect.getJoins())){
+            if (CollUtil.isNotEmpty(plainSelect.getJoins())) {
                 return;
             }
             String tableName = plainSelect.getFromItem().toString();
@@ -79,25 +83,23 @@ public class SelectFieldPermInterceptor extends JsqlParserSupport implements Inn
     /**
      * 判断是否需要进行数据权限控制
      */
-    protected boolean checkPermission(){
+    protected boolean checkPermission() {
         // 配置是否开启了权限控制
-        if (!dataPermProperties.isEnableSelectFieldPerm()){
+        if (!dataPermProperties.isEnableSelectFieldPerm()) {
             return false;
         }
         // 判断是否在嵌套执行环境中
         NestedPermission nestedPermission = DataPermContextHolder.getNestedPermission();
-        if (Objects.nonNull(nestedPermission) && !nestedPermission.selectField()){
+        if (Objects.nonNull(nestedPermission) && !nestedPermission.selectField()) {
             return false;
         }
         // 是否添加了对应的注解来开启数据权限控制
         Permission permission = DataPermContextHolder.getPermission();
-        if (Objects.isNull(permission) || !permission.selectField()){
+        if (Objects.isNull(permission) || !permission.selectField()) {
             return false;
         }
         // 检查是否已经登录和是否是超级管理员, 管理员跳过权限控制
-        return !DataPermContextHolder.getUserDetail()
-                .map(UserDetail::isAdmin)
-                .orElseThrow(NotLoginPermException::new);
+        return !DataPermContextHolder.getUserDetail().map(UserDetail::isAdmin).orElseThrow(NotLoginPermException::new);
     }
 
 }

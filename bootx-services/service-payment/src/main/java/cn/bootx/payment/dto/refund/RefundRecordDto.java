@@ -11,18 +11,19 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**   
-* 退款记录
-* @author xxm  
-* @date 2022/3/2 
-*/
+/**
+ * 退款记录
+ *
+ * @author xxm
+ * @date 2022/3/2
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "退款记录")
 public class RefundRecordDto extends BaseDto {
 
-    @Schema(description= "关联的业务id")
+    @Schema(description = "关联的业务id")
     private String businessId;
 
     @Schema(description = "付款付单号")
@@ -63,4 +64,5 @@ public class RefundRecordDto extends BaseDto {
 
     @Schema(description = "错误信息")
     private String errorMsg;
+
 }

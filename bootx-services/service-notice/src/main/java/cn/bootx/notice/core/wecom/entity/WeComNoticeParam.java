@@ -8,11 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
-/**   
-* 企业微信发送消息参数
-* @author xxm  
-* @date 2022/7/23 
-*/
+/**
+ * 企业微信发送消息参数
+ *
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
@@ -34,4 +35,5 @@ public class WeComNoticeParam {
         receive.process(wxCpMessage);
         return wxCpMessage;
     }
+
 }

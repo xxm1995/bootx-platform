@@ -8,25 +8,27 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* 钉钉响应结果
-* @author xxm  
-* @date 2020/11/30 
-*/
+ * 钉钉响应结果
+ *
+ * @author xxm
+ * @date 2020/11/30
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉发送响应类")
 public class DingTalkResult<T> implements Serializable {
+
     private static final long serialVersionUID = 4298060961428118100L;
 
     @JsonProperty("errcode")
-    @Schema(description= "错误码")
+    @Schema(description = "错误码")
     private Integer code;
 
-    @Schema(description= "返回数据")
+    @Schema(description = "返回数据")
     private T result;
 
     @JsonProperty("errmsg")
-    @Schema(description= "返回码描述")
+    @Schema(description = "返回码描述")
     private String msg;
 
 }

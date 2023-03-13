@@ -7,12 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 /**
-* 微信消息配置
-* @author xxm
-* @date 2021/8/10
-*/
+ * 微信消息配置
+ *
+ * @author xxm
+ * @date 2021/8/10
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class WeChatNoticeConfigManager extends BaseManager<WeChatNoticeConfigMapper,WeChatNoticeConfig> {
+public class WeChatNoticeConfigManager extends BaseManager<WeChatNoticeConfigMapper, WeChatNoticeConfig> {
+
 }

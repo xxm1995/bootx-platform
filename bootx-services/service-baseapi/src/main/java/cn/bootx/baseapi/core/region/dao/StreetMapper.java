@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 街道表
+ *
  * @author xxm
  * @date 2022-12-24
  */
 @Mapper
 public interface StreetMapper extends BaseMapper<Street> {
+
 }

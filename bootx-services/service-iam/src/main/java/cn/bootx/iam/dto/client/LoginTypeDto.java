@@ -6,11 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* 登录方式
-* @author xxm  
-* @date 2021/8/25 
-*/
+/**
+ * 登录方式
+ *
+ * @author xxm
+ * @date 2021/8/25
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -46,4 +47,5 @@ public class LoginTypeDto extends BaseDto {
 
     @Schema(description = "描述")
     private String description;
+
 }

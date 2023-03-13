@@ -11,14 +11,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 /**
-*
-* @author xxm
-* @date 2021/12/2
-*/
+ * @author xxm
+ * @date 2021/12/2
+ */
 @Data
 @Accessors(chain = true)
-@Document(collection="starter_audit_operate_log")
-public class OperateLogMongo  implements EntityBaseFunction<OperateLogDto> {
+@Document(collection = "starter_audit_operate_log")
+public class OperateLogMongo implements EntityBaseFunction<OperateLogDto> {
 
     @Id
     private Long id;
@@ -69,4 +68,5 @@ public class OperateLogMongo  implements EntityBaseFunction<OperateLogDto> {
     public OperateLogDto toDto() {
         return LogConvert.CONVERT.convert(this);
     }
+
 }

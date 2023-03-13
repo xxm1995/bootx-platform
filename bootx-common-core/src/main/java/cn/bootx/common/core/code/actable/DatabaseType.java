@@ -6,8 +6,7 @@ package cn.bootx.common.core.code.actable;
  * @date 2023/1/16
  */
 public enum DatabaseType {
-    MYSQL,
-    ORACLE,
-    SQLSERVER,
-    POSTGRESQL;
+
+    MYSQL, ORACLE, SQLSERVER, POSTGRESQL;
+
 }

@@ -12,10 +12,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 登录方式
-* @author xxm
-* @date 2022/7/5
-*/
+ * 登录方式
+ *
+ * @author xxm
+ * @date 2022/7/5
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("iam_login_type")
@@ -52,7 +53,7 @@ public class LonginType extends MpBaseEntity implements EntityBaseFunction<Login
     /** 描述 */
     private String description;
 
-    public static LonginType init(LoginTypeParam in){
+    public static LonginType init(LoginTypeParam in) {
         return LoginTypeConvert.CONVERT.convert(in);
     }
 
@@ -60,4 +61,5 @@ public class LonginType extends MpBaseEntity implements EntityBaseFunction<Login
     public LoginTypeDto toDto() {
         return LoginTypeConvert.CONVERT.convert(this);
     }
+
 }

@@ -30,31 +30,39 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 
-/**   
-* 系统属性结果
-* @author xxm  
-* @date 2022/6/10 
-*/
+/**
+ * 系统属性结果
+ *
+ * @author xxm
+ * @date 2022/6/10
+ */
 @Data
 @Schema(title = "系统属性结果")
 public class SystemMonitorResult implements Serializable {
+
     private static final long serialVersionUID = 7229392877839912411L;
+
     @Schema(description = "系统信息")
     private SysOsInfo sysOsInfo;
+
     @Schema(description = "系统磁盘信息")
     private List<SysDiskInfo> sysDiskInfos;
+
     @Schema(description = "Java信息")
     private SysJavaInfo sysJavaInfo;
+
     @Schema(description = "JVM内存信息")
     private SysJvmMemInfo sysJvmMemInfo;
+
     @Schema(description = "硬件信息")
     private HardwareInfo hardwareInfo;
+
     @Schema(description = "线程池信息")
     private ThreadPoolInfo threadPoolInfo;
 
-    /**   
-    * 系统信息内部类
-    */
+    /**
+     * 系统信息内部类
+     */
     @Data
     @Schema(title = "系统信息")
     public static class SysOsInfo {
@@ -76,9 +84,9 @@ public class SystemMonitorResult implements Serializable {
 
     }
 
-    /**   
-    * JVM信息内部类
-    */
+    /**
+     * JVM信息内部类
+     */
     @Data
     @Schema(title = "JVM信息内部类")
     public static class SysJavaInfo {
@@ -100,9 +108,9 @@ public class SystemMonitorResult implements Serializable {
 
     }
 
-    /**   
-    * JVM内存信息
-    */
+    /**
+     * JVM内存信息
+     */
     @Data
     @Schema(title = "JVM内存信息")
     public static class SysJvmMemInfo {
@@ -124,6 +132,7 @@ public class SystemMonitorResult implements Serializable {
 
         @Schema(description = "使用率")
         private String jvmMemoryUsedRate;
+
     }
 
     /**
@@ -182,7 +191,7 @@ public class SystemMonitorResult implements Serializable {
      */
     @Data
     @Schema(title = "系统磁盘信息")
-    public static class ThreadPoolInfo{
+    public static class ThreadPoolInfo {
 
         @Schema(description = "线程池大小")
         private int poolSize;
@@ -201,5 +210,7 @@ public class SystemMonitorResult implements Serializable {
 
         @Schema(description = "使用率")
         private int completedTaskCount;
+
     }
+
 }

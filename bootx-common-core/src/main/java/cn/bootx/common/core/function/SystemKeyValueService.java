@@ -5,10 +5,11 @@ import cn.bootx.common.core.rest.dto.KeyValue;
 import java.util.List;
 
 /**
-* kv存储接口 (必须实现)
-* @author xxm  
-* @date 2022/6/13 
-*/
+ * kv存储接口 (必须实现)
+ *
+ * @author xxm
+ * @date 2022/6/13
+ */
 public interface SystemKeyValueService {
 
     /**
@@ -24,10 +25,11 @@ public interface SystemKeyValueService {
     /**
      * 设置值
      */
-    void setup(String key,String value);
+    void setup(String key, String value);
 
     /**
      * 设置多个
      */
     void setupBatch(List<KeyValue> list);
+
 }

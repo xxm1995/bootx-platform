@@ -9,10 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* swagger配置
-* @author xxm
-* @date 2020/4/9 13:36
-*/
+ * swagger配置
+ *
+ * @author xxm
+ * @date 2020/4/9 13:36
+ */
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "bootx.common.swagger")
@@ -32,10 +33,12 @@ public class SwaggerProperties {
      * Basic 认证控制
      */
     private Basic basic = new Basic();
+
     /**
      * 标题
      */
     private String title;
+
     /**
      * 作者
      */
@@ -45,10 +48,12 @@ public class SwaggerProperties {
      * 描述
      */
     private String description;
+
     /**
      * 服务条款网址
      */
     private String termsOfServiceUrl;
+
     /**
      * 版本号
      */
@@ -69,7 +74,7 @@ public class SwaggerProperties {
      */
     @Getter
     @Setter
-    public static class Basic{
+    public static class Basic {
 
         /**
          * basic是否开启,默认为false
@@ -85,5 +90,7 @@ public class SwaggerProperties {
          * basic 密码
          */
         private String password = "123456";
+
     }
+
 }

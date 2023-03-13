@@ -1,6 +1,5 @@
 package cn.bootx.common.core.util;
 
-
 import cn.bootx.common.core.exception.ValidationFailedException;
 import lombok.experimental.UtilityClass;
 
@@ -10,11 +9,12 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
-/**   
-* BeanValidation 工具类
-* @author xxm  
-* @date 2020/5/26 18:14 
-*/
+/**
+ * BeanValidation 工具类
+ *
+ * @author xxm
+ * @date 2020/5/26 18:14
+ */
 @UtilityClass
 public class ValidationUtil {
 
@@ -25,7 +25,7 @@ public class ValidationUtil {
      */
     public void validateParam(Object paramObject, Class<?>... groups) {
         Validator validator = validatorFactory.getValidator();
-        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject,groups);
+        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject, groups);
         if (!violations.isEmpty()) {
             throw new ValidationFailedException(extractMessages(violations));
         }
@@ -37,7 +37,7 @@ public class ValidationUtil {
     public String extractMessages(Set<ConstraintViolation<Object>> violations) {
         StringBuilder message = new StringBuilder();
         for (ConstraintViolation<Object> violation : violations) {
-           message.append(violation.getMessage()).append(System.lineSeparator());
+            message.append(violation.getMessage()).append(System.lineSeparator());
         }
         return message.toString();
     }
@@ -45,9 +45,9 @@ public class ValidationUtil {
     /**
      * 验证参数对象，如果验证失败则返回所有失败信息
      */
-    public String validate(Object paramObject, Class<?>... groups){
+    public String validate(Object paramObject, Class<?>... groups) {
         Validator validator = validatorFactory.getValidator();
-        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject,groups);
+        Set<ConstraintViolation<Object>> violations = validator.validate(paramObject, groups);
 
         StringBuilder message = new StringBuilder();
         for (ConstraintViolation<Object> violation : violations) {
@@ -56,4 +56,5 @@ public class ValidationUtil {
 
         return message.toString();
     }
+
 }

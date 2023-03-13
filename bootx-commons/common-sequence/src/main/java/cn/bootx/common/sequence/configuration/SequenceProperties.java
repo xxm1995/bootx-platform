@@ -5,10 +5,11 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
-* 序列生成器参数
-* @author xxm
-* @date 2021/8/6
-*/
+ * 序列生成器参数
+ *
+ * @author xxm
+ * @date 2021/8/6
+ */
 @Getter
 @Setter
 @ConfigurationProperties("bootx.common.sequence")
@@ -42,12 +43,15 @@ public class SequenceProperties {
     /**
      * 存储类型
      */
-    public enum Type{
+    public enum Type {
+
         /** redis */
         REDIS,
         /** 数据库 */
         JDBC,
         /** MongoDB */
         MONGO
+
     }
+
 }

@@ -12,6 +12,7 @@ import java.util.Objects;
 
 /**
  * 序列号生成工具类
+ *
  * @author xxm
  * @date 2022/12/27
  */
@@ -21,15 +22,14 @@ public class SequenceUtil {
     /**
      * 创建一个序列号生成器
      */
-    public Sequence create(int step,int rangeStep,int rangeStart){
+    public Sequence create(int step, int rangeStep, int rangeStart) {
         SeqRangeManager rangeManager = SpringUtil.getBean(SeqRangeManager.class);
-        if (Objects.isNull(rangeManager)){
+        if (Objects.isNull(rangeManager)) {
             throw new FatalException("序列号生成器创建失败，缺少区间管理器");
         }
-        SeqRangeConfig seqRangeConfig = new SeqRangeConfig()
-                .setStep(step)
-                .setRangeStart(rangeStep)
+        SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(step).setRangeStart(rangeStep)
                 .setRangeStep(rangeStart);
         return new DefaultRangeSequence(rangeManager, seqRangeConfig);
     }
+
 }

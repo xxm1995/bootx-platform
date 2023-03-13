@@ -52,22 +52,25 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 数据变动记录插件, 基于MP官方进行修改
+ *
  * @author xxm
  * @date 2023/1/5
  */
 @Slf4j
 public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
+
     @SuppressWarnings("unused")
     public static final String IGNORED_TABLE_COLUMN_PROPERTIES = "ignoredTableColumns";
 
     private final Map<String, Set<String>> ignoredTableColumns = new ConcurrentHashMap<>();
-    //全部表的这些字段名，INSERT/UPDATE都忽略，delete暂时保留
+
+    // 全部表的这些字段名，INSERT/UPDATE都忽略，delete暂时保留
     private final Set<String> ignoreAllColumns = new HashSet<>();
 
     /**
      * 解析前操作
-     * @param sh                 StatementHandler(可能是代理对象)
-     * @param connection         Connection
+     * @param sh StatementHandler(可能是代理对象)
+     * @param connection Connection
      * @param transactionTimeout transactionTimeout
      */
     @Override
@@ -85,20 +88,24 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
                 Statement statement = CCJSqlParserUtil.parse(mpBs.sql());
                 // 判断是否需要进行处理
                 dataVersion = this.getDataVersionAnno(statement);
-                if (Objects.isNull(dataVersion)){
+                if (Objects.isNull(dataVersion)) {
                     return;
                 }
 
                 if (statement instanceof Insert) {
                     operationResult = processInsert((Insert) statement, mpSh.boundSql());
-                } else if (statement instanceof Update) {
+                }
+                else if (statement instanceof Update) {
                     operationResult = processUpdate((Update) statement, ms, boundSql, connection);
-                } else if (statement instanceof Delete) {
+                }
+                else if (statement instanceof Delete) {
                     operationResult = processDelete((Delete) statement, ms, boundSql, connection);
-                } else {
+                }
+                else {
                     return;
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 log.error("Unexpected error for mappedStatement={}, sql={}", ms.getId(), mpBs.sql(), e);
                 return;
             }
@@ -111,7 +118,6 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         }
     }
 
-
     /**
      * 判断哪些SQL需要处理
      */
@@ -119,16 +125,19 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         String tableName;
         if (statement instanceof Insert) {
             tableName = ((Insert) statement).getTable().getName();
-        } else if (statement instanceof Update) {
+        }
+        else if (statement instanceof Update) {
             tableName = ((Update) statement).getTable().getName();
-        } else if (statement instanceof Delete) {
+        }
+        else if (statement instanceof Delete) {
             return null;
-        } else {
+        }
+        else {
             return null;
         }
 
         TableInfo tableInfo = MpUtil.getTableInfo(tableName);
-        if (Objects.isNull(tableInfo)){
+        if (Objects.isNull(tableInfo)) {
             return null;
         }
         return tableInfo.getEntityType().getAnnotation(DataVersionLog.class);
@@ -151,7 +160,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         return result;
     }
 
-    public OperationResult processUpdate(Update updateStmt, MappedStatement mappedStatement, BoundSql boundSql, Connection connection) {
+    public OperationResult processUpdate(Update updateStmt, MappedStatement mappedStatement, BoundSql boundSql,
+            Connection connection) {
         Expression where = updateStmt.getWhere();
         Select selectStmt = new Select();
         PlainSelect selectBody = new PlainSelect();
@@ -186,23 +196,25 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
                 boundSql4Select.setAdditionalParameter(ety.getKey(), ety.getValue());
             }
         }
-        OriginalDataObj originalData = buildOriginalObjectData(selectStmt, buildColumns2SelectItems.getPk(), mappedStatement, boundSql4Select, connection);
+        OriginalDataObj originalData = buildOriginalObjectData(selectStmt, buildColumns2SelectItems.getPk(),
+                mappedStatement, boundSql4Select, connection);
         OperationResult result = new OperationResult();
         result.setOperation("update");
         result.setTableName(table.getName());
         result.setRecordStatus(true);
-        result.setChangedRecords(compareAndGetUpdatedColumnDatas(result.getTableName(), boundSql, updateStmt, originalData));
+        result.setChangedRecords(
+                compareAndGetUpdatedColumnDatas(result.getTableName(), boundSql, updateStmt, originalData));
         return result;
     }
 
     /**
      * 将update SET部分的jdbc参数去除
-     *
      * @param originalMappingList 这里只会包含JdbcParameter参数
      * @param updateStmt
      * @return
      */
-    private List<ParameterMapping> prepareParameterMapping4Select(List<ParameterMapping> originalMappingList, Update updateStmt) {
+    private List<ParameterMapping> prepareParameterMapping4Select(List<ParameterMapping> originalMappingList,
+            Update updateStmt) {
         List<Expression> updateValueExpressions = new ArrayList<>();
         for (UpdateSet updateSet : updateStmt.getUpdateSets()) {
             updateValueExpressions.addAll(updateSet.getExpressions());
@@ -221,7 +233,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
      * @param originalDataObj
      * @return
      */
-    private List<DataChangedRecord> compareAndGetUpdatedColumnDatas(String tableName, BoundSql updateSql, Statement statement, OriginalDataObj originalDataObj) {
+    private List<DataChangedRecord> compareAndGetUpdatedColumnDatas(String tableName, BoundSql updateSql,
+            Statement statement, OriginalDataObj originalDataObj) {
         Map<String, Object> columnNameValMap = new HashMap<>(updateSql.getParameterMappings().size());
         List<Column> selectItemsFromUpdateSql = new ArrayList<>();
         if (statement instanceof Update) {
@@ -232,17 +245,20 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
                 for (int i = 0; i < updateList.size(); ++i) {
                     Expression updateExps = updateList.get(i);
                     if (!(updateExps instanceof JdbcParameter)) {
-                        columnNameValMap.put(updateSet.getColumns().get(i).getColumnName().toUpperCase(), updateExps.toString());
+                        columnNameValMap.put(updateSet.getColumns().get(i).getColumnName().toUpperCase(),
+                                updateExps.toString());
                     }
                 }
             }
-        } else if (statement instanceof Insert) {
+        }
+        else if (statement instanceof Insert) {
             selectItemsFromUpdateSql.addAll(((Insert) statement).getColumns());
         }
         Map<String, String> relatedColumnsUpperCaseWithoutUnderline = new HashMap<>(selectItemsFromUpdateSql.size(), 1);
         for (Column item : selectItemsFromUpdateSql) {
-            //FIRSTNAME: FIRST_NAME/FIRST-NAME/FIRST$NAME/FIRST.NAME
-            relatedColumnsUpperCaseWithoutUnderline.put(item.toString().replaceAll("[._\\-$]", "").toUpperCase(), item.toString().toUpperCase());
+            // FIRSTNAME: FIRST_NAME/FIRST-NAME/FIRST$NAME/FIRST.NAME
+            relatedColumnsUpperCaseWithoutUnderline.put(item.toString().replaceAll("[._\\-$]", "").toUpperCase(),
+                    item.toString().toUpperCase());
         }
         MetaObject metaObject = SystemMetaObject.forObject(updateSql.getParameterObject());
 
@@ -254,7 +270,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             String[] arr = propertyName.split("\\.");
             String propertyNameTrim = arr[arr.length - 1].replace("_", "").toUpperCase();
             if (relatedColumnsUpperCaseWithoutUnderline.containsKey(propertyNameTrim)) {
-                columnNameValMap.put(relatedColumnsUpperCaseWithoutUnderline.get(propertyNameTrim), metaObject.getValue(propertyName));
+                columnNameValMap.put(relatedColumnsUpperCaseWithoutUnderline.get(propertyNameTrim),
+                        metaObject.getValue(propertyName));
             }
         }
 
@@ -264,7 +281,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             List<DataColumnChangeResult> updateColumns = new ArrayList<>(columnNameValMap.size());
             for (Map.Entry<String, Object> ety : columnNameValMap.entrySet()) {
                 String columnName = ety.getKey();
-                if ((ignoredColumns == null || !ignoredColumns.contains(columnName)) && !ignoreAllColumns.contains(columnName)) {
+                if ((ignoredColumns == null || !ignoredColumns.contains(columnName))
+                        && !ignoreAllColumns.contains(columnName)) {
                     updateColumns.add(DataColumnChangeResult.constrcutByUpdateVal(columnName, ety.getValue()));
                 }
             }
@@ -282,10 +300,11 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         return updateDataList;
     }
 
-
-    private String buildOriginalData(Select selectStmt, MappedStatement mappedStatement, BoundSql boundSql, Connection connection) {
+    private String buildOriginalData(Select selectStmt, MappedStatement mappedStatement, BoundSql boundSql,
+            Connection connection) {
         try (PreparedStatement statement = connection.prepareStatement(selectStmt.toString())) {
-            DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, boundSql.getParameterObject(), boundSql);
+            DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement,
+                    boundSql.getParameterObject(), boundSql);
             parameterHandler.setParameters(statement);
             ResultSet resultSet = statement.executeQuery();
             final ResultSetMetaData metaData = resultSet.getMetaData();
@@ -298,7 +317,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
                     Object res = resultSet.getObject(i);
                     if (res instanceof Clob) {
                         sb.append(DataColumnChangeResult.convertClob((Clob) res));
-                    } else {
+                    }
+                    else {
                         sb.append(res);
                     }
                     sb.append("\",");
@@ -308,7 +328,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             sb.append("]");
             resultSet.close();
             return sb.toString();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("try to get record tobe deleted for selectStmt={}", selectStmt, e);
             return "failed to get original data";
         }
@@ -317,10 +338,12 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
     /**
      * 构建原始对象数据
      */
-    private OriginalDataObj buildOriginalObjectData(Select selectStmt, Column pk, MappedStatement mappedStatement, BoundSql boundSql, Connection connection) {
+    private OriginalDataObj buildOriginalObjectData(Select selectStmt, Column pk, MappedStatement mappedStatement,
+            BoundSql boundSql, Connection connection) {
         try (PreparedStatement statement = connection.prepareStatement(selectStmt.toString())) {
 
-            DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, boundSql.getParameterObject(), boundSql);
+            DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement,
+                    boundSql.getParameterObject(), boundSql);
             parameterHandler.setParameters(statement);
             ResultSet resultSet = statement.executeQuery();
             List<DataChangedRecord> originalObjectDatas = new LinkedList<>();
@@ -331,7 +354,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             result.setOriginalDataObj(originalObjectDatas);
             resultSet.close();
             return result;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("try to get record tobe updated for selectStmt={}", selectStmt, e);
             return new OriginalDataObj();
         }
@@ -339,7 +363,6 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
 
     /**
      * 获取记录：在数据库中包含具有原始数据的相关列
-     *
      * @param resultSet
      * @param pk
      * @return
@@ -352,10 +375,12 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         DataColumnChangeResult pkval = null;
         for (int i = 1; i <= columnCount; ++i) {
             String columnName = metaData.getColumnName(i).toUpperCase();
-            DataColumnChangeResult col = DataColumnChangeResult.constrcutByOriginalVal(columnName, resultSet.getObject(i));
+            DataColumnChangeResult col = DataColumnChangeResult.constrcutByOriginalVal(columnName,
+                    resultSet.getObject(i));
             if (pk != null && columnName.equalsIgnoreCase(pk.getColumnName())) {
                 pkval = col;
-            } else {
+            }
+            else {
                 originalColumnDatas.add(col);
             }
         }
@@ -388,7 +413,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         return Columns2SelectItemsResult.build(selectItems, 0);
     }
 
-    public OperationResult processDelete(Delete deleteStmt, MappedStatement mappedStatement, BoundSql boundSql, Connection connection) {
+    public OperationResult processDelete(Delete deleteStmt, MappedStatement mappedStatement, BoundSql boundSql,
+            Connection connection) {
         Table table = deleteStmt.getTable();
         Expression where = deleteStmt.getWhere();
         Select selectStmt = new Select();
@@ -407,12 +433,9 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
     }
 
     /**
-     * ignoredColumns = TABLE_NAME1.COLUMN1,COLUMN2; TABLE2.COLUMN1,COLUMN2; TABLE3.*; *.COLUMN1,COLUMN2
-     * 多个表用分号分隔
-     * TABLE_NAME1.COLUMN1,COLUMN2 : 表示忽略这个表的这2个字段
-     * TABLE3.*: 表示忽略这张表的INSERT/UPDATE，delete暂时还保留
-     * *.COLUMN1,COLUMN2:表示所有表的这个2个字段名都忽略
-     *
+     * ignoredColumns = TABLE_NAME1.COLUMN1,COLUMN2; TABLE2.COLUMN1,COLUMN2; TABLE3.*;
+     * *.COLUMN1,COLUMN2 多个表用分号分隔 TABLE_NAME1.COLUMN1,COLUMN2 : 表示忽略这个表的这2个字段 TABLE3.*:
+     * 表示忽略这张表的INSERT/UPDATE，delete暂时还保留 *.COLUMN1,COLUMN2:表示所有表的这个2个字段名都忽略
      * @param properties
      */
     @Override
@@ -426,7 +449,9 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         for (String table : array) {
             int index = table.indexOf(".");
             if (index == -1) {
-                log.warn("invalid data={} for ignoredColumns, format should be TABLE_NAME1.COLUMN1,COLUMN2; TABLE2.COLUMN1,COLUMN2;", table);
+                log.warn(
+                        "invalid data={} for ignoredColumns, format should be TABLE_NAME1.COLUMN1,COLUMN2; TABLE2.COLUMN1,COLUMN2;",
+                        table);
                 continue;
             }
             String tableName = table.substring(0, index).trim().toUpperCase();
@@ -441,7 +466,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             }
             if ("*".equals(tableName)) {
                 ignoreAllColumns.addAll(columnSet);
-            } else {
+            }
+            else {
                 this.ignoredTableColumns.put(tableName, columnSet);
             }
         }
@@ -452,29 +478,39 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
      */
     @Data
     public static class OperationResult {
+
         /** sql类型 */
         private String operation;
+
         /** 记录状态 */
         private boolean recordStatus;
+
         /** 表名称 */
         private String tableName;
+
         @Deprecated
         private String changedData;
+
         /** 数据变动记录 */
         private List<DataChangedRecord> changedRecords;
+
         private DataVersionLog annotation;
+
         /** 耗时(毫秒) */
         private long cost;
+
     }
 
     @Data
     public static class Columns2SelectItemsResult {
 
         private Column pk;
+
         /**
          * all column with additional columns: ID, etc.
          */
         private List<SelectItem> selectItems;
+
         /**
          * newly added column count from meta data.
          */
@@ -486,6 +522,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             result.setAdditionalItemCount(additionalItemCount);
             return result;
         }
+
     }
 
     @Data
@@ -504,10 +541,13 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
      */
     @Data
     public static class DataColumnChangeResult {
+
         /** 列名称 */
         private String columnName;
+
         /** 原始值 */
         private Object originalValue;
+
         /** 更新后的值 */
         private Object updateValue;
 
@@ -542,7 +582,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         public static String convertClob(Clob clobObj) {
             try {
                 return clobObj.getSubString(0, (int) clobObj.length());
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 try (Reader is = clobObj.getCharacterStream()) {
                     char[] chars = new char[64];
                     int readChars;
@@ -551,8 +592,9 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
                         sb.append(chars, 0, readChars);
                     }
                     return sb.toString();
-                } catch (Exception e2) {
-                    //ignored
+                }
+                catch (Exception e2) {
+                    // ignored
                     return "unknown clobObj";
                 }
             }
@@ -574,7 +616,9 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
 
         public String generateDataStr() {
             StringBuilder sb = new StringBuilder();
-            sb.append("\"").append(columnName).append("\"").append(":").append("\"").append(convertDoubleQuotes(originalValue)).append("->").append(convertDoubleQuotes(updateValue)).append("\"").append(",");
+            sb.append("\"").append(columnName).append("\"").append(":").append("\"")
+                    .append(convertDoubleQuotes(originalValue)).append("->").append(convertDoubleQuotes(updateValue))
+                    .append("\"").append(",");
             return sb.toString();
         }
 
@@ -584,25 +628,32 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             }
             return obj.toString().replace("\"", "\\\"");
         }
+
     }
 
     /**
      * 数据变动记录
+     *
      * @author xxm
      * @date 2023/1/7
      */
     @Data
     public static class DataChangedRecord {
+
         /** 主键名称 */
         private String pkColumnName;
+
         /** 主键值 */
         private Object pkColumnVal;
+
         /** 原始的数据列 */
         private List<DataColumnChangeResult> originalColumns;
+
         /** 更改的数据列 */
         private List<DataColumnChangeResult> updatedColumns;
 
-        public boolean hasUpdate(Map<String, Object> columnNameValMap, Set<String> ignoredColumns, Set<String> ignoreAllColumns) {
+        public boolean hasUpdate(Map<String, Object> columnNameValMap, Set<String> ignoredColumns,
+                Set<String> ignoreAllColumns) {
             if (originalColumns == null) {
                 return true;
             }
@@ -610,7 +661,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             updatedColumns = new ArrayList<>(originalColumns.size());
             for (DataColumnChangeResult originalColumn : originalColumns) {
                 final String columnName = originalColumn.getColumnName().toUpperCase();
-                if (ignoredColumns != null && ignoredColumns.contains(columnName) || ignoreAllColumns.contains(columnName)) {
+                if (ignoredColumns != null && ignoredColumns.contains(columnName)
+                        || ignoreAllColumns.contains(columnName)) {
                     continue;
                 }
                 Object updatedValue = columnNameValMap.get(columnName);
@@ -627,7 +679,8 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             StringBuilder sb = new StringBuilder();
             sb.append("{");
             if (pkColumnName != null) {
-                sb.append("\"").append(pkColumnName).append("\"").append(":").append("\"").append(convertDoubleQuotes(pkColumnVal)).append("\"").append(",");
+                sb.append("\"").append(pkColumnName).append("\"").append(":").append("\"")
+                        .append(convertDoubleQuotes(pkColumnVal)).append("\"").append(",");
             }
             for (DataColumnChangeResult update : updatedColumns) {
                 sb.append(update.generateDataStr());
@@ -642,5 +695,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             }
             return obj.toString().replace("\"", "\\\"");
         }
+
     }
+
 }

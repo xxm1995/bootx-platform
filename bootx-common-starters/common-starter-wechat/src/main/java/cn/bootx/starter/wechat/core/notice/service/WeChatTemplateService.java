@@ -29,54 +29,59 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**   
-* 微信消息模板
-* @author xxm  
-* @date 2022/7/15 
-*/
+/**
+ * 微信消息模板
+ *
+ * @author xxm
+ * @date 2022/7/15
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeChatTemplateService {
+
     private final WxMpService wxMpService;
+
     private final WeChatTemplateManager weChatTemplateManager;
+
     private final UserWsNoticeService userWsNoticeService;
 
     /**
      * 修改
      */
-    public void update(WeChatTemplateParam param){
-        WeChatTemplate weChatTemplate = weChatTemplateManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-        BeanUtil.copyProperties(param,weChatTemplate, CopyOptions.create().ignoreNullValue());
+    public void update(WeChatTemplateParam param) {
+        WeChatTemplate weChatTemplate = weChatTemplateManager.findById(param.getId())
+                .orElseThrow(DataNotExistException::new);
+        BeanUtil.copyProperties(param, weChatTemplate, CopyOptions.create().ignoreNullValue());
         weChatTemplateManager.updateById(weChatTemplate);
     }
 
     /**
      * 分页
      */
-    public PageResult<WeChatTemplateDto> page(PageParam pageParam, WeChatTemplateParam weChatTemplateParam){
-        return MpUtil.convert2DtoPageResult(weChatTemplateManager.page(pageParam,weChatTemplateParam));
+    public PageResult<WeChatTemplateDto> page(PageParam pageParam, WeChatTemplateParam weChatTemplateParam) {
+        return MpUtil.convert2DtoPageResult(weChatTemplateManager.page(pageParam, weChatTemplateParam));
     }
 
     /**
      * 获取单条
      */
-    public WeChatTemplateDto findById(Long id){
+    public WeChatTemplateDto findById(Long id) {
         return weChatTemplateManager.findById(id).map(WeChatTemplate::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
-    public List<WeChatTemplateDto> findAll(){
+    public List<WeChatTemplateDto> findAll() {
         return ResultConvertUtil.dtoListConvert(weChatTemplateManager.findAll());
     }
 
     /**
      * 编码是否已经存在(不包含自身)
      */
-    public boolean existsByCode(String code,Long id){
-        return weChatTemplateManager.existsByCode(code,id);
+    public boolean existsByCode(String code, Long id) {
+        return weChatTemplateManager.existsByCode(code, id);
     }
 
     /**
@@ -85,31 +90,29 @@ public class WeChatTemplateService {
     @SneakyThrows
     @Async("asyncExecutor")
     @Transactional(rollbackFor = Exception.class)
-    public void sync(){
+    public void sync() {
         WxMpTemplateMsgService templateMsgService = wxMpService.getTemplateMsgService();
         // 微信公众号订阅模板
         List<WxMpTemplate> wxTemplates = templateMsgService.getAllPrivateTemplate().stream()
-                .filter(o-> StrUtil.isNotBlank(o.getPrimaryIndustry()))
-                .collect(Collectors.toList());
+                .filter(o -> StrUtil.isNotBlank(o.getPrimaryIndustry())).collect(Collectors.toList());
         List<String> wxTemplateIds = wxTemplates.stream().map(WxMpTemplate::getTemplateId).collect(Collectors.toList());
 
         // 系统中模板
         List<WeChatTemplate> weChatTemplates = weChatTemplateManager.findAll();
-        List<String> weChatTemplatesIds = weChatTemplates.stream().map(WeChatTemplate::getTemplateId).collect(Collectors.toList());
+        List<String> weChatTemplatesIds = weChatTemplates.stream().map(WeChatTemplate::getTemplateId)
+                .collect(Collectors.toList());
 
         // 删除 本地有有,服务端没有
-        List<Long> deleteIds =  weChatTemplates.stream()
-                .filter(o->!wxTemplateIds.contains(o.getTemplateId()))
-                .map(MpIdEntity::getId)
-                .collect(Collectors.toList());
+        List<Long> deleteIds = weChatTemplates.stream().filter(o -> !wxTemplateIds.contains(o.getTemplateId()))
+                .map(MpIdEntity::getId).collect(Collectors.toList());
         // 新增 服务端有且本地没有
         List<WeChatTemplate> saveTemplate = wxTemplates.stream()
-                .filter(o -> !weChatTemplatesIds.contains(o.getTemplateId()))
-                .map(WeChatTemplate::init)
+                .filter(o -> !weChatTemplatesIds.contains(o.getTemplateId())).map(WeChatTemplate::init)
                 .collect(Collectors.toList());
         weChatTemplateManager.saveAll(saveTemplate);
         weChatTemplateManager.deleteByIds(deleteIds);
-        SecurityUtil.getCurrentUser().ifPresent(userDetail ->
-                userWsNoticeService.sendMessageByUser(WsRes.notificationInfo("微信消息模板同步成功"), userDetail.getId()));
+        SecurityUtil.getCurrentUser().ifPresent(userDetail -> userWsNoticeService
+                .sendMessageByUser(WsRes.notificationInfo("微信消息模板同步成功"), userDetail.getId()));
     }
+
 }

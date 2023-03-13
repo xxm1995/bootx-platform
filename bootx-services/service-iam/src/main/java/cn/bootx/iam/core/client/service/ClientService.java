@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * 认证应用
+ *
  * @author xxm
  * @date 2022-06-27
  */
@@ -27,12 +28,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ClientService {
+
     private final ClientManager clientManager;
 
     /**
      * 添加
      */
-    public void add(ClientParam param){
+    public void add(ClientParam param) {
         Client client = Client.init(param);
         clientManager.save(client);
     }
@@ -40,12 +42,13 @@ public class ClientService {
     /**
      * 修改
      */
-    public void update(ClientParam param){
+    public void update(ClientParam param) {
         Client client = clientManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
         BeanUtil.copyProperties(param, client, CopyOptions.create().ignoreNullValue());
-        if (CollUtil.isNotEmpty(param.getLoginTypeIdList())){
-            client.setLoginTypeIds(String.join(",",param.getLoginTypeIdList()));
-        } else {
+        if (CollUtil.isNotEmpty(param.getLoginTypeIdList())) {
+            client.setLoginTypeIds(String.join(",", param.getLoginTypeIdList()));
+        }
+        else {
             client.setLoginTypeIds("");
         }
         clientManager.updateById(client);
@@ -54,43 +57,43 @@ public class ClientService {
     /**
      * 分页
      */
-    public PageResult<ClientDto> page(PageParam pageParam, ClientParam clientParam){
+    public PageResult<ClientDto> page(PageParam pageParam, ClientParam clientParam) {
         return MpUtil.convert2DtoPageResult(clientManager.page(pageParam, clientParam));
     }
 
     /**
      * 获取单条
      */
-    public ClientDto findById(Long id){
+    public ClientDto findById(Long id) {
         return clientManager.findById(id).map(Client::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
-    public List<ClientDto> findAll(){
+    public List<ClientDto> findAll() {
         return ResultConvertUtil.dtoListConvert(clientManager.findAll());
     }
 
     /**
      * 删除
      */
-    public void delete(Long id){
+    public void delete(Long id) {
         clientManager.deleteById(id);
     }
 
     /**
      * 编码是否已经存在
      */
-    public boolean existsByCode(String code){
+    public boolean existsByCode(String code) {
         return clientManager.existsByCode(code);
     }
 
     /**
      * 编码是否已经存在(不包含自身)
      */
-    public boolean existsByCode(String code,Long id){
-        return clientManager.existsByCode(code,id);
+    public boolean existsByCode(String code, Long id) {
+        return clientManager.existsByCode(code, id);
     }
 
 }

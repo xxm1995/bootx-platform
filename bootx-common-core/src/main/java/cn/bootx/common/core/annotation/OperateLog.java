@@ -3,10 +3,10 @@ package cn.bootx.common.core.annotation;
 import java.lang.annotation.*;
 
 /**
-* 操作日志注解(支持重复注解)
-* @author xxm
-* @date 2021/8/13
-*/
+ * 操作日志注解(支持重复注解)
+ * @author xxm
+ * @date 2021/8/13
+ */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -38,6 +38,7 @@ public @interface OperateLog {
      * 业务操作类型
      */
     enum BusinessType {
+
         /**
          * 其它
          */
@@ -82,5 +83,7 @@ public @interface OperateLog {
          * 清空数据
          */
         CLEAN,
+
     }
+
 }

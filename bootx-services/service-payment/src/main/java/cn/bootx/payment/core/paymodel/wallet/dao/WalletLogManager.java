@@ -15,21 +15,19 @@ import java.util.Optional;
 
 /**
  * 钱包日志
+ *
  * @author xxm
  * @date 2020/12/8
  */
 @Repository
 @RequiredArgsConstructor
-public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
+public class WalletLogManager extends BaseManager<WalletLogMapper, WalletLog> {
 
     /**
      * 按付款查找优先
      */
     public Optional<WalletLog> findFirstByPayment(Long paymentId) {
-        return MpUtil.findOne(
-                lambdaQuery().eq(WalletLog::getPaymentId,paymentId)
-                        .orderByDesc(MpIdEntity::getId)
-        );
+        return MpUtil.findOne(lambdaQuery().eq(WalletLog::getPaymentId, paymentId).orderByDesc(MpIdEntity::getId));
     }
 
     /**
@@ -38,10 +36,7 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
     public Page<WalletLog> pageByUserId(PageParam pageParam, WalletLogQueryParam param, Long userId) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
 
-        return this.lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .eq(WalletLog::getUserId,userId)
-                .page(mpPage);
+        return this.lambdaQuery().orderByDesc(MpIdEntity::getId).eq(WalletLog::getUserId, userId).page(mpPage);
     }
 
     /**
@@ -49,20 +44,18 @@ public class WalletLogManager extends BaseManager<WalletLogMapper,WalletLog> {
      */
     public Page<WalletLog> page(PageParam pageParam, WalletLogQueryParam query) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
-        return this.lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .like(Objects.nonNull(query.getUserId()),WalletLog::getUserId,query.getUserId())
-                .like(Objects.nonNull(query.getWalletId()),WalletLog::getWalletId,query.getWalletId())
-                .page(mpPage);
+        return this.lambdaQuery().orderByDesc(MpIdEntity::getId)
+                .like(Objects.nonNull(query.getUserId()), WalletLog::getUserId, query.getUserId())
+                .like(Objects.nonNull(query.getWalletId()), WalletLog::getWalletId, query.getWalletId()).page(mpPage);
     }
+
     /**
      * 分页查询 根据钱包id
      */
     public Page<WalletLog> pageByWalletId(PageParam pageParam, WalletLogQueryParam param) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
-        return this.lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .eq(WalletLog::getWalletId,param.getWalletId())
+        return this.lambdaQuery().orderByDesc(MpIdEntity::getId).eq(WalletLog::getWalletId, param.getWalletId())
                 .page(mpPage);
     }
+
 }

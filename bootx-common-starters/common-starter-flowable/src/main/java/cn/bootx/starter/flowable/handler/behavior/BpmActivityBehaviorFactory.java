@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Bpm 活动行为工厂
+ *
  * @author xxm
  * @date 2022/8/24
  */
@@ -20,7 +21,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
+
     private final BpmUserTaskAssignService bpmUserTaskAssignService;
+
     private final BpmMultiInstanceBehaviorService assistService;
 
     /**
@@ -35,7 +38,8 @@ public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
      * 创建并行多实例行为
      */
     @Override
-    public ParallelMultiInstanceBehavior createParallelMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior) {
+    public ParallelMultiInstanceBehavior createParallelMultiInstanceBehavior(Activity activity,
+            AbstractBpmnActivityBehavior innerActivityBehavior) {
         return new BpmParallelMultiInstanceBehavior(activity, innerActivityBehavior, assistService);
     }
 
@@ -43,7 +47,9 @@ public class BpmActivityBehaviorFactory extends DefaultActivityBehaviorFactory {
      * 创建串行多实例行为
      */
     @Override
-    public SequentialMultiInstanceBehavior createSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior) {
-        return new BpmSequentialMultiInstanceBehavior(activity,innerActivityBehavior,assistService);
+    public SequentialMultiInstanceBehavior createSequentialMultiInstanceBehavior(Activity activity,
+            AbstractBpmnActivityBehavior innerActivityBehavior) {
+        return new BpmSequentialMultiInstanceBehavior(activity, innerActivityBehavior, assistService);
     }
+
 }

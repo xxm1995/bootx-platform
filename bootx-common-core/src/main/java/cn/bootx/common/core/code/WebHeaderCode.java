@@ -2,6 +2,7 @@ package cn.bootx.common.core.code;
 
 /**
  * web请求头常量
+ *
  * @author network
  */
 public interface WebHeaderCode {
@@ -44,4 +45,5 @@ public interface WebHeaderCode {
 
     /** 请求头中 timezone 的参数名 */
     String TIMEZONE_NAME = "Timezone";
+
 }

@@ -10,14 +10,15 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2021/7/12
-*/
+ * @author xxm
+ * @date 2021/7/12
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "菜单和资源权限")
 public class PermMenuDto extends BaseDto implements Serializable {
+
     private static final long serialVersionUID = 1935403328634321841L;
 
     @Schema(description = "父id")
@@ -82,4 +83,5 @@ public class PermMenuDto extends BaseDto implements Serializable {
 
     @Schema(description = "子节点")
     private List<PermMenuDto> children;
+
 }

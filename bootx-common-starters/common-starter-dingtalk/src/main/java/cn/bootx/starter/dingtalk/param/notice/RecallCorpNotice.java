@@ -8,11 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**   
-* 钉钉撤回工作通知
-* @author xxm  
-* @date 2022/7/20 
-*/
+/**
+ * 钉钉撤回工作通知
+ *
+ * @author xxm
+ * @date 2022/7/20
+ */
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
@@ -28,7 +29,8 @@ public class RecallCorpNotice {
     @Schema(description = "发送消息时钉钉返回的任务ID")
     private Long taskId;
 
-    public String toParam(){
+    public String toParam() {
         return JacksonUtil.toJson(this);
     }
+
 }

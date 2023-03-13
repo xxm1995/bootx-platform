@@ -17,14 +17,16 @@ import java.util.Map;
 import static cn.bootx.starter.wechat.code.WeChatCode.EVENT_KEY_QRSCENE;
 
 /**
-* 新增关注订阅消息
-* @author xxm
-* @date 2022/7/16
-*/
+ * 新增关注订阅消息
+ *
+ * @author xxm
+ * @date 2022/7/16
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class WeChatSubscribeHandler implements WeChatMpMessageHandler {
+
     private final WeChatQrLoginService weChatQrLoginService;
 
     @Override
@@ -33,19 +35,19 @@ public class WeChatSubscribeHandler implements WeChatMpMessageHandler {
     }
 
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) {
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+            WxSessionManager sessionManager) {
         String openId = wxMessage.getFromUser();
         log.info("新关注用户 OPENID: " + openId);
         // 判断是否携带参数, 携带参数出厂扫码情况
-        if (StrUtil.startWith(wxMessage.getEventKey(),EVENT_KEY_QRSCENE)){
+        if (StrUtil.startWith(wxMessage.getEventKey(), EVENT_KEY_QRSCENE)) {
             // 二维码key值
             String qrCodeKey = StrUtil.subAfter(wxMessage.getEventKey(), EVENT_KEY_QRSCENE, true);
-            weChatQrLoginService.setOpenId(qrCodeKey,openId);
+            weChatQrLoginService.setOpenId(qrCodeKey, openId);
         }
 
-        return new TextBuilder()
-                .fromUser(wxMessage.getToUser())
-                .toUser(wxMessage.getFromUser())
-                .content("感谢关注").build();
+        return new TextBuilder().fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser()).content("感谢关注")
+                .build();
     }
+
 }

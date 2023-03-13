@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * 微信公众号粉丝
+ *
  * @author xxm
  * @date 2022-07-16
  */
@@ -21,24 +22,34 @@ public class WechatFansDto extends BaseDto {
 
     @Schema(description = "关联OpenId")
     private String openid;
+
     @Schema(description = "订阅状态")
     private Boolean subscribeStatus;
+
     @Schema(description = "订阅时间")
     private LocalDateTime subscribeTime;
+
     @Schema(description = "昵称")
     private String nickname;
+
     @Schema(description = "性别")
     private String sex;
+
     @Schema(description = "语言")
     private String language;
+
     @Schema(description = "国家")
     private String country;
+
     @Schema(description = "省份")
     private String province;
+
     @Schema(description = "城市")
     private String city;
+
     @Schema(description = "头像地址")
     private String avatarUrl;
+
     @Schema(description = "备注")
     private String remark;
 

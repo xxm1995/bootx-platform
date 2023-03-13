@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Primary;
 
 /**
  * 序列化生成器
+ *
  * @author xxm
  * @date 2021/8/6
  */
@@ -19,15 +20,14 @@ import org.springframework.context.annotation.Primary;
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SequenceProperties.class)
 public class SequenceConfiguration {
+
     private final SequenceProperties sequenceProperties;
 
     @Bean
     @Primary
-    public Sequence sequence(SeqRangeManager seqRangeManager){
-        SeqRangeConfig seqRangeConfig = new SeqRangeConfig()
-                .setStep(sequenceProperties.getStep())
-                .setRangeStart(sequenceProperties.getRangeStart())
-                .setRangeStep(sequenceProperties.getRangeStep());
+    public Sequence sequence(SeqRangeManager seqRangeManager) {
+        SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(sequenceProperties.getStep())
+                .setRangeStart(sequenceProperties.getRangeStart()).setRangeStep(sequenceProperties.getRangeStep());
         return new DefaultRangeSequence(seqRangeManager, seqRangeConfig);
     }
 

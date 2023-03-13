@@ -8,24 +8,22 @@ import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 /**
-*
-* @author xxm
-* @date 2022/7/23
-*/
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @Schema(title = "企微markdown消息")
-public class WeComMarkdownMsg implements WeComMsg{
+public class WeComMarkdownMsg implements WeComMsg {
 
     @Schema(description = "markdown消息")
     private String content;
 
     @Override
     public WxCpMessage toMsg() {
-        return WxCpMessage.MARKDOWN()
-                .content(content)
-                .build();
+        return WxCpMessage.MARKDOWN().content(content).build();
     }
+
 }

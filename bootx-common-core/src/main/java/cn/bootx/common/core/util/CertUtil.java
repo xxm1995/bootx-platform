@@ -10,10 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.security.PublicKey;
 
 /**
-* 证书工具类
-* @author xxm
-* @date 2022/2/24
-*/
+ * 证书工具类
+ *
+ * @author xxm
+ * @date 2022/2/24
+ */
 @UtilityClass
 public class CertUtil {
 
@@ -21,9 +22,11 @@ public class CertUtil {
      * 根据证书文本获取证书
      */
     @SneakyThrows
-    public String getCertByContent(String certContent){
-        X509Certificate cert = X509Certificate.getInstance(new ByteArrayInputStream(certContent.getBytes(StandardCharsets.UTF_8)));
+    public String getCertByContent(String certContent) {
+        X509Certificate cert = X509Certificate
+                .getInstance(new ByteArrayInputStream(certContent.getBytes(StandardCharsets.UTF_8)));
         PublicKey publicKey = cert.getPublicKey();
         return Base64Encoder.encode(publicKey.getEncoded());
     }
+
 }

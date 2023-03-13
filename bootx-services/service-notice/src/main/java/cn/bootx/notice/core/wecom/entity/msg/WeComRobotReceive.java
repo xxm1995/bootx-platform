@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * 企微机器人接收人配置
+ *
  * @author xxm
  * @date 2022/7/24
  */
@@ -19,4 +20,5 @@ public class WeComRobotReceive {
     List<String> mentionedList;
 
     List<String> mobileList;
+
 }

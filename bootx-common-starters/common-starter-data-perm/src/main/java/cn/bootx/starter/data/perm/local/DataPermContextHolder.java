@@ -7,15 +7,20 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 
 import java.util.Optional;
 
-/**   
-* 忽略鉴权数据上下文
-* @author xxm  
-* @date 2021/12/22 
-*/
+/**
+ * 忽略鉴权数据上下文
+ *
+ * @author xxm
+ * @date 2021/12/22
+ */
 public class DataPermContextHolder {
+
     private static final ThreadLocal<Permission> PERMISSION_LOCAL = new TransmittableThreadLocal<>();
+
     private static final ThreadLocal<NestedPermission> NESTED_PERMISSION_LOCAL = new TransmittableThreadLocal<>();
+
     private static final ThreadLocal<UserDetail> USER_DETAIL_LOCAL = new TransmittableThreadLocal<>();
+
     /**
      * 设置 数据权限控制注解
      */
@@ -72,4 +77,5 @@ public class DataPermContextHolder {
     public static void clearNestedPermission() {
         NESTED_PERMISSION_LOCAL.remove();
     }
+
 }

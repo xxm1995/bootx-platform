@@ -22,24 +22,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**   
-* 数据字段解密插件
-* @author xxm  
-* @date 2021/11/23 
-*/
+/**
+ * 数据字段解密插件
+ *
+ * @author xxm
+ * @date 2021/11/23
+ */
 @Slf4j
-@Intercepts(@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = {Statement.class}))
+@Intercepts(@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class }))
 @Component
 @RequiredArgsConstructor
 public class DecryptInterceptor implements Interceptor {
+
     private final DataPermProperties dataPermProperties;
+
     /**
      * 拦截返回的结果
      */
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object result = invocation.proceed();
-        if (!dataPermProperties.isEnableFieldDecrypt()){
+        if (!dataPermProperties.isEnableFieldDecrypt()) {
             return result;
         }
         return this.decrypt(result);
@@ -48,18 +51,19 @@ public class DecryptInterceptor implements Interceptor {
     /**
      * 解密
      */
-    private Object decrypt(Object result){
+    private Object decrypt(Object result) {
         if (result instanceof List<?>) {
             List<?> list = (ArrayList<?>) result;
             for (Object o : list) {
                 // 值为空的情况
-                if (Objects.isNull(o)){
+                if (Objects.isNull(o)) {
                     continue;
                 }
-                Field[] fields = ReflectUtil.getFields(o.getClass(), field -> Objects.nonNull(field.getAnnotation(EncryptionField.class)));
+                Field[] fields = ReflectUtil.getFields(o.getClass(),
+                        field -> Objects.nonNull(field.getAnnotation(EncryptionField.class)));
                 for (Field field : fields) {
                     Object fieldValue = this.decryptValue(ReflectUtil.getFieldValue(o, field));
-                    ReflectUtil.setFieldValue(o,field,fieldValue);
+                    ReflectUtil.setFieldValue(o, field, fieldValue);
                 }
             }
             return list;
@@ -70,11 +74,11 @@ public class DecryptInterceptor implements Interceptor {
     /**
      * 对具体的值进行解码
      */
-    public Object decryptValue(Object fieldValue){
+    public Object decryptValue(Object fieldValue) {
 
-        if (fieldValue instanceof String){
+        if (fieldValue instanceof String) {
             AES aes = SecureUtil.aes(dataPermProperties.getFieldDecryptKey().getBytes(StandardCharsets.UTF_8));
-            return new String(aes.decrypt(Base64.decode((String)fieldValue)),StandardCharsets.UTF_8);
+            return new String(aes.decrypt(Base64.decode((String) fieldValue)), StandardCharsets.UTF_8);
         }
 
         else {

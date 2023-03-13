@@ -1,6 +1,5 @@
 package cn.bootx.iam.core.permission.entity;
 
-
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.iam.core.permission.convert.PermConvert;
@@ -12,10 +11,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 权限资源(url请求)
-* @author xxm  
-* @date 2020/5/10 23:09 
-*/
+ * 权限资源(url请求)
+ *
+ * @author xxm
+ * @date 2020/5/10 23:09
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -46,7 +46,7 @@ public class PermPath extends MpBaseEntity implements EntityBaseFunction<PermPat
     /** 描述 */
     private String remark;
 
-    public static PermPath init(PermPathParam param){
+    public static PermPath init(PermPathParam param) {
         return PermConvert.CONVERT.convert(param);
     }
 
@@ -54,4 +54,5 @@ public class PermPath extends MpBaseEntity implements EntityBaseFunction<PermPat
     public PermPathDto toDto() {
         return PermConvert.CONVERT.convert(this);
     }
+
 }

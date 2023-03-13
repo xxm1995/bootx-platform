@@ -2,6 +2,7 @@ package cn.bootx.payment.core.pay.exception;
 
 /**
  * 支付异常信息
+ *
  * @author xxm
  * @date 2020/12/9
  */

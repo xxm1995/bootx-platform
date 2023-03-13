@@ -15,10 +15,11 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 /**
-* 忽略权限控制切面处理类
-* @author xxm
-* @date 2021/12/22
-*/
+ * 忽略权限控制切面处理类
+ *
+ * @author xxm
+ * @date 2021/12/22
+ */
 @Slf4j
 @Aspect
 @Component
@@ -33,15 +34,17 @@ public class DataPermAspectHandler {
         Object obj;
         // 如果方法和类同时存在, 以方法上的注解为准
         Permission methodAnnotation = AopUtil.getMethodAnnotation(pjp, Permission.class);
-        if (Objects.nonNull(methodAnnotation)){
+        if (Objects.nonNull(methodAnnotation)) {
             DataPermContextHolder.putPermission(methodAnnotation);
-        } else {
+        }
+        else {
             DataPermContextHolder.putPermission(permission);
         }
         DataPermContextHolder.putUserDetail(SecurityUtil.getCurrentUser().orElse(null));
         try {
             obj = pjp.proceed();
-        } finally {
+        }
+        finally {
             DataPermContextHolder.clearUserAndPermission();
         }
         return obj;
@@ -52,17 +55,20 @@ public class DataPermAspectHandler {
         Object obj;
         // 如果方法和类同时存在, 以方法上的注解为准
         NestedPermission methodAnnotation = AopUtil.getMethodAnnotation(pjp, NestedPermission.class);
-        if (Objects.nonNull(methodAnnotation)){
+        if (Objects.nonNull(methodAnnotation)) {
             DataPermContextHolder.putNestedPermission(methodAnnotation);
-        } else {
+        }
+        else {
             DataPermContextHolder.putNestedPermission(nestedPermission);
         }
         DataPermContextHolder.putUserDetail(SecurityUtil.getCurrentUser().orElse(null));
         try {
             obj = pjp.proceed();
-        } finally {
+        }
+        finally {
             DataPermContextHolder.clearNestedPermission();
         }
         return obj;
     }
+
 }

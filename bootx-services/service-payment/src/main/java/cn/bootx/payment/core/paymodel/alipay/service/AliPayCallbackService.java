@@ -25,16 +25,19 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
-* 支付宝回调处理
-* @author xxm
-* @date 2021/2/28
-*/
+ * 支付宝回调处理
+ *
+ * @author xxm
+ * @date 2021/2/28
+ */
 @Slf4j
 @Service
 public class AliPayCallbackService extends AbsPayCallbackStrategy {
+
     private final AlipayConfigManager alipayConfigManager;
 
-    public AliPayCallbackService(RedisClient redisClient, PayNotifyRecordManager payNotifyRecordManager, PayCallbackService payCallbackService, AlipayConfigManager alipayConfigManager) {
+    public AliPayCallbackService(RedisClient redisClient, PayNotifyRecordManager payNotifyRecordManager,
+            PayCallbackService payCallbackService, AlipayConfigManager alipayConfigManager) {
         super(redisClient, payNotifyRecordManager, payCallbackService);
         this.alipayConfigManager = alipayConfigManager;
     }
@@ -48,7 +51,7 @@ public class AliPayCallbackService extends AbsPayCallbackStrategy {
     public int getTradeStatus() {
         Map<String, String> params = PARAMS.get();
         String tradeStatus = params.get(AliPayCode.TRADE_STATUS);
-        if (Objects.equals(tradeStatus,AliPayCode.NOTIFY_TRADE_SUCCESS)){
+        if (Objects.equals(tradeStatus, AliPayCode.NOTIFY_TRADE_SUCCESS)) {
             return PayStatusCode.NOTIFY_TRADE_SUCCESS;
         }
         return PayStatusCode.NOTIFY_TRADE_FAIL;
@@ -71,11 +74,12 @@ public class AliPayCallbackService extends AbsPayCallbackStrategy {
         }
 
         try {
-            if (Objects.equals(alipayConfig.getAuthType(),AliPayCode.AUTH_TYPE_KEY)){
-                return AlipaySignature.rsaCheckV1(params, alipayConfig.getAlipayPublicKey(), CharsetUtil.UTF_8, AlipayConstants.SIGN_TYPE_RSA2);
-            } else {
-                return AlipaySignature.verifyV1(params,
-                        CertUtil.getCertByContent(alipayConfig.getAlipayCert()),
+            if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_KEY)) {
+                return AlipaySignature.rsaCheckV1(params, alipayConfig.getAlipayPublicKey(), CharsetUtil.UTF_8,
+                        AlipayConstants.SIGN_TYPE_RSA2);
+            }
+            else {
+                return AlipaySignature.verifyV1(params, CertUtil.getCertByContent(alipayConfig.getAlipayCert()),
                         CharsetUtil.UTF_8, AlipayConstants.SIGN_TYPE_RSA2);
             }
         }
@@ -95,4 +99,5 @@ public class AliPayCallbackService extends AbsPayCallbackStrategy {
     public String getReturnMsg() {
         return "success";
     }
+
 }

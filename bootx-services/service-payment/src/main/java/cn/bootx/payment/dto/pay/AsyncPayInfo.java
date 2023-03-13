@@ -7,13 +7,14 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* @author xxm
-* @date 2021/2/28
-*/
+ * @author xxm
+ * @date 2021/2/28
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "异步支付线程信息")
 public class AsyncPayInfo implements Serializable {
+
     private static final long serialVersionUID = 8239742916705144905L;
 
     /** 支付参数体(通常用于发起支付的参数) */
@@ -24,4 +25,5 @@ public class AsyncPayInfo implements Serializable {
 
     /** 是否记录超时时间,默认记录 */
     private boolean expiredTime = true;
+
 }

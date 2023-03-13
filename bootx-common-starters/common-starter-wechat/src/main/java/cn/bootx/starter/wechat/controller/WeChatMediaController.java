@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 import static me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult.WxMaterialNewsBatchGetNewsItem;
 
 /**
- *
  * @author xxm
  * @date 2022/8/9
  */
@@ -24,31 +23,33 @@ import static me.chanjar.weixin.mp.bean.material.WxMpMaterialNewsBatchGetResult.
 @RequestMapping("/wechat/media")
 @RequiredArgsConstructor
 public class WeChatMediaController {
+
     private final WeChatMediaService weChatMediaService;
 
     @Operation(summary = "非图文素材分页")
     @GetMapping("/pageFile")
-    public ResResult<PageResult<WeChatMediaDto>> pageFile(PageParam pageParam, String type){
-        return Res.ok(weChatMediaService.pageFile(pageParam,type));
+    public ResResult<PageResult<WeChatMediaDto>> pageFile(PageParam pageParam, String type) {
+        return Res.ok(weChatMediaService.pageFile(pageParam, type));
     }
 
     @Operation(summary = "图文素材分页")
     @GetMapping("/pageNews")
-    public ResResult<PageResult<WxMaterialNewsBatchGetNewsItem>> pageNews(PageParam pageParam){
+    public ResResult<PageResult<WxMaterialNewsBatchGetNewsItem>> pageNews(PageParam pageParam) {
         return Res.ok(weChatMediaService.pageNews(pageParam));
     }
 
     @Operation(summary = "删除素材")
     @DeleteMapping("/deleteFile")
-    public ResResult<Void> deleteFile(String mediaId){
+    public ResResult<Void> deleteFile(String mediaId) {
         weChatMediaService.deleteFile(mediaId);
         return Res.ok();
     }
-    
+
     @Operation(summary = "上传素材")
     @PostMapping("/uploadFile")
-    public ResResult<Void> uploadFile(String mediaType, MultipartFile file){
-        weChatMediaService.uploadFile(mediaType,file);
+    public ResResult<Void> uploadFile(String mediaType, MultipartFile file) {
+        weChatMediaService.uploadFile(mediaType, file);
         return Res.ok();
     }
+
 }

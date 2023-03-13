@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 区域表
+ *
  * @author xxm
  * @date 2022-12-24
  */
@@ -16,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AreaManager extends BaseManager<AreaMapper, Area> {
 
-    public List<Area> findAllByCityCode(String cityCode){
-        return findAllByField(Area::getCityCode,cityCode);
+    public List<Area> findAllByCityCode(String cityCode) {
+        return findAllByField(Area::getCityCode, cityCode);
     }
+
 }

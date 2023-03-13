@@ -11,10 +11,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 数据范围配置
-* @author xxm
-* @date 2021/12/23
-*/
+ * 数据范围配置
+ *
+ * @author xxm
+ * @date 2021/12/23
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -36,7 +37,7 @@ public class DataScope extends MpBaseEntity implements EntityBaseFunction<DataSc
     /** 备注 */
     private String remark;
 
-    public static DataScope init(DataScopeParam in){
+    public static DataScope init(DataScopeParam in) {
         return DataScopeConvert.CONVERT.convert(in);
     }
 
@@ -44,4 +45,5 @@ public class DataScope extends MpBaseEntity implements EntityBaseFunction<DataSc
     public DataScopeDto toDto() {
         return DataScopeConvert.CONVERT.convert(this);
     }
+
 }

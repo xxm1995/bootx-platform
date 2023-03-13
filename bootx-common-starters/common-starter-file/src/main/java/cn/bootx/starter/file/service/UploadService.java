@@ -9,19 +9,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 
 /**
-* 文件上传接口
-* @author xxm
-* @date 2022/1/14
-*/
+ * 文件上传接口
+ *
+ * @author xxm
+ * @date 2022/1/14
+ */
 public interface UploadService {
+
     /**
      * 判断启用
      */
     boolean enable(FileUploadTypeEnum type);
+
     /**
      * 上传文件
      */
     UpdateFileInfo upload(MultipartFile file, UploadFileContext context);
+
     /**
      * 预览文件
      */
@@ -35,5 +39,6 @@ public interface UploadService {
     /**
      * 删除文件
      */
-    void delete(UpdateFileInfo updateFileInfo );
+    void delete(UpdateFileInfo updateFileInfo);
+
 }

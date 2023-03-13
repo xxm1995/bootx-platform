@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * 支付超时任务撤销消息注册
+ *
  * @author xxm
  * @date 2022/7/12
  */
@@ -20,19 +21,21 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PayExpiredTimeTaskService {
+
     private final PaymentExpiredTimeRepository expiredTimeRepository;
+
     private final PaymentEventSender paymentEventSender;
 
     /**
      * 定时查询, 如果有过时的发送到消息队列
      */
-    public void sync(){
+    public void sync() {
         List<Long> paymentIds = expiredTimeRepository.retrieveExpiredKeys(LocalDateTime.now()).stream()
-                .map(Long::valueOf)
-                .collect(Collectors.toList());
-        if (CollUtil.isNotEmpty(paymentIds)){
+                .map(Long::valueOf).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(paymentIds)) {
             expiredTimeRepository.removeKeys(paymentIds.stream().map(String::valueOf).toArray(String[]::new));
             paymentIds.forEach(paymentEventSender::sendPaymentExpiredTime);
         }
     }
+
 }

@@ -14,34 +14,34 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**   
-* 消息模板
-* @author xxm  
-* @date 2021/8/9 
-*/
+/**
+ * 消息模板
+ *
+ * @author xxm
+ * @date 2021/8/9
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, MessageTemplate> {
 
-    public Optional<MessageTemplate> findByCode(String code){
-        return findByField(MessageTemplate::getCode,code);
+    public Optional<MessageTemplate> findByCode(String code) {
+        return findByField(MessageTemplate::getCode, code);
     }
 
-    public boolean existsByCode(String code){
-        return existedByField(MessageTemplate::getCode,code);
+    public boolean existsByCode(String code) {
+        return existedByField(MessageTemplate::getCode, code);
     }
 
-    public boolean existsByCode(String code, Long id){
-        return existedByField(MessageTemplate::getCode,code,id);
+    public boolean existsByCode(String code, Long id) {
+        return existedByField(MessageTemplate::getCode, code, id);
     }
 
     public Page<MessageTemplate> page(PageParam pageParam, MessageTemplateParam query) {
         Page<MessageTemplate> mpPage = MpUtil.getMpPage(pageParam, MessageTemplate.class);
-        return lambdaQuery()
-                .like(StrUtil.isNotBlank(query.getCode()), MessageTemplate::getCode,query.getCode())
-                .like(StrUtil.isNotBlank(query.getName()), MessageTemplate::getName,query.getName())
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return lambdaQuery().like(StrUtil.isNotBlank(query.getCode()), MessageTemplate::getCode, query.getCode())
+                .like(StrUtil.isNotBlank(query.getName()), MessageTemplate::getName, query.getName())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
+
 }

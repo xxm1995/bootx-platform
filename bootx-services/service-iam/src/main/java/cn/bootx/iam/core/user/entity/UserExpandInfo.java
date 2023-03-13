@@ -13,10 +13,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
-* 用户扩展信息
-* @author xxm
-* @date 2022/1/8
-*/
+ * 用户扩展信息
+ *
+ * @author xxm
+ * @date 2022/1/8
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -48,4 +49,5 @@ public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<U
     public UserExpandInfoDto toDto() {
         return UserConvert.CONVERT.convert(this);
     }
+
 }

@@ -8,11 +8,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**   
-* 用户数据范围关联关系
-* @author xxm  
-* @date 2021/12/23 
-*/
+/**
+ * 用户数据范围关联关系
+ *
+ * @author xxm
+ * @date 2021/12/23
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -26,4 +27,5 @@ public class UserDataScope extends MpIdEntity {
 
     /** 数据权限id */
     private Long dataScopeId;
+
 }

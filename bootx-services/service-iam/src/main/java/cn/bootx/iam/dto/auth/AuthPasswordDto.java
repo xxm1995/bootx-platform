@@ -9,10 +9,10 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**   
-* @author xxm
-* @date 2020/4/25 17:27 
-*/
+/**
+ * @author xxm
+ * @date 2020/4/25 17:27
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -21,12 +21,13 @@ public class AuthPasswordDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = -131891945146840339L;
 
-    @Schema(description= "用户主键", required = true)
+    @Schema(description = "用户主键", required = true)
     private Long uid;
 
-    @Schema(description= "用户密码", required = true)
+    @Schema(description = "用户密码", required = true)
     private String password;
 
-    @Schema(description= "最后登录时间")
+    @Schema(description = "最后登录时间")
     private LocalDateTime lastLoginTime;
+
 }

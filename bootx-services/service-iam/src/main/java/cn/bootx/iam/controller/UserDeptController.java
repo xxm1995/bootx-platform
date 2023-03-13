@@ -15,19 +15,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2021/9/29
-*/
-@Tag(name ="用户部门关联关系")
+ * @author xxm
+ * @date 2021/9/29
+ */
+@Tag(name = "用户部门关联关系")
 @RestController
 @RequestMapping("/user/dept")
 @RequiredArgsConstructor
 public class UserDeptController {
+
     private final UserDeptService userDeptService;
 
     @Operation(summary = "给用户分配部门")
     @PostMapping("/saveAssign")
-    public ResResult<Void> saveAssign(@RequestBody UserDeptParam param){
+    public ResResult<Void> saveAssign(@RequestBody UserDeptParam param) {
         ValidationUtil.validateParam(param);
         userDeptService.saveAssign(param.getUserId(), param.getDeptIds());
         return Res.ok();
@@ -35,19 +36,19 @@ public class UserDeptController {
 
     @Operation(summary = "给用户分配部门(批量)")
     @PostMapping("/saveAssignBatch")
-    public ResResult<Void> saveAssignBatch(@RequestBody UserDeptBatchParam param){
+    public ResResult<Void> saveAssignBatch(@RequestBody UserDeptBatchParam param) {
         ValidationUtil.validateParam(param);
         userDeptService.saveAssignBatch(param.getUserIds(), param.getDeptIds());
         return Res.ok();
     }
 
-    @Operation( summary = "根据用户ID获取到部门集合")
+    @Operation(summary = "根据用户ID获取到部门集合")
     @GetMapping(value = "/findAllByUser")
     public ResResult<List<DeptDto>> findAllByUser(Long id) {
         return Res.ok(userDeptService.findDeptListByUser(id));
     }
 
-    @Operation( summary = "根据用户ID获取到部门id集合")
+    @Operation(summary = "根据用户ID获取到部门id集合")
     @GetMapping(value = "/findIdsByUser")
     public ResResult<List<Long>> findIdsByUser(Long id) {
         return Res.ok(userDeptService.findDeptIdsByUser(id));

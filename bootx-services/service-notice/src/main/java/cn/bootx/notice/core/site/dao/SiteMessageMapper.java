@@ -9,15 +9,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-/**   
-* 站内信
-* @author xxm  
-* @date 2021/8/7 
-*/
+/**
+ * 站内信
+ *
+ * @author xxm
+ * @date 2021/8/7
+ */
 @Mapper
 public interface SiteMessageMapper extends BaseMapper<SiteMessage> {
 
-    Page<SiteMessageInfo> pageMassage(Page<SiteMessageInfo> page, @Param(Constants.WRAPPER) Wrapper<SiteMessageInfo> wrapper);
+    Page<SiteMessageInfo> pageMassage(Page<SiteMessageInfo> page,
+            @Param(Constants.WRAPPER) Wrapper<SiteMessageInfo> wrapper);
 
     Integer countMassage(@Param(Constants.WRAPPER) Wrapper<SiteMessageInfo> wrapper);
+
 }

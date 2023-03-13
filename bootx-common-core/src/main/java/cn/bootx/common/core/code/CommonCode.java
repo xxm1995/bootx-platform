@@ -2,6 +2,7 @@ package cn.bootx.common.core.code;
 
 /**
  * 公共常量
+ *
  * @author xxm
  * @date 2020/4/8 10:58
  */
@@ -12,8 +13,10 @@ public interface CommonCode {
 
     /** 开发环境 */
     String ENV_DEV = "dev";
+
     /** 测试环境 */
     String ENV_TEST = "test";
+
     /** 生产环境 */
     String ENV_PROD = "prod";
 
@@ -31,6 +34,7 @@ public interface CommonCode {
      * 系统默认用户的 userId，便于定时任务和异步任务时使用
      */
     Long SYSTEM_DEFAULT_USERID = 1L;
+
     /**
      * 系统默认用户的 userId，便于定时任务和异步任务时使用
      */
@@ -57,7 +61,7 @@ public interface CommonCode {
     /** 用户 */
     String USER = "user";
 
-    /** 用户id  */
+    /** 用户id */
     String USER_ID = "userId";
 
     /** 主键字段 */
@@ -80,4 +84,5 @@ public interface CommonCode {
 
     /** 数据软删除标识字段 */
     String DELETED = "deleted";
+
 }

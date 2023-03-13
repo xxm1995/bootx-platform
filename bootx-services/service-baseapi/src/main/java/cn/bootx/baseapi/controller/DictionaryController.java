@@ -19,14 +19,16 @@ import java.util.List;
 
 /**
  * 字典
+ *
  * @author xxm
  * @date 2021/8/4
  */
-@Tag(name ="字典")
+@Tag(name = "字典")
 @RestController
 @RequestMapping("/dict")
 @RequiredArgsConstructor
 public class DictionaryController {
+
     private final DictionaryService dictionaryService;
 
     @Operation(summary = "添加")
@@ -64,19 +66,20 @@ public class DictionaryController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<DictionaryDto>> page(PageParam pageParam,DictionaryParam param){
-        return Res.ok(dictionaryService.page(pageParam,param));
+    public ResResult<PageResult<DictionaryDto>> page(PageParam pageParam, DictionaryParam param) {
+        return Res.ok(dictionaryService.page(pageParam, param));
     }
 
-    @Operation( summary = "编码是否被使用")
+    @Operation(summary = "编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
         return Res.ok(dictionaryService.existsByCode(code));
     }
 
-    @Operation( summary = "编码是否被使用(不包含自己)")
+    @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
-    public ResResult<Boolean> existsByCode(String code,Long id) {
-        return Res.ok(dictionaryService.existsByCode(code,id));
+    public ResResult<Boolean> existsByCode(String code, Long id) {
+        return Res.ok(dictionaryService.existsByCode(code, id));
     }
+
 }

@@ -32,10 +32,11 @@ import java.util.function.BiConsumer;
 
 /**
  * 自定义的基础数据库Manager操作类 类似自带的ServiceImpl类
+ *
  * @author xxm
  * @date 2020/4/15 14:26
  */
-public class BaseManager<M extends BaseMapper<T>, T>{
+public class BaseManager<M extends BaseMapper<T>, T> {
 
     /**
      * 默认批次提交数量
@@ -56,7 +57,6 @@ public class BaseManager<M extends BaseMapper<T>, T>{
         return currentModelClass();
     }
 
-
     @SuppressWarnings("unchecked")
     protected Class<M> currentMapperClass() {
         return (Class<M>) ReflectionKit.getSuperClassGenericType(this.getClass(), BaseManager.class, 0);
@@ -70,7 +70,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     /**
      * 获取主键明
      */
-    protected String getKeyProperty(){
+    protected String getKeyProperty() {
         TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
         Assert.notNull(tableInfo, "错误:无法执行.因为找不到实体的 TableInfo 缓存!");
         String keyProperty = tableInfo.getKeyProperty();
@@ -81,23 +81,19 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     /*
      * 以下的方法使用介绍:
      *
-     * 一. 名称介绍
-     * 1. 方法名带有 query 的为对数据的查询操作, 方法名带有 update 的为对数据的修改操作
-     * 2. 方法名带有 lambda 的为内部方法入参 column 支持函数式的
-     * 二. 支持介绍
+     * 一. 名称介绍 1. 方法名带有 query 的为对数据的查询操作, 方法名带有 update 的为对数据的修改操作 2. 方法名带有 lambda 的为内部方法入参
+     * column 支持函数式的 二. 支持介绍
      *
-     * 1. 方法名带有 query 的支持以 {@link ChainQuery} 内部的方法名结尾进行数据查询操作
-     * 2. 方法名带有 update 的支持以 {@link ChainUpdate} 内部的方法名为结尾进行数据修改操作
+     * 1. 方法名带有 query 的支持以 {@link ChainQuery} 内部的方法名结尾进行数据查询操作 2. 方法名带有 update 的支持以 {@link
+     * ChainUpdate} 内部的方法名为结尾进行数据修改操作
      *
-     * 三. 使用示例,只用不带 lambda 的方法各展示一个例子,其他类推
-     * 1. 根据条件获取一条数据: `query().eq("column", value).one()`
-     * 2. 根据条件删除一条数据: `update().eq("column", value).remove()`
+     * 三. 使用示例,只用不带 lambda 的方法各展示一个例子,其他类推 1. 根据条件获取一条数据: `query().eq("column",
+     * value).one()` 2. 根据条件删除一条数据: `update().eq("column", value).remove()`
      *
      */
 
     /**
      * 链式查询 普通
-     *
      * @return QueryWrapper 的包装类
      */
     public QueryChainWrapper<T> query() {
@@ -106,8 +102,9 @@ public class BaseManager<M extends BaseMapper<T>, T>{
 
     /**
      * 链式查询 lambda 式
-     * <p>注意：不支持 Kotlin </p>
-     *
+     * <p>
+     * 注意：不支持 Kotlin
+     * </p>
      * @return LambdaQueryWrapper 的包装类
      */
     public LambdaQueryChainWrapper<T> lambdaQuery() {
@@ -115,9 +112,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     }
 
     /**
-     * 链式查询 lambda 式
-     * kotlin 使用
-     *
+     * 链式查询 lambda 式 kotlin 使用
      * @return KtQueryWrapper 的包装类
      */
     public KtQueryChainWrapper<T> ktQuery() {
@@ -125,9 +120,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     }
 
     /**
-     * 链式查询 lambda 式
-     * kotlin 使用
-     *
+     * 链式查询 lambda 式 kotlin 使用
      * @return KtQueryWrapper 的包装类
      */
     public KtUpdateChainWrapper<T> ktUpdate() {
@@ -136,7 +129,6 @@ public class BaseManager<M extends BaseMapper<T>, T>{
 
     /**
      * 链式更改 普通
-     *
      * @return UpdateWrapper 的包装类
      */
     public UpdateChainWrapper<T> update() {
@@ -145,19 +137,17 @@ public class BaseManager<M extends BaseMapper<T>, T>{
 
     /**
      * 链式更改 lambda 式
-     * <p>注意：不支持 Kotlin </p>
-     *
+     * <p>
+     * 注意：不支持 Kotlin
+     * </p>
      * @return LambdaUpdateWrapper 的包装类
      */
     public LambdaUpdateChainWrapper<T> lambdaUpdate() {
         return ChainWrappers.lambdaUpdateChain(getBaseMapper());
     }
 
-
-
     /**
      * 获取mapperStatementId
-     *
      * @param sqlMethod 方法名
      * @return 命名id
      * @since 3.4.0
@@ -166,11 +156,10 @@ public class BaseManager<M extends BaseMapper<T>, T>{
         return SqlHelper.getSqlStatement(currentMapperClass(), sqlMethod);
     }
 
-
     /**
      * 保存
      */
-    public T save(T t){
+    public T save(T t) {
         baseMapper.insert(t);
         return t;
     }
@@ -179,8 +168,8 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * 批量保存
      */
     @Transactional(rollbackFor = Exception.class)
-    public List<T> saveAll(List<T> list){
-        if (CollUtil.isNotEmpty(list)){
+    public List<T> saveAll(List<T> list) {
+        if (CollUtil.isNotEmpty(list)) {
             saveBatch(list, DEFAULT_BATCH_SIZE);
         }
         return list;
@@ -200,7 +189,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean updateAllById(Collection<T> entityList) {
-        if (CollUtil.isNotEmpty(entityList)){
+        if (CollUtil.isNotEmpty(entityList)) {
             return updateBatchById(entityList, DEFAULT_BATCH_SIZE);
         }
         return false;
@@ -221,11 +210,10 @@ public class BaseManager<M extends BaseMapper<T>, T>{
 
     /**
      * 执行批量操作
-     *
-     * @param list      数据集合
+     * @param list 数据集合
      * @param batchSize 批量大小
-     * @param consumer  执行方法
-     * @param <E>       泛型
+     * @param consumer 执行方法
+     * @param <E> 泛型
      * @return 操作结果
      * @since 3.3.1
      */
@@ -233,10 +221,8 @@ public class BaseManager<M extends BaseMapper<T>, T>{
         return SqlHelper.executeBatch(currentModelClass(), log, list, batchSize, consumer);
     }
 
-
     /**
      * TableId 注解存在更新记录，否插入一条记录
-     *
      * @param entity 实体对象
      * @return boolean
      */
@@ -244,10 +230,11 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     public T saveOrUpdate(T entity) {
         if (null != entity) {
             String keyProperty = this.getKeyProperty();
-            Object idVal = ReflectionKit.getFieldValue(entity,keyProperty);
-            if (StringUtils.checkValNull(idVal) || Objects.isNull(findById((Serializable) idVal))){
+            Object idVal = ReflectionKit.getFieldValue(entity, keyProperty);
+            if (StringUtils.checkValNull(idVal) || Objects.isNull(findById((Serializable) idVal))) {
                 save(entity);
-            } else{
+            }
+            else {
                 updateById(entity);
             }
         }
@@ -257,7 +244,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     /**
      * 根据id进行更新
      */
-    public T updateById(T t){
+    public T updateById(T t) {
         if (!SqlHelper.retBool(baseMapper.updateById(t))) {
             throw new OptimisticLockException();
         }
@@ -267,16 +254,14 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     /**
      * 根据指定字段进行更新
      */
-    public boolean updateByField(T t,SFunction<T, ?> field, Object fieldValue){
-        return lambdaUpdate()
-                .eq(field,fieldValue)
-                .update(t);
+    public boolean updateByField(T t, SFunction<T, ?> field, Object fieldValue) {
+        return lambdaUpdate().eq(field, fieldValue).update(t);
     }
 
     /**
      * 查询全部
      */
-    public List<T> findAll(){
+    public List<T> findAll() {
         return lambdaQuery().list();
     }
 
@@ -297,7 +282,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     /**
      * 根据主键查询
      */
-    public Optional<T> findById(Serializable id){
+    public Optional<T> findById(Serializable id) {
         return Optional.ofNullable(baseMapper.selectById(id));
     }
 
@@ -307,18 +292,17 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValue 字段数据
      * @return 对象
      */
-    public Optional<T> findByField(SFunction<T, ?> field, Object fieldValue){
-        return lambdaQuery().eq(field,fieldValue).oneOpt();
+    public Optional<T> findByField(SFunction<T, ?> field, Object fieldValue) {
+        return lambdaQuery().eq(field, fieldValue).oneOpt();
     }
-
 
     /**
      * idList 为空不报错
      * @param idList is集合
      * @return list
      */
-    public List<T> findAllByIds(Collection<? extends Serializable> idList){
-        if (CollUtil.isEmpty(idList)){
+    public List<T> findAllByIds(Collection<? extends Serializable> idList) {
+        if (CollUtil.isEmpty(idList)) {
             return new ArrayList<>(0);
         }
         return baseMapper.selectBatchIds(idList);
@@ -330,8 +314,8 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValue 字段数据
      * @return 对象列表
      */
-    public List<T> findAllByField(SFunction<T, ?> field, Object fieldValue){
-        return lambdaQuery().eq(field,fieldValue).list();
+    public List<T> findAllByField(SFunction<T, ?> field, Object fieldValue) {
+        return lambdaQuery().eq(field, fieldValue).list();
     }
 
     /**
@@ -340,21 +324,20 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValues 字段数据集合
      * @return 对象列表
      */
-    public List<T> findAllByFields(SFunction<T, ?> field, Collection<? extends Serializable> fieldValues){
-        if (CollUtil.isEmpty(fieldValues)){
+    public List<T> findAllByFields(SFunction<T, ?> field, Collection<? extends Serializable> fieldValues) {
+        if (CollUtil.isEmpty(fieldValues)) {
             return new ArrayList<>(0);
         }
-        return lambdaQuery().in(field,fieldValues).list();
+        return lambdaQuery().in(field, fieldValues).list();
     }
 
     /**
      * 判断指定id对象是否存在
      */
-    public boolean existedById(Serializable id){
+    public boolean existedById(Serializable id) {
         String keyProperty = this.getKeyProperty();
-        return query().eq(keyProperty,id).exists();
+        return query().eq(keyProperty, id).exists();
     }
-
 
     /**
      * 根据指定字段查询是否存在数据
@@ -362,8 +345,8 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValue 字段数据
      * @return 是否存在
      */
-    public boolean existedByField(SFunction<T, ?> field, Object fieldValue){
-        return lambdaQuery().eq(field,fieldValue).exists();
+    public boolean existedByField(SFunction<T, ?> field, Object fieldValue) {
+        return lambdaQuery().eq(field, fieldValue).exists();
     }
 
     /**
@@ -373,11 +356,9 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param id 主键值
      * @return 是否存在
      */
-    public boolean existedByField(SFunction<T, ?> field, Object fieldValue,Serializable id){
+    public boolean existedByField(SFunction<T, ?> field, Object fieldValue, Serializable id) {
         String keyProperty = this.getKeyProperty();
-        return query().eq(MpUtil.getColumnName(field),fieldValue)
-                .ne(keyProperty,id)
-                .exists();
+        return query().eq(MpUtil.getColumnName(field), fieldValue).ne(keyProperty, id).exists();
     }
 
     /**
@@ -386,10 +367,9 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValue 字段数据
      * @return 数量
      */
-    public Long countByField(SFunction<T, ?> field, Object fieldValue){
-        return lambdaQuery().eq(field,fieldValue).count();
+    public Long countByField(SFunction<T, ?> field, Object fieldValue) {
+        return lambdaQuery().eq(field, fieldValue).count();
     }
-
 
     /**
      * 根据指定字段值进行删除, 逻辑删除时不会记录更新时间和更新人
@@ -397,8 +377,8 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValue 字段数据
      * @return boolean
      */
-    public boolean deleteByField(SFunction<T, ?> field, Object fieldValue){
-        return lambdaUpdate().eq(field,fieldValue).remove();
+    public boolean deleteByField(SFunction<T, ?> field, Object fieldValue) {
+        return lambdaUpdate().eq(field, fieldValue).remove();
     }
 
     /**
@@ -407,11 +387,11 @@ public class BaseManager<M extends BaseMapper<T>, T>{
      * @param fieldValues 字段数据集合
      * @return boolean
      */
-    public boolean deleteByFields(SFunction<T, ?> field, Collection<?> fieldValues){
-        if (CollUtil.isEmpty(fieldValues)){
+    public boolean deleteByFields(SFunction<T, ?> field, Collection<?> fieldValues) {
+        if (CollUtil.isEmpty(fieldValues)) {
             return false;
         }
-        return lambdaUpdate().in(field,fieldValues).remove();
+        return lambdaUpdate().in(field, fieldValues).remove();
     }
 
     /**
@@ -426,7 +406,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
     }
 
     /**
-     *逻辑删除时会记录更新时间和更新人
+     * 逻辑删除时会记录更新时间和更新人
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteByIds(Collection<?> list) {
@@ -435,7 +415,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
         }
         TableInfo tableInfo = TableInfoHelper.getTableInfo(getEntityClass());
         if (tableInfo.isWithLogicDelete() && tableInfo.isWithUpdateFill()) {
-            return deleteBatchByIds(list, DEFAULT_BATCH_SIZE,true);
+            return deleteBatchByIds(list, DEFAULT_BATCH_SIZE, true);
         }
         return SqlHelper.retBool(getBaseMapper().deleteBatchIds(list));
     }
@@ -460,8 +440,7 @@ public class BaseManager<M extends BaseMapper<T>, T>{
 
     /**
      * 批量删除(jdbc批量提交)
-     *
-     * @param list    主键ID或实体列表(主键ID类型必须与实体类型字段保持一致)
+     * @param list 主键ID或实体列表(主键ID类型必须与实体类型字段保持一致)
      * @param useFill 是否启用填充(为true的情况,会将入参转换实体进行delete删除)
      * @return 删除结果
      */
@@ -473,14 +452,17 @@ public class BaseManager<M extends BaseMapper<T>, T>{
             if (useFill && tableInfo.isWithLogicDelete()) {
                 if (getEntityClass().isAssignableFrom(e.getClass())) {
                     sqlSession.update(sqlStatement, e);
-                } else {
+                }
+                else {
                     T instance = tableInfo.newInstance();
                     tableInfo.setPropertyValue(instance, tableInfo.getKeyProperty(), e);
                     sqlSession.update(sqlStatement, instance);
                 }
-            } else {
+            }
+            else {
                 sqlSession.update(sqlStatement, e);
             }
         });
     }
+
 }

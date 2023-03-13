@@ -14,10 +14,11 @@ import lombok.experimental.Accessors;
 import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
 
 /**
-* 权限配置
-* @author xxm
-* @date 2021/8/3
-*/
+ * 权限配置
+ *
+ * @author xxm
+ * @date 2021/8/3
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -92,7 +93,7 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     /** 描述 */
     private String remark;
 
-    public static PermMenu init(PermMenuParam in){
+    public static PermMenu init(PermMenuParam in) {
         return PermConvert.CONVERT.convert(in);
     }
 
@@ -100,4 +101,5 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     public PermMenuDto toDto() {
         return PermConvert.CONVERT.convert(this);
     }
+
 }

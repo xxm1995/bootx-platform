@@ -4,13 +4,15 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 支付通道支持的支付方式
-* @author xxm  
-* @date 2021/6/30 
-*/
+ * 支付通道支持的支付方式
+ *
+ * @author xxm
+ * @date 2021/6/30
+ */
 @Data
 @Accessors(chain = true)
 public class PayChannelWayParam {
+
     /** 通道id */
     private Long channelId;
 

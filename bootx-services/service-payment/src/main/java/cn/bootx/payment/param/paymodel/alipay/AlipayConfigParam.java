@@ -8,9 +8,9 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2021/2/26
-*/
+ * @author xxm
+ * @date 2021/2/26
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "支付宝配置参数")
@@ -69,4 +69,5 @@ public class AlipayConfigParam implements Serializable {
 
     @Schema(description = "备注")
     private String remark;
+
 }

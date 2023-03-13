@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 /**
  * 支付回调处理
+ *
  * @author xxm
  * @date 2021/2/27
  */
@@ -36,7 +37,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PayCallbackService {
+
     private final PaymentService paymentService;
+
     private final PaymentEventSender eventSender;
 
     /**
@@ -44,50 +47,46 @@ public class PayCallbackService {
      * @see PayStatusCode
      * @param tradeStatus 支付状态
      */
-    public PayCallbackResult callback(Long paymentId, int tradeStatus, Map<String, String> map){
+    public PayCallbackResult callback(Long paymentId, int tradeStatus, Map<String, String> map) {
 
         // 获取payment和paymentParam数据
-        Payment payment = paymentService.findById(paymentId)
-                .orElse(null);
+        Payment payment = paymentService.findById(paymentId).orElse(null);
 
         // 支付单不存在,记录回调记录
-        if (Objects.isNull(payment)){
-            return new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单不存在,记录回调记录");
+        if (Objects.isNull(payment)) {
+            return new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("支付单不存在,记录回调记录");
         }
 
         // 回调时间超出了支付单超时时间, 记录一下, 不做处理
-        if (Objects.nonNull(payment.getExpiredTime())&& LocalDateTimeUtil.ge(LocalDateTime.now(),payment.getExpiredTime())){
-            return new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("回调时间超出了支付单支付有效时间");
+        if (Objects.nonNull(payment.getExpiredTime())
+                && LocalDateTimeUtil.ge(LocalDateTime.now(), payment.getExpiredTime())) {
+            return new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("回调时间超出了支付单支付有效时间");
         }
 
         // 成功状态
-        if (PayStatusCode.NOTIFY_TRADE_SUCCESS == tradeStatus){
-            return this.success(payment,map);
-        } else {
+        if (PayStatusCode.NOTIFY_TRADE_SUCCESS == tradeStatus) {
+            return this.success(payment, map);
+        }
+        else {
             // 失败状态
-            return this.fail(payment,map);
+            return this.fail(payment, map);
         }
     }
 
     /**
      * 成功处理
      */
-    private PayCallbackResult success(Payment payment, Map<String, String> map){
-        PayCallbackResult result = new PayCallbackResult()
-                .setCode(PayStatusCode.NOTIFY_PROCESS_SUCCESS);
+    private PayCallbackResult success(Payment payment, Map<String, String> map) {
+        PayCallbackResult result = new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_SUCCESS);
 
         // payment已经被支付,不需要重复处理
-        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_IGNORE)
-                    .setMsg("支付单已经是支付成功状态,不进行处理");
+        if (Objects.equals(payment.getPayStatus(), PayStatusCode.TRADE_SUCCESS)) {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_IGNORE).setMsg("支付单已经是支付成功状态,不进行处理");
         }
 
         // payment已被取消,记录回调记录
-        if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_PROGRESS)){
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单不是待支付状态,记录回调记录");
+        if (!Objects.equals(payment.getPayStatus(), PayStatusCode.TRADE_PROGRESS)) {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("支付单不是待支付状态,记录回调记录");
         }
 
         // 2.通过工厂生成对应的策略组
@@ -95,8 +94,7 @@ public class PayCallbackService {
 
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
         if (CollectionUtil.isEmpty(paymentStrategyList)) {
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单数据非法,未找到对应的支付方式");
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("支付单数据非法,未找到对应的支付方式");
         }
 
         // 3.初始化支付的参数
@@ -117,39 +115,34 @@ public class PayCallbackService {
         if (handlerFlag) {
             // 5. 发送成功事件
             eventSender.sendPayComplete(PayEventBuilder.buildPayComplete(payment));
-        } else {
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("回调处理过程报错");
+        }
+        else {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("回调处理过程报错");
         }
         return result;
     }
 
-
     /**
-     * 失败处理, 关闭并退款  按说这块不会发生
+     * 失败处理, 关闭并退款 按说这块不会发生
      */
     private PayCallbackResult fail(Payment payment, Map<String, String> map) {
-        PayCallbackResult result = new PayCallbackResult()
-                .setCode(PayStatusCode.NOTIFY_PROCESS_SUCCESS);
+        PayCallbackResult result = new PayCallbackResult().setCode(PayStatusCode.NOTIFY_PROCESS_SUCCESS);
 
         // payment已被取消,记录回调记录,后期处理
-        if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_PROGRESS)){
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_IGNORE)
-                    .setMsg("支付单已经取消,记录回调记录");
+        if (!Objects.equals(payment.getPayStatus(), PayStatusCode.TRADE_PROGRESS)) {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_IGNORE).setMsg("支付单已经取消,记录回调记录");
         }
 
         // payment支付成功, 状态非法
-        if (!Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单状态非法,支付网关状态为失败,但支付单状态为已完成");
+        if (!Objects.equals(payment.getPayStatus(), PayStatusCode.TRADE_SUCCESS)) {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("支付单状态非法,支付网关状态为失败,但支付单状态为已完成");
         }
 
         // 2.通过工厂生成对应的策略组
         PayParam payParam = PaymentBuilder.buildPayParamByPayment(payment);
         List<AbsPayStrategy> paymentStrategyList = PayStrategyFactory.create(payParam.getPayModeList());
         if (CollectionUtil.isEmpty(paymentStrategyList)) {
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("支付单数据非法,未找到对应的支付方式");
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("支付单数据非法,未找到对应的支付方式");
         }
         // 3.初始化支付关闭的参数
         for (AbsPayStrategy paymentStrategy : paymentStrategyList) {
@@ -168,9 +161,9 @@ public class PayCallbackService {
         if (handlerFlag) {
             // 5. 发送退款事件
             eventSender.sendPayRefund(PayEventBuilder.buildPayRefund(payment));
-        } else {
-            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL)
-                    .setMsg("回调处理过程报错");
+        }
+        else {
+            return result.setCode(PayStatusCode.NOTIFY_PROCESS_FAIL).setMsg("回调处理过程报错");
         }
 
         return result;
@@ -182,9 +175,8 @@ public class PayCallbackService {
      * @param strategyList 支付策略
      * @param successCallback 成功操作
      */
-    private boolean doHandler(Payment payment,
-                              List<AbsPayStrategy> strategyList,
-                              PayStrategyConsumer<List<AbsPayStrategy>, Payment> successCallback) {
+    private boolean doHandler(Payment payment, List<AbsPayStrategy> strategyList,
+            PayStrategyConsumer<List<AbsPayStrategy>, Payment> successCallback) {
 
         try {
             // 1.获取异步支付方式，通过工厂生成对应的策略组
@@ -193,7 +185,8 @@ public class PayCallbackService {
                     .collect(Collectors.toList());
             // 执行成功方法
             successCallback.accept(syncPaymentStrategyList, payment);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // error事件的处理
             this.asyncErrorHandler(payment, strategyList, e);
             return false;
@@ -210,7 +203,8 @@ public class PayCallbackService {
         ExceptionInfo exceptionInfo = new ExceptionInfo(PayStatusCode.TRADE_FAIL, e.getMessage());
         if (e instanceof BaseException) {
             exceptionInfo = ((BaseException) e).getExceptionInfo();
-        } else if (e instanceof ErrorCodeRuntimeException) {
+        }
+        else if (e instanceof ErrorCodeRuntimeException) {
             ErrorCodeRuntimeException ex = (ErrorCodeRuntimeException) e;
             exceptionInfo = new ExceptionInfo(ex.getCode(), ex.getMessage());
         }

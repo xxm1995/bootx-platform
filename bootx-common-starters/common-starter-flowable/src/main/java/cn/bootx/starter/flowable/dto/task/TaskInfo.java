@@ -6,10 +6,11 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-/**   
+/**
  * 流程任务扩展
- * @author xxm  
- * @date 2022/8/28 
+ *
+ * @author xxm
+ * @date 2022/8/28
  */
 @Data
 @Accessors(chain = true)
@@ -54,4 +55,5 @@ public class TaskInfo {
 
     @Schema(description = "结束时间")
     private LocalDateTime endTime;
+
 }

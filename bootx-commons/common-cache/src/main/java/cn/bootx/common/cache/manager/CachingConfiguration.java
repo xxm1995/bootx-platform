@@ -23,6 +23,7 @@ import java.time.Duration;
 
 /**
  * 缓存自动配置
+ *
  * @author xxm
  * @date 2021/6/11
  */
@@ -30,16 +31,18 @@ import java.time.Duration;
 @EnableCaching
 @EnableConfigurationProperties(CachingProperties.class)
 @ConditionalOnClass(CacheManager.class)
-@ConditionalOnProperty(prefix = "bootx.common.cache", value = "enabled", havingValue = "true",matchIfMissing = true)
+@ConditionalOnProperty(prefix = "bootx.common.cache", value = "enabled", havingValue = "true", matchIfMissing = true)
 public class CachingConfiguration extends CachingConfigurerSupport {
 
     private final CachingProperties cachingProperties;
+
     private final ObjectMapper typeObjectMapper;
+
     private final ObjectMapper objectMapper;
 
     public CachingConfiguration(CachingProperties cachingProperties,
-                                @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper,
-                                @Qualifier("objectMapper") ObjectMapper objectMapper) {
+            @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper,
+            @Qualifier("objectMapper") ObjectMapper objectMapper) {
         this.cachingProperties = cachingProperties;
         this.typeObjectMapper = typeObjectMapper;
         this.objectMapper = objectMapper;
@@ -60,11 +63,10 @@ public class CachingConfiguration extends CachingConfigurerSupport {
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
 
         BootxRedisCacheManager bootxRedisCacheManager = new BootxRedisCacheManager(
-                //Redis 缓存写入器
+                // Redis 缓存写入器
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
                 // 默认配置
-                this.getRedisCacheConfigurationWithTtl(Duration.ofSeconds(cachingProperties.getDefaultTtl()))
-        );
+                this.getRedisCacheConfigurationWithTtl(Duration.ofSeconds(cachingProperties.getDefaultTtl())));
         bootxRedisCacheManager.setKeysTtl(cachingProperties.getKeysTtl());
         return bootxRedisCacheManager;
 
@@ -75,22 +77,25 @@ public class CachingConfiguration extends CachingConfigurerSupport {
      */
     private RedisCacheConfiguration getRedisCacheConfigurationWithTtl(Duration duration) {
         // 序列化方式
-        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(
+                Object.class);
 
         // 缓存是否需要记录对象数据的类型
-        if (cachingProperties.isRetainType()){
+        if (cachingProperties.isRetainType()) {
             jackson2JsonRedisSerializer.setObjectMapper(typeObjectMapper);
-        } else {
+        }
+        else {
             jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
         }
 
         // redis缓存配置
-        return RedisCacheConfiguration
-                .defaultCacheConfig()
+        return RedisCacheConfiguration.defaultCacheConfig()
                 // 设置key为String
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeKeysWith(
+                        RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 // 设置value 为自动转Json的Object
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer))
+                .serializeValuesWith(
+                        RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer))
                 // 不缓存null
                 .disableCachingNullValues()
                 // 覆盖默认的构造key，否则会多出一个冒号
@@ -98,4 +103,5 @@ public class CachingConfiguration extends CachingConfigurerSupport {
                 // 过期时间
                 .entryTtl(duration);
     }
+
 }

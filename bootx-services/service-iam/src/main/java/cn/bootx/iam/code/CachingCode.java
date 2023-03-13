@@ -1,10 +1,11 @@
 package cn.bootx.iam.code;
 
 /**
-* 缓存名称
-* @author xxm
-* @date 2021/6/16
-*/
+ * 缓存名称
+ *
+ * @author xxm
+ * @date 2021/6/16
+ */
 public interface CachingCode {
 
     /** 直接放行的请求权限 */
@@ -18,4 +19,5 @@ public interface CachingCode {
 
     /** 用户数据权限关系缓存 */
     String USER_DATA_SCOPE = "iam:user:data:scope";
+
 }

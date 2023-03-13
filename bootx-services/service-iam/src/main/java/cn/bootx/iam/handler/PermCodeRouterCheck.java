@@ -17,6 +17,7 @@ import java.util.Optional;
 
 /**
  * 权限码方式请求路径拦截
+ *
  * @author xxm
  * @date 2023/1/22
  */
@@ -24,7 +25,9 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class PermCodeRouterCheck implements RouterCheck {
+
     private final RolePermService rolePermService;
+
     /**
      * 路由检查
      */
@@ -37,10 +40,11 @@ public class PermCodeRouterCheck implements RouterCheck {
             if (Objects.isNull(permCode)) {
                 // 方法上上是否加了跳过鉴权注解
                 permCode = handlerMethod.getMethodAnnotation(PermCode.class);
-            } else {
+            }
+            else {
                 // controller和方法上都加了跳过鉴权注解,以方法上为准
                 PermCode annotation = handlerMethod.getMethodAnnotation(PermCode.class);
-                if (Objects.nonNull(annotation)){
+                if (Objects.nonNull(annotation)) {
                     permCode = annotation;
                 }
             }
@@ -48,23 +52,24 @@ public class PermCodeRouterCheck implements RouterCheck {
         }
         return false;
     }
+
     /**
      * 权限码鉴权注解处理
      */
-    private boolean ignoreAuth(PermCode permCode){
-        if (Objects.isNull(permCode)){
+    private boolean ignoreAuth(PermCode permCode) {
+        if (Objects.isNull(permCode)) {
             return false;
         }
         List<String> permCodes = CollUtil.newArrayList(permCode.value());
-        if (CollUtil.isEmpty(permCodes)){
+        if (CollUtil.isEmpty(permCodes)) {
             return false;
         }
         Optional<UserDetail> UserDetailOpt = SecurityUtil.getCurrentUser();
-        if (!UserDetailOpt.isPresent()){
+        if (!UserDetailOpt.isPresent()) {
             return false;
         }
         List<String> userPermCodes = rolePermService.findEffectPermCodesByUserId(UserDetailOpt.get().getId());
-        return userPermCodes.stream()
-                .anyMatch(permCodes::contains);
+        return userPermCodes.stream().anyMatch(permCodes::contains);
     }
+
 }

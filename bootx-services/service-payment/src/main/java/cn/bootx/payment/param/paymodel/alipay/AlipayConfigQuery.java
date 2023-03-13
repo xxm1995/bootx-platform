@@ -7,13 +7,14 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* @author xxm
-* @date 2021/7/22
-*/
+ * @author xxm
+ * @date 2021/7/22
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "支付宝配置搜索参数")
 public class AlipayConfigQuery implements Serializable {
+
     private static final long serialVersionUID = -173325268481050362L;
 
     /** 名称 */
@@ -24,4 +25,5 @@ public class AlipayConfigQuery implements Serializable {
 
     /** 支付宝商户appId */
     private String appId;
+
 }

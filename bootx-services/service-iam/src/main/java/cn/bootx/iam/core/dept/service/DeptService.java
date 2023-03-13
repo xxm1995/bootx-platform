@@ -24,7 +24,6 @@ import java.util.Objects;
 import static cn.bootx.iam.code.CachingCode.USER_DATA_SCOPE;
 
 /**
- *
  * @author xxm
  * @date 2020/5/7 17:42
  */
@@ -32,15 +31,18 @@ import static cn.bootx.iam.code.CachingCode.USER_DATA_SCOPE;
 @Service
 @AllArgsConstructor
 public class DeptService {
+
     private final DeptManager deptManager;
+
     private final DeptRuleService deptRuleService;
+
     private final ApplicationEventPublisher eventPublisher;
 
     /**
      * 添加部门
      */
-    @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
-    public DeptDto add(DeptParam param){
+    @CacheEvict(value = { USER_DATA_SCOPE }, allEntries = true)
+    public DeptDto add(DeptParam param) {
         Dept dept = Dept.init(param);
 
         // 先判断该对象有无父级ID,有则意味着不是最高级,否则意味着是最高级
@@ -63,15 +65,15 @@ public class DeptService {
     /**
      * 根据id查询
      */
-    public DeptDto findById(Long id){
+    public DeptDto findById(Long id) {
         return deptManager.findById(id).map(Dept::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 编辑数据 编辑部门的部分数据,并保存到数据库
      */
-    @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
-    public DeptDto update(DeptParam param){
+    @CacheEvict(value = { USER_DATA_SCOPE }, allEntries = true)
+    public DeptDto update(DeptParam param) {
         // 父机构ID 机构编码 不能修改
         Dept dept = deptManager.findById(param.getId()).orElseThrow(() -> new BizException("机构未找到"));
         param.setParentId(null);
@@ -82,11 +84,11 @@ public class DeptService {
     /**
      * 删除部门
      */
-    @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
+    @CacheEvict(value = { USER_DATA_SCOPE }, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Long id){
+    public void delete(Long id) {
 
-        if (deptManager.existsParent(id)){
+        if (deptManager.existsParent(id)) {
             throw new BizException("存在子部门,无法直接删除");
         }
         deptManager.deleteById(id);
@@ -98,10 +100,10 @@ public class DeptService {
      * 删除部门及下级部门
      */
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {USER_DATA_SCOPE},allEntries = true)
-    public boolean deleteAndChildren(Long id){
+    @CacheEvict(value = { USER_DATA_SCOPE }, allEntries = true)
+    public boolean deleteAndChildren(Long id) {
         Dept dept = deptManager.findById(id).orElseThrow(DataNotExistException::new);
-        if (Objects.isNull(dept)){
+        if (Objects.isNull(dept)) {
             return false;
         }
         deptManager.deleteByOrgCode(dept.getOrgCode());
@@ -110,4 +112,5 @@ public class DeptService {
         deptManager.deleteById(id);
         return true;
     }
+
 }

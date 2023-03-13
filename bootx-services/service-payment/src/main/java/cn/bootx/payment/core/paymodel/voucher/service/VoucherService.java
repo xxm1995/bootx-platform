@@ -19,48 +19,43 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**   
-* 储值卡
-* @author xxm  
-* @date 2022/3/14 
-*/
+/**
+ * 储值卡
+ *
+ * @author xxm
+ * @date 2022/3/14
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class VoucherService {
+
     private final VoucherManager voucherManager;
+
     private final VoucherLogManager voucherLogManager;
 
     /**
      * 批量生成
      */
     @Transactional(rollbackFor = Exception.class)
-    public void generationBatch(VoucherGenerationParam param){
+    public void generationBatch(VoucherGenerationParam param) {
         Integer count = param.getCount();
         List<Voucher> vouchers = new ArrayList<>(count);
         long batchNo = IdUtil.getSnowflakeNextId();
         for (int i = 0; i < count; i++) {
             Voucher voucher = new Voucher()
-                    .setCardNo('V'+IdUtil.getSnowflakeNextIdStr()+ RandomUtil.randomNumbers(2))
-                    .setBatchNo(batchNo)
-                    .setBalance(param.getFaceValue())
-                    .setFaceValue(param.getFaceValue())
-                    .setEnduring(param.getEnduring())
-                    .setStatus(param.getStatus());
-            if (Objects.equals(param.getEnduring(),Boolean.FALSE)){
-                voucher.setStartTime(param.getStartTime())
-                        .setEndTime(param.getEndTime());
+                    .setCardNo('V' + IdUtil.getSnowflakeNextIdStr() + RandomUtil.randomNumbers(2)).setBatchNo(batchNo)
+                    .setBalance(param.getFaceValue()).setFaceValue(param.getFaceValue())
+                    .setEnduring(param.getEnduring()).setStatus(param.getStatus());
+            if (Objects.equals(param.getEnduring(), Boolean.FALSE)) {
+                voucher.setStartTime(param.getStartTime()).setEndTime(param.getEndTime());
             }
             vouchers.add(voucher);
         }
         voucherManager.saveAll(vouchers);
         // 日志
-        List<VoucherLog> voucherLogs = vouchers.stream()
-                .map(voucher -> new VoucherLog()
-                        .setType(VoucherCode.LOG_ACTIVE)
-                        .setAmount(voucher.getBalance())
-                        .setVoucherId(voucher.getId())
-                        .setVoucherNo(voucher.getCardNo()))
+        List<VoucherLog> voucherLogs = vouchers.stream().map(voucher -> new VoucherLog().setType(VoucherCode.LOG_ACTIVE)
+                .setAmount(voucher.getBalance()).setVoucherId(voucher.getId()).setVoucherNo(voucher.getCardNo()))
                 .collect(Collectors.toList());
         voucherLogManager.saveAll(voucherLogs);
     }
@@ -68,41 +63,43 @@ public class VoucherService {
     /**
      * 批量导入
      */
-    public void importBatch(VoucherImportParam param){
-        
+    public void importBatch(VoucherImportParam param) {
+
     }
 
     /**
      * 启用
      */
-    public void unlock(Long id){
+    public void unlock(Long id) {
         voucherManager.changeStatus(id, VoucherCode.STATUS_NORMAL);
     }
 
     /**
      * 冻结
      */
-    public void lock(Long id){
+    public void lock(Long id) {
         voucherManager.changeStatus(id, VoucherCode.STATUS_FORBIDDEN);
     }
+
     /**
      * 批量启用
      */
-    public void unlockBatch(List<Long> ids){
+    public void unlockBatch(List<Long> ids) {
         voucherManager.changeStatusBatch(ids, VoucherCode.STATUS_NORMAL);
     }
 
     /**
      * 批量冻结
      */
-    public void lockBatch(List<Long> ids){
+    public void lockBatch(List<Long> ids) {
         voucherManager.changeStatusBatch(ids, VoucherCode.STATUS_FORBIDDEN);
     }
 
     /**
      * 更改有效期
      */
-    public void changeEnduring(){
-        
+    public void changeEnduring() {
+
     }
+
 }

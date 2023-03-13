@@ -25,14 +25,16 @@ import java.io.InputStream;
 import java.util.Optional;
 
 /**
-* mongo方式存储文件
-* @author xxm
-* @date 2022/1/12
-*/
+ * mongo方式存储文件
+ *
+ * @author xxm
+ * @date 2022/1/12
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class MongoUploadService implements UploadService {
+
     private final GridFsTemplate gridFsTemplate;
 
     @Override
@@ -45,11 +47,9 @@ public class MongoUploadService implements UploadService {
      */
     @SneakyThrows
     @Override
-    public UpdateFileInfo upload(MultipartFile file,  UploadFileContext context) {
+    public UpdateFileInfo upload(MultipartFile file, UploadFileContext context) {
         ObjectId store = gridFsTemplate.store(file.getInputStream(), context.getFileName(), file.getContentType());
-        return new UpdateFileInfo()
-                .setExternalStorageId(store.toString())
-                .setFileSize(file.getSize());
+        return new UpdateFileInfo().setExternalStorageId(store.toString()).setFileSize(file.getSize());
     }
 
     @SneakyThrows
@@ -63,7 +63,7 @@ public class MongoUploadService implements UploadService {
         GridFsResource resource = gridFsTemplate.getResource(gridFSFile);
         InputStream inputStream = resource.getInputStream();
 
-        //获取响应输出流
+        // 获取响应输出流
         ServletOutputStream os = response.getOutputStream();
         IoUtil.copy(inputStream, os);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, updateFileInfo.getFileType());
@@ -80,7 +80,7 @@ public class MongoUploadService implements UploadService {
         GridFSFile gridFSFile = Optional.ofNullable(gridFsTemplate.findOne(query))
                 .orElseThrow(DataNotExistException::new);
         GridFsResource resource = gridFsTemplate.getResource(gridFSFile);
-        return  resource.getInputStream();
+        return resource.getInputStream();
     }
 
     /**
@@ -92,4 +92,5 @@ public class MongoUploadService implements UploadService {
         Query query = new Query(criteria);
         gridFsTemplate.delete(query);
     }
+
 }

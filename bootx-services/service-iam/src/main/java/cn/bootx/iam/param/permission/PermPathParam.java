@@ -7,13 +7,14 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* @author xxm
-* @date 2021/6/16
-*/
+ * @author xxm
+ * @date 2021/6/16
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "权限信息参数")
 public class PermPathParam implements Serializable {
+
     private static final long serialVersionUID = 7617748080025164673L;
 
     @Schema(description = "主键")

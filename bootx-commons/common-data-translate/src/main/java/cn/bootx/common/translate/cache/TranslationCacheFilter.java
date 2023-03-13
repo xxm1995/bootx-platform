@@ -14,6 +14,7 @@ import java.io.IOException;
 
 /**
  * session缓存,用来减少一个请求中多次获取用户信息导致的多次访问redis
+ *
  * @author xxm
  * @date 2022/1/8
  */
@@ -24,12 +25,15 @@ import java.io.IOException;
 public class TranslationCacheFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         try {
             filterChain.doFilter(request, response);
             TranslationCacheLocal.put(new TranslationCacheLocal.Cache());
-        } finally {
+        }
+        finally {
             TranslationCacheLocal.clear();
         }
     }
+
 }

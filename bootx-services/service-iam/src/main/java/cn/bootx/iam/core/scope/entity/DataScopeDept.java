@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
-* 数据范围部门关联配置
-* @author xxm
-* @date 2021/12/23
-*/
+ * 数据范围部门关联配置
+ *
+ * @author xxm
+ * @date 2021/12/23
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -26,4 +27,5 @@ public class DataScopeDept extends MpIdEntity {
 
     /** 部门id */
     private Long deptId;
+
 }

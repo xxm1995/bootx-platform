@@ -3,14 +3,19 @@ package cn.bootx.payment.core.pay.local;
 import com.alibaba.ttl.TransmittableThreadLocal;
 
 /**
-* 异步退款线程变量
-* @author xxm  
-* @date 2022/3/9 
-*/
+ * 异步退款线程变量
+ *
+ * @author xxm
+ * @date 2022/3/9
+ */
 public final class AsyncRefundLocal {
+
     private static final ThreadLocal<String> THREAD_LOCAL = new TransmittableThreadLocal<>();
+
     private static final ThreadLocal<String> ERROR_MSG = new TransmittableThreadLocal<>();
+
     private static final ThreadLocal<String> ERROR_CODE = new TransmittableThreadLocal<>();
+
     /**
      * 设置 退款号
      */
@@ -38,6 +43,7 @@ public final class AsyncRefundLocal {
     public static String getErrorMsg() {
         return ERROR_MSG.get();
     }
+
     /**
      * 设置 错误码
      */

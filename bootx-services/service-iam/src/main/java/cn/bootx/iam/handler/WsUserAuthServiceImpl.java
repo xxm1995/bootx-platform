@@ -10,6 +10,7 @@ import java.util.Optional;
 
 /**
  * websocket 用户认证接口实现
+ *
  * @author xxm
  * @date 2022/6/9
  */
@@ -20,9 +21,8 @@ public class WsUserAuthServiceImpl implements WsUserAuthService {
 
     @Override
     public Long getUserIdByToken(String token) {
-        return Optional.ofNullable(StpUtil.getLoginIdByToken(token))
-                .map(id->(String)id)
-                .map(Long::valueOf)
+        return Optional.ofNullable(StpUtil.getLoginIdByToken(token)).map(id -> (String) id).map(Long::valueOf)
                 .orElse(null);
     }
+
 }

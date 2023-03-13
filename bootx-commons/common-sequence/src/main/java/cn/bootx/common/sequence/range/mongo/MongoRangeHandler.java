@@ -10,25 +10,28 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**   
-* Mongo区间处理器
-* @author xxm  
-* @date 2022/1/21 
-*/
+/**
+ * Mongo区间处理器
+ *
+ * @author xxm
+ * @date 2022/1/21
+ */
 @Repository
 @RequiredArgsConstructor
 public class MongoRangeHandler {
+
     private final MongoTemplate mongoTemplate;
+
     /**
      * 第一次不存在，进行初始化,不存在就set，存在就忽略
      */
-    public void setIfAbsentRange(String key, long rangeStart){
+    public void setIfAbsentRange(String key, long rangeStart) {
         // 是否存在
         Criteria criteria = Criteria.where(SequenceRange.Fields.rangeKey).is(key);
         Query query = new Query(criteria);
-        if (!mongoTemplate.exists(query,SequenceRange.class)){
-            mongoTemplate.save(new SequenceRange().setRangeKey(key).setRangeValue(rangeStart)
-                    .setId(IdUtil.getSnowflakeNextId()));
+        if (!mongoTemplate.exists(query, SequenceRange.class)) {
+            mongoTemplate.save(
+                    new SequenceRange().setRangeKey(key).setRangeValue(rangeStart).setId(IdUtil.getSnowflakeNextId()));
         }
     }
 
@@ -46,4 +49,5 @@ public class MongoRangeHandler {
         mongoTemplate.save(range);
         return stepValue;
     }
+
 }

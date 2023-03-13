@@ -18,38 +18,41 @@ import java.util.Objects;
 
 import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 
-/**   
-* 钉钉用户信息
-* @author xxm  
-* @date 2022/7/17 
-*/
+/**
+ * 钉钉用户信息
+ *
+ * @author xxm
+ * @date 2022/7/17
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DingUserService {
+
     private final DingAccessService dingAccessService;
+
     /**
-     * 根据unionid获取用户userid
-     * <a href="https://open.dingtalk.com/document/isvapp-server/query-a-user-by-the-union-id">...</a>
+     * 根据unionid获取用户userid <a href=
+     * "https://open.dingtalk.com/document/isvapp-server/query-a-user-by-the-union-id">...</a>
      */
-    public String getUserIdByUnionId(String unionId){
+    public String getUserIdByUnionId(String unionId) {
         String accessToken = dingAccessService.getAccessToken();
-        Map<String,String> map = new HashMap<>(1);
-        map.put(UNION_ID,unionId);
+        Map<String, String> map = new HashMap<>(1);
+        map.put(UNION_ID, unionId);
         String responseBody = HttpUtil.createPost(StrUtil.format(USER_GET_URL, accessToken))
-                .body(JacksonUtil.toJson(map))
-                .execute()
-                .body();
-        DingTalkResult<UserIdResult> dingTalkResult = JacksonUtil.toBean(responseBody, new TypeReference<DingTalkResult<UserIdResult>>() {
-        });
+                .body(JacksonUtil.toJson(map)).execute().body();
+        DingTalkResult<UserIdResult> dingTalkResult = JacksonUtil.toBean(responseBody,
+                new TypeReference<DingTalkResult<UserIdResult>>() {
+                });
         // 未找到用户, 返回空
-        if (Objects.equals(dingTalkResult.getCode(),NOT_FUND_STAFF)){
+        if (Objects.equals(dingTalkResult.getCode(), NOT_FUND_STAFF)) {
             return null;
         }
         // 错误
-        if (!Objects.equals(dingTalkResult.getCode(),SUCCESS_CODE)){
+        if (!Objects.equals(dingTalkResult.getCode(), SUCCESS_CODE)) {
             throw new BizException(dingTalkResult.getMsg());
         }
         return dingTalkResult.getResult().getUserId();
     }
+
 }

@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/**   
-* 企业微信配置
-* @author xxm  
-* @date 2022/7/22 
-*/
+/**
+ * 企业微信配置
+ *
+ * @author xxm
+ * @date 2022/7/22
+ */
 @Getter
 @Setter
 @ConfigurationProperties("bootx.starter.third.wecom")
@@ -26,6 +27,7 @@ public class WeComProperties {
     /** token */
     private String token;
 
-    /** 消息加解密密钥  */
+    /** 消息加解密密钥 */
     private String encodingAesKey;
+
 }

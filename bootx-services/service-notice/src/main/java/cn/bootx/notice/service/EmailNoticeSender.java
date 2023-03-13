@@ -4,10 +4,11 @@ import cn.bootx.notice.dto.mail.SendMailParam;
 
 /**
  * 邮件发送服务
+ *
  * @author xxm
  * @date 2022/7/16
  */
-    public interface EmailNoticeSender {
+public interface EmailNoticeSender {
 
     /**
      * 简单邮件发送
@@ -15,10 +16,11 @@ import cn.bootx.notice.dto.mail.SendMailParam;
      * @param subject 邮件标题
      * @param msg 邮件消息
      */
-    void sentSimpleMail(String email,String subject,String msg);
+    void sentSimpleMail(String email, String subject, String msg);
 
     /**
      * 标准邮件发送方式
      */
     void sendMail(SendMailParam mailParam);
+
 }

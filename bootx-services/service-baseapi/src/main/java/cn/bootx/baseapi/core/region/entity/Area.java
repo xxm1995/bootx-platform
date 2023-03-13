@@ -6,24 +6,28 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
-* 区域表(县区)
-* @author xxm
-* @date 2022-12-24
-*/
+ * 区域表(县区)
+ *
+ * @author xxm
+ * @date 2022-12-24
+ */
 @Data
 @TableName("base_area")
-public class Area{
+public class Area {
 
     /** d */
     @TableId
     private String code;
+
     /** 名称 */
     private String name;
+
     /** 城市code */
     private String cityCode;
 
     /** 转换成dto */
     public RegionDto toDto() {
-        return new RegionDto(code,name,3).setParentCode(cityCode);
+        return new RegionDto(code, name, 3).setParentCode(cityCode);
     }
+
 }

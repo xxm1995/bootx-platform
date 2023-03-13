@@ -12,12 +12,16 @@ import static cn.bootx.starter.flowable.code.BpmnCode.*;
 
 /**
  * Bpm 顺序多实例行为
+ *
  * @author xxm
- * @date 2022/9/6 
+ * @date 2022/9/6
  */
 public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceBehavior {
+
     private final BpmMultiInstanceBehaviorService behaviorService;
-    public BpmSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior, BpmMultiInstanceBehaviorService behaviorService) {
+
+    public BpmSequentialMultiInstanceBehavior(Activity activity, AbstractBpmnActivityBehavior innerActivityBehavior,
+            BpmMultiInstanceBehaviorService behaviorService) {
         super(activity, innerActivityBehavior);
         this.behaviorService = behaviorService;
     }
@@ -33,7 +37,7 @@ public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceB
         super.setCollectionString(MULTI_COLLECTION);
         super.setCollectionElementVariable(MULTI_COLLECTION_ELEMENT);
 
-        List<String> taskUsers = behaviorService.getTaskUsers(execution,this);
+        List<String> taskUsers = behaviorService.getTaskUsers(execution, this);
         execution.setVariable(super.collectionString, taskUsers);
         execution.setVariable(MULTI_TASK_ID, IdUtil.getSnowflakeNextId());
         return taskUsers.size();
@@ -45,11 +49,13 @@ public class BpmSequentialMultiInstanceBehavior extends SequentialMultiInstanceB
     @Override
     public boolean completionConditionSatisfied(DelegateExecution execution) {
         // 先进行自定义判断处理, 不通过调用原生的处理
-        boolean conditionSatisfied = behaviorService.completionConditionSatisfied(execution, this) || super.completionConditionSatisfied(execution);
-        if (conditionSatisfied){
+        boolean conditionSatisfied = behaviorService.completionConditionSatisfied(execution, this)
+                || super.completionConditionSatisfied(execution);
+        if (conditionSatisfied) {
             // 删除多实例id
             execution.removeVariable(MULTI_TASK_ID);
         }
         return conditionSatisfied;
     }
+
 }

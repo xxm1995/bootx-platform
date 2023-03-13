@@ -1,6 +1,5 @@
 package cn.bootx.payment.core.pay.factory;
 
-
 import cn.bootx.payment.code.pay.PayChannelCode;
 import cn.bootx.payment.core.pay.func.AbsPayStrategy;
 import cn.bootx.payment.core.pay.strategy.*;
@@ -17,6 +16,7 @@ import java.util.stream.Collectors;
 
 /**
  * 支付策略工厂
+ *
  * @author xxm
  * @date 2020/12/11
  */
@@ -24,14 +24,13 @@ public class PayStrategyFactory {
 
     /**
      * 根据传入的支付通道创建策略
-     *
      * @param payModeParam 支付类型
      * @return 支付策略
      */
     public static AbsPayStrategy create(PayModeParam payModeParam) {
 
         AbsPayStrategy strategy = null;
-        switch (payModeParam.getPayChannel()){
+        switch (payModeParam.getPayChannel()) {
             case PayChannelCode.ALI:
                 strategy = SpringUtil.getBean(AliPayStrategy.class);
                 break;
@@ -59,7 +58,7 @@ public class PayStrategyFactory {
             default:
                 throw new PayUnsupportedMethodException();
         }
-        //noinspection ConstantConditions
+        // noinspection ConstantConditions
         strategy.setPayMode(payModeParam);
         return strategy;
     }
@@ -68,55 +67,52 @@ public class PayStrategyFactory {
      * 根据传入的支付类型批量创建策略, 异步支付在后面
      */
     public static List<AbsPayStrategy> createDesc(List<PayModeParam> payModeParamList) {
-        return create(payModeParamList,true);
+        return create(payModeParamList, true);
     }
 
     /**
-     *  根据传入的支付类型批量创建策略, 默认异步支付在前面
+     * 根据传入的支付类型批量创建策略, 默认异步支付在前面
      */
     public static List<AbsPayStrategy> create(List<PayModeParam> payModeParamList) {
-        return create(payModeParamList,false);
+        return create(payModeParamList, false);
     }
 
     /**
      * 根据传入的支付类型批量创建策略
-     *
      * @param payModeParamList 支付类型
      * @return 支付策略
      */
-    private static List<AbsPayStrategy> create(List<PayModeParam> payModeParamList,boolean description) {
+    private static List<AbsPayStrategy> create(List<PayModeParam> payModeParamList, boolean description) {
         if (CollectionUtil.isEmpty(payModeParamList)) {
             return Collections.emptyList();
         }
         List<AbsPayStrategy> list = new ArrayList<>(payModeParamList.size());
 
         // 同步支付
-        List<PayModeParam> syncPayModeParamList = payModeParamList.stream()
-                .filter(Objects::nonNull)
+        List<PayModeParam> syncPayModeParamList = payModeParamList.stream().filter(Objects::nonNull)
                 .filter(payModeParam -> !PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
                 .collect(Collectors.toList());
 
         // 异步支付
-        List<PayModeParam> asyncPayModeParamList = payModeParamList.stream()
-                .filter(Objects::nonNull)
+        List<PayModeParam> asyncPayModeParamList = payModeParamList.stream().filter(Objects::nonNull)
                 .filter(payModeParam -> PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
                 .collect(Collectors.toList());
 
         List<PayModeParam> sortList = new ArrayList<>(payModeParamList.size());
 
         // 异步在后面
-        if (description){
+        if (description) {
             sortList.addAll(syncPayModeParamList);
             sortList.addAll(asyncPayModeParamList);
-        } else {
+        }
+        else {
             sortList.addAll(asyncPayModeParamList);
             sortList.addAll(syncPayModeParamList);
         }
 
         // 此处有一个根据Type的反转排序，
-        sortList.stream()
-                .filter(Objects::nonNull)
-                .forEach(payMode -> list.add(create(payMode)));
+        sortList.stream().filter(Objects::nonNull).forEach(payMode -> list.add(create(payMode)));
         return list;
     }
+
 }

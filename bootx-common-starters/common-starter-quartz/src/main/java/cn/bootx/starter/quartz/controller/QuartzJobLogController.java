@@ -15,27 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-*
-* @author xxm
-* @date 2022/5/2
-*/
+ * @author xxm
+ * @date 2022/5/2
+ */
 @Tag(name = "定时任务执行日志")
 @RestController
 @RequestMapping("/quartz/log")
 @RequiredArgsConstructor
 public class QuartzJobLogController {
-    private final QuartzJobLogService quartzJobLogService;
 
+    private final QuartzJobLogService quartzJobLogService;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<QuartzJobLogDto>> page(PageParam pageParam, QuartzJobLogQuery param){
-        return Res.ok(quartzJobLogService.page(pageParam,param));
+    public ResResult<PageResult<QuartzJobLogDto>> page(PageParam pageParam, QuartzJobLogQuery param) {
+        return Res.ok(quartzJobLogService.page(pageParam, param));
     }
 
     @Operation(summary = "单条")
     @GetMapping("/findById")
-    public ResResult<QuartzJobLogDto> findById(Long id){
+    public ResResult<QuartzJobLogDto> findById(Long id) {
         return Res.ok(quartzJobLogService.findById(id));
     }
 

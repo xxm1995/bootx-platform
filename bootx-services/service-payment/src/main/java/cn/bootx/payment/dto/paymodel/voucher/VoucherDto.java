@@ -10,9 +10,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
-* @author xxm
-* @date 2022/3/14
-*/
+ * @author xxm
+ * @date 2022/3/14
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -45,4 +45,5 @@ public class VoucherDto extends BaseDto {
      */
     @Schema(description = "状态")
     private Integer status;
+
 }

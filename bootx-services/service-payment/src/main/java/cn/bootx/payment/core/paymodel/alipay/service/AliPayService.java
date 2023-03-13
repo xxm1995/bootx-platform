@@ -38,6 +38,7 @@ import static cn.bootx.payment.code.paymodel.AliPayCode.QUICK_MSECURITY_PAY;
 
 /**
  * 支付宝支付service
+ *
  * @author xxm
  * @date 2021/2/26
  */
@@ -49,11 +50,9 @@ public class AliPayService {
     /**
      * 支付前检查支付方式是否可用
      */
-    public void validation(PayModeParam payModeParam, AlipayConfig alipayConfig){
-        List<String> payWays = Optional.ofNullable(alipayConfig.getPayWays())
-                .filter(StrUtil::isNotBlank)
-                .map(s -> StrUtil.split(s, ','))
-                .orElse(new ArrayList<>(1));
+    public void validation(PayModeParam payModeParam, AlipayConfig alipayConfig) {
+        List<String> payWays = Optional.ofNullable(alipayConfig.getPayWays()).filter(StrUtil::isNotBlank)
+                .map(s -> StrUtil.split(s, ',')).orElse(new ArrayList<>(1));
         // 发起的支付类型是否在支持的范围内
         PayWayEnum payWayEnum = Optional.ofNullable(AliPayWay.findByNo(payModeParam.getPayWay()))
                 .orElseThrow(() -> new PayFailureException("非法的支付宝支付类型"));
@@ -65,31 +64,31 @@ public class AliPayService {
     /**
      * 调起支付
      */
-    public void pay(BigDecimal amount, Payment payment, AliPayParam aliPayParam, PayModeParam payModeParam, AlipayConfig alipayConfig){
+    public void pay(BigDecimal amount, Payment payment, AliPayParam aliPayParam, PayModeParam payModeParam,
+            AlipayConfig alipayConfig) {
         String payBody = null;
         // 线程存储
         AsyncPayInfo asyncPayInfo = Optional.ofNullable(AsyncPayInfoLocal.get()).orElse(new AsyncPayInfo());
         // wap支付
-        if (payModeParam.getPayWay()== PayWayCode.WAP){
-            payBody = this.wapPay(amount, payment,alipayConfig,aliPayParam);
+        if (payModeParam.getPayWay() == PayWayCode.WAP) {
+            payBody = this.wapPay(amount, payment, alipayConfig, aliPayParam);
         }
         // 程序支付
-        else if (payModeParam.getPayWay() == PayWayCode.APP){
+        else if (payModeParam.getPayWay() == PayWayCode.APP) {
             payBody = this.appPay(amount, payment, alipayConfig);
         }
         // pc支付
-        else if (payModeParam.getPayWay() == PayWayCode.WEB){
-            payBody = this.webPay(amount, payment, alipayConfig,aliPayParam);
+        else if (payModeParam.getPayWay() == PayWayCode.WEB) {
+            payBody = this.webPay(amount, payment, alipayConfig, aliPayParam);
         }
         // 二维码支付
-        else if (payModeParam.getPayWay() == PayWayCode.QRCODE){
+        else if (payModeParam.getPayWay() == PayWayCode.QRCODE) {
             payBody = this.qrCodePay(amount, payment, alipayConfig);
         }
         // 付款码支付
-        else if (payModeParam.getPayWay() == PayWayCode.BARCODE){
-            String tradeNo = this.barCode(amount, payment,aliPayParam, alipayConfig);
-            asyncPayInfo.setExpiredTime(false)
-                    .setTradeNo(tradeNo);
+        else if (payModeParam.getPayWay() == PayWayCode.BARCODE) {
+            String tradeNo = this.barCode(amount, payment, aliPayParam, alipayConfig);
+            asyncPayInfo.setExpiredTime(false).setTradeNo(tradeNo);
         }
         // 通常是发起支付的参数
         asyncPayInfo.setPayBody(payBody);
@@ -99,7 +98,7 @@ public class AliPayService {
     /**
      * wap支付
      */
-    public String wapPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig,AliPayParam aliPayParam){
+    public String wapPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig, AliPayParam aliPayParam) {
 
         AlipayTradeWapPayModel model = new AlipayTradeWapPayModel();
         model.setSubject(payment.getTitle());
@@ -130,7 +129,7 @@ public class AliPayService {
     /**
      * app支付
      */
-    public String appPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig){
+    public String appPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig) {
         AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
 
         model.setSubject(payment.getTitle());
@@ -154,7 +153,7 @@ public class AliPayService {
     /**
      * PC支付
      */
-    public String webPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig, AliPayParam aliPayParam){
+    public String webPay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig, AliPayParam aliPayParam) {
 
         AlipayTradePagePayModel model = new AlipayTradePagePayModel();
 
@@ -175,7 +174,8 @@ public class AliPayService {
             // 通过GET方式的请求, 返回URL的响应, 默认是POST方式的请求, 返回的是表单响应
             AlipayTradePagePayResponse response = AliPayApi.pageExecute(request, Method.GET.name());
             return response.getBody();
-        } catch (AlipayApiException e) {
+        }
+        catch (AlipayApiException e) {
             log.error("支付宝PC支付失败", e);
             throw new PayFailureException("支付宝PC支付失败");
         }
@@ -184,7 +184,7 @@ public class AliPayService {
     /**
      * 二维码支付(扫码支付)
      */
-    public String qrCodePay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig){
+    public String qrCodePay(BigDecimal amount, Payment payment, AlipayConfig alipayConfig) {
         AlipayTradePrecreateModel model = new AlipayTradePrecreateModel();
         model.setSubject(payment.getTitle());
         model.setOutTradeNo(String.valueOf(payment.getId()));
@@ -195,10 +195,12 @@ public class AliPayService {
         payment.setExpiredTime(PayModelUtil.getPaymentExpiredTime(alipayConfig.getExpireTime()));
 
         try {
-            AlipayTradePrecreateResponse response = AliPayApi.tradePrecreatePayToResponse(model, alipayConfig.getNotifyUrl());
+            AlipayTradePrecreateResponse response = AliPayApi.tradePrecreatePayToResponse(model,
+                    alipayConfig.getNotifyUrl());
             this.verifyErrorMsg(response);
             return response.getQrCode();
-        } catch (AlipayApiException e) {
+        }
+        catch (AlipayApiException e) {
             log.error("支付宝手机支付失败", e);
             throw new PayFailureException("支付宝手机支付失败");
         }
@@ -224,16 +226,16 @@ public class AliPayService {
             AlipayTradePayResponse response = AliPayApi.tradePayToResponse(model, alipayConfig.getNotifyUrl());
 
             // 支付成功处理 金额2000以下免密支付
-            if (Objects.equals(response.getCode(),AliPayCode.SUCCESS)) {
-                payment.setPayStatus(PayStatusCode.TRADE_SUCCESS)
-                        .setPayTime(LocalDateTime.now());
+            if (Objects.equals(response.getCode(), AliPayCode.SUCCESS)) {
+                payment.setPayStatus(PayStatusCode.TRADE_SUCCESS).setPayTime(LocalDateTime.now());
                 return response.getTradeNo();
             }
             // 非支付中响应码, 进行错误处理
-            if (!Objects.equals(response.getCode(),AliPayCode.INPROCESS)){
+            if (!Objects.equals(response.getCode(), AliPayCode.INPROCESS)) {
                 this.verifyErrorMsg(response);
             }
-        } catch (AlipayApiException e) {
+        }
+        catch (AlipayApiException e) {
             log.error("主动扫码支付失败", e);
             throw new PayFailureException("主动扫码支付失败");
         }
@@ -243,14 +245,15 @@ public class AliPayService {
     /**
      * 验证错误信息
      */
-    private void verifyErrorMsg(AlipayResponse alipayResponse){
-        if (!Objects.equals(alipayResponse.getCode(), AliPayCode.SUCCESS)){
+    private void verifyErrorMsg(AlipayResponse alipayResponse) {
+        if (!Objects.equals(alipayResponse.getCode(), AliPayCode.SUCCESS)) {
             String errorMsg = alipayResponse.getSubMsg();
-            if (StrUtil.isBlank(errorMsg)){
+            if (StrUtil.isBlank(errorMsg)) {
                 errorMsg = alipayResponse.getMsg();
             }
             log.error("支付失败 {}", errorMsg);
             throw new PayFailureException(errorMsg);
         }
     }
+
 }

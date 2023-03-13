@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 public class DeptManager extends BaseManager<DeptMapper, Dept> {
 
     public boolean existsParent(Long parentId) {
-        return existedByField(Dept::getParentId,parentId);
+        return existedByField(Dept::getParentId, parentId);
     }
 
     public void deleteByOrgCode(String orgCode) {
-        lambdaUpdate().likeRight(Dept::getOrgCode,orgCode)
-                .remove();
+        lambdaUpdate().likeRight(Dept::getOrgCode, orgCode).remove();
     }
+
 }

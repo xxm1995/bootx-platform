@@ -16,16 +16,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**   
-* 退款记录
-* @author xxm  
-* @date 2022/3/2 
-*/
+/**
+ * 退款记录
+ *
+ * @author xxm
+ * @date 2022/3/2
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName(value = "pay_refund_record",autoResultMap = true)
-public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<RefundRecordDto>{
+@TableName(value = "pay_refund_record", autoResultMap = true)
+public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<RefundRecordDto> {
 
     /** 支付单号 */
     private Long paymentId;
@@ -53,6 +54,7 @@ public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<Ref
 
     /** 退款时间 */
     private LocalDateTime refundTime;
+
     /**
      * 退款信息列表
      */
@@ -75,4 +77,5 @@ public class RefundRecord extends MpBaseEntity implements EntityBaseFunction<Ref
     public RefundRecordDto toDto() {
         return RefundConvert.CONVERT.convert(this);
     }
+
 }

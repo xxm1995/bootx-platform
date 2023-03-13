@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * 钉钉机器人消息发送
+ *
  * @author xxm
  * @date 2020/11/29
  */
@@ -28,6 +29,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DingRobotConfigService {
+
     private final DingRobotConfigManager robotConfigManager;
 
     /**
@@ -49,24 +51,24 @@ public class DingRobotConfigService {
      */
     @Transactional(rollbackFor = Exception.class)
     public DingRobotConfigDto update(DingRobotConfigParam param) {
-        DingRobotConfig dingRobotConfig = robotConfigManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-        BeanUtil.copyProperties(param,dingRobotConfig, CopyOptions.create().ignoreNullValue());
+        DingRobotConfig dingRobotConfig = robotConfigManager.findById(param.getId())
+                .orElseThrow(DataNotExistException::new);
+        BeanUtil.copyProperties(param, dingRobotConfig, CopyOptions.create().ignoreNullValue());
         return robotConfigManager.updateById(dingRobotConfig).toDto();
     }
 
     /**
      * 获取所有配置
      */
-    public List<DingRobotConfigDto> findAll(){
+    public List<DingRobotConfigDto> findAll() {
         return ResultConvertUtil.dtoListConvert(robotConfigManager.findAll());
     }
-
 
     /**
      * 获取所有配置
      */
-    public PageResult<DingRobotConfigDto> page(PageParam pageParam,DingRobotConfigParam param){
-        return MpUtil.convert2DtoPageResult(robotConfigManager.page(pageParam,param));
+    public PageResult<DingRobotConfigDto> page(PageParam pageParam, DingRobotConfigParam param) {
+        return MpUtil.convert2DtoPageResult(robotConfigManager.page(pageParam, param));
     }
 
     /**
@@ -75,7 +77,6 @@ public class DingRobotConfigService {
     public DingRobotConfigDto findById(Long id) {
         return ResultConvertUtil.dtoConvert(robotConfigManager.findById(id));
     }
-
 
     /**
      * 根据 id 删除相应的机器人配置
@@ -87,14 +88,15 @@ public class DingRobotConfigService {
     /**
      * 编码是否已经存在
      */
-    public boolean existsByCode(String code){
+    public boolean existsByCode(String code) {
         return robotConfigManager.existsByCode(code);
     }
 
     /**
      * 编码是否已经存在(不包含自身)
      */
-    public boolean existsByCode(String code,Long id){
-        return robotConfigManager.existsByCode(code,id);
+    public boolean existsByCode(String code, Long id) {
+        return robotConfigManager.existsByCode(code, id);
     }
+
 }

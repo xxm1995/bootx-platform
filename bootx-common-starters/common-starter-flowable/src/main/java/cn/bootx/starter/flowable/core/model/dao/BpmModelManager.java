@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * 流程模型
+ *
  * @author xxm
  * @date 2022-08-23
  */
@@ -24,24 +25,20 @@ import java.util.Optional;
 public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
 
     /**
-    * 分页
-    */
+     * 分页
+     */
     public Page<BpmModel> page(PageParam pageParam, BpmModelParam param) {
         Page<BpmModel> mpPage = MpUtil.getMpPage(pageParam, BpmModel.class);
-        return this.lambdaQuery()
-                .select(this.getEntityClass(),MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getName()),BpmModel::getName,param.getName())
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return this.lambdaQuery().select(this.getEntityClass(), MpUtil::excludeBigField)
+                .like(StrUtil.isNotBlank(param.getName()), BpmModel::getName, param.getName())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
     /**
      * 取消主流程
      */
     public void cancelMainProcessByDefKey(String defKey) {
-        lambdaUpdate().set(BpmModel::getMainProcess,false)
-                .eq(BpmModel::getDefKey,defKey)
-                .update();
+        lambdaUpdate().set(BpmModel::getMainProcess, false).eq(BpmModel::getDefKey, defKey).update();
 
     }
 
@@ -49,13 +46,14 @@ public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
      * 获取生效并部署的主流程列表
      */
     public List<BpmModel> findMainProcess() {
-        return findAllByField(BpmModel::getMainProcess,true);
+        return findAllByField(BpmModel::getMainProcess, true);
     }
 
     /**
      * 根据流程定义id获取模型信息
      */
-    public Optional<BpmModel> findByDefId(String defId){
-        return findByField(BpmModel::getDefId,defId);
+    public Optional<BpmModel> findByDefId(String defId) {
+        return findByField(BpmModel::getDefId, defId);
     }
+
 }

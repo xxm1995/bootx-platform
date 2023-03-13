@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 项目大屏信息
+ *
  * @author xxm
  * @date 2023/2/21
  */

@@ -20,24 +20,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
-/**   
-* 消息模板
-* @author xxm  
-* @date 2021/8/9 
-*/
+/**
+ * 消息模板
+ *
+ * @author xxm
+ * @date 2021/8/9
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class MessageTemplateService {
+
     private final MessageTemplateManager messageTemplateManager;
 
     /**
      * 添加
      */
-    public MessageTemplateDto add(MessageTemplateParam param){
+    public MessageTemplateDto add(MessageTemplateParam param) {
         MessageTemplate messageTemplate = MessageTemplate.init(param);
         // code 不重复
-        if (messageTemplateManager.existsByCode(messageTemplate.getCode())){
+        if (messageTemplateManager.existsByCode(messageTemplate.getCode())) {
             throw new BizException("模板编码不可重复");
         }
         return messageTemplateManager.save(messageTemplate).toDto();
@@ -47,56 +49,56 @@ public class MessageTemplateService {
     /**
      * 更新
      */
-    public MessageTemplateDto update(MessageTemplateParam param){
+    public MessageTemplateDto update(MessageTemplateParam param) {
         // code 不重复
-        if (messageTemplateManager.existsByCode(param.getCode(), param.getId())){
+        if (messageTemplateManager.existsByCode(param.getCode(), param.getId())) {
             throw new BizException("模板编码不可重复");
         }
         MessageTemplate messageTemplate = messageTemplateManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("消息模板不存在"));
-        BeanUtil.copyProperties(param,messageTemplate, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, messageTemplate, CopyOptions.create().ignoreNullValue());
         return messageTemplateManager.updateById(messageTemplate).toDto();
     }
 
     /**
      * 分页
      */
-    public PageResult<MessageTemplateDto> page(PageParam pageParam, MessageTemplateParam query){
-        return MpUtil.convert2DtoPageResult(messageTemplateManager.page(pageParam,query));
+    public PageResult<MessageTemplateDto> page(PageParam pageParam, MessageTemplateParam query) {
+        return MpUtil.convert2DtoPageResult(messageTemplateManager.page(pageParam, query));
     }
 
     /**
      * 获取详情
      */
-    public MessageTemplateDto findById(Long id){
+    public MessageTemplateDto findById(Long id) {
         return messageTemplateManager.findById(id).map(MessageTemplate::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 编码是否已经存在
      */
-    public boolean existsByCode(String code){
+    public boolean existsByCode(String code) {
         return messageTemplateManager.existsByCode(code);
     }
 
     /**
      * 编码是否已经存在(不包含自身)
      */
-    public boolean existsByCode(String code,Long id){
-        return messageTemplateManager.existsByCode(code,id);
+    public boolean existsByCode(String code, Long id) {
+        return messageTemplateManager.existsByCode(code, id);
     }
 
     /**
      * 删除
      */
-    public void delete(Long id){
+    public void delete(Long id) {
         messageTemplateManager.deleteById(id);
     }
 
     /**
      * 渲染
      */
-    public String rendering(String code, Map<String,Object> paramMap){
+    public String rendering(String code, Map<String, Object> paramMap) {
         MessageTemplate messageTemplate = messageTemplateManager.findByCode(code)
                 .orElseThrow(() -> new BizException("消息模板不存在"));
         String date = messageTemplate.getData();
@@ -104,4 +106,5 @@ public class MessageTemplateService {
         Template template = engine.getTemplate(date);
         return template.render(paramMap);
     }
+
 }

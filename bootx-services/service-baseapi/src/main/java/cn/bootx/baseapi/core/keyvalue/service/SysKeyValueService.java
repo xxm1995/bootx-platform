@@ -11,25 +11,25 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**   
-* kv存储
-* @author xxm  
-* @date 2022/3/30 
-*/
+/**
+ * kv存储
+ *
+ * @author xxm
+ * @date 2022/3/30
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SysKeyValueService implements SystemKeyValueService {
+
     private final SysKeyValueManager sysKeyValueManager;
 
     /**
      * 获取值
      */
     @Override
-    public String get(String key){
-        return sysKeyValueManager.findByField(SysKeyValue::getKey,key).
-                map(SysKeyValue::getValue)
-                .orElse(null);
+    public String get(String key) {
+        return sysKeyValueManager.findByField(SysKeyValue::getKey, key).map(SysKeyValue::getValue).orElse(null);
     }
 
     /**
@@ -37,8 +37,7 @@ public class SysKeyValueService implements SystemKeyValueService {
      */
     @Override
     public List<KeyValue> gets(List<String> keys) {
-        return sysKeyValueManager.findAllByFields(SysKeyValue::getKey,keys).stream()
-                .map(SysKeyValue::toKeyValue)
+        return sysKeyValueManager.findAllByFields(SysKeyValue::getKey, keys).stream().map(SysKeyValue::toKeyValue)
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +45,7 @@ public class SysKeyValueService implements SystemKeyValueService {
      * 设置值
      */
     @Override
-    public void setup(String key,String value){
+    public void setup(String key, String value) {
         SysKeyValue sysKeyValue = sysKeyValueManager.findByField(SysKeyValue::getKey, key)
                 .orElse(new SysKeyValue().setKey(key).setValue(value));
         sysKeyValueManager.saveOrUpdate(sysKeyValue);
@@ -59,4 +58,5 @@ public class SysKeyValueService implements SystemKeyValueService {
     public void setupBatch(List<KeyValue> list) {
 
     }
+
 }

@@ -6,11 +6,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* 队列区间
-* @author xxm  
-* @date 2021/12/14 
-*/
+/**
+ * 队列区间
+ *
+ * @author xxm
+ * @date 2021/12/14
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -22,4 +23,5 @@ public class SequenceRange extends MpBaseEntity {
 
     /** 区间开始值 */
     private Long rangeValue;
+
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author xxm
  * @date 2022/8/11
  */
@@ -23,11 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/wechat/article")
 @RequiredArgsConstructor
 public class WeChatArticleController {
+
     private final WeChatArticleService weChatArticleService;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<WeChatArticleDto>> page(PageParam pageParam){
+    public ResResult<PageResult<WeChatArticleDto>> page(PageParam pageParam) {
         return Res.ok(weChatArticleService.page(pageParam));
     }
+
 }

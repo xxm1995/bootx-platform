@@ -7,23 +7,23 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-*
-* @author xxm
-* @date 2022/7/20
-*/
+ * @author xxm
+ * @date 2022/7/20
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉MarkDown工作通知消息")
 public class DingMarkDownMsg implements DingMsg {
 
-    @Schema(description= "标题")
+    @Schema(description = "标题")
     private String title;
 
-    @Schema(description= "内容")
+    @Schema(description = "内容")
     private String text;
 
     @Override
     public Msg toDingMsg() {
         return new MarkdownMsg(title, text);
     }
+
 }

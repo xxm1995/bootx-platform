@@ -15,20 +15,21 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-/**   
-* 敏感信息脱敏序列化
-* @author xxm  
-* @date 2021/10/25 
-*/
+/**
+ * 敏感信息脱敏序列化
+ *
+ * @author xxm
+ * @date 2021/10/25
+ */
 @AllArgsConstructor
 @NoArgsConstructor
-public class SensitiveInfoSerialize extends JsonSerializer<String> implements
-        ContextualSerializer {
+public class SensitiveInfoSerialize extends JsonSerializer<String> implements ContextualSerializer {
 
     private SensitiveInfo sensitiveInfo;
 
     @Override
-    public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(String s, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+            throws IOException {
         switch (this.sensitiveInfo.value()) {
             case CHINESE_NAME: {
                 jsonGenerator.writeString(DesensitizedUtil.chineseName(s));
@@ -43,7 +44,7 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
                 break;
             }
             case ID_CARD: {
-                jsonGenerator.writeString(DesensitizedUtil.idCardNum(s,6,2));
+                jsonGenerator.writeString(DesensitizedUtil.idCardNum(s, 6, 2));
                 break;
             }
             case FIXED_PHONE: {
@@ -62,7 +63,7 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
                 jsonGenerator.writeString(DesensitizedUtil.address(s, 6));
                 break;
             }
-            case CAR_LICENSE:{
+            case CAR_LICENSE: {
                 jsonGenerator.writeString(DesensitizedUtil.carLicense(s));
                 break;
             }
@@ -75,14 +76,14 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
                 break;
             }
             case CNAPS_CODE: {
-                jsonGenerator.writeString(this.hide(s,4,4));
+                jsonGenerator.writeString(this.hide(s, 4, 4));
                 break;
             }
             case OTHER: {
-                jsonGenerator.writeString(this.hide(s,sensitiveInfo.front(),sensitiveInfo.end()));
+                jsonGenerator.writeString(this.hide(s, sensitiveInfo.front(), sensitiveInfo.end()));
                 break;
             }
-            default:{
+            default: {
                 jsonGenerator.writeString(s);
             }
         }
@@ -90,14 +91,18 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty) throws JsonMappingException {
+    public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty)
+            throws JsonMappingException {
         if (beanProperty != null) { // 为空直接跳过
-            if (Objects.equals(beanProperty.getType().getRawClass(), String.class)) { // 非 String 类直接跳过
+            if (Objects.equals(beanProperty.getType().getRawClass(), String.class)) { // 非
+                                                                                      // String
+                                                                                      // 类直接跳过
                 SensitiveInfo sensitiveInfo = beanProperty.getAnnotation(SensitiveInfo.class);
                 if (sensitiveInfo == null) {
                     sensitiveInfo = beanProperty.getContextAnnotation(SensitiveInfo.class);
                 }
-                if (sensitiveInfo != null) { // 如果能得到注解，就将注解的 value 传入 SensitiveInfoSerialize
+                if (sensitiveInfo != null) { // 如果能得到注解，就将注解的 value 传入
+                                             // SensitiveInfoSerialize
                     return new SensitiveInfoSerialize(sensitiveInfo);
                 }
             }
@@ -109,12 +114,12 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
     /**
      * ip脱敏
      */
-    private String ip(String ip){
+    private String ip(String ip) {
         List<String> ipList = StrUtil.split(ip, '.');
-        if (ipList.size()< 2){
+        if (ipList.size() < 2) {
             return "*.*.*.*";
         }
-        return ipList.get(0)+"."+ipList.get(1)+".*.*";
+        return ipList.get(0) + "." + ipList.get(1) + ".*.*";
     }
 
     /**
@@ -124,15 +129,16 @@ public class SensitiveInfoSerialize extends JsonSerializer<String> implements
      * @param end 后多少位不隐藏
      * @return 处理后的字段
      */
-    private String hide(String str,int front,int end){
-        //字符串不能为空
+    private String hide(String str, int front, int end) {
+        // 字符串不能为空
         if (StrUtil.isBlank(str)) {
             return StrUtil.EMPTY;
         }
-        //需要截取的不能小于0
+        // 需要截取的不能小于0
         if (front < 0 || end < 0) {
             return StrUtil.EMPTY;
         }
         return StrUtil.hide(str, front, str.length() - end);
     }
+
 }

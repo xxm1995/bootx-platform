@@ -16,21 +16,21 @@ import java.util.List;
 
 /**
  * 权限
-* @author xxm
-* @date 2020/5/10 23:27
-*/
+ *
+ * @author xxm
+ * @date 2020/5/10 23:27
+ */
 @Repository
 @RequiredArgsConstructor
 public class PermPathManager extends BaseManager<PermPathMapper, PermPath> {
 
     public Page<PermPath> page(PageParam pageParam, PermPathParam param) {
         Page<PermPath> mpPage = MpUtil.getMpPage(pageParam, PermPath.class);
-        return lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getCode()), PermPath::getCode,param.getCode())
-                .like(StrUtil.isNotBlank(param.getPath()), PermPath::getPath,param.getPath())
-                .like(StrUtil.isNotBlank(param.getName()), PermPath::getName,param.getName())
-                .like(StrUtil.isNotBlank(param.getGroupName()), PermPath::getGroupName,param.getGroupName())
+        return lambdaQuery().orderByDesc(MpIdEntity::getId)
+                .like(StrUtil.isNotBlank(param.getCode()), PermPath::getCode, param.getCode())
+                .like(StrUtil.isNotBlank(param.getPath()), PermPath::getPath, param.getPath())
+                .like(StrUtil.isNotBlank(param.getName()), PermPath::getName, param.getName())
+                .like(StrUtil.isNotBlank(param.getGroupName()), PermPath::getGroupName, param.getGroupName())
                 .page(mpPage);
 
     }
@@ -38,20 +38,18 @@ public class PermPathManager extends BaseManager<PermPathMapper, PermPath> {
     /**
      * 查询未被启用的请求路径权限
      */
-    public List<PermPath> findByNotEnableAndRequestType(String requestType){
-        return lambdaQuery()
-                .eq(PermPath::isEnable,false)
-                .eq(PermPath::getRequestType,requestType)
-                .list();
+    public List<PermPath> findByNotEnableAndRequestType(String requestType) {
+        return lambdaQuery().eq(PermPath::isEnable, false).eq(PermPath::getRequestType, requestType).list();
     }
 
     /**
      * 新增
      */
     @Override
-    public List<PermPath> saveAll(List<PermPath> permPaths){
-        MpUtil.initEntityList(permPaths,SecurityUtil.getUserIdOrDefaultId());
-        MpUtil.executeBatch(permPaths,baseMapper::saveAll,this.DEFAULT_BATCH_SIZE);
+    public List<PermPath> saveAll(List<PermPath> permPaths) {
+        MpUtil.initEntityList(permPaths, SecurityUtil.getUserIdOrDefaultId());
+        MpUtil.executeBatch(permPaths, baseMapper::saveAll, this.DEFAULT_BATCH_SIZE);
         return permPaths;
     }
+
 }

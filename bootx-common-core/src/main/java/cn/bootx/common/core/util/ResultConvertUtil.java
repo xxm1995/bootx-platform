@@ -1,6 +1,5 @@
 package cn.bootx.common.core.util;
 
-
 import cn.bootx.common.core.function.EntityBaseFunction;
 import lombok.experimental.UtilityClass;
 
@@ -9,17 +8,18 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
-* 结果转换工具类工具类
-* @author xxm
-* @date 2020/8/27
-*/
+ * 结果转换工具类工具类
+ *
+ * @author xxm
+ * @date 2020/8/27
+ */
 @UtilityClass
 public class ResultConvertUtil {
 
     /**
      * list转换
      */
-    public <T> List<T> dtoListConvert(List<? extends EntityBaseFunction<T>>list){
+    public <T> List<T> dtoListConvert(List<? extends EntityBaseFunction<T>> list) {
         return list.stream().map(EntityBaseFunction::toDto).collect(Collectors.toList());
     }
 
@@ -29,7 +29,7 @@ public class ResultConvertUtil {
      * @param <T> 它的Dto对象
      * @return T
      */
-    public <T> T dtoConvert(EntityBaseFunction<T> object){
+    public <T> T dtoConvert(EntityBaseFunction<T> object) {
         return Optional.ofNullable(object).map(EntityBaseFunction::toDto).orElse(null);
     }
 
@@ -40,7 +40,8 @@ public class ResultConvertUtil {
      * @return T
      */
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    public <T> T dtoConvert(Optional<? extends EntityBaseFunction<T>> optional){
+    public <T> T dtoConvert(Optional<? extends EntityBaseFunction<T>> optional) {
         return optional.map(EntityBaseFunction::toDto).orElse(null);
     }
+
 }

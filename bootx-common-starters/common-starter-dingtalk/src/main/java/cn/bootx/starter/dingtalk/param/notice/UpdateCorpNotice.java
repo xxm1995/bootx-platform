@@ -7,10 +7,11 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 钉钉 更新工作通知状态栏
-* @author xxm  
-* @date 2022/7/17 
-*/
+ * 钉钉 更新工作通知状态栏
+ *
+ * @author xxm
+ * @date 2022/7/17
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉更新工作通知状态栏")
@@ -32,7 +33,8 @@ public class UpdateCorpNotice {
     @Schema(description = "状态栏背景色，推荐0xFF加六位颜色值")
     private String statusBg;
 
-    public String toParam(){
+    public String toParam() {
         return JacksonUtil.toJson(this);
     }
+
 }

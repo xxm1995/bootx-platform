@@ -6,12 +6,12 @@ import java.io.Serializable;
 
 import static cn.bootx.iam.code.IamErrorCode.NONE_PHONE_AND_EMAIL;
 
-
-/**   
-* 用户手机号和邮箱不可都为空的异常
-* @author xxm  
-* @date 2020/5/7 18:30
-*/
+/**
+ * 用户手机号和邮箱不可都为空的异常
+ *
+ * @author xxm
+ * @date 2020/5/7 18:30
+ */
 public class UserNonePhoneAndEmailException extends BizException implements Serializable {
 
     private static final long serialVersionUID = -6866507370268138197L;
@@ -19,4 +19,5 @@ public class UserNonePhoneAndEmailException extends BizException implements Seri
     public UserNonePhoneAndEmailException() {
         super(NONE_PHONE_AND_EMAIL, "用户的电话和电子邮件必须包含一个");
     }
+
 }

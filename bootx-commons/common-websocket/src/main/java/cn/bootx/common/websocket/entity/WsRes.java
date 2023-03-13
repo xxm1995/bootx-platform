@@ -3,12 +3,12 @@ package cn.bootx.common.websocket.entity;
 import cn.bootx.common.websocket.code.WebsocketCode;
 import lombok.experimental.UtilityClass;
 
-
 /**
-* websocket 响应工具类
-* @author xxm
-* @date 2022/6/9
-*/
+ * websocket 响应工具类
+ *
+ * @author xxm
+ * @date 2022/6/9
+ */
 @UtilityClass
 public class WsRes {
 
@@ -18,12 +18,14 @@ public class WsRes {
     public <T> WsResult<T> notificationInfo(T data) {
         return new WsResult<>(WebsocketCode.NOTIFICATION_INFO, data);
     }
+
     /**
      * 消息通知(警告)
      */
     public <T> WsResult<T> notificationWarn(T data) {
         return new WsResult<>(WebsocketCode.NOTIFICATION_WARN, data);
     }
+
     /**
      * 消息通知(错误)
      */
@@ -34,15 +36,15 @@ public class WsRes {
     /**
      * 事件通知
      */
-    public <T> WsResult<T> eventNotice(T data,String code) {
-        return new WsResult<>(WebsocketCode.EVENT_NOTICE,data,code);
+    public <T> WsResult<T> eventNotice(T data, String code) {
+        return new WsResult<>(WebsocketCode.EVENT_NOTICE, data, code);
     }
 
     /**
      * 事件通知
      */
     public <T> WsResult<T> eventNotice(String code) {
-        return new WsResult<>(WebsocketCode.EVENT_NOTICE,null,code);
+        return new WsResult<>(WebsocketCode.EVENT_NOTICE, null, code);
     }
 
 }

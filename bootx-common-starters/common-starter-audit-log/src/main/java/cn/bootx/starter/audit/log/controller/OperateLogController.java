@@ -16,26 +16,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* 操作日志
-* @author xxm
-* @date 2021/9/8
-*/
-@Tag(name ="操作日志")
+ * 操作日志
+ *
+ * @author xxm
+ * @date 2021/9/8
+ */
+@Tag(name = "操作日志")
 @RestController
 @RequestMapping("/log/operate")
 @RequiredArgsConstructor
 public class OperateLogController {
+
     private final OperateLogService operateLogService;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<OperateLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject OperateLogParam operateLogParam){
-        return Res.ok(operateLogService.page(pageParam,operateLogParam));
+    public ResResult<PageResult<OperateLogDto>> page(@ParameterObject PageParam pageParam,
+            @ParameterObject OperateLogParam operateLogParam) {
+        return Res.ok(operateLogService.page(pageParam, operateLogParam));
     }
 
     @Operation(summary = "获取")
     @GetMapping("/findById")
-    public ResResult<OperateLogDto> findById(Long id){
+    public ResResult<OperateLogDto> findById(Long id) {
         return Res.ok(operateLogService.findById(id));
     }
+
 }

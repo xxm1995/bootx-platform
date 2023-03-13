@@ -14,13 +14,16 @@ import java.util.Optional;
 
 /**
  * 用户路径路由拦截
+ *
  * @author xxm
  * @date 2021/12/21
  */
 @Component
 @RequiredArgsConstructor
 public class UserPathRouterCheck implements RouterCheck {
+
     private final RolePathService rolePathService;
+
     private final AntPathMatcher matcher = new AntPathMatcher();
 
     @Override
@@ -34,12 +37,12 @@ public class UserPathRouterCheck implements RouterCheck {
         String path = WebServletUtil.getPath();
 
         Optional<UserDetail> UserDetailOpt = SecurityUtil.getCurrentUser();
-        if (!UserDetailOpt.isPresent()){
+        if (!UserDetailOpt.isPresent()) {
             return false;
         }
         UserDetail userDetail = UserDetailOpt.get();
-        List<String> paths = rolePathService.findSimplePathsByUser(method,userDetail.getId());
-        return paths.stream()
-                .anyMatch(pattern->matcher.match(pattern, path));
+        List<String> paths = rolePathService.findSimplePathsByUser(method, userDetail.getId());
+        return paths.stream().anyMatch(pattern -> matcher.match(pattern, path));
     }
+
 }

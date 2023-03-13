@@ -10,15 +10,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/**   
-* 获取认证终端
-* @author xxm  
-* @date 2021/8/25 
-*/
+/**
+ * 获取认证终端
+ *
+ * @author xxm
+ * @date 2021/8/25
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetAuthLoginTypeServiceImpl implements GetAuthLoginTypeService {
+
     private final LoginTypeManager loginTypeManager;
 
     /**
@@ -31,4 +33,5 @@ public class GetAuthLoginTypeServiceImpl implements GetAuthLoginTypeService {
         BeanUtil.copyProperties(longinType, authLoginType);
         return authLoginType;
     }
+
 }

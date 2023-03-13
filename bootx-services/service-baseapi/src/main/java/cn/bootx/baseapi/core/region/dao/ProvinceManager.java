@@ -10,12 +10,12 @@ import java.util.List;
 
 /**
  * 省份表
+ *
  * @author xxm
  * @date 2022-12-24
  */
 @Repository
 @RequiredArgsConstructor
 public class ProvinceManager extends BaseManager<ProvinceMapper, Province> {
-
 
 }

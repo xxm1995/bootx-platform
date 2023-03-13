@@ -10,6 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface UserConvert {
+
     UserConvert CONVERT = Mappers.getMapper(UserConvert.class);
 
     UserInfo convert(UserInfoParam in);

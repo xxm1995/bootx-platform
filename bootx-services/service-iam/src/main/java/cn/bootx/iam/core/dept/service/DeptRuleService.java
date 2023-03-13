@@ -15,65 +15,63 @@ import java.util.*;
 
 /**
  * 部门规则工具类
+ *
  * @author xxm
  * @date 2020/5/10 15:01
  */
 @Service
 @RequiredArgsConstructor
 public class DeptRuleService {
+
     private final DeptManager deptManager;
 
     /**
-     * 生成机构代码 根机构_子机构_子子机构
-     * 使用分布式锁
+     * 生成机构代码 根机构_子机构_子子机构 使用分布式锁
      */
     @Lock4j(keys = "#parentId")
     public String generateOrgCode(Long parentId) {
         // 顶级机构
         if (Objects.isNull(parentId)) {
-            Dept dept = MpUtil.findOne(
-                    deptManager.lambdaQuery()
-                            .isNull(Dept::getParentId)
-                            .orderByDesc(Dept::getOrgCode)
-            ).orElse(null);
+            Dept dept = MpUtil
+                    .findOne(deptManager.lambdaQuery().isNull(Dept::getParentId).orderByDesc(Dept::getOrgCode))
+                    .orElse(null);
             if (Objects.isNull(dept)) {
                 return "1";
-            } else {
+            }
+            else {
                 return this.getNextCode(dept.getOrgCode());
             }
-        } else {
+        }
+        else {
             // 父亲
-            Dept parenDept = deptManager.findById(parentId)
-                    .orElseThrow(() -> new BizException("父机构不存在"));
-            //最新的兄弟
-            Dept dept = MpUtil.findOne(
-                    deptManager.lambdaQuery()
-                            .eq(Dept::getParentId,parenDept.getId())
-                            .orderByDesc(Dept::getOrgCategory)
-            ).orElse(null);
-            if (Objects.isNull(dept)){
-                return parenDept.getOrgCode()+"_1";
-            }else {
+            Dept parenDept = deptManager.findById(parentId).orElseThrow(() -> new BizException("父机构不存在"));
+            // 最新的兄弟
+            Dept dept = MpUtil.findOne(deptManager.lambdaQuery().eq(Dept::getParentId, parenDept.getId())
+                    .orderByDesc(Dept::getOrgCategory)).orElse(null);
+            if (Objects.isNull(dept)) {
+                return parenDept.getOrgCode() + "_1";
+            }
+            else {
                 return this.getNextCode(dept.getOrgCode());
             }
         }
     }
 
     /**
-     * 根据前一个code，获取同级下一个code
-     * 例如:当前最大code为1_2，下一个code为：1_3
+     * 根据前一个code，获取同级下一个code 例如:当前最大code为1_2，下一个code为：1_3
      */
     public String getNextCode(String code) {
         // 没有分隔符, 纯数字
-        if (!StrUtil.contains(code,"_")){
+        if (!StrUtil.contains(code, "_")) {
             int i = Integer.parseInt(code);
-            return String.valueOf(i+1);
-        }else {
+            return String.valueOf(i + 1);
+        }
+        else {
             int start = code.lastIndexOf("_");
-            String sub = StrUtil.sub(code, start+1, code.length());
+            String sub = StrUtil.sub(code, start + 1, code.length());
             int i = Integer.parseInt(sub);
             // 拼接新的 前缀+ '_'+新编号
-            return StrUtil.sub(code, 0, start+1)+ (i + 1);
+            return StrUtil.sub(code, 0, start + 1) + (i + 1);
         }
 
     }
@@ -87,10 +85,10 @@ public class DeptRuleService {
         List<DeptTreeResult> tree = new ArrayList<>();
         for (Dept dept : recordList) {
             // 查出没有父级的部门
-            if (Objects.isNull(dept.getParentId())){
+            if (Objects.isNull(dept.getParentId())) {
                 DeptTreeResult deptTreeResult = new DeptTreeResult();
                 BeanUtil.copyProperties(dept, deptTreeResult);
-                this.findChildren(deptTreeResult,recordList);
+                this.findChildren(deptTreeResult, recordList);
                 tree.add(deptTreeResult);
             }
         }
@@ -107,11 +105,12 @@ public class DeptRuleService {
                     treeNode.setChildren(new ArrayList<>());
                 }
                 DeptTreeResult childNode = new DeptTreeResult();
-                BeanUtil.copyProperties(category,childNode);
+                BeanUtil.copyProperties(category, childNode);
                 findChildren(childNode, categories);
                 // 子节点
                 treeNode.getChildren().add(childNode);
             }
         }
     }
+
 }

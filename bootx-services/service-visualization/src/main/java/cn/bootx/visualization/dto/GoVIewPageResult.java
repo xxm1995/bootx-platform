@@ -7,6 +7,7 @@ import lombok.ToString;
 
 /**
  * GoView分页
+ *
  * @author xxm
  * @date 2023/2/21
  */
@@ -17,4 +18,5 @@ public class GoVIewPageResult<T> extends ResResult<T> {
 
     /** 数据条数 */
     private int count;
+
 }

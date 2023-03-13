@@ -1,6 +1,5 @@
 package cn.bootx.common.actable.manager.handler;
 
-
 import cn.bootx.common.actable.configuration.ActableProperties;
 import cn.bootx.common.core.code.actable.DatabaseType;
 import cn.bootx.common.actable.manager.system.SysMysqlCreateTableManager;
@@ -12,6 +11,7 @@ import javax.annotation.PostConstruct;
 
 /**
  * 启动时执行处理
+ *
  * @author chenbin.sun
  *
  */
@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 public class StartUpHandler {
 
     private final ActableProperties actableProperties;
+
     private final SysMysqlCreateTableManager sysMysqlCreateTableManager;
 
     /**
@@ -34,14 +35,19 @@ public class StartUpHandler {
         if (DatabaseType.MYSQL == databaseType) {
             log.debug("databaseType=mysql，开始执行mysql的处理方法");
             sysMysqlCreateTableManager.createMysqlTable();
-        }else if (DatabaseType.ORACLE == databaseType) {
+        }
+        else if (DatabaseType.ORACLE == databaseType) {
             log.debug("databaseType=oracle，开始执行oracle的处理方法");
-        }else if (DatabaseType.SQLSERVER == databaseType) {
+        }
+        else if (DatabaseType.SQLSERVER == databaseType) {
             log.debug("databaseType=sqlserver，开始执行sqlserver的处理方法");
-        }else if (DatabaseType.POSTGRESQL == databaseType) {
+        }
+        else if (DatabaseType.POSTGRESQL == databaseType) {
             log.debug("databaseType=postgresql，开始执行postgresql的处理方法");
-        }else{
+        }
+        else {
             log.debug("没有找到符合条件的处理方法！");
         }
     }
+
 }

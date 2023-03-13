@@ -6,10 +6,11 @@ import lombok.experimental.Accessors;
 
 import java.io.InputStream;
 
-/**   
+/**
  * 企微文件上传
- * @author xxm  
- * @date 2022/7/24 
+ *
+ * @author xxm
+ * @date 2022/7/24
  */
 @Data
 @Accessors(chain = true)
@@ -24,4 +25,5 @@ public class UploadMedia {
 
     @Schema(description = "文件流")
     private InputStream inputStream;
+
 }

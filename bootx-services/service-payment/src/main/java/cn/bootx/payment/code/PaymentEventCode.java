@@ -16,4 +16,5 @@ public interface PaymentEventCode {
 
     /** 支付单超时 */
     String PAYMENT_EXPIRED_TIME = "payment.expired:time";
+
 }

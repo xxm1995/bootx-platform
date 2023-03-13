@@ -16,24 +16,25 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
-* 终端
-* @author xxm
-* @date 2021/8/25
-*/
+ * 终端
+ *
+ * @author xxm
+ * @date 2021/8/25
+ */
 @Repository
 @RequiredArgsConstructor
 public class LoginTypeManager extends BaseManager<LoginTypeMapper, LonginType> {
 
     public Optional<LonginType> findByCode(String code) {
-        return findByField(LonginType::getCode,code);
+        return findByField(LonginType::getCode, code);
     }
 
     public boolean existsByCode(String code) {
-        return existedByField(LonginType::getCode,code);
+        return existedByField(LonginType::getCode, code);
     }
 
-    public boolean existsByCode(String code,Long id) {
-        return existedByField(LonginType::getCode,code,id);
+    public boolean existsByCode(String code, Long id) {
+        return existedByField(LonginType::getCode, code, id);
     }
 
     public Page<LonginType> page(PageParam pageParam, LoginTypeParam loginTypeParam) {
@@ -50,6 +51,7 @@ public class LoginTypeManager extends BaseManager<LoginTypeMapper, LonginType> {
     public Page<LonginType> supperPage(PageParam pageParam, QueryParams queryParams) {
         QueryWrapper<LonginType> generator = QueryGenerator.generator(queryParams);
         Page<LonginType> mpPage = MpUtil.getMpPage(pageParam, LonginType.class);
-        return this.page(mpPage,generator);
+        return this.page(mpPage, generator);
     }
+
 }

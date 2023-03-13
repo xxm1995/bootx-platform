@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 代码生成参数
-* @author xxm
-* @date 2022/2/18
-*/
+ * 代码生成参数
+ *
+ * @author xxm
+ * @date 2022/2/18
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "代码生成参数")

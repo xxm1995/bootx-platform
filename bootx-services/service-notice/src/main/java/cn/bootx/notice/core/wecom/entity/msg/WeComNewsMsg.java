@@ -12,26 +12,26 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 import java.util.List;
 
 /**
-* 暂未支持
-* @author xxm
-* @date 2022/7/23
-*/
+ * 暂未支持
+ *
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "图文消息")
-public class WeComNewsMsg implements WeComMsg{
+public class WeComNewsMsg implements WeComMsg {
 
     @Schema(description = "图文内容列表")
     private List<NewArticle> articles;
 
     @Override
     public WxCpMessage toMsg() {
-        if (CollUtil.isEmpty(articles)){
+        if (CollUtil.isEmpty(articles)) {
             throw new BizException("图文内容列表不可为空");
         }
         NewArticle[] newArticles = ArrayUtil.toArray(articles, NewArticle.class);
-        return WxCpMessage.NEWS()
-                .addArticle(newArticles)
-                .build();
+        return WxCpMessage.NEWS().addArticle(newArticles).build();
     }
+
 }

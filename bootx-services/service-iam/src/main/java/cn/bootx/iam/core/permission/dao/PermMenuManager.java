@@ -10,33 +10,34 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
-* 权限配置
-* @author xxm
-* @date 2021/8/3
-*/
+ * 权限配置
+ *
+ * @author xxm
+ * @date 2021/8/3
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class PermMenuManager extends BaseManager<PermMenuMapper, PermMenu> {
 
     public boolean existsByParentId(Long pid) {
-        return existedByField(PermMenu::getParentId,pid);
+        return existedByField(PermMenu::getParentId, pid);
     }
 
     public boolean existsByPermCode(String permCode) {
-        return existedByField(PermMenu::getPermCode,permCode);
+        return existedByField(PermMenu::getPermCode, permCode);
     }
 
-    public boolean existsByPermCode(String permCode,Long id) {
-        return existedByField(PermMenu::getPermCode,permCode,id);
+    public boolean existsByPermCode(String permCode, Long id) {
+        return existedByField(PermMenu::getPermCode, permCode, id);
     }
 
     public List<PermMenu> findAllByParentId(Long parentId) {
-        return findAllByField(PermMenu::getParentId,parentId);
+        return findAllByField(PermMenu::getParentId, parentId);
     }
 
     public List<PermMenu> findAllByClientCode(String clientCode) {
-        return findAllByField(PermMenu::getClientCode,clientCode);
+        return findAllByField(PermMenu::getClientCode, clientCode);
     }
 
     public List<PermMenu> findAllByResource() {

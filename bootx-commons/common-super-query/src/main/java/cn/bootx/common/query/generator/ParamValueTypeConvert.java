@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * 参数值转换
+ *
  * @author xxm
  * @date 2021/11/18
  */
@@ -27,16 +28,16 @@ public class ParamValueTypeConvert {
     public static Object initQueryParamValue(QueryParam queryParam) {
         Object paramValue = queryParam.getParamValue();
         // 空值不进行处理
-        if (Objects.isNull(paramValue)){
+        if (Objects.isNull(paramValue)) {
             return null;
         }
         // 未传入参数类型原样返回
-        if (StrUtil.isBlank(queryParam.getParamType())){
+        if (StrUtil.isBlank(queryParam.getParamType())) {
             return paramValue;
         }
         ParamTypeEnum paramTypeEnum = Optional.ofNullable(ParamTypeEnum.getByCode(queryParam.getParamType()))
                 .orElseThrow(() -> new BizException("不支持的数据类型"));
-        switch (paramTypeEnum){
+        switch (paramTypeEnum) {
             // 原样返回
             case NUMBER:
             case STRING:
@@ -44,12 +45,10 @@ public class ParamValueTypeConvert {
             case DATE:
             case TIME:
             case DATE_TIME:
-                return convertType(paramValue,paramTypeEnum);
-            case LIST:{
+                return convertType(paramValue, paramTypeEnum);
+            case LIST: {
                 Collection<?> collection = (Collection<?>) paramValue;
-                return collection.stream()
-                        .map(o -> convertType(o,paramTypeEnum))
-                        .collect(Collectors.toList());
+                return collection.stream().map(o -> convertType(o, paramTypeEnum)).collect(Collectors.toList());
             }
             default:
                 return null;
@@ -62,26 +61,27 @@ public class ParamValueTypeConvert {
      * @param paramTypeEnum 参数类型
      * @return 解析完的数据
      */
-    private static Object convertType(Object paramValue, ParamTypeEnum paramTypeEnum){
+    private static Object convertType(Object paramValue, ParamTypeEnum paramTypeEnum) {
 
         ParamTypeEnum typeEnum = Optional.ofNullable(ParamTypeEnum.getByCode(paramTypeEnum.getCode()))
                 .orElseThrow(() -> new BizException("不支持的数据类型"));
-        switch (typeEnum){
+        switch (typeEnum) {
             // 原样返回
             case NUMBER:
             case STRING:
             case BOOLEAN:
                 return paramValue;
             case DATE:
-                return LocalDateTimeUtil.parseDate((String)paramValue, DatePattern.NORM_DATE_PATTERN);
+                return LocalDateTimeUtil.parseDate((String) paramValue, DatePattern.NORM_DATE_PATTERN);
             case TIME:
-                return LocalDateTimeUtil.parse((String)paramValue, DatePattern.NORM_TIME_PATTERN).toLocalTime();
+                return LocalDateTimeUtil.parse((String) paramValue, DatePattern.NORM_TIME_PATTERN).toLocalTime();
             case DATE_TIME:
-                return LocalDateTimeUtil.parse((String)paramValue, DatePattern.NORM_DATETIME_PATTERN);
+                return LocalDateTimeUtil.parse((String) paramValue, DatePattern.NORM_DATETIME_PATTERN);
             case LIST:
                 return paramValue;
             default:
                 throw new BizException("类型错误");
         }
     }
+
 }

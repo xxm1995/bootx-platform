@@ -12,7 +12,8 @@ public abstract class SystemException extends ErrorCodeRuntimeException implemen
     public SystemException(int code, String message) {
         super(code, message);
     }
-    public SystemException(){
+
+    public SystemException() {
         super();
     }
 

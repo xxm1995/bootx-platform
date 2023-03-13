@@ -16,65 +16,67 @@ import java.util.List;
 
 /**
  * 认证终端
+ *
  * @author xxm
  * @date 2022-06-27
  */
-@Tag(name ="认证终端")
+@Tag(name = "认证终端")
 @RestController
 @RequestMapping("/client")
 @RequiredArgsConstructor
 public class ClientController {
+
     private final ClientService clientService;
 
-    @Operation( summary = "添加")
+    @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody ClientParam param){
+    public ResResult<Void> add(@RequestBody ClientParam param) {
         clientService.add(param);
         return Res.ok();
     }
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody ClientParam param){
+    public ResResult<Void> update(@RequestBody ClientParam param) {
         clientService.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         clientService.delete(id);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<ClientDto> findById(Long id){
+    public ResResult<ClientDto> findById(Long id) {
         return Res.ok(clientService.findById(id));
     }
 
-    @Operation( summary = "查询所有")
+    @Operation(summary = "查询所有")
     @GetMapping(value = "/findAll")
-    public ResResult<List<ClientDto>> findAll(){
+    public ResResult<List<ClientDto>> findAll() {
         return Res.ok(clientService.findAll());
     }
 
-    @Operation( summary = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<ClientDto>> page(PageParam pageParam, ClientParam clientParam){
+    public ResResult<PageResult<ClientDto>> page(PageParam pageParam, ClientParam clientParam) {
         return Res.ok(clientService.page(pageParam, clientParam));
     }
 
-    @Operation( summary = "编码是否被使用")
+    @Operation(summary = "编码是否被使用")
     @GetMapping("/existsByCode")
     public ResResult<Boolean> existsByCode(String code) {
         return Res.ok(clientService.existsByCode(code));
     }
 
-    @Operation( summary = "编码是否被使用(不包含自己)")
+    @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
-    public ResResult<Boolean> existsByCode(String code,Long id) {
-        return Res.ok(clientService.existsByCode(code,id));
+    public ResResult<Boolean> existsByCode(String code, Long id) {
+        return Res.ok(clientService.existsByCode(code, id));
     }
 
 }

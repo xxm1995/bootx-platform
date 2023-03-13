@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
-* @author xxm
-* @date 2020/12/8
-*/
+ * @author xxm
+ * @date 2020/12/8
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -23,37 +23,37 @@ public class WalletLogDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = -2553004953931903738L;
 
-    @Schema(description= "钱包ID")
+    @Schema(description = "钱包ID")
     private Long walletId;
 
-    @Schema(description= "用户ID")
+    @Schema(description = "用户ID")
     private Long userId;
 
     /**
      * @see WalletCode
      */
-    @Schema(description= "类型")
+    @Schema(description = "类型")
     private Integer type;
 
-    @Schema(description= "交易记录ID")
+    @Schema(description = "交易记录ID")
     private Long paymentId;
 
-    @Schema(description= "备注")
+    @Schema(description = "备注")
     private String remark;
 
-    @Schema(description= "业务ID")
+    @Schema(description = "业务ID")
     private String businessId;
 
     /**
      * @see WalletCode
      */
-    @Schema(description= " 1 系统操作  2管理员操作 3用户操作")
+    @Schema(description = " 1 系统操作  2管理员操作 3用户操作")
     private Integer operationSource;
 
-    @Schema(description= "金额")
+    @Schema(description = "金额")
     private BigDecimal amount;
 
-    @Schema(description= "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
 }

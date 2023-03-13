@@ -8,11 +8,12 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-/**   
-* 储值卡日志
-* @author xxm  
-* @date 2022/3/17 
-*/
+/**
+ * 储值卡日志
+ *
+ * @author xxm
+ * @date 2022/3/17
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -42,4 +43,5 @@ public class VoucherLog extends MpBaseEntity {
 
     /** 备注 */
     private String remark;
+
 }

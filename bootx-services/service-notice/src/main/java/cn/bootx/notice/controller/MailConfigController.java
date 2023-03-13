@@ -14,14 +14,15 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
-* @author xxm
-* @date 2020/5/2 14:38
-*/
-@Tag(name ="邮箱配置")
+ * @author xxm
+ * @date 2020/5/2 14:38
+ */
+@Tag(name = "邮箱配置")
 @RestController
 @RequestMapping("/mail/config")
 @AllArgsConstructor
 public class MailConfigController {
+
     private final MailConfigService mailConfigService;
 
     @Operation(summary = "通过 id 获取指定邮箱配置")
@@ -33,8 +34,8 @@ public class MailConfigController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<MailConfigDto>> page(PageParam pageParam, MailConfigParam param){
-        return Res.ok(mailConfigService.page(pageParam,param));
+    public ResResult<PageResult<MailConfigDto>> page(PageParam pageParam, MailConfigParam param) {
+        return Res.ok(mailConfigService.page(pageParam, param));
     }
 
     @Operation(summary = "增加新邮箱配置")
@@ -55,14 +56,14 @@ public class MailConfigController {
 
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         mailConfigService.delete(id);
         return Res.ok();
     }
 
     @Operation(summary = "设置启用的邮箱配置")
     @PostMapping("/setUpActivity")
-    public ResResult<Void> setUpActivity(Long id){
+    public ResResult<Void> setUpActivity(Long id) {
         mailConfigService.setUpActivity(id);
         return Res.ok();
     }
@@ -75,8 +76,8 @@ public class MailConfigController {
 
     @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
-    public ResResult<Boolean> existsByCode(String code,Long id) {
-        return Res.ok(mailConfigService.existsByCode(code,id));
+    public ResResult<Boolean> existsByCode(String code, Long id) {
+        return Res.ok(mailConfigService.existsByCode(code, id));
     }
 
 }

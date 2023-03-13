@@ -16,13 +16,14 @@ import java.util.Map;
 
 /**
  * 任务扩展存储
+ *
  * @author xxm
  * @date 2022/8/23
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName(value = "bpm_task",autoResultMap = true)
+@TableName(value = "bpm_task", autoResultMap = true)
 public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDto> {
 
     /** 任务id */
@@ -57,7 +58,7 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
 
     /**
      * 处理结果
-     *  @see cn.bootx.starter.flowable.code.TaskCode#RESULT_PASS
+     * @see cn.bootx.starter.flowable.code.TaskCode#RESULT_PASS
      */
     private String result;
 
@@ -72,7 +73,7 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
 
     /** 提交的表单值 */
     @TableField(typeHandler = JacksonTypeHandler.class)
-    private Map<String,Object> formVariables;
+    private Map<String, Object> formVariables;
 
     /** 当前处理人 */
     private Long userId;
@@ -91,4 +92,5 @@ public class BpmTask extends MpDelEntity implements EntityBaseFunction<BpmTaskDt
     public BpmTaskDto toDto() {
         return BpmTaskConvert.CONVERT.convert(this);
     }
+
 }

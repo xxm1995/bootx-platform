@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* @author xxm
-* @date 2022/1/10
-*/
+ * @author xxm
+ * @date 2022/1/10
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "数据版本日志")
@@ -30,4 +30,5 @@ public class DataVersionLogParam {
 
     @Schema(description = "版本")
     private Integer version;
+
 }

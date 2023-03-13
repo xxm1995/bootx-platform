@@ -10,16 +10,14 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-/**   
- *
- * @author xxm  
- * @date 2022/8/14 
+/**
+ * @author xxm
+ * @date 2022/8/14
  */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class SiteMessageUserManager extends BaseManager<SiteMessageUserMapper,SiteMessageUser> {
-
+public class SiteMessageUserManager extends BaseManager<SiteMessageUserMapper, SiteMessageUser> {
 
     /**
      * 根据消息ID查询
@@ -32,16 +30,16 @@ public class SiteMessageUserManager extends BaseManager<SiteMessageUserMapper,Si
      * 阅读
      */
     public void readById(Long id) {
-        lambdaUpdate().eq(MpIdEntity::getId,id).set(SiteMessageUser::isHaveRead,Boolean.TRUE)
-                .set(SiteMessageUser::getReadTime, LocalDateTime.now())
-                .update();
+        lambdaUpdate().eq(MpIdEntity::getId, id).set(SiteMessageUser::isHaveRead, Boolean.TRUE)
+                .set(SiteMessageUser::getReadTime, LocalDateTime.now()).update();
     }
 
     /**
      * 根据消息ID删除
      */
-    public void deleteByMessageId(Long messageId){
-        deleteByField(SiteMessageUser::getMessageId,messageId);
+    public void deleteByMessageId(Long messageId) {
+        deleteByField(SiteMessageUser::getMessageId, messageId);
 
     }
+
 }

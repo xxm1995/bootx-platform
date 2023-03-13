@@ -37,10 +37,13 @@ public @interface Translate {
     /**
      * 翻译类型
      */
-    enum Type{
+    enum Type {
+
         /** 字典 */
         DICT,
         /** 数据表 暂未实现 */
         TABLE;
+
     }
+
 }

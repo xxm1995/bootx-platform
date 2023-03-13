@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * 储值卡支付记录
+ *
  * @author xxm
  * @date 2022/3/14
  */
@@ -29,22 +30,20 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class VoucherPaymentService {
+
     private final VoucherPaymentManager voucherPaymentManager;
 
     /**
      * 添加支付记录
      */
-    public void savePayment(Payment payment, PayParam payParam, PayModeParam payMode, List<Voucher> vouchers){
-        String voucherIds = vouchers.stream().map(MpIdEntity::getId).map(String::valueOf).collect(Collectors.joining(","));
+    public void savePayment(Payment payment, PayParam payParam, PayModeParam payMode, List<Voucher> vouchers) {
+        String voucherIds = vouchers.stream().map(MpIdEntity::getId).map(String::valueOf)
+                .collect(Collectors.joining(","));
 
-        VoucherPayment walletPayment = new VoucherPayment()
-                .setVoucherIds(voucherIds);
-        walletPayment.setPaymentId(payment.getId())
-                .setUserId(payment.getUserId())
-                .setBusinessId(payParam.getBusinessId())
-                .setAmount(payMode.getAmount())
-                .setRefundableBalance(payMode.getAmount())
-                .setPayStatus(payment.getPayStatus());
+        VoucherPayment walletPayment = new VoucherPayment().setVoucherIds(voucherIds);
+        walletPayment.setPaymentId(payment.getId()).setUserId(payment.getUserId())
+                .setBusinessId(payParam.getBusinessId()).setAmount(payMode.getAmount())
+                .setRefundableBalance(payMode.getAmount()).setPayStatus(payment.getPayStatus());
         voucherPaymentManager.save(walletPayment);
     }
 
@@ -53,10 +52,9 @@ public class VoucherPaymentService {
      */
     public void updateSuccess(Long paymentId) {
         Optional<VoucherPayment> payment = voucherPaymentManager.findByPaymentId(paymentId);
-        if (payment.isPresent()){
+        if (payment.isPresent()) {
             VoucherPayment voucherPayment = payment.get();
-            voucherPayment.setPayStatus(PayStatusCode.TRADE_SUCCESS)
-                    .setPayTime(LocalDateTime.now());
+            voucherPayment.setPayStatus(PayStatusCode.TRADE_SUCCESS).setPayTime(LocalDateTime.now());
             voucherPaymentManager.updateById(voucherPayment);
         }
     }
@@ -74,17 +72,19 @@ public class VoucherPaymentService {
     /**
      * 更新退款
      */
-    public void updateRefund(Long paymentId, BigDecimal amount){
+    public void updateRefund(Long paymentId, BigDecimal amount) {
         Optional<VoucherPayment> voucherPayment = voucherPaymentManager.findByPaymentId(paymentId);
         voucherPayment.ifPresent(payment -> {
             BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
             payment.setRefundableBalance(refundableBalance);
-            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO) == 0) {
                 payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
-            } else {
+            }
+            else {
                 payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
             }
             voucherPaymentManager.updateById(payment);
         });
     }
+
 }

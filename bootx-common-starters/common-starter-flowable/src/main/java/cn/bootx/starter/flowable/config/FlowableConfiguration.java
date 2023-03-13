@@ -12,20 +12,19 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Flowable 配置类
+ *
  * @author xxm
  * @date 2022/8/24
  */
 @Configuration
 public class FlowableConfiguration {
+
     /**
-     * 1. 设置各种监听器
-     * 2. 设置自定义的 ActivityBehaviorFactory 实现
-     * 3. 其他的一些配置
+     * 1. 设置各种监听器 2. 设置自定义的 ActivityBehaviorFactory 实现 3. 其他的一些配置
      */
     @Bean
     public EngineConfigurationConfigurer<SpringProcessEngineConfiguration> bpmProcessEngineConfigurationConfigurer(
-            ObjectProvider<FlowableEventListener> listeners,
-            BpmActivityBehaviorFactory bpmActivityBehaviorFactory) {
+            ObjectProvider<FlowableEventListener> listeners, BpmActivityBehaviorFactory bpmActivityBehaviorFactory) {
         return configuration -> {
             // 注册监听器
             configuration.setEventListeners(ListUtil.toList(listeners.iterator()));

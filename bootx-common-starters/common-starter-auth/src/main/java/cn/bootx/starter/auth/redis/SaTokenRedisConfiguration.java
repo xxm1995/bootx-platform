@@ -29,13 +29,16 @@ import java.util.stream.Collectors;
 
 /**
  * Sa-Token持久层接口 Redis版 配置
+ *
  * @author xxm
  */
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(SaTokenRedisProperties.class)
 public class SaTokenRedisConfiguration {
+
     private final SaTokenRedisProperties saTokenDaoRedisProperties;
+
     private final RedisConnectionFactory connectionFactory;
 
     @Resource
@@ -46,15 +49,14 @@ public class SaTokenRedisConfiguration {
      */
     private static final String ALONE_PREFIX = "sa-token.plugins.redis.alone-redis";
 
-
     /**
      * redis连接方式
      */
-    protected RedisConnectionFactory redisConnectionFactory(){
+    protected RedisConnectionFactory redisConnectionFactory() {
         boolean alone = saTokenDaoRedisProperties.isAlone();
         // 获取自定义Redis对象
-        RedisProperties aloneRedis =saTokenDaoRedisProperties.getAloneRedis();
-        if (alone){
+        RedisProperties aloneRedis = saTokenDaoRedisProperties.getAloneRedis();
+        if (alone) {
             RedisConfiguration redisConfig = new RedisStandaloneConfiguration();
             // 单机模式/集群模式
             if (aloneRedis.getCluster() == null || CollUtil.isEmpty(aloneRedis.getCluster().getNodes())) {
@@ -65,17 +67,17 @@ public class SaTokenRedisConfiguration {
                 standaloneConfiguration.setPort(aloneRedis.getPort());
                 standaloneConfiguration.setPassword(aloneRedis.getPassword());
                 redisConfig = standaloneConfiguration;
-            } else {
+            }
+            else {
                 RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration();
                 RedisProperties.Cluster cluster = aloneRedis.getCluster();
-                List<RedisNode> redisNodes = cluster.getNodes().stream()
-                        .map(node -> {
-                            List<String> hostAndPort = StrUtil.split(node, ':');
-                            if (hostAndPort.size() != 2) {
-                                throw new FatalException(1, "Redis Cluster集群配置错误, 无法启动");
-                            }
-                            return new RedisNode(hostAndPort.get(0), Integer.parseInt(hostAndPort.get(1)));
-                        }).collect(Collectors.toList());
+                List<RedisNode> redisNodes = cluster.getNodes().stream().map(node -> {
+                    List<String> hostAndPort = StrUtil.split(node, ':');
+                    if (hostAndPort.size() != 2) {
+                        throw new FatalException(1, "Redis Cluster集群配置错误, 无法启动");
+                    }
+                    return new RedisNode(hostAndPort.get(0), Integer.parseInt(hostAndPort.get(1)));
+                }).collect(Collectors.toList());
                 clusterConfiguration.setClusterNodes(redisNodes);
                 clusterConfiguration.setPassword(aloneRedis.getPassword());
                 clusterConfiguration.setMaxRedirects(cluster.getMaxRedirects());
@@ -85,7 +87,7 @@ public class SaTokenRedisConfiguration {
             GenericObjectPoolConfig<?> poolConfig = new GenericObjectPoolConfig<>();
             // pool配置
             RedisProperties.Lettuce lettuce = aloneRedis.getLettuce();
-            if(lettuce.getPool() != null) {
+            if (lettuce.getPool() != null) {
                 RedisProperties.Pool pool = aloneRedis.getLettuce().getPool();
                 // 连接池最大连接数
                 poolConfig.setMaxTotal(pool.getMaxActive());
@@ -94,15 +96,16 @@ public class SaTokenRedisConfiguration {
                 // 连接池中的最小空闲连接
                 poolConfig.setMinIdle(pool.getMinIdle());
                 // 连接池最大阻塞等待时间（使用负值表示没有限制）
-                poolConfig. setMaxWait(pool.getMaxWait());
+                poolConfig.setMaxWait(pool.getMaxWait());
             }
-            LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration.builder();
+            LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration
+                    .builder();
             // timeout
-            if(aloneRedis.getTimeout() != null) {
+            if (aloneRedis.getTimeout() != null) {
                 builder.commandTimeout(aloneRedis.getTimeout());
             }
             // shutdownTimeout
-            if(lettuce.getShutdownTimeout() != null) {
+            if (lettuce.getShutdownTimeout() != null) {
                 builder.shutdownTimeout(lettuce.getShutdownTimeout());
             }
             // 创建Factory对象
@@ -110,17 +113,17 @@ public class SaTokenRedisConfiguration {
             LettuceConnectionFactory factory = new LettuceConnectionFactory(redisConfig, clientConfig);
             factory.afterPropertiesSet();
             return factory;
-        } else {
+        }
+        else {
             // 使用默认的
             return connectionFactory;
         }
     }
 
-
     /**
      * string专用
      */
-    protected StringRedisTemplate stringRedisTemplate(){
+    protected StringRedisTemplate stringRedisTemplate() {
         // 构建StringRedisTemplate
         StringRedisTemplate stringTemplate = new StringRedisTemplate();
         stringTemplate.setConnectionFactory(redisConnectionFactory());
@@ -131,7 +134,7 @@ public class SaTokenRedisConfiguration {
     /**
      * object专用
      */
-    protected RedisTemplate<String, Object> objectRedisTemplate(){
+    protected RedisTemplate<String, Object> objectRedisTemplate() {
         StringRedisSerializer keySerializer = new StringRedisSerializer();
         RedisSerializer<Object> valueSerializer = new GenericJackson2JsonRedisSerializer(typeObjectMapper);
 
@@ -146,12 +149,12 @@ public class SaTokenRedisConfiguration {
         return template;
     }
 
-    /**   
+    /**
      * Sa-Token持久层接口
      */
     @Bean
     @ConditionalOnMissingBean(SaTokenDao.class)
-    public SaTokenDao saTokenDaoRedis(){
+    public SaTokenDao saTokenDaoRedis() {
         SaTokenDaoRedis saTokenDaoRedis = new SaTokenDaoRedis();
         saTokenDaoRedis.setObjectRedisTemplate(objectRedisTemplate());
         saTokenDaoRedis.setStringRedisTemplate(stringRedisTemplate());
@@ -166,4 +169,5 @@ public class SaTokenRedisConfiguration {
     public RedisProperties getSaAloneRedisConfig() {
         return new RedisProperties();
     }
+
 }

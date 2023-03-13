@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 /**
  * 查询条件生成器
+ *
  * @author xxm
  * @date 2021/11/17
  */
@@ -19,13 +20,12 @@ public class QueryGenerator {
     public static <T> QueryWrapper<T> generator(QueryParams queryParams) {
         QueryWrapper<T> queryWrapper = new QueryWrapper<>();
         // 查询条件
-        SuperQueryGenerator.initQueryParam(queryWrapper,queryParams.getQueryParams());
+        SuperQueryGenerator.initQueryParam(queryWrapper, queryParams.getQueryParams());
         // 排序条件
-        SuperQueryGenerator.initQueryOrder(queryWrapper,queryParams.getQueryOrders());
+        SuperQueryGenerator.initQueryOrder(queryWrapper, queryParams.getQueryOrders());
 
         return queryWrapper;
     }
-
 
     /**
      * 根据查询对象数据和该类上标注的注解进行生成, 生成的多个查询条件之间用And连接
@@ -44,8 +44,8 @@ public class QueryGenerator {
      * @param <T> 泛型
      * @return 查询器
      */
-    public static <T> QueryWrapper<T> generator(Object queryParams,Class<T> clazz) {
-        return AnnotationQueryGenerator.generator(queryParams,clazz);
+    public static <T> QueryWrapper<T> generator(Object queryParams, Class<T> clazz) {
+        return AnnotationQueryGenerator.generator(queryParams, clazz);
     }
 
 }

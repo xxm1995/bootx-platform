@@ -13,11 +13,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-/**   
-* 操作日志
-* @author xxm  
-* @date 2021/8/12 
-*/
+/**
+ * 操作日志
+ *
+ * @author xxm
+ * @date 2021/8/12
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -26,10 +27,13 @@ public class OperateLogDbManager extends BaseManager<OperateLogDbMapper, Operate
     public Page<OperateLogDb> page(PageParam pageParam, OperateLogParam operateLogParam) {
         Page<OperateLogDb> mpPage = MpUtil.getMpPage(pageParam, OperateLogDb.class);
         return lambdaQuery()
-                .like(StrUtil.isNotBlank(operateLogParam.getUsername()), OperateLogDb::getUsername,operateLogParam.getUsername())
-                .like(StrUtil.isNotBlank(operateLogParam.getTitle()), OperateLogDb::getTitle,operateLogParam.getTitle())
-                .eq(Objects.nonNull(operateLogParam.getBusinessType()), OperateLogDb::getBusinessType,operateLogParam.getBusinessType())
-                .orderByDesc(OperateLogDb::getOperateTime)
-                .page(mpPage);
+                .like(StrUtil.isNotBlank(operateLogParam.getUsername()), OperateLogDb::getUsername,
+                        operateLogParam.getUsername())
+                .like(StrUtil.isNotBlank(operateLogParam.getTitle()), OperateLogDb::getTitle,
+                        operateLogParam.getTitle())
+                .eq(Objects.nonNull(operateLogParam.getBusinessType()), OperateLogDb::getBusinessType,
+                        operateLogParam.getBusinessType())
+                .orderByDesc(OperateLogDb::getOperateTime).page(mpPage);
     }
+
 }

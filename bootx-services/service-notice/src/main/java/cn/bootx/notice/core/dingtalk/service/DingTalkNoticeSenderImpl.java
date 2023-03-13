@@ -27,6 +27,7 @@ import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 
 /**
  * 钉钉消息通知
+ *
  * @author xxm
  * @date 2022/7/16
  */
@@ -34,8 +35,11 @@ import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 @Service
 @RequiredArgsConstructor
 public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
+
     private final DingNoticeService dingNoticeService;
+
     private final DingMediaService dingMediaService;
+
     private final DingTalkProperties dingTalkProperties;
 
     /**
@@ -43,8 +47,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * @return 发布消息任务ID
      */
     @Override
-    public Long sendTextCorpNotice(DingTextMsg dingTextMsg, DingCorpNoticeReceive receive){
-        return this.sendCorpNotice(dingTextMsg,receive);
+    public Long sendTextCorpNotice(DingTextMsg dingTextMsg, DingCorpNoticeReceive receive) {
+        return this.sendCorpNotice(dingTextMsg, receive);
     }
 
     /**
@@ -52,8 +56,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * @return 发布消息任务ID
      */
     @Override
-    public Long sendImageCorpNotice(DingImageMsg dingImageMsg, DingCorpNoticeReceive receive){
-        return this.sendCorpNotice(dingImageMsg,receive);
+    public Long sendImageCorpNotice(DingImageMsg dingImageMsg, DingCorpNoticeReceive receive) {
+        return this.sendCorpNotice(dingImageMsg, receive);
     }
 
     /**
@@ -61,10 +65,10 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * @return 发布消息任务ID
      */
     @Override
-    public Long sendImageCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive){
+    public Long sendImageCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive) {
         String mediaId = dingMediaService.uploadMedia(inputStream, MEDIA_IMAGE);
         DingImageMsg dingImageMsg = new DingImageMsg(mediaId);
-        return this.sendCorpNotice(dingImageMsg,receive);
+        return this.sendCorpNotice(dingImageMsg, receive);
     }
 
     /**
@@ -72,10 +76,10 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * @return 发布消息任务ID
      */
     @Override
-    public Long sendImageCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive){
+    public Long sendImageCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive) {
         String mediaId = dingMediaService.uploadMedia(inputStream, filename, MEDIA_IMAGE);
         DingImageMsg dingImageMsg = new DingImageMsg(mediaId);
-        return this.sendCorpNotice(dingImageMsg,receive);
+        return this.sendCorpNotice(dingImageMsg, receive);
     }
 
     /**
@@ -84,7 +88,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendVoiceCorpNotice(DingVoiceMsg dingVoiceMsg, DingCorpNoticeReceive receive) {
-        return this.sendCorpNotice(dingVoiceMsg,receive);
+        return this.sendCorpNotice(dingVoiceMsg, receive);
     }
 
     /**
@@ -94,8 +98,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
     @Override
     public Long sendVoiceCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive) {
         String mediaId = dingMediaService.uploadMedia(inputStream, MEDIA_VOICE);
-        DingVoiceMsg dingVoiceMsg = new DingVoiceMsg(mediaId,"10");
-        return this.sendCorpNotice(dingVoiceMsg,receive);
+        DingVoiceMsg dingVoiceMsg = new DingVoiceMsg(mediaId, "10");
+        return this.sendCorpNotice(dingVoiceMsg, receive);
     }
 
     /**
@@ -105,8 +109,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
     @Override
     public Long sendVoiceCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive) {
         String mediaId = dingMediaService.uploadMedia(inputStream, filename, MEDIA_VOICE);
-        DingVoiceMsg dingVoiceMsg = new DingVoiceMsg(mediaId,"10");
-        return this.sendCorpNotice(dingVoiceMsg,receive);
+        DingVoiceMsg dingVoiceMsg = new DingVoiceMsg(mediaId, "10");
+        return this.sendCorpNotice(dingVoiceMsg, receive);
     }
 
     /**
@@ -115,7 +119,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendFileCorpNotice(DingFileMsg dingFileMsg, DingCorpNoticeReceive receive) {
-        return this.sendCorpNotice(dingFileMsg,receive);
+        return this.sendCorpNotice(dingFileMsg, receive);
     }
 
     /**
@@ -126,17 +130,18 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
     public Long sendFileCorpNotice(InputStream inputStream, DingCorpNoticeReceive receive) {
         String mediaId = dingMediaService.uploadMedia(inputStream, MEDIA_FILE);
         DingFileMsg dingFileMsg = new DingFileMsg(mediaId);
-        return this.sendCorpNotice(dingFileMsg,receive);
+        return this.sendCorpNotice(dingFileMsg, receive);
     }
+
     /**
      * 发送文件消息(文件)
      * @return 发布消息任务ID
      */
     @Override
     public Long sendFileCorpNotice(InputStream inputStream, String filename, DingCorpNoticeReceive receive) {
-        String mediaId = dingMediaService.uploadMedia(inputStream,filename, MEDIA_FILE);
+        String mediaId = dingMediaService.uploadMedia(inputStream, filename, MEDIA_FILE);
         DingFileMsg dingFileMsg = new DingFileMsg(mediaId);
-        return this.sendCorpNotice(dingFileMsg,receive);
+        return this.sendCorpNotice(dingFileMsg, receive);
     }
 
     /**
@@ -145,7 +150,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendLinkCorpNotice(DingLinkMsg dingLinkMsg, DingCorpNoticeReceive receive) {
-        return this.sendCorpNotice(dingLinkMsg,receive);
+        return this.sendCorpNotice(dingLinkMsg, receive);
     }
 
     /**
@@ -154,7 +159,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendOaCorpNotice(DingOaMsg dingOaMsg, DingCorpNoticeReceive receive) {
-        return this.sendCorpNotice(dingOaMsg,receive);
+        return this.sendCorpNotice(dingOaMsg, receive);
     }
 
     /**
@@ -162,7 +167,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendMarkDownCorpNotice(DingMarkDownMsg dingMarkDownMsg, DingCorpNoticeReceive receive) {
-        return this.sendCorpNotice(dingMarkDownMsg,receive);
+        return this.sendCorpNotice(dingMarkDownMsg, receive);
     }
 
     /**
@@ -170,33 +175,33 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public Long sendActionCardCorpNotice(DingActionCardMsg dingActionCardMsg, DingCorpNoticeReceive receive) {
-        return this.sendCorpNotice(dingActionCardMsg,receive);
+        return this.sendCorpNotice(dingActionCardMsg, receive);
     }
 
     /**
      * 返回任务id(OA消息更新状态使用)
      */
-    private Long sendCorpNotice(DingMsg dingMsg, DingCorpNoticeReceive receive){
+    private Long sendCorpNotice(DingMsg dingMsg, DingCorpNoticeReceive receive) {
         DingCorpNoticeParam dingCorpNoticeParam = new DingCorpNoticeParam(receive, dingMsg);
         CorpNotice corpNotice = dingCorpNoticeParam.toDingCorpNotice();
         corpNotice.setAgentId(dingTalkProperties.getAgentId());
         CorpNoticeResult result = dingNoticeService.sendCorpNotice(corpNotice);
 
-        if (!Objects.equals(result.getCode(),SUCCESS_CODE)){
+        if (!Objects.equals(result.getCode(), SUCCESS_CODE)) {
             throw new BizException(result.getMsg());
         }
         return result.getTaskId();
     }
 
     /**
-     *  更新OA工作通知消息
+     * 更新OA工作通知消息
      */
     @Override
-    public void updateOaCorpNotice(DingCorpNoticeUpdate updateCorpNotice){
+    public void updateOaCorpNotice(DingCorpNoticeUpdate updateCorpNotice) {
         UpdateCorpNotice dingUpdateCorpNotice = updateCorpNotice.toDingUpdateCorpNotice();
         dingUpdateCorpNotice.setAgentId(dingTalkProperties.getAgentId());
         CorpNoticeResult result = dingNoticeService.updateCorpNotice(dingUpdateCorpNotice);
-        if (!Objects.equals(result.getCode(),SUCCESS_CODE)){
+        if (!Objects.equals(result.getCode(), SUCCESS_CODE)) {
             throw new BizException(result.getMsg());
         }
     }
@@ -205,10 +210,10 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * 撤回工作通知消息
      */
     @Override
-    public void recallCorpNotice(Long msgTaskId){
-        RecallCorpNotice recallCorpNotice = new RecallCorpNotice(dingTalkProperties.getAgentId(),msgTaskId);
+    public void recallCorpNotice(Long msgTaskId) {
+        RecallCorpNotice recallCorpNotice = new RecallCorpNotice(dingTalkProperties.getAgentId(), msgTaskId);
         DingTalkResult<?> result = dingNoticeService.recallCorpNotice(recallCorpNotice);
-        if (!Objects.equals(result.getCode(),SUCCESS_CODE)){
+        if (!Objects.equals(result.getCode(), SUCCESS_CODE)) {
             throw new BizException(result.getMsg());
         }
     }
@@ -219,8 +224,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * @return 发布企业群消息ID
      */
     @Override
-    public String sendTextChatNotice(DingTextMsg dingTextMsg, String chatId){
-        return this.sendChatNotice(dingTextMsg,chatId);
+    public String sendTextChatNotice(DingTextMsg dingTextMsg, String chatId) {
+        return this.sendChatNotice(dingTextMsg, chatId);
     }
 
     /**
@@ -229,8 +234,8 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * @return 发布企业群消息ID
      */
     @Override
-    public String sendImageChatNotice(DingImageMsg dingImageMsg, String chatId){
-        return this.sendChatNotice(dingImageMsg,chatId);
+    public String sendImageChatNotice(DingImageMsg dingImageMsg, String chatId) {
+        return this.sendChatNotice(dingImageMsg, chatId);
     }
 
     /**
@@ -240,7 +245,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public String sendVoiceChatNotice(DingVoiceMsg dingVoiceMsg, String chatId) {
-        return this.sendChatNotice(dingVoiceMsg,chatId);
+        return this.sendChatNotice(dingVoiceMsg, chatId);
     }
 
     /**
@@ -250,7 +255,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public String sendFileChatNotice(DingFileMsg dingFileMsg, String chatId) {
-        return this.sendChatNotice(dingFileMsg,chatId);
+        return this.sendChatNotice(dingFileMsg, chatId);
     }
 
     /**
@@ -260,7 +265,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public String sendLinkChatNotice(DingLinkMsg dingLinkMsg, String chatId) {
-        return this.sendChatNotice(dingLinkMsg,chatId);
+        return this.sendChatNotice(dingLinkMsg, chatId);
     }
 
     /**
@@ -270,7 +275,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public String sendOaChatNotice(DingOaMsg dingOaMsg, String chatId) {
-        return this.sendChatNotice(dingOaMsg,chatId);
+        return this.sendChatNotice(dingOaMsg, chatId);
     }
 
     /**
@@ -280,7 +285,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public String sendMarkDownChatNotice(DingMarkDownMsg dingMarkDownMsg, String chatId) {
-        return this.sendChatNotice(dingMarkDownMsg,chatId);
+        return this.sendChatNotice(dingMarkDownMsg, chatId);
     }
 
     /**
@@ -290,7 +295,7 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      */
     @Override
     public String sendActionCardChatNotice(DingActionCardMsg dingActionCardMsg, String chatId) {
-        return this.sendChatNotice(dingActionCardMsg,chatId);
+        return this.sendChatNotice(dingActionCardMsg, chatId);
     }
 
     /**
@@ -298,13 +303,14 @@ public class DingTalkNoticeSenderImpl implements DingTalkNoticeSender {
      * @param chatId 群Id
      * @return 发布企业群消息ID
      */
-    private String sendChatNotice(DingMsg dingMsg, String chatId){
+    private String sendChatNotice(DingMsg dingMsg, String chatId) {
 
         ChatNotice chatNotice = new ChatNotice(chatId, dingMsg.toDingMsg());
         ChatNoticeResult result = dingNoticeService.sendChatNotice(chatNotice);
-        if (!Objects.equals(result.getCode(),SUCCESS_CODE)){
+        if (!Objects.equals(result.getCode(), SUCCESS_CODE)) {
             throw new BizException(result.getMsg());
         }
         return result.getMessageId();
     }
+
 }

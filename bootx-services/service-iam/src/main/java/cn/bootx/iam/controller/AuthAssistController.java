@@ -12,22 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-*
-* @author xxm
-* @date 2021/9/9
-*/
-@Tag(name ="认证支撑接口")
+ * @author xxm
+ * @date 2021/9/9
+ */
+@Tag(name = "认证支撑接口")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthAssistController {
+
     private final AuthAssistService authAssistService;
 
     @IgnoreAuth
     @Operation(summary = "发送短信验证码")
     @PostMapping("/sendSmsCaptcha")
-    public ResResult<Void> sendSmsCaptcha(String phone){
+    public ResResult<Void> sendSmsCaptcha(String phone) {
         authAssistService.sendSmsCaptcha(phone);
         return Res.ok();
     }
+
 }

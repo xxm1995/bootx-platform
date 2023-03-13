@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**   
+/**
  * 钉钉
- * @author xxm  
- * @date 2022/7/26 
+ *
+ * @author xxm
+ * @date 2022/7/26
  */
 @Slf4j
 @Repository
@@ -21,7 +22,8 @@ public class DingMediaMd5Manager extends BaseManager<DingMediaMd5Mapper, DingMed
     /**
      * 根据md5查询
      */
-    public Optional<DingMediaMd5> findByMd5(String md5){
-        return findByField(DingMediaMd5::getMd5,md5);
+    public Optional<DingMediaMd5> findByMd5(String md5) {
+        return findByField(DingMediaMd5::getMd5, md5);
     }
+
 }

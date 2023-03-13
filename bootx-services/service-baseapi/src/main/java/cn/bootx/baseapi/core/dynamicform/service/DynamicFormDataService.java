@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 动态表单数据收集
+ *
  * @author xxm
  * @date 2022/8/13
  */
@@ -18,35 +19,36 @@ public class DynamicFormDataService {
     /**
      * 新增
      */
-    public void add(){
-        
+    public void add() {
+
     }
 
     /**
      * 更新
      */
-    public void update(){
-        
+    public void update() {
+
     }
 
     /**
      * 删除
      */
-    public void delete(){
-        
+    public void delete() {
+
     }
 
     /**
      * 查询单条
      */
-    public void findById(){
-        
+    public void findById() {
+
     }
 
     /**
      * 查询列表
      */
-    public void page(PageParam pageParam){
+    public void page(PageParam pageParam) {
 
     }
+
 }

@@ -7,12 +7,13 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**   
-*
-* @author xxm  
-* @date 2021/12/23 
-*/
+/**
+ * @author xxm
+ * @date 2021/12/23
+ */
 @Mapper
 public interface UserDataScopeMapper extends BaseMapper<UserDataScope> {
+
     void saveAll(@Param("userDataScopes") List<UserDataScope> userDataScopes);
+
 }

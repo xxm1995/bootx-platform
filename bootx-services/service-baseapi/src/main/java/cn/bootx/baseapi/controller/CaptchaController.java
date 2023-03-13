@@ -14,20 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 验证码服务
+ *
  * @author xxm
  * @date 2021/8/2
  */
-@Tag(name ="验证码服务")
+@Tag(name = "验证码服务")
 @RestController
 @RequestMapping("/captcha")
 @RequiredArgsConstructor
 public class CaptchaController {
+
     private final CaptchaService captchaService;
 
     @IgnoreAuth
     @Operation(summary = "获取图片验证码")
     @PostMapping("/imgCaptcha")
-    public ResResult<CaptchaDataResult> imgCaptcha(){
+    public ResResult<CaptchaDataResult> imgCaptcha() {
         return Res.ok(captchaService.imgCaptcha());
     }
 

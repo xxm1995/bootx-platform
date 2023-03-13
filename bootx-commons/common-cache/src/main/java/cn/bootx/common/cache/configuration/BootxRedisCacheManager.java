@@ -13,13 +13,16 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
-* 自定义Redis缓存管理
-* @author xxm
-* @date 2021/6/11
-*/
+ * 自定义Redis缓存管理
+ *
+ * @author xxm
+ * @date 2021/6/11
+ */
 public class BootxRedisCacheManager extends RedisCacheManager {
+
     @Setter
-    private Map<String,Integer> keysTtl;
+    private Map<String, Integer> keysTtl;
+
     private final RedisCacheWriter cacheWriter;
 
     public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration) {
@@ -27,22 +30,26 @@ public class BootxRedisCacheManager extends RedisCacheManager {
         this.cacheWriter = cacheWriter;
     }
 
-    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, String... initialCacheNames) {
+    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
+            String... initialCacheNames) {
         super(cacheWriter, defaultCacheConfiguration, initialCacheNames);
         this.cacheWriter = cacheWriter;
     }
 
-    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, boolean allowInFlightCacheCreation, String... initialCacheNames) {
+    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
+            boolean allowInFlightCacheCreation, String... initialCacheNames) {
         super(cacheWriter, defaultCacheConfiguration, allowInFlightCacheCreation, initialCacheNames);
         this.cacheWriter = cacheWriter;
     }
 
-    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, Map<String, RedisCacheConfiguration> initialCacheConfigurations) {
+    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
+            Map<String, RedisCacheConfiguration> initialCacheConfigurations) {
         super(cacheWriter, defaultCacheConfiguration, initialCacheConfigurations);
         this.cacheWriter = cacheWriter;
     }
 
-    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration, Map<String, RedisCacheConfiguration> initialCacheConfigurations, boolean allowInFlightCacheCreation) {
+    public BootxRedisCacheManager(RedisCacheWriter cacheWriter, RedisCacheConfiguration defaultCacheConfiguration,
+            Map<String, RedisCacheConfiguration> initialCacheConfigurations, boolean allowInFlightCacheCreation) {
         super(cacheWriter, defaultCacheConfiguration, initialCacheConfigurations, allowInFlightCacheCreation);
         this.cacheWriter = cacheWriter;
     }
@@ -51,14 +58,12 @@ public class BootxRedisCacheManager extends RedisCacheManager {
      * 创建Redis缓存
      */
     @Override
-    @SuppressWarnings({"ConstantConditions", "NullableProblems"})
+    @SuppressWarnings({ "ConstantConditions", "NullableProblems" })
     protected RedisCache createRedisCache(@Nullable String name, @Nullable RedisCacheConfiguration cacheConfig) {
-        Optional<String> keyOptional = keysTtl.keySet().stream()
-                .sorted((o1, o2) -> StrUtil.compare(o2,o1,false))
-                .filter(name::startsWith)
-                .findFirst();
+        Optional<String> keyOptional = keysTtl.keySet().stream().sorted((o1, o2) -> StrUtil.compare(o2, o1, false))
+                .filter(name::startsWith).findFirst();
         // 是自定义的key
-        if (keyOptional.isPresent()){
+        if (keyOptional.isPresent()) {
             String key = keyOptional.get();
             return this.createBootxRedisCache(name, cacheConfig.entryTtl(Duration.ofSeconds(keysTtl.get(key))));
         }
@@ -68,8 +73,8 @@ public class BootxRedisCacheManager extends RedisCacheManager {
     /**
      * 替换为自定义的RedisCache
      */
-    public BootxRedisCache createBootxRedisCache(String name, RedisCacheConfiguration cacheConfig){
+    public BootxRedisCache createBootxRedisCache(String name, RedisCacheConfiguration cacheConfig) {
         return new BootxRedisCache(name, this.cacheWriter, cacheConfig);
     }
-}
 
+}

@@ -8,20 +8,21 @@ import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**   
-*
-* @author xxm  
-* @date 2022/7/23 
-*/
+/**
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Configuration
 @RequiredArgsConstructor
 public class WeComConfiguration {
+
     private final WeComProperties weComProperties;
+
     /**
      * 微信公众号APIService
      */
     @Bean
-    public WxCpService wxCpService(WxCpConfigStorage wxMpConfigStorage){
+    public WxCpService wxCpService(WxCpConfigStorage wxMpConfigStorage) {
         WxCpService wxMpService = new WxCpServiceImpl();
         wxMpService.setWxCpConfigStorage(wxMpConfigStorage);
         return wxMpService;
@@ -31,7 +32,7 @@ public class WeComConfiguration {
      * 微信配置
      */
     @Bean
-    public WxCpConfigStorage wxCpConfigStorage(){
+    public WxCpConfigStorage wxCpConfigStorage() {
         WxCpDefaultConfigImpl config = new WxCpDefaultConfigImpl();
         config.setAgentId(weComProperties.getAgentId());
         config.setCorpId(weComProperties.getCorpId());
@@ -40,4 +41,5 @@ public class WeComConfiguration {
         config.setAesKey(weComProperties.getEncodingAesKey()); // 消息加解密密钥
         return config;
     }
+
 }

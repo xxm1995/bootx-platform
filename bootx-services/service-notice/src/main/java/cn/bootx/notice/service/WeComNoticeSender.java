@@ -6,10 +6,11 @@ import cn.bootx.notice.core.wecom.entity.msg.*;
 import java.io.InputStream;
 
 /**
-* 企业微信通知服务
-* @author xxm  
-* @date 2022/7/16 
-*/
+ * 企业微信通知服务
+ *
+ * @author xxm
+ * @date 2022/7/16
+ */
 public interface WeComNoticeSender {
 
     /**
@@ -71,4 +72,5 @@ public interface WeComNoticeSender {
      * 撤回企微消息
      */
     void recallNotice(String msgId);
+
 }

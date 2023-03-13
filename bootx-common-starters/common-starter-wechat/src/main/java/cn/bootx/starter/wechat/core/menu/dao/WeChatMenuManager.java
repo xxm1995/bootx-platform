@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * 微信自定义菜单
+ *
  * @author xxm
  * @date 2022-08-08
  */
@@ -21,24 +22,20 @@ import org.springframework.stereotype.Repository;
 public class WeChatMenuManager extends BaseManager<WeChatMenuMapper, WeChatMenu> {
 
     /**
-    * 分页
-    */
+     * 分页
+     */
     public Page<WeChatMenu> page(PageParam pageParam, WeChatMenuParam param) {
         Page<WeChatMenu> mpPage = MpUtil.getMpPage(pageParam, WeChatMenu.class);
-        return lambdaQuery()
-                .select(this.getEntityClass(),MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getName()),WeChatMenu::getName,param.getName())
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return lambdaQuery().select(this.getEntityClass(), MpUtil::excludeBigField)
+                .like(StrUtil.isNotBlank(param.getName()), WeChatMenu::getName, param.getName())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
     /**
      * 清除其他发布状态
      */
-    public void clearPublish(){
-        lambdaUpdate()
-                .eq(WeChatMenu::isPublish,true)
-                .set(WeChatMenu::isPublish,false)
-                .update();
+    public void clearPublish() {
+        lambdaUpdate().eq(WeChatMenu::isPublish, true).set(WeChatMenu::isPublish, false).update();
     }
+
 }

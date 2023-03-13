@@ -21,15 +21,17 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
-* 数据版本日志数据库实现
-* @author xxm
-* @date 2022/1/10
-*/
+ * 数据版本日志数据库实现
+ *
+ * @author xxm
+ * @date 2022/1/10
+ */
 @Slf4j
 @Service
-@ConditionalOnProperty(prefix = "bootx.starter.audit-log", value = "store", havingValue = "jdbc",matchIfMissing = true)
+@ConditionalOnProperty(prefix = "bootx.starter.audit-log", value = "store", havingValue = "jdbc", matchIfMissing = true)
 @RequiredArgsConstructor
 public class DataVersionLogDbService implements DataVersionLogService {
+
     private final DataVersionLogDbManager manager;
 
     /**
@@ -39,21 +41,20 @@ public class DataVersionLogDbService implements DataVersionLogService {
     @Transactional
     public void add(DataVersionLogParam param) {
         int maxVersion = manager.getMaxVersion(param.getTableName(), param.getDataId());
-        DataVersionLogDb dataVersionLog = new DataVersionLogDb()
-                .setTableName(param.getTableName())
-                .setDataName(param.getDataName())
-                .setDataId(param.getDataId())
-                .setCreator(SecurityUtil.getUserIdOrDefaultId())
-                .setCreateTime(LocalDateTime.now())
-                .setVersion(maxVersion+1);
-        if (param.getDataContent() instanceof String){
+        DataVersionLogDb dataVersionLog = new DataVersionLogDb().setTableName(param.getTableName())
+                .setDataName(param.getDataName()).setDataId(param.getDataId())
+                .setCreator(SecurityUtil.getUserIdOrDefaultId()).setCreateTime(LocalDateTime.now())
+                .setVersion(maxVersion + 1);
+        if (param.getDataContent() instanceof String) {
             dataVersionLog.setDataContent((String) param.getDataContent());
-        } else {
+        }
+        else {
             dataVersionLog.setDataContent(JacksonUtil.toJson(param.getDataContent()));
         }
-        if (param.getChangeContent() instanceof String){
+        if (param.getChangeContent() instanceof String) {
             dataVersionLog.setChangeContent(param.getChangeContent());
-        } else {
+        }
+        else {
             if (Objects.nonNull(param.getChangeContent())) {
                 dataVersionLog.setChangeContent(JacksonUtil.toJson(param.getChangeContent()));
             }
@@ -74,7 +75,7 @@ public class DataVersionLogDbService implements DataVersionLogService {
      */
     @Override
     public PageResult<DataVersionLogDto> page(PageParam pageParam, DataVersionLogParam param) {
-        return MpUtil.convert2DtoPageResult(manager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(manager.page(pageParam, param));
     }
 
     /**
@@ -84,4 +85,5 @@ public class DataVersionLogDbService implements DataVersionLogService {
     public void delete(Long id) {
 
     }
+
 }

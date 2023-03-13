@@ -9,21 +9,25 @@ import lombok.experimental.Accessors;
 
 import java.util.List;
 
-/**   
-* 用户信息类
-* @author xxm  
-* @date 2021/7/30 
-*/
+/**
+ * 用户信息类
+ *
+ * @author xxm
+ * @date 2021/7/30
+ */
 @Getter
 @Setter
 @ToString
 @Accessors(chain = true)
 @NoArgsConstructor
-public class UserDetail{
+public class UserDetail {
+
     /** 用户id */
     private Long id;
+
     /** 用户名称 */
     private String name;
+
     /** 账号 */
     private String username;
 

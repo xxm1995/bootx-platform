@@ -13,15 +13,16 @@ import java.util.List;
 
 /**
  * 取回任务命令类
+ *
  * @author xxm
  * @date 2020/3/18 11:03
  */
 public class TaskRetrieveCmd implements Command<Void> {
+
     /**
      * 任务id
      */
     protected String taskId;
-
 
     public TaskRetrieveCmd(String taskId) {
         this.taskId = taskId;
@@ -35,9 +36,7 @@ public class TaskRetrieveCmd implements Command<Void> {
 
         List<ActivityInstance> activityInstancesByQueryCriteria = CommandContextUtil.getActivityInstanceEntityManager()
                 .findActivityInstancesByQueryCriteria(new ActivityInstanceQueryImpl()
-                        .processInstanceId(taskEntity.getProcessInstanceId())
-                        .orderByActivityInstanceStartTime());
-
+                        .processInstanceId(taskEntity.getProcessInstanceId()).orderByActivityInstanceStartTime());
 
         List<ActivityInstance> reverse = Lists.reverse(activityInstancesByQueryCriteria);
 
@@ -45,4 +44,3 @@ public class TaskRetrieveCmd implements Command<Void> {
     }
 
 }
-

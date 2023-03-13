@@ -11,10 +11,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 只是在初始化时候使用一下，之后就会被替换
+ *
  * @author xxm
  * @date 2022/11/30
  */
 public class RedissonClientTemporary implements RedissonClient {
+
     /**
      * @param s
      * @param <V>
@@ -327,7 +329,8 @@ public class RedissonClientTemporary implements RedissonClient {
      * @return
      */
     @Override
-    public <K, V> RLocalCachedMap<K, V> getLocalCachedMap(String s, Codec codec, LocalCachedMapOptions<K, V> localCachedMapOptions) {
+    public <K, V> RLocalCachedMap<K, V> getLocalCachedMap(String s, Codec codec,
+            LocalCachedMapOptions<K, V> localCachedMapOptions) {
         return null;
     }
 
@@ -1228,4 +1231,5 @@ public class RedissonClientTemporary implements RedissonClient {
     public String getId() {
         return null;
     }
+
 }

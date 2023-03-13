@@ -11,10 +11,11 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* 钉钉消息
-* @author xxm  
-* @date 2020/11/30 
-*/
+ * 钉钉消息
+ *
+ * @author xxm
+ * @date 2020/11/30
+ */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -27,14 +28,14 @@ public class Msg implements Serializable {
      * <a href="https://open.dingtalk.com/document/group/custom-robot-access">...</a>
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Schema(description= "@谁(机器人消息用)")
+    @Schema(description = "@谁(机器人消息用)")
     private At at;
 
     /**
      * @see DingTalkNoticeCode
      */
     @JsonProperty("msgtype")
-    @Schema(description= "消息类型")
+    @Schema(description = "消息类型")
     private String msgType;
 
     public Msg(At at, String msgType) {
@@ -45,4 +46,5 @@ public class Msg implements Serializable {
     public Msg(String msgType) {
         this.msgType = msgType;
     }
+
 }

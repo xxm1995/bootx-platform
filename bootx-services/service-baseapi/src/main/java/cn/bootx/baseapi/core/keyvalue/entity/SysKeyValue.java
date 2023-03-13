@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
-* kv存储
-* @author xxm
-* @date 2022/3/30
-*/
+ * kv存储
+ *
+ * @author xxm
+ * @date 2022/3/30
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
@@ -35,14 +36,15 @@ public class SysKeyValue extends MpBaseEntity {
     /**
      * 转换成系统的 KayValue 对象
      */
-    public KeyValue toKeyValue(){
-        return new KeyValue(key,value);
+    public KeyValue toKeyValue() {
+        return new KeyValue(key, value);
     }
 
     /**
      * 从 KayValue 转换
      */
-    public static SysKeyValue init(KeyValue keyValue){
-        return new SysKeyValue(keyValue.getKey(),keyValue.getValue());
+    public static SysKeyValue init(KeyValue keyValue) {
+        return new SysKeyValue(keyValue.getKey(), keyValue.getValue());
     }
+
 }

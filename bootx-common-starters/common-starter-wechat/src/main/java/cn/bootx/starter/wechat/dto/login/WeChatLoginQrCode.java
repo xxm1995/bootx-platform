@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- *
  * @author xxm
  * @date 2022/8/4
  */
@@ -23,4 +22,5 @@ public class WeChatLoginQrCode {
 
     @Schema(description = "qrCode")
     private String qrCodeUrl;
+
 }

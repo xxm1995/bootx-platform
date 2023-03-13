@@ -13,11 +13,10 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
 
-/**   
-*
-* @author xxm  
-* @date 2022/5/1 
-*/
+/**
+ * @author xxm
+ * @date 2022/5/1
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -26,13 +25,12 @@ public class QuartzJobLogManager extends BaseManager<QuartzJobLogMapper, QuartzJ
     /**
      * 分页
      */
-    public Page<QuartzJobLog> page(PageParam pageParam, QuartzJobLogQuery query){
+    public Page<QuartzJobLog> page(PageParam pageParam, QuartzJobLogQuery query) {
         Page<QuartzJobLog> mpPage = MpUtil.getMpPage(pageParam, QuartzJobLog.class);
 
-        return this.lambdaQuery()
-                .eq(QuartzJobLog::getClassName,query.getClassName())
-                .eq(Objects.nonNull(query.getSuccess()),QuartzJobLog::getSuccess,query.getSuccess())
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return this.lambdaQuery().eq(QuartzJobLog::getClassName, query.getClassName())
+                .eq(Objects.nonNull(query.getSuccess()), QuartzJobLog::getSuccess, query.getSuccess())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
+
 }

@@ -9,15 +9,15 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-*
-* @author xxm
-* @date 2021/8/4
-*/
+ * @author xxm
+ * @date 2021/8/4
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户三方登录关系")
 public class UserThirdDto extends BaseDto implements Serializable {
+
     private static final long serialVersionUID = -7537453271488369310L;
 
     /** 用户id */
@@ -40,4 +40,5 @@ public class UserThirdDto extends BaseDto implements Serializable {
 
     /** 企业微信唯一标识 */
     private String weComId;
+
 }

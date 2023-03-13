@@ -9,38 +9,38 @@ import java.util.List;
 import java.util.Objects;
 
 /**
-* 微信支付方式
-* @author xxm
-* @date 2021/7/2
-*/
+ * 微信支付方式
+ *
+ * @author xxm
+ * @date 2021/7/2
+ */
 @UtilityClass
 public class WeChatPayWay {
-    private static final List<PayWayEnum> PAY_WAYS =
-            Arrays.asList(PayWayEnum.WAP,PayWayEnum.APP,PayWayEnum.JSAPI,PayWayEnum.QRCODE,PayWayEnum.BARCODE);
+
+    private static final List<PayWayEnum> PAY_WAYS = Arrays.asList(PayWayEnum.WAP, PayWayEnum.APP, PayWayEnum.JSAPI,
+            PayWayEnum.QRCODE, PayWayEnum.BARCODE);
 
     /**
      * 根据数字编号获取
      */
-    public PayWayEnum findByNo(int no){
-        return PAY_WAYS.stream()
-                .filter(e -> e.getNo() == no)
-                .findFirst()
+    public PayWayEnum findByNo(int no) {
+        return PAY_WAYS.stream().filter(e -> e.getNo() == no).findFirst()
                 .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
+
     /**
      * 根据数字编号获取
      */
-    public PayWayEnum findByCode(String code){
-        return PAY_WAYS.stream()
-                .filter(e -> Objects.equals(code,e.getCode()))
-                .findFirst()
+    public PayWayEnum findByCode(String code) {
+        return PAY_WAYS.stream().filter(e -> Objects.equals(code, e.getCode())).findFirst()
                 .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
 
     /**
      * 获取支持的支付方式
      */
-    public List<PayWayEnum> getPayWays(){
+    public List<PayWayEnum> getPayWays() {
         return PAY_WAYS;
     }
+
 }

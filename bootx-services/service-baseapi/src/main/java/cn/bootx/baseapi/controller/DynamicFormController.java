@@ -16,53 +16,55 @@ import java.util.List;
 
 /**
  * 动态表单
+ *
  * @author xxm
  * @date 2022-07-28
  */
-@Tag(name ="动态表单")
+@Tag(name = "动态表单")
 @RestController
 @RequestMapping("/dynamic/form")
 @RequiredArgsConstructor
 public class DynamicFormController {
+
     private final DynamicFormService dynamicFormService;
 
-    @Operation( summary = "添加")
+    @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody DynamicFormParam param){
+    public ResResult<Void> add(@RequestBody DynamicFormParam param) {
         dynamicFormService.add(param);
         return Res.ok();
     }
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody DynamicFormParam param){
+    public ResResult<Void> update(@RequestBody DynamicFormParam param) {
         dynamicFormService.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         dynamicFormService.delete(id);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<DynamicFormDto> findById(Long id){
+    public ResResult<DynamicFormDto> findById(Long id) {
         return Res.ok(dynamicFormService.findById(id));
     }
 
-    @Operation( summary = "查询所有")
+    @Operation(summary = "查询所有")
     @GetMapping(value = "/findAll")
-    public ResResult<List<DynamicFormDto>> findAll(){
+    public ResResult<List<DynamicFormDto>> findAll() {
         return Res.ok(dynamicFormService.findAll());
     }
 
-    @Operation( summary = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<DynamicFormDto>> page(PageParam pageParam, DynamicFormParam dynamicFormParam){
-        return Res.ok(dynamicFormService.page(pageParam,dynamicFormParam));
+    public ResResult<PageResult<DynamicFormDto>> page(PageParam pageParam, DynamicFormParam dynamicFormParam) {
+        return Res.ok(dynamicFormService.page(pageParam, dynamicFormParam));
     }
 
     @Operation(summary = "编码是否被使用")
@@ -73,7 +75,8 @@ public class DynamicFormController {
 
     @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
-    public ResResult<Boolean> existsByCode(String code,Long id) {
-        return Res.ok(dynamicFormService.existsByCode(code,id));
+    public ResResult<Boolean> existsByCode(String code, Long id) {
+        return Res.ok(dynamicFormService.existsByCode(code, id));
     }
+
 }

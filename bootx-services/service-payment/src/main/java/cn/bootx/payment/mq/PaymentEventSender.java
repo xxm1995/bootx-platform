@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 支付中心消息发送器
+ *
  * @author xxm
  * @date 2021/4/22
  */
@@ -29,24 +30,16 @@ public class PaymentEventSender {
     @Async("bigExecutor")
     @Retryable(value = Exception.class)
     public void sendPayComplete(PayCompleteEvent event) {
-        rabbitTemplate.convertAndSend(
-                PaymentEventCode.EXCHANGE_PAYMENT,
-                PaymentEventCode.PAY_COMPLETE,
-                event
-        );
+        rabbitTemplate.convertAndSend(PaymentEventCode.EXCHANGE_PAYMENT, PaymentEventCode.PAY_COMPLETE, event);
     }
 
     /**
-     * 支付撤销/关闭 事件发布 
+     * 支付撤销/关闭 事件发布
      */
     @Async("bigExecutor")
     @Retryable(value = Exception.class)
-    public void sendPayCancel(PayCancelEvent event){
-        rabbitTemplate.convertAndSend(
-                PaymentEventCode.EXCHANGE_PAYMENT,
-                PaymentEventCode.PAY_CANCEL,
-                event
-        );
+    public void sendPayCancel(PayCancelEvent event) {
+        rabbitTemplate.convertAndSend(PaymentEventCode.EXCHANGE_PAYMENT, PaymentEventCode.PAY_CANCEL, event);
     }
 
     /**
@@ -54,25 +47,18 @@ public class PaymentEventSender {
      */
     @Async("bigExecutor")
     @Retryable(value = Exception.class)
-    public void sendPayRefund(PayRefundEvent event){
-        rabbitTemplate.convertAndSend(
-                PaymentEventCode.EXCHANGE_PAYMENT,
-                PaymentEventCode.PAY_REFUND,
-                event
-        );
+    public void sendPayRefund(PayRefundEvent event) {
+        rabbitTemplate.convertAndSend(PaymentEventCode.EXCHANGE_PAYMENT, PaymentEventCode.PAY_REFUND, event);
     }
+
     /**
      * 支付单超时 事件发布
      */
     @Async("bigExecutor")
     @Retryable(value = Exception.class)
-    public void sendPaymentExpiredTime(Long paymentId){
-        rabbitTemplate.convertAndSend(
-                PaymentEventCode.EXCHANGE_PAYMENT,
-                PaymentEventCode.PAYMENT_EXPIRED_TIME,
-                paymentId
-        );
+    public void sendPaymentExpiredTime(Long paymentId) {
+        rabbitTemplate.convertAndSend(PaymentEventCode.EXCHANGE_PAYMENT, PaymentEventCode.PAYMENT_EXPIRED_TIME,
+                paymentId);
     }
-
 
 }

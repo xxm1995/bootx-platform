@@ -15,27 +15,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**   
-*
-* @author xxm  
-* @date 2021/9/7 
-*/
+/**
+ * @author xxm
+ * @date 2021/9/7
+ */
 @Tag(name = "登录日志")
 @RestController
 @RequestMapping("/log/login")
 @RequiredArgsConstructor
 public class LoginLogController {
+
     private final LoginLogService loginLogService;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<LoginLogDto>> page(@ParameterObject PageParam pageParam,@ParameterObject LoginLogParam loginLogParam){
-        return Res.ok(loginLogService.page(pageParam,loginLogParam));
+    public ResResult<PageResult<LoginLogDto>> page(@ParameterObject PageParam pageParam,
+            @ParameterObject LoginLogParam loginLogParam) {
+        return Res.ok(loginLogService.page(pageParam, loginLogParam));
     }
 
     @Operation(summary = "获取")
     @GetMapping("/findById")
-    public ResResult<LoginLogDto> findById(Long id){
+    public ResResult<LoginLogDto> findById(Long id) {
         return Res.ok(loginLogService.findById(id));
     }
+
 }

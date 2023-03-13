@@ -8,13 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-/**   
-* TTL MDC 适配器 覆盖原始类
-* @author xxm  
-* @date 2021/8/4 
-*/
+/**
+ * TTL MDC 适配器 覆盖原始类
+ *
+ * @author xxm
+ * @date 2021/8/4
+ */
 public class TtlMDCAdapter implements MDCAdapter {
-
 
     // The internal map is copied so as
 
@@ -33,6 +33,7 @@ public class TtlMDCAdapter implements MDCAdapter {
     private final ThreadLocal<Map<String, String>> copyOnThreadLocal = new TransmittableThreadLocal<>();
 
     private static final int WRITE_OPERATION = 1;
+
     private static final int MAP_COPY_OPERATION = 2;
 
     // keeps track of the last operation performed
@@ -68,9 +69,8 @@ public class TtlMDCAdapter implements MDCAdapter {
      * contrary to log4j, the <code>val</code> parameter can be null.
      * <p/>
      * <p/>
-     * If the current thread does not have a context map it is created as a side
-     * effect of this call.
-     *
+     * If the current thread does not have a context map it is created as a side effect of
+     * this call.
      * @throws IllegalArgumentException in case the "key" parameter is null
      */
     public void put(String key, String val) throws IllegalArgumentException {
@@ -84,7 +84,8 @@ public class TtlMDCAdapter implements MDCAdapter {
         if (wasLastOpReadOrNull(lastOp) || oldMap == null) {
             Map<String, String> newMap = duplicateAndInsertNewMap(oldMap);
             newMap.put(key, val);
-        } else {
+        }
+        else {
             oldMap.put(key, val);
         }
     }
@@ -106,7 +107,8 @@ public class TtlMDCAdapter implements MDCAdapter {
         if (wasLastOpReadOrNull(lastOp)) {
             Map<String, String> newMap = duplicateAndInsertNewMap(oldMap);
             newMap.remove(key);
-        } else {
+        }
+        else {
             oldMap.remove(key);
         }
     }
@@ -127,7 +129,8 @@ public class TtlMDCAdapter implements MDCAdapter {
         final Map<String, String> map = copyOnThreadLocal.get();
         if ((map != null) && (key != null)) {
             return map.get(key);
-        } else {
+        }
+        else {
             return null;
         }
     }
@@ -142,28 +145,28 @@ public class TtlMDCAdapter implements MDCAdapter {
     }
 
     /**
-     * Returns the keys in the MDC as a {@link Set}. The returned value can be
-     * null.
+     * Returns the keys in the MDC as a {@link Set}. The returned value can be null.
      */
     public Set<String> getKeys() {
         Map<String, String> map = getPropertyMap();
 
         if (map != null) {
             return map.keySet();
-        } else {
+        }
+        else {
             return null;
         }
     }
 
     /**
-     * Return a copy of the current thread's context map. Returned value may be
-     * null.
+     * Return a copy of the current thread's context map. Returned value may be null.
      */
     public Map<String, String> getCopyOfContextMap() {
         Map<String, String> hashMap = copyOnThreadLocal.get();
         if (hashMap == null) {
             return null;
-        } else {
+        }
+        else {
             return new HashMap<>(hashMap);
         }
     }
@@ -177,4 +180,5 @@ public class TtlMDCAdapter implements MDCAdapter {
         // the newMap replaces the old one for serialisation's sake
         copyOnThreadLocal.set(newMap);
     }
+
 }

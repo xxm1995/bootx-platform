@@ -16,51 +16,48 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**   
-* 角色
-* @author xxm  
-* @date 2021/8/3 
-*/
+/**
+ * 角色
+ *
+ * @author xxm
+ * @date 2021/8/3
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class RoleManager extends BaseManager<RoleMapper, Role> {
 
     public boolean existsByCode(String code) {
-        return existedByField(Role::getCode,code);
+        return existedByField(Role::getCode, code);
     }
 
     public boolean existsByCode(String code, Long id) {
-        return existedByField(Role::getCode,code,id);
+        return existedByField(Role::getCode, code, id);
     }
 
     public boolean existsByName(String name) {
-        return existedByField(Role::getName,name);
+        return existedByField(Role::getName, name);
     }
 
     public boolean existsByName(String name, Long id) {
-        return existedByField(Role::getName,name,id);
+        return existedByField(Role::getName, name, id);
     }
 
     public boolean existsById(Long roleId) {
-        return lambdaQuery().eq(Role::getId,roleId)
-                .exists();
+        return lambdaQuery().eq(Role::getId, roleId).exists();
     }
 
     public List<KeyValue> findDropdown() {
-        return lambdaQuery().select(Role::getId,Role::getName)
-                .list().stream()
-                .map(role -> new KeyValue(String.valueOf(role.getId()),role.getName()))
-                .collect(Collectors.toList());
+        return lambdaQuery().select(Role::getId, Role::getName).list().stream()
+                .map(role -> new KeyValue(String.valueOf(role.getId()), role.getName())).collect(Collectors.toList());
 
     }
 
     public Page<Role> page(PageParam pageParam, RoleParam roleParam) {
         Page<Role> mpPage = MpUtil.getMpPage(pageParam, Role.class);
-        return lambdaQuery()
-                .like(StrUtil.isNotBlank(roleParam.getCode()), Role::getCode,roleParam.getCode())
-                .like(StrUtil.isNotBlank(roleParam.getName()), Role::getName,roleParam.getName())
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return lambdaQuery().like(StrUtil.isNotBlank(roleParam.getCode()), Role::getCode, roleParam.getCode())
+                .like(StrUtil.isNotBlank(roleParam.getName()), Role::getName, roleParam.getName())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
+
 }

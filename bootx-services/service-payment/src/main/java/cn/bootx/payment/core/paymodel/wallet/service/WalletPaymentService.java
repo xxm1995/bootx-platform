@@ -19,6 +19,7 @@ import java.util.Optional;
 
 /**
  * 钱包交易记录的相关操作
+ *
  * @author xxm
  * @date 2020/12/8
  */
@@ -26,32 +27,28 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class WalletPaymentService {
+
     private final WalletPaymentManager walletPaymentManager;
 
     /**
      * 保存钱包支付记录
      */
     public void savePayment(Payment payment, PayParam payParam, PayModeParam payMode, Wallet wallet) {
-        WalletPayment walletPayment = new WalletPayment()
-                .setWalletId(wallet.getId());
-        walletPayment.setPaymentId(payment.getId())
-                .setUserId(payment.getUserId())
-                .setBusinessId(payParam.getBusinessId())
-                .setAmount(payMode.getAmount())
-                .setRefundableBalance(payMode.getAmount())
-                .setPayStatus(payment.getPayStatus());
+        WalletPayment walletPayment = new WalletPayment().setWalletId(wallet.getId());
+        walletPayment.setPaymentId(payment.getId()).setUserId(payment.getUserId())
+                .setBusinessId(payParam.getBusinessId()).setAmount(payMode.getAmount())
+                .setRefundableBalance(payMode.getAmount()).setPayStatus(payment.getPayStatus());
         walletPaymentManager.save(walletPayment);
     }
 
     /**
      * 更新成功状态
      */
-    public void updateSuccess(Long paymentId){
+    public void updateSuccess(Long paymentId) {
         Optional<WalletPayment> payment = walletPaymentManager.findByPaymentId(paymentId);
-        if (payment.isPresent()){
+        if (payment.isPresent()) {
             WalletPayment walletPayment = payment.get();
-            walletPayment.setPayStatus(PayStatusCode.TRADE_SUCCESS)
-                    .setPayTime(LocalDateTime.now());
+            walletPayment.setPayStatus(PayStatusCode.TRADE_SUCCESS).setPayTime(LocalDateTime.now());
             walletPaymentManager.updateById(walletPayment);
         }
     }
@@ -69,17 +66,19 @@ public class WalletPaymentService {
     /**
      * 更新退款
      */
-    public void updateRefund(Long paymentId, BigDecimal amount){
+    public void updateRefund(Long paymentId, BigDecimal amount) {
         Optional<WalletPayment> walletPayment = walletPaymentManager.findByPaymentId(paymentId);
         walletPayment.ifPresent(payment -> {
             BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
             payment.setRefundableBalance(refundableBalance);
-            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO) == 0) {
                 payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
-            } else {
+            }
+            else {
                 payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
             }
             walletPaymentManager.updateById(payment);
         });
     }
+
 }

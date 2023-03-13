@@ -9,29 +9,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**   
-* 用户websocket方式发送通知消息
-* @author xxm  
-* @date 2022/6/9 
-*/
+/**
+ * 用户websocket方式发送通知消息
+ *
+ * @author xxm
+ * @date 2022/6/9
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserWsNoticeService {
+
     private final UserNoticeWebSocketHandler noticeWebSocketHandler;
 
     /**
      * 服务端发送消息给客户端(指定用户)
      */
-    public <T> void sendMessageByUser(WsResult<T> resResult, Long userId){
-        noticeWebSocketHandler.sendMessageByUser(JacksonUtil.toJson(resResult),userId);
+    public <T> void sendMessageByUser(WsResult<T> resResult, Long userId) {
+        noticeWebSocketHandler.sendMessageByUser(JacksonUtil.toJson(resResult), userId);
     }
 
     /**
      * 服务端发送消息给客户端(指定用户组)
      */
-    public <T> void sendMessageByUsers(WsResult<T> resResult, List<Long> userIds){
-        noticeWebSocketHandler.sendMessageByUsers(JacksonUtil.toJson(resResult),userIds);
+    public <T> void sendMessageByUsers(WsResult<T> resResult, List<Long> userIds) {
+        noticeWebSocketHandler.sendMessageByUsers(JacksonUtil.toJson(resResult), userIds);
     }
 
     /**
@@ -40,4 +42,5 @@ public class UserWsNoticeService {
     public <T> void sendMessageByAll(WsResult<T> resResult) {
         noticeWebSocketHandler.sendMessageByAll(JacksonUtil.toJson(resResult));
     }
+
 }

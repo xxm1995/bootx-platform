@@ -21,18 +21,22 @@ import static cn.bootx.starter.auth.code.AuthLoginTypeCode.AUTH_CODE;
 import static cn.bootx.starter.auth.code.AuthLoginTypeCode.WE_CHAT;
 
 /**
-* 微信登录(公众号)
-* @author xxm
-* @date 2021/8/2
-*/
+ * 微信登录(公众号)
+ *
+ * @author xxm
+ * @date 2021/8/2
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class WeChatLoginHandler implements OpenIdAuthentication {
+
     private final UserTiredOperateService userTiredOperateService;
+
     private final WeChatQrLoginService weChatQrLoginService;
 
     private final UserThirdManager userThirdManager;
+
     private final UserInfoManager userInfoManager;
 
     @Override
@@ -49,16 +53,14 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
         AuthUser authUser = this.getAuthUser(authCode, null);
 
         // 获取微信公众号关联的用户id
-        UserThird userThird = userThirdManager.findByField(UserThird::getWeChatId,authUser.getUuid())
+        UserThird userThird = userThirdManager.findByField(UserThird::getWeChatId, authUser.getUuid())
                 .orElseThrow(() -> new LoginFailureException("没有找到绑定的微信公众号用户"));
 
         // 获取用户信息
         UserInfo userInfo = userInfoManager.findById(userThird.getUserId())
                 .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
-        return new AuthInfoResult()
-                .setUserDetail(userInfo.toUserDetail())
-                .setId(userInfo.getId());
+        return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());
     }
 
     /**
@@ -66,7 +68,7 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
      * @param authCode key 值, 可以用来拿用户信息
      */
     @Override
-    public AuthUser getAuthUser(String authCode, String state){
+    public AuthUser getAuthUser(String authCode, String state) {
         // 根据微信二维码的值获取关联扫码的微信信息
         String uuid = weChatQrLoginService.getOpenId(authCode);
         AuthUser authUser = new AuthUser();
@@ -77,15 +79,17 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
         weChatQrLoginService.clear(authCode);
         return authUser;
     }
+
     /**
      * 绑定用户
      */
     @Override
-    public void bindUser(String authCode, String state){
+    public void bindUser(String authCode, String state) {
         Long userId = SecurityUtil.getUserId();
         AuthUser authUser = this.getAuthUser(authCode, state);
         userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getWeChatId);
-        userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setWeChatId);
-        userTiredOperateService.bindOpenInfo(userId,authUser,WE_CHAT);
+        userTiredOperateService.bindOpenId(userId, authUser.getUuid(), UserThird::setWeChatId);
+        userTiredOperateService.bindOpenInfo(userId, authUser, WE_CHAT);
     }
+
 }

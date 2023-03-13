@@ -11,19 +11,20 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
-* mp自动填充值
-* @author xxm
-* @date 2021/7/27
-*/
+ * mp自动填充值
+ *
+ * @author xxm
+ * @date 2021/7/27
+ */
 @Component
 public class MpMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.strictInsertFill(metaObject, CommonCode.CREATE_TIME, LocalDateTime::now,LocalDateTime.class);
-        this.strictInsertFill(metaObject, CommonCode.CREATOR, this::getUserid,Long.class);
-        this.strictInsertFill(metaObject, CommonCode.LAST_MODIFIED_TIME, LocalDateTime::now,LocalDateTime.class);
-        this.strictInsertFill(metaObject, CommonCode.LAST_MODIFIER, this::getUserid,Long.class);
+        this.strictInsertFill(metaObject, CommonCode.CREATE_TIME, LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, CommonCode.CREATOR, this::getUserid, Long.class);
+        this.strictInsertFill(metaObject, CommonCode.LAST_MODIFIED_TIME, LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, CommonCode.LAST_MODIFIER, this::getUserid, Long.class);
     }
 
     @Override
@@ -33,9 +34,8 @@ public class MpMetaObjectHandler implements MetaObjectHandler {
         this.setFieldValByName(CommonCode.LAST_MODIFIER, this.getUserid(), metaObject);
     }
 
-    public Long getUserid(){
-        return SecurityUtil.getCurrentUser()
-                .map(UserDetail::getId)
-                .orElse(DesensitizedUtil.userId());
+    public Long getUserid() {
+        return SecurityUtil.getCurrentUser().map(UserDetail::getId).orElse(DesensitizedUtil.userId());
     }
+
 }

@@ -12,15 +12,18 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import org.springframework.stereotype.Service;
 
 /**
-* 微信门户处理
-* @author xxm
-* @date 2022/7/16
-*/
+ * 微信门户处理
+ *
+ * @author xxm
+ * @date 2022/7/16
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeChatPortalService {
+
     private final WxMpService wxMpService;
+
     private final WxMpMessageRouter wxMpMessageRouter;
 
     /**
@@ -51,7 +54,8 @@ public class WeChatPortalService {
      * @param timestamp 时间戳
      * @param nonce 随机数
      */
-    public String handleMessage(String requestBody, String signature, String timestamp, String nonce, String openid, String encType, String msgSignature) {
+    public String handleMessage(String requestBody, String signature, String timestamp, String nonce, String openid,
+            String encType, String msgSignature) {
         if (!wxMpService.checkSignature(timestamp, nonce, signature)) {
             throw new ValidationFailedException("非法请求，可能属于伪造的请求！");
         }
@@ -82,4 +86,5 @@ public class WeChatPortalService {
         log.debug("组装回复信息：{}", out);
         return out;
     }
+
 }

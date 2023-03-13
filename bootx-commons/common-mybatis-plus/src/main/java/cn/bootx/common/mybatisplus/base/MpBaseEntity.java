@@ -9,18 +9,21 @@ import lombok.experimental.FieldNameConstants;
 import java.io.Serializable;
 
 /**
-* 基础实体类 (带软删除)
-* @author xxm
-* @date 2021/7/27
-*/
+ * 基础实体类 (带软删除)
+ *
+ * @author xxm
+ * @date 2021/7/27
+ */
 @Getter
 @Setter
 @FieldNameConstants(innerTypeName = "Base")
 public abstract class MpBaseEntity extends MpDelEntity implements Serializable {
+
     private static final long serialVersionUID = -2699324766101179583L;
 
     /** 删除标志 */
     @TableLogic
-    @Column(comment = "删除标志",isNull = false,order = Integer.MAX_VALUE-100)
+    @Column(comment = "删除标志", isNull = false, order = Integer.MAX_VALUE - 100)
     private boolean deleted;
+
 }

@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * @author xxm
  * @date 2023/2/16
  */
@@ -19,7 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoViewLoginAuthentication extends PasswordLoginHandler {
 
-    public GoViewLoginAuthentication(PasswordEncoder passwordEncoder, UserAdminService userAdminService, UserQueryService userQueryService, CaptchaService captchaService) {
+    public GoViewLoginAuthentication(PasswordEncoder passwordEncoder, UserAdminService userAdminService,
+            UserQueryService userQueryService, CaptchaService captchaService) {
         super(passwordEncoder, userAdminService, userQueryService, captchaService);
     }
 
@@ -35,4 +35,5 @@ public class GoViewLoginAuthentication extends PasswordLoginHandler {
     public void authenticationBefore(LoginAuthContext context) {
         // 去除验证码的校验
     }
+
 }

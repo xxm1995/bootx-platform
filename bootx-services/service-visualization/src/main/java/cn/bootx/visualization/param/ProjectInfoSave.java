@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * 大屏更新参数
+ *
  * @author xxm
  * @date 2023/2/21
  */
@@ -26,11 +27,12 @@ public class ProjectInfoSave {
     private Integer state;
 
     @Schema(description = "报表内容")
-    private Map<String,Object> content;
+    private Map<String, Object> content;
 
     @Schema(description = "预览图片id")
     private Long indexImage;
 
     @Schema(description = "备注")
     private String remark;
+
 }

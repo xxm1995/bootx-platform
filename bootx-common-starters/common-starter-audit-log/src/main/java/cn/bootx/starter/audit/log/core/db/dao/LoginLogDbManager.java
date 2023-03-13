@@ -11,11 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-/**   
-* 登录日志
-* @author xxm  
-* @date 2021/8/12 
-*/
+/**
+ * 登录日志
+ *
+ * @author xxm
+ * @date 2021/8/12
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -23,11 +24,13 @@ public class LoginLogDbManager extends BaseManager<LoginLogDbMapper, LoginLogDb>
 
     public Page<LoginLogDb> page(PageParam pageParam, LoginLogParam loginLogParam) {
         Page<LoginLogDb> mpPage = MpUtil.getMpPage(pageParam, LoginLogDb.class);
-        return lambdaQuery()
-                .orderByDesc(LoginLogDb::getId)
-                .like(StrUtil.isNotBlank(loginLogParam.getAccount()), LoginLogDb::getAccount,loginLogParam.getAccount())
-                .like(StrUtil.isNotBlank(loginLogParam.getClient()), LoginLogDb::getClient,loginLogParam.getClient())
-                .like(StrUtil.isNotBlank(loginLogParam.getLoginType()), LoginLogDb::getLoginType,loginLogParam.getLoginType())
+        return lambdaQuery().orderByDesc(LoginLogDb::getId)
+                .like(StrUtil.isNotBlank(loginLogParam.getAccount()), LoginLogDb::getAccount,
+                        loginLogParam.getAccount())
+                .like(StrUtil.isNotBlank(loginLogParam.getClient()), LoginLogDb::getClient, loginLogParam.getClient())
+                .like(StrUtil.isNotBlank(loginLogParam.getLoginType()), LoginLogDb::getLoginType,
+                        loginLogParam.getLoginType())
                 .page(mpPage);
     }
+
 }

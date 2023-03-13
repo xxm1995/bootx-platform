@@ -20,34 +20,35 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2020/5/11 9:36
-*/
+ * @author xxm
+ * @date 2020/5/11 9:36
+ */
 @Validated
-@Tag(name ="请求权限资源")
+@Tag(name = "请求权限资源")
 @RestController
 @RequestMapping("/perm/path")
 @RequiredArgsConstructor
 public class PermPathController {
+
     private final PermPathService pathService;
 
     @Operation(summary = "添加权限")
     @PostMapping("/add")
-    public ResResult<PermPathDto> add(@RequestBody PermPathParam param){
+    public ResResult<PermPathDto> add(@RequestBody PermPathParam param) {
         pathService.add(param);
         return Res.ok();
     }
 
     @Operation(summary = "更新权限")
     @PostMapping("/update")
-    public ResResult<PermPathDto> update(@RequestBody PermPathParam param){
+    public ResResult<PermPathDto> update(@RequestBody PermPathParam param) {
         pathService.update(param);
         return Res.ok();
     }
 
     @Operation(summary = "批量更新状态")
     @PostMapping("/batchUpdateEnable")
-    public ResResult<PermPathDto> batchUpdateEnable(@RequestBody PermPathBatchEnableParam param){
+    public ResResult<PermPathDto> batchUpdateEnable(@RequestBody PermPathBatchEnableParam param) {
         ValidationUtil.validateParam(param);
         pathService.batchUpdateEnable(param);
         return Res.ok();
@@ -55,39 +56,39 @@ public class PermPathController {
 
     @Operation(summary = "删除权限")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(@NotNull(message = "id不可为空") Long id){
+    public ResResult<Void> delete(@NotNull(message = "id不可为空") Long id) {
         pathService.delete(id);
         return Res.ok();
     }
 
     @Operation(summary = "批量删除")
     @DeleteMapping("/deleteBatch")
-    public ResResult<Void> deleteBatch(@RequestBody @NotEmpty(message = "id集合不可为空") List<Long> ids){
+    public ResResult<Void> deleteBatch(@RequestBody @NotEmpty(message = "id集合不可为空") List<Long> ids) {
         pathService.deleteBatch(ids);
         return Res.ok();
     }
 
     @Operation(summary = "获取详情")
     @GetMapping("/findById")
-    public ResResult<PermPathDto> findById(Long id){
+    public ResResult<PermPathDto> findById(Long id) {
         return Res.ok(pathService.findById(id));
     }
 
     @Operation(summary = "权限分页")
     @GetMapping("/page")
-    public ResResult<PageResult<PermPathDto>> page(PageParam pageParam, PermPathParam param){
-        return Res.ok(pathService.page(pageParam,param));
+    public ResResult<PageResult<PermPathDto>> page(PageParam pageParam, PermPathParam param) {
+        return Res.ok(pathService.page(pageParam, param));
     }
 
     @Operation(summary = "权限列表")
     @GetMapping("/findAll")
-    public ResResult<List<PermPathDto>> findAll(){
+    public ResResult<List<PermPathDto>> findAll() {
         return Res.ok(pathService.findAll());
     }
 
     @Operation(summary = "同步系统请求资源")
     @PostMapping("/syncSystem")
-    public ResResult<Void> syncSystem(){
+    public ResResult<Void> syncSystem() {
         pathService.syncSystem();
         return Res.ok();
     }

@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
-*
-* @author xxm
-* @date 2022/3/14
-*/
+ * @author xxm
+ * @date 2022/3/14
+ */
 @Mapper
 public interface VoucherPaymentMapper extends BaseMapper<VoucherPayment> {
+
 }

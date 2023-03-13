@@ -17,4 +17,5 @@ public @interface DataVersionLog {
      * 数据记录的标题
      */
     String title() default "";
+
 }

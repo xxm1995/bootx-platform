@@ -12,15 +12,17 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
-* redis请求类
-* @author xxm
-* @date 2020/4/9 15:34
-*/
+ * redis请求类
+ *
+ * @author xxm
+ * @date 2020/4/9 15:34
+ */
 @RequiredArgsConstructor
 public class RedisClient {
 
     private final StringRedisTemplate stringRedisTemplate;
-    private final RedisTemplate<String,Object> redisTemplate;
+
+    private final RedisTemplate<String, Object> redisTemplate;
 
     /** 删除key */
     public void deleteKey(String key) {
@@ -44,7 +46,7 @@ public class RedisClient {
 
     /** 设置超时通知的事件 */
     public void setKeyExpired(String keyPrefix, String key, long timeoutMs) {
-        stringRedisTemplate.opsForValue().set(keyPrefix+key, "", timeoutMs, TimeUnit.MILLISECONDS);
+        stringRedisTemplate.opsForValue().set(keyPrefix + key, "", timeoutMs, TimeUnit.MILLISECONDS);
     }
 
     /** 是否存在 */
@@ -80,7 +82,7 @@ public class RedisClient {
 
     /** 获取hash值 */
     public Map<String, String> hmGet(String key) {
-        return stringRedisTemplate.<String,String>opsForHash().entries(key);
+        return stringRedisTemplate.<String, String>opsForHash().entries(key);
     }
 
     /** ZSet 添加 */
@@ -107,7 +109,7 @@ public class RedisClient {
     }
 
     /** 设置超时 */
-    public void expireUnit(String key, long expire,TimeUnit timeUnit) {
+    public void expireUnit(String key, long expire, TimeUnit timeUnit) {
         stringRedisTemplate.expire(key, expire, timeUnit);
     }
 
@@ -127,7 +129,7 @@ public class RedisClient {
     }
 
     /** 不存在进行赋值,带超时 */
-    public Boolean setIfAbsent(String key, String value,long timeoutMs) {
+    public Boolean setIfAbsent(String key, String value, long timeoutMs) {
         return stringRedisTemplate.opsForValue().setIfAbsent(key, value, timeoutMs, TimeUnit.MILLISECONDS);
     }
 
@@ -137,7 +139,8 @@ public class RedisClient {
     }
 
     /** 发布订阅消息 */
-    public void convertAndSend(String topic, Object message){
-        redisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX+topic,message);
+    public void convertAndSend(String topic, Object message) {
+        redisTemplate.convertAndSend(RedisCode.TOPIC_PREFIX + topic, message);
     }
+
 }

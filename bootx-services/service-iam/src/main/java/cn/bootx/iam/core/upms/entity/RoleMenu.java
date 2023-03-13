@@ -7,11 +7,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**   
-* 角色权限关联关系
-* @author xxm  
-* @date 2021/8/3 
-*/
+/**
+ * 角色权限关联关系
+ *
+ * @author xxm
+ * @date 2021/8/3
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -34,10 +35,10 @@ public class RoleMenu extends MpIdEntity {
      */
     private Long permissionId;
 
-
     public RoleMenu(Long roleId, String clientCode, Long permissionId) {
         this.roleId = roleId;
         this.clientCode = clientCode;
         this.permissionId = permissionId;
     }
+
 }

@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
-* 声音消息
-* @author xxm
-* @date 2022/7/19
-*/
+ * 声音消息
+ *
+ * @author xxm
+ * @date 2022/7/19
+ */
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
@@ -31,6 +32,7 @@ public class DingVoiceMsg implements DingMsg {
      */
     @Override
     public Msg toDingMsg() {
-        return new VoiceMsg(mediaId,duration);
+        return new VoiceMsg(mediaId, duration);
     }
+
 }

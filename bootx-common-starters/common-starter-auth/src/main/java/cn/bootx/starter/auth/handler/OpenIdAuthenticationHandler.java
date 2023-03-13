@@ -12,26 +12,25 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* OpenID登录处理器
-* @author xxm  
-* @date 2021/7/30 
-*/
+ * OpenID登录处理器
+ *
+ * @author xxm
+ * @date 2021/7/30
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class OpenIdAuthenticationHandler {
+
     private final List<OpenIdAuthentication> openIdAuthentications;
 
     /**
      * 认证
      */
-    public @NotNull AuthInfoResult authentication(LoginAuthContext context){
+    public @NotNull AuthInfoResult authentication(LoginAuthContext context) {
         String clientCode = context.getAuthLoginType().getCode();
-        return openIdAuthentications.stream()
-                .filter(o->o.adaptation(clientCode))
-                .findFirst()
-                .map(o->o.authentication(context))
-                .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
+        return openIdAuthentications.stream().filter(o -> o.adaptation(clientCode)).findFirst()
+                .map(o -> o.authentication(context)).orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
 
 }

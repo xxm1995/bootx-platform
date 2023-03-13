@@ -25,6 +25,7 @@ import java.util.Optional;
 
 /**
  * 微信支付记录单
+ *
  * @author xxm
  * @date 2021/6/21
  */
@@ -32,17 +33,17 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class WeChatPaymentService {
+
     private final PaymentService paymentService;
+
     private final WeChatPaymentManager weChatPaymentManager;
 
     /**
-     * 支付调起成功
-     * 更新 payment 中 异步支付类型信息
+     * 支付调起成功 更新 payment 中 异步支付类型信息
      */
-    public void updatePaySuccess(Payment payment, PayModeParam payModeParam){
+    public void updatePaySuccess(Payment payment, PayModeParam payModeParam) {
         AsyncPayInfo asyncPayInfo = AsyncPayInfoLocal.get();
-        payment.setAsyncPayMode(true)
-                .setAsyncPayChannel(PayChannelCode.WECHAT);
+        payment.setAsyncPayMode(true).setAsyncPayChannel(PayChannelCode.WECHAT);
 
         List<PayChannelInfo> payTypeInfos = payment.getPayChannelInfo();
         List<RefundableInfo> refundableInfos = payment.getRefundableInfo();
@@ -50,20 +51,16 @@ public class WeChatPaymentService {
         payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         refundableInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         // 添加微信支付类型信息
-        payTypeInfos.add(new PayChannelInfo()
-                .setPayChannel(PayChannelCode.WECHAT)
-                .setPayWay(payModeParam.getPayWay())
-                .setAmount(payModeParam.getAmount())
-                .setExtraParamsJson(payModeParam.getExtraParamsJson()));
+        payTypeInfos.add(new PayChannelInfo().setPayChannel(PayChannelCode.WECHAT).setPayWay(payModeParam.getPayWay())
+                .setAmount(payModeParam.getAmount()).setExtraParamsJson(payModeParam.getExtraParamsJson()));
         payment.setPayChannelInfo(payTypeInfos);
         // 更新微信可退款类型信息
-        refundableInfos.add(new RefundableInfo()
-                .setPayChannel(PayChannelCode.WECHAT)
-                .setAmount(payModeParam.getAmount()));
+        refundableInfos
+                .add(new RefundableInfo().setPayChannel(PayChannelCode.WECHAT).setAmount(payModeParam.getAmount()));
         payment.setRefundableInfo(refundableInfos);
         // 如果支付完成(付款码情况) 调用 updateSyncSuccess 创建微信支付记录
-        if (Objects.equals(payment.getPayStatus(),PayStatusCode.TRADE_SUCCESS)){
-            this.createWeChatPayment(payment,payModeParam,asyncPayInfo.getTradeNo());
+        if (Objects.equals(payment.getPayStatus(), PayStatusCode.TRADE_SUCCESS)) {
+            this.createWeChatPayment(payment, payModeParam, asyncPayInfo.getTradeNo());
         }
     }
 
@@ -71,11 +68,9 @@ public class WeChatPaymentService {
      * 异步支付成功, 更新支付记录成功状态, 并创建微信支付记录
      */
     public void updateAsyncSuccess(Long id, PayModeParam payModeParam, String tradeNo) {
-        Payment payment = paymentService.findById(id)
-                .orElseThrow(() -> new BizException("支付记录不存在"));
-        this.createWeChatPayment(payment,payModeParam,tradeNo);
+        Payment payment = paymentService.findById(id).orElseThrow(() -> new BizException("支付记录不存在"));
+        this.createWeChatPayment(payment, payModeParam, tradeNo);
     }
-
 
     /**
      * 更新支付记录成功状态, 并创建微信支付记录
@@ -84,13 +79,9 @@ public class WeChatPaymentService {
 
         // 创建微信支付记录
         WeChatPayment wechatPayment = new WeChatPayment();
-        wechatPayment.setTradeNo(tradeNo)
-                .setPaymentId(payment.getId())
-                .setAmount(payModeParam.getAmount())
-                .setRefundableBalance(payModeParam.getAmount())
-                .setBusinessId(payment.getBusinessId())
-                .setUserId(payment.getUserId())
-                .setPayStatus(PayStatusCode.TRADE_SUCCESS)
+        wechatPayment.setTradeNo(tradeNo).setPaymentId(payment.getId()).setAmount(payModeParam.getAmount())
+                .setRefundableBalance(payModeParam.getAmount()).setBusinessId(payment.getBusinessId())
+                .setUserId(payment.getUserId()).setPayStatus(PayStatusCode.TRADE_SUCCESS)
                 .setPayTime(LocalDateTime.now());
         weChatPaymentManager.save(wechatPayment);
     }
@@ -98,7 +89,7 @@ public class WeChatPaymentService {
     /**
      * 取消状态
      */
-    public void updateClose(Long paymentId){
+    public void updateClose(Long paymentId) {
         Optional<WeChatPayment> weChatPaymentOptional = weChatPaymentManager.findByPaymentId(paymentId);
         weChatPaymentOptional.ifPresent(weChatPayment -> {
             weChatPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
@@ -106,18 +97,19 @@ public class WeChatPaymentService {
         });
     }
 
-
     /**
      * 更新退款
      */
     public void updatePayRefund(WeChatPayment weChatPayment, BigDecimal amount) {
         BigDecimal refundableBalance = weChatPayment.getRefundableBalance().subtract(amount);
         weChatPayment.setRefundableBalance(refundableBalance);
-        if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+        if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO) == 0) {
             weChatPayment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
-        } else {
+        }
+        else {
             weChatPayment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
         }
         weChatPaymentManager.updateById(weChatPayment);
     }
+
 }

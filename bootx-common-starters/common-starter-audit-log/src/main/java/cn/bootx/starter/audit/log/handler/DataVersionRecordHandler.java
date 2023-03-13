@@ -15,6 +15,7 @@ import java.util.*;
 
 /**
  * 数据变动记录插件
+ *
  * @author xxm
  * @date 2023/1/8
  */
@@ -22,6 +23,7 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor
 public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor {
+
     // 必须延迟加载, 不然无法启动
     @Lazy
     private final DataVersionLogService dataVersionLogService;
@@ -38,37 +40,33 @@ public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor
             // 原始数据
             List<DataColumnChangeResult> originalColumns = Optional.ofNullable(changedRecord.getOriginalColumns())
                     .orElse(new ArrayList<>(0));
-            Map<String,Object> dataRecord = new HashMap<>();
-            Map<String,Object> updateRecord = new HashMap<>();
+            Map<String, Object> dataRecord = new HashMap<>();
+            Map<String, Object> updateRecord = new HashMap<>();
             // 遍历原始数据的所有字段
             for (DataColumnChangeResult originalColumn : originalColumns) {
-                dataRecord.put(originalColumn.getColumnName(),originalColumn.getOriginalValue());
+                dataRecord.put(originalColumn.getColumnName(), originalColumn.getOriginalValue());
             }
             // 用新数据进行替换
             List<DataColumnChangeResult> updatedColumns = Optional.ofNullable(changedRecord.getUpdatedColumns())
                     .orElse(new ArrayList<>(0));
             for (DataColumnChangeResult updatedColumn : updatedColumns) {
                 // 更新记录列表记录变更前的数据
-                updateRecord.put(updatedColumn.getColumnName(),dataRecord.get(updatedColumn.getColumnName()));
-                dataRecord.put(updatedColumn.getColumnName(),updatedColumn.getUpdateValue());
+                updateRecord.put(updatedColumn.getColumnName(), dataRecord.get(updatedColumn.getColumnName()));
+                dataRecord.put(updatedColumn.getColumnName(), updatedColumn.getUpdateValue());
             }
             Object pkColumnVal = changedRecord.getPkColumnVal();
             // insert手动获取下主键值
-            if ("insert".equals(operationResult.getOperation())){
+            if ("insert".equals(operationResult.getOperation())) {
                 String keyProperty = Optional.ofNullable(MpUtil.getTableInfo(operationResult.getTableName()))
-                        .map(TableInfo::getKeyProperty)
-                        .map(String::toUpperCase)
-                        .orElse(null);
+                        .map(TableInfo::getKeyProperty).map(String::toUpperCase).orElse(null);
                 pkColumnVal = dataRecord.get(keyProperty);
             }
             // 保存记录
-            DataVersionLogParam dataVersionLogParam = new DataVersionLogParam()
-                    .setDataId(pkColumnVal.toString())
-                    .setDataName(annotation.title())
-                    .setDataContent(dataRecord)
-                    .setChangeContent(updateRecord)
+            DataVersionLogParam dataVersionLogParam = new DataVersionLogParam().setDataId(pkColumnVal.toString())
+                    .setDataName(annotation.title()).setDataContent(dataRecord).setChangeContent(updateRecord)
                     .setTableName(operationResult.getTableName());
             dataVersionLogService.add(dataVersionLogParam);
         }
     }
+
 }

@@ -15,22 +15,20 @@ import java.util.Set;
 import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventType.*;
 
 /**
- *
  * @author xxm
  * @date 2022/8/28
  */
 @Slf4j
 @Component
 public class BpmInstanceEventListener extends AbstractFlowableEngineEventListener {
+
     private final BpmInstanceEvenListenerService bpmInstanceEvenListenerService;
 
     /** 处理的事件 */
-    private static final Set<FlowableEngineEventType> TASK_EVENTS = CollUtil.newHashSet(
-            PROCESS_CREATED,
-            PROCESS_CANCELLED,
-            PROCESS_COMPLETED
-    );
-    public BpmInstanceEventListener(BpmInstanceEvenListenerService bpmInstanceEvenListenerService){
+    private static final Set<FlowableEngineEventType> TASK_EVENTS = CollUtil.newHashSet(PROCESS_CREATED,
+            PROCESS_CANCELLED, PROCESS_COMPLETED);
+
+    public BpmInstanceEventListener(BpmInstanceEvenListenerService bpmInstanceEvenListenerService) {
         super(TASK_EVENTS);
         this.bpmInstanceEvenListenerService = bpmInstanceEvenListenerService;
     }
@@ -40,15 +38,14 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
      */
     @Override
     protected void processCreated(FlowableEngineEntityEvent event) {
-        ProcessInstance instance = (ProcessInstance)event.getEntity();
+        ProcessInstance instance = (ProcessInstance) event.getEntity();
         bpmInstanceEvenListenerService.processCreated(instance);
     }
 
     /**
-     * 流程取消(被删除)
-     * 一个进程已被取消。在数据库删除之前由
-     * org.flowable.engine.impl.RuntimeServiceImpl#deleteProcessInstance(java.lang.String, java.lang.String)
-     * 删除流程实例时调度。
+     * 流程取消(被删除) 一个进程已被取消。在数据库删除之前由
+     * org.flowable.engine.impl.RuntimeServiceImpl#deleteProcessInstance(java.lang.String,
+     * java.lang.String) 删除流程实例时调度。
      */
     @Override
     protected void processCancelled(FlowableCancelledEvent event) {
@@ -59,8 +56,9 @@ public class BpmInstanceEventListener extends AbstractFlowableEngineEventListene
      */
     @Override
     protected void processCompleted(FlowableEngineEntityEvent event) {
-        ProcessInstance instance = (ProcessInstance)event.getEntity();
+        ProcessInstance instance = (ProcessInstance) event.getEntity();
         bpmInstanceEvenListenerService.processCompleted(instance);
 
     }
+
 }

@@ -16,6 +16,7 @@ import static cn.bootx.common.core.code.CommonCode.USER_ID;
 
 /**
  * 全局用户WS通知
+ *
  * @author xxm
  * @date 2022/3/27
  */
@@ -26,6 +27,7 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
 
     /** websocket连接管理器 */
     private static final SpringWebSocketSessionManager wsManager = new SpringWebSocketSessionManager();
+
     /** 记录当前在线连接数 */
     private static final AtomicInteger onlineCount = new AtomicInteger(0);
 
@@ -35,7 +37,7 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         Long userId = (Long) session.getAttributes().get(USER_ID);
-        wsManager.addSession(String.valueOf(userId),session);
+        wsManager.addSession(String.valueOf(userId), session);
         onlineCount.incrementAndGet(); // 在线数加1
         log.info("有新连接加入：{}，当前在线人数为：{}", userId, onlineCount.get());
     }
@@ -55,20 +57,18 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
      * 接收消息
      */
     @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message){
+    public void handleTextMessage(WebSocketSession session, TextMessage message) {
         // 不处理接收的消息, 通常只会接收到心跳请求
-//        log.debug("心跳请求");
+        // log.debug("心跳请求");
     }
-
 
     /**
      * 错误
      */
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) {
-        log.error("{} 发生错误",session.getId());
+        log.error("{} 发生错误", session.getId());
     }
-
 
     /**
      * 服务端发送消息给客户端(指定用户)
@@ -80,7 +80,8 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
             for (WebSocketSession session : sessions) {
                 session.sendMessage(new TextMessage(message));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("服务端发送消息给客户端失败：", e);
         }
     }
@@ -88,9 +89,9 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
     /**
      * 服务端发送消息给客户端(指定用户组)
      */
-    public void sendMessageByUsers(String message, List<Long> userIds){
+    public void sendMessageByUsers(String message, List<Long> userIds) {
         for (Long userId : userIds) {
-            this.sendMessageByUser(message,userId);
+            this.sendMessageByUser(message, userId);
         }
     }
 
@@ -103,7 +104,8 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
             for (WebSocketSession session : sessions) {
                 session.sendMessage(new TextMessage(message));
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.error("服务端发送消息给客户端失败：", e);
         }
     }

@@ -5,10 +5,11 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
-* 配置
-* @author xxm
-* @date 2021/12/5
-*/
+ * 配置
+ *
+ * @author xxm
+ * @date 2021/12/5
+ */
 @Getter
 @Setter
 @ConfigurationProperties("bootx.common.exception")

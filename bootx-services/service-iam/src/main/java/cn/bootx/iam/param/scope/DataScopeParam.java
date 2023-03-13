@@ -5,13 +5,13 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* @author xxm
-* @date 2021/12/24
-*/
+ * @author xxm
+ * @date 2021/12/24
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "数据范围权限")
-public class DataScopeParam{
+public class DataScopeParam {
 
     @Schema(description = "主键")
     private Long id;
@@ -26,4 +26,6 @@ public class DataScopeParam{
     private Integer type;
 
     @Schema(description = "备注")
-    private String remark;}
+    private String remark;
+
+}

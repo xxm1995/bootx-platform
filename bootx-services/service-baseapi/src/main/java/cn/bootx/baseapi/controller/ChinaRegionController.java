@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 中国行政区划
+ *
  * @author xxm
  * @date 2022/12/24
  */
@@ -23,29 +24,30 @@ import java.util.List;
 @RequestMapping("/china/region")
 @RequiredArgsConstructor
 public class ChinaRegionController {
+
     private final ChinaRegionService chinaRegionService;
 
     @Operation(summary = "获取一级行政区")
     @GetMapping("/findAllProvince")
-    public ResResult<List<RegionDto>> findAllProvince(){
+    public ResResult<List<RegionDto>> findAllProvince() {
         return Res.ok(chinaRegionService.findAllProvince());
     }
 
     @Operation(summary = "根据编码获取下一级行政区划的列表")
     @GetMapping("/findAllRegionByParentCode")
-    public ResResult<List<RegionDto>> findAllRegionByParentCode(String parentCode){
+    public ResResult<List<RegionDto>> findAllRegionByParentCode(String parentCode) {
         return Res.ok(chinaRegionService.findAllRegionByParentCode(parentCode));
     }
 
     @Operation(summary = "获取省市二级联动列表")
     @GetMapping("/findAllProvinceAndCity")
-    public ResResult<List<RegionDto>> findAllProvinceAndCity(){
+    public ResResult<List<RegionDto>> findAllProvinceAndCity() {
         return Res.ok(chinaRegionService.findAllProvinceAndCity());
     }
 
     @Operation(summary = " 获取省市区县三级联动列表")
     @GetMapping("/findAllProvinceAndCityAndArea")
-    public ResResult<List<RegionDto>> findAllProvinceAndCityAndArea(){
+    public ResResult<List<RegionDto>> findAllProvinceAndCityAndArea() {
         return Res.ok(chinaRegionService.findAllProvinceAndCityAndArea());
     }
 

@@ -8,18 +8,24 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
-* 响应包装类
-* @author xxm
-* @date 2020/1/22 15:26
-*/
+ * 响应包装类
+ *
+ * @author xxm
+ * @date 2020/1/22 15:26
+ */
 @Getter
 @Setter
 @ToString
 public class ResResult<T> implements Serializable {
+
     private static final long serialVersionUID = -3041700282408360384L;
+
     private String msg = "success";
+
     private int code = CommonCode.SUCCESS_CODE;
+
     private T data;
+
     public ResResult() {
         super();
     }
@@ -42,4 +48,5 @@ public class ResResult<T> implements Serializable {
         this(code, msg);
         this.data = data;
     }
+
 }

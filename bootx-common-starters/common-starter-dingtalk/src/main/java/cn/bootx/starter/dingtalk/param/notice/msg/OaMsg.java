@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 钉钉OA消息
+ *
  * @author xxm
  * @date 2022/7/19
  */
@@ -29,7 +30,7 @@ public class OaMsg extends Msg {
     @Data
     @Accessors(chain = true)
     @Schema(title = "OA消息体")
-    public static class Oa{
+    public static class Oa {
 
         @JsonProperty("message_url")
         @Schema(description = "消息点击链接地址")
@@ -49,11 +50,10 @@ public class OaMsg extends Msg {
         @Schema(description = "消息状态栏")
         private StatusBar statusBar;
 
-
         @Data
         @Accessors(chain = true)
         @Schema(title = "消息头部内容")
-        public static class Head{
+        public static class Head {
 
             @JsonProperty("bgcolor")
             @Schema(description = "消息头部的背景颜色")
@@ -63,10 +63,11 @@ public class OaMsg extends Msg {
             private String text;
 
         }
+
         @Data
         @Accessors(chain = true)
         @Schema(title = "消息状态栏")
-        public static class StatusBar{
+        public static class StatusBar {
 
             @Schema(description = "状态栏文案")
             @JsonProperty("status_value")
@@ -77,11 +78,11 @@ public class OaMsg extends Msg {
             private String statusBg;
 
         }
+
         @Data
         @Accessors(chain = true)
         @Schema(title = "消息体")
-        public static class Body{
-
+        public static class Body {
 
             @Schema(description = "消息体的标题")
             private String title;
@@ -105,24 +106,23 @@ public class OaMsg extends Msg {
             @Schema(description = "自定义的作者名字")
             private String author;
 
-
-
             @Data
             @Accessors(chain = true)
             @Schema(title = "消息体的表单，最多显示6个，超过会被隐藏")
-            public static class Form{
+            public static class Form {
 
                 @Schema(description = "消息体的关键字")
                 private String key;
 
                 @Schema(description = "消息体的关键字对应的值")
                 private String value;
+
             }
 
             @Data
             @Accessors(chain = true)
             @Schema(title = "单行富文本信息")
-            public static class Rich{
+            public static class Rich {
 
                 @Schema(description = "单行富文本信息的数目")
                 private String num;
@@ -131,6 +131,9 @@ public class OaMsg extends Msg {
                 private String unit;
 
             }
+
         }
+
     }
+
 }

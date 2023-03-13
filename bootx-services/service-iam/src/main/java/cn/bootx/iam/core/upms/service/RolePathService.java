@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
 
 import static cn.bootx.iam.code.CachingCode.USER_PATH;
 
-
 /**
  * 角色请求权限关系
+ *
  * @author xxm
  * @date 2021/6/9
  */
@@ -36,8 +36,11 @@ import static cn.bootx.iam.code.CachingCode.USER_PATH;
 @Service
 @RequiredArgsConstructor
 public class RolePathService {
+
     private final RolePathManager rolePathManager;
+
     private final PermPathService pathService;
+
     private final UserInfoManager userInfoManager;
 
     private final UserRoleService userRoleService;
@@ -46,7 +49,7 @@ public class RolePathService {
      * 保存角色路径授权
      */
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {USER_PATH},allEntries = true)
+    @CacheEvict(value = { USER_PATH }, allEntries = true)
     @CountTime
     public void addRolePath(Long roleId, List<Long> permissionIds) {
         // 先删后增
@@ -54,14 +57,11 @@ public class RolePathService {
         List<Long> rolePathIds = rolePaths.stream().map(RolePath::getPermissionId).collect(Collectors.toList());
         // 需要删除的
         List<Long> deleteIds = rolePaths.stream()
-                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
-                .map(MpIdEntity::getId)
+                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId())).map(MpIdEntity::getId)
                 .collect(Collectors.toList());
 
-        List<RolePath> rolePermissions = permissionIds.stream()
-                .filter(id->!rolePathIds.contains(id))
-                .map(permissionId -> new RolePath(roleId, permissionId))
-                .collect(Collectors.toList());
+        List<RolePath> rolePermissions = permissionIds.stream().filter(id -> !rolePathIds.contains(id))
+                .map(permissionId -> new RolePath(roleId, permissionId)).collect(Collectors.toList());
         rolePathManager.deleteByIds(deleteIds);
         rolePathManager.saveAll(rolePermissions);
     }
@@ -69,7 +69,7 @@ public class RolePathService {
     /**
      * 查询用户查询拥有的请求权限信息
      */
-    public List<PermPathDto> findPathsByUser(){
+    public List<PermPathDto> findPathsByUser() {
         Long userId = SecurityUtil.getUserId();
         return this.findPathsByUser(userId);
     }
@@ -79,32 +79,30 @@ public class RolePathService {
      */
     public List<Long> findIdsByRole(Long roleId) {
         List<RolePath> rolePermissions = rolePathManager.findAllByRole(roleId);
-        return rolePermissions.stream()
-                .map(RolePath::getPermissionId)
-                .collect(Collectors.toList());
+        return rolePermissions.stream().map(RolePath::getPermissionId).collect(Collectors.toList());
     }
 
     /**
      * 查询用户拥有的路径权限信息( 路径路由拦截使用 )
      */
-    @Cacheable(value = USER_PATH,key = "#method+':'+#userId")
-    public List<String> findSimplePathsByUser(String method,Long userId){
+    @Cacheable(value = USER_PATH, key = "#method+':'+#userId")
+    public List<String> findSimplePathsByUser(String method, Long userId) {
         return SpringUtil.getBean(this.getClass()).findPathsByUser(userId).stream()
-                .filter(permPathDto -> Objects.equals(method,permPathDto.getRequestType()))
-                .map(PermPathDto::getPath)
+                .filter(permPathDto -> Objects.equals(method, permPathDto.getRequestType())).map(PermPathDto::getPath)
                 .collect(Collectors.toList());
     }
 
     /**
      * 查询用户拥有的路径权限信息
      */
-    public List<PermPathDto> findPathsByUser(Long userId){
+    public List<PermPathDto> findPathsByUser(Long userId) {
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
 
         List<PermPathDto> paths;
-        if (userInfo.isAdmin()){
+        if (userInfo.isAdmin()) {
             paths = pathService.findAll();
-        } else {
+        }
+        else {
             paths = this.findPermissionsByUser(userId);
         }
         return paths;
@@ -113,19 +111,17 @@ public class RolePathService {
     /**
      * 查询用户查询拥有的权限信息
      */
-    private List<PermPathDto> findPermissionsByUser(Long userId){
+    private List<PermPathDto> findPermissionsByUser(Long userId) {
         List<PermPathDto> permissions = new ArrayList<>(0);
 
         List<Long> roleIds = userRoleService.findRoleIdsByUser(userId);
-        if (CollUtil.isEmpty(roleIds)){
+        if (CollUtil.isEmpty(roleIds)) {
             return permissions;
         }
         List<RolePath> rolePaths = rolePathManager.findAllByRoles(roleIds);
-        List<Long> permissionIds = rolePaths.stream()
-                .map(RolePath::getPermissionId)
-                .distinct()
+        List<Long> permissionIds = rolePaths.stream().map(RolePath::getPermissionId).distinct()
                 .collect(Collectors.toList());
-        if (CollUtil.isNotEmpty(permissionIds)){
+        if (CollUtil.isNotEmpty(permissionIds)) {
             permissions = pathService.findByIds(permissionIds);
         }
         return permissions;

@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- *
  * @author xxm
  * @date 2022/3/14
  */
@@ -41,4 +40,5 @@ public class VoucherGenerationParam {
      */
     @Schema(description = "默认状态")
     private Integer status;
+
 }

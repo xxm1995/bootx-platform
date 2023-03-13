@@ -15,12 +15,11 @@ public class BizException extends ErrorCodeRuntimeException implements Serializa
         super(code, message);
     }
 
-
     public BizException(String message) {
         super(CommonCode.FAIL_CODE, message);
     }
 
-    public BizException(){
+    public BizException() {
         super();
     }
 

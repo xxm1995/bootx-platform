@@ -8,11 +8,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**   
-* 用户部门关联关系
-* @author xxm  
-* @date 2021/9/29 
-*/
+/**
+ * 用户部门关联关系
+ *
+ * @author xxm
+ * @date 2021/9/29
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor

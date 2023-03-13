@@ -18,9 +18,9 @@ import java.util.List;
 
 import static cn.bootx.starter.auth.code.AuthLoginTypeCode.WE_CHAT;
 
-
 /**
  * 三方账号绑定
+ *
  * @author xxm
  * @date 2021/8/2
  */
@@ -28,15 +28,18 @@ import static cn.bootx.starter.auth.code.AuthLoginTypeCode.WE_CHAT;
 @Service
 @RequiredArgsConstructor
 public class UserThirdBindService {
+
     private final UserThirdManager userThirdManager;
+
     private final UserThirdInfoManager userThirdInfoManager;
+
     private final List<OpenIdAuthentication> openIdAuthentications;
 
     /**
      * 绑定账号
      */
     @Transactional(rollbackFor = Exception.class)
-    public void bind(String authCode, String loginType, String state){
+    public void bind(String authCode, String loginType, String state) {
         OpenIdAuthentication openIdAuthentication = this.getOpenIdAuthentication(loginType);
         openIdAuthentication.bindUser(authCode, state);
     }
@@ -47,8 +50,8 @@ public class UserThirdBindService {
     @Transactional
     public void unbind(String loginType) {
         Long userId = SecurityUtil.getUserId();
-        if (!userThirdManager.existsByUserId(userId)){
-           throw new DataNotExistException("用户绑定关系不存");
+        if (!userThirdManager.existsByUserId(userId)) {
+            throw new DataNotExistException("用户绑定关系不存");
         }
         userThirdInfoManager.deleteByUserAndClientCode(userId, loginType);
         switch (loginType) {
@@ -69,13 +72,13 @@ public class UserThirdBindService {
             }
         }
     }
+
     /**
      * 获取 openId登录认证器
      */
-    private OpenIdAuthentication getOpenIdAuthentication(String clientCode){
-        return openIdAuthentications.stream()
-                .filter(o->o.adaptation(clientCode))
-                .findFirst()
+    private OpenIdAuthentication getOpenIdAuthentication(String clientCode) {
+        return openIdAuthentications.stream().filter(o -> o.adaptation(clientCode)).findFirst()
                 .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
+
 }

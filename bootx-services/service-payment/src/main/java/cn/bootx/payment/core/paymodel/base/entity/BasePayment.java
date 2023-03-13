@@ -9,11 +9,12 @@ import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**   
-* 基础支付记录类
-* @author xxm  
-* @date 2021/2/25 
-*/
+/**
+ * 基础支付记录类
+ *
+ * @author xxm
+ * @date 2021/2/25
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -42,6 +43,5 @@ public class BasePayment extends MpBaseEntity {
 
     /** 支付时间 */
     private LocalDateTime payTime;
-
 
 }

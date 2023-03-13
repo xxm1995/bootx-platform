@@ -25,61 +25,55 @@ import java.util.stream.Collectors;
 @Accessors(chain = true)
 @Schema(title = "用户信息")
 public class UserInfoDto extends BaseDto implements Serializable {
+
     private static final long serialVersionUID = 5881350477107722635L;
 
-    @Schema(description= "用户id")
+    @Schema(description = "用户id")
     private Long id;
 
-    @Schema(description= "名称")
+    @Schema(description = "名称")
     private String name;
 
-    @Schema(description= "账号")
+    @Schema(description = "账号")
     private String username;
 
-    @Schema(description= "密码")
+    @Schema(description = "密码")
     @SensitiveInfo(SensitiveInfo.SensitiveType.PASSWORD)
     private String password;
 
-    @Schema(description= "手机号")
+    @Schema(description = "手机号")
     @SensitiveInfo(SensitiveInfo.SensitiveType.MOBILE_PHONE)
     private String phone;
 
-    @Schema(description= "邮箱")
+    @Schema(description = "邮箱")
     @SensitiveInfo(SensitiveInfo.SensitiveType.EMAIL)
     private String email;
 
-    @Schema(description= "终端id列表")
+    @Schema(description = "终端id列表")
     private List<String> clientIdList = new ArrayList<>();
 
-    @Schema(description= "注册来源")
+    @Schema(description = "注册来源")
     private String source;
 
-    @Schema(description= "是否管理员")
+    @Schema(description = "是否管理员")
     private boolean admin;
 
     /**
      * @see UserStatusCode
      */
-    @Schema(description= "账号状态")
+    @Schema(description = "账号状态")
     private Integer status;
 
-    @Schema(description= "注册时间")
+    @Schema(description = "注册时间")
     private LocalDateTime registerTime;
 
-    public UserDetail toUserDetail(){
+    public UserDetail toUserDetail() {
         List<Long> clientIds = new ArrayList<>();
-        if (CollUtil.isNotEmpty(this.getClientIdList())){
-            clientIds = this.getClientIdList().stream()
-                    .map(Long::valueOf)
-                    .collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(this.getClientIdList())) {
+            clientIds = this.getClientIdList().stream().map(Long::valueOf).collect(Collectors.toList());
         }
-        return new UserDetail()
-                .setId(this.getId())
-                .setPassword(this.password)
-                .setUsername(this.getUsername())
-                .setName(this.name)
-                .setAdmin(this.admin)
-                .setAppIds(clientIds)
-                .setStatus(this.status);
+        return new UserDetail().setId(this.getId()).setPassword(this.password).setUsername(this.getUsername())
+                .setName(this.name).setAdmin(this.admin).setAppIds(clientIds).setStatus(this.status);
     }
+
 }

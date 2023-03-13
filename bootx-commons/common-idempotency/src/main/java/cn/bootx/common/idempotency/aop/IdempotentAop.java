@@ -21,6 +21,7 @@ import java.util.Locale;
 
 /**
  * 幂等处理器切面
+ *
  * @author xxm
  * @date 2021/08/20
  */
@@ -29,36 +30,40 @@ import java.util.Locale;
 @Component
 @RequiredArgsConstructor
 public class IdempotentAop {
+
     private final RedisClient redisClient;
-    private final List<String> METHODS = Arrays.asList(Method.GET.name(),Method.POST.name(),Method.PUT.name(),Method.DELETE.name());
+
+    private final List<String> METHODS = Arrays.asList(Method.GET.name(), Method.POST.name(), Method.PUT.name(),
+            Method.DELETE.name());
 
     /**
      * 幂等切面
      */
     @Around("@annotation(idempotent)")
     public Object doAround(ProceedingJoinPoint pjp, Idempotent idempotent) throws Throwable {
-        if (idempotent.enable()){
+        if (idempotent.enable()) {
             String method = WebServletUtil.getMethod();
             // 只处理四种经典的情况
-            if (METHODS.contains(method.toUpperCase(Locale.ROOT))){
+            if (METHODS.contains(method.toUpperCase(Locale.ROOT))) {
                 // 从请求头或者请求参数中获取幂等Token
                 String idempotentToken = HeaderHolder.getIdempotentToken();
-                if (StrUtil.isBlank(idempotentToken)){
+                if (StrUtil.isBlank(idempotentToken)) {
                     idempotentToken = WebServletUtil.getParameter((WebHeaderCode.IDEMPOTENT_TOKEN));
                 }
                 // 进行判断拦截
-                if (StrUtil.isNotBlank(idempotentToken)){
+                if (StrUtil.isNotBlank(idempotentToken)) {
                     String key;
                     // 是否有自定义的命名空间
-                    if (StrUtil.isNotBlank(idempotent.name())){
+                    if (StrUtil.isNotBlank(idempotent.name())) {
                         key = WebHeaderCode.IDEMPOTENT_TOKEN + ":" + idempotent.name();
-                    } else {
+                    }
+                    else {
                         // 没有的话添方法名为命名空间
                         key = WebHeaderCode.IDEMPOTENT_TOKEN + ":" + pjp.getStaticPart().getSignature().getName();
                     }
                     // 是否已经存在幂等token
                     Boolean flag = redisClient.setIfAbsent(key + ":" + idempotentToken, "", idempotent.timeout());
-                    if (Boolean.FALSE.equals(flag)){
+                    if (Boolean.FALSE.equals(flag)) {
                         throw new RepetitiveOperationException(idempotent.message());
                     }
                 }
@@ -66,4 +71,5 @@ public class IdempotentAop {
         }
         return pjp.proceed();
     }
+
 }

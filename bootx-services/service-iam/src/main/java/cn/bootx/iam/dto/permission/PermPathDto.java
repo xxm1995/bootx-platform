@@ -9,13 +9,14 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* @author xxm
-*/
+ * @author xxm
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "请求权限资源")
 public class PermPathDto extends BaseDto implements Serializable {
+
     private static final long serialVersionUID = -8909568804160122987L;
 
     @Schema(description = "权限标识")

@@ -35,49 +35,42 @@ import java.util.stream.Collectors;
 
 /**
  * MP工具类
+ *
  * @author xxm
  * @date 2020/4/21 10:00
  */
 public class MpUtil {
+
     /**
      * mp page转换为 PageResult 同时进行dto转换
      */
-    public static <T> PageResult<T> convert2DtoPageResult(Page<? extends EntityBaseFunction<T>> page){
-        if (Objects.isNull(page)){
+    public static <T> PageResult<T> convert2DtoPageResult(Page<? extends EntityBaseFunction<T>> page) {
+        if (Objects.isNull(page)) {
             return new PageResult<>();
         }
-        List<T> collect = page.getRecords()
-                .stream()
-                .map(EntityBaseFunction::toDto)
-                .collect(Collectors.toList());
+        List<T> collect = page.getRecords().stream().map(EntityBaseFunction::toDto).collect(Collectors.toList());
         // 构造 PageResult 对象
-        return new PageResult<T>()
-                .setSize(page.getSize())
-                .setCurrent(page.getCurrent())
-                .setTotal(page.getTotal())
+        return new PageResult<T>().setSize(page.getSize()).setCurrent(page.getCurrent()).setTotal(page.getTotal())
                 .setRecords(collect);
     }
 
     /**
      * page转换为 PageResult
      */
-    public static <T> PageResult<T> convert2PageResult(Page<T> page){
-        if (Objects.isNull(page)){
+    public static <T> PageResult<T> convert2PageResult(Page<T> page) {
+        if (Objects.isNull(page)) {
             return new PageResult<>();
         }
         // 构造 PageResult 对象
-        return new PageResult<T>()
-                .setSize(page.getSize())
-                .setCurrent(page.getCurrent())
-                .setTotal(page.getTotal())
+        return new PageResult<T>().setSize(page.getSize()).setCurrent(page.getCurrent()).setTotal(page.getTotal())
                 .setRecords(page.getRecords());
     }
 
     /**
      * 获取分页对象 MyBatis-Plus
      */
-    public static <T> Page<T> getMpPage(PageParam page, Class<T> clazz){
-        return Page.of(page.getCurrent(),page.getSize());
+    public static <T> Page<T> getMpPage(PageParam page, Class<T> clazz) {
+        return Page.of(page.getCurrent(), page.getSize());
     }
 
     /**
@@ -85,7 +78,7 @@ public class MpUtil {
      * @param function 对象字段对应的读取方法的Lambda表达式
      * @return 字段名
      */
-    public static <T> String getColumnName(SFunction<T,?> function){
+    public static <T> String getColumnName(SFunction<T, ?> function) {
         LambdaMeta meta = LambdaUtils.extract(function);
         Map<String, ColumnCache> columnMap = LambdaUtils.getColumnMap(meta.getInstantiatedClass());
         Assert.notEmpty(columnMap, "错误:无法执行.因为无法获取到实体类的表对应缓存!");
@@ -100,11 +93,12 @@ public class MpUtil {
      * @param clazz 实体类类型. 辅助进行判断, 传多个只有第一个生效，可以为空, 为空时使用读取方法对应的Class类，
      * @return 字段名
      */
-    public static <T> String getColumnName(Method readMethod, Class<T> ...clazz){
-        Class<?> beanClass ;
-        if (ArrayUtil.isNotEmpty(clazz)){
+    public static <T> String getColumnName(Method readMethod, Class<T>... clazz) {
+        Class<?> beanClass;
+        if (ArrayUtil.isNotEmpty(clazz)) {
             beanClass = clazz[0];
-        } else {
+        }
+        else {
             beanClass = readMethod.getDeclaringClass();
         }
 
@@ -118,12 +112,12 @@ public class MpUtil {
     /**
      * 批量执行语句, 通常用于for循环方式的批量插入
      */
-    public static <T> void executeBatch(List<T> saveList, Consumer<List<T>> consumer,int batchSize){
+    public static <T> void executeBatch(List<T> saveList, Consumer<List<T>> consumer, int batchSize) {
         // 开始游标
         int start = 0;
         // 结束游标
         int end = Math.min(batchSize, saveList.size());
-        while (start < end){
+        while (start < end) {
             List<T> list = ListUtil.sub(saveList, start, end);
             start = end;
             end = Math.min(end + batchSize, saveList.size());
@@ -137,7 +131,7 @@ public class MpUtil {
      * @param userId 用户id, 可以为空
      * @param <T> 泛型 MpIdEntity
      */
-    public static <T extends MpIdEntity> void initEntityList(List<? extends MpIdEntity> entityList,Long userId){
+    public static <T extends MpIdEntity> void initEntityList(List<? extends MpIdEntity> entityList, Long userId) {
         for (MpIdEntity t : entityList) {
             // 设置id
             t.setId(IdUtil.getSnowflakeNextId());
@@ -171,8 +165,8 @@ public class MpUtil {
     /**
      * 获取的一条数据, 有多条取第一条
      */
-    public static <T> Optional<T> findOne(LambdaQueryChainWrapper<T> lambdaQuery){
-        Page<T> mpPage = new Page<>(0,1);
+    public static <T> Optional<T> findOne(LambdaQueryChainWrapper<T> lambdaQuery) {
+        Page<T> mpPage = new Page<>(0, 1);
         Page<T> page = lambdaQuery.page(mpPage);
         // 关闭 count 查询
         page.setSearchCount(false);
@@ -185,7 +179,7 @@ public class MpUtil {
     /**
      * 获取关联的 TableInfo
      */
-    public static TableInfo getTableInfo(String tableName){
+    public static TableInfo getTableInfo(String tableName) {
         for (TableInfo tableInfo : TableInfoHelper.getTableInfos()) {
             if (tableName.equalsIgnoreCase(tableInfo.getTableName())) {
                 return tableInfo;
@@ -193,4 +187,5 @@ public class MpUtil {
         }
         return null;
     }
+
 }

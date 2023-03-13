@@ -1,15 +1,17 @@
 package cn.bootx.starter.auth.code;
 
 /**
-* 认证录方式
-* @author xxm
-* @date 2021/8/2
-*/
+ * 认证录方式
+ *
+ * @author xxm
+ * @date 2021/8/2
+ */
 public interface AuthLoginTypeCode {
 
     // 参数
     /** 第三方平台授权码 */
     String AUTH_CODE = "authCode";
+
     /**
      * 访问AuthorizeUrl后回调时带的参数state，用于和请求AuthorizeUrl前的state比较，防止CSRF攻击
      */
@@ -17,7 +19,6 @@ public interface AuthLoginTypeCode {
 
     /** 成功代码 */
     int SUCCESS = 2000;
-
 
     /* 登录方式 */
     /** 账号密码登录(普通) */
@@ -31,6 +32,7 @@ public interface AuthLoginTypeCode {
 
     /** 微信登录(公众号) */
     String WE_CHAT = "weChat";
+
     /** 微信登录(开放平台) */
     String WE_CHAT_OPEN = "weChatOpen";
 

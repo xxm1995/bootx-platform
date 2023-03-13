@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 用户部门关系
+ *
  * @author xxm
  * @date 2021/9/29
  */
@@ -19,32 +20,33 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class UserDeptManager extends BaseManager<UserDeptMapper, UserDept> {
+
     /**
      * 根据用户id删除关联关系
      */
     public void deleteByUser(Long userId) {
-        this.deleteByField(UserDept::getUserId,userId);
+        this.deleteByField(UserDept::getUserId, userId);
     }
 
     /**
      * 根据用户id集合删除关联关系
      */
     public void deleteByUsers(List<Long> userIds) {
-        this.deleteByFields(UserDept::getUserId,userIds);
+        this.deleteByFields(UserDept::getUserId, userIds);
     }
 
     /**
      * 根据部门id集合删除
      */
     public void deleteByDeptIds(List<Long> deptIds) {
-        this.deleteByFields(UserDept::getDeptId,deptIds);
+        this.deleteByFields(UserDept::getDeptId, deptIds);
     }
 
     /**
      * 根据用户id 查询部门ids
      */
     public List<UserDept> findDeptIdsByUser(Long userId) {
-        return findAllByField(UserDept::getUserId,userId);
+        return findAllByField(UserDept::getUserId, userId);
     }
 
     /**
@@ -53,7 +55,8 @@ public class UserDeptManager extends BaseManager<UserDeptMapper, UserDept> {
     @Override
     public List<UserDept> saveAll(List<UserDept> list) {
         MpUtil.initEntityList(list, SecurityUtil.getUserIdOrDefaultId());
-        MpUtil.executeBatch(list,baseMapper::saveAll,this.DEFAULT_BATCH_SIZE);
+        MpUtil.executeBatch(list, baseMapper::saveAll, this.DEFAULT_BATCH_SIZE);
         return list;
     }
+
 }

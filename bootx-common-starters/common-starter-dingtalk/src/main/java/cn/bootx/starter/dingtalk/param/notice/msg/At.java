@@ -10,10 +10,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-* 钉钉At
-* @author xxm
-* @date 2020/11/29
-*/
+ * 钉钉At
+ *
+ * @author xxm
+ * @date 2020/11/29
+ */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -22,25 +23,25 @@ public class At implements Serializable {
 
     private static final long serialVersionUID = -8677524557109058147L;
 
-    @Schema(description= "@的用户手机号")
+    @Schema(description = "@的用户手机号")
     private List<String> atMobiles;
 
-    @Schema(description= "@被@人的用户userid")
+    @Schema(description = "@被@人的用户userid")
     private List<String> atUserIds;
 
-    @Schema(description= "是否@全体")
+    @Schema(description = "是否@全体")
     private boolean isAtAll = false;
 
-    public At(List<String> atMobiles){
+    public At(List<String> atMobiles) {
         this.atMobiles = atMobiles;
     }
 
     /**
      * 输出@xxx文本
      */
-    public String toAtMobiles(){
-        if (CollUtil.isNotEmpty(atMobiles)){
-            return " @"+String.join(" @", atMobiles);
+    public String toAtMobiles() {
+        if (CollUtil.isNotEmpty(atMobiles)) {
+            return " @" + String.join(" @", atMobiles);
         }
         return "";
     }
@@ -48,9 +49,9 @@ public class At implements Serializable {
     /**
      * 输出@xxx文本
      */
-    public String toAtUserIds(){
-        if (CollUtil.isNotEmpty(atUserIds)){
-            return " @"+String.join(" @", atUserIds);
+    public String toAtUserIds() {
+        if (CollUtil.isNotEmpty(atUserIds)) {
+            return " @" + String.join(" @", atUserIds);
         }
         return "";
     }

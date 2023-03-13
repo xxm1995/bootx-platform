@@ -18,35 +18,41 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-* 认证终端
-* @author xxm
-* @date 2021/8/25
-*/
+ * 认证终端
+ *
+ * @author xxm
+ * @date 2021/8/25
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("iam_client")
 @Accessors(chain = true)
-public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto>{
+public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto> {
 
     /** 编码 */
     private String code;
+
     /** 名称 */
     private String name;
+
     /** 是否系统内置 */
     @TableField("`system`")
     private boolean system;
+
     /** 是否可用 */
     private boolean enable;
+
     /** 关联登录方式 */
     private String loginTypeIds;
+
     /** 描述 */
     private String description;
 
     /** 创建对象 */
     public static Client init(ClientParam in) {
         Client client = ClientConvert.CONVERT.convert(in);
-        if (CollUtil.isNotEmpty(in.getLoginTypeIdList())){
-            String loginTypeIds= String.join(",", in.getLoginTypeIdList());
+        if (CollUtil.isNotEmpty(in.getLoginTypeIdList())) {
+            String loginTypeIds = String.join(",", in.getLoginTypeIdList());
             client.setLoginTypeIds(loginTypeIds);
         }
         return client;
@@ -56,11 +62,11 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     @Override
     public ClientDto toDto() {
         ClientDto client = ClientConvert.CONVERT.convert(this);
-        if (StrUtil.isNotBlank(this.getLoginTypeIds())){
-            List<String> collect = Arrays.stream(this.getLoginTypeIds().split(","))
-                    .collect(Collectors.toList());
+        if (StrUtil.isNotBlank(this.getLoginTypeIds())) {
+            List<String> collect = Arrays.stream(this.getLoginTypeIds().split(",")).collect(Collectors.toList());
             client.setLoginTypeIdList(collect);
         }
         return client;
     }
+
 }

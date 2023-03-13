@@ -11,14 +11,15 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2021/2/26
-*/
+ * @author xxm
+ * @date 2021/2/26
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "支付宝配置")
 public class AlipayConfigDto extends BaseDto implements Serializable {
+
     private static final long serialVersionUID = 6641158663606363171L;
 
     @Schema(description = "名称")
@@ -80,4 +81,5 @@ public class AlipayConfigDto extends BaseDto implements Serializable {
 
     @Schema(description = "备注")
     private String remark;
+
 }

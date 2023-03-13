@@ -9,10 +9,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
-* 钉钉图片工作通知消息
-* @author xxm
-* @date 2022/7/19
-*/
+ * 钉钉图片工作通知消息
+ *
+ * @author xxm
+ * @date 2022/7/19
+ */
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
@@ -30,4 +31,5 @@ public class DingImageMsg implements DingMsg {
     public Msg toDingMsg() {
         return new ImageMsg(mediaId);
     }
+
 }

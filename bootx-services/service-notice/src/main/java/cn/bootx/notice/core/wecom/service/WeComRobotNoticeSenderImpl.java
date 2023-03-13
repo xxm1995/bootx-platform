@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * 微信机器人消息发送
+ *
  * @author xxm
  * @date 2022/7/23
  */
@@ -23,6 +24,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WeComRobotNoticeSenderImpl implements WeComRobotNoticeSender {
+
     private final WeComRobotNoticeService robotNoticeService;
 
     /**
@@ -37,43 +39,43 @@ public class WeComRobotNoticeSenderImpl implements WeComRobotNoticeSender {
      * 发送markdown消息
      */
     @Override
-    public void sendMarkdownNotice(String code, String content){
-        robotNoticeService.sendMarkdownNotice(code,content);
+    public void sendMarkdownNotice(String code, String content) {
+        robotNoticeService.sendMarkdownNotice(code, content);
     }
 
     /**
      * 发送图片消息
      */
     @Override
-    public void sendImageNotice(String code, String imageBase64,String md5){
-        robotNoticeService.sendImageNotice(code,imageBase64,md5);
+    public void sendImageNotice(String code, String imageBase64, String md5) {
+        robotNoticeService.sendImageNotice(code, imageBase64, md5);
     }
 
     /**
      * 发送图片消息
      */
     @Override
-    public void sendImageNotice(String code, InputStream imageIs){
+    public void sendImageNotice(String code, InputStream imageIs) {
         byte[] bytes = IoUtil.readBytes(imageIs);
         String md5 = DigestUtil.md5Hex(bytes);
         String imageBase64 = Base64.encode(bytes);
-        robotNoticeService.sendImageNotice(code,imageBase64,md5);
+        robotNoticeService.sendImageNotice(code, imageBase64, md5);
     }
 
     /**
      * 发送图文消息
      */
     @Override
-    public void sendNewsNotice(String code, List<NewArticle> articleList){
-        robotNoticeService.sendNewsNotice(code,articleList);
+    public void sendNewsNotice(String code, List<NewArticle> articleList) {
+        robotNoticeService.sendNewsNotice(code, articleList);
     }
 
     /**
      * 发送文件消息
      */
     @Override
-    public void sendFIleNotice(String code, String mediaId){
-        robotNoticeService.sendFIleNotice(code,mediaId);
+    public void sendFIleNotice(String code, String mediaId) {
+        robotNoticeService.sendFIleNotice(code, mediaId);
     }
 
     /**
@@ -81,9 +83,9 @@ public class WeComRobotNoticeSenderImpl implements WeComRobotNoticeSender {
      */
     @SneakyThrows
     @Override
-    public void sendFIleNotice(String code, InputStream fileIs){
+    public void sendFIleNotice(String code, InputStream fileIs) {
         String mediaId = robotNoticeService.updatedMedia(code, fileIs);
-        robotNoticeService.sendFIleNotice(code,mediaId);
+        robotNoticeService.sendFIleNotice(code, mediaId);
     }
 
     /**
@@ -91,8 +93,9 @@ public class WeComRobotNoticeSenderImpl implements WeComRobotNoticeSender {
      */
     @SneakyThrows
     @Override
-    public void sendFIleNotice(String code, InputStream inputStream, String filename){
+    public void sendFIleNotice(String code, InputStream inputStream, String filename) {
         String mediaId = robotNoticeService.updatedMedia(code, inputStream, filename);
-        robotNoticeService.sendFIleNotice(code,mediaId);
+        robotNoticeService.sendFIleNotice(code, mediaId);
     }
+
 }

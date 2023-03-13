@@ -19,7 +19,6 @@ import java.util.Map;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 /**
- *
  * @author xxm
  * @date 2022/2/23
  */
@@ -29,37 +28,39 @@ import static org.springframework.http.HttpHeaders.USER_AGENT;
 @RequestMapping("/cashier")
 @RequiredArgsConstructor
 public class CashierController {
+
     private final CashierService cashierService;
 
     @Operation(summary = "发起支付(单渠道,包括聚合付款码方式)")
     @PostMapping("/singlePay")
-    public ResResult<PayResult> singlePay(@RequestBody CashierSinglePayParam cashierSinglePayParam){
+    public ResResult<PayResult> singlePay(@RequestBody CashierSinglePayParam cashierSinglePayParam) {
         return Res.ok(cashierService.singlePay(cashierSinglePayParam));
     }
 
     @Operation(summary = "发起支付(组合支付)")
     @PostMapping("/combinationPay")
-    public ResResult<PayResult> combinationPay(@RequestBody CashierCombinationPayParam param){
+    public ResResult<PayResult> combinationPay(@RequestBody CashierCombinationPayParam param) {
         return Res.ok(cashierService.combinationPay(param));
     }
 
     @Operation(summary = "扫码聚合支付(单渠道)")
     @GetMapping("/aggregatePay")
-    public ModelAndView aggregatePay(String key, @RequestHeader(USER_AGENT) String ua){
+    public ModelAndView aggregatePay(String key, @RequestHeader(USER_AGENT) String ua) {
         try {
             String url = cashierService.aggregatePay(key, ua);
-            return new ModelAndView("redirect:"+url);
-        } catch (PayUnsupportedMethodException e) {
+            return new ModelAndView("redirect:" + url);
+        }
+        catch (PayUnsupportedMethodException e) {
             return new ModelAndView("errorCashier");
         }
     }
 
     @Operation(summary = "微信jsapi支付(回调)")
     @GetMapping("/wxJsapiPay")
-    public ModelAndView wxJsapiPay(String code, String state){
+    public ModelAndView wxJsapiPay(String code, String state) {
         Map<String, String> map = cashierService.wxJsapiPay(code, state);
         // 跳转页面, 调起微信jsapi支付
-        return new ModelAndView("wechatJsapiPay")
-                .addAllObjects(map);
+        return new ModelAndView("wechatJsapiPay").addAllObjects(map);
     }
+
 }

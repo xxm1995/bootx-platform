@@ -13,9 +13,10 @@ import java.lang.annotation.*;
  * @author xxm
  * @date 2022/12/12
  */
-@Target({ElementType.TYPE})
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Conditional(OnRabbitEnable.class)
 public @interface ConditionalOnRabbit {
+
 }

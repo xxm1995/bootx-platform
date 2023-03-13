@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- *
  * @author xxm
  * @date 2022/7/30
  */
@@ -21,4 +20,5 @@ public class DynamicFormData extends MpBaseEntity {
     private Long formId;
 
     /** 内容 */
+
 }

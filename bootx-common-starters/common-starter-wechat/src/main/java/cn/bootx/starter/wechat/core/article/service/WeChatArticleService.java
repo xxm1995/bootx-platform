@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author xxm
  * @date 2022/8/11
  */
@@ -21,25 +20,20 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class WeChatArticleService {
-    private final WxMpService wxMpService;
 
+    private final WxMpService wxMpService;
 
     /**
      * 查询图文
-     *
      * @return
      */
     @SneakyThrows
-    public PageResult<WeChatArticleDto> page(PageParam pageParam){
+    public PageResult<WeChatArticleDto> page(PageParam pageParam) {
         val freePublishService = wxMpService.getFreePublishService();
         val result = freePublishService.getPublicationRecords(pageParam.start(), pageParam.getSize());
-        val items = result.getItems().stream()
-                .map(WeChatArticleDto::init)
-                .collect(Collectors.toList());
+        val items = result.getItems().stream().map(WeChatArticleDto::init).collect(Collectors.toList());
         PageResult<WeChatArticleDto> pageResult = new PageResult<>();
-        pageResult.setCurrent(pageParam.getCurrent())
-                .setRecords(items)
-                .setSize(pageParam.getSize())
+        pageResult.setCurrent(pageParam.getCurrent()).setRecords(items).setSize(pageParam.getSize())
                 .setTotal(result.getTotalCount());
         return pageResult;
     }

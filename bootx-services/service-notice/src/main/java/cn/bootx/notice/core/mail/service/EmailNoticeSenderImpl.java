@@ -34,6 +34,7 @@ import java.util.*;
 
 /**
  * 邮件发送服务
+ *
  * @author xxm
  * @date 2020/5/2 16:06
  */
@@ -46,6 +47,7 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
      * 默认 MIME Type
      */
     private static final String MIME_TYPE_DEFAULT = "text/html; charset=utf-8";
+
     private final MailConfigService mailConfigService;
 
     /**
@@ -55,7 +57,7 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
      * @param msg 邮件消息
      */
     @Override
-    public void sentSimpleMail(String email,String subject,String msg){
+    public void sentSimpleMail(String email, String subject, String msg) {
         SendMailParam mailParam = new SendMailParam();
         mailParam.setTo(Collections.singletonList(email));
         mailParam.setSubject(subject);
@@ -70,7 +72,7 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
     @Override
     public void sendMail(SendMailParam mailParam) {
         log.info("开始发送邮件");
-        MailConfigDto mailConfig = this.getMailConfig( mailParam.getConfigCode());
+        MailConfigDto mailConfig = this.getMailConfig(mailParam.getConfigCode());
         JavaMailSenderImpl mailSender = this.getMailSender(mailConfig);
         List<MimeMessage> mimeMessageList = new ArrayList<>();
 
@@ -97,12 +99,14 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
             for (String to : receivers) {
                 this.buildMailParam(mailParam, mailConfig, mailSender, mimeMessageList, allReceivers, to);
             }
-        } else {
-            this.buildMailParam(mailParam, mailConfig, mailSender, mimeMessageList, allReceivers,ArrayUtil.toArray(receivers,String.class));
+        }
+        else {
+            this.buildMailParam(mailParam, mailConfig, mailSender, mimeMessageList, allReceivers,
+                    ArrayUtil.toArray(receivers, String.class));
         }
 
         // 调用发送
-        mailSender.send(ArrayUtil.toArray(mimeMessageList,MimeMessage.class));
+        mailSender.send(ArrayUtil.toArray(mimeMessageList, MimeMessage.class));
         log.info("SendMail结束");
     }
 
@@ -117,7 +121,9 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
      * @throws MessagingException 消息异常
      * @throws UnsupportedEncodingException 不支持的编码异常
      */
-    private void buildMailParam(SendMailParam mailParam, MailConfigDto mailConfig, JavaMailSenderImpl mailSender, List<MimeMessage> mimeMessageList, Set<String> allReceivers, String... to) throws MessagingException, UnsupportedEncodingException {
+    private void buildMailParam(SendMailParam mailParam, MailConfigDto mailConfig, JavaMailSenderImpl mailSender,
+            List<MimeMessage> mimeMessageList, Set<String> allReceivers, String... to)
+            throws MessagingException, UnsupportedEncodingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
         mimeMessageHelper.setFrom(new InternetAddress(mailConfig.getFrom(), mailConfig.getSender()));
@@ -142,7 +148,7 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
             if (!CollectionUtil.isEmpty(bccReceivers)) {
                 String[] bccReceiverArray = new String[bccReceivers.size()];
                 bccReceivers.toArray(bccReceiverArray);
-                mimeMessageHelper.setBcc(ArrayUtil.toArray(bccList,String.class));
+                mimeMessageHelper.setBcc(ArrayUtil.toArray(bccList, String.class));
             }
         }
 
@@ -152,7 +158,7 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
         // 使用MimeMultipart，因为我们需要处理文件附件
         Multipart multipart = new MimeMultipart();
 
-        //判断是否包含附件
+        // 判断是否包含附件
         if (mailParam.isSendAttachment()) {
             this.buildAttachmentParam(mailParam, multipart);
         }
@@ -169,15 +175,15 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
      * 构建附件参数
      */
     private void buildAttachmentParam(SendMailParam mailParam, Multipart multipart) throws MessagingException {
-        //获得附件集合 进行发送附件
+        // 获得附件集合 进行发送附件
         List<MailFileParam> files = mailParam.getFileList();
         if (!CollectionUtil.isEmpty(files)) {
             for (MailFileParam f : files) {
 
                 MimeBodyPart mimeBodyPart = new MimeBodyPart();
-                //附件数据源:根据文件字节放入数据源
+                // 附件数据源:根据文件字节放入数据源
                 DataSource dss = new ByteArrayDataSource(f.getFileInputStream(), "application/png");
-                //数据处理器
+                // 数据处理器
                 DataHandler dh = new DataHandler(dss);
                 mimeBodyPart.setFileName(f.getFileName());
                 mimeBodyPart.setDataHandler(dh);
@@ -195,7 +201,8 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
         // 无code获取默认
         if (StrUtil.isEmpty(configCode)) {
             mailConfig = mailConfigService.getDefaultConfig();
-        } else {
+        }
+        else {
             mailConfig = mailConfigService.getByCode(configCode);
         }
         if (mailConfig == null) {
@@ -218,7 +225,9 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
         // 判断是否是TLS
         if (Objects.equals(Optional.ofNullable(mailConfig.getSecurityType()).orElse(0), MailCode.SECURITY_TYPE_TLS)) {
             props.setProperty("mail.smtp.starttls.enable", "true");
-        } else if (Objects.equals(Optional.ofNullable(mailConfig.getSecurityType()).orElse(0), MailCode.SECURITY_TYPE_SSL)) {
+        }
+        else if (Objects.equals(Optional.ofNullable(mailConfig.getSecurityType()).orElse(0),
+                MailCode.SECURITY_TYPE_SSL)) {
             props.setProperty("mail.smtp.starttls.enable", "true");
             props.setProperty("mail.smtp.auth", "true");
             props.setProperty("mail.smtp.socketFactory.port", mailConfig.getPort() + "");
@@ -229,4 +238,5 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
 
         return mailSender;
     }
+
 }

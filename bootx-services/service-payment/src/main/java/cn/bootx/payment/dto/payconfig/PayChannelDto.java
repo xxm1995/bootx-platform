@@ -9,10 +9,11 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* 支付通道
-* @author xxm  
-* @date 2021/6/30 
-*/
+ * 支付通道
+ *
+ * @author xxm
+ * @date 2021/6/30
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -38,4 +39,5 @@ public class PayChannelDto extends BaseDto implements Serializable {
 
     /** 备注 */
     private String remark;
+
 }

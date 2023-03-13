@@ -25,58 +25,49 @@ import java.util.stream.Collectors;
 
 /**
  * 钱包的相关操作
+ *
  * @author xxm
  * @date 2020/12/8
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class WalletService{
+public class WalletService {
+
     private final WalletManager walletManager;
+
     private final WalletLogManager walletLogManager;
 
     /**
      * 开通操作 创建
      */
     @Transactional(rollbackFor = Exception.class)
-    public void createWallet(Long userId){
+    public void createWallet(Long userId) {
         // 判断钱包是否已开通
         if (walletManager.existsByUser(userId)) {
             throw new BizException("钱包已经开通");
         }
-        Wallet wallet = new Wallet()
-                .setUserId(userId)
-                .setBalance(BigDecimal.ZERO)
-                .setStatus(WalletCode.STATUS_NORMAL);
+        Wallet wallet = new Wallet().setUserId(userId).setBalance(BigDecimal.ZERO).setStatus(WalletCode.STATUS_NORMAL);
         walletManager.save(wallet);
         // 激活 log
-        WalletLog activeLog = new WalletLog()
-                .setWalletId(wallet.getId())
-                .setUserId(wallet.getUserId())
-                .setType(WalletCode.LOG_ACTIVE)
-                .setRemark("激活钱包")
-                .setOperationSource(WalletCode.OPERATION_SOURCE_USER);
+        WalletLog activeLog = new WalletLog().setWalletId(wallet.getId()).setUserId(wallet.getUserId())
+                .setType(WalletCode.LOG_ACTIVE).setRemark("激活钱包").setOperationSource(WalletCode.OPERATION_SOURCE_USER);
         walletLogManager.save(activeLog);
     }
 
     /**
      * 批量开通
      */
-    public void createWalletBatch(List<Long> userIds){
+    public void createWalletBatch(List<Long> userIds) {
         // 查询出
         List<Long> existUserIds = walletManager.findExistUserIds(userIds);
         userIds.removeAll(existUserIds);
-        List<Wallet> wallets = userIds.stream()
-                .map(userId -> new Wallet().setUserId(userId).setStatus(WalletCode.STATUS_NORMAL).setBalance(BigDecimal.ZERO))
-                .collect(Collectors.toList());
+        List<Wallet> wallets = userIds.stream().map(userId -> new Wallet().setUserId(userId)
+                .setStatus(WalletCode.STATUS_NORMAL).setBalance(BigDecimal.ZERO)).collect(Collectors.toList());
         walletManager.saveAll(wallets);
         List<WalletLog> walletLogs = wallets.stream()
-                .map(wallet -> new WalletLog()
-                        .setWalletId(wallet.getId())
-                        .setUserId(wallet.getUserId())
-                        .setAmount(BigDecimal.ZERO)
-                        .setType(WalletCode.LOG_ACTIVE)
-                        .setRemark("激活钱包")
+                .map(wallet -> new WalletLog().setWalletId(wallet.getId()).setUserId(wallet.getUserId())
+                        .setAmount(BigDecimal.ZERO).setType(WalletCode.LOG_ACTIVE).setRemark("激活钱包")
                         .setOperationSource(WalletCode.OPERATION_SOURCE_USER))
                 .collect(Collectors.toList());
         walletLogManager.saveAll(walletLogs);
@@ -85,40 +76,38 @@ public class WalletService{
     /**
      * 锁定钱包
      */
-    public void lock(Long walletId){
-        walletManager.setUpStatus(walletId,WalletCode.STATUS_FORBIDDEN);
+    public void lock(Long walletId) {
+        walletManager.setUpStatus(walletId, WalletCode.STATUS_FORBIDDEN);
     }
 
     /**
      * 解锁钱包
      */
-    public void unlock(Long walletId){
-        walletManager.setUpStatus(walletId,WalletCode.STATUS_NORMAL);
+    public void unlock(Long walletId) {
+        walletManager.setUpStatus(walletId, WalletCode.STATUS_NORMAL);
     }
 
     /**
      * 充值操作 也可以扣款
      */
     @Transactional(rollbackFor = Exception.class)
-    public void changerBalance(WalletRechargeParam param){
-        if (BigDecimalUtil.compareTo(param.getAmount(),BigDecimal.ZERO)==1){
+    public void changerBalance(WalletRechargeParam param) {
+        if (BigDecimalUtil.compareTo(param.getAmount(), BigDecimal.ZERO) == 1) {
             walletManager.increaseBalance(param.getWalletId(), param.getAmount());
-        } else if (BigDecimalUtil.compareTo(param.getAmount(),BigDecimal.ZERO)==-1){
+        }
+        else if (BigDecimalUtil.compareTo(param.getAmount(), BigDecimal.ZERO) == -1) {
             walletManager.reduceBalanceUnlimited(param.getWalletId(), param.getAmount());
-        } else {
+        }
+        else {
             return;
         }
         Wallet wallet = walletManager.findById(param.getWalletId()).orElseThrow(DataNotExistException::new);
-        WalletLog walletLog = new WalletLog()
-                .setAmount(param.getAmount())
-                .setWalletId(wallet.getId())
-                .setType(WalletCode.LOG_ADMIN_CHANGER)
-                .setUserId(wallet.getUserId())
+        WalletLog walletLog = new WalletLog().setAmount(param.getAmount()).setWalletId(wallet.getId())
+                .setType(WalletCode.LOG_ADMIN_CHANGER).setUserId(wallet.getUserId())
                 .setRemark(String.format("系统变动余额 %.2f ", param.getAmount()))
                 .setOperationSource(WalletCode.OPERATION_SOURCE_ADMIN);
         walletLogManager.save(walletLog);
     }
-
 
     /**
      * 根据支付单对钱包充值的余额进行扣减
@@ -127,18 +116,18 @@ public class WalletService{
     public void deductedBalanceByPaymentId(Long paymentId, Long orderId, String remark, Boolean isThrowError) {
 
         // 根据支付记录ID查询交易的金额和交易的钱包ID
-        WalletLog walletLog =  walletLogManager.findFirstByPayment(paymentId).orElseThrow(DataNotExistException::new);
+        WalletLog walletLog = walletLogManager.findFirstByPayment(paymentId).orElseThrow(DataNotExistException::new);
         if (walletLog == null) {
             return;
         }
 
         // 充值类型
-        List<Integer> chargeLogType = Lists.newArrayList(WalletCode.LOG_RECHARGE,
-                WalletCode.LOG_AUTO_RECHARGE,
+        List<Integer> chargeLogType = Lists.newArrayList(WalletCode.LOG_RECHARGE, WalletCode.LOG_AUTO_RECHARGE,
                 WalletCode.LOG_ADMIN_CHANGER);
 
         // 保证是充值类型 且充值金额大于0
-        if (!chargeLogType.contains(walletLog.getType()) || BigDecimalUtil.compareTo(walletLog.getAmount(), BigDecimal.ZERO) < 0) {
+        if (!chargeLogType.contains(walletLog.getType())
+                || BigDecimalUtil.compareTo(walletLog.getAmount(), BigDecimal.ZERO) < 0) {
             log.warn("退款 发现非充值交易，日志ID:{},交易类型:{}", walletLog.getId(), walletLog.getType());
             if (isThrowError) {
                 throw new WalletLogError();
@@ -150,15 +139,10 @@ public class WalletService{
         walletManager.reduceBalanceUnlimited(walletLog.getWalletId(), walletLog.getAmount());
 
         // 记录日志
-        WalletLog log = new WalletLog()
-                .setWalletId(walletLog.getWalletId())
-                .setUserId(walletLog.getUserId())
-                .setPaymentId(paymentId)
-                .setAmount(walletLog.getAmount())
-                .setType(WalletCode.LOG_SYSTEM_REDUCE_BALANCE)
+        WalletLog log = new WalletLog().setWalletId(walletLog.getWalletId()).setUserId(walletLog.getUserId())
+                .setPaymentId(paymentId).setAmount(walletLog.getAmount()).setType(WalletCode.LOG_SYSTEM_REDUCE_BALANCE)
                 .setRemark(String.format("系统减少余额 %.2f (" + remark + ")", walletLog.getAmount()))
-                .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM)
-                .setPaymentId(paymentId)
+                .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM).setPaymentId(paymentId)
                 .setBusinessId(String.valueOf(orderId));
         walletLogManager.save(log);
 
@@ -189,4 +173,5 @@ public class WalletService{
         }
         return wallet;
     }
+
 }

@@ -7,9 +7,9 @@ import lombok.experimental.Accessors;
 import java.time.LocalDate;
 
 /**
-* @author xxm
-* @date 2022/1/8
-*/
+ * @author xxm
+ * @date 2022/1/8
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户基础信息")
@@ -18,15 +18,16 @@ public class UserBaseInfoParam {
     @Schema(description = "用户id")
     private Long id;
 
-    @Schema(description= "名称")
+    @Schema(description = "名称")
     private String name;
 
     @Schema(description = "性别")
     private Integer sex;
 
-    @Schema(description= "头像")
+    @Schema(description = "头像")
     private String avatar;
 
     @Schema(description = "生日")
     private LocalDate birthday;
+
 }

@@ -6,11 +6,12 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 
-/**   
-* 用户绑定第三方开放平台参数
-* @author xxm  
-* @date 2022/7/2 
-*/
+/**
+ * 用户绑定第三方开放平台参数
+ *
+ * @author xxm
+ * @date 2022/7/2
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户绑定第三方开放平台参数")
@@ -24,7 +25,8 @@ public class UserBindThirdParam {
     @Schema(description = "第三方开放平台登录类型")
     private String loginType;
 
-//    @NotBlank(message = "state不可为空")
+    // @NotBlank(message = "state不可为空")
     @Schema(description = "state")
     private String state;
+
 }

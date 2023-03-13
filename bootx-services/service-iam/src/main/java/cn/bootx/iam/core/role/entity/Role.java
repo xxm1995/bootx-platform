@@ -11,10 +11,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 角色
-* @author xxm
-* @date 2020/5/1 17:31
-*/
+ * 角色
+ *
+ * @author xxm
+ * @date 2020/5/1 17:31
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("iam_role")
@@ -27,13 +28,13 @@ public class Role extends MpBaseEntity implements EntityBaseFunction<RoleDto> {
     /** 名称 */
     private String name;
 
-    /** 是否系统内置 不能修改*/
+    /** 是否系统内置 不能修改 */
     private boolean internal;
 
     /** 描述 */
     private String remark;
 
-    public static Role init(RoleParam in){
+    public static Role init(RoleParam in) {
         return RoleConvert.CONVERT.convert(in);
     }
 
@@ -41,4 +42,5 @@ public class Role extends MpBaseEntity implements EntityBaseFunction<RoleDto> {
     public RoleDto toDto() {
         return RoleConvert.CONVERT.convert(this);
     }
+
 }

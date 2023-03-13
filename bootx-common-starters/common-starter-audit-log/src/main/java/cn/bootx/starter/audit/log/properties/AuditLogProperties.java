@@ -4,11 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/**   
-* 审计日志配置
-* @author xxm  
-* @date 2021/12/2 
-*/
+/**
+ * 审计日志配置
+ *
+ * @author xxm
+ * @date 2021/12/2
+ */
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "bootx.starter.audit-log")
@@ -22,10 +23,13 @@ public class AuditLogProperties {
     /**
      * 存储类型
      */
-    public enum Store{
+    public enum Store {
+
         /** 数据库 */
         JDBC,
         /** MongoDB */
         MONGO
+
     }
+
 }

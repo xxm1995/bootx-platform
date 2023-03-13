@@ -16,19 +16,24 @@ import java.util.List;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
-/**   
-* 储值卡支付
-* @author xxm  
-* @date 2022/3/13 
-*/
+/**
+ * 储值卡支付
+ *
+ * @author xxm
+ * @date 2022/3/13
+ */
 @Slf4j
 @Scope(SCOPE_PROTOTYPE)
 @Service
 @RequiredArgsConstructor
 public class VoucherStrategy extends AbsPayStrategy {
+
     private final VoucherPayService voucherPayService;
+
     private final VoucherPaymentService voucherPaymentService;
+
     private final PaymentService paymentService;
+
     private List<Voucher> vouchers;
 
     @Override
@@ -50,8 +55,8 @@ public class VoucherStrategy extends AbsPayStrategy {
      */
     @Override
     public void doPayHandler() {
-        voucherPayService.pay(getPayMode().getAmount(),this.getPayment(),this.vouchers);
-        voucherPaymentService.savePayment(getPayment(),getPayParam(),getPayMode(),vouchers);
+        voucherPayService.pay(getPayMode().getAmount(), this.getPayment(), this.vouchers);
+        voucherPaymentService.savePayment(getPayment(), getPayParam(), getPayMode(), vouchers);
     }
 
     /**
@@ -76,8 +81,9 @@ public class VoucherStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
-        voucherPayService.refund(this.getPayment().getId(),this.getPayMode().getAmount());
-        voucherPaymentService.updateRefund(this.getPayment().getId(),this.getPayMode().getAmount());
-        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.VOUCHER);
+        voucherPayService.refund(this.getPayment().getId(), this.getPayMode().getAmount());
+        voucherPaymentService.updateRefund(this.getPayment().getId(), this.getPayMode().getAmount());
+        paymentService.updateRefundSuccess(this.getPayment(), this.getPayMode().getAmount(), PayChannelEnum.VOUCHER);
     }
+
 }

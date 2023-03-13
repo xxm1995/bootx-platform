@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 街道表
+ *
  * @author xxm
  * @date 2022-12-24
  */
@@ -16,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StreetManager extends BaseManager<StreetMapper, Street> {
 
-    public List<Street> findAllByAreaCode(String areaCode){
-        return findAllByField(Street::getAreaCode,areaCode);
+    public List<Street> findAllByAreaCode(String areaCode) {
+        return findAllByField(Street::getAreaCode, areaCode);
     }
+
 }

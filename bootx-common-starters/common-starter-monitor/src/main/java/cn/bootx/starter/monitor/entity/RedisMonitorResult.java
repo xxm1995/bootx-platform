@@ -7,14 +7,16 @@ import lombok.Data;
 import java.util.List;
 import java.util.Properties;
 
-/**   
-* Redis监控信息
-* @author xxm  
-* @date 2022/6/12 
-*/
+/**
+ * Redis监控信息
+ *
+ * @author xxm
+ * @date 2022/6/12
+ */
 @Data
 @Schema(title = "Redis监控信息")
 public class RedisMonitorResult {
+
     @Schema(description = "Redis系统信息")
     private Properties info;
 
@@ -23,7 +25,5 @@ public class RedisMonitorResult {
 
     @Schema(description = "key数量")
     private Long dbSize;
-
-
 
 }

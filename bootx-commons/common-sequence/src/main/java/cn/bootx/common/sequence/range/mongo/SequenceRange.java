@@ -6,11 +6,12 @@ import lombok.experimental.FieldNameConstants;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**   
-* 队列区间
-* @author xxm  
-* @date 2021/12/14 
-*/
+/**
+ * 队列区间
+ *
+ * @author xxm
+ * @date 2021/12/14
+ */
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
@@ -25,4 +26,5 @@ public class SequenceRange {
 
     /** 区间开始值 */
     private Long rangeValue;
+
 }

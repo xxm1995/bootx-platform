@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 角色权限关系
+ *
  * @author xxm
  * @date 2021/8/3
  */
@@ -21,29 +22,27 @@ import java.util.List;
 public class RoleMenuManager extends BaseManager<RoleMenuMapper, RoleMenu> {
 
     public void deleteByPermission(Long permissionId) {
-        deleteByField(RoleMenu::getPermissionId,permissionId);
+        deleteByField(RoleMenu::getPermissionId, permissionId);
     }
 
-    public void deleteByRole(Long roleId){
-        this.deleteByField(RoleMenu::getRoleId,roleId);
+    public void deleteByRole(Long roleId) {
+        this.deleteByField(RoleMenu::getRoleId, roleId);
     }
 
     public List<RoleMenu> findAllByRoles(List<Long> roleIds) {
-        return findAllByFields(RoleMenu::getRoleId,roleIds);
+        return findAllByFields(RoleMenu::getRoleId, roleIds);
     }
 
     public List<RoleMenu> findAllByRoleAndClientCode(Long roleId, String clientCode) {
-        return lambdaQuery()
-                .eq(RoleMenu::getRoleId,roleId)
-                .eq(RoleMenu::getClientCode,clientCode)
-                .list();
+        return lambdaQuery().eq(RoleMenu::getRoleId, roleId).eq(RoleMenu::getClientCode, clientCode).list();
 
     }
 
     @Override
     public List<RoleMenu> saveAll(List<RoleMenu> list) {
         list.forEach(roleMenu -> roleMenu.setId(IdUtil.getSnowflakeNextId()));
-        MpUtil.executeBatch(list,baseMapper::saveAll,this.DEFAULT_BATCH_SIZE);
+        MpUtil.executeBatch(list, baseMapper::saveAll, this.DEFAULT_BATCH_SIZE);
         return list;
     }
+
 }

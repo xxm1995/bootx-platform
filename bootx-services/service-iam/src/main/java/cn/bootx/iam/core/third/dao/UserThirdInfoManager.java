@@ -15,6 +15,7 @@ import java.util.Optional;
 
 /**
  * 用户三方登录绑定详情
+ *
  * @author xxm
  * @date 2022-07-02
  */
@@ -23,8 +24,8 @@ import java.util.Optional;
 public class UserThirdInfoManager extends BaseManager<UserThirdInfoMapper, UserThirdInfo> {
 
     /**
-    * 分页
-    */
+     * 分页
+     */
     public Page<UserThirdInfo> page(PageParam pageParam, UserThirdInfoParam param) {
         Page<UserThirdInfo> mpPage = MpUtil.getMpPage(pageParam, UserThirdInfo.class);
         return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
@@ -33,27 +34,22 @@ public class UserThirdInfoManager extends BaseManager<UserThirdInfoMapper, UserT
     /**
      * 根据用户id查询
      */
-    public List<UserThirdInfo> findAllByUser(Long userId){
-        return this.findAllByField(UserThirdInfo::getUserId,userId);
+    public List<UserThirdInfo> findAllByUser(Long userId) {
+        return this.findAllByField(UserThirdInfo::getUserId, userId);
     }
 
     /**
      * 根据用户id和终端Code查询
      */
-    public Optional<UserThirdInfo> findByUserAndClientCode(Long userId, String clientCode){
-        return lambdaQuery()
-                .eq(UserThirdInfo::getUserId,userId)
-                .eq(UserThirdInfo::getClientCode,clientCode)
-                .oneOpt();
+    public Optional<UserThirdInfo> findByUserAndClientCode(Long userId, String clientCode) {
+        return lambdaQuery().eq(UserThirdInfo::getUserId, userId).eq(UserThirdInfo::getClientCode, clientCode).oneOpt();
     }
+
     /**
      * 删除指定类型
      */
-    public void deleteByUserAndClientCode(Long userId,String clientCode){
-        lambdaUpdate()
-                .eq(UserThirdInfo::getUserId,userId)
-                .eq(UserThirdInfo::getClientCode,clientCode)
-                .remove();
+    public void deleteByUserAndClientCode(Long userId, String clientCode) {
+        lambdaUpdate().eq(UserThirdInfo::getUserId, userId).eq(UserThirdInfo::getClientCode, clientCode).remove();
     }
 
 }

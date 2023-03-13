@@ -6,14 +6,16 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
-/**   
+/**
  * 工作流
- * @author xxm  
- * @date 2022/8/22 
+ *
+ * @author xxm
+ * @date 2022/8/22
  */
 @ComponentScan
 @ConfigurationPropertiesScan
 @AutoConfiguration
 @MapperScan(annotationClass = Mapper.class)
 public class FlowableAutoConfiguration {
+
 }

@@ -10,37 +10,38 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* App版本
-* @author xxm  
-* @date 2021/8/9 
-*/
+/**
+ * App版本
+ *
+ * @author xxm
+ * @date 2021/8/9
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("App版本")
 public class AppVersion extends MpBaseEntity implements EntityBaseFunction<AppVersionDto> {
 
-    /** app版本*/
+    /** app版本 */
     private String appVersion;
 
-    /**下载地址*/
+    /** 下载地址 */
     private String url;
 
-    /**密码*/
+    /** 密码 */
     private String password;
 
-    /**包名*/
+    /** 包名 */
     private String bundleId;
 
-    /**说明*/
+    /** 说明 */
     private String description;
 
-    public static AppVersion init(AppVersionDto in){
+    public static AppVersion init(AppVersionDto in) {
         return AppVersionConvert.CONVERT.convert(in);
     }
 
-    public static AppVersion init(AppVersionParam in){
+    public static AppVersion init(AppVersionParam in) {
         return AppVersionConvert.CONVERT.convert(in);
     }
 
@@ -48,4 +49,5 @@ public class AppVersion extends MpBaseEntity implements EntityBaseFunction<AppVe
     public AppVersionDto toDto() {
         return AppVersionConvert.CONVERT.convert(this);
     }
+
 }

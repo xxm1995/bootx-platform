@@ -25,6 +25,7 @@ import static cn.bootx.common.core.code.CommonErrorCode.VALIDATE_PARAMETERS_ERRO
 
 /**
  * Web 项目异常处理
+ *
  * @author xxm
  * @date 2020/5/8 15:30
  */
@@ -33,6 +34,7 @@ import static cn.bootx.common.core.code.CommonErrorCode.VALIDATE_PARAMETERS_ERRO
 @EnableConfigurationProperties(ExceptionHandlerProperties.class)
 @RequiredArgsConstructor
 public class RestExceptionHandler {
+
     private final ExceptionHandlerProperties properties;
 
     /**
@@ -41,20 +43,20 @@ public class RestExceptionHandler {
     @ExceptionHandler(BizException.class)
     public ResResult<Void> handleBusinessException(BizException ex) {
         log.info(ex.getMessage(), ex);
-        return Res.response(ex.getCode(),ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+        return Res.response(ex.getCode(), ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
      * 请求参数校验未通过
      */
-    @ExceptionHandler({ConstraintViolationException.class})
+    @ExceptionHandler({ ConstraintViolationException.class })
     public ResResult<Void> handleBusinessException(ConstraintViolationException ex) {
         log.info(ex.getMessage(), ex);
         StringBuilder message = new StringBuilder();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
             message.append(violation.getMessage()).append(System.lineSeparator());
         }
-        return Res.response(VALIDATE_PARAMETERS_ERROR,message.toString(),MDC.get(CommonCode.TRACE_ID));
+        return Res.response(VALIDATE_PARAMETERS_ERROR, message.toString(), MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -63,15 +65,15 @@ public class RestExceptionHandler {
      * @return
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResResult<?> HttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e){
+    public ResResult<?> HttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         StringBuffer sb = new StringBuffer();
         sb.append("不支持");
         sb.append(e.getMethod());
         sb.append("请求方法，");
         sb.append("支持以下");
-        String [] methods = e.getSupportedMethods();
-        if(methods!=null){
-            sb.append(String.join("、",methods));
+        String[] methods = e.getSupportedMethods();
+        if (methods != null) {
+            sb.append(String.join("、", methods));
         }
         log.error(sb.toString(), e);
         return Res.error(sb.toString());
@@ -80,10 +82,10 @@ public class RestExceptionHandler {
     /**
      * 请求参数校验未通过
      */
-    @ExceptionHandler({ValidationException.class})
+    @ExceptionHandler({ ValidationException.class })
     public ResResult<Void> handleBusinessException(ValidationException ex) {
         log.info(ex.getMessage(), ex);
-        return Res.response(VALIDATE_PARAMETERS_ERROR,ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+        return Res.response(VALIDATE_PARAMETERS_ERROR, ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -92,7 +94,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResResult<Void> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
         log.info(ex.getMessage(), ex);
-        return Res.response(CommonErrorCode.VALIDATE_PARAMETERS_ERROR, "参数处理失败",MDC.get(CommonCode.TRACE_ID));
+        return Res.response(CommonErrorCode.VALIDATE_PARAMETERS_ERROR, "参数处理失败", MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -101,7 +103,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(SystemException.class)
     public ResResult<Void> handleSystemException(SystemException ex) {
         log.info(ex.getMessage(), ex);
-        return Res.response(ex.getCode(), ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+        return Res.response(ex.getCode(), ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -110,7 +112,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(HttpMessageConversionException.class)
     public ResResult<Void> handleHttpMessageConversionException(HttpMessageConversionException ex) {
         log.info(ex.getMessage(), ex);
-        return Res.response(CommonErrorCode.PARSE_PARAMETERS_ERROR, ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+        return Res.response(CommonErrorCode.PARSE_PARAMETERS_ERROR, ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -119,7 +121,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(FatalException.class)
     public ResResult<Void> handleFatalException(FatalException ex) {
         log.error("致命异常 " + ex.getMessage(), ex);
-        return Res.response(ex.getCode(), ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
+        return Res.response(ex.getCode(), ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -128,7 +130,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(NullPointerException.class)
     public ResResult<Void> handleNullPointerException(NullPointerException ex) {
         log.error("空指针 ", ex);
-        return Res.response(CommonErrorCode.SYSTEM_ERROR, "数据错误",MDC.get(CommonCode.TRACE_ID));
+        return Res.response(CommonErrorCode.SYSTEM_ERROR, "数据错误", MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -137,13 +139,13 @@ public class RestExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResResult<Void> handleRuntimeException(RuntimeException ex) {
         log.error(ex.getMessage(), ex);
-        if (properties.isShowFullMessage()){
-            return Res.response(CommonErrorCode.SYSTEM_ERROR, ex.getMessage(),MDC.get(CommonCode.TRACE_ID));
-        } else {
-            return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));
+        if (properties.isShowFullMessage()) {
+            return Res.response(CommonErrorCode.SYSTEM_ERROR, ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
+        }
+        else {
+            return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误", MDC.get(CommonCode.TRACE_ID));
         }
     }
-
 
     /**
      * 处理 OutOfMemoryError
@@ -151,7 +153,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(OutOfMemoryError.class)
     public ResResult<Void> handleOomException(OutOfMemoryError ex) {
         log.error("内存不足错误 " + ex.getMessage(), ex);
-        return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));
+        return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误", MDC.get(CommonCode.TRACE_ID));
     }
 
     /**
@@ -160,7 +162,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(Throwable.class)
     public ResResult<Void> handleThrowable(Throwable ex) {
         log.error("系统错误 " + ex.getMessage(), ex);
-        return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误",MDC.get(CommonCode.TRACE_ID));
+        return Res.response(CommonErrorCode.SYSTEM_ERROR, "系统错误", MDC.get(CommonCode.TRACE_ID));
     }
 
 }

@@ -30,16 +30,14 @@ import static cn.bootx.payment.code.CachingCode.PAYMENT_ID;
 public class PaymentManager extends BaseManager<PaymentMapper, Payment> {
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = PAYMENT_ID,key = "#payment.id"),
-            @CacheEvict(value = PAYMENT_BUSINESS_ID,key = "#payment.businessId")
-    })
+    @Caching(evict = { @CacheEvict(value = PAYMENT_ID, key = "#payment.id"),
+            @CacheEvict(value = PAYMENT_BUSINESS_ID, key = "#payment.businessId") })
     public Payment updateById(Payment payment) {
         return super.updateById(payment);
     }
 
     @Override
-    @Cacheable(value = {PAYMENT_ID}, key = "#id")
+    @Cacheable(value = { PAYMENT_ID }, key = "#id")
     public Optional<Payment> findById(Serializable id) {
         return super.findById(id);
     }
@@ -47,16 +45,16 @@ public class PaymentManager extends BaseManager<PaymentMapper, Payment> {
     /**
      * 根据BusinessId查询
      */
-    @Cacheable(value = {PAYMENT_BUSINESS_ID}, key = "#businessId")
-    public Optional<Payment> findByBusinessId(String businessId){
-        return findByField(Payment::getBusinessId,businessId);
+    @Cacheable(value = { PAYMENT_BUSINESS_ID }, key = "#businessId")
+    public Optional<Payment> findByBusinessId(String businessId) {
+        return findByField(Payment::getBusinessId, businessId);
     }
 
     /**
      * 根据用户查询
      */
-    public List<Payment> findByUserId(Long userId){
-        return this.findAllByField(Payment::getUserId,userId);
+    public List<Payment> findByUserId(Long userId) {
+        return this.findAllByField(Payment::getUserId, userId);
     }
 
     /**
@@ -64,21 +62,23 @@ public class PaymentManager extends BaseManager<PaymentMapper, Payment> {
      */
     public Page<Payment> page(PageParam pageParam, PaymentQuery param, OrderParam orderParam) {
         Page<Payment> mpPage = MpUtil.getMpPage(pageParam, Payment.class);
-        return query()
-                .select(Payment.class, MpUtil::excludeBigField)
-                .orderBy(Objects.nonNull(orderParam.getSortField()),orderParam.isAsc(), StrUtil.toUnderlineCase(orderParam.getSortField()))
-                .like(Objects.nonNull(param.getPaymentId()), MpUtil.getColumnName(Payment::getId),param.getPaymentId())
-                .like(Objects.nonNull(param.getBusinessId()),MpUtil.getColumnName(Payment::getBusinessId),param.getBusinessId())
-                .like(Objects.nonNull(param.getTitle()),MpUtil.getColumnName(Payment::getTitle),param.getTitle())
+        return query().select(Payment.class, MpUtil::excludeBigField)
+                .orderBy(Objects.nonNull(orderParam.getSortField()), orderParam.isAsc(),
+                        StrUtil.toUnderlineCase(orderParam.getSortField()))
+                .like(Objects.nonNull(param.getPaymentId()), MpUtil.getColumnName(Payment::getId), param.getPaymentId())
+                .like(Objects.nonNull(param.getBusinessId()), MpUtil.getColumnName(Payment::getBusinessId),
+                        param.getBusinessId())
+                .like(Objects.nonNull(param.getTitle()), MpUtil.getColumnName(Payment::getTitle), param.getTitle())
                 .page(mpPage);
     }
+
     /**
      * 分页查询
      */
     public Page<Payment> superPage(PageParam pageParam, QueryParams queryParams) {
         QueryWrapper<Payment> wrapper = QueryGenerator.generator(queryParams);
         Page<Payment> mpPage = MpUtil.getMpPage(pageParam, Payment.class);
-        return this.page(mpPage,wrapper);
+        return this.page(mpPage, wrapper);
     }
 
 }

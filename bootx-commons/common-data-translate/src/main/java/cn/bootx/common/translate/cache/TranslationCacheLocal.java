@@ -12,6 +12,7 @@ import java.util.Set;
 
 /**
  * 字典翻译缓存
+ *
  * @author xxm
  * @date 2023/1/29
  */
@@ -19,6 +20,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class TranslationCacheLocal {
+
     private static final ThreadLocal<Cache> THREAD_LOCAL = new TransmittableThreadLocal<>();
 
     /**
@@ -49,41 +51,43 @@ public class TranslationCacheLocal {
      */
     @Getter
     public static class Cache {
+
         /** 字典项 */
         private final Set<DictItem> dictItems = new HashSet<>();
+
         /** 表项 */
         private final Set<TableItem> tableItems = new HashSet<>();
+
         /** 字典缓存 */
         private final Set<DictItemValue> dictItemCaches = new HashSet<>();
+
         /** 表缓存 */
         private final Set<TableItemValue> tableItemCaches = new HashSet<>();
 
-        public String getDictValue(String dicCode,String code){
+        public String getDictValue(String dicCode, String code) {
             return dictItemCaches.stream()
-                    .filter(o-> Objects.equal(dicCode,o.getDictCode())&&Objects.equal(code,o.getCode()))
-                    .findFirst()
-                    .map(DictItemValue::getValue)
-                    .orElse(null);
+                    .filter(o -> Objects.equal(dicCode, o.getDictCode()) && Objects.equal(code, o.getCode()))
+                    .findFirst().map(DictItemValue::getValue).orElse(null);
         }
 
-        public Object getTableValue(String table,String key,String param,String select){
+        public Object getTableValue(String table, String key, String param, String select) {
             return null;
         }
 
-        public void addDict(String dictCode,String code){
-            dictItems.add(new DictItem(dictCode,code));
+        public void addDict(String dictCode, String code) {
+            dictItems.add(new DictItem(dictCode, code));
         }
 
-        public void addTable(String table,String key,String param,String select){
-            tableItems.add(new TableItem(table,key,param,select));
+        public void addTable(String table, String key, String param, String select) {
+            tableItems.add(new TableItem(table, key, param, select));
         }
 
-        public void addDictCache(String dictCode,String code,String value){
-            dictItemCaches.add(new DictItemValue(dictCode,code,value));
+        public void addDictCache(String dictCode, String code, String value) {
+            dictItemCaches.add(new DictItemValue(dictCode, code, value));
         }
 
-        public void addTableCache(String table,String key,String param,String select,String value){
-            tableItemCaches.add(new TableItemValue(table,key,param,select,value));
+        public void addTableCache(String table, String key, String param, String select, String value) {
+            tableItemCaches.add(new TableItemValue(table, key, param, select, value));
         }
 
     }
@@ -94,41 +98,59 @@ public class TranslationCacheLocal {
     @AllArgsConstructor
     @Getter
     @EqualsAndHashCode
-    public static class DictItem{
+    public static class DictItem {
+
         /** 字典code */
         private String dictCode;
+
         /** code */
         private String code;
+
     }
+
     @Getter
-    public static class DictItemValue extends DictItem{
+    public static class DictItemValue extends DictItem {
+
         private final String value;
-        public DictItemValue(String dictCode, String code,String value) {
+
+        public DictItemValue(String dictCode, String code, String value) {
             super(dictCode, code);
             this.value = value;
         }
+
     }
+
     /**
      * 要进行缓存的字典值
      */
     @AllArgsConstructor
     @EqualsAndHashCode
-    public static class TableItem{
+    public static class TableItem {
+
         /** 表名 */
         private String table;
+
         /** 条件字段 */
         private String key;
+
         /** 条件值 */
         private Object param;
+
         /** 目标字段 */
         private String select;
+
     }
+
     @Getter
-    public static class TableItemValue extends TableItem{
+    public static class TableItemValue extends TableItem {
+
         private Object value;
-        public TableItemValue(String table, String key, Object param, String select,Object value) {
+
+        public TableItemValue(String table, String key, Object param, String select, Object value) {
             super(table, key, param, select);
             this.value = value;
         }
+
     }
+
 }

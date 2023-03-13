@@ -17,6 +17,7 @@ import java.util.Objects;
 
 /**
  * 字段翻译切点
+ *
  * @author xxm
  * @date 2022/12/20
  */
@@ -29,7 +30,7 @@ public class TranslationInterceptor implements MethodInterceptor {
     @Nullable
     @Override
     public Object invoke(@NotNull MethodInvocation invocation) throws Throwable {
-        if (Objects.isNull(invocation)){
+        if (Objects.isNull(invocation)) {
             return null;
         }
         // 使用其他aop组件时,aop切了两次.
@@ -40,18 +41,17 @@ public class TranslationInterceptor implements MethodInterceptor {
         TranslationResult translationResult = invocation.getMethod().getAnnotation(TranslationResult.class);
         Object proceed = invocation.proceed();
         // 返回值为空和未开启字典翻译直接结束
-        if (Objects.isNull(proceed)||!translationResult.enable()){
+        if (Objects.isNull(proceed) || !translationResult.enable()) {
             return null;
         }
         // 获取返回类型, 基础类型Type为class, 泛型类型为 ParameterizedType
         Type returnType = TypeUtil.getReturnType(invocation.getMethod());
         for (TranslationHandler translationHandler : translationHandlers) {
-            if (translationHandler.adaptation(returnType)){
-                translationHandler.translation(proceed,returnType, translationResult);
+            if (translationHandler.adaptation(returnType)) {
+                translationHandler.translation(proceed, returnType, translationResult);
             }
         }
         return proceed;
     }
-
 
 }

@@ -27,49 +27,54 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/uni_pay")
 @AllArgsConstructor
 public class PayController {
+
     private final PayService payService;
+
     private final PayCancelService payCancelService;
+
     private final PayRefundService payRefundService;
+
     private final PaySyncService paySyncService;
 
     @Operation(summary = "支付")
     @PostMapping("/pay")
-    public ResResult<PayResult>pay(@RequestBody PayParam payParam){
+    public ResResult<PayResult> pay(@RequestBody PayParam payParam) {
         return Res.ok(payService.pay(payParam));
     }
 
     @Operation(summary = "取消支付(支付id)")
     @PostMapping("/cancelByPaymentId")
-    public ResResult<Void> cancelByPaymentId(@Parameter(description = "支付id") Long paymentId){
+    public ResResult<Void> cancelByPaymentId(@Parameter(description = "支付id") Long paymentId) {
         payCancelService.cancelByPaymentId(paymentId);
         return Res.ok();
     }
 
     @Operation(summary = "取消支付(业务id)")
     @PostMapping("/cancelByBusinessId")
-    public ResResult<Void> cancelByBusinessId(@Parameter(description = "业务id") String businessId){
+    public ResResult<Void> cancelByBusinessId(@Parameter(description = "业务id") String businessId) {
         payCancelService.cancelByBusinessId(businessId);
         return Res.ok();
     }
-    
+
     @Operation(summary = "刷新指定业务id的支付单状态")
     @PostMapping("/syncByBusinessId")
-    public ResResult<Void> syncByBusinessId(@Parameter(description = "业务id") String businessId){
+    public ResResult<Void> syncByBusinessId(@Parameter(description = "业务id") String businessId) {
         paySyncService.syncByBusinessId(businessId);
         return Res.ok();
     }
-    
+
     @Operation(summary = "退款")
     @PostMapping("/refund")
-    public ResResult<Void> refund(@RequestBody RefundParam refundParam){
+    public ResResult<Void> refund(@RequestBody RefundParam refundParam) {
         payRefundService.refund(refundParam);
         return Res.ok();
     }
 
     @Operation(summary = "全额退款(业务id)")
     @PostMapping("/refundByBusinessId")
-    public ResResult<Void> refundByBusinessId(@Parameter(description = "业务id") String businessId){
+    public ResResult<Void> refundByBusinessId(@Parameter(description = "业务id") String businessId) {
         payRefundService.refundByBusinessId(businessId);
         return Res.ok();
     }
+
 }

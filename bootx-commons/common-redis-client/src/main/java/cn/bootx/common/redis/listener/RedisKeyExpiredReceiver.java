@@ -11,15 +11,18 @@ import java.util.List;
 
 /**
  * key过期事件接收
+ *
  * @author xxm
  * @date 2022/5/7
  */
 @Slf4j
 @Component
 public class RedisKeyExpiredReceiver extends KeyExpirationEventMessageListener {
+
     private final List<RedisKeyExpiredListener> redisKeyExpiredListeners;
 
-    public RedisKeyExpiredReceiver(RedisMessageListenerContainer listenerContainer, List<RedisKeyExpiredListener> redisKeyExpiredListeners) {
+    public RedisKeyExpiredReceiver(RedisMessageListenerContainer listenerContainer,
+            List<RedisKeyExpiredListener> redisKeyExpiredListeners) {
         super(listenerContainer);
         this.redisKeyExpiredListeners = redisKeyExpiredListeners;
     }
@@ -29,10 +32,11 @@ public class RedisKeyExpiredReceiver extends KeyExpirationEventMessageListener {
         String expiredKey = new String(message.getBody());
         for (RedisKeyExpiredListener redisKeyExpiredListener : redisKeyExpiredListeners) {
             String prefixKey = redisKeyExpiredListener.getPrefixKey();
-            if (StrUtil.startWith(expiredKey,prefixKey)){
+            if (StrUtil.startWith(expiredKey, prefixKey)) {
                 // 去除key前缀
-                redisKeyExpiredListener.onMessage(StrUtil.removePrefix(expiredKey,prefixKey));
+                redisKeyExpiredListener.onMessage(StrUtil.removePrefix(expiredKey, prefixKey));
             }
         }
     }
+
 }

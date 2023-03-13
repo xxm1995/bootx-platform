@@ -13,10 +13,11 @@ import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 
 /**
-* 微信粉丝
-* @author xxm
-* @date 2022/7/15
-*/
+ * 微信粉丝
+ *
+ * @author xxm
+ * @date 2022/7/15
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -51,4 +52,5 @@ public class WechatFans extends MpIdEntity implements EntityBaseFunction<WechatF
     public WechatFansDto toDto() {
         return WechatFansConvert.CONVERT.convert(this);
     }
+
 }

@@ -15,6 +15,7 @@ import java.util.Enumeration;
 
 /**
  * 请求头保存
+ *
  * @author xxm
  * @date 2021/4/20
  */
@@ -23,22 +24,25 @@ import java.util.Enumeration;
 public class WebHeaderHolderInterceptor extends OncePerRequestFilter {
 
     @Override
-    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
         try {
             // 保存一些Servlet请求的数据
-            HolderContextHolder.put(ServletCode.METHOD,request.getMethod());
-            HolderContextHolder.put(ServletCode.CONTEXT_PATH,request.getContextPath());
-            HolderContextHolder.put(ServletCode.REQUEST_URI,request.getRequestURI());
-            HolderContextHolder.put(ServletCode.REQUEST_URL,request.getRequestURL().toString());
+            HolderContextHolder.put(ServletCode.METHOD, request.getMethod());
+            HolderContextHolder.put(ServletCode.CONTEXT_PATH, request.getContextPath());
+            HolderContextHolder.put(ServletCode.REQUEST_URI, request.getRequestURI());
+            HolderContextHolder.put(ServletCode.REQUEST_URL, request.getRequestURL().toString());
             // 保存请求头数据
             Enumeration<String> headerNames = request.getHeaderNames();
-            while (headerNames.hasMoreElements()){
+            while (headerNames.hasMoreElements()) {
                 String header = headerNames.nextElement();
-                HolderContextHolder.put(header,request.getHeader(header));
+                HolderContextHolder.put(header, request.getHeader(header));
             }
             chain.doFilter(request, response);
-        } finally {
+        }
+        finally {
             HolderContextHolder.clear();
         }
     }
+
 }

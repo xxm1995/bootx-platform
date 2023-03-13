@@ -17,6 +17,7 @@ import java.util.Objects;
 
 /**
  * 扫码事件
+ *
  * @author xxm
  * @date 2022/8/4
  */
@@ -24,7 +25,9 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class WeChatQrLoginService {
+
     private final RedisClient redisClient;
+
     private final WxMpService wxMpService;
 
     private final String PREFIX_KEY = "third:wechat:login:qr:";
@@ -33,27 +36,29 @@ public class WeChatQrLoginService {
      * 申请待扫描的二维码
      */
     @SneakyThrows
-    public WeChatLoginQrCode applyQrCode(){
+    public WeChatLoginQrCode applyQrCode() {
         WxMpQrcodeService qrcodeService = wxMpService.getQrcodeService();
         long timeout = 5 * 60 * 1000;
         String qrCodeKey = IdUtil.getSnowflakeNextIdStr();
         WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(qrCodeKey, (int) timeout);
         String url = wxMpQrCodeTicket.getUrl();
-        redisClient.setWithTimeout(PREFIX_KEY+qrCodeKey,"", timeout);
-        return new WeChatLoginQrCode(qrCodeKey,url);
+        redisClient.setWithTimeout(PREFIX_KEY + qrCodeKey, "", timeout);
+        return new WeChatLoginQrCode(qrCodeKey, url);
     }
 
     /**
      * 查询二维码状态 等待扫码/登录成功/过期
      */
-    public String getStatus(String key){
+    public String getStatus(String key) {
         String openId = redisClient.get(PREFIX_KEY + key);
 
-        if (Objects.isNull(openId)){
+        if (Objects.isNull(openId)) {
             return "expired";
-        } else if (StrUtil.isBlank(openId)){
+        }
+        else if (StrUtil.isBlank(openId)) {
             return "wait";
-        } else {
+        }
+        else {
             return "ok";
         }
     }
@@ -61,16 +66,16 @@ public class WeChatQrLoginService {
     /**
      * 设置微信openId
      */
-    public void setOpenId(String key,String openId){
-        if (redisClient.exists(PREFIX_KEY+key)){
-            redisClient.set(PREFIX_KEY+key,openId);
+    public void setOpenId(String key, String openId) {
+        if (redisClient.exists(PREFIX_KEY + key)) {
+            redisClient.set(PREFIX_KEY + key, openId);
         }
     }
 
     /**
      * 获取 openId
      */
-    public String getOpenId(String key){
+    public String getOpenId(String key) {
         String openId = redisClient.get(PREFIX_KEY + key);
         if (StrUtil.isBlank(openId)) {
             throw new LoginFailureException("数据已过期或不存在");
@@ -81,8 +86,8 @@ public class WeChatQrLoginService {
     /**
      * 清除扫码信息
      */
-    public void clear(String key){
-        redisClient.deleteKey(PREFIX_KEY+key);
+    public void clear(String key) {
+        redisClient.deleteKey(PREFIX_KEY + key);
     }
 
 }

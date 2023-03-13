@@ -8,11 +8,13 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * 企业微信机器人配置
+ *
  * @author bootx
  * @date 2022-07-23
  */
 @Mapper
 public interface WecomRobotConfigConvert {
+
     WecomRobotConfigConvert CONVERT = Mappers.getMapper(WecomRobotConfigConvert.class);
 
     WecomRobotConfig convert(WecomRobotConfigParam in);

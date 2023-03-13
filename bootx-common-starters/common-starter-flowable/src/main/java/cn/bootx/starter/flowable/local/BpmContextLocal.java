@@ -4,14 +4,15 @@ import com.alibaba.ttl.TransmittableThreadLocal;
 
 import java.util.Optional;
 
-/**   
+/**
  * 流程任务处理缓存类
- * @author xxm  
- * @date 2022/8/28 
+ *
+ * @author xxm
+ * @date 2022/8/28
  */
 public class BpmContextLocal {
-    private static final ThreadLocal<BpmContext> THREAD_LOCAL = new TransmittableThreadLocal<>();
 
+    private static final ThreadLocal<BpmContext> THREAD_LOCAL = new TransmittableThreadLocal<>();
 
     /**
      * TTL 设置数据
@@ -35,4 +36,5 @@ public class BpmContextLocal {
     public static void clear() {
         THREAD_LOCAL.remove();
     }
+
 }

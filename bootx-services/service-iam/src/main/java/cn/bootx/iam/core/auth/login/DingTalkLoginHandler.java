@@ -33,6 +33,7 @@ import static cn.bootx.starter.auth.code.AuthLoginTypeCode.*;
 
 /**
  * 钉钉登录
+ *
  * @author xxm
  * @date 2022/4/2
  */
@@ -40,11 +41,15 @@ import static cn.bootx.starter.auth.code.AuthLoginTypeCode.*;
 @Component
 @RequiredArgsConstructor
 public class DingTalkLoginHandler implements OpenIdAuthentication {
+
     private final UserTiredOperateService userTiredOperateService;
+
     private final DingUserService dingUserService;
 
     private final UserThirdManager userThirdManager;
+
     private final UserInfoManager userInfoManager;
+
     private final AuthProperties authProperties;
 
     /**
@@ -72,16 +77,14 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
         UserInfo userInfo = userInfoManager.findById(userThird.getUserId())
                 .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
-        return new AuthInfoResult()
-                .setUserDetail(userInfo.toUserDetail())
-                .setId(userInfo.getId());
+        return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());
     }
 
     /**
      * 获取登录地址
      */
     @Override
-    public String getLoginUrl(){
+    public String getLoginUrl() {
         AuthRequest authRequest = this.getAuthRequest();
         return authRequest.authorize(AuthStateUtils.createState());
     }
@@ -91,15 +94,12 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public AuthUser getAuthUser(String authCode, String state){
+    public AuthUser getAuthUser(String authCode, String state) {
         AuthRequest authRequest = this.getAuthRequest();
-        AuthCallback callback = AuthCallback.builder()
-                .code(authCode)
-                .state(state)
-                .build();
+        AuthCallback callback = AuthCallback.builder().code(authCode).state(state).build();
         AuthResponse<AuthUser> response = authRequest.login(callback);
-        if (!Objects.equals(response.getCode(), AuthLoginTypeCode.SUCCESS)){
-            log.error("钉钉登录报错: {}",response.getMsg());
+        if (!Objects.equals(response.getCode(), AuthLoginTypeCode.SUCCESS)) {
+            log.error("钉钉登录报错: {}", response.getMsg());
             throw new LoginFailureException("钉钉登录出错");
         }
         return response.getData();
@@ -109,25 +109,20 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
      * 绑定用户
      */
     @Override
-    public void bindUser(String authCode, String state){
+    public void bindUser(String authCode, String state) {
         Long userId = SecurityUtil.getUserId();
         AuthUser authUser = this.getAuthUser(authCode, state);
         userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getDingTalkId);
-        userTiredOperateService.bindOpenId(userId,authUser.getUuid(), UserThird::setDingTalkId);
+        userTiredOperateService.bindOpenId(userId, authUser.getUuid(), UserThird::setDingTalkId);
         String thirdUserId = dingUserService.getUserIdByUnionId(authUser.getUuid());
 
         // 检查是否允许不在组织中的钉钉人员进行绑定
-        if (!authProperties.getThirdLogin().getDingTalk().isCheckBelongOrg()
-                &&Objects.isNull(thirdUserId)){
+        if (!authProperties.getThirdLogin().getDingTalk().isCheckBelongOrg() && Objects.isNull(thirdUserId)) {
             throw new BizException("未在钉钉组织找到该用户，无法进行绑定");
         }
 
-        UserThirdInfo userThirdInfo = new UserThirdInfo()
-                .setUserId(userId)
-                .setClientCode(DING_TALK)
-                .setUsername(authUser.getUsername())
-                .setNickname(authUser.getNickname())
-                .setAvatar(authUser.getAvatar())
+        UserThirdInfo userThirdInfo = new UserThirdInfo().setUserId(userId).setClientCode(DING_TALK)
+                .setUsername(authUser.getUsername()).setNickname(authUser.getNickname()).setAvatar(authUser.getAvatar())
                 .setThirdUserId(thirdUserId);
         userTiredOperateService.bindOpenInfo(userThirdInfo);
     }
@@ -135,15 +130,13 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
     /**
      * 获取钉钉认证请求
      */
-    private AuthDingTalkRequest getAuthRequest(){
+    private AuthDingTalkRequest getAuthRequest() {
         val thirdLogin = authProperties.getThirdLogin().getDingTalk();
-        if (Objects.isNull(thirdLogin)){
+        if (Objects.isNull(thirdLogin)) {
             throw new LoginFailureException("钉钉开放登录配置有误");
         }
-        return new AuthDingTalkRequest(AuthConfig.builder()
-                .clientId(thirdLogin.getClientId())
-                .clientSecret(thirdLogin.getClientSecret())
-                .redirectUri(thirdLogin.getRedirectUri())
-                .build());
+        return new AuthDingTalkRequest(AuthConfig.builder().clientId(thirdLogin.getClientId())
+                .clientSecret(thirdLogin.getClientSecret()).redirectUri(thirdLogin.getRedirectUri()).build());
     }
+
 }

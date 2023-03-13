@@ -9,20 +9,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
-* 微信配置
-* @author xxm
-* @date 2022/7/15
-*/
+ * 微信配置
+ *
+ * @author xxm
+ * @date 2022/7/15
+ */
 @Configuration
 @RequiredArgsConstructor
 public class WeChatConfiguration {
+
     private final WeChatProperties weChatProperties;
 
     /**
      * 微信公众号APIService
      */
     @Bean
-    public WxMpService wxMpService(WxMpConfigStorage wxMpConfigStorage){
+    public WxMpService wxMpService(WxMpConfigStorage wxMpConfigStorage) {
         WxMpService wxMpService = new WxMpServiceImpl();
         wxMpService.setWxMpConfigStorage(wxMpConfigStorage);
         return wxMpService;
@@ -32,7 +34,7 @@ public class WeChatConfiguration {
      * 微信配置
      */
     @Bean
-    public WxMpConfigStorage wxMpConfigStorage(){
+    public WxMpConfigStorage wxMpConfigStorage() {
         WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
         config.setAppId(weChatProperties.getAppId()); // 设置微信公众号的appid
         config.setSecret(weChatProperties.getAppSecret()); // 设置微信公众号的app corpSecret

@@ -6,11 +6,12 @@ import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 
-/**   
-* 通过手机验证码忘记密码参数
-* @author xxm  
-* @date 2022/6/26 
-*/
+/**
+ * 通过手机验证码忘记密码参数
+ *
+ * @author xxm
+ * @date 2022/6/26
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "通过手机验证码忘记密码参数")

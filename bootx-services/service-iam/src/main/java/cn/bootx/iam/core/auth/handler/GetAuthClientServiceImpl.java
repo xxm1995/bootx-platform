@@ -11,14 +11,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
-* 获取认证应用
-* @author xxm
-* @date 2022/6/27
-*/
+ * 获取认证应用
+ *
+ * @author xxm
+ * @date 2022/6/27
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetAuthClientServiceImpl implements GetAuthClientService {
+
     private final ClientManager clientManager;
 
     @Override
@@ -28,4 +30,5 @@ public class GetAuthClientServiceImpl implements GetAuthClientService {
         BeanUtil.copyProperties(client, authClient);
         return authClient;
     }
+
 }

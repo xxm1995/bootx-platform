@@ -21,15 +21,18 @@ import java.io.InputStream;
 import static cn.bootx.starter.wecom.code.WeComCode.NOTICE_RECALL_URL;
 
 /**
-* 企业微信消息发送
-* @author xxm
-* @date 2022/7/23
-*/
+ * 企业微信消息发送
+ *
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeComNoticeService {
+
     private final WxCpService wxCpService;
+
     private final WeComProperties weComProperties;
 
     /**
@@ -37,7 +40,7 @@ public class WeComNoticeService {
      * @return 消息id, 可用于撤回
      */
     @SneakyThrows
-    public String sendNotice(WxCpMessage message){
+    public String sendNotice(WxCpMessage message) {
         WxCpMessageService messageService = wxCpService.getMessageService();
         message.setAgentId(weComProperties.getAgentId());
         WxCpMessageSendResult result = messageService.send(message);
@@ -49,7 +52,7 @@ public class WeComNoticeService {
      * @param msgId 消息id
      */
     @SneakyThrows
-    public void recallNotice(String msgId)  {
+    public void recallNotice(String msgId) {
         wxCpService.execute(new RecallNoticeRequestExecutor(), NOTICE_RECALL_URL, msgId);
     }
 
@@ -57,11 +60,12 @@ public class WeComNoticeService {
      * 上传临时素材
      */
     @SneakyThrows
-    public String updatedMedia(InputStream inputStream, String mediaType){
+    public String updatedMedia(InputStream inputStream, String mediaType) {
         WxCpMediaService mediaService = wxCpService.getMediaService();
         byte[] bytes = IoUtil.readBytes(inputStream);
         String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
         WxMediaUploadResult result = mediaService.upload(mediaType, fileType, new ByteArrayInputStream(bytes));
         return result.getMediaId();
     }
+
 }

@@ -10,11 +10,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* 定时任务
-* @author xxm  
-* @date 2021/11/2 
-*/
+/**
+ * 定时任务
+ *
+ * @author xxm
+ * @date 2021/11/2
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -47,7 +48,8 @@ public class QuartzJob extends MpBaseEntity implements EntityBaseFunction<Quartz
         return QuartzJobConvert.CONVERT.convert(this);
     }
 
-    public static QuartzJob init(QuartzJobParam in){
+    public static QuartzJob init(QuartzJobParam in) {
         return QuartzJobConvert.CONVERT.convert(in);
     }
+
 }

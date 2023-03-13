@@ -7,10 +7,11 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
-* 企业通知接收人配置
-* @author xxm
-* @date 2022/7/20
-*/
+ * 企业通知接收人配置
+ *
+ * @author xxm
+ * @date 2022/7/20
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "企业通知接收人配置")
@@ -28,8 +29,8 @@ public class DingCorpNoticeReceive {
     /**
      * 发送给全部用户
      */
-    public static DingCorpNoticeReceive toAll(){
-        return new DingCorpNoticeReceive()
-                .setToAllUser(true);
+    public static DingCorpNoticeReceive toAll() {
+        return new DingCorpNoticeReceive().setToAllUser(true);
     }
+
 }

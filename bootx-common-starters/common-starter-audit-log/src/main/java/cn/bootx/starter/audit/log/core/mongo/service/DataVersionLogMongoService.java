@@ -28,16 +28,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
-*
-* @author xxm
-* @date 2022/1/10
-*/
+ * @author xxm
+ * @date 2022/1/10
+ */
 @Slf4j
 @Service
 @ConditionalOnProperty(prefix = "bootx.starter.audit-log", value = "store", havingValue = "mongo")
 @RequiredArgsConstructor
 public class DataVersionLogMongoService implements DataVersionLogService {
+
     private final DataVersionLogMongoRepository repository;
+
     private final MongoTemplate mongoTemplate;
 
     /**
@@ -53,21 +54,20 @@ public class DataVersionLogMongoService implements DataVersionLogService {
         DataVersionLogMongo one = mongoTemplate.findOne(query, DataVersionLogMongo.class);
         Integer maxVersion = Optional.ofNullable(one).map(DataVersionLogMongo::getVersion).orElse(0);
 
-        DataVersionLogMongo dataVersionLog = new DataVersionLogMongo()
-                .setTableName(param.getTableName())
-                .setDataName(param.getDataName())
-                .setDataId(param.getDataId())
-                .setCreator(SecurityUtil.getUserIdOrDefaultId())
-                .setCreateTime(LocalDateTime.now())
-                .setVersion(maxVersion+1);
-        if (param.getDataContent() instanceof String){
+        DataVersionLogMongo dataVersionLog = new DataVersionLogMongo().setTableName(param.getTableName())
+                .setDataName(param.getDataName()).setDataId(param.getDataId())
+                .setCreator(SecurityUtil.getUserIdOrDefaultId()).setCreateTime(LocalDateTime.now())
+                .setVersion(maxVersion + 1);
+        if (param.getDataContent() instanceof String) {
             dataVersionLog.setDataContent((String) param.getDataContent());
-        } else {
+        }
+        else {
             dataVersionLog.setDataContent(JacksonUtil.toJson(param.getDataContent()));
         }
-        if (param.getChangeContent() instanceof String){
+        if (param.getChangeContent() instanceof String) {
             dataVersionLog.setChangeContent(param.getChangeContent());
-        } else {
+        }
+        else {
             if (Objects.nonNull(param.getChangeContent())) {
                 dataVersionLog.setChangeContent(JacksonUtil.toJson(param.getChangeContent()));
             }
@@ -83,33 +83,26 @@ public class DataVersionLogMongoService implements DataVersionLogService {
 
     @Override
     public PageResult<DataVersionLogDto> page(PageParam pageParam, DataVersionLogParam param) {
-        DataVersionLogMongo dataVersionLogMongo = new DataVersionLogMongo()
-                .setDataId(param.getDataId())
-                .setVersion(param.getVersion())
-                .setTableName(param.getTableName())
-                .setDataName(param.getDataName());
+        DataVersionLogMongo dataVersionLogMongo = new DataVersionLogMongo().setDataId(param.getDataId())
+                .setVersion(param.getVersion()).setTableName(param.getTableName()).setDataName(param.getDataName());
         // 查询条件
-        ExampleMatcher matching = ExampleMatcher.matching()
-                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        ExampleMatcher matching = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example<DataVersionLogMongo> example = Example.of(dataVersionLogMongo, matching);
-        //设置分页条件 (第几页，每页大小，排序)
+        // 设置分页条件 (第几页，每页大小，排序)
         Sort sort = Sort.by(Sort.Order.desc(CommonCode.ID));
-        Pageable pageable = PageRequest.of(pageParam.getCurrent()-1, pageParam.getSize(), sort);
+        Pageable pageable = PageRequest.of(pageParam.getCurrent() - 1, pageParam.getSize(), sort);
 
-        Page<DataVersionLogMongo> page = repository.findAll(example,pageable);
-        List<DataVersionLogDto> records = page.getContent().stream()
-                .map(DataVersionLogMongo::toDto)
+        Page<DataVersionLogMongo> page = repository.findAll(example, pageable);
+        List<DataVersionLogDto> records = page.getContent().stream().map(DataVersionLogMongo::toDto)
                 .collect(Collectors.toList());
 
-        return new PageResult<DataVersionLogDto>()
-                .setCurrent(pageParam.getCurrent())
-                .setSize(pageParam.getSize())
-                .setRecords(records)
-                .setTotal(page.getTotalElements());
+        return new PageResult<DataVersionLogDto>().setCurrent(pageParam.getCurrent()).setSize(pageParam.getSize())
+                .setRecords(records).setTotal(page.getTotalElements());
     }
 
     @Override
     public void delete(Long id) {
 
     }
+
 }

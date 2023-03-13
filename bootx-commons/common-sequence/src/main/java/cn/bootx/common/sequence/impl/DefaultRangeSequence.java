@@ -13,10 +13,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
-* 序列号区间生成器接口默认实现
-* @author xxm
-* @date 2021/8/6
-*/
+ * 序列号区间生成器接口默认实现
+ *
+ * @author xxm
+ * @date 2021/8/6
+ */
 @Setter
 @Getter
 @RequiredArgsConstructor
@@ -47,24 +48,25 @@ public class DefaultRangeSequence implements Sequence {
      */
     @Override
     public long next(String name) throws SeqException {
-        //当前区间不存在，重新获取一个区间
+        // 当前区间不存在，重新获取一个区间
         if (null == currentRange) {
             lock.lock();
             try {
                 if (null == currentRange) {
                     currentRange = seqRangeManager.nextRange(name, seqRangeConfig);
                 }
-            } finally {
+            }
+            finally {
                 lock.unlock();
             }
         }
 
-        //当value值为-1时，表明区间的序列号已经分配完，需要重新获取区间
+        // 当value值为-1时，表明区间的序列号已经分配完，需要重新获取区间
         long value = currentRange.getAndIncrement();
         if (value == -1) {
             lock.lock();
             try {
-                while (true){
+                while (true) {
                     if (currentRange.isOver()) {
                         currentRange = seqRangeManager.nextRange(name, seqRangeConfig);
                     }
@@ -74,7 +76,8 @@ public class DefaultRangeSequence implements Sequence {
                     }
                     break;
                 }
-            } finally {
+            }
+            finally {
                 lock.unlock();
             }
         }

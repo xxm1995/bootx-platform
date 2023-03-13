@@ -10,18 +10,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* 钉钉机器人配置
-* @author xxm  
-* @date 2020/11/29 
-*/
+/**
+ * 钉钉机器人配置
+ *
+ * @author xxm
+ * @date 2020/11/29
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("starter_ding_robot_config")
 public class DingRobotConfig extends MpBaseEntity implements EntityBaseFunction<DingRobotConfigDto> {
 
-    /**  机器人编号编号 */
+    /** 机器人编号编号 */
     private String code;
 
     /** 机器人配置名称 */
@@ -30,16 +31,16 @@ public class DingRobotConfig extends MpBaseEntity implements EntityBaseFunction<
     /** 钉钉机器人的accessToken */
     private String accessToken;
 
-	/** 是否开启验签 */
-	private boolean enableSignatureCheck;
+    /** 是否开启验签 */
+    private boolean enableSignatureCheck;
 
-	/** 验签秘钥 */
-	private String signSecret;
+    /** 验签秘钥 */
+    private String signSecret;
 
     /** 备注 */
     private String remark;
 
-    public static DingRobotConfig init(DingRobotConfigParam in){
+    public static DingRobotConfig init(DingRobotConfigParam in) {
         return DingRobotConvert.CONVERT.convert(in);
     }
 
@@ -47,4 +48,5 @@ public class DingRobotConfig extends MpBaseEntity implements EntityBaseFunction<
     public DingRobotConfigDto toDto() {
         return DingRobotConvert.CONVERT.convert(this);
     }
+
 }

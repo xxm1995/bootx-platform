@@ -7,11 +7,12 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-/**   
-* 请求权限批量启停用
-* @author xxm  
-* @date 2022/6/6 
-*/
+/**
+ * 请求权限批量启停用
+ *
+ * @author xxm
+ * @date 2022/6/6
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "请求权限批量启停用")
@@ -23,4 +24,5 @@ public class PermPathBatchEnableParam {
 
     @Schema(description = "是否启用")
     private boolean enable;
+
 }

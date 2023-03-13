@@ -13,21 +13,23 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
-* 储值卡查询
-* @author xxm
-* @date 2022/3/14
-*/
+ * 储值卡查询
+ *
+ * @author xxm
+ * @date 2022/3/14
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class VoucherQueryService {
+
     private final VoucherManager voucherManager;
 
     /**
      * 分页
      */
-    public PageResult<VoucherDto> page(PageParam pageParam, VoucherParam param){
-        return MpUtil.convert2DtoPageResult(voucherManager.page(pageParam,param));
+    public PageResult<VoucherDto> page(PageParam pageParam, VoucherParam param) {
+        return MpUtil.convert2DtoPageResult(voucherManager.page(pageParam, param));
     }
 
     /**
@@ -40,7 +42,9 @@ public class VoucherQueryService {
     /**
      * 根据卡号查询
      */
-    public VoucherDto findByCardNo(String cardNo){
-        return voucherManager.findByCardNo(cardNo).map(Voucher::toDto).orElseThrow(() -> new DataNotExistException("储值卡不存在"));
+    public VoucherDto findByCardNo(String cardNo) {
+        return voucherManager.findByCardNo(cardNo).map(Voucher::toDto)
+                .orElseThrow(() -> new DataNotExistException("储值卡不存在"));
     }
+
 }

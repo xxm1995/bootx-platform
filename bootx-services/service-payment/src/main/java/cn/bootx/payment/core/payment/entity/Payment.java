@@ -21,15 +21,16 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
-* 支付记录
-* @author xxm
-* @date 2020/12/8
-*/
+ * 支付记录
+ *
+ * @author xxm
+ * @date 2020/12/8
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
-@TableName(value = "pay_payment",autoResultMap = true)
+@TableName(value = "pay_payment", autoResultMap = true)
 public class Payment extends MpBaseEntity implements EntityBaseFunction<PaymentDto> {
 
     /** 关联的业务id */

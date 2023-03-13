@@ -16,25 +16,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* @author xxm
-* @date 2022/1/10
-*/
+ * @author xxm
+ * @date 2022/1/10
+ */
 @Tag(name = "数据版本日志")
 @RestController
 @RequestMapping("/log/dataVersion")
 @RequiredArgsConstructor
 public class DataVersionLogController {
+
     private final DataVersionLogService service;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<DataVersionLogDto>> page(@ParameterObject PageParam pageParam, @ParameterObject DataVersionLogParam param){
-        return Res.ok(service.page(pageParam,param));
+    public ResResult<PageResult<DataVersionLogDto>> page(@ParameterObject PageParam pageParam,
+            @ParameterObject DataVersionLogParam param) {
+        return Res.ok(service.page(pageParam, param));
     }
 
     @Operation(summary = "获取")
     @GetMapping("/findById")
-    public ResResult<DataVersionLogDto> findById(Long id){
+    public ResResult<DataVersionLogDto> findById(Long id) {
         return Res.ok(service.findById(id));
     }
+
 }

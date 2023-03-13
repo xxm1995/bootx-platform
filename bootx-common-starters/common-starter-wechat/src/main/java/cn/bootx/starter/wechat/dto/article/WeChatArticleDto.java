@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * 微信文章
+ *
  * @author xxm
  * @date 2022/8/12
  */
@@ -33,16 +34,12 @@ public class WeChatArticleDto {
     /**
      * 构建
      */
-    public static WeChatArticleDto init(WxMpFreePublishItem item){
+    public static WeChatArticleDto init(WxMpFreePublishItem item) {
         DateTime date = DateUtil.date(Long.parseLong(item.getUpdateTime()));
         LocalDateTime localDateTime = DateUtil.toLocalDateTime(date);
-        String titles = item.getContent().getNewsItem().stream()
-                .map(WxMpFreePublishArticles::getTitle)
+        String titles = item.getContent().getNewsItem().stream().map(WxMpFreePublishArticles::getTitle)
                 .collect(Collectors.joining(","));
-        return new WeChatArticleDto()
-                .setArticleId(item.getArticleId())
-                .setUpdateTime(localDateTime)
-                .setTitles(titles);
+        return new WeChatArticleDto().setArticleId(item.getArticleId()).setUpdateTime(localDateTime).setTitles(titles);
     }
 
 }

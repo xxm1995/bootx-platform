@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * 流程任务扩展
+ *
  * @author xxm
  * @date 2022-09-01
  */
@@ -22,39 +23,55 @@ public class BpmTaskDto extends BaseDto {
 
     @Schema(description = "任务ID")
     private String taskId;
+
     @Schema(description = "任务执行 ID")
     private String executionId;
+
     @Schema(description = "流程实例的id")
     private String instanceId;
+
     @Schema(description = "流程名称(业务标题)")
     private String instanceName;
+
     @Schema(description = "流程定义名称")
     private String defName;
+
     @Schema(description = "任务节点id")
     private String nodeId;
+
     @Schema(description = "任务节点名称")
     private String nodeName;
+
     @Schema(description = "流程任务的状态")
     private String state;
+
     /**
-     *  @see cn.bootx.starter.flowable.code.TaskCode#RESULT_PASS
+     * @see cn.bootx.starter.flowable.code.TaskCode#RESULT_PASS
      */
     @Schema(description = "处理结果")
     private String result;
+
     @Schema(description = "处理意见")
     private String reason;
+
     @Schema(description = "开始时间")
     private LocalDateTime startTime;
+
     @Schema(description = "结束时间")
     private LocalDateTime endTime;
+
     @Schema(description = "当前处理人")
     private Long userId;
+
     @Schema(description = "当前处理人")
     private String userName;
+
     @Schema(description = "发起人")
     private Long startUserId;
+
     @Schema(description = "发起人名称")
     private String startUserName;
+
     @Schema(description = "提交的表单值")
     private Map<String, Object> formVariables;
 

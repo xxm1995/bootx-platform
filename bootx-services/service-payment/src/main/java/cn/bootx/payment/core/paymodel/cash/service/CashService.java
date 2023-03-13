@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * 现金支付
+ *
  * @author xxm
  * @date 2021/6/23
  */
@@ -23,6 +24,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CashService {
+
     private final CashPaymentManager cashPaymentManager;
 
     /**
@@ -30,13 +32,9 @@ public class CashService {
      */
     public void pay(PayModeParam payMode, Payment payment, PayParam payParam) {
         CashPayment walletPayment = new CashPayment();
-        walletPayment
-                .setPaymentId(payment.getId())
-                .setUserId(payment.getUserId())
-                .setBusinessId(payParam.getBusinessId())
-                .setAmount(payMode.getAmount())
-                .setRefundableBalance(payMode.getAmount())
-                .setPayStatus(payment.getPayStatus());
+        walletPayment.setPaymentId(payment.getId()).setUserId(payment.getUserId())
+                .setBusinessId(payParam.getBusinessId()).setAmount(payMode.getAmount())
+                .setRefundableBalance(payMode.getAmount()).setPayStatus(payment.getPayStatus());
         cashPaymentManager.save(walletPayment);
     }
 
@@ -54,16 +52,18 @@ public class CashService {
     /**
      * 退款
      */
-    public void refund(Long paymentId, BigDecimal amount){
+    public void refund(Long paymentId, BigDecimal amount) {
         Optional<CashPayment> cashPayment = cashPaymentManager.findByPaymentId(paymentId);
-        cashPayment.ifPresent(payment->{
+        cashPayment.ifPresent(payment -> {
             BigDecimal refundableBalance = payment.getRefundableBalance().subtract(amount);
-            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO)==0){
+            if (BigDecimalUtil.compareTo(refundableBalance, BigDecimal.ZERO) == 0) {
                 payment.setPayStatus(PayStatusCode.TRADE_REFUNDED);
-            } else {
+            }
+            else {
                 payment.setPayStatus(PayStatusCode.TRADE_REFUNDING);
             }
             cashPaymentManager.updateById(payment);
         });
     }
+
 }

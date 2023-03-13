@@ -20,6 +20,7 @@ import javax.validation.Valid;
 
 /**
  * GoView可视化大屏管理接口
+ *
  * @author xxm
  * @date 2023/2/24
  */
@@ -29,6 +30,7 @@ import javax.validation.Valid;
 @RequestMapping("/goview/admin")
 @RequiredArgsConstructor
 public class GoViewAdminController {
+
     private final ProjectInfoService projectInfoService;
 
     @Operation(summary = "创建项目")
@@ -39,13 +41,13 @@ public class GoViewAdminController {
 
     @Operation(summary = "获取项目列表分页 ")
     @GetMapping("/page")
-    public ResResult<PageResult<ProjectInfoDto>> page(PageParam pageParam, ProjectInfoSave query){
-        return Res.ok(projectInfoService.pageByAdmin(pageParam,query));
+    public ResResult<PageResult<ProjectInfoDto>> page(PageParam pageParam, ProjectInfoSave query) {
+        return Res.ok(projectInfoService.pageByAdmin(pageParam, query));
     }
 
     @Operation(summary = "获取详情")
     @GetMapping("/findById")
-    public ResResult<ProjectInfoDto> findById(Long id){
+    public ResResult<ProjectInfoDto> findById(Long id) {
         return Res.ok(projectInfoService.findById(id));
     }
 
@@ -93,7 +95,7 @@ public class GoViewAdminController {
 
     @Operation(summary = "获取GoView服务的地址")
     @GetMapping("/getGoViewUrl")
-    public ResResult<String> getGoViewUrl(){
+    public ResResult<String> getGoViewUrl() {
         return Res.ok(projectInfoService.getGoViewUrl());
     }
 
@@ -103,4 +105,5 @@ public class GoViewAdminController {
         projectInfoService.delete(id);
         return Res.ok();
     }
+
 }

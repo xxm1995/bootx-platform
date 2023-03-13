@@ -13,10 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
-* 表信息查询
-* @author xxm
-* @date 2022/1/27
-*/
+ * 表信息查询
+ *
+ * @author xxm
+ * @date 2022/1/27
+ */
 @Mapper
 public interface DatabaseTableMapper {
 
@@ -32,7 +33,7 @@ public interface DatabaseTableMapper {
      */
     @Select("select * from (select table_name tableName, engine, table_comment tableComment, create_time createTime from information_schema.tables"
             + " where table_schema = (select database())) as t ${ew.customSqlSegment}")
-    Page<DatabaseTable> page(Page<DatabaseTable> mpPage,@Param(Constants.WRAPPER) Wrapper<?> wrapper);
+    Page<DatabaseTable> page(Page<DatabaseTable> mpPage, @Param(Constants.WRAPPER) Wrapper<?> wrapper);
 
     /**
      * 查询表信息 详情
@@ -47,4 +48,5 @@ public interface DatabaseTableMapper {
     @Select("select column_name, data_type, column_comment, column_key, extra from information_schema.columns"
             + " where table_name = #{tableName} and table_schema = (select database()) order by ordinal_position")
     List<DatabaseColumn> findColumnByTableName(@Param("tableName") String tableName);
+
 }

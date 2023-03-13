@@ -4,11 +4,12 @@ import static cn.bootx.common.core.code.CommonCode.FAIL_CODE;
 import static cn.bootx.common.core.code.CommonCode.SUCCESS_CODE;
 
 /**
-* 返回工具类
-* @author xxm  
-* @date 2020/1/22 15:29 
-*/
-public class Res{
+ * 返回工具类
+ *
+ * @author xxm
+ * @date 2020/1/22 15:29
+ */
+public class Res {
 
     private final static String SUCCESS = "success";
 
@@ -38,13 +39,12 @@ public class Res{
         return new ResResult<>(code, msg);
     }
 
-    public static <T> ResResult<T> response(int code, String msg,String traceId) {
+    public static <T> ResResult<T> response(int code, String msg, String traceId) {
         return new ErrorResult<>(code, msg, traceId);
     }
 
     public static <T> ResResult<T> response(int code, String msg, T data) {
         return new ResResult<>(code, data, msg);
     }
-
 
 }

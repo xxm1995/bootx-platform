@@ -16,11 +16,12 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * spring 线程池 配置
+ *
  * @author xxm
  * @date 2021/6/11
  */
 @Configuration
-@EnableConfigurationProperties({SpringProperties.class})
+@EnableConfigurationProperties({ SpringProperties.class })
 @ConditionalOnClass(ApplicationContext.class)
 @EnableSpringUtil
 @RequiredArgsConstructor
@@ -53,7 +54,7 @@ public class SpringExecutorConfiguration {
     }
 
     /**
-     *  TTl包装后的线程执行器(线程极多, 用来处理一些非核心的异步任务)
+     * TTl包装后的线程执行器(线程极多, 用来处理一些非核心的异步任务)
      */
     @Bean
     public Executor bigExecutor() {
@@ -68,7 +69,8 @@ public class SpringExecutorConfiguration {
      * TTl包装后的线程执行服务
      */
     @Bean
-    public ExecutorService asyncExecutorService(ThreadPoolTaskExecutor springRawExecutor){
+    public ExecutorService asyncExecutorService(ThreadPoolTaskExecutor springRawExecutor) {
         return TtlExecutors.getTtlExecutorService(springRawExecutor.getThreadPoolExecutor());
     }
+
 }

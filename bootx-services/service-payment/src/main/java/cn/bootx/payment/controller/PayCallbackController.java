@@ -19,24 +19,25 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
-*
-* @author xxm
-* @date 2021/2/27
-*/
+ * @author xxm
+ * @date 2021/2/27
+ */
 @IgnoreAuth
 @Slf4j
-@Tag(name ="支付回调")
+@Tag(name = "支付回调")
 @RestController
 @RequestMapping("/pay/callback")
 @AllArgsConstructor
 public class PayCallbackController {
+
     private final AliPayCallbackService aliPayCallbackService;
+
     private final WeChatPayCallbackService weChatPayCallbackService;
 
     @SneakyThrows
     @Operation(summary = "支付宝回调")
     @PostMapping("/alipay")
-    public String aliPay(HttpServletRequest request){
+    public String aliPay(HttpServletRequest request) {
         Map<String, String> stringStringMap = AliPayApi.toMap(request);
         return aliPayCallbackService.payCallback(stringStringMap);
     }
@@ -44,9 +45,10 @@ public class PayCallbackController {
     @SneakyThrows
     @Operation(summary = "微信支付回调")
     @PostMapping("/wechat")
-    public String wechat(HttpServletRequest request){
+    public String wechat(HttpServletRequest request) {
         String xmlMsg = HttpKit.readData(request);
         Map<String, String> params = WxPayKit.xmlToMap(xmlMsg);
         return weChatPayCallbackService.payCallback(params);
     }
+
 }

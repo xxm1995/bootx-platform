@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 企业群消息参数
+ *
  * @author xxm
  * @date 2022/7/20
  */
@@ -23,8 +24,7 @@ public class DingChatNoticeParam {
     private DingMsg dingMsg;
 
     public ChatNotice toDingChatNotice() {
-        return new ChatNotice()
-                .setChatId(chatId)
-                .setMsg(dingMsg.toDingMsg());
+        return new ChatNotice().setChatId(chatId).setMsg(dingMsg.toDingMsg());
     }
+
 }

@@ -5,16 +5,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-/**   
- *
- * @author xxm  
- * @date 2022/7/26 
+/**
+ * @author xxm
+ * @date 2022/7/26
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DingMediaMd5Service {
-    private final DingMediaMd5Manager dingMediaMd5Manager;
 
+    private final DingMediaMd5Manager dingMediaMd5Manager;
 
 }

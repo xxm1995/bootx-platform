@@ -13,6 +13,7 @@ import java.util.Objects;
 
 /**
  * 请求头获取工具类
+ *
  * @author xxm
  * @date 2020/4/14 15:23
  */
@@ -29,17 +30,17 @@ public class HeaderHolder {
     /**
      * 获取请求头参数
      */
-    public String getHeader(String name){
+    public String getHeader(String name) {
 
         // TTL
         String ttlHeader = HolderContextHolder.get(name);
-        if (Objects.nonNull(ttlHeader)){
+        if (Objects.nonNull(ttlHeader)) {
             return ttlHeader;
         }
 
         // web
         String webHeader = getWebHeader(name);
-        if (Objects.nonNull(webHeader)){
+        if (Objects.nonNull(webHeader)) {
             return webHeader;
         }
         return null;
@@ -53,5 +54,5 @@ public class HeaderHolder {
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         return request.getHeader(name);
     }
-}
 
+}

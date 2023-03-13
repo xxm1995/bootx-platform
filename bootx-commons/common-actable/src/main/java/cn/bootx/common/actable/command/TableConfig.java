@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * 表配置
+ *
  * @author xxm
  * @date 2023/1/16
  */
@@ -20,19 +21,19 @@ public class TableConfig {
     /** 表的全部字段 */
     private List<Object> list = new ArrayList<>();
 
-    private Map<String,Object> map = new HashMap<>();
+    private Map<String, Object> map = new HashMap<>();
 
     public TableConfig(List<Object> list, Map<String, Object> map) {
-        if (list != null){
+        if (list != null) {
             this.list = list;
         }
-        if(map != null){
+        if (map != null) {
             this.map = map;
         }
     }
 
     public TableConfig(List<Object> list) {
-        if (list != null){
+        if (list != null) {
             this.list = list;
         }
     }
@@ -40,4 +41,5 @@ public class TableConfig {
     public TableConfig(Map<String, Object> map) {
         this.map = map;
     }
+
 }

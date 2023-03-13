@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 微信接入入口
+ *
  * @author xxm
  * @date 2022/7/16
  */
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/wechat/portal")
 @RequiredArgsConstructor
 public class WeChatPortalController {
+
     private final WeChatPortalService weChatPortalService;
 
     /**
@@ -29,8 +31,8 @@ public class WeChatPortalController {
      * @param echostr 随机字符串
      */
     @GetMapping(produces = "text/plain;charset=utf-8")
-    public String auth(String signature,String timestamp,String nonce,String echostr) {
-        return weChatPortalService.auth(signature,timestamp,nonce,echostr);
+    public String auth(String signature, String timestamp, String nonce, String echostr) {
+        return weChatPortalService.auth(signature, timestamp, nonce, echostr);
     }
 
     /**
@@ -44,8 +46,10 @@ public class WeChatPortalController {
      */
     @PostMapping(produces = "application/xml; charset=UTF-8")
     public String post(@RequestBody String requestBody, String signature, String timestamp, String nonce, String openid,
-                       @RequestParam(name = "encrypt_type",required = false) String encType,
-                       @RequestParam(name = "msg_signature",required = false) String msgSignature) {
-        return weChatPortalService.handleMessage(requestBody, signature, timestamp, nonce, openid, encType, msgSignature);
+            @RequestParam(name = "encrypt_type", required = false) String encType,
+            @RequestParam(name = "msg_signature", required = false) String msgSignature) {
+        return weChatPortalService.handleMessage(requestBody, signature, timestamp, nonce, openid, encType,
+                msgSignature);
     }
+
 }

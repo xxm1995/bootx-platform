@@ -28,30 +28,35 @@ import java.util.Objects;
 
 import static cn.bootx.iam.code.CachingCode.USER_PATH;
 
-/**   
-* 角色
-* @author xxm  
-* @date 2021/8/3 
-*/
+/**
+ * 角色
+ *
+ * @author xxm
+ * @date 2021/8/3
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class RoleService {
+
     private final RoleManager roleManager;
+
     private final UserRoleManager userRoleManager;
+
     private final RolePathManager rolePathManager;
+
     private final RoleMenuManager roleMenuManager;
 
     /**
      * 添加
      */
     @Transactional(rollbackFor = Exception.class)
-    public RoleDto add(RoleParam roleParam){
-        //Name唯一性校验（名称code不能相同）
-        if (roleManager.existsByCode(roleParam.getCode())){
+    public RoleDto add(RoleParam roleParam) {
+        // Name唯一性校验（名称code不能相同）
+        if (roleManager.existsByCode(roleParam.getCode())) {
             throw new RoleAlreadyExistedException();
         }
-        if (roleManager.existsByName(roleParam.getName())){
+        if (roleManager.existsByName(roleParam.getName())) {
             throw new RoleAlreadyExistedException();
         }
         Role role = Role.init(roleParam);
@@ -62,19 +67,19 @@ public class RoleService {
      * 修改
      */
     @Transactional(rollbackFor = Exception.class)
-    public RoleDto update(RoleParam roleParam){
+    public RoleDto update(RoleParam roleParam) {
         Long id = roleParam.getId();
 
-        //name和code唯一性校验
-        if (roleManager.existsByCode(roleParam.getCode(),id)){
+        // name和code唯一性校验
+        if (roleManager.existsByCode(roleParam.getCode(), id)) {
             throw new RoleAlreadyExistedException();
         }
-        if (roleManager.existsByName(roleParam.getName(),id)){
+        if (roleManager.existsByName(roleParam.getName(), id)) {
             throw new RoleAlreadyExistedException();
         }
 
         Role role = roleManager.findById(id).orElseThrow(RoleNotExistedException::new);
-        BeanUtil.copyProperties(roleParam,role, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(roleParam, role, CopyOptions.create().ignoreNullValue());
 
         return roleManager.updateById(role).toDto();
     }
@@ -83,9 +88,9 @@ public class RoleService {
      * 删除
      */
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {USER_PATH},allEntries = true)
-    public void delete(Long roleId){
-        if (Objects.isNull(roleId) || !roleManager.existsById(roleId)){
+    @CacheEvict(value = { USER_PATH }, allEntries = true)
+    public void delete(Long roleId) {
+        if (Objects.isNull(roleId) || !roleManager.existsById(roleId)) {
             throw new RoleNotExistedException();
         }
         // 存在当前角色用户的场合不允许删除
@@ -102,22 +107,21 @@ public class RoleService {
     /**
      * 角色列表
      */
-    public List<RoleDto> findAll(){
+    public List<RoleDto> findAll() {
         return ResultConvertUtil.dtoListConvert(roleManager.findAll());
     }
 
     /**
      * 角色分页
      */
-    public PageResult<RoleDto> page(PageParam pageParam, RoleParam roleParam){
-        return MpUtil.convert2DtoPageResult(roleManager.page(pageParam,roleParam));
+    public PageResult<RoleDto> page(PageParam pageParam, RoleParam roleParam) {
+        return MpUtil.convert2DtoPageResult(roleManager.page(pageParam, roleParam));
     }
-
 
     /**
      * 角色下拉框
      */
-    public List<KeyValue> dropdown(){
+    public List<KeyValue> dropdown() {
         return roleManager.findDropdown();
     }
 
@@ -131,27 +135,29 @@ public class RoleService {
     /**
      * code是否存在
      */
-    public boolean existsByCode(String code){
+    public boolean existsByCode(String code) {
         return roleManager.existsByCode(code);
     }
+
     /**
      * code是否存在
      */
-    public boolean existsByCode(String code,Long id){
-        return roleManager.existsByCode(code,id);
+    public boolean existsByCode(String code, Long id) {
+        return roleManager.existsByCode(code, id);
     }
 
     /**
      * name是否存在
      */
-    public boolean existsByName(String name){
+    public boolean existsByName(String name) {
         return roleManager.existsByName(name);
     }
 
     /**
      * name是否存在
      */
-    public boolean existsByName(String name,Long id){
-        return roleManager.existsByName(name,id);
+    public boolean existsByName(String name, Long id) {
+        return roleManager.existsByName(name, id);
     }
+
 }

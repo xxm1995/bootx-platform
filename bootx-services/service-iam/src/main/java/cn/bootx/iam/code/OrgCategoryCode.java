@@ -1,10 +1,11 @@
 package cn.bootx.iam.code;
 
-/**   
-* 部门组织机构类型
-* @author xxm  
-* @date 2021/9/29 
-*/
+/**
+ * 部门组织机构类型
+ *
+ * @author xxm
+ * @date 2021/9/29
+ */
 public interface OrgCategoryCode {
 
     /** 公司 */

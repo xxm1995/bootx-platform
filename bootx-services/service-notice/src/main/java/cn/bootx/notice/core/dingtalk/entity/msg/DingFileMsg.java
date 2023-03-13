@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 钉钉文件工作通知消息
+ *
  * @author xxm
  * @date 2022/7/19
  */
@@ -27,7 +28,8 @@ public class DingFileMsg implements DingMsg {
      * 转换成钉钉消息
      */
     @Override
-    public Msg toDingMsg(){
+    public Msg toDingMsg() {
         return new FileMsg(mediaId);
     }
+
 }

@@ -18,6 +18,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 自定义大屏信息
+ *
  * @author xxm
  * @date 2023/2/21
  */
@@ -49,14 +50,11 @@ public class ProjectInfo extends MpBaseEntity implements EntityBaseFunction<Proj
     /** 备注 */
     private String remark;
 
-
-    public static ProjectInfo init(ProjectInfoSave param){
-        ProjectInfo entity = new ProjectInfo()
-                .setName(param.getName())
-                .setIndexImage(param.getIndexImage())
+    public static ProjectInfo init(ProjectInfoSave param) {
+        ProjectInfo entity = new ProjectInfo().setName(param.getName()).setIndexImage(param.getIndexImage())
                 .setRemark(param.getRemark());
         entity.setId(param.getProjectId());
-        if (CollUtil.isNotEmpty(param.getContent())){
+        if (CollUtil.isNotEmpty(param.getContent())) {
             entity.setContent(JacksonUtil.toJson(param.getContent()));
         }
         return entity;
@@ -69,4 +67,5 @@ public class ProjectInfo extends MpBaseEntity implements EntityBaseFunction<Proj
     public ProjectInfoDto toDto() {
         return GoViewConvert.CONVERT.convert(this);
     }
+
 }

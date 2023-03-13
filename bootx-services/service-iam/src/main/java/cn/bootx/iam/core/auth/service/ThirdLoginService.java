@@ -12,6 +12,7 @@ import java.util.List;
 
 /**
  * 三方登录
+ *
  * @author xxm
  * @date 2022/6/29
  */
@@ -25,7 +26,7 @@ public class ThirdLoginService {
     /**
      * 获取登录地址
      */
-    public String getLoginUrl(String loginType){
+    public String getLoginUrl(String loginType) {
         OpenIdAuthentication openIdAuthentication = this.getOpenIdAuthentication(loginType);
         return openIdAuthentication.getLoginUrl();
     }
@@ -41,10 +42,9 @@ public class ThirdLoginService {
     /**
      * 获取认证器
      */
-    private OpenIdAuthentication getOpenIdAuthentication(String loginType){
-        return openIdAuthentications.stream()
-                .filter(o->o.adaptation(loginType))
-                .findFirst()
+    private OpenIdAuthentication getOpenIdAuthentication(String loginType) {
+        return openIdAuthentications.stream().filter(o -> o.adaptation(loginType)).findFirst()
                 .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
+
 }

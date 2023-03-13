@@ -14,21 +14,23 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-/**   
-* 版本管理
-* @author xxm  
-* @date 2021/8/9 
-*/
+/**
+ * 版本管理
+ *
+ * @author xxm
+ * @date 2021/8/9
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AppVersionService {
+
     private final AppVersionManager appVersionManager;
 
     /**
      * 添加
      */
-    public AppVersionDto add(AppVersionParam param){
+    public AppVersionDto add(AppVersionParam param) {
         AppVersion appVersion = AppVersion.init(param);
         return appVersionManager.save(appVersion).toDto();
     }
@@ -36,14 +38,14 @@ public class AppVersionService {
     /**
      * 删除
      */
-    public void delete(Long id){
+    public void delete(Long id) {
         appVersionManager.deleteById(id);
     }
 
     /**
      * 检查更新
      */
-    public AppVersionDto check(){
+    public AppVersionDto check() {
         Optional<AppVersion> appVersion = appVersionManager.findLatest();
         return appVersion.map(AppVersion::toDto).orElseThrow(DataNotExistException::new);
     }
@@ -51,14 +53,14 @@ public class AppVersionService {
     /**
      * 分页
      */
-    public PageResult<AppVersionDto> page(PageParam pageParam){
+    public PageResult<AppVersionDto> page(PageParam pageParam) {
         return MpUtil.convert2DtoPageResult(appVersionManager.page(pageParam));
     }
 
     /**
      * 获取详情
      */
-    public AppVersionDto findById(Long id){
+    public AppVersionDto findById(Long id) {
         return appVersionManager.findById(id).map(AppVersion::toDto).orElseThrow(DataNotExistException::new);
     }
 

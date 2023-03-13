@@ -7,10 +7,11 @@ import lombok.experimental.Accessors;
 import java.util.Date;
 import java.util.List;
 
-/**   
+/**
  * 代码生成所需的参数数据
- * @author xxm  
- * @date 2022/8/1 
+ *
+ * @author xxm
+ * @date 2022/8/1
  */
 @Data
 @Accessors(chain = true)
@@ -59,7 +60,7 @@ public class CodeGenData {
     private String author;
 
     /** 创建时间 */
-    private String datetime= DateUtil.formatDate(new Date());
+    private String datetime = DateUtil.formatDate(new Date());
 
     /** 备注 */
     private String comments;
@@ -67,14 +68,16 @@ public class CodeGenData {
     /** 行信息 */
     private List<CodeGenColumnData> columns;
 
-    /**   
+    /**
      * 行信息
-     * @author xxm  
-     * @date 2022/8/1 
+     *
+     * @author xxm
+     * @date 2022/8/1
      */
     @Data
     @Accessors(chain = true)
-    public static class CodeGenColumnData{
+    public static class CodeGenColumnData {
+
         /** 列名称 */
         private String name;
 
@@ -89,6 +92,7 @@ public class CodeGenData {
 
         /** 备注 */
         private String comments;
+
     }
-    
+
 }

@@ -11,22 +11,24 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* @author xxm
-* @date 2020/11/29
-*/
+ * @author xxm
+ * @date 2020/11/29
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉文本消息")
 public class TextMsg extends Msg implements Serializable {
+
     private static final long serialVersionUID = 8237431306046852539L;
 
-    @Schema(description= "文本消息体")
+    @Schema(description = "文本消息体")
     private DingText text;
 
     public TextMsg() {
         super(DingTalkNoticeCode.MSG_TEXT);
     }
+
     public TextMsg(String msg) {
         super(DingTalkNoticeCode.MSG_TEXT);
         text = new DingText(msg);
@@ -38,10 +40,12 @@ public class TextMsg extends Msg implements Serializable {
     @AllArgsConstructor
     @Schema(title = "钉钉文本")
     public static class DingText implements Serializable {
+
         private static final long serialVersionUID = 3582073816491238620L;
 
-        @Schema(description= "文本")
+        @Schema(description = "文本")
         private String content;
 
     }
+
 }

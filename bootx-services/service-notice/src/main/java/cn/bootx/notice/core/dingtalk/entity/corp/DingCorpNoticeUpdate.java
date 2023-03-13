@@ -5,11 +5,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
-* 企业通知(OA消息)更新
-* @author xxm  
-* @date 2022/7/20 
-*/
+/**
+ * 企业通知(OA消息)更新
+ *
+ * @author xxm
+ * @date 2022/7/20
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "企业通知(OA消息)更新")
@@ -27,10 +28,8 @@ public class DingCorpNoticeUpdate {
     /**
      * 转换为钉钉参数对象
      */
-    public UpdateCorpNotice toDingUpdateCorpNotice(){
-        return new UpdateCorpNotice()
-                .setTaskId(taskId)
-                .setStatusValue(statusValue)
-                .setStatusBg(statusBg);
+    public UpdateCorpNotice toDingUpdateCorpNotice() {
+        return new UpdateCorpNotice().setTaskId(taskId).setStatusValue(statusValue).setStatusBg(statusBg);
     }
+
 }

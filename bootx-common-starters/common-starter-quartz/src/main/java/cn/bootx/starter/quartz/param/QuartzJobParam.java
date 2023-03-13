@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 定时任务
-* @author xxm
-* @date 2021/11/2
-*/
+ * 定时任务
+ *
+ * @author xxm
+ * @date 2021/11/2
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "定时任务")
@@ -35,4 +36,5 @@ public class QuartzJobParam {
 
     @Schema(description = "备注")
     private String remark;
+
 }

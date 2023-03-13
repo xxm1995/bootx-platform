@@ -14,7 +14,8 @@ public class ValidationFailedException extends BizException implements Serializa
     public ValidationFailedException(String detail) {
         super(VALIDATE_PARAMETERS_ERROR, "验证参数错误" + System.lineSeparator() + detail);
     }
-    public ValidationFailedException(){
+
+    public ValidationFailedException() {
         super();
     }
 

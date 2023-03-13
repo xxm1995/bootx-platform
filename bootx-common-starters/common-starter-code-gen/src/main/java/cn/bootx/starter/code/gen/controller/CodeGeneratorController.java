@@ -17,30 +17,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**   
-* 代码生成
-* @author xxm  
-* @date 2022/2/17 
-*/
+/**
+ * 代码生成
+ *
+ * @author xxm
+ * @date 2022/2/17
+ */
 @Tag(name = "代码生成")
 @RestController
 @RequestMapping("/gen/code")
 @RequiredArgsConstructor
 public class CodeGeneratorController {
+
     private final CodeGeneratorService generatorService;
+
     private final SystemKeyValueService systemKeyValueService;
 
     @Operation(summary = "预览生成代码")
     @PostMapping("/codeGenPreview")
-    public ResResult<List<CodeGenPreview>> codeGenPreview(@RequestBody CodeGenParam param){
+    public ResResult<List<CodeGenPreview>> codeGenPreview(@RequestBody CodeGenParam param) {
         return Res.ok(generatorService.codeGenPreview(param));
     }
 
     @Operation(summary = "下载生成代码")
     @PostMapping("/genCodeZip")
-    public ResponseEntity<byte[]> genCodeZip(@RequestBody CodeGenParam param){
+    public ResponseEntity<byte[]> genCodeZip(@RequestBody CodeGenParam param) {
         return generatorService.genCodeZip(param);
     }
-
 
 }

@@ -30,6 +30,7 @@ import java.util.List;
 
 /**
  * 认证相关服务
+ *
  * @author xxm
  * @date 2021/7/30
  */
@@ -39,52 +40,54 @@ import java.util.List;
 public class TokenService {
 
     private final GetAuthLoginTypeService getAuthLoginTypeService;
+
     private final GetAuthClientService getAuthClientService;
 
     private final AuthProperties authProperties;
 
     private final List<AbstractAuthentication> abstractAuthentications;
+
     private final List<LoginSuccessHandler> loginSuccessHandlers;
+
     private final List<LoginFailureHandler> loginFailureHandlers;
 
     /**
      * 登录
      */
-    public String login(HttpServletRequest request, HttpServletResponse response){
+    public String login(HttpServletRequest request, HttpServletResponse response) {
         AuthInfoResult authInfoResult;
         AuthLoginType authLoginType = this.getAuthLoginType(request);
         AuthClient authClient = this.getAuthApplication(request);
         try {
-            LoginAuthContext loginAuthContext = new LoginAuthContext()
-                    .setRequest(request)
-                    .setResponse(response)
-                    .setAuthProperties(authProperties)
-                    .setAuthLoginType(authLoginType)
-                    .setAuthClient(authClient);
+            LoginAuthContext loginAuthContext = new LoginAuthContext().setRequest(request).setResponse(response)
+                    .setAuthProperties(authProperties).setAuthLoginType(authLoginType).setAuthClient(authClient);
             // 校验登录终端
             this.validateAuthClient(loginAuthContext);
             // 认证并获取结果
             authInfoResult = this.authentication(loginAuthContext);
             // 登录处理
-            this.login(authInfoResult,loginAuthContext);
-        } catch (LoginFailureException e) {
+            this.login(authInfoResult, loginAuthContext);
+        }
+        catch (LoginFailureException e) {
             // 登录失败回调
-            this.loginFailureHandler(request,response,e);
+            this.loginFailureHandler(request, response, e);
             throw e;
         }
         // 登录成功回调
-        this.loginSuccessHandler(request,response,authInfoResult);
+        this.loginSuccessHandler(request, response, authInfoResult);
         return StpUtil.getTokenValue();
     }
 
     /**
      * 成功处理
      */
-    private void loginSuccessHandler(HttpServletRequest request, HttpServletResponse response,AuthInfoResult authInfoResult){
+    private void loginSuccessHandler(HttpServletRequest request, HttpServletResponse response,
+            AuthInfoResult authInfoResult) {
         for (LoginSuccessHandler loginSuccessHandler : loginSuccessHandlers) {
             try {
-                loginSuccessHandler.onLoginSuccess(request,response,authInfoResult);
-            } catch (Exception ignored) {
+                loginSuccessHandler.onLoginSuccess(request, response, authInfoResult);
+            }
+            catch (Exception ignored) {
             }
         }
     }
@@ -92,11 +95,13 @@ public class TokenService {
     /**
      * 失败处理
      */
-    private void loginFailureHandler(HttpServletRequest request, HttpServletResponse response,LoginFailureException e){
+    private void loginFailureHandler(HttpServletRequest request, HttpServletResponse response,
+            LoginFailureException e) {
         for (LoginFailureHandler loginFailureHandler : loginFailureHandlers) {
             try {
-                loginFailureHandler.onLoginFailure(request,response,e);
-            } catch (Exception ignored) {
+                loginFailureHandler.onLoginFailure(request, response, e);
+            }
+            catch (Exception ignored) {
             }
         }
     }
@@ -104,10 +109,10 @@ public class TokenService {
     /**
      * 获取方式
      */
-    private AuthLoginType getAuthLoginType(HttpServletRequest request){
+    private AuthLoginType getAuthLoginType(HttpServletRequest request) {
         // 登录方式
         AuthLoginType authLoginType = getAuthLoginTypeService.getAuthLoginType(SecurityUtil.getLoginType(request));
-        if (!authLoginType.isEnable()){
+        if (!authLoginType.isEnable()) {
             throw new ClientNotEnableException();
         }
         return authLoginType;
@@ -116,10 +121,10 @@ public class TokenService {
     /**
      * 获取终端
      */
-    private AuthClient getAuthApplication(HttpServletRequest request){
+    private AuthClient getAuthApplication(HttpServletRequest request) {
         // 终端
         AuthClient authClient = getAuthClientService.getAuthApplication(SecurityUtil.getClient(request));
-        if (!authClient.isEnable()){
+        if (!authClient.isEnable()) {
             throw new ClientNotEnableException();
         }
         return authClient;
@@ -128,10 +133,11 @@ public class TokenService {
     /**
      * 校验该认证应用是否支持此种登录方式
      */
-    private void validateAuthClient(LoginAuthContext loginAuthContext){
+    private void validateAuthClient(LoginAuthContext loginAuthContext) {
         AuthClient authClient = loginAuthContext.getAuthClient();
         AuthLoginType authLoginType = loginAuthContext.getAuthLoginType();
-        if (CollUtil.isEmpty(authClient.getLoginTypeIds()) || !authClient.getLoginTypeIds().contains(authLoginType.getId())){
+        if (CollUtil.isEmpty(authClient.getLoginTypeIds())
+                || !authClient.getLoginTypeIds().contains(authLoginType.getId())) {
             throw new LoginFailureException("不支持的登录方式");
         }
     }
@@ -139,28 +145,23 @@ public class TokenService {
     /**
      * 认证
      */
-    private @NotNull AuthInfoResult authentication(LoginAuthContext context){
+    private @NotNull AuthInfoResult authentication(LoginAuthContext context) {
         String loginType = context.getAuthLoginType().getCode();
-        return abstractAuthentications.stream()
-                .filter(o->o.adaptation(loginType))
-                .findFirst()
-                .map(o->o.authentication(context))
-                .orElseThrow(() -> new LoginFailureException("未找到对应的登录认证器"));
+        return abstractAuthentications.stream().filter(o -> o.adaptation(loginType)).findFirst()
+                .map(o -> o.authentication(context)).orElseThrow(() -> new LoginFailureException("未找到对应的登录认证器"));
     }
 
     /**
      * 登录
      */
-    private void login(AuthInfoResult authInfoResult,LoginAuthContext context){
+    private void login(AuthInfoResult authInfoResult, LoginAuthContext context) {
         AuthLoginType authLoginType = context.getAuthLoginType();
         AuthClient authClient = context.getAuthClient();
-        SaLoginModel saLoginModel = new SaLoginModel()
-                .setDevice(authClient.getCode())
+        SaLoginModel saLoginModel = new SaLoginModel().setDevice(authClient.getCode())
                 .setTimeout(authLoginType.getTimeout() * 60);
 
-        authInfoResult.setClient(authClient.getCode())
-                .setLoginType(authLoginType.getCode());
-        StpUtil.login(authInfoResult.getId(),saLoginModel);
+        authInfoResult.setClient(authClient.getCode()).setLoginType(authLoginType.getCode());
+        StpUtil.login(authInfoResult.getId(), saLoginModel);
         SaSession session = StpUtil.getSession();
         UserDetail userDetail = authInfoResult.getUserDetail();
         session.set(CommonCode.USER, userDetail);
@@ -172,4 +173,5 @@ public class TokenService {
     public void logout() {
         StpUtil.logout();
     }
+
 }

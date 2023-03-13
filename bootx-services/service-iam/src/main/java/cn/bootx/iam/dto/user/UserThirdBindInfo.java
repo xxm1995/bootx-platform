@@ -7,10 +7,11 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
-* 用户三方绑定信息
-* @author xxm
-* @date 2022/7/2
-*/
+ * 用户三方绑定信息
+ *
+ * @author xxm
+ * @date 2022/7/2
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户三方绑定信息")
@@ -31,10 +32,14 @@ public class UserThirdBindInfo {
     @Getter
     @Setter
     @Schema(title = "用户信息")
-    public static class BindInfo{
+    public static class BindInfo {
+
         @Schema(description = "是否绑定")
         private boolean bind;
+
         @Schema(description = "名称")
         private String username;
+
     }
+
 }

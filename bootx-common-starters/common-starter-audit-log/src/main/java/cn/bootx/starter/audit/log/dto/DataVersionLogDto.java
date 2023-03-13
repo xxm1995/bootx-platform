@@ -7,10 +7,9 @@ import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 
 /**
-*
-* @author xxm
-* @date 2022/1/10
-*/
+ * @author xxm
+ * @date 2022/1/10
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "数据版本日志")
@@ -42,4 +41,5 @@ public class DataVersionLogDto {
 
     @Schema(description = "创建时间")
     private LocalDateTime createTime;
+
 }

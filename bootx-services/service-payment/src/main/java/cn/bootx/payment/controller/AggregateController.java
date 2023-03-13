@@ -14,21 +14,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* 聚合支付
-* @author xxm
-* @date 2022/3/6
-*/
+ * 聚合支付
+ *
+ * @author xxm
+ * @date 2022/3/6
+ */
 @IgnoreAuth
 @Tag(name = "聚合支付")
 @RestController
 @RequestMapping("/aggregate")
 @RequiredArgsConstructor
 public class AggregateController {
+
     private final AggregateService aggregateService;
 
     @Operation(summary = "创建聚合支付")
     @PostMapping("/createAggregatePay")
-    public ResResult<String> createAggregatePay(@RequestBody CashierSinglePayParam param){
+    public ResResult<String> createAggregatePay(@RequestBody CashierSinglePayParam param) {
         return Res.ok(aggregateService.createAggregatePay(param));
     }
+
 }

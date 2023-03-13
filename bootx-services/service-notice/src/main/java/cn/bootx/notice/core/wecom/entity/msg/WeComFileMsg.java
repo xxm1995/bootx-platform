@@ -6,22 +6,20 @@ import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 /**
-*
-* @author xxm
-* @date 2022/7/23
-*/
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "企微文件消息")
-public class WeComFileMsg implements WeComMsg{
+public class WeComFileMsg implements WeComMsg {
 
     @Schema(description = "资源id")
     private String mediaId;
 
     @Override
     public WxCpMessage toMsg() {
-        return WxCpMessage.FILE()
-                .mediaId(mediaId)
-                .build();
+        return WxCpMessage.FILE().mediaId(mediaId).build();
     }
+
 }

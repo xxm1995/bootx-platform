@@ -11,17 +11,19 @@ import java.io.Serializable;
 
 /**
  * 钉钉链接消息
-* @author xxm
-* @date 2020/11/30
-*/
+ *
+ * @author xxm
+ * @date 2020/11/30
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉链接消息")
 public class LinkMsg extends Msg implements Serializable {
+
     private static final long serialVersionUID = -3094638065840434973L;
 
-    @Schema(description= "钉钉link消息体")
+    @Schema(description = "钉钉link消息体")
     private DingLink link;
 
     public LinkMsg() {
@@ -32,7 +34,8 @@ public class LinkMsg extends Msg implements Serializable {
         super(DingTalkNoticeCode.MSG_LINK);
         link = new DingLink(title, msg, messageUrl);
     }
-    public LinkMsg(String title, String msg, String messageUrl, String picUrl){
+
+    public LinkMsg(String title, String msg, String messageUrl, String picUrl) {
         super(DingTalkNoticeCode.MSG_LINK);
         link = new DingLink(title, msg, messageUrl, picUrl);
     }
@@ -42,18 +45,19 @@ public class LinkMsg extends Msg implements Serializable {
     @Schema(title = "钉钉link")
     @NoArgsConstructor
     public static class DingLink implements Serializable {
+
         private static final long serialVersionUID = 8191181631664337904L;
 
-        @Schema(description= "标题")
+        @Schema(description = "标题")
         private String title;
 
-        @Schema(description= "内容")
+        @Schema(description = "内容")
         private String text;
 
-        @Schema(description= "点击消息跳转的URL")
+        @Schema(description = "点击消息跳转的URL")
         private String messageUrl;
 
-        @Schema(description= "图片URL")
+        @Schema(description = "图片URL")
         private String picUrl;
 
         public DingLink(String title, String text, String messageUrl) {
@@ -68,5 +72,7 @@ public class LinkMsg extends Msg implements Serializable {
             this.messageUrl = messageUrl;
             this.picUrl = picUrl;
         }
+
     }
+
 }

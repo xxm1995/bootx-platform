@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- *
  * @author xxm
  * @date 2022/7/17
  */
@@ -26,34 +25,29 @@ public class WeChatTemplateManager extends BaseManager<WeChatTemplateMapper, WeC
 
     public Page<WeChatTemplate> page(PageParam pageParam, WeChatTemplateParam param) {
         Page<WeChatTemplate> mpPage = MpUtil.getMpPage(pageParam, WeChatTemplate.class);
-        return this.lambdaQuery()
-                .select(WeChatTemplate.class, MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getTemplateId()), WeChatTemplate::getTemplateId,param.getTemplateId())
-                .like(StrUtil.isNotBlank(param.getName()), WeChatTemplate::getName,param.getName())
-                .like(StrUtil.isNotBlank(param.getCode()), WeChatTemplate::getCode,param.getCode())
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return this.lambdaQuery().select(WeChatTemplate.class, MpUtil::excludeBigField)
+                .like(StrUtil.isNotBlank(param.getTemplateId()), WeChatTemplate::getTemplateId, param.getTemplateId())
+                .like(StrUtil.isNotBlank(param.getName()), WeChatTemplate::getName, param.getName())
+                .like(StrUtil.isNotBlank(param.getCode()), WeChatTemplate::getCode, param.getCode())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
-    public boolean existsByCode(String code,Long id){
-        return existedByField(WeChatTemplate::getCode,code,id);
-    }
-
-
-    /**
-     * 根据code查询
-     */
-    public Optional<WeChatTemplate> findByCode(String code){
-        return this.findByField(WeChatTemplate::getCode,code);
+    public boolean existsByCode(String code, Long id) {
+        return existedByField(WeChatTemplate::getCode, code, id);
     }
 
     /**
      * 根据code查询
      */
-    public Optional<WeChatTemplate> findTemplateIdByCode(String code){
-        return lambdaQuery()
-                .select(WeChatTemplate::getTemplateId)
-                .eq(WeChatTemplate::getCode,code)
-                .oneOpt();
+    public Optional<WeChatTemplate> findByCode(String code) {
+        return this.findByField(WeChatTemplate::getCode, code);
     }
+
+    /**
+     * 根据code查询
+     */
+    public Optional<WeChatTemplate> findTemplateIdByCode(String code) {
+        return lambdaQuery().select(WeChatTemplate::getTemplateId).eq(WeChatTemplate::getCode, code).oneOpt();
+    }
+
 }

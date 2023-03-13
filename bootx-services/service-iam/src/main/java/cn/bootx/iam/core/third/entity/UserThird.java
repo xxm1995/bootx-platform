@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 用户三方登录
+ *
  * @author xxm
  * @date 2021/8/2
  */
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("iam_user_third")
 public class UserThird extends MpBaseEntity implements EntityBaseFunction<UserThirdDto> {
+
     /** 用户id */
     private Long userId;
 
@@ -45,4 +47,5 @@ public class UserThird extends MpBaseEntity implements EntityBaseFunction<UserTh
     public UserThirdDto toDto() {
         return UserThirdConvert.CONVERT.convert(this);
     }
+
 }

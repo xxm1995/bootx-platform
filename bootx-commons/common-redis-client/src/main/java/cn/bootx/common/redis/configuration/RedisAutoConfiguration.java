@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 
 /**
  * Redis配置
+ *
  * @author xxm
  * @date 2020/4/9 15:40
  */
@@ -41,6 +42,7 @@ import java.util.stream.Collectors;
 @ConditionalOnClass(StringRedisTemplate.class)
 @RequiredArgsConstructor
 public class RedisAutoConfiguration {
+
     private final ObjectMapper objectMapper;
 
     /**
@@ -48,8 +50,9 @@ public class RedisAutoConfiguration {
      */
     @Bean
     @Primary
-    public RedisClient redisClient(StringRedisTemplate stringRedisTemplate,RedisTemplate<String,Object> redisTemplates) {
-        return new RedisClient(stringRedisTemplate,redisTemplates);
+    public RedisClient redisClient(StringRedisTemplate stringRedisTemplate,
+            RedisTemplate<String, Object> redisTemplates) {
+        return new RedisClient(stringRedisTemplate, redisTemplates);
     }
 
     /**
@@ -58,8 +61,8 @@ public class RedisAutoConfiguration {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     @Primary
-    public RedisTemplate<String,?> redisTemplate(RedisConnectionFactory redisConnectionFactory,
-                                                 @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper){
+    public RedisTemplate<String, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory,
+            @Qualifier("typeObjectMapper") ObjectMapper typeObjectMapper) {
 
         // 配置key和value的序列化方式
         StringRedisSerializer keySerializer = new StringRedisSerializer();
@@ -92,7 +95,7 @@ public class RedisAutoConfiguration {
      */
     @Bean
     @Primary
-    public RedisConfiguration redisConfiguration(RedisProperties redisProperties){
+    public RedisConfiguration redisConfiguration(RedisProperties redisProperties) {
         // 单机模式/集群模式
         RedisProperties.Cluster cluster = redisProperties.getCluster();
         if (cluster == null || CollUtil.isEmpty(cluster.getNodes())) {
@@ -102,16 +105,16 @@ public class RedisAutoConfiguration {
             configuration.setPort(redisProperties.getPort());
             configuration.setPassword(redisProperties.getPassword());
             return configuration;
-        } else {
+        }
+        else {
             RedisClusterConfiguration configuration = new RedisClusterConfiguration();
-            List<RedisNode> redisNodes = cluster.getNodes().stream()
-                    .map(node -> {
-                        List<String> hostAndPort = StrUtil.split(node, ':');
-                        if (hostAndPort.size() != 2) {
-                            throw new FatalException(1, "Redis Cluster集群配置错误, 无法启动");
-                        }
-                        return new RedisNode(hostAndPort.get(0), Integer.parseInt(hostAndPort.get(1)));
-                    }).collect(Collectors.toList());
+            List<RedisNode> redisNodes = cluster.getNodes().stream().map(node -> {
+                List<String> hostAndPort = StrUtil.split(node, ':');
+                if (hostAndPort.size() != 2) {
+                    throw new FatalException(1, "Redis Cluster集群配置错误, 无法启动");
+                }
+                return new RedisNode(hostAndPort.get(0), Integer.parseInt(hostAndPort.get(1)));
+            }).collect(Collectors.toList());
             configuration.setClusterNodes(redisNodes);
             configuration.setPassword(redisProperties.getPassword());
             configuration.setMaxRedirects(cluster.getMaxRedirects());
@@ -119,17 +122,14 @@ public class RedisAutoConfiguration {
         }
     }
 
-
     /**
      * Lettuce连接工厂
      */
     @Bean
     @Primary
     public LettuceConnectionFactory factory(GenericObjectPoolConfig<LettucePoolingClientConfiguration> config,
-                                            RedisConfiguration redisConfiguration ) {
-        LettuceClientConfiguration clientConfiguration = LettucePoolingClientConfiguration
-                .builder()
-                .poolConfig(config)
+            RedisConfiguration redisConfiguration) {
+        LettuceClientConfiguration clientConfiguration = LettucePoolingClientConfiguration.builder().poolConfig(config)
                 .build();
         return new LettuceConnectionFactory(redisConfiguration, clientConfiguration);
     }
@@ -138,11 +138,8 @@ public class RedisAutoConfiguration {
      * redis 消息监听容器
      */
     @Bean
-    public RedisMessageListenerContainer redisMessageListenerContainer(
-            RedisConnectionFactory redisConnectionFactory,
-            RedisTopicReceiver redisTopicReceiver,
-            ObjectMapper typeObjectMapper
-    ) {
+    public RedisMessageListenerContainer redisMessageListenerContainer(RedisConnectionFactory redisConnectionFactory,
+            RedisTopicReceiver redisTopicReceiver, ObjectMapper typeObjectMapper) {
         RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();
         redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory);
 
@@ -150,7 +147,9 @@ public class RedisAutoConfiguration {
         MessageListenerAdapter messageListenerAdapter = new MessageListenerAdapter(redisTopicReceiver);
         // 设置序列化方式
         messageListenerAdapter.setSerializer(new GenericJackson2JsonRedisSerializer(typeObjectMapper));
-        redisMessageListenerContainer.addMessageListener(messageListenerAdapter,new PatternTopic(RedisCode.TOPIC_PATTERN_TOPIC));
+        redisMessageListenerContainer.addMessageListener(messageListenerAdapter,
+                new PatternTopic(RedisCode.TOPIC_PATTERN_TOPIC));
         return redisMessageListenerContainer;
     }
+
 }

@@ -8,10 +8,12 @@ import org.springframework.scheduling.annotation.Async;
 
 /**
  * 数据版本日志
+ *
  * @author xxm
  * @date 2022/1/10
  */
 public interface DataVersionLogService {
+
     /**
      * 添加
      */
@@ -32,4 +34,5 @@ public interface DataVersionLogService {
      * 删除
      */
     void delete(Long id);
+
 }

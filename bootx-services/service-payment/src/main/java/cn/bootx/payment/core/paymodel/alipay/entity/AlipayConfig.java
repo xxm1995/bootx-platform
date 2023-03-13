@@ -16,11 +16,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* 支付宝支付配置
-* @author xxm  
-* @date 2020/12/15 
-*/
+/**
+ * 支付宝支付配置
+ *
+ * @author xxm
+ * @date 2020/12/15
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -36,7 +37,9 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     /** 服务器异步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 */
     private String notifyUrl;
 
-    /** 页面跳转同步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 商户可以自定义同步跳转地址 */
+    /**
+     * 页面跳转同步通知页面路径 需http://或者https://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问 商户可以自定义同步跳转地址
+     */
     private String returnUrl;
 
     /** 请求网关地址 */
@@ -85,15 +88,14 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
     /** 是否启用 */
     private Boolean activity;
 
-    /** 状态 暂时没什么用  */
+    /** 状态 暂时没什么用 */
     private Integer state;
 
     /** 备注 */
     private String remark;
 
-
     @Override
-    public AlipayConfigDto toDto(){
+    public AlipayConfigDto toDto() {
         AlipayConfigDto convert = AlipayConvert.CONVERT.convert(this);
         if (StrUtil.isNotBlank(this.getPayWays())) {
             convert.setPayWayList(StrUtil.split(this.getPayWays(), ','));
@@ -101,13 +103,12 @@ public class AlipayConfig extends MpBaseEntity implements EntityBaseFunction<Ali
         return convert;
     }
 
-    public static AlipayConfig init(AlipayConfigParam in){
+    public static AlipayConfig init(AlipayConfigParam in) {
         AlipayConfig convert = AlipayConvert.CONVERT.convert(in);
-        if (CollUtil.isNotEmpty(in.getPayWayList())){
+        if (CollUtil.isNotEmpty(in.getPayWayList())) {
             convert.setPayWays(String.join(",", in.getPayWayList()));
         }
         return convert;
     }
 
 }
-

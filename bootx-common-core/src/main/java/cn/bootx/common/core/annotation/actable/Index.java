@@ -13,19 +13,20 @@ import java.lang.annotation.*;
 @Documented
 public @interface Index {
 
-	/**
-	 * 索引的名字，不设置默认为{actable_idx_当前标记字段名@Column的name}<p>
-	 * 如果设置了名字例如union_name,系统会默认在名字前加actable_idx_前缀，也就是actable_idx_union_name
-	 * @return
-	 */
-	String value() default "";
+    /**
+     * 索引的名字，不设置默认为{actable_idx_当前标记字段名@Column的name}
+     * <p>
+     * 如果设置了名字例如union_name,系统会默认在名字前加actable_idx_前缀，也就是actable_idx_union_name
+     * @return
+     */
+    String value() default "";
 
-	/**
-	 * 要建立索引的字段名，不设置默认为当前标记字段名@Column的name
-	 * <p>可设置多个建立联合索引{"login_mobile","login_name"}
-	 * @return
-	 */
-	String[] columns() default {};
+    /**
+     * 要建立索引的字段名，不设置默认为当前标记字段名@Column的name
+     * <p>
+     * 可设置多个建立联合索引{"login_mobile","login_name"}
+     * @return
+     */
+    String[] columns() default {};
 
 }
-

@@ -15,6 +15,7 @@ import java.util.Optional;
 
 /**
  * 认证应用
+ *
  * @author xxm
  * @date 2022-06-27
  */
@@ -23,25 +24,25 @@ import java.util.Optional;
 public class ClientManager extends BaseManager<ClientMapper, Client> {
 
     /**
-    * 分页
-    */
+     * 分页
+     */
     public Page<Client> page(PageParam pageParam, ClientParam param) {
         Page<Client> mpPage = MpUtil.getMpPage(pageParam, Client.class);
-        return lambdaQuery()
-                .like(StrUtil.isNotBlank(param.getCode()),Client::getCode,param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()),Client::getName,param.getName())
+        return lambdaQuery().like(StrUtil.isNotBlank(param.getCode()), Client::getCode, param.getCode())
+                .like(StrUtil.isNotBlank(param.getName()), Client::getName, param.getName())
                 .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
     public Optional<Client> findByCode(String code) {
-        return findByField(Client::getCode,code);
+        return findByField(Client::getCode, code);
     }
 
     public boolean existsByCode(String code) {
-        return existedByField(Client::getCode,code);
+        return existedByField(Client::getCode, code);
     }
 
-    public boolean existsByCode(String code,Long id) {
-        return existedByField(Client::getCode,code,id);
+    public boolean existsByCode(String code, Long id) {
+        return existedByField(Client::getCode, code, id);
     }
+
 }

@@ -7,6 +7,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 微信自定义菜单
+ *
  * @author xxm
  * @date 2022-08-08
  */
@@ -15,14 +16,18 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class WeChatMenuParam {
 
-    @Schema(description= "主键")
+    @Schema(description = "主键")
     private Long id;
+
     @Schema(description = "名称")
     private String name;
+
     @Schema(description = "菜单信息")
     private WeChatMenuInfo menuInfo = new WeChatMenuInfo();
+
     @Schema(description = "是否发布")
     private boolean publish;
+
     @Schema(description = "备注")
     private String remark;
 

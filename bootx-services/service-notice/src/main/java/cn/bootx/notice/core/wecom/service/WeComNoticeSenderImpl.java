@@ -12,115 +12,118 @@ import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 
-/**   
-* 实现类
-* @author xxm  
-* @date 2022/7/23 
-*/
+/**
+ * 实现类
+ *
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeComNoticeSenderImpl implements WeComNoticeSender {
+
     private final WeComNoticeService weComNoticeService;
 
     /**
      * 发送文本消息
      */
     @Override
-    public String sendTextNotice(WeComTextMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendTextNotice(WeComTextMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送图片消息
      */
     @Override
-    public String sendImageNotice(WeComImageMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendImageNotice(WeComImageMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送图片消息 (传入文件)
      */
     @Override
-    public String sendImageNotice(InputStream inputStream, WeComNoticeReceive receive){
-        String media = weComNoticeService.updatedMedia(inputStream,WxConsts.MediaFileType.IMAGE);
+    public String sendImageNotice(InputStream inputStream, WeComNoticeReceive receive) {
+        String media = weComNoticeService.updatedMedia(inputStream, WxConsts.MediaFileType.IMAGE);
         WeComImageMsg msg = new WeComImageMsg(media);
-        return this.sendNotice(msg,receive);
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送语音消息
      */
     @Override
-    public String sendVoiceNotice(WeComVoiceMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendVoiceNotice(WeComVoiceMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送语音消息(传入文件)
      */
     @Override
-    public String sendVoiceNotice(InputStream inputStream, WeComNoticeReceive receive){
-        String media = weComNoticeService.updatedMedia(inputStream,WxConsts.MediaFileType.VOICE);
+    public String sendVoiceNotice(InputStream inputStream, WeComNoticeReceive receive) {
+        String media = weComNoticeService.updatedMedia(inputStream, WxConsts.MediaFileType.VOICE);
         WeComVoiceMsg msg = new WeComVoiceMsg(media);
-        return this.sendNotice(msg,receive);
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送视频消息 (传入文件)
      */
     @Override
-    public String sendVideoNotice(String title, String description, InputStream inputStream, WeComNoticeReceive receive){
-        String media = weComNoticeService.updatedMedia(inputStream,WxConsts.MediaFileType.VIDEO);
-        WeComVideoMsg msg = new WeComVideoMsg(title,media,description);
-        return this.sendNotice(msg,receive);
+    public String sendVideoNotice(String title, String description, InputStream inputStream,
+            WeComNoticeReceive receive) {
+        String media = weComNoticeService.updatedMedia(inputStream, WxConsts.MediaFileType.VIDEO);
+        WeComVideoMsg msg = new WeComVideoMsg(title, media, description);
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送视频消息
      */
     @Override
-    public String sendVideoNotice(WeComVideoMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendVideoNotice(WeComVideoMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送文本卡片消息
      */
     @Override
-    public String sendTextCardNotice(WeComTextCardMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendTextCardNotice(WeComTextCardMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送图文消息
      */
     @Override
-    public String sendNewsNotice(WeComNewsMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendNewsNotice(WeComNewsMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送图文消息(mpnews)
      */
     @Override
-    public String sendMpNewsNotice(WeComMpNewsMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendMpNewsNotice(WeComMpNewsMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送markdown消息
      */
     @Override
-    public String sendMarkdownNotice(WeComMarkdownMsg msg, WeComNoticeReceive receive){
-        return this.sendNotice(msg,receive);
+    public String sendMarkdownNotice(WeComMarkdownMsg msg, WeComNoticeReceive receive) {
+        return this.sendNotice(msg, receive);
     }
 
     /**
      * 发送企微信息
      */
-    private String sendNotice(WeComMsg msg, WeComNoticeReceive receive){
+    private String sendNotice(WeComMsg msg, WeComNoticeReceive receive) {
         WeComNoticeParam weComNoticeParam = new WeComNoticeParam(receive, msg);
         return weComNoticeService.sendNotice(weComNoticeParam.toWeComNotice());
     }
@@ -129,7 +132,8 @@ public class WeComNoticeSenderImpl implements WeComNoticeSender {
      * 撤回企微消息
      */
     @Override
-    public void recallNotice(String msgId){
+    public void recallNotice(String msgId) {
         weComNoticeService.recallNotice(msgId);
     }
+
 }

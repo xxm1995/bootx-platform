@@ -17,17 +17,20 @@ import java.math.BigDecimal;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
-/**   
-* 现金支付
-* @author xxm  
-* @date 2021/6/23 
-*/
+/**
+ * 现金支付
+ *
+ * @author xxm
+ * @date 2021/6/23
+ */
 @Slf4j
 @Scope(SCOPE_PROTOTYPE)
 @Service
 @RequiredArgsConstructor
 public class CashPayStrategy extends AbsPayStrategy {
+
     private final CashService cashService;
+
     private final PaymentService paymentService;
 
     /**
@@ -45,18 +48,17 @@ public class CashPayStrategy extends AbsPayStrategy {
     public void doBeforePayHandler() {
         // 检查金额
         PayModeParam payMode = this.getPayMode();
-        if (BigDecimalUtil.compareTo(payMode.getAmount(), BigDecimal.ZERO) < 1){
+        if (BigDecimalUtil.compareTo(payMode.getAmount(), BigDecimal.ZERO) < 1) {
             throw new PayAmountAbnormalException();
         }
     }
+
     /**
      * 支付操作
      */
     @Override
     public void doPayHandler() {
-        cashService.pay(this.getPayMode(),
-                this.getPayment(),
-                this.getPayParam());
+        cashService.pay(this.getPayMode(), this.getPayment(), this.getPayParam());
     }
 
     /**
@@ -72,7 +74,8 @@ public class CashPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
-        cashService.refund(this.getPayment().getId(),this.getPayMode().getAmount());
-        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.CASH);
+        cashService.refund(this.getPayment().getId(), this.getPayMode().getAmount());
+        paymentService.updateRefundSuccess(this.getPayment(), this.getPayMode().getAmount(), PayChannelEnum.CASH);
     }
+
 }

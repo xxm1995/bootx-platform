@@ -35,6 +35,7 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 
 /**
  * 支付宝支付
+ *
  * @author xxm
  * @date 2021/2/27
  */
@@ -44,13 +45,19 @@ import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROT
 public class AliPayStrategy extends AbsPayStrategy {
 
     private final AliPaymentService aliPaymentService;
+
     private final AlipaySyncService alipaySyncService;
+
     private final AliPayService aliPayService;
+
     private final AliPayCancelService aliPayCancelService;
+
     private final AlipayConfigManager alipayConfigManager;
+
     private final PaymentService paymentService;
 
     private AlipayConfig alipayConfig;
+
     private AliPayParam aliPayParam;
 
     @Override
@@ -62,28 +69,30 @@ public class AliPayStrategy extends AbsPayStrategy {
      * 支付前操作
      */
     @Override
-    public void doBeforePayHandler(){
+    public void doBeforePayHandler() {
         try {
             // 支付宝参数验证
             String extraParamsJson = this.getPayMode().getExtraParamsJson();
-            if (StrUtil.isNotBlank(extraParamsJson)){
+            if (StrUtil.isNotBlank(extraParamsJson)) {
                 this.aliPayParam = JSONUtil.toBean(extraParamsJson, AliPayParam.class);
-            } else {
+            }
+            else {
                 this.aliPayParam = new AliPayParam();
             }
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             throw new PayFailureException("支付参数错误");
         }
         // 检查金额
         PayModeParam payMode = this.getPayMode();
-        if (BigDecimalUtil.compareTo(payMode.getAmount(), BigDecimal.ZERO) < 1){
+        if (BigDecimalUtil.compareTo(payMode.getAmount(), BigDecimal.ZERO) < 1) {
             throw new PayAmountAbnormalException();
         }
         // 检查并获取支付宝支付配置
         this.initAlipayConfig();
-        aliPayService.validation(this.getPayMode(),alipayConfig);
+        aliPayService.validation(this.getPayMode(), alipayConfig);
         // 如果没有显式传入同步回调地址, 使用默认配置
-        if (StrUtil.isBlank(aliPayParam.getReturnUrl())){
+        if (StrUtil.isBlank(aliPayParam.getReturnUrl())) {
             aliPayParam.setReturnUrl(alipayConfig.getReturnUrl());
         }
         this.initAlipayConfig();
@@ -94,10 +103,7 @@ public class AliPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doPayHandler() {
-        aliPayService.pay(this.getPayMode().getAmount(),
-                this.getPayment(),
-                this.aliPayParam,
-                this.getPayMode(),
+        aliPayService.pay(this.getPayMode().getAmount(), this.getPayment(), this.aliPayParam, this.getPayMode(),
                 this.alipayConfig);
     }
 
@@ -105,8 +111,8 @@ public class AliPayStrategy extends AbsPayStrategy {
      * 支付调起成功
      */
     @Override
-    public void doSuccessHandler(){
-        aliPaymentService.updatePaySuccess(this.getPayment(),this.getPayMode());
+    public void doSuccessHandler() {
+        aliPaymentService.updatePaySuccess(this.getPayment(), this.getPayMode());
     }
 
     /**
@@ -123,7 +129,7 @@ public class AliPayStrategy extends AbsPayStrategy {
     @Override
     public void doAsyncSuccessHandler(Map<String, String> map) {
         String tradeNo = map.get(AliPayCode.TRADE_NO);
-        aliPaymentService.updateAsyncSuccess(this.getPayment().getId(),this.getPayMode(),tradeNo);
+        aliPaymentService.updateAsyncSuccess(this.getPayment().getId(), this.getPayMode(), tradeNo);
     }
 
     /**
@@ -161,16 +167,16 @@ public class AliPayStrategy extends AbsPayStrategy {
     @Override
     public void doRefundHandler() {
         this.initAlipayConfig();
-        aliPayCancelService.refund(this.getPayment(),this.getPayMode().getAmount());
-        aliPaymentService.updatePayRefund(this.getPayment().getId(),this.getPayMode().getAmount());
-        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.ALI);
+        aliPayCancelService.refund(this.getPayment(), this.getPayMode().getAmount());
+        aliPaymentService.updatePayRefund(this.getPayment().getId(), this.getPayMode().getAmount());
+        paymentService.updateRefundSuccess(this.getPayment(), this.getPayMode().getAmount(), PayChannelEnum.ALI);
     }
 
     /**
      * 异步支付单与支付网关进行状态比对
      */
     @Override
-    public PaySyncResult doSyncPayStatusHandler(){
+    public PaySyncResult doSyncPayStatusHandler() {
         this.initAlipayConfig();
         return alipaySyncService.syncPayStatus(this.getPayment());
     }
@@ -178,10 +184,9 @@ public class AliPayStrategy extends AbsPayStrategy {
     /**
      * 初始化支付宝配置信息
      */
-    private void initAlipayConfig(){
+    private void initAlipayConfig() {
         // 检查并获取支付宝支付配置
-        this.alipayConfig = alipayConfigManager.findActivity()
-                .orElseThrow(() -> new PayFailureException("支付配置不存在"));
+        this.alipayConfig = alipayConfigManager.findActivity().orElseThrow(() -> new PayFailureException("支付配置不存在"));
         this.initApiConfig(this.alipayConfig);
     }
 
@@ -189,35 +194,29 @@ public class AliPayStrategy extends AbsPayStrategy {
      * 初始化IJPay 服务
      */
     @SneakyThrows
-    private void initApiConfig(AlipayConfig alipayConfig){
+    private void initApiConfig(AlipayConfig alipayConfig) {
 
         AliPayApiConfig aliPayApiConfig;
         // 公钥
-        if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_KEY)){
-            aliPayApiConfig = AliPayApiConfig.builder()
-                    .setAppId(alipayConfig.getAppId())
-                    .setPrivateKey(alipayConfig.getPrivateKey())
-                    .setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
-                    .setCharset(CharsetUtil.UTF_8)
-                    .setServiceUrl(alipayConfig.getServerUrl())
-                    .setSignType(alipayConfig.getSignType())
-                    .build();
+        if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_KEY)) {
+            aliPayApiConfig = AliPayApiConfig.builder().setAppId(alipayConfig.getAppId())
+                    .setPrivateKey(alipayConfig.getPrivateKey()).setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
+                    .setCharset(CharsetUtil.UTF_8).setServiceUrl(alipayConfig.getServerUrl())
+                    .setSignType(alipayConfig.getSignType()).build();
         }
         // 证书
-        else if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_CART)){
-            aliPayApiConfig = AliPayApiConfig.builder()
-                    .setAppId(alipayConfig.getAppId())
-                    .setPrivateKey(alipayConfig.getPrivateKey())
-                    .setAppCertContent(alipayConfig.getAppCert())
+        else if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_CART)) {
+            aliPayApiConfig = AliPayApiConfig.builder().setAppId(alipayConfig.getAppId())
+                    .setPrivateKey(alipayConfig.getPrivateKey()).setAppCertContent(alipayConfig.getAppCert())
                     .setAliPayCertContent(alipayConfig.getAlipayCert())
-                    .setAliPayRootCertContent(alipayConfig.getAlipayRootCert())
-                    .setCharset(CharsetUtil.UTF_8)
-                    .setServiceUrl(alipayConfig.getServerUrl())
-                    .setSignType(alipayConfig.getSignType())
+                    .setAliPayRootCertContent(alipayConfig.getAlipayRootCert()).setCharset(CharsetUtil.UTF_8)
+                    .setServiceUrl(alipayConfig.getServerUrl()).setSignType(alipayConfig.getSignType())
                     .buildByCertContent();
-        } else {
+        }
+        else {
             throw new BizException("支付宝认证方式不可为空");
         }
         AliPayApiConfigKit.setThreadLocalAliPayApiConfig(aliPayApiConfig);
     }
+
 }

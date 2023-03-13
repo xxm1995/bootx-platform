@@ -13,19 +13,22 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
-* redis订阅消息接收
-* @author xxm
-* @date 2022/5/7
-*/
+ * redis订阅消息接收
+ *
+ * @author xxm
+ * @date 2022/5/7
+ */
 @SuppressWarnings("rawtypes")
 @Slf4j
 @Component
 public class RedisTopicReceiver implements MessageListener {
+
     private final List<RedisTopicListener> redisTopicListeners;
+
     private final ObjectMapper objectMapper;
 
     public RedisTopicReceiver(List<RedisTopicListener> redisTopicListeners,
-                              @Qualifier("typeObjectMapper") ObjectMapper objectMapper) {
+            @Qualifier("typeObjectMapper") ObjectMapper objectMapper) {
         this.redisTopicListeners = redisTopicListeners;
         this.objectMapper = objectMapper;
     }
@@ -37,18 +40,20 @@ public class RedisTopicReceiver implements MessageListener {
     public void onMessage(Message message, byte[] pattern) {
         String topic = new String(message.getChannel());
         for (RedisTopicListener redisTopicListener : redisTopicListeners) {
-            if (topic.equals(RedisCode.TOPIC_PREFIX+redisTopicListener.getTopic())){
+            if (topic.equals(RedisCode.TOPIC_PREFIX + redisTopicListener.getTopic())) {
                 String json = new String(message.getBody());
                 Object o;
                 try {
                     o = objectMapper.readValue(json, Object.class);
-                } catch (JsonProcessingException e) {
-                    log.warn(e.getMessage(),e);
-                    throw new FatalException(1,e.getMessage());
                 }
-                //noinspection unchecked
+                catch (JsonProcessingException e) {
+                    log.warn(e.getMessage(), e);
+                    throw new FatalException(1, e.getMessage());
+                }
+                // noinspection unchecked
                 redisTopicListener.onMessage(o);
             }
         }
     }
+
 }

@@ -9,18 +9,19 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
- *
  * @author xxm
  * @date 2022/7/17
  */
 @Mapper
 public interface WeChatTemplateConvert {
+
     WeChatTemplateConvert CONVERT = Mappers.getMapper(WeChatTemplateConvert.class);
 
-    @Mapping(source = "title",target = "name")
+    @Mapping(source = "title", target = "name")
     WeChatTemplate convert(WxMpTemplate in);
 
     WeChatTemplate convert(WeChatTemplateParam in);
 
     WeChatTemplateDto convert(WeChatTemplate in);
+
 }

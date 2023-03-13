@@ -11,11 +11,12 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-/**   
-* 登录日志
-* @author xxm  
-* @date 2021/8/12 
-*/
+/**
+ * 登录日志
+ *
+ * @author xxm
+ * @date 2021/8/12
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -28,7 +29,7 @@ public class LoginLogDb extends MpIdEntity implements EntityBaseFunction<LoginLo
     /** 用户名称 */
     private String account;
 
-    /** 登录成功状态*/
+    /** 登录成功状态 */
     private Boolean login;
 
     /** 登录终端 */
@@ -59,4 +60,5 @@ public class LoginLogDb extends MpIdEntity implements EntityBaseFunction<LoginLo
     public LoginLogDto toDto() {
         return LogConvert.CONVERT.convert(this);
     }
+
 }

@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 企业微信机器人配置
+ *
  * @author bootx
  * @date 2022-07-23
  */
 @Mapper
 public interface WecomRobotConfigMapper extends BaseMapper<WecomRobotConfig> {
+
 }

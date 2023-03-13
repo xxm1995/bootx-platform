@@ -7,15 +7,15 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* @author xxm
-* @date 2021/12/24
-*/
+ * @author xxm
+ * @date 2021/12/24
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "数据范围权限")
 public class DataScopeDto extends BaseDto {
-    
+
     @Schema(description = "编码")
     private String code;
 
@@ -26,4 +26,6 @@ public class DataScopeDto extends BaseDto {
     private Integer type;
 
     @Schema(description = "备注")
-    private String remark;}
+    private String remark;
+
+}

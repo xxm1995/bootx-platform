@@ -16,30 +16,35 @@ import java.util.Objects;
 import static cn.bootx.common.core.code.CommonCode.USER_ID;
 import static cn.bootx.common.core.code.WebHeaderCode.ACCESS_TOKEN;
 
-/**   
-* 全局用户WS通知拦截鉴权
-* @author xxm  
-* @date 2022/6/9 
-*/
+/**
+ * 全局用户WS通知拦截鉴权
+ *
+ * @author xxm
+ * @date 2022/6/9
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserNoticeWebSocketInterceptor implements HandshakeInterceptor {
+
     private final WsUserAuthService wsUserAuthService;
 
     @Override
-    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
+            Map<String, Object> attributes) {
         String token = ((ServletServerHttpRequest) request).getServletRequest().getParameter(ACCESS_TOKEN);
         Long userId = wsUserAuthService.getUserIdByToken(token);
-        if (Objects.isNull(userId)){
+        if (Objects.isNull(userId)) {
             return false;
         }
-        attributes.put(USER_ID,userId);
+        attributes.put(USER_ID, userId);
         return true;
     }
 
     @Override
-    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Exception exception) {
+    public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
+            Exception exception) {
 
     }
+
 }

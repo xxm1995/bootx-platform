@@ -18,10 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
-* 三方登录
-* @author xxm
-* @date 2022/6/29
-*/
+ * 三方登录
+ *
+ * @author xxm
+ * @date 2022/6/29
+ */
 @Slf4j
 @IgnoreAuth
 @Tag(name = "三方登录")
@@ -29,21 +30,23 @@ import java.io.IOException;
 @RequestMapping("/auth/third")
 @RequiredArgsConstructor
 public class ThirdLoginController {
+
     private final ThirdLoginService thirdLoginService;
 
     @Operation(summary = "跳转到登陆页")
     @GetMapping("/toLoginUrl/{loginType}")
-    public void toLoginUrl(@PathVariable("loginType") String loginType, HttpServletResponse response) throws IOException {
+    public void toLoginUrl(@PathVariable("loginType") String loginType, HttpServletResponse response)
+            throws IOException {
         String loginUrl = thirdLoginService.getLoginUrl(loginType);
         response.sendRedirect(loginUrl);
     }
 
     @Operation(summary = "扫码后回调")
     @GetMapping("/callback/{loginType}")
-    public ModelAndView callback(@PathVariable("loginType") String loginType, AuthCallback callback){
-        ThirdAuthCode authCode = thirdLoginService.getAuthCode(loginType,callback);
+    public ModelAndView callback(@PathVariable("loginType") String loginType, AuthCallback callback) {
+        ThirdAuthCode authCode = thirdLoginService.getAuthCode(loginType, callback);
         // 回传给前台
-        return new ModelAndView("thirdLoginCallback")
-                .addObject("authCode",authCode);
+        return new ModelAndView("thirdLoginCallback").addObject("authCode", authCode);
     }
+
 }

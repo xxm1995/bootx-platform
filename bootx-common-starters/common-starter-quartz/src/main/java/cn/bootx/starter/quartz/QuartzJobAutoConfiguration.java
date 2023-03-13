@@ -6,14 +6,16 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
-/**   
-* 定时任务
-* @author xxm  
-* @date 2021/11/2 
-*/
+/**
+ * 定时任务
+ *
+ * @author xxm
+ * @date 2021/11/2
+ */
 @ComponentScan
 @ConfigurationPropertiesScan
 @AutoConfiguration
 @MapperScan(annotationClass = Mapper.class)
 public class QuartzJobAutoConfiguration {
+
 }

@@ -7,17 +7,19 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-/**   
+/**
  * 流程活动转换
- * @author xxm  
- * @date 2022/8/31 
+ *
+ * @author xxm
+ * @date 2022/8/31
  */
 @Mapper
 public interface BpmActivityConvert {
-    BpmActivityConvert CONVERT = Mappers.getMapper(BpmActivityConvert.class);
 
+    BpmActivityConvert CONVERT = Mappers.getMapper(BpmActivityConvert.class);
 
     List<ActivityInstanceChart> convert(List<HistoricActivityInstance> in);
 
     ActivityInstanceChart convert(HistoricActivityInstance in);
+
 }

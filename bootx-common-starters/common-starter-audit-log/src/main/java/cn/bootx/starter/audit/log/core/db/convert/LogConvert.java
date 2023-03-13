@@ -12,12 +12,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
-* 日志转换
-* @author xxm
-* @date 2021/8/12
-*/
+ * 日志转换
+ *
+ * @author xxm
+ * @date 2021/8/12
+ */
 @Mapper
 public interface LogConvert {
+
     LogConvert CONVERT = Mappers.getMapper(LogConvert.class);
 
     OperateLogDto convert(OperateLogDb in);

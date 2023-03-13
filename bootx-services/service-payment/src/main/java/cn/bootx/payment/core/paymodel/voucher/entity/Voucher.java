@@ -13,10 +13,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
-* 储值卡
-* @author xxm
-* @date 2022/3/14
-*/
+ * 储值卡
+ *
+ * @author xxm
+ * @date 2022/3/14
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -54,4 +55,5 @@ public class Voucher extends MpBaseEntity implements EntityBaseFunction<VoucherD
     public VoucherDto toDto() {
         return VoucherConvert.CONVERT.convert(this);
     }
+
 }

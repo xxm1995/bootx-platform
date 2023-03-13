@@ -7,11 +7,13 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * 流程模型
+ *
  * @author xxm
  * @date 2022-08-23
  */
 @Mapper
 public interface BpmModelConvert {
+
     BpmModelConvert CONVERT = Mappers.getMapper(BpmModelConvert.class);
 
     BpmModelDto convert(BpmModel in);

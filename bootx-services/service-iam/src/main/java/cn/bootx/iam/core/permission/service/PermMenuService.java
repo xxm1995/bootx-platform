@@ -29,15 +29,18 @@ import java.util.stream.Collectors;
 import static cn.bootx.iam.code.CachingCode.USER_PERM_CODE;
 
 /**
-* 权限
-* @author xxm
-* @date 2021/8/3
-*/
+ * 权限
+ *
+ * @author xxm
+ * @date 2021/8/3
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PermMenuService {
+
     private final PermMenuManager permMenuManager;
+
     private final RoleMenuManager roleMenuManager;
 
     private final UserRoleService userRoleService;
@@ -47,8 +50,8 @@ public class PermMenuService {
      */
     @Transactional(rollbackFor = Exception.class)
     public PermMenuDto add(PermMenuParam param) {
-        //判断是否是一级菜单，是的话清空父菜单
-        if(PermissionCode.MENU_TYPE_TOP.equals(param.getMenuType())) {
+        // 判断是否是一级菜单，是的话清空父菜单
+        if (PermissionCode.MENU_TYPE_TOP.equals(param.getMenuType())) {
             param.setParentId(null);
         }
         PermMenu permission = PermMenu.init(param);
@@ -58,16 +61,15 @@ public class PermMenuService {
     /**
      * 更新
      */
-    @CacheEvict(value = {USER_PERM_CODE},allEntries = true)
+    @CacheEvict(value = { USER_PERM_CODE }, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public PermMenuDto update(PermMenuParam param){
-        PermMenu permMenu = permMenuManager.findById(param.getId())
-                .orElseThrow(() -> new BizException("菜单权限不存在"));
+    public PermMenuDto update(PermMenuParam param) {
+        PermMenu permMenu = permMenuManager.findById(param.getId()).orElseThrow(() -> new BizException("菜单权限不存在"));
         permMenu.setClientCode(null);
-        BeanUtil.copyProperties(param,permMenu, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, permMenu, CopyOptions.create().ignoreNullValue());
 
         // 判断是否是一级菜单，是的话清空父菜单ID
-        if(PermissionCode.MENU_TYPE_TOP.equals(permMenu.getMenuType())) {
+        if (PermissionCode.MENU_TYPE_TOP.equals(permMenu.getMenuType())) {
             permMenu.setParentId(null);
         }
         return permMenuManager.updateById(permMenu).toDto();
@@ -76,10 +78,8 @@ public class PermMenuService {
     /**
      * 根据id查询
      */
-    public PermMenuDto findById(Long id){
-        return permMenuManager.findById(id)
-                .map(PermMenu::toDto)
-                .orElseThrow(DataNotExistException::new);
+    public PermMenuDto findById(Long id) {
+        return permMenuManager.findById(id).map(PermMenu::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -106,11 +106,11 @@ public class PermMenuService {
     /**
      * 删除
      */
-    @CacheEvict(value = {USER_PERM_CODE},allEntries = true)
+    @CacheEvict(value = { USER_PERM_CODE }, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Long id){
+    public void delete(Long id) {
         // 有子菜单不可以删除
-        if (permMenuManager.existsByParentId(id)){
+        if (permMenuManager.existsByParentId(id)) {
             throw new BizException("有子菜单或下属权限不可以删除");
         }
         roleMenuManager.deleteByPermission(id);
@@ -123,20 +123,17 @@ public class PermMenuService {
     public List<PermMenuDto> findResourceByMenuId(Long menuId) {
         UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
         List<PermMenu> resources = permMenuManager.findAllByParentId(menuId).stream()
-                .filter(permMenu -> Objects.equals(permMenu.getMenuType(),PermissionCode.MENU_TYPE_RESOURCE))
+                .filter(permMenu -> Objects.equals(permMenu.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
                 .collect(Collectors.toList());
         // 管理员返回全部
-        if (userDetail.isAdmin()){
+        if (userDetail.isAdmin()) {
             return resources.stream().map(PermMenu::toDto).collect(Collectors.toList());
         }
         // 普通用户只能看到自己有权限的
         List<Long> roleIds = userRoleService.findRoleIdsByUser(userDetail.getId());
-        List<Long> roleMenuIds = roleMenuManager.findAllByRoles(roleIds).stream()
-                .map(RoleMenu::getPermissionId)
+        List<Long> roleMenuIds = roleMenuManager.findAllByRoles(roleIds).stream().map(RoleMenu::getPermissionId)
                 .collect(Collectors.toList());
-        return resources.stream()
-                .filter(permMenu -> roleMenuIds.contains(permMenu.getId()))
-                .map(PermMenu::toDto)
+        return resources.stream().filter(permMenu -> roleMenuIds.contains(permMenu.getId())).map(PermMenu::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -153,6 +150,7 @@ public class PermMenuService {
      * @return
      */
     public boolean existsByPermCode(String permCode, Long id) {
-        return permMenuManager.existsByPermCode(permCode,id);
+        return permMenuManager.existsByPermCode(permCode, id);
     }
+
 }

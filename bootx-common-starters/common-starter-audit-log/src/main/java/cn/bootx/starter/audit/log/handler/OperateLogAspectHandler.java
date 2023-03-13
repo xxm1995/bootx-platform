@@ -32,6 +32,7 @@ import java.util.Optional;
 
 /**
  * 操作日志切面处理
+ *
  * @author xxm
  * @date 2021/8/13
  */
@@ -40,20 +41,21 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class OperateLogAspectHandler {
+
     private final OperateLogService operateLogService;
 
     /**
      * 配置织入点
      */
     @Pointcut("@annotation(cn.bootx.common.core.annotation.OperateLog) || @annotation(cn.bootx.common.core.annotation.OperateLogs)")
-    public void logPointCut(){
+    public void logPointCut() {
     }
 
     /**
      * 处理完请求后执行
      */
     @AfterReturning(pointcut = "logPointCut()", returning = "o")
-    public void doAfterReturning(JoinPoint joinPoint, Object o){
+    public void doAfterReturning(JoinPoint joinPoint, Object o) {
         handleLog(joinPoint, null, o);
     }
 
@@ -61,17 +63,16 @@ public class OperateLogAspectHandler {
      * 拦截异常操作
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
-    public void doAfterThrowing(JoinPoint joinPoint, Exception e){
+    public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
         handleLog(joinPoint, e, null);
     }
-
 
     /**
      * 操作log处理
      */
-    protected void handleLog(JoinPoint joinPoint, Exception e, Object o){
+    protected void handleLog(JoinPoint joinPoint, Exception e, Object o) {
         List<OperateLog> logs = getMethodAnnotation(joinPoint);
-        if (CollUtil.isEmpty(logs)){
+        if (CollUtil.isEmpty(logs)) {
             return;
         }
         // 基础信息
@@ -82,32 +83,28 @@ public class OperateLogAspectHandler {
         String methodName = joinPoint.getSignature().getName();
 
         for (OperateLog log : logs) {
-            OperateLogParam operateLog = new OperateLogParam()
-                    .setTitle(log.title())
+            OperateLogParam operateLog = new OperateLogParam().setTitle(log.title())
                     .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
                     .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
                     .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
                     .setOperateUrl(HeaderHolder.getHeader(ServletCode.REQUEST_URI))
                     .setMethod(className + "#" + methodName)
-                    .setRequestMethod(HeaderHolder.getHeader(ServletCode.METHOD))
-                    .setSuccess(true)
-                    .setOperateIp(ip)
+                    .setRequestMethod(HeaderHolder.getHeader(ServletCode.METHOD)).setSuccess(true).setOperateIp(ip)
                     .setOperateTime(LocalDateTime.now());
 
             // 异常流
-            if (Objects.nonNull(e)){
-                operateLog.setSuccess(false)
-                        .setErrorMsg(e.getMessage());
+            if (Objects.nonNull(e)) {
+                operateLog.setSuccess(false).setErrorMsg(e.getMessage());
             }
 
             // 参数
-            if (log.saveParam()){
+            if (log.saveParam()) {
                 Object[] args = joinPoint.getArgs();
                 operateLog.setOperateParam(JacksonUtil.toJson(args));
             }
 
             // 返回值
-            if (log.saverReturn()){
+            if (log.saverReturn()) {
                 operateLog.setOperateReturn(JacksonUtil.toJson(o));
             }
 
@@ -119,12 +116,10 @@ public class OperateLogAspectHandler {
      * 获取注解
      */
     private List<OperateLog> getMethodAnnotation(JoinPoint joinPoint) {
-        List<OperateLog> operateLogs = Optional.ofNullable(AopUtil.getMethodAnnotation(joinPoint,OperateLogs.class))
-                .map(OperateLogs::value)
-                .map(ListUtil::of)
-                .orElse(null);
-        if (CollUtil.isEmpty(operateLogs)){
-            operateLogs = ListUtil.of(AopUtil.getMethodAnnotation(joinPoint,OperateLog.class));
+        List<OperateLog> operateLogs = Optional.ofNullable(AopUtil.getMethodAnnotation(joinPoint, OperateLogs.class))
+                .map(OperateLogs::value).map(ListUtil::of).orElse(null);
+        if (CollUtil.isEmpty(operateLogs)) {
+            operateLogs = ListUtil.of(AopUtil.getMethodAnnotation(joinPoint, OperateLog.class));
         }
         return operateLogs;
     }

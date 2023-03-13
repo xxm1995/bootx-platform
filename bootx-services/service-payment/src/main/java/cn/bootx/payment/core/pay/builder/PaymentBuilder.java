@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 /**
  * 支付对象构建器
+ *
  * @author xxm
  * @date 2021/2/25
  */
@@ -33,32 +34,24 @@ public class PaymentBuilder {
     /**
      * 构建payment记录
      */
-    public Payment buildPayment(PayParam payParam){
+    public Payment buildPayment(PayParam payParam) {
         Payment payment = new Payment();
 
         HttpServletRequest request = WebServletUtil.getRequest();
         String ip = ServletUtil.getClientIP(request);
         // 基础信息
-        payment.setBusinessId(payParam.getBusinessId())
-                .setUserId(payParam.getUserId())
-                .setTitle(payParam.getTitle())
+        payment.setBusinessId(payParam.getBusinessId()).setUserId(payParam.getUserId()).setTitle(payParam.getTitle())
                 .setDescription(payParam.getDescription());
 
         // 支付方式和状态
         List<PayChannelInfo> payTypeInfos = buildPayTypeInfo(payParam.getPayModeList());
         List<RefundableInfo> refundableInfos = buildRefundableInfo(payParam.getPayModeList());
         // 计算总价
-        BigDecimal sumAmount = payTypeInfos.stream()
-                .map(PayChannelInfo::getAmount)
-                .filter(Objects::nonNull)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
+        BigDecimal sumAmount = payTypeInfos.stream().map(PayChannelInfo::getAmount).filter(Objects::nonNull)
+                .reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
         // 支付通道信息
-        payment.setPayChannelInfo(payTypeInfos)
-                .setRefundableInfo(refundableInfos)
-                .setPayStatus(PayStatusCode.TRADE_PROGRESS)
-                .setAmount(sumAmount)
-                .setClientIp(ip)
+        payment.setPayChannelInfo(payTypeInfos).setRefundableInfo(refundableInfos)
+                .setPayStatus(PayStatusCode.TRADE_PROGRESS).setAmount(sumAmount).setClientIp(ip)
                 .setRefundableBalance(sumAmount);
         return payment;
     }
@@ -67,44 +60,36 @@ public class PaymentBuilder {
      * 构建PayTypeInfo
      */
     private List<PayChannelInfo> buildPayTypeInfo(List<PayModeParam> payModeParamList) {
-        return CollectionUtil.isEmpty(payModeParamList) ? Collections.emptyList() : payModeParamList.stream()
-                .map(PayModeParam::toPayTypeInfo)
-                .collect(Collectors.toList());
+        return CollectionUtil.isEmpty(payModeParamList) ? Collections.emptyList()
+                : payModeParamList.stream().map(PayModeParam::toPayTypeInfo).collect(Collectors.toList());
     }
+
     /**
      * 构建RefundableInfo
      */
     private List<RefundableInfo> buildRefundableInfo(List<PayModeParam> payModeParamList) {
-        return CollectionUtil.isEmpty(payModeParamList) ? Collections.emptyList() : payModeParamList.stream()
-                .map(PayModeParam::toRefundableInfo)
-                .collect(Collectors.toList());
+        return CollectionUtil.isEmpty(payModeParamList) ? Collections.emptyList()
+                : payModeParamList.stream().map(PayModeParam::toRefundableInfo).collect(Collectors.toList());
     }
 
     /**
      * 根据Payment构建PayParam支付参数
      */
-    public PayParam buildPayParamByPayment(Payment payment){
+    public PayParam buildPayParamByPayment(Payment payment) {
         PayParam payParam = new PayParam();
         // 恢复 payModeList
         List<PayModeParam> payModeParams = payment.getPayChannelInfo().stream()
-                .map(payTypeInfo -> new PayModeParam()
-                        .setAmount(payTypeInfo.getAmount())
+                .map(payTypeInfo -> new PayModeParam().setAmount(payTypeInfo.getAmount())
                         .setPayChannel(payTypeInfo.getPayChannel())
                         .setExtraParamsJson(payTypeInfo.getExtraParamsJson()))
                 .collect(Collectors.toList());
-        payParam.setPayModeList(payModeParams)
-                .setBusinessId(payment.getBusinessId())
-                .setUserId(payment.getUserId())
-                .setTitle(payment.getTitle())
-                .setTitle(payment.getTitle())
-                .setDescription(payment.getDescription());
+        payParam.setPayModeList(payModeParams).setBusinessId(payment.getBusinessId()).setUserId(payment.getUserId())
+                .setTitle(payment.getTitle()).setTitle(payment.getTitle()).setDescription(payment.getDescription());
         return payParam;
     }
 
-
     /**
      * 根据Payment构建PaymentResult
-     *
      * @param payment payment
      * @return paymentVO
      */
@@ -113,8 +98,7 @@ public class PaymentBuilder {
         try {
             paymentResult = new PayResult();
             // 异步支付信息
-            paymentResult.setAsyncPayChannel(payment.getAsyncPayChannel())
-                    .setAsyncPayMode(payment.isAsyncPayMode())
+            paymentResult.setAsyncPayChannel(payment.getAsyncPayChannel()).setAsyncPayMode(payment.isAsyncPayMode())
                     .setPayStatus(payment.getPayStatus());
 
             List<PayChannelInfo> channelInfos = payment.getPayChannelInfo();
@@ -127,9 +111,11 @@ public class PaymentBuilder {
                 paymentResult.setAsyncPayInfo(AsyncPayInfoLocal.get());
             }
             // 清空线程变量
-        } finally {
+        }
+        finally {
             AsyncPayInfoLocal.clear();
         }
         return paymentResult;
     }
+
 }

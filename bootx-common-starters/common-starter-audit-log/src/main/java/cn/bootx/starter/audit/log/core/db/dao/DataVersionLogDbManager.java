@@ -14,14 +14,14 @@ import org.springframework.stereotype.Repository;
 import java.util.Objects;
 
 /**
-*
-* @author xxm
-* @date 2022/1/10
-*/
+ * @author xxm
+ * @date 2022/1/10
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class DataVersionLogDbManager extends BaseManager<DataVersionLogDbMapper, DataVersionLogDb> {
+
     private final DataVersionLogDbMapper mapper;
 
     /**
@@ -40,12 +40,11 @@ public class DataVersionLogDbManager extends BaseManager<DataVersionLogDbMapper,
      */
     public Page<DataVersionLogDb> page(PageParam pageParam, DataVersionLogParam param) {
         Page<DataVersionLogDb> mpPage = MpUtil.getMpPage(pageParam, DataVersionLogDb.class);
-        return lambdaQuery()
-                .orderByDesc(DataVersionLogDb::getId)
-                .like(StrUtil.isNotBlank(param.getDataName()), DataVersionLogDb::getDataName,param.getDataName())
-                .like(StrUtil.isNotBlank(param.getTableName()), DataVersionLogDb::getTableName,param.getTableName())
-                .like(StrUtil.isNotBlank(param.getDataId()), DataVersionLogDb::getDataId,param.getDataId())
-                .eq(Objects.nonNull(param.getVersion()), DataVersionLogDb::getVersion,param.getVersion())
-                .page(mpPage);
+        return lambdaQuery().orderByDesc(DataVersionLogDb::getId)
+                .like(StrUtil.isNotBlank(param.getDataName()), DataVersionLogDb::getDataName, param.getDataName())
+                .like(StrUtil.isNotBlank(param.getTableName()), DataVersionLogDb::getTableName, param.getTableName())
+                .like(StrUtil.isNotBlank(param.getDataId()), DataVersionLogDb::getDataId, param.getDataId())
+                .eq(Objects.nonNull(param.getVersion()), DataVersionLogDb::getVersion, param.getVersion()).page(mpPage);
     }
+
 }

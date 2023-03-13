@@ -12,29 +12,33 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 动态表单
-* @author xxm
-* @date 2022-07-28
-*/
+ * 动态表单
+ *
+ * @author xxm
+ * @date 2022-07-28
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName(value = "base_dynamic_form",autoResultMap = true)
-public class DynamicForm extends MpBaseEntity implements EntityBaseFunction<DynamicFormDto>{
+@TableName(value = "base_dynamic_form", autoResultMap = true)
+public class DynamicForm extends MpBaseEntity implements EntityBaseFunction<DynamicFormDto> {
 
     /** 表单名称 */
     private String name;
+
     /** 表单键名 */
     private String code;
+
     /** 表单内容 */
     @BigField
     private String value;
+
     /** 备注 */
     private String remark;
 
     /** 创建对象 */
     public static DynamicForm init(DynamicFormParam in) {
-            return DynamicFormConvert.CONVERT.convert(in);
+        return DynamicFormConvert.CONVERT.convert(in);
     }
 
     /** 转换成dto */
@@ -42,4 +46,5 @@ public class DynamicForm extends MpBaseEntity implements EntityBaseFunction<Dyna
     public DynamicFormDto toDto() {
         return DynamicFormConvert.CONVERT.convert(this);
     }
+
 }

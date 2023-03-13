@@ -24,32 +24,30 @@ import java.io.File;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**   
+/**
  * 素材管理
- * @author xxm  
- * @date 2022/8/9 
+ *
+ * @author xxm
+ * @date 2022/8/9
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeChatMediaService {
+
     private final WxMpService wxMpService;
 
     /**
      * 分页查询
      */
     @SneakyThrows
-    public PageResult<WeChatMediaDto> pageFile(PageParam pageParam, String type){
+    public PageResult<WeChatMediaDto> pageFile(PageParam pageParam, String type) {
         WxMpMaterialService materialService = wxMpService.getMaterialService();
         val result = materialService.materialFileBatchGet(type, pageParam.start(), pageParam.getSize());
-//        val result = new WxMpMaterialFileBatchGetResult();
-        val items = result.getItems().stream()
-                .map(WeChatMediaDto::init)
-                .collect(Collectors.toList());
+        // val result = new WxMpMaterialFileBatchGetResult();
+        val items = result.getItems().stream().map(WeChatMediaDto::init).collect(Collectors.toList());
         PageResult<WeChatMediaDto> pageResult = new PageResult<>();
-        pageResult.setCurrent(pageParam.getCurrent())
-                .setRecords(items)
-                .setSize(pageParam.getSize())
+        pageResult.setCurrent(pageParam.getCurrent()).setRecords(items).setSize(pageParam.getSize())
                 .setTotal(result.getTotalCount());
         return pageResult;
     }
@@ -58,14 +56,12 @@ public class WeChatMediaService {
      * 分页查询(图文)
      */
     @SneakyThrows
-    public PageResult<WxMaterialNewsBatchGetNewsItem> pageNews(PageParam pageParam){
+    public PageResult<WxMaterialNewsBatchGetNewsItem> pageNews(PageParam pageParam) {
         WxMpMaterialService materialService = wxMpService.getMaterialService();
-        val result = materialService.materialNewsBatchGet( pageParam.start(), pageParam.getSize());
+        val result = materialService.materialNewsBatchGet(pageParam.start(), pageParam.getSize());
         val items = result.getItems();
         PageResult<WxMaterialNewsBatchGetNewsItem> pageResult = new PageResult<>();
-        pageResult.setCurrent(pageParam.getCurrent())
-                .setRecords(items)
-                .setSize(pageParam.getSize())
+        pageResult.setCurrent(pageParam.getCurrent()).setRecords(items).setSize(pageParam.getSize())
                 .setTotal(result.getTotalCount());
         return pageResult;
     }
@@ -74,7 +70,7 @@ public class WeChatMediaService {
      * 删除素材
      */
     @SneakyThrows
-    public void deleteFile(String mediaId){
+    public void deleteFile(String mediaId) {
         WxMpMaterialService materialService = wxMpService.getMaterialService();
         materialService.materialDelete(mediaId);
     }
@@ -84,20 +80,20 @@ public class WeChatMediaService {
      * @see WxConsts.MediaFileType
      */
     @SneakyThrows
-    public void uploadFile(String mediaType, MultipartFile multipartFile){
+    public void uploadFile(String mediaType, MultipartFile multipartFile) {
         WxMpMaterialService materialService = wxMpService.getMaterialService();
         byte[] bytes = IoUtil.readBytes(multipartFile.getInputStream());
         String originalFilename = multipartFile.getOriginalFilename();
         String fileName = FileNameUtil.mainName(originalFilename);
-        String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes),originalFilename);
+        String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes), originalFilename);
         File tempFile = FileUtil.createTempFile(new ByteArrayInputStream(bytes), fileName, fileType);
         WxMpMaterial material = new WxMpMaterial();
         material.setFile(tempFile);
-        if (Objects.equals(mediaType,WxConsts.MediaFileType.VIDEO)) {
+        if (Objects.equals(mediaType, WxConsts.MediaFileType.VIDEO)) {
             material.setVideoTitle(fileName);
             material.setVideoIntroduction(fileName);
         }
-        materialService.materialFileUpload(mediaType,material);
+        materialService.materialFileUpload(mediaType, material);
     }
 
 }

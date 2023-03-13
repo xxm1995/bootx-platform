@@ -3,10 +3,11 @@ package cn.bootx.notice.core.wecom.entity.msg;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 /**
-* 企业微信通知消息
-* @author xxm  
-* @date 2022/7/23 
-*/
+ * 企业微信通知消息
+ *
+ * @author xxm
+ * @date 2022/7/23
+ */
 public interface WeComMsg {
 
     /**
@@ -14,4 +15,5 @@ public interface WeComMsg {
      * @return
      */
     WxCpMessage toMsg();
+
 }

@@ -8,31 +8,32 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
-* 请求头TTL存储类
-* @author xxm
-* @date 2021/4/20
-*/
+ * 请求头TTL存储类
+ *
+ * @author xxm
+ * @date 2021/4/20
+ */
 public final class HolderContextHolder {
 
-    private static final ThreadLocal<Map<String,String>> THREAD_LOCAL = new TransmittableThreadLocal<>();
+    private static final ThreadLocal<Map<String, String>> THREAD_LOCAL = new TransmittableThreadLocal<>();
+
     /**
      * TTL 设置数据
      */
-    public static void put(String key,String value) {
+    public static void put(String key, String value) {
         Map<String, String> map = THREAD_LOCAL.get();
-        if (MapUtil.isEmpty(map)){
+        if (MapUtil.isEmpty(map)) {
             map = new HashMap<>(10);
             THREAD_LOCAL.set(map);
         }
-        map.put(key,value);
+        map.put(key, value);
     }
 
     /**
      * 获取TTL中的数据
      */
     public static String get(String key) {
-        return Optional.ofNullable(THREAD_LOCAL.get()).map(map -> map.get(key))
-                .orElse(null);
+        return Optional.ofNullable(THREAD_LOCAL.get()).map(map -> map.get(key)).orElse(null);
     }
 
     /**
@@ -41,4 +42,5 @@ public final class HolderContextHolder {
     public static void clear() {
         THREAD_LOCAL.remove();
     }
+
 }

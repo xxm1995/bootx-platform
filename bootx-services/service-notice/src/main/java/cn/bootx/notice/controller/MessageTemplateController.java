@@ -16,43 +16,45 @@ import java.util.Map;
 
 /**
  * 消息模板
+ *
  * @author xxm
  * @date 2021/8/10
  */
-@Tag(name ="消息模板")
+@Tag(name = "消息模板")
 @RestController
 @RequestMapping("/message/template")
 @RequiredArgsConstructor
 public class MessageTemplateController {
+
     private final MessageTemplateService messageTemplateService;
 
     @Operation(summary = "添加")
     @PostMapping("/add")
-    public ResResult<MessageTemplateDto> add(@RequestBody MessageTemplateParam param){
+    public ResResult<MessageTemplateDto> add(@RequestBody MessageTemplateParam param) {
         return Res.ok(messageTemplateService.add(param));
     }
 
     @Operation(summary = "更新")
     @PostMapping("/update")
-    public ResResult<MessageTemplateDto> update(@RequestBody MessageTemplateParam param){
+    public ResResult<MessageTemplateDto> update(@RequestBody MessageTemplateParam param) {
         return Res.ok(messageTemplateService.update(param));
     }
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<MessageTemplateDto>> page(PageParam pageParam,MessageTemplateParam query){
-        return Res.ok(messageTemplateService.page(pageParam,query));
+    public ResResult<PageResult<MessageTemplateDto>> page(PageParam pageParam, MessageTemplateParam query) {
+        return Res.ok(messageTemplateService.page(pageParam, query));
     }
 
     @Operation(summary = "获取详情")
     @GetMapping("/findById")
-    public ResResult<MessageTemplateDto> findById(Long id){
+    public ResResult<MessageTemplateDto> findById(Long id) {
         return Res.ok(messageTemplateService.findById(id));
     }
 
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         messageTemplateService.delete(id);
         return Res.ok();
     }
@@ -65,13 +67,14 @@ public class MessageTemplateController {
 
     @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
-    public ResResult<Boolean> existsByCode(String code,Long id) {
-        return Res.ok(messageTemplateService.existsByCode(code,id));
+    public ResResult<Boolean> existsByCode(String code, Long id) {
+        return Res.ok(messageTemplateService.existsByCode(code, id));
     }
 
     @Operation(summary = "渲染模板")
     @PostMapping("/rendering")
-    public ResResult<String> rendering(@RequestParam String code, @RequestBody Map<String,Object> paramMap){
-        return Res.ok(messageTemplateService.rendering(code,paramMap));
+    public ResResult<String> rendering(@RequestParam String code, @RequestBody Map<String, Object> paramMap) {
+        return Res.ok(messageTemplateService.rendering(code, paramMap));
     }
+
 }

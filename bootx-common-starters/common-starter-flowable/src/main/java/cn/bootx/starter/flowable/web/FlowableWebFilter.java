@@ -18,6 +18,7 @@ import java.io.IOException;
 
 /**
  * flowable Web 过滤器，将 userId 设置到工作流里
+ *
  * @author xxm
  * @date 2022/8/24
  */
@@ -37,11 +38,13 @@ public class FlowableWebFilter extends OncePerRequestFilter {
             }
             // 过滤
             chain.doFilter(request, response);
-        } finally {
+        }
+        finally {
             BpmContextLocal.clear();
             // 清理
             Authentication.setAuthenticatedUserId(null);
 
         }
     }
+
 }

@@ -17,66 +17,69 @@ import java.util.List;
  * @author xxm
  * @date 2020/5/11 9:36
  */
-@Tag(name ="菜单权限资源")
+@Tag(name = "菜单权限资源")
 @RestController
 @RequestMapping("/perm/menu")
 @RequiredArgsConstructor
 public class PermMenuController {
+
     private final PermMenuService permissionService;
+
     private final RolePermService rolePermissionService;
 
     @Operation(summary = "添加菜单权限")
     @PostMapping("/add")
-    public ResResult<PermMenuDto> add(@RequestBody PermMenuParam param){
+    public ResResult<PermMenuDto> add(@RequestBody PermMenuParam param) {
         return Res.ok(permissionService.add(param));
     }
 
     @Operation(summary = "修改菜单权限")
     @PostMapping("/update")
-    public ResResult<PermMenuDto> update(@RequestBody PermMenuParam param){
+    public ResResult<PermMenuDto> update(@RequestBody PermMenuParam param) {
         return Res.ok(permissionService.update(param));
     }
 
     @Operation(summary = "获取菜单树")
     @GetMapping("/menuTree")
-    public ResResult<List<PermMenuDto>> menuTree(String clientCode){
+    public ResResult<List<PermMenuDto>> menuTree(String clientCode) {
         return Res.ok(rolePermissionService.findMenuTree(clientCode));
     }
 
     @Operation(summary = "获取全部树")
     @GetMapping("/allTree")
-    public ResResult<List<PermMenuDto>> allTree(String clientCode){
+    public ResResult<List<PermMenuDto>> allTree(String clientCode) {
         return Res.ok(rolePermissionService.findAllTree(clientCode));
     }
 
     @Operation(summary = "资源(权限码)列表")
     @GetMapping("/resourceList")
-    public ResResult<List<PermMenuDto>> resourceList(Long menuId){
+    public ResResult<List<PermMenuDto>> resourceList(Long menuId) {
         return Res.ok(permissionService.findResourceByMenuId(menuId));
     }
 
     @Operation(summary = "根据id查询")
     @GetMapping("/findById")
-    public ResResult<PermMenuDto> findById(Long id){
+    public ResResult<PermMenuDto> findById(Long id) {
         return Res.ok(permissionService.findById(id));
     }
 
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         permissionService.delete(id);
         return Res.ok();
     }
 
     @Operation(summary = "编码是否被使用")
     @GetMapping("/existsByPermCode")
-    public ResResult<Boolean> existsByPermCode(String permCode){
+    public ResResult<Boolean> existsByPermCode(String permCode) {
         return Res.ok(permissionService.existsByPermCode(permCode));
     }
 
     @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByPermCodeNotId")
-    public ResResult<Boolean> existsByPermCode(String permCode,Long id){
-        return Res.ok(permissionService.existsByPermCode(permCode,id));
+    public ResResult<Boolean> existsByPermCode(String permCode, Long id) {
+        return Res.ok(permissionService.existsByPermCode(permCode, id));
     }
+
 }

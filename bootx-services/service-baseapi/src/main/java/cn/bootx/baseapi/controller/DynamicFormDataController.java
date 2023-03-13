@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author xxm
  * @date 2022/8/13
  */
@@ -16,5 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/dynamic/form/data")
 @RequiredArgsConstructor
 public class DynamicFormDataController {
+
     private final DynamicFormDataService dynamicFormDataService;
+
 }

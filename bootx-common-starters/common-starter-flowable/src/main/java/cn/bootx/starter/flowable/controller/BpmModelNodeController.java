@@ -17,66 +17,69 @@ import java.util.List;
 
 /**
  * 模型任务节点配置
+ *
  * @author xxm
  * @date 2022-08-25
  */
 @Validated
-@Tag(name ="模型任务节点配置")
+@Tag(name = "模型任务节点配置")
 @RestController
 @RequestMapping("/bpm/model/node")
 @RequiredArgsConstructor
 public class BpmModelNodeController {
+
     private final BpmModelNodeService bpmModelNodeService;
 
-    @Operation( summary = "添加")
+    @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody BpmModelNodeParam param){
+    public ResResult<Void> add(@RequestBody BpmModelNodeParam param) {
         bpmModelNodeService.add(param);
         return Res.ok();
     }
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody BpmModelNodeParam param){
+    public ResResult<Void> update(@RequestBody BpmModelNodeParam param) {
         bpmModelNodeService.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         bpmModelNodeService.delete(id);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<BpmModelNodeDto> findById(Long id){
+    public ResResult<BpmModelNodeDto> findById(Long id) {
         return Res.ok(bpmModelNodeService.findById(id));
     }
 
-    @Operation( summary = "查询任务节点配置项")
+    @Operation(summary = "查询任务节点配置项")
     @GetMapping(value = "/findByDefIdAndTaskId")
-    public ResResult<BpmModelNodeDto> findByDefIdAndTaskId(String defId, String nodeId){
-        return Res.ok(bpmModelNodeService.findByDefIdAndTaskId(defId,nodeId));
+    public ResResult<BpmModelNodeDto> findByDefIdAndTaskId(String defId, String nodeId) {
+        return Res.ok(bpmModelNodeService.findByDefIdAndTaskId(defId, nodeId));
     }
 
-    @Operation( summary = "获取下一步节点列表")
+    @Operation(summary = "获取下一步节点列表")
     @GetMapping(value = "/getNextNodes")
-    public ResResult<List<LabelValue>> getNextNodes(String defId, String nodeId){
-        return Res.ok(bpmModelNodeService.getNextNodes(defId,nodeId));
+    public ResResult<List<LabelValue>> getNextNodes(String defId, String nodeId) {
+        return Res.ok(bpmModelNodeService.getNextNodes(defId, nodeId));
     }
 
-    @Operation( summary = "根据模型Id查询所有")
+    @Operation(summary = "根据模型Id查询所有")
     @GetMapping(value = "/findAllByModelId")
-    public ResResult<List<BpmModelNodeDto>> findAllByModelId(@NotNull(message = "模型ID不能为空") Long modelId){
+    public ResResult<List<BpmModelNodeDto>> findAllByModelId(@NotNull(message = "模型ID不能为空") Long modelId) {
         return Res.ok(bpmModelNodeService.findAllByModelId(modelId));
     }
 
     @Operation(summary = "同步")
     @PostMapping("/sync")
-    public ResResult<Void> sync(Long modelId){
+    public ResResult<Void> sync(Long modelId) {
         bpmModelNodeService.sync(modelId);
         return Res.ok();
     }
+
 }

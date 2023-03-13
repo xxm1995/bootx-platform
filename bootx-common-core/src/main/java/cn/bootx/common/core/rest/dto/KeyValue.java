@@ -7,10 +7,11 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* kv键值对象
-* @author xxm
-* @date 2021/5/18
-*/
+ * kv键值对象
+ *
+ * @author xxm
+ * @date 2021/5/18
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,6 +20,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 @Schema(title = "kv键值对象")
 public class KeyValue implements Serializable {
+
     private static final long serialVersionUID = 3427649251589010105L;
 
     @Schema(description = "键")

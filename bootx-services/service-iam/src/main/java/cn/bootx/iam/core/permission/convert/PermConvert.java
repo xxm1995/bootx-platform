@@ -12,12 +12,14 @@ import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
-* 权限转换
-* @author xxm
-* @date 2021/8/3
-*/
+ * 权限转换
+ *
+ * @author xxm
+ * @date 2021/8/3
+ */
 @Mapper
 public interface PermConvert {
+
     PermConvert CONVERT = Mappers.getMapper(PermConvert.class);
 
     PermPathDto convert(PermPath in);

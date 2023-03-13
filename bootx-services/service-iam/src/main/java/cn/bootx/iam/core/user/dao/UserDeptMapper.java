@@ -7,12 +7,15 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**   
-* 用户部门关系
-* @author xxm  
-* @date 2021/9/29 
-*/
+/**
+ * 用户部门关系
+ *
+ * @author xxm
+ * @date 2021/9/29
+ */
 @Mapper
 public interface UserDeptMapper extends BaseMapper<UserDept> {
+
     void saveAll(@Param("userDepots") List<UserDept> userDepots);
+
 }

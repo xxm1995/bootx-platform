@@ -5,21 +5,23 @@ import cn.bootx.starter.dingtalk.param.notice.msg.MarkdownMsg;
 import cn.bootx.starter.dingtalk.param.notice.msg.TextMsg;
 
 /**
-* 钉钉机器人消息通知
-* @author xxm  
-* @date 2022/7/16 
-*/
+ * 钉钉机器人消息通知
+ *
+ * @author xxm
+ * @date 2022/7/16
+ */
 public interface DingRobotNoticeSender {
 
     /**
      * 简单文本消息发送
      */
-    void sendSimpleText(String code,String msg);
+    void sendSimpleText(String code, String msg);
 
     /**
      * 文本消息发送
      */
     void sendText(String code, TextMsg dingTalkTextNotice);
+
     /**
      * 发送链接消息
      */
@@ -29,4 +31,5 @@ public interface DingRobotNoticeSender {
      * 发送Markdown消息
      */
     void sendMarkdown(String code, MarkdownMsg notice);
+
 }

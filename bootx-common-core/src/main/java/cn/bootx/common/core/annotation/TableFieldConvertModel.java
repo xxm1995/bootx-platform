@@ -10,7 +10,8 @@ import java.lang.annotation.Target;
  * @author xxm
  * @date 2022/12/15
  */
-@Target({ElementType.METHOD,ElementType.TYPE,ElementType.FIELD})
+@Target({ ElementType.METHOD, ElementType.TYPE, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TableFieldConvertModel {
+
 }

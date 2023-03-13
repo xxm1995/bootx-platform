@@ -5,10 +5,11 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
-* 钉钉应用配置
-* @author xxm  
-* @date 2022/7/15 
-*/
+ * 钉钉应用配置
+ *
+ * @author xxm
+ * @date 2022/7/15
+ */
 @Getter
 @Setter
 @ConfigurationProperties("bootx.starter.third.ding-talk")

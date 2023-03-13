@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-/**   
-* LabelValue
-* @author xxm  
-* @date 2022/5/4 
-*/
+/**
+ * LabelValue
+ *
+ * @author xxm
+ * @date 2022/5/4
+ */
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,6 +32,7 @@ public class LabelValue {
 
     public LabelValue(String label, String value) {
         this.label = label;
-        this.value =value;
+        this.value = value;
     }
+
 }

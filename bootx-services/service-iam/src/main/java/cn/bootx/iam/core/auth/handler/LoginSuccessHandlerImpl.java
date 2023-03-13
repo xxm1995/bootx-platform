@@ -16,32 +16,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
-/**   
-* 登录成功处理
-* @author xxm  
-* @date 2021/8/13 
-*/
+/**
+ * 登录成功处理
+ *
+ * @author xxm
+ * @date 2021/8/13
+ */
 @Component
 @RequiredArgsConstructor
 public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
+
     private final LoginLogService loginLogService;
+
     private final UserExpandInfoService userExpandInfoService;
 
     @Override
-    public void onLoginSuccess(HttpServletRequest request, HttpServletResponse response, AuthInfoResult authInfoResult) {
+    public void onLoginSuccess(HttpServletRequest request, HttpServletResponse response,
+            AuthInfoResult authInfoResult) {
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader(WebHeaderCode.USER_AGENT));
         String ip = ServletUtil.getClientIP(request);
-        LoginLogParam loginLog = new LoginLogParam()
-                .setLogin(true)
-                .setUserId(authInfoResult.getUserDetail().getId())
-                .setClient(authInfoResult.getClient())
-                .setLoginType(authInfoResult.getLoginType())
-                .setAccount(authInfoResult.getUserDetail().getUsername())
-                .setIp(ip)
-                .setOs(userAgent.getOs().getName())
-                .setBrowser(userAgent.getBrowser().getName()+" "+userAgent.getVersion())
+        LoginLogParam loginLog = new LoginLogParam().setLogin(true).setUserId(authInfoResult.getUserDetail().getId())
+                .setClient(authInfoResult.getClient()).setLoginType(authInfoResult.getLoginType())
+                .setAccount(authInfoResult.getUserDetail().getUsername()).setIp(ip).setOs(userAgent.getOs().getName())
+                .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
                 .setLoginTime(LocalDateTime.now());
         loginLogService.add(loginLog);
         userExpandInfoService.updateLoginTime(loginLog.getUserId());
     }
+
 }

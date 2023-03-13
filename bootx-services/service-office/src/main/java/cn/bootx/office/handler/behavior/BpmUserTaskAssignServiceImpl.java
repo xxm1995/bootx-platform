@@ -35,28 +35,28 @@ import static cn.bootx.starter.flowable.code.TaskCode.STATE_REJECT;
 
 /**
  * 处理普通任务人员分配
+ *
  * @author xxm
- * @date 2022/9/4 
+ * @date 2022/9/4
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
+
     private final BpmModelNodeManager bpmModelNodeManager;
+
     private final BpmInstanceManager bpmInstanceManager;
+
     private final BpmTaskManager bpmTaskManager;
+
     private final UserRoleManager userRoleManager;
 
     @Override
-    public void handleAssignments(TaskService taskService,
-                                  String assignee,
-                                  String owner, List<String> candidateUsers,
-                                  List<String> candidateGroups,
-                                  TaskEntity task,
-                                  ExpressionManager expressionManager,
-                                  DelegateExecution execution,
-                                  ProcessEngineConfigurationImpl processEngineConfiguration,
-                                  UserTaskActivityBehavior userTaskActivityBehavior) {
+    public void handleAssignments(TaskService taskService, String assignee, String owner, List<String> candidateUsers,
+            List<String> candidateGroups, TaskEntity task, ExpressionManager expressionManager,
+            DelegateExecution execution, ProcessEngineConfigurationImpl processEngineConfiguration,
+            UserTaskActivityBehavior userTaskActivityBehavior) {
         Long userId = null;
         BpmContext bpmContext = BpmContextLocal.get();
 
@@ -64,8 +64,8 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
         val multiInstanceActivityBehavior = userTaskActivityBehavior.getMultiInstanceActivityBehavior();
         if (Objects.nonNull(userTaskActivityBehavior.getMultiInstanceActivityBehavior())) {
             Object multiId = execution.getVariable(MULTI_TASK_ID);
-            if (Objects.nonNull(multiId)){
-                bpmContext.setTaskMultiId((Long)multiId);
+            if (Objects.nonNull(multiId)) {
+                bpmContext.setTaskMultiId((Long) multiId);
             }
 
             val userIdStr = execution.getVariable(multiInstanceActivityBehavior.getCollectionElementVariable());
@@ -74,37 +74,38 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
         }
 
         // 情况二，驳回/退回处理
-        if (Objects.equals(bpmContext.getTaskState(),STATE_REJECT)){
+        if (Objects.equals(bpmContext.getTaskState(), STATE_REJECT)) {
             Long rejectUserId = this.getRejectOrBackUserId(task);
             TaskHelper.changeTaskAssignee(task, String.valueOf(rejectUserId));
             return;
         }
 
         // 情况三，如果非多实例的任务，则获取节点配置并设置处理人
-        BpmModelNode modelTask = bpmModelNodeManager.findByDefIdAndNodeId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
+        BpmModelNode modelTask = bpmModelNodeManager
+                .findByDefIdAndNodeId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
                 .orElseThrow(ModelNodeNotExistException::new);
         // 发起人
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_SPONSOR)){
+        if (Objects.equals(modelTask.getAssignType(), ASSIGN_SPONSOR)) {
             userId = this.getStartUserId(execution.getProcessInstanceId());
         }
         // 用户手动选择
-        if (Objects.equals(modelTask.getAssignType(), ASSIGN_SELECT)){
+        if (Objects.equals(modelTask.getAssignType(), ASSIGN_SELECT)) {
             userId = Long.valueOf(bpmContext.getNextAssign().toString());
         }
 
         // 指定用户
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_USER)){
-            userId =  Long.valueOf(modelTask.getAssignRaw().toString());
+        if (Objects.equals(modelTask.getAssignType(), ASSIGN_USER)) {
+            userId = Long.valueOf(modelTask.getAssignRaw().toString());
         }
 
         // 指定角色 角色有多个, 只会从里面抽一个人
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_ROLE)){
+        if (Objects.equals(modelTask.getAssignType(), ASSIGN_ROLE)) {
             Long roleId = Long.valueOf(modelTask.getAssignRaw().toString());
             userId = this.getUserIdByRole(roleId);
         }
-        // 部门负责人  负责人有多个, 只会从里面抽一个人
-        if (Objects.equals(modelTask.getAssignType(),ASSIGN_DEPT_LEADER)){
-            Long deptId =  Long.valueOf(modelTask.getAssignRaw().toString());
+        // 部门负责人 负责人有多个, 只会从里面抽一个人
+        if (Objects.equals(modelTask.getAssignType(), ASSIGN_DEPT_LEADER)) {
+            Long deptId = Long.valueOf(modelTask.getAssignRaw().toString());
 
         }
         TaskHelper.changeTaskAssignee(task, String.valueOf(userId));
@@ -115,27 +116,25 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
      */
     private Long getRejectOrBackUserId(TaskEntity task) {
         // 查询当前环节的历史任务
-        List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(), task.getTaskDefinitionKey());
-        //noinspection OptionalGetWithoutIsPresent
-        return tasks.stream()
-                .filter(o -> Objects.nonNull(o.getEndTime()))
-                .max(Comparator.comparingLong(MpIdEntity::getId))
-                .map(BpmTask::getUserId)
-                .get();
+        List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(),
+                task.getTaskDefinitionKey());
+        // noinspection OptionalGetWithoutIsPresent
+        return tasks.stream().filter(o -> Objects.nonNull(o.getEndTime()))
+                .max(Comparator.comparingLong(MpIdEntity::getId)).map(BpmTask::getUserId).get();
     }
 
     /**
      * 获取发起人id
      */
     private Long getStartUserId(String processInstanceId) {
-        return bpmInstanceManager.findByInstanceId(processInstanceId).map(BpmInstance::getStartUserId)
-                .orElse(null);
+        return bpmInstanceManager.findByInstanceId(processInstanceId).map(BpmInstance::getStartUserId).orElse(null);
     }
 
     /**
      * 根据角色获取人员id集合
      */
-    private Long getUserIdByRole(Long roleId){
+    private Long getUserIdByRole(Long roleId) {
         return userRoleManager.findAllByRole(roleId).stream().map(UserRole::getUserId).findAny().orElse(null);
     }
+
 }

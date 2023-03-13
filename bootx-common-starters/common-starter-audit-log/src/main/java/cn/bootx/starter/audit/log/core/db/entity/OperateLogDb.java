@@ -11,11 +11,12 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-/**   
-* 操作日志
-* @author xxm  
-* @date 2021/8/12 
-*/
+/**
+ * 操作日志
+ *
+ * @author xxm
+ * @date 2021/8/12
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -68,4 +69,5 @@ public class OperateLogDb extends MpIdEntity implements EntityBaseFunction<Opera
     public OperateLogDto toDto() {
         return LogConvert.CONVERT.convert(this);
     }
+
 }

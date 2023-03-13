@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import lombok.RequiredArgsConstructor;
 
 /**
-* 雪花id生成器
-* @author xxm
-* @date 2021/8/18
-*/
+ * 雪花id生成器
+ *
+ * @author xxm
+ * @date 2021/8/18
+ */
 @RequiredArgsConstructor
 public class SnowflakeIdentifierGenerator implements IdentifierGenerator {
 
@@ -16,4 +17,5 @@ public class SnowflakeIdentifierGenerator implements IdentifierGenerator {
     public Number nextId(Object entity) {
         return IdUtil.getSnowflake().nextId();
     }
+
 }

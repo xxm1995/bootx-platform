@@ -7,14 +7,16 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-/**   
-* 密码编码器
-* @author xxm  
-* @date 2021/7/30 
-*/
+/**
+ * 密码编码器
+ *
+ * @author xxm
+ * @date 2021/7/30
+ */
 @Component
 @RequiredArgsConstructor
 public class PasswordEncoder {
+
     private final AuthProperties authProperties;
 
     /**
@@ -23,24 +25,23 @@ public class PasswordEncoder {
      * @return 加密后的密码
      */
     public String encode(String rawPassword) {
-        return SaSecureUtil.md5BySalt(rawPassword,authProperties.getSalt());
+        return SaSecureUtil.md5BySalt(rawPassword, authProperties.getSalt());
     }
 
     /**
-     * 验证从存储中获取的编码密码是否与提交的原始密码匹配后也被编码。 如果密码匹配，则返回 true，否则返回 false。 存储的密码本身永远不会被解码。
-     * 参数：
+     * 验证从存储中获取的编码密码是否与提交的原始密码匹配后也被编码。 如果密码匹配，则返回 true，否则返回 false。 存储的密码本身永远不会被解码。 参数：
      * @param rawPassword – 编码和匹配的原始密码
      * @param encodedPassword —来自存储的编码密码，用于比较
      * @return 如果原始密码在编码后与存储中的编码密码匹配，则为 true
      */
     public boolean matches(String rawPassword, String encodedPassword) {
-        return Objects.equals(encodedPassword,encode(rawPassword));
+        return Objects.equals(encodedPassword, encode(rawPassword));
     }
 
     /**
      * 获取默认密码
      */
-    public String defaultPassword(){
+    public String defaultPassword() {
         return SaSecureUtil.md5BySalt(authProperties.getDefaultPassword(), authProperties.getSalt());
     }
 

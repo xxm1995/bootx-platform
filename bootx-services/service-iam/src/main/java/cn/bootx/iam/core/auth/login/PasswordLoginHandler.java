@@ -26,10 +26,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**
-* 账号密码登陆方式实现
-* @author xxm
-* @date 2021/8/2
-*/
+ * 账号密码登陆方式实现
+ *
+ * @author xxm
+ * @date 2021/8/2
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -37,34 +38,40 @@ import java.util.Objects;
 public class PasswordLoginHandler implements UsernamePasswordAuthentication {
 
     private final String USERNAME_PARAMETER = "account";
+
     private final String PASSWORD_PARAMETER = "password";
+
     // 前端传入的验证码
     private final String CAPTCHA_PARAMETER = "captcha";
+
     // 前端传入的验证码的key
     private final String CAPTCHA_KEY_PARAMETER = "captchaKey";
 
     private final PasswordEncoder passwordEncoder;
+
     private final UserAdminService userAdminService;
+
     private final UserQueryService userQueryService;
+
     private final CaptchaService captchaService;
 
     /**
      * 认证前置操作, 默认处理验证码
      */
     @Override
-    public void authenticationBefore(LoginAuthContext context){
+    public void authenticationBefore(LoginAuthContext context) {
         AuthLoginType authLoginType = context.getAuthLoginType();
         HttpServletRequest request = context.getRequest();
         // 开启验证码验证
-        if (authLoginType.isCaptcha()){
+        if (authLoginType.isCaptcha()) {
             String captcha = this.obtainCaptcha(request);
             String captchaKey = this.obtainCaptchaKey(request);
-            if (StrUtil.isBlank(captcha)){
+            if (StrUtil.isBlank(captcha)) {
                 throw new BizException("验证码为空");
             }
-            if (!captchaService.validateImgCaptcha(captchaKey,captcha)){
+            if (!captchaService.validateImgCaptcha(captchaKey, captcha)) {
                 String username = this.obtainUsername(request);
-                throw new LoginFailureException(username,"验证码不正确");
+                throw new LoginFailureException(username, "验证码不正确");
             }
         }
     }
@@ -79,8 +86,8 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         UserDetail userDetail = this.loadUserByUsername(username);
         String saltPassword = passwordEncoder.encode(password);
         // 比对密码未通过
-        if (!Objects.equals(saltPassword,userDetail.getPassword())){
-            this.passwordError(userDetail,context);
+        if (!Objects.equals(saltPassword, userDetail.getPassword())) {
+            this.passwordError(userDetail, context);
         }
         // 管理员跳过各种校验
         if (!userDetail.isAdmin()) {
@@ -92,16 +99,14 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
                 throw new LoginFailureException(username, "账号不是正常状态,无法登陆");
             }
         }
-        return new AuthInfoResult()
-                .setId(userDetail.getId())
-                .setUserDetail(userDetail);
+        return new AuthInfoResult().setId(userDetail.getId()).setUserDetail(userDetail);
     }
 
     /**
      * 认证后操作
      */
     @Override
-    public void authenticationAfter(AuthInfoResult authInfoResult,LoginAuthContext context){
+    public void authenticationAfter(AuthInfoResult authInfoResult, LoginAuthContext context) {
         String captchaKey = this.obtainCaptchaKey(context.getRequest());
         captchaService.deleteImgCaptcha(captchaKey);
     }
@@ -115,14 +120,16 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         if (RegexUtil.isEmailPattern(username)) {
             // 根据 Email 获取用户信息
             userInfoDto = userQueryService.findByEmail(username);
-        } else if (RegexUtil.isPhonePattern(username)) {
+        }
+        else if (RegexUtil.isPhonePattern(username)) {
             // 根据 手机号 获取用户信息
             userInfoDto = userQueryService.findByPhone(username);
-        } else {
+        }
+        else {
             // 根据 账号 获取账户信息
             userInfoDto = userQueryService.findByAccount(username);
         }
-        if (Objects.isNull(userInfoDto)){
+        if (Objects.isNull(userInfoDto)) {
             throw new UserNotFoundException(username);
         }
         return userInfoDto.toUserDetail();
@@ -131,16 +138,16 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     /**
      * 密码输入错误处理
      */
-    public void passwordError(UserDetail userDetail, LoginAuthContext context){
+    public void passwordError(UserDetail userDetail, LoginAuthContext context) {
         AuthLoginType authLoginType = context.getAuthLoginType();
         int errCount = 0;
         // 密码错误限制
-        if (authLoginType.getPwdErrNum() > -1){
+        if (authLoginType.getPwdErrNum() > -1) {
 
         }
-//        String errMsg = StrUtil.format("密码不正确, 还有{}次机会",errCount);
+        // String errMsg = StrUtil.format("密码不正确, 还有{}次机会",errCount);
         String errMsg = StrUtil.format("密码不正确");
-        throw new LoginFailureException(userDetail.getUsername(),errMsg);
+        throw new LoginFailureException(userDetail.getUsername(), errMsg);
     }
 
     @Nullable
@@ -157,8 +164,10 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     protected String obtainCaptcha(HttpServletRequest request) {
         return request.getParameter(this.CAPTCHA_PARAMETER);
     }
+
     @Nullable
     protected String obtainCaptchaKey(HttpServletRequest request) {
         return request.getParameter(this.CAPTCHA_KEY_PARAMETER);
     }
+
 }

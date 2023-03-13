@@ -16,6 +16,7 @@ import java.util.Optional;
 
 /**
  * 用户信息查询服务
+ *
  * @author xxm
  * @date 2022/6/19
  */
@@ -23,7 +24,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserQueryService implements UserDetailService {
+
     private final UserInfoManager userInfoManager;
+
     private final UserAssistService userAssistService;
 
     /**
@@ -39,8 +42,8 @@ public class UserQueryService implements UserDetailService {
     /**
      * 账号是否存在
      */
-    public boolean existsUsername(String username,Long id) {
-        return userInfoManager.existsByUsername(username.trim(),id);
+    public boolean existsUsername(String username, Long id) {
+        return userInfoManager.existsByUsername(username.trim(), id);
     }
 
     /**
@@ -56,8 +59,8 @@ public class UserQueryService implements UserDetailService {
     /**
      * 邮箱是否存在
      */
-    public boolean existsEmail(String email,Long id) {
-        return userInfoManager.existsByEmail(email.trim(),id);
+    public boolean existsEmail(String email, Long id) {
+        return userInfoManager.existsByEmail(email.trim(), id);
     }
 
     /**
@@ -73,15 +76,14 @@ public class UserQueryService implements UserDetailService {
     /**
      * 手机是否存在
      */
-    public boolean existsPhone(String phone,Long id) {
-        return userInfoManager.existsByPhone(phone.trim(),id);
+    public boolean existsPhone(String phone, Long id) {
+        return userInfoManager.existsByPhone(phone.trim(), id);
     }
-
 
     /**
      * 根据用户id 获取 UserInfo
      */
-    public UserInfoDto findById(Long id){
+    public UserInfoDto findById(Long id) {
         return userInfoManager.findById(id).map(UserInfo::toDto).orElseThrow(UserNotFoundException::new);
     }
 
@@ -91,6 +93,7 @@ public class UserQueryService implements UserDetailService {
     public UserInfoDto findByAccount(String account) {
         return userInfoManager.findByUsername(account).map(UserInfo::toDto).orElseThrow(UserNotFoundException::new);
     }
+
     /**
      * 根据邮箱查询用户
      */
@@ -108,8 +111,8 @@ public class UserQueryService implements UserDetailService {
     /**
      * 根据手机验证码查询账号
      */
-    public String findUsernameByPhoneCaptcha(String phone,String captcha) {
-        if (!userAssistService.validatePhoneForgetCaptcha(phone,captcha)){
+    public String findUsernameByPhoneCaptcha(String phone, String captcha) {
+        if (!userAssistService.validatePhoneForgetCaptcha(phone, captcha)) {
             throw new BizException("验证码错误");
         }
         return userInfoManager.findByPhone(phone).map(UserInfo::getUsername).orElseThrow(UserNotFoundException::new);
@@ -119,4 +122,5 @@ public class UserQueryService implements UserDetailService {
     public Optional<UserDetail> findByUserId(Long userId) {
         return userInfoManager.findById(userId).map(UserInfo::toUserDetail);
     }
+
 }

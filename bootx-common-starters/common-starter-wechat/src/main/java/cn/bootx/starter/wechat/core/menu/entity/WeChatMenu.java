@@ -15,15 +15,16 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 微信自定义菜单
-* @author xxm
-* @date 2022-08-08
-*/
+ * 微信自定义菜单
+ *
+ * @author xxm
+ * @date 2022-08-08
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@TableName(value = "starter_wx_menu",autoResultMap = true)
-public class WeChatMenu extends MpBaseEntity implements EntityBaseFunction<WeChatMenuDto>{
+@TableName(value = "starter_wx_menu", autoResultMap = true)
+public class WeChatMenu extends MpBaseEntity implements EntityBaseFunction<WeChatMenuDto> {
 
     /** 名称 */
     private String name;
@@ -41,7 +42,7 @@ public class WeChatMenu extends MpBaseEntity implements EntityBaseFunction<WeCha
 
     /** 创建对象 */
     public static WeChatMenu init(WeChatMenuParam in) {
-            return WeChatMenuConvert.CONVERT.convert(in);
+        return WeChatMenuConvert.CONVERT.convert(in);
     }
 
     /** 转换成dto */

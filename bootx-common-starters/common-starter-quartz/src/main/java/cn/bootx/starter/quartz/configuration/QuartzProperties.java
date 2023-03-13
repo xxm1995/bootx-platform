@@ -15,10 +15,11 @@ import java.util.HashMap;
 import static org.quartz.impl.jdbcjobstore.Constants.DEFAULT_TABLE_PREFIX;
 
 /**
-* 支持配置文件自动提示
-* @author xxm
-* @date 2021/12/2
-*/
+ * 支持配置文件自动提示
+ *
+ * @author xxm
+ * @date 2021/12/2
+ */
 @Getter
 @Setter
 @ConfigurationProperties("spring.quartz.properties.org.quartz")
@@ -33,15 +34,16 @@ public class QuartzProperties {
     /** 线程池 */
     private ThreadPool threadPool;
 
-
     @Setter
     @Getter
-    static class Scheduler{
+    static class Scheduler {
 
     }
+
     @Setter
     @Getter
-    static class JobStore{
+    static class JobStore {
+
         protected String dsName;
 
         protected String tablePrefix = DEFAULT_TABLE_PREFIX;
@@ -93,19 +95,23 @@ public class QuartzProperties {
         private boolean makeThreadsDaemons = false;
 
         private boolean threadsInheritInitializersClassLoadContext = false;
+
         private ClassLoader initializersLoader = null;
 
         private boolean doubleCheckLockMisfireHandler = true;
+
     }
 
     @Setter
     @Getter
-    static class ThreadPool{
+    static class ThreadPool {
+
         private int count = -1;
 
         private int prio = Thread.NORM_PRIORITY;
 
         private boolean isShutdown = false;
+
         private boolean handoffPending = false;
 
         private boolean inheritLoader = false;
@@ -115,8 +121,7 @@ public class QuartzProperties {
         private boolean makeThreadsDaemons = false;
 
         private boolean threadsInheritContextClassLoaderOfInitializingThread = false;
+
     }
-
-
 
 }

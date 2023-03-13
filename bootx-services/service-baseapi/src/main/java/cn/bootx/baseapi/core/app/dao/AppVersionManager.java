@@ -12,11 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**   
-* app版本管理
-* @author xxm  
-* @date 2021/8/9 
-*/
+/**
+ * app版本管理
+ *
+ * @author xxm
+ * @date 2021/8/9
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -24,14 +25,11 @@ public class AppVersionManager extends BaseManager<AppVersionMapper, AppVersion>
 
     public Page<AppVersion> page(PageParam pageParam) {
         Page<AppVersion> mpPage = MpUtil.getMpPage(pageParam, AppVersion.class);
-        return lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
-    public Optional<AppVersion> findLatest(){
-        return MpUtil.findOne(
-                lambdaQuery().orderByDesc(AppVersion::getAppVersion)
-        );
+    public Optional<AppVersion> findLatest() {
+        return MpUtil.findOne(lambdaQuery().orderByDesc(AppVersion::getAppVersion));
     }
+
 }

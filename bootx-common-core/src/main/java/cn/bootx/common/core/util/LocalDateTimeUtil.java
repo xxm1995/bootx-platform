@@ -9,6 +9,7 @@ import java.time.ZoneId;
 
 /**
  * java8 时间工具类
+ *
  * @author xxm
  * @date 2020/11/10
  */
@@ -19,7 +20,7 @@ public class LocalDateTimeUtil extends cn.hutool.core.date.LocalDateTimeUtil {
      * 是否在指定的时间范围内
      */
     public boolean between(LocalDateTime now, LocalDateTime start, LocalDateTime end) {
-        return ge(now,start)&&le(now,end);
+        return ge(now, start) && le(now, end);
     }
 
     /**
@@ -61,8 +62,8 @@ public class LocalDateTimeUtil extends cn.hutool.core.date.LocalDateTimeUtil {
     /**
      * 将localDate转换成localDateTime
      */
-    public LocalDateTime date2DateTime(LocalDate localDate){
-        return localDate.atTime(0,0);
+    public LocalDateTime date2DateTime(LocalDate localDate) {
+        return localDate.atTime(0, 0);
 
     }
 
@@ -76,6 +77,7 @@ public class LocalDateTimeUtil extends cn.hutool.core.date.LocalDateTimeUtil {
         ZoneId zone = ZoneId.systemDefault();
         return LocalDateTime.ofInstant(instant, zone);
     }
+
     /**
      * LocalDateTime转为long类型的timestamp
      * @param localDateTime 日期时间
@@ -86,5 +88,5 @@ public class LocalDateTimeUtil extends cn.hutool.core.date.LocalDateTimeUtil {
         Instant instant = localDateTime.atZone(zone).toInstant();
         return instant.toEpochMilli();
     }
-}
 
+}

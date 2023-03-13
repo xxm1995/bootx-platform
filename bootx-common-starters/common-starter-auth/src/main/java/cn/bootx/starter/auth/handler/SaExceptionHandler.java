@@ -10,12 +10,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/**   
-* 过滤SaTokenException,需要运行在 RestExceptionHandler 之前
-* @author xxm  
-* @date 2021/8/5 
-*/
-@Order(Ordered.LOWEST_PRECEDENCE-1)
+/**
+ * 过滤SaTokenException,需要运行在 RestExceptionHandler 之前
+ *
+ * @author xxm
+ * @date 2021/8/5
+ */
+@Order(Ordered.LOWEST_PRECEDENCE - 1)
 @Slf4j
 @RestControllerAdvice
 public class SaExceptionHandler {
@@ -26,7 +27,7 @@ public class SaExceptionHandler {
     @ExceptionHandler(SaTokenException.class)
     public ResResult<Void> handleBusinessException(SaTokenException ex) {
         log.info(ex.getMessage(), ex);
-        return Res.response(CommonCode.FAIL_CODE,ex.getMessage());
+        return Res.response(CommonCode.FAIL_CODE, ex.getMessage());
     }
 
 }

@@ -3,11 +3,12 @@ package cn.bootx.iam.core.permission.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
-* 请求权限
-* @author xxm  
-* @date 2021/12/19 
-*/
+/**
+ * 请求权限
+ *
+ * @author xxm
+ * @date 2021/12/19
+ */
 @Data
 @Accessors(chain = true)
 public class RequestPath {

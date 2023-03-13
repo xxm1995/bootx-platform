@@ -34,24 +34,27 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class DictionaryItemService {
+
     private final DictionaryItemManager dictionaryItemManager;
+
     private final DictionaryManager dictionaryManager;
 
     /**
      * 添加内容
      */
     @Transactional(rollbackFor = Exception.class)
-    public DictionaryItemDto add(DictionaryItemParam param){
+    public DictionaryItemDto add(DictionaryItemParam param) {
 
         // 在同一个Dictionary不允许存在相同code的DictionaryItem
         if (dictionaryItemManager.existsByCode(param.getCode(), param.getDictId())) {
             throw new DictItemAlreadyExistedException();
         }
 
-        Dictionary dictionary = dictionaryManager.findById(param.getDictId()).orElseThrow(() -> new BizException("字典不存在"));
+        Dictionary dictionary = dictionaryManager.findById(param.getDictId())
+                .orElseThrow(() -> new BizException("字典不存在"));
         param.setDictCode(dictionary.getCode());
         DictionaryItem dictionaryItem = DictionaryItem.init(param);
-        dictionaryItem =dictionaryItemManager.save(dictionaryItem);
+        dictionaryItem = dictionaryItemManager.save(dictionaryItem);
         return dictionaryItem.toDto();
     }
 
@@ -66,10 +69,10 @@ public class DictionaryItemService {
                 .orElseThrow(DictItemNotExistedException::new);
 
         // 判断是否有重复code的Item
-        if (dictionaryItemManager.existsByCode(dictionaryItem.getDictCode(),param.getDictId(),param.getId())) {
+        if (dictionaryItemManager.existsByCode(dictionaryItem.getDictCode(), param.getDictId(), param.getId())) {
             throw new DictItemAlreadyExistedException();
         }
-        BeanUtil.copyProperties(param,dictionaryItem, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, dictionaryItem, CopyOptions.create().ignoreNullValue());
         return dictionaryItemManager.updateById(dictionaryItem).toDto();
     }
 
@@ -90,18 +93,16 @@ public class DictionaryItemService {
     /**
      * 根据字典编码和字典项编码查询启用的菜单项
      */
-    public Optional<DictionaryItem> findEnableByCode(String dictCode, String code){
-        return dictionaryItemManager.findByCodeAndEnable(dictCode,code,true);
+    public Optional<DictionaryItem> findEnableByCode(String dictCode, String code) {
+        return dictionaryItemManager.findByCodeAndEnable(dictCode, code, true);
     }
 
     /**
      * 查询指定目录下的所有内容
      */
     public List<DictionaryItemDto> findByDictionaryId(Long dictionaryId) {
-        return dictionaryItemManager.findByDictId(dictionaryId)
-                .stream()
-                .sorted(Comparator.comparingDouble(DictionaryItem::getSortNo))
-                .map(DictionaryItem::toDto)
+        return dictionaryItemManager.findByDictId(dictionaryId).stream()
+                .sorted(Comparator.comparingDouble(DictionaryItem::getSortNo)).map(DictionaryItem::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -109,9 +110,7 @@ public class DictionaryItemService {
      * 查询指定目录下的所有内容
      */
     public List<DictionaryItemDto> findEnableByDictCode(String dictCode) {
-        return dictionaryItemManager.findByDictCodeAndEnable(dictCode,true)
-                .stream()
-                .map(DictionaryItem::toDto)
+        return dictionaryItemManager.findByDictCodeAndEnable(dictCode, true).stream().map(DictionaryItem::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -126,48 +125,42 @@ public class DictionaryItemService {
     /**
      * 判断编码是否存在
      */
-    public boolean existsByCode(String code, Long dictId){
-        return dictionaryItemManager.existsByCode(code,dictId);
+    public boolean existsByCode(String code, Long dictId) {
+        return dictionaryItemManager.existsByCode(code, dictId);
     }
 
     /**
      * 判断编码是否存在
      */
-    public boolean existsByCode(String code,Long dictId,Long id){
-        return dictionaryItemManager.existsByCode(code,dictId,id);
+    public boolean existsByCode(String code, Long dictId, Long id) {
+        return dictionaryItemManager.existsByCode(code, dictId, id);
     }
 
     /**
      * 获取全部字典项
      */
-    public List<DictionaryItemSimpleDto> findAll(){
+    public List<DictionaryItemSimpleDto> findAll() {
         return dictionaryItemManager.findAll().stream()
-                .sorted(Comparator.comparing(DictionaryItem::getDictId)
-                        .thenComparing(DictionaryItem::getSortNo)
-                        .thenComparing(MpIdEntity::getId)
-                )
-                .map(DictionaryItem::toSimpleDto)
-                .collect(Collectors.toList());
+                .sorted(Comparator.comparing(DictionaryItem::getDictId).thenComparing(DictionaryItem::getSortNo)
+                        .thenComparing(MpIdEntity::getId))
+                .map(DictionaryItem::toSimpleDto).collect(Collectors.toList());
     }
+
     /**
      * 获取启用的字典项列表
      */
-    public List<DictionaryItemSimpleDto> findAllByEnable(){
+    public List<DictionaryItemSimpleDto> findAllByEnable() {
 
         // 获取被停用的字典
-        List<Long> unEnableDictIds = dictionaryManager.findAllByEnable(false).stream()
-                .map(MpIdEntity::getId)
+        List<Long> unEnableDictIds = dictionaryManager.findAllByEnable(false).stream().map(MpIdEntity::getId)
                 .collect(Collectors.toList());
 
         // 过滤掉被停用的字典项
         return dictionaryItemManager.findAllByEnable(true).stream()
-                .filter(o->!unEnableDictIds.contains(o.getDictId()))
-                .sorted(Comparator.comparing(DictionaryItem::getDictId)
-                        .thenComparing(DictionaryItem::getSortNo)
-                        .thenComparing(MpIdEntity::getId)
-                )
-                .map(DictionaryItem::toSimpleDto)
-                .collect(Collectors.toList());
+                .filter(o -> !unEnableDictIds.contains(o.getDictId()))
+                .sorted(Comparator.comparing(DictionaryItem::getDictId).thenComparing(DictionaryItem::getSortNo)
+                        .thenComparing(MpIdEntity::getId))
+                .map(DictionaryItem::toSimpleDto).collect(Collectors.toList());
     }
 
 }

@@ -22,21 +22,23 @@ import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
-* 系统信息
-* @author xxm
-* @date 2022/6/10
-*/
+ * 系统信息
+ *
+ * @author xxm
+ * @date 2022/6/10
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SystemMonitorService {
+
     private final ThreadPoolTaskExecutor springRawExecutor;
 
     /**
      * 获取系统监控信息
      */
-    public SystemMonitorResult getSystemInfo(){
-        //系统属性结果集
+    public SystemMonitorResult getSystemInfo() {
+        // 系统属性结果集
         SystemMonitorResult result = new SystemMonitorResult();
         result.setSysOsInfo(getSysOsInfo());
         result.setSysJavaInfo(getSysJavaInfo());
@@ -50,7 +52,7 @@ public class SystemMonitorService {
     /**
      * 系统信息
      */
-    private SysOsInfo getSysOsInfo(){
+    private SysOsInfo getSysOsInfo() {
         OsInfo osInfo = SystemUtil.getOsInfo();
         HostInfo hostInfo = SystemUtil.getHostInfo();
 
@@ -66,7 +68,7 @@ public class SystemMonitorService {
     /**
      * Java信息
      */
-    public SysJavaInfo getSysJavaInfo(){
+    public SysJavaInfo getSysJavaInfo() {
         JvmInfo jvmInfo = SystemUtil.getJvmInfo();
         JavaRuntimeInfo javaRuntimeInfo = SystemUtil.getJavaRuntimeInfo();
 
@@ -82,7 +84,7 @@ public class SystemMonitorService {
     /**
      * jvm内存信息
      */
-    private SysJvmMemInfo getSysJvmMemInfo(){
+    private SysJvmMemInfo getSysJvmMemInfo() {
         RuntimeInfo runtimeInfo = SystemUtil.getRuntimeInfo();
 
         SysJvmMemInfo sysJvmMemInfo = new SysJvmMemInfo();
@@ -90,7 +92,8 @@ public class SystemMonitorService {
         sysJvmMemInfo.setJvmUsableMemory(FileUtil.readableFileSize(runtimeInfo.getUsableMemory()));
         sysJvmMemInfo.setJvmTotalMemory(FileUtil.readableFileSize(runtimeInfo.getTotalMemory()));
         sysJvmMemInfo.setJvmFreeMemory(FileUtil.readableFileSize(runtimeInfo.getFreeMemory()));
-        BigDecimal usedMemory = NumberUtil.sub(new BigDecimal(runtimeInfo.getTotalMemory()), new BigDecimal(runtimeInfo.getFreeMemory()));
+        BigDecimal usedMemory = NumberUtil.sub(new BigDecimal(runtimeInfo.getTotalMemory()),
+                new BigDecimal(runtimeInfo.getFreeMemory()));
         sysJvmMemInfo.setJvmUsedMemory(FileUtil.readableFileSize(usedMemory.longValue()));
         BigDecimal rate = NumberUtil.div(usedMemory, runtimeInfo.getTotalMemory());
         String usedRate = new DecimalFormat("#.00").format(NumberUtil.mul(rate, 100)) + "%";
@@ -101,7 +104,7 @@ public class SystemMonitorService {
     /**
      * 获取硬件信息
      */
-    private HardwareInfo getHardwareInfo(){
+    private HardwareInfo getHardwareInfo() {
         // 内存
         GlobalMemory memory = OshiUtil.getMemory();
         HardwareInfo hardwareInfo = new HardwareInfo();
@@ -125,7 +128,7 @@ public class SystemMonitorService {
     /**
      * 获取磁盘信息
      */
-    private List<SysDiskInfo> getDiskInfos(){
+    private List<SysDiskInfo> getDiskInfos() {
         List<SysDiskInfo> list = new ArrayList<>();
         // 当前文件系统类
         FileSystemView fsv = FileSystemView.getFileSystemView();
@@ -137,10 +140,10 @@ public class SystemMonitorService {
             }
             SysDiskInfo sysDiskInfo = new SysDiskInfo();
             sysDiskInfo.setName(fsv.getSystemDisplayName(f));
-            sysDiskInfo.setTotalSpace( FileUtil.readableFileSize((f.getTotalSpace())));
-            sysDiskInfo.setFreeSpace( FileUtil.readableFileSize(f.getFreeSpace()));
+            sysDiskInfo.setTotalSpace(FileUtil.readableFileSize((f.getTotalSpace())));
+            sysDiskInfo.setFreeSpace(FileUtil.readableFileSize(f.getFreeSpace()));
             long used = f.getTotalSpace() - f.getFreeSpace();
-            sysDiskInfo.setUsedSpace( FileUtil.readableFileSize(used));
+            sysDiskInfo.setUsedSpace(FileUtil.readableFileSize(used));
             double restPpt = used * 100.0 / f.getTotalSpace();
             String usedRate = new DecimalFormat("#.00").format(restPpt) + "%";
             sysDiskInfo.setUsedRate(usedRate);
@@ -152,7 +155,7 @@ public class SystemMonitorService {
     /**
      * 获取线程池信息
      */
-    public ThreadPoolInfo getThreadPoolInfo(){
+    public ThreadPoolInfo getThreadPoolInfo() {
         ThreadPoolInfo threadPoolInfo = new ThreadPoolInfo();
 
         ThreadPoolExecutor threadPoolExecutor = springRawExecutor.getThreadPoolExecutor();
@@ -165,4 +168,5 @@ public class SystemMonitorService {
         threadPoolInfo.setCompletedTaskCount(springRawExecutor.getCorePoolSize());
         return threadPoolInfo;
     }
+
 }

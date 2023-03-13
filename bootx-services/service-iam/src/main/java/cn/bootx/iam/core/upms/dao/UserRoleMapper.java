@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 用户角色关系
+ *
  * @author xxm
  * @date 2021/8/3
  */
@@ -16,4 +17,5 @@ import java.util.List;
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
     void saveAll(@Param("userRoles") List<UserRole> userRoles);
+
 }

@@ -6,17 +6,20 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 验证码数据
-* @author xxm
-* @date 2021/8/2
-*/
+ * 验证码数据
+ *
+ * @author xxm
+ * @date 2021/8/2
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "验证码数据")
 public class CaptchaDataResult {
-    @Schema(description= "验证码标示")
+
+    @Schema(description = "验证码标示")
     private String captchaKey;
 
-    @Schema(description= "验证码base64数据")
+    @Schema(description = "验证码base64数据")
     private String captchaData;
+
 }

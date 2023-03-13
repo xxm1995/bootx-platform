@@ -10,16 +10,18 @@ import org.springframework.stereotype.Service;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
-/**   
-* 云闪付
-* @author xxm  
-* @date 2022/3/8 
-*/
+/**
+ * 云闪付
+ *
+ * @author xxm
+ * @date 2022/3/8
+ */
 @Slf4j
 @Scope(SCOPE_PROTOTYPE)
 @Service
 @RequiredArgsConstructor
 public class UnionPayStrategy extends AbsPayStrategy {
+
     @Override
     public int getType() {
         return PayChannelCode.UNION_PAY;
@@ -44,4 +46,5 @@ public class UnionPayStrategy extends AbsPayStrategy {
     public void doRefundHandler() {
 
     }
+
 }

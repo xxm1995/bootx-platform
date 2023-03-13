@@ -1,10 +1,11 @@
 package cn.bootx.payment.code;
 
-/**   
-* 支付服务缓存
-* @author xxm  
-* @date 2022/7/11 
-*/
+/**
+ * 支付服务缓存
+ *
+ * @author xxm
+ * @date 2022/7/11
+ */
 public interface CachingCode {
 
     /** 支付单(主键) */

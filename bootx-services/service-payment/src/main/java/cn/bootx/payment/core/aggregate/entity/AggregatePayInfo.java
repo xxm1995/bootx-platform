@@ -6,10 +6,11 @@ import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 
 /**
-* 聚合支付发起信息
-* @author xxm
-* @date 2022/3/5
-*/
+ * 聚合支付发起信息
+ *
+ * @author xxm
+ * @date 2022/3/5
+ */
 @Data
 @Accessors(chain = true)
 public class AggregatePayInfo {
@@ -22,4 +23,5 @@ public class AggregatePayInfo {
 
     /** 支付金额 */
     private BigDecimal amount;
+
 }

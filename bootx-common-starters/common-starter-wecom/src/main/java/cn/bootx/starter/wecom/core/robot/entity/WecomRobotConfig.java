@@ -13,22 +13,26 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 企业微信机器人配置
-* @author bootx
-* @date 2022-07-23
-*/
+ * 企业微信机器人配置
+ *
+ * @author bootx
+ * @date 2022-07-23
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("starter_wecom_robot_config")
 @Accessors(chain = true)
-public class WecomRobotConfig extends MpBaseEntity implements EntityBaseFunction<WecomRobotConfigDto>{
+public class WecomRobotConfig extends MpBaseEntity implements EntityBaseFunction<WecomRobotConfigDto> {
 
     /** 名称 */
     private String name;
+
     /** 编号 */
     private String code;
+
     /** webhook地址的key */
     private String webhookKey;
+
     /** 备注 */
     private String remark;
 
@@ -41,7 +45,7 @@ public class WecomRobotConfig extends MpBaseEntity implements EntityBaseFunction
 
     /** 创建对象 */
     public static WecomRobotConfig init(WecomRobotConfigParam in) {
-            return WecomRobotConfigConvert.CONVERT.convert(in);
+        return WecomRobotConfigConvert.CONVERT.convert(in);
     }
 
     /** 转换成dto */
@@ -49,4 +53,5 @@ public class WecomRobotConfig extends MpBaseEntity implements EntityBaseFunction
     public WecomRobotConfigDto toDto() {
         return WecomRobotConfigConvert.CONVERT.convert(this);
     }
+
 }

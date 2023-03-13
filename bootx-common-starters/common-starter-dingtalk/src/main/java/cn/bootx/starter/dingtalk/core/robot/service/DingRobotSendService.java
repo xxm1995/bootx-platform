@@ -21,43 +21,45 @@ import java.util.Objects;
 import static cn.bootx.starter.dingtalk.code.DingTalkCode.SUCCESS_CODE;
 
 /**
-* 钉钉机器人消息发送
-* @author xxm
-* @date 2020/11/29
-*/
+ * 钉钉机器人消息发送
+ *
+ * @author xxm
+ * @date 2020/11/29
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class DingRobotSendService {
+
     private final DingRobotConfigManager dingRobotConfigManager;
 
     /**
      * 发送钉钉机器人消息
      */
     public void sendNotice(String code, Msg body) {
-        DingRobotConfig dingRobotConfig = dingRobotConfigManager.findByCode(code).orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
+        DingRobotConfig dingRobotConfig = dingRobotConfigManager.findByCode(code)
+                .orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
         long timestamp = System.currentTimeMillis();
 
         Map<String, Object> map = new HashMap<>(3);
         map.put(DingTalkCode.ACCESS_TOKEN, dingRobotConfig.getAccessToken());
         String url;
         // 验签
-        if (dingRobotConfig.isEnableSignatureCheck()){
+        if (dingRobotConfig.isEnableSignatureCheck()) {
             url = DingTalkCode.ROBOT_SEND_SIGN_URL;
             map.put(DingTalkCode.SIGN, DingTalkUtil.generateSign(timestamp, dingRobotConfig.getSignSecret()));
             map.put(DingTalkCode.TIMESTAMP, timestamp);
-        }else {
+        }
+        else {
             url = DingTalkCode.ROBOT_SEND_NOT_SIGN_URL;
         }
 
         // 请求消息
-        String responseBody = HttpUtil.createPost(StrUtil.format(url, map))
-                .body(JacksonUtil.toJson(body))
-                .execute()
+        String responseBody = HttpUtil.createPost(StrUtil.format(url, map)).body(JacksonUtil.toJson(body)).execute()
                 .body();
         DingTalkResult<?> dingTalkResult = JacksonUtil.toBean(responseBody, DingTalkResult.class);
-        if (!Objects.equals(SUCCESS_CODE,dingTalkResult.getCode())){
-            log.error("钉钉机器人发送消息失败: {}",dingTalkResult.getMsg());
+        if (!Objects.equals(SUCCESS_CODE, dingTalkResult.getCode())) {
+            log.error("钉钉机器人发送消息失败: {}", dingTalkResult.getMsg());
         }
     }
 

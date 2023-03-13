@@ -8,10 +8,11 @@ import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
-* 文件上传配置
-* @author xxm
-* @date 2022/1/14
-*/
+ * 文件上传配置
+ *
+ * @author xxm
+ * @date 2022/1/14
+ */
 @Data
 @Accessors(chain = true)
 @ConfigurationProperties(prefix = "bootx.starter.file-upload")
@@ -39,9 +40,11 @@ public class FileUploadProperties {
      */
     @Getter
     @Setter
-    public static class Local{
+    public static class Local {
+
         /** 本地存储路径 */
         private String localPath = "/data/file/";
+
     }
 
     /**
@@ -49,9 +52,11 @@ public class FileUploadProperties {
      */
     @Getter
     @Setter
-    public static class Mongo{
+    public static class Mongo {
+
         /** 存储桶 */
         private String bucket = "fs";
+
     }
 
     /**
@@ -59,16 +64,23 @@ public class FileUploadProperties {
      */
     @Getter
     @Setter
-    public static class Minio{
+    public static class Minio {
+
         /** 端点地址 */
         private String endpoint;
+
         /** 区域 */
         private String region;
+
         /** 访问 key */
         private String accessKey;
+
         /** 访问 Secret */
         private String accessSecret;
+
         /** 存储桶 需要至少三位 */
         private String bucket = "bootx";
+
     }
+
 }

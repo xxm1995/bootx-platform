@@ -11,19 +11,19 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
-* 渠道转换
-* @author xxm  
-* @date 2021/7/6 
-*/
+ * 渠道转换
+ *
+ * @author xxm
+ * @date 2021/7/6
+ */
 @Mapper
 public interface DictionaryConvert {
-    DictionaryConvert CONVERT = Mappers.getMapper(DictionaryConvert.class);
 
+    DictionaryConvert CONVERT = Mappers.getMapper(DictionaryConvert.class);
 
     Dictionary convert(DictionaryParam in);
 
     DictionaryDto convert(Dictionary in);
-
 
     DictionaryItem convert(DictionaryItemParam in);
 

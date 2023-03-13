@@ -5,17 +5,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
-* 排序参数
-* @author xxm  
-* @date 2022/3/10 
-*/
+ * 排序参数
+ *
+ * @author xxm
+ * @date 2022/3/10
+ */
 @Getter
 @Setter
 @Schema(title = "分页查询参数")
 public class OrderParam {
-    @Schema(description= "排序字段")
+
+    @Schema(description = "排序字段")
     private String sortField;
 
-    @Schema(description= "是否升序")
+    @Schema(description = "是否升序")
     private boolean asc = true;
+
 }

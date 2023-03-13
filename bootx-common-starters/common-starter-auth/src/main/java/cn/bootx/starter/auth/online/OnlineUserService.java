@@ -21,26 +21,28 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
-* 在线用户
-* @author xxm
-* @date 2021/9/8
-*/
+ * 在线用户
+ *
+ * @author xxm
+ * @date 2021/9/8
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class OnlineUserService {
+
     @SuppressWarnings("FieldCanBeLocal")
     private final String SessionPattern = "AccessToken:login:session:*";
 
     private final StringRedisTemplate stringRedisTemplate;
-    private final RedisTemplate<String,SaSession> objectRedisTemplate;
+
+    private final RedisTemplate<String, SaSession> objectRedisTemplate;
 
     /**
      * 分页查询
      */
-    public PageResult<OnlineUserDto> page(PageParam pageParam){
-        ArrayList<String> keys = Optional.ofNullable(stringRedisTemplate.keys(SessionPattern))
-                .map(ArrayList::new)
+    public PageResult<OnlineUserDto> page(PageParam pageParam) {
+        ArrayList<String> keys = Optional.ofNullable(stringRedisTemplate.keys(SessionPattern)).map(ArrayList::new)
                 .orElseGet(ArrayList::new);
         List<String> list = new ArrayList<>();
         int start = pageParam.start();
@@ -48,56 +50,48 @@ public class OnlineUserService {
         for (int i = start; i < end; i++) {
             if (i >= keys.size()) {
                 break;
-            }else {
+            }
+            else {
                 list.add(keys.get(i));
             }
         }
         List<OnlineUserDto> onlineUsers = Optional.ofNullable(objectRedisTemplate.opsForValue().multiGet(list))
-                .orElseGet(ArrayList::new)
-                .stream()
-                .map(this::convert)
-                .collect(Collectors.toList());
-        return new PageResult<OnlineUserDto>()
-                .setCurrent(pageParam.getCurrent())
-                .setSize(pageParam.getSize())
-                .setTotal(keys.size())
-                .setRecords(onlineUsers);
+                .orElseGet(ArrayList::new).stream().map(this::convert).collect(Collectors.toList());
+        return new PageResult<OnlineUserDto>().setCurrent(pageParam.getCurrent()).setSize(pageParam.getSize())
+                .setTotal(keys.size()).setRecords(onlineUsers);
     }
 
     /**
      * 获取单条
      */
-    public OnlineUserDto findBySessionId(String sessionId){
-        SaSession saSession = Optional.ofNullable(objectRedisTemplate.opsForValue().get(sessionId)).orElseThrow(() -> new BizException("会话不存在"));
+    public OnlineUserDto findBySessionId(String sessionId) {
+        SaSession saSession = Optional.ofNullable(objectRedisTemplate.opsForValue().get(sessionId))
+                .orElseThrow(() -> new BizException("会话不存在"));
         return this.convert(saSession);
     }
 
     /**
      * 转换if在线用户对象
      */
-    private OnlineUserDto convert(SaSession saSession){
+    private OnlineUserDto convert(SaSession saSession) {
         UserDetail userDetail = saSession.getModel(CommonCode.USER, UserDetail.class);
         List<OnlineUserDto.TokenSign> tokenSignList = saSession.getTokenSignList().stream()
-                .map(tokenSign -> new OnlineUserDto.TokenSign()
-                        .setDevice(tokenSign.getDevice())
+                .map(tokenSign -> new OnlineUserDto.TokenSign().setDevice(tokenSign.getDevice())
                         .setValue(tokenSign.getValue()))
                 .collect(Collectors.toList());
 
-        return new OnlineUserDto()
-                .setUserId(userDetail.getId())
-                .setUserName(userDetail.getUsername())
-                .setName(userDetail.getName())
-                .setTimeout(saSession.getTimeout())
-                .setCreationTime(LocalDateTimeUtil.of(saSession.getCreateTime()))
-                .setSessionId(saSession.getId())
+        return new OnlineUserDto().setUserId(userDetail.getId()).setUserName(userDetail.getUsername())
+                .setName(userDetail.getName()).setTimeout(saSession.getTimeout())
+                .setCreationTime(LocalDateTimeUtil.of(saSession.getCreateTime())).setSessionId(saSession.getId())
                 .setTokenSigns(tokenSignList);
     }
 
     /**
      * 下线
      */
-    @OperateLog(title = "强退用户",businessType = OperateLog.BusinessType.FORCE, saveParam = true)
-    public void logoutByUserId(Long userId){
+    @OperateLog(title = "强退用户", businessType = OperateLog.BusinessType.FORCE, saveParam = true)
+    public void logoutByUserId(Long userId) {
         StpUtil.kickout(userId);
     }
+
 }

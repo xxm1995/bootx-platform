@@ -11,17 +11,20 @@ import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
-* 转换
-* @author xxm
-* @date 2021/8/20
-*/
+ * 转换
+ *
+ * @author xxm
+ * @date 2021/8/20
+ */
 @Mapper
 public interface WalletConvert {
+
     WalletConvert CONVERT = Mappers.getMapper(WalletConvert.class);
 
     WalletDto convert(Wallet in);
-    
+
     WalletPaymentDto convert(WalletPayment in);
 
     WalletLogDto convert(WalletLog walletLog);
+
 }

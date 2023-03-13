@@ -9,20 +9,19 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
-*
-* @author xxm
-* @date 2022/3/14
-*/
+ * @author xxm
+ * @date 2022/3/14
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class VoucherPaymentManager extends BaseManager<VoucherPaymentMapper, VoucherPayment> {
 
-
     /**
      * 根据支付id
      */
-    public Optional<VoucherPayment> findByPaymentId(Long paymentId){
-        return this.findByField(VoucherPayment::getPaymentId,paymentId);
+    public Optional<VoucherPayment> findByPaymentId(Long paymentId) {
+        return this.findByField(VoucherPayment::getPaymentId, paymentId);
     }
+
 }

@@ -15,21 +15,19 @@ import java.util.Map;
 import static cn.bootx.starter.wecom.code.WeComCode.NOTICE_MSG_ID;
 
 /**
-* 消息撤回请求执行器.
-* @author xxm
-* @date 2022/7/23
-*/
-public class RecallNoticeRequestExecutor implements RequestExecutor<WxError,String> {
+ * 消息撤回请求执行器.
+ *
+ * @author xxm
+ * @date 2022/7/23
+ */
+public class RecallNoticeRequestExecutor implements RequestExecutor<WxError, String> {
 
     @Override
     public WxError execute(String uri, String data, WxType wxType) throws WxErrorException {
 
-        Map<String,String> map = new HashMap<>(1);
-        map.put(NOTICE_MSG_ID,data);
-        String response = HttpUtil.createPost(uri)
-                .body(JacksonUtil.toJson(map))
-                .execute()
-                .body();
+        Map<String, String> map = new HashMap<>(1);
+        map.put(NOTICE_MSG_ID, data);
+        String response = HttpUtil.createPost(uri).body(JacksonUtil.toJson(map)).execute().body();
 
         WxError result = WxError.fromJson(response);
         if (result.getErrorCode() != 0) {
@@ -39,7 +37,8 @@ public class RecallNoticeRequestExecutor implements RequestExecutor<WxError,Stri
     }
 
     @Override
-    public void execute(String uri, String data, ResponseHandler<WxError> handler, WxType wxType) throws WxErrorException, IOException {
+    public void execute(String uri, String data, ResponseHandler<WxError> handler, WxType wxType)
+            throws WxErrorException, IOException {
         handler.handle(this.execute(uri, data, wxType));
     }
 

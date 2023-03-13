@@ -3,11 +3,12 @@ package cn.bootx.common.mybatisplus.interceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import lombok.*;
 
-/**   
-* mp插件包装(支持排序)
-* @author xxm  
-* @date 2021/12/21 
-*/
+/**
+ * mp插件包装(支持排序)
+ *
+ * @author xxm
+ * @date 2021/12/21
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,4 +24,5 @@ public class MpInterceptor {
     public MpInterceptor(InnerInterceptor innerInterceptor) {
         this.innerInterceptor = innerInterceptor;
     }
+
 }

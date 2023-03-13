@@ -2,6 +2,7 @@ package cn.bootx.baseapi.code;
 
 /**
  * 查询SQL
+ *
  * @author xxm
  * @date 2023/3/12
  */

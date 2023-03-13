@@ -8,18 +8,19 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2021/9/29
-*/
+ * @author xxm
+ * @date 2021/9/29
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户部门关联")
 public class UserDeptParam {
 
-    @Schema(description= "用户id")
+    @Schema(description = "用户id")
     @NotNull(message = "用户id不可为空")
     private Long userId;
 
-    @Schema(description= "部门id集合")
+    @Schema(description = "部门id集合")
     private List<Long> deptIds;
+
 }

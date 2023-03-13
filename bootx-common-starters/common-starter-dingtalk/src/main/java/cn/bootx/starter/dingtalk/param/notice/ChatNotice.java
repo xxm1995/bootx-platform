@@ -9,11 +9,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**   
-* 钉钉发送企业群消息参数
-* @author xxm  
-* @date 2022/7/20 
-*/
+/**
+ * 钉钉发送企业群消息参数
+ *
+ * @author xxm
+ * @date 2022/7/20
+ */
 @Data
 @Accessors(chain = true)
 @AllArgsConstructor
@@ -31,7 +32,8 @@ public class ChatNotice {
     /**
      * 输出参数
      */
-    public String toParam(){
+    public String toParam() {
         return JacksonUtil.toJson(this);
     }
+
 }

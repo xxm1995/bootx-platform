@@ -5,10 +5,11 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
-* 数据权限配置
-* @author xxm
-* @date 2021/12/3
-*/
+ * 数据权限配置
+ *
+ * @author xxm
+ * @date 2021/12/3
+ */
 @Getter
 @Setter
 @ConfigurationProperties("bootx.starter.data-perm")
@@ -29,13 +30,13 @@ public class DataPermProperties {
     /** 开启查询字段权限 */
     private boolean enableSelectFieldPerm = true;
 
-
     /**
      * 数据权限(通常是用户/部门关联表)
      */
     @Getter
     @Setter
     public static class DataPerm {
+
         /** 关联表名 */
         private String table = "iam_user_dept";
 
@@ -44,6 +45,7 @@ public class DataPermProperties {
 
         /** 条件字段(筛选条件字段名) */
         private String whereField = "dept_id";
+
     }
 
 }

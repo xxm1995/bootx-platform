@@ -13,6 +13,7 @@ import java.io.Serializable;
 
 /**
  * 钉钉语音消息
+ *
  * @author xxm
  * @date 2022/7/17
  */
@@ -25,13 +26,15 @@ public class VoiceMsg extends Msg implements Serializable {
     @Schema(description = "钉钉语音")
     private DingVoice voice;
 
-    public VoiceMsg(){
+    public VoiceMsg() {
         super(DingTalkNoticeCode.MSG_VOICE);
     }
+
     public VoiceMsg(String mediaId, String duration) {
         super(DingTalkNoticeCode.MSG_VOICE);
         this.voice = new DingVoice(mediaId, duration);
     }
+
     @Data
     @Accessors(chain = true)
     @Schema(title = "钉钉语音")
@@ -46,5 +49,7 @@ public class VoiceMsg extends Msg implements Serializable {
         @JsonProperty("duration")
         @Schema(description = "音频时长")
         private String duration;
+
     }
+
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 项目启动时Redisson替换RedissonClient的实现, Redisson连接失败是会导致项目无法启动, 选择改为项目启动成功后, 替换掉原有的Bean
+ *
  * @author xxm
  * @date 2022/11/30
  */
@@ -26,9 +27,11 @@ import org.springframework.stereotype.Component;
 @ConditionalOnBean(name = "org.redisson.Redisson")
 @RequiredArgsConstructor
 public class RedissonLoadListener implements ApplicationListener<ApplicationReadyEvent> {
+
     private final ConfigurableApplicationContext configurableApplicationContext;
 
     private final RedisProperties redisProperties;
+
     private final String REDIS_PREFIX = "redis://";
 
     @Override
@@ -38,7 +41,8 @@ public class RedissonLoadListener implements ApplicationListener<ApplicationRead
         RedisProperties.Cluster cluster = redisProperties.getCluster();
         if (cluster == null || CollUtil.isEmpty(cluster.getNodes())) {
             initSingleConfig(config.useSingleServer());
-        } else {
+        }
+        else {
             initClusterConfig(config.useClusterServers());
         }
 
@@ -47,33 +51,30 @@ public class RedissonLoadListener implements ApplicationListener<ApplicationRead
 
         String redissonClientName = StrUtil.lowerFirst(RedissonClient.class.getSimpleName());
 
-        //创建一个Redisson对象, 替换掉原有的对象
+        // 创建一个Redisson对象, 替换掉原有的对象
         BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) configurableApplicationContext;
         beanDefinitionRegistry.removeBeanDefinition(redissonClientName);
         beanDefinitionRegistry.registerBeanDefinition(redissonClientName, beanDefinitionBuilder.getBeanDefinition());
 
-        //这里相当于初始化加载使用
+        // 这里相当于初始化加载使用
         configurableApplicationContext.getBean(redissonClientName);
     }
-
 
     /**
      * 单节点模式
      */
-    private void initSingleConfig(SingleServerConfig singleServerConfig){
-        singleServerConfig.setAddress(REDIS_PREFIX+redisProperties.getHost()+":"+redisProperties.getPort())
-                .setDatabase(redisProperties.getDatabase())
-                .setPassword(redisProperties.getPassword());
+    private void initSingleConfig(SingleServerConfig singleServerConfig) {
+        singleServerConfig.setAddress(REDIS_PREFIX + redisProperties.getHost() + ":" + redisProperties.getPort())
+                .setDatabase(redisProperties.getDatabase()).setPassword(redisProperties.getPassword());
     }
 
     /**
      * 集群模式
      */
-    private void initClusterConfig(ClusterServersConfig clusterServersConfig){
-        String[] nodes = redisProperties.getCluster().getNodes().stream()
-                .map(node -> REDIS_PREFIX + node)
+    private void initClusterConfig(ClusterServersConfig clusterServersConfig) {
+        String[] nodes = redisProperties.getCluster().getNodes().stream().map(node -> REDIS_PREFIX + node)
                 .toArray(String[]::new);
-        clusterServersConfig.setPassword(redisProperties.getPassword())
-                .addNodeAddress(nodes);
+        clusterServersConfig.setPassword(redisProperties.getPassword()).addNodeAddress(nodes);
     }
+
 }

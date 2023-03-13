@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- *
  * @author xxm
  * @date 2023/3/9
  */
@@ -19,4 +18,5 @@ public class QueryFieldParam {
 
     @Schema(description = "SQL语句")
     private String sql;
+
 }

@@ -14,12 +14,14 @@ import java.util.Map;
 
 /**
  * ResResult返回类的处理, 泛型 T 不为泛型类
+ *
  * @author xxm
  * @date 2022/12/20
  */
 @Component
 @RequiredArgsConstructor
 public class ResultObjectTranslationHandler implements TranslationHandler {
+
     private final FieldTranslationService translationService;
 
     /**
@@ -28,11 +30,11 @@ public class ResultObjectTranslationHandler implements TranslationHandler {
     @Override
     public boolean adaptation(Type type) {
         // 是否是泛型类型
-        if (type instanceof ParameterizedType){
+        if (type instanceof ParameterizedType) {
             ParameterizedType parameterizedType = (ParameterizedType) type;
             // 是否是ResResult类型, 并且Class类型是非泛型(ParameterizedType)
             Type rawType = parameterizedType.getRawType();
-            if (rawType instanceof Class<?> && ClassUtil.isAssignable((Class<?>) rawType,ResResult.class)){
+            if (rawType instanceof Class<?> && ClassUtil.isAssignable((Class<?>) rawType, ResResult.class)) {
                 return true;
             }
         }
@@ -44,11 +46,13 @@ public class ResultObjectTranslationHandler implements TranslationHandler {
     public void translation(Object object, Type type, TranslationResult translationResult) {
         ResResult<?> resResult = (ResResult<?>) object;
         Object data = resResult.getData();
-        if (translationResult.convertType()== TranslationResult.ConvertType.OBJECT){
+        if (translationResult.convertType() == TranslationResult.ConvertType.OBJECT) {
             translationService.translation(data);
-        } else {
+        }
+        else {
             Map<String, Object> stringObjectMap = translationService.translationToMap(data);
-            ((ResResult<Map<String, Object>>)resResult).setData(stringObjectMap);
+            ((ResResult<Map<String, Object>>) resResult).setData(stringObjectMap);
         }
     }
+
 }

@@ -6,13 +6,15 @@ import cn.bootx.starter.dingtalk.param.robot.DingRobotConfigParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-/**   
-* 钉钉相关类转换
-* @author xxm  
-* @date 2021/8/5 
-*/
+/**
+ * 钉钉相关类转换
+ *
+ * @author xxm
+ * @date 2021/8/5
+ */
 @Mapper
 public interface DingRobotConvert {
+
     DingRobotConvert CONVERT = Mappers.getMapper(DingRobotConvert.class);
 
     DingRobotConfig convert(DingRobotConfigParam in);

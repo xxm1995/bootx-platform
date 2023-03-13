@@ -20,54 +20,56 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.NotBlank;
 
 /**
-* 用户三方登录管理
-* @author xxm
-* @date 2021/8/4
-*/
+ * 用户三方登录管理
+ *
+ * @author xxm
+ * @date 2021/8/4
+ */
 @Validated
-@Tag(name ="用户三方登录管理")
+@Tag(name = "用户三方登录管理")
 @RestController
 @RequestMapping("/user/third")
 @AllArgsConstructor
 public class UserThirdController {
+
     private final UserThirdBindService userThirdBindService;
+
     private final UserThirdQueryService userThirdQueryService;
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<UserThirdDto>> page(PageParam pageParam){
+    public ResResult<PageResult<UserThirdDto>> page(PageParam pageParam) {
         return Res.ok(userThirdQueryService.page(pageParam));
     }
-    
+
     @Operation(summary = "获取详情")
     @PostMapping("/findById")
-    public ResResult<UserThirdDto> findById(Long id){
+    public ResResult<UserThirdDto> findById(Long id) {
         return Res.ok(userThirdQueryService.findById(id));
     }
 
     @IgnoreAuth
     @Operation(summary = "获取绑定详情")
     @GetMapping("/getThirdBindInfo")
-    public ResResult<UserThirdBindInfo> getThirdBindInfo(){
+    public ResResult<UserThirdBindInfo> getThirdBindInfo() {
         return Res.ok(userThirdQueryService.getThirdBindInfo());
     }
 
     @IgnoreAuth
     @Operation(summary = "绑定第三方账号")
     @PostMapping("/bind")
-    public ResResult<Void> bind(@RequestBody UserBindThirdParam param){
+    public ResResult<Void> bind(@RequestBody UserBindThirdParam param) {
         ValidationUtil.validateParam(param);
-        userThirdBindService.bind(param.getAuthCode(),param.getLoginType(),param.getState());
+        userThirdBindService.bind(param.getAuthCode(), param.getLoginType(), param.getState());
         return Res.ok();
     }
 
     @IgnoreAuth
     @Operation(summary = "解绑第三方账号")
     @PostMapping("/unbind")
-    public ResResult<Void> unbind(@NotBlank(message = "终端代码不可为空") String clientCode){
+    public ResResult<Void> unbind(@NotBlank(message = "终端代码不可为空") String clientCode) {
         userThirdBindService.unbind(clientCode);
         return Res.ok();
     }
-
 
 }

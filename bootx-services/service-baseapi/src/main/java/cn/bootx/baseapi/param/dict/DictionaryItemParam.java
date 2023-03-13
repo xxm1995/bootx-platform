@@ -12,43 +12,46 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
-* 字典项参数
-* @author xxm
-* @date 2021/8/4
-*/
+ * 字典项参数
+ *
+ * @author xxm
+ * @date 2021/8/4
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "字典项参数")
 public class DictionaryItemParam implements Serializable {
+
     private static final long serialVersionUID = -6847496213782805488L;
 
-    @Null(message = "Id需要为空",groups = add.class)
-    @NotNull(message = "Id不可为空",groups = edit.class)
-    @Schema(description= "主键")
+    @Null(message = "Id需要为空", groups = add.class)
+    @NotNull(message = "Id不可为空", groups = edit.class)
+    @Schema(description = "主键")
     private Long id;
 
     @NotNull(message = "字典ID不可为空")
-    @Schema(description= "字典ID")
+    @Schema(description = "字典ID")
     private Long dictId;
 
-    @Schema(description= "字典编码")
+    @Schema(description = "字典编码")
     private String dictCode;
 
-    @NotEmpty(message = "字典项编码不可为空",groups = add.class)
-    @Schema(description= "字典项编码")
+    @NotEmpty(message = "字典项编码不可为空", groups = add.class)
+    @Schema(description = "字典项编码")
     private String code;
 
-    @NotEmpty(message = "字典项编码不可为空",groups = add.class)
-    @Schema(description= "名称")
+    @NotEmpty(message = "字典项编码不可为空", groups = add.class)
+    @Schema(description = "名称")
     private String name;
 
-    @NotNull(message = "启用状态不可为空",groups = add.class)
-    @Schema(description= "启用状态")
+    @NotNull(message = "启用状态不可为空", groups = add.class)
+    @Schema(description = "启用状态")
     private Boolean enable;
 
-    @Schema(description= "字典项排序")
+    @Schema(description = "字典项排序")
     private Double sortNo;
 
-    @Schema(description= "备注")
+    @Schema(description = "备注")
     private String remark;
+
 }

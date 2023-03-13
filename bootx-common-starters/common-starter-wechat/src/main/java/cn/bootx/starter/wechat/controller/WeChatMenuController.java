@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * 微信菜单管理
+ *
  * @author xxm
  * @date 2022/8/6
  */
@@ -24,65 +25,67 @@ import java.util.List;
 @RequestMapping("/wechat/menu")
 @RequiredArgsConstructor
 public class WeChatMenuController {
+
     private final WeChatMenuService weChatMenuService;
 
-
-    @Operation( summary = "添加")
+    @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody WeChatMenuParam param){
+    public ResResult<Void> add(@RequestBody WeChatMenuParam param) {
         weChatMenuService.add(param);
         return Res.ok();
     }
 
-    @Operation( summary = "修改")
+    @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody WeChatMenuParam param){
+    public ResResult<Void> update(@RequestBody WeChatMenuParam param) {
         weChatMenuService.update(param);
         return Res.ok();
     }
 
-    @Operation( summary = "删除")
+    @Operation(summary = "删除")
     @DeleteMapping(value = "/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         weChatMenuService.delete(id);
         return Res.ok();
     }
 
-    @Operation( summary = "通过ID查询")
+    @Operation(summary = "通过ID查询")
     @GetMapping(value = "/findById")
-    public ResResult<WeChatMenuDto> findById(Long id){
+    public ResResult<WeChatMenuDto> findById(Long id) {
         return Res.ok(weChatMenuService.findById(id));
     }
 
-    @Operation( summary = "查询所有")
+    @Operation(summary = "查询所有")
     @GetMapping(value = "/findAll")
-    public ResResult<List<WeChatMenuDto>> findAll(){
+    public ResResult<List<WeChatMenuDto>> findAll() {
         return Res.ok(weChatMenuService.findAll());
     }
 
-    @Operation( summary = "分页查询")
+    @Operation(summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<WeChatMenuDto>> page(PageParam pageParam, WeChatMenuParam weChatMenuParam){
-        return Res.ok(weChatMenuService.page(pageParam,weChatMenuParam));
+    public ResResult<PageResult<WeChatMenuDto>> page(PageParam pageParam, WeChatMenuParam weChatMenuParam) {
+        return Res.ok(weChatMenuService.page(pageParam, weChatMenuParam));
     }
 
     @Operation(summary = "发布菜单")
     @PostMapping("/publish")
-    public ResResult<Void> publish(Long id){
+    public ResResult<Void> publish(Long id) {
         weChatMenuService.publish(id);
         return Res.ok();
     }
 
     @Operation(summary = "导入微信自定义菜单到系统中")
     @PostMapping("/importMenu")
-    public ResResult<Void> importMenu(){
+    public ResResult<Void> importMenu() {
         weChatMenuService.importMenu();
         return Res.ok();
     }
+
     @Operation(summary = "清空微信自定义菜单")
     @PostMapping("/clearMenu")
-    public ResResult<Void> clearMenu(){
+    public ResResult<Void> clearMenu() {
         weChatMenuService.clearMenu();
         return Res.ok();
     }
+
 }

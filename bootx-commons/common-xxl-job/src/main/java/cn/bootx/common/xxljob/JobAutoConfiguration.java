@@ -5,11 +5,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**   
-* xxl-job自动配置
-* @author xxm  
-* @date 2021/3/11 
-*/
+/**
+ * xxl-job自动配置
+ *
+ * @author xxm
+ * @date 2021/3/11
+ */
 @Configuration
 @EnableConfigurationProperties(XxlJobProperties.class)
 public class JobAutoConfiguration {
@@ -26,4 +27,5 @@ public class JobAutoConfiguration {
         xxlJobSpringExecutor.setLogRetentionDays(xxlJobProperties.getLogRetentionDays());
         return xxlJobSpringExecutor;
     }
+
 }

@@ -12,24 +12,25 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 /**
-* 用户扩展信息服务
-* @author xxm
-* @date 2022/1/8
-*/
+ * 用户扩展信息服务
+ *
+ * @author xxm
+ * @date 2022/1/8
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserExpandInfoService {
+
     private final UserExpandInfoManager userExpandInfoManager;
 
     /**
-    * 更新登录时间
-    */
+     * 更新登录时间
+     */
     @Async("asyncExecutor")
-    public void updateLoginTime(Long userId){
+    public void updateLoginTime(Long userId) {
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userId).orElseThrow(BizException::new);
-        userExpandInfo.setLastLoginTime(userExpandInfo.getCurrentLoginTime())
-                .setCurrentLoginTime(LocalDateTime.now());
+        userExpandInfo.setLastLoginTime(userExpandInfo.getCurrentLoginTime()).setCurrentLoginTime(LocalDateTime.now());
         userExpandInfoManager.updateById(userExpandInfo);
     }
 

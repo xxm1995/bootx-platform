@@ -25,22 +25,25 @@ import java.util.Optional;
 
 import static cn.bootx.payment.code.pay.PayStatusCode.*;
 
-/**   
-* 支付记录
-* @author xxm  
-* @date 2021/3/8 
-*/
+/**
+ * 支付记录
+ *
+ * @author xxm
+ * @date 2021/3/8
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PaymentService {
+
     private final PaymentManager paymentManager;
+
     private final PaymentExpiredTimeRepository expiredTimeRepository;
 
     /**
      * 保存
      */
-    public Payment save(Payment payment){
+    public Payment save(Payment payment) {
         return paymentManager.save(payment);
     }
 
@@ -63,20 +66,18 @@ public class PaymentService {
     /**
      * 根据BusinessId查询
      */
-    public Optional<Payment> findByBusinessId(String businessId){
+    public Optional<Payment> findByBusinessId(String businessId) {
         return paymentManager.findByBusinessId(businessId);
     }
-
 
     /**
      * 退款成功处理, 更新可退款信息 不进行持久化
      */
-    public void updateRefundSuccess(Payment payment, BigDecimal amount, PayChannelEnum payChannelEnum){
+    public void updateRefundSuccess(Payment payment, BigDecimal amount, PayChannelEnum payChannelEnum) {
         // 删除旧有的退款记录, 替换退款完的新的
         List<RefundableInfo> refundableInfos = payment.getRefundableInfo();
         RefundableInfo refundableInfo = refundableInfos.stream()
-                .filter(o -> o.getPayChannel() == payChannelEnum.getNo())
-                .findFirst()
+                .filter(o -> o.getPayChannel() == payChannelEnum.getNo()).findFirst()
                 .orElseThrow(() -> new PayFailureException("数据不存在"));
         refundableInfos.remove(refundableInfo);
         refundableInfo.setAmount(refundableInfo.getAmount().subtract(amount));
@@ -89,15 +90,16 @@ public class PaymentService {
      */
     @Async("bigExecutor")
     @Retryable(value = RetryableException.class)
-    public void registerExpiredTime(Payment payment){
+    public void registerExpiredTime(Payment payment) {
         LocalDateTime expiredTime = payment.getExpiredTime();
         // 支付中且有超时时间才会注册超时关闭时间
-        if (Objects.equals(payment.getPayStatus(),TRADE_PROGRESS)&&Objects.nonNull(expiredTime)){
+        if (Objects.equals(payment.getPayStatus(), TRADE_PROGRESS) && Objects.nonNull(expiredTime)) {
             try {
                 // 将过期时间添加到redis中, 往后延时一分钟
                 expiredTime = LocalDateTimeUtil.offset(expiredTime, 1, ChronoUnit.MINUTES);
-                expiredTimeRepository.store(payment.getId(),expiredTime);
-            } catch (Exception e){
+                expiredTimeRepository.store(payment.getId(), expiredTime);
+            }
+            catch (Exception e) {
                 log.error("注册支付单超时关闭失败");
                 throw new RetryableException();
             }

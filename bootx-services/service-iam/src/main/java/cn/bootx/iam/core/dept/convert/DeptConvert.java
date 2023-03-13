@@ -7,13 +7,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-/**   
-* 部门机构转换
-* @author xxm  
-* @date 2021/8/4 
-*/
+/**
+ * 部门机构转换
+ *
+ * @author xxm
+ * @date 2021/8/4
+ */
 @Mapper
 public interface DeptConvert {
+
     DeptConvert CONVERT = Mappers.getMapper(DeptConvert.class);
 
     Dept convert(DeptDto in);
@@ -21,4 +23,5 @@ public interface DeptConvert {
     Dept convert(DeptParam in);
 
     DeptDto convert(Dept in);
+
 }

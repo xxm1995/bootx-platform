@@ -1,10 +1,11 @@
 package cn.bootx.notice.code;
 
-/**   
-* 消息模板类型
-* @author xxm  
-* @date 2021/8/10 
-*/
+/**
+ * 消息模板类型
+ *
+ * @author xxm
+ * @date 2021/8/10
+ */
 public interface MessageTemplateCode {
 
     /** 站内信 */
@@ -24,4 +25,5 @@ public interface MessageTemplateCode {
 
     /** 微信 */
     int WECHAT = 5;
+
 }

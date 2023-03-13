@@ -8,6 +8,7 @@ import java.io.Serializable;
 public abstract class ErrorCodeRuntimeException extends RuntimeException implements Serializable {
 
     private static final long serialVersionUID = 1724988277326336635L;
+
     private int code;
 
     public ErrorCodeRuntimeException(int code, String message) {
@@ -15,15 +16,16 @@ public abstract class ErrorCodeRuntimeException extends RuntimeException impleme
         this.code = code;
     }
 
-	public ErrorCodeRuntimeException() {
-		super();
-	}
+    public ErrorCodeRuntimeException() {
+        super();
+    }
 
-	public int getCode() {
+    public int getCode() {
         return code;
     }
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
+
 }

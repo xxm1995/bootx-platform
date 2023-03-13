@@ -13,6 +13,7 @@ import java.util.Objects;
 
 /**
  * 验证码服务
+ *
  * @author xxm
  * @date 2021/8/2
  */
@@ -20,126 +21,128 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class CaptchaService {
+
     /** redis key前缀 */
     private final String imgCaptchaPrefix = "login:captcha:img";
+
     /** 手机验证码前缀 */
     private final String smsCaptchaPrefix = "phone:captcha:";
+
     /** 邮箱验证码前缀 */
     private final String emailCaptchaPrefix = "email:captcha:";
 
     private final UserWsNoticeService userWsNoticeService;
+
     private final RedisClient redisClient;
 
     /**
      * 获取图片验证码
      */
-    public CaptchaDataResult imgCaptcha(){
+    public CaptchaDataResult imgCaptcha() {
         String key = RandomUtil.randomString(16);
         // 几位数运算，默认是两位
-        ArithmeticCaptcha captcha = new ArithmeticCaptcha(105,35);
+        ArithmeticCaptcha captcha = new ArithmeticCaptcha(105, 35);
         // 获取运算的结果
         String text = captcha.text();
-        log.info("获取图片验证码: {}",text);
-        redisClient.setWithTimeout(imgCaptchaPrefix +key, text,5*60*1000);
-        return new CaptchaDataResult()
-                .setCaptchaKey(key)
-                .setCaptchaData(captcha.toBase64());
+        log.info("获取图片验证码: {}", text);
+        redisClient.setWithTimeout(imgCaptchaPrefix + key, text, 5 * 60 * 1000);
+        return new CaptchaDataResult().setCaptchaKey(key).setCaptchaData(captcha.toBase64());
     }
 
     /**
      * 校验图片验证码
      */
-    public boolean validateImgCaptcha(String key, String captcha){
+    public boolean validateImgCaptcha(String key, String captcha) {
         // 比较验证码是否正确
-        String captchaByRedis = redisClient.get(imgCaptchaPrefix +key);
-        return Objects.equals(captcha,captchaByRedis);
+        String captchaByRedis = redisClient.get(imgCaptchaPrefix + key);
+        return Objects.equals(captcha, captchaByRedis);
     }
 
     /**
      * 失效图片验证码
      */
-    public void deleteImgCaptcha(String key){
-        redisClient.deleteKey(imgCaptchaPrefix +key);
+    public void deleteImgCaptcha(String key) {
+        redisClient.deleteKey(imgCaptchaPrefix + key);
     }
 
     /**
      * 发送手机验证码
      */
-    public int sendSmsCaptcha(String phone,long timeoutSec,String type){
+    public int sendSmsCaptcha(String phone, long timeoutSec, String type) {
         int captcha = RandomUtil.randomInt(100000, 1000000);
-        log.info("短信验证码: {}",captcha);
-        redisClient.setWithTimeout(getSmsCaptchaPrefix(type)+phone, String.valueOf(captcha),timeoutSec*1000);
+        log.info("短信验证码: {}", captcha);
+        redisClient.setWithTimeout(getSmsCaptchaPrefix(type) + phone, String.valueOf(captcha), timeoutSec * 1000);
         return captcha;
     }
 
     /**
      * 手机发送的验证码是否还有效
      */
-    public boolean existsSmsCaptcha(String phone, String type){
-        return redisClient.exists(getSmsCaptchaPrefix(type)+phone);
+    public boolean existsSmsCaptcha(String phone, String type) {
+        return redisClient.exists(getSmsCaptchaPrefix(type) + phone);
     }
 
     /**
      * 校验手机验证码
      */
-    public boolean validateSmsCaptcha(String phone, String captcha,String type){
+    public boolean validateSmsCaptcha(String phone, String captcha, String type) {
         // 比较验证码是否正确
-        String captchaByRedis = redisClient.get(getSmsCaptchaPrefix(type)+phone);
-        return Objects.equals(captcha,captchaByRedis);
+        String captchaByRedis = redisClient.get(getSmsCaptchaPrefix(type) + phone);
+        return Objects.equals(captcha, captchaByRedis);
     }
 
     /**
      * 失效手机验证码
      */
-    public void deleteSmsCaptcha(String phone,String type){
-        redisClient.deleteKey(getSmsCaptchaPrefix(type)+phone);
+    public void deleteSmsCaptcha(String phone, String type) {
+        redisClient.deleteKey(getSmsCaptchaPrefix(type) + phone);
     }
 
     /**
      * 获取手机验证码前缀
      */
-    private String getSmsCaptchaPrefix(String type){
-        return smsCaptchaPrefix+type+":";
+    private String getSmsCaptchaPrefix(String type) {
+        return smsCaptchaPrefix + type + ":";
     }
 
     /**
      * 发送邮箱验证码
      */
-    public int sendEmailCaptcha(String email,long timeoutSec,String type){
+    public int sendEmailCaptcha(String email, long timeoutSec, String type) {
         int captcha = RandomUtil.randomInt(100000, 1000000);
-        log.info("邮箱验证码: {}",captcha);
-        redisClient.setWithTimeout(getEmailCaptchaPrefix(type)+email, String.valueOf(captcha),timeoutSec*1000);
+        log.info("邮箱验证码: {}", captcha);
+        redisClient.setWithTimeout(getEmailCaptchaPrefix(type) + email, String.valueOf(captcha), timeoutSec * 1000);
         return captcha;
     }
 
     /**
      * 邮箱发送的验证码是否还有效
      */
-    public boolean existsEmailCaptcha(String email, String type){
-        return redisClient.exists(getEmailCaptchaPrefix(type)+email);
+    public boolean existsEmailCaptcha(String email, String type) {
+        return redisClient.exists(getEmailCaptchaPrefix(type) + email);
     }
 
     /**
      * 校验邮箱验证码
      */
-    public boolean validateEmailCaptcha(String email, String captcha,String type){
+    public boolean validateEmailCaptcha(String email, String captcha, String type) {
         // 比较验证码是否正确
-        String captchaByRedis = redisClient.get(getEmailCaptchaPrefix(type)+email);
-        return Objects.equals(captcha,captchaByRedis);
+        String captchaByRedis = redisClient.get(getEmailCaptchaPrefix(type) + email);
+        return Objects.equals(captcha, captchaByRedis);
     }
 
     /**
      * 失效邮箱验证码
      */
-    public void deleteEmailCaptcha(String email,String type){
-        redisClient.deleteKey(getEmailCaptchaPrefix(type)+email);
+    public void deleteEmailCaptcha(String email, String type) {
+        redisClient.deleteKey(getEmailCaptchaPrefix(type) + email);
     }
 
     /**
      * 获取邮箱验证码前缀
      */
-    private String getEmailCaptchaPrefix(String type){
-        return emailCaptchaPrefix+type+":";
+    private String getEmailCaptchaPrefix(String type) {
+        return emailCaptchaPrefix + type + ":";
     }
-    
+
 }

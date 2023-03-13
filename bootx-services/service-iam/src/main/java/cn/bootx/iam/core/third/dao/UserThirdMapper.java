@@ -4,11 +4,13 @@ import cn.bootx.iam.core.third.entity.UserThird;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
-/**   
-* 三方登录
-* @author xxm  
-* @date 2021/8/2 
-*/
+/**
+ * 三方登录
+ *
+ * @author xxm
+ * @date 2021/8/2
+ */
 @Mapper
 public interface UserThirdMapper extends BaseMapper<UserThird> {
+
 }

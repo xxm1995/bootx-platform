@@ -6,6 +6,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 异常处理程序
+ *
  * @author xxm
  * @date 2022/12/18
  */
@@ -13,4 +14,5 @@ import org.springframework.context.annotation.ComponentScan;
 @ConfigurationPropertiesScan
 @AutoConfiguration
 public class ExceptionHandlerAutoConfiguration {
+
 }

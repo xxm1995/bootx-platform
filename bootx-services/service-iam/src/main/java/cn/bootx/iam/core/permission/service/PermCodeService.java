@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 权限码管理
+ *
  * @author xxm
  * @date 2023/1/23
  */
@@ -13,6 +14,5 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PermCodeService {
-
 
 }

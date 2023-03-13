@@ -3,11 +3,12 @@ package cn.bootx.notice.dto.mail;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
-* 邮件附件参数
-* @author xxm  
-* @date 2020/5/2 20:33 
-*/
+/**
+ * 邮件附件参数
+ *
+ * @author xxm
+ * @date 2020/5/2 20:33
+ */
 @Data
 @Accessors(chain = true)
 public class MailFileParam {

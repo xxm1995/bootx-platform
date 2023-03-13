@@ -14,35 +14,35 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
-* 钉钉机器人
-* @author xxm
-* @date 2020/11/29
-*/
+ * 钉钉机器人
+ *
+ * @author xxm
+ * @date 2020/11/29
+ */
 @Repository
 @RequiredArgsConstructor
 public class DingRobotConfigManager extends BaseManager<DingRobotConfigMapper, DingRobotConfig> {
 
     public Optional<DingRobotConfig> findByCode(String code) {
-        return findByField(DingRobotConfig::getCode,code);
+        return findByField(DingRobotConfig::getCode, code);
     }
 
     public boolean existsByCode(String code) {
-        return existedByField(DingRobotConfig::getCode,code);
+        return existedByField(DingRobotConfig::getCode, code);
     }
 
-    public boolean existsByCode(String code,Long id) {
-        return lambdaQuery().eq(DingRobotConfig::getCode, code)
-                .ne(MpIdEntity::getId,id)
-                .exists();
+    public boolean existsByCode(String code, Long id) {
+        return lambdaQuery().eq(DingRobotConfig::getCode, code).ne(MpIdEntity::getId, id).exists();
     }
 
     public Page<DingRobotConfig> page(PageParam pageParam, DingRobotConfigParam param) {
         Page<DingRobotConfig> mpPage = MpUtil.getMpPage(pageParam, DingRobotConfig.class);
-        return lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getCode()),DingRobotConfig::getCode,param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()),DingRobotConfig::getName,param.getName())
-                .like(StrUtil.isNotBlank(param.getAccessToken()),DingRobotConfig::getAccessToken,param.getAccessToken())
+        return lambdaQuery().orderByDesc(MpIdEntity::getId)
+                .like(StrUtil.isNotBlank(param.getCode()), DingRobotConfig::getCode, param.getCode())
+                .like(StrUtil.isNotBlank(param.getName()), DingRobotConfig::getName, param.getName())
+                .like(StrUtil.isNotBlank(param.getAccessToken()), DingRobotConfig::getAccessToken,
+                        param.getAccessToken())
                 .page(mpPage);
     }
+
 }

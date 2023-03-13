@@ -10,47 +10,49 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* 部门表
-* @author xxm  
-* @date 2020/5/7 17:38 
-*/
+/**
+ * 部门表
+ *
+ * @author xxm
+ * @date 2020/5/7 17:38
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("iam_dept")
 public class Dept extends MpBaseEntity implements EntityBaseFunction<DeptDto> {
 
-	/**父机构ID*/
-	private Long parentId;
+    /** 父机构ID */
+    private Long parentId;
 
-	/**机构/部门名称*/
-	private String deptName;
+    /** 机构/部门名称 */
+    private String deptName;
 
-	/**排序*/
+    /** 排序 */
     private Double sortNo;
 
-	/**
+    /**
      * 机构类别
      * @see cn.bootx.iam.code.OrgCategoryCode
      */
-	private Integer orgCategory;
-	/**机构编码*/
-	private String orgCode;
+    private Integer orgCategory;
 
-	/**手机号*/
-	private String mobile;
+    /** 机构编码 */
+    private String orgCode;
 
-	/**传真*/
-	private String fax;
+    /** 手机号 */
+    private String mobile;
 
-	/**地址*/
-	private String address;
+    /** 传真 */
+    private String fax;
 
-	/**备注*/
-	private String remark;
+    /** 地址 */
+    private String address;
 
-    public static Dept init(DeptParam in){
+    /** 备注 */
+    private String remark;
+
+    public static Dept init(DeptParam in) {
         return DeptConvert.CONVERT.convert(in);
     }
 
@@ -58,4 +60,5 @@ public class Dept extends MpBaseEntity implements EntityBaseFunction<DeptDto> {
     public DeptDto toDto() {
         return DeptConvert.CONVERT.convert(this);
     }
+
 }

@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 字典项
+ *
  * @author xxm
  * @date 2020/4/15 17:45
  */
@@ -55,10 +56,9 @@ public class DictionaryItem extends MpBaseEntity implements EntityBaseFunction<D
     /**
      * 转换成简单对象
      */
-    public DictionaryItemSimpleDto toSimpleDto(){
+    public DictionaryItemSimpleDto toSimpleDto() {
         return DictionaryConvert.CONVERT.convertSimple(this);
 
     }
 
 }
-

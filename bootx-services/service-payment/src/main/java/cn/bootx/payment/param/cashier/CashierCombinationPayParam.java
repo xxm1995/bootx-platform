@@ -9,10 +9,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
-* 结算台发起支付参数
-* @author xxm  
-* @date 2022/2/23 
-*/
+ * 结算台发起支付参数
+ *
+ * @author xxm
+ * @date 2022/2/23
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "结算台组合支付参数")
@@ -27,7 +28,7 @@ public class CashierCombinationPayParam {
     @Schema(description = "业务id")
     private String businessId;
 
-    @Schema(description= "支付信息",required = true)
+    @Schema(description = "支付信息", required = true)
     private List<PayModeParam> payModeList;
 
 }

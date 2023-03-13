@@ -16,13 +16,11 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- *
  * @author xxm
  * @date 2022/12/14
  */
 @UtilityClass
 public class SuperQueryGenerator {
-
 
     /**
      * 组装查询条件
@@ -30,7 +28,7 @@ public class SuperQueryGenerator {
      * @param queryParams 查询参数
      * @param <T> 泛型
      */
-   <T> void initQueryParam(QueryWrapper<T> queryWrapper, List<QueryParam> queryParams) {
+    <T> void initQueryParam(QueryWrapper<T> queryWrapper, List<QueryParam> queryParams) {
         if (CollUtil.isEmpty(queryParams)) {
             return;
         }
@@ -47,19 +45,18 @@ public class SuperQueryGenerator {
             if (CollUtil.isEmpty(nestedParams)) {
                 // 组装单条查询条件
                 initQueryParam(queryWrapper, queryParam);
-            } else {
+            }
+            else {
                 // 将当前查询条件与嵌套的查询条件组装成一个查询条件
-                QueryParam q = new QueryParam()
-                        .setParamName(queryParam.getParamName())
-                        .setCompareType(queryParam.getCompareType())
-                        .setParamType(queryParam.getParamType())
-                        .setParamValue(queryParam.getParamValue())
-                        .setUnderLine(queryParam.isUnderLine())
+                QueryParam q = new QueryParam().setParamName(queryParam.getParamName())
+                        .setCompareType(queryParam.getCompareType()).setParamType(queryParam.getParamType())
+                        .setParamValue(queryParam.getParamValue()).setUnderLine(queryParam.isUnderLine())
                         .setOr(queryParam.isOr());
                 nestedParams.add(0, q);
                 if (queryParam.isOr()) {
                     queryWrapper.or(wrapper -> initQueryParam(wrapper, nestedParams));
-                } else {
+                }
+                else {
                     queryWrapper.and(wrapper -> initQueryParam(wrapper, nestedParams));
                 }
             }
@@ -83,58 +80,58 @@ public class SuperQueryGenerator {
         // 查询匹配类型
         CompareTypeEnum compareTypeEnum = Optional.ofNullable(CompareTypeEnum.getByCode(queryParam.getCompareType()))
                 .orElseThrow(() -> new BizException("查询匹配类型非法"));
-        switch (compareTypeEnum){
+        switch (compareTypeEnum) {
             case GT:
-                queryWrapper.gt(paramName,paramValue);
+                queryWrapper.gt(paramName, paramValue);
                 break;
             case GE:
-                queryWrapper.ge(paramName,paramValue);
+                queryWrapper.ge(paramName, paramValue);
                 break;
             case LT:
-                queryWrapper.lt(paramName,paramValue);
+                queryWrapper.lt(paramName, paramValue);
                 break;
             case LE:
-                queryWrapper.le(paramName,paramValue);
+                queryWrapper.le(paramName, paramValue);
                 break;
             case EQ:
-                queryWrapper.eq(paramName,paramValue);
+                queryWrapper.eq(paramName, paramValue);
                 break;
             case NE:
-                queryWrapper.ne(paramName,paramValue);
+                queryWrapper.ne(paramName, paramValue);
                 break;
             case IN:
-                queryWrapper.in(paramName,(Collection<?>) paramValue);
+                queryWrapper.in(paramName, (Collection<?>) paramValue);
                 break;
             case NOT_IN:
-                queryWrapper.notIn(paramName,(Collection<?>) paramValue);
+                queryWrapper.notIn(paramName, (Collection<?>) paramValue);
                 break;
-            case BETWEEN:{
-                if (Objects.isNull(paramValue)){
+            case BETWEEN: {
+                if (Objects.isNull(paramValue)) {
                     throw new BizException("between 查询条件为空");
                 }
                 QueryBetweenParam value = (QueryBetweenParam) paramValue;
-                queryWrapper.between(paramName,value.getStart(), value.getEnd());
+                queryWrapper.between(paramName, value.getStart(), value.getEnd());
                 break;
             }
-            case NOT_BETWEEN:{
-                if (Objects.isNull(paramValue)){
+            case NOT_BETWEEN: {
+                if (Objects.isNull(paramValue)) {
                     throw new BizException("between 查询条件为空");
                 }
                 QueryBetweenParam value = (QueryBetweenParam) paramValue;
-                queryWrapper.notBetween(paramName,value.getStart(), value.getEnd());
+                queryWrapper.notBetween(paramName, value.getStart(), value.getEnd());
                 break;
             }
             case LIKE:
-                queryWrapper.like(paramName,paramValue);
+                queryWrapper.like(paramName, paramValue);
                 break;
             case NOT_LIKE:
-                queryWrapper.notLike(paramName,paramValue);
+                queryWrapper.notLike(paramName, paramValue);
                 break;
             case LIKE_LEFT:
-                queryWrapper.likeLeft(paramName,paramValue);
+                queryWrapper.likeLeft(paramName, paramValue);
                 break;
             case LIKE_RIGHT:
-                queryWrapper.likeRight(paramName,paramValue);
+                queryWrapper.likeRight(paramName, paramValue);
                 break;
             case IS_NULL:
                 queryWrapper.isNull(paramName);
@@ -147,7 +144,6 @@ public class SuperQueryGenerator {
         }
     }
 
-
     /**
      * 组装排序条件
      * @param queryWrapper 查询器
@@ -155,14 +151,15 @@ public class SuperQueryGenerator {
      * @param <T> 泛型
      */
     <T> void initQueryOrder(QueryWrapper<T> queryWrapper, List<QueryOrder> queryOrders) {
-        if (CollUtil.isEmpty(queryOrders)){
+        if (CollUtil.isEmpty(queryOrders)) {
             return;
         }
         for (QueryOrder queryOrder : queryOrders) {
-            if (queryOrder.isUnderLine()){
-                queryWrapper.orderBy(true,queryOrder.isAsc(), StrUtil.toUnderlineCase(queryOrder.getSortField()));
-            } else {
-                queryWrapper.orderBy(true,queryOrder.isAsc(),queryOrder.getSortField());
+            if (queryOrder.isUnderLine()) {
+                queryWrapper.orderBy(true, queryOrder.isAsc(), StrUtil.toUnderlineCase(queryOrder.getSortField()));
+            }
+            else {
+                queryWrapper.orderBy(true, queryOrder.isAsc(), queryOrder.getSortField());
             }
         }
     }
@@ -174,10 +171,12 @@ public class SuperQueryGenerator {
      */
     private String initQueryParamName(QueryParam queryParam) {
         String paramName = queryParam.getParamName();
-        if (queryParam.isUnderLine()){
+        if (queryParam.isUnderLine()) {
             return StrUtil.toUnderlineCase(paramName);
-        } else {
+        }
+        else {
             return paramName;
         }
     }
+
 }

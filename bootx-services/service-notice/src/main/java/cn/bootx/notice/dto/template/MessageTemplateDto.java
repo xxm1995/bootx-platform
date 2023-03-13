@@ -9,15 +9,17 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* 消息模板
-* @author xxm
-* @date 2021/8/10
-*/
+ * 消息模板
+ *
+ * @author xxm
+ * @date 2021/8/10
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "消息模板")
 public class MessageTemplateDto extends BaseDto implements Serializable {
+
     private static final long serialVersionUID = -1377790220501836009L;
 
     /** 编码 */

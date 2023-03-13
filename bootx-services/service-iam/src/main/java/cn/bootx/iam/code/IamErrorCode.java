@@ -1,12 +1,12 @@
 package cn.bootx.iam.code;
 
 /**
-* 用户中心错误码(21000-21999)
-* @author xxm
-* @date 2020/4/24 16:01
-*/
+ * 用户中心错误码(21000-21999)
+ *
+ * @author xxm
+ * @date 2020/4/24 16:01
+ */
 public interface IamErrorCode {
-
 
     /**
      * 密码不正确
@@ -17,6 +17,7 @@ public interface IamErrorCode {
      * 用户Email已存在
      */
     int USER_EMAIL_ALREADY_EXISTED = 21014;
+
     /**
      * 用户手机号已存在
      */

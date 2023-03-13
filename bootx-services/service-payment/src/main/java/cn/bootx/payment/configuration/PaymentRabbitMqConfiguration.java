@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 消息队列配置
+ *
  * @author xxm
  * @date 2021/6/25
  */
@@ -21,16 +22,19 @@ public class PaymentRabbitMqConfiguration {
     public Queue payComplete() {
         return new Queue(PaymentEventCode.PAY_COMPLETE);
     }
+
     /** 支付关闭/撤销队列 */
     @Bean
     public Queue payCancel() {
         return new Queue(PaymentEventCode.PAY_CANCEL);
     }
+
     /** 支付退款队列 */
     @Bean
     public Queue payRefund() {
         return new Queue(PaymentEventCode.PAY_REFUND);
     }
+
     /** 支付超时通知队列 */
     @Bean
     public Queue paymentExpiredTime() {
@@ -46,29 +50,26 @@ public class PaymentRabbitMqConfiguration {
     /** 绑定支付完成 */
     @Bean
     public Binding bindPayComplete() {
-        return BindingBuilder.bind(payComplete())
-                .to(paymentExchange())
-                .with(PaymentEventCode.PAY_COMPLETE);
+        return BindingBuilder.bind(payComplete()).to(paymentExchange()).with(PaymentEventCode.PAY_COMPLETE);
     }
+
     /** 绑定支付关闭/撤销 */
     @Bean
     public Binding bindPayCancel() {
-        return BindingBuilder.bind(payCancel())
-                .to(paymentExchange())
-                .with(PaymentEventCode.PAY_CANCEL);
+        return BindingBuilder.bind(payCancel()).to(paymentExchange()).with(PaymentEventCode.PAY_CANCEL);
     }
+
     /** 绑定支付退款 */
     @Bean
     public Binding bindPayRefund() {
-        return BindingBuilder.bind(payRefund())
-                .to(paymentExchange())
-                .with(PaymentEventCode.PAY_REFUND);
+        return BindingBuilder.bind(payRefund()).to(paymentExchange()).with(PaymentEventCode.PAY_REFUND);
     }
+
     /** 绑定支付超时通知 */
     @Bean
     public Binding bindPaymentExpiredTime() {
-        return BindingBuilder.bind(paymentExpiredTime())
-                .to(paymentExchange())
+        return BindingBuilder.bind(paymentExpiredTime()).to(paymentExchange())
                 .with(PaymentEventCode.PAYMENT_EXPIRED_TIME);
     }
+
 }

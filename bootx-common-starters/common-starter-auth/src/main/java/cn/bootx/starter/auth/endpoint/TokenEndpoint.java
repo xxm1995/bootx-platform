@@ -12,27 +12,29 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**   
-* 基础登录退出操作
-* @author xxm  
-* @date 2021/7/30 
-*/
+/**
+ * 基础登录退出操作
+ *
+ * @author xxm
+ * @date 2021/7/30
+ */
 @Tag(name = "认证相关")
 @RestController
 @RequestMapping("/token")
 @AllArgsConstructor
 public class TokenEndpoint {
+
     private final TokenService tokenService;
 
     @Operation(summary = "普通登录")
     @PostMapping("/login")
-    public ResResult<String> login(HttpServletRequest request, HttpServletResponse response){
-        return Res.ok(tokenService.login(request,response));
+    public ResResult<String> login(HttpServletRequest request, HttpServletResponse response) {
+        return Res.ok(tokenService.login(request, response));
     }
 
     @Operation(summary = "退出")
     @PostMapping("/logout")
-    public ResResult<String> logout(){
+    public ResResult<String> logout() {
         tokenService.logout();
         return Res.ok();
     }

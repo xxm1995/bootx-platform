@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
-* 钉钉工作通知消息
-* @author xxm  
-* @date 2022/7/19 
-*/
+ * 钉钉工作通知消息
+ *
+ * @author xxm
+ * @date 2022/7/19
+ */
 @Data
 @Accessors(chain = true)
 @NoArgsConstructor
@@ -20,7 +21,7 @@ import lombok.experimental.Accessors;
 @Schema(title = "钉钉文本工作通知消息")
 public class DingTextMsg implements DingMsg {
 
-    @Schema(description= "文本内容")
+    @Schema(description = "文本内容")
     private String content;
 
     /**
@@ -29,4 +30,5 @@ public class DingTextMsg implements DingMsg {
     public Msg toDingMsg() {
         return new TextMsg(content);
     }
+
 }

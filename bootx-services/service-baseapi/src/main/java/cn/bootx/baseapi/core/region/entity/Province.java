@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
-* 省份表
-* @author xxm
-* @date 2022-12-24
-*/
+ * 省份表
+ *
+ * @author xxm
+ * @date 2022-12-24
+ */
 @Data
 @TableName("base_province")
 public class Province {
@@ -17,12 +18,13 @@ public class Province {
     /** 省份编码 */
     @TableId
     private String code;
+
     /** 省份名称 */
     private String name;
 
     /** 转换成dto */
     public RegionDto toDto() {
-        return new RegionDto(code,name,1);
+        return new RegionDto(code, name, 1);
     }
 
 }

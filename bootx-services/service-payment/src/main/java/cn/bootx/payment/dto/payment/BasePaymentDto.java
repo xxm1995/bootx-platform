@@ -11,36 +11,37 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
-* @author xxm
-* @date 2021/2/25
-*/
+ * @author xxm
+ * @date 2021/2/25
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "具体支付日志基类")
 public class BasePaymentDto extends BaseDto {
 
-    @Schema(description= "支付id")
+    @Schema(description = "支付id")
     private Long paymentId;
 
-    @Schema(description= "用户id")
+    @Schema(description = "用户id")
     private Long userId;
 
-    @Schema(description= "关联的业务id")
+    @Schema(description = "关联的业务id")
     private String businessId;
 
-    @Schema(description= "金额")
+    @Schema(description = "金额")
     private BigDecimal amount;
 
-    @Schema(description= "可退款金额")
+    @Schema(description = "可退款金额")
     private BigDecimal refundableBalance;
 
     /**
      * @see PayStatusCode
      */
-    @Schema(description= "支付状态")
+    @Schema(description = "支付状态")
     private int payStatus;
 
-    @Schema(description= "支付时间")
+    @Schema(description = "支付时间")
     private LocalDateTime payTime;
+
 }

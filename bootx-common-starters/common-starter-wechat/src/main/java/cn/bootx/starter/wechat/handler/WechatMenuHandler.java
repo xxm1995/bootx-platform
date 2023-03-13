@@ -13,21 +13,25 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
-* 菜单点击事件
-* @author xxm
-* @date 2022/7/16
-*/
+ * 菜单点击事件
+ *
+ * @author xxm
+ * @date 2022/7/16
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class WechatMenuHandler implements WeChatMpMessageHandler {
+
     @Override
     public String getEvent() {
         return WxConsts.MenuButtonType.CLICK;
     }
 
     @Override
-    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService, WxSessionManager sessionManager) {
+    public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
+            WxSessionManager sessionManager) {
         return null;
     }
+
 }

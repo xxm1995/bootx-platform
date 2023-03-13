@@ -12,16 +12,19 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
-/**   
-* Websocket配置
-* @author xxm  
-* @date 2022/3/27 
-*/
+/**
+ * Websocket配置
+ *
+ * @author xxm
+ * @date 2022/3/27
+ */
 @EnableWebSocket
 @Configuration
 @RequiredArgsConstructor
 public class WebSocketConfig implements WebSocketConfigurer {
+
     private final UserNoticeWebSocketInterceptor userNoticeWebSocketInterceptor;
+
     private final UserNoticeWebSocketHandler userNoticeWebSocketHandler;
 
     /**
@@ -48,4 +51,5 @@ public class WebSocketConfig implements WebSocketConfigurer {
                 // 允许跨域
                 .setAllowedOrigins("*");
     }
+
 }

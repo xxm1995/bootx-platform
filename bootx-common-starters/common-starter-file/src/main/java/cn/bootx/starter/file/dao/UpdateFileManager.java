@@ -10,11 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-/**   
-* 
-* @author xxm  
-* @date 2022/1/12 
-*/
+/**
+ * @author xxm
+ * @date 2022/1/12
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
@@ -23,10 +22,9 @@ public class UpdateFileManager extends BaseManager<UpdateFileMapper, UpdateFileI
     /**
      * 分页
      */
-    public Page<UpdateFileInfo> page(PageParam pageParam){
+    public Page<UpdateFileInfo> page(PageParam pageParam) {
         Page<UpdateFileInfo> mpPage = MpUtil.getMpPage(pageParam, UpdateFileInfo.class);
-        return lambdaQuery()
-                .orderByDesc(UpdateFileInfo::getId)
-                .page(mpPage);
+        return lambdaQuery().orderByDesc(UpdateFileInfo::getId).page(mpPage);
     }
+
 }

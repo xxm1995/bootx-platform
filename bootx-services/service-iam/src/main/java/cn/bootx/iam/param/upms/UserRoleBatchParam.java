@@ -14,10 +14,11 @@ import java.util.List;
 @Schema(title = "用户角色参数")
 public class UserRoleBatchParam {
 
-    @Schema(description= "用户的ID", required = true)
+    @Schema(description = "用户的ID", required = true)
     @NotEmpty(message = "用户集合不能为空")
     private List<Long> userIds;
 
-    @Schema(description= "角色的ID集合", required = true)
+    @Schema(description = "角色的ID集合", required = true)
     private List<Long> roleIds;
+
 }

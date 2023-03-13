@@ -25,22 +25,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**   
+/**
  * 微信菜单
- * @author xxm  
- * @date 2022/8/6 
+ *
+ * @author xxm
+ * @date 2022/8/6
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeChatMenuService {
+
     private final WxMpService wxMpService;
+
     private final WeChatMenuManager weChatMenuManager;
 
     /**
      * 添加
      */
-    public void add(WeChatMenuParam param){
+    public void add(WeChatMenuParam param) {
         WeChatMenu weChatMenu = WeChatMenu.init(param);
         weChatMenuManager.save(weChatMenu);
     }
@@ -48,48 +51,47 @@ public class WeChatMenuService {
     /**
      * 修改
      */
-    public void update(WeChatMenuParam param){
+    public void update(WeChatMenuParam param) {
         WeChatMenu weChatMenu = weChatMenuManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
 
-        BeanUtil.copyProperties(param,weChatMenu, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, weChatMenu, CopyOptions.create().ignoreNullValue());
         weChatMenuManager.updateById(weChatMenu);
     }
 
     /**
      * 分页
      */
-    public PageResult<WeChatMenuDto> page(PageParam pageParam, WeChatMenuParam weChatMenuParam){
-        return MpUtil.convert2DtoPageResult(weChatMenuManager.page(pageParam,weChatMenuParam));
+    public PageResult<WeChatMenuDto> page(PageParam pageParam, WeChatMenuParam weChatMenuParam) {
+        return MpUtil.convert2DtoPageResult(weChatMenuManager.page(pageParam, weChatMenuParam));
     }
 
     /**
      * 获取单条
      */
-    public WeChatMenuDto findById(Long id){
+    public WeChatMenuDto findById(Long id) {
         return weChatMenuManager.findById(id).map(WeChatMenu::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
-    public List<WeChatMenuDto> findAll(){
+    public List<WeChatMenuDto> findAll() {
         return ResultConvertUtil.dtoListConvert(weChatMenuManager.findAll());
     }
 
     /**
      * 删除
      */
-    public void delete(Long id){
+    public void delete(Long id) {
         weChatMenuManager.deleteById(id);
     }
-
 
     /**
      * 发布菜单
      */
     @SneakyThrows
     @Transactional(rollbackFor = Exception.class)
-    public void publish(Long id){
+    public void publish(Long id) {
         WeChatMenu weChatMenu = weChatMenuManager.findById(id).orElseThrow(() -> new DataNotExistException("菜单信息不存在"));
         WxMenu wxMenu = weChatMenu.getMenuInfo().toWxMenu();
         WxMpMenuService menuService = wxMpService.getMenuService();
@@ -104,14 +106,11 @@ public class WeChatMenuService {
      */
     @Transactional(rollbackFor = Exception.class)
     @SneakyThrows
-    public void importMenu(){
+    public void importMenu() {
         WxMpMenuService menuService = wxMpService.getMenuService();
         WxMpMenu wxMpMenu = menuService.menuGet();
         WeChatMenuInfo weChatMenuInfo = WeChatMenuInfo.init(wxMpMenu);
-        WeChatMenu weChatMenu = new WeChatMenu()
-                .setName("微信自定义菜单")
-                .setRemark("导入时间" + DateUtil.now())
-                .setPublish(true)
+        WeChatMenu weChatMenu = new WeChatMenu().setName("微信自定义菜单").setRemark("导入时间" + DateUtil.now()).setPublish(true)
                 .setMenuInfo(weChatMenuInfo);
         weChatMenuManager.clearPublish();
         weChatMenuManager.save(weChatMenu);
@@ -121,7 +120,7 @@ public class WeChatMenuService {
      * 清空菜单
      */
     @SneakyThrows
-    public void clearMenu(){
+    public void clearMenu() {
         WxMpMenuService menuService = wxMpService.getMenuService();
         menuService.menuDelete();
     }

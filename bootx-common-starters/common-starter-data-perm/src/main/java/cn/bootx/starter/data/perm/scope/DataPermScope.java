@@ -7,10 +7,11 @@ import lombok.experimental.Accessors;
 import java.util.Set;
 
 /**
-* 数据权限范围参数
-* @author xxm
-* @date 2021/12/22
-*/
+ * 数据权限范围参数
+ *
+ * @author xxm
+ * @date 2021/12/22
+ */
 @Data
 @Accessors(chain = true)
 public class DataPermScope {

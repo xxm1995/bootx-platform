@@ -14,14 +14,16 @@ import org.springframework.stereotype.Repository;
 import java.util.Objects;
 import java.util.Optional;
 
-/**   
-* 微信支付配置
-* @author xxm  
-* @date 2021/3/19 
-*/
+/**
+ * 微信支付配置
+ *
+ * @author xxm
+ * @date 2021/3/19
+ */
 @Repository
 @RequiredArgsConstructor
 public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, WeChatPayConfig> {
+
     private Optional<WeChatPayConfig> weChatPayConfig;
 
     @Override
@@ -39,8 +41,8 @@ public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, W
     /**
      * 获取启用的微信配置
      */
-    public Optional<WeChatPayConfig> findActivity(){
-        if (Objects.isNull(weChatPayConfig)){
+    public Optional<WeChatPayConfig> findActivity() {
+        if (Objects.isNull(weChatPayConfig)) {
             weChatPayConfig = findByField(WeChatPayConfig::getActivity, Boolean.TRUE);
         }
         return weChatPayConfig;
@@ -51,13 +53,11 @@ public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, W
      */
     public Page<WeChatPayConfig> page(PageParam pageParam, WeChatPayConfigParam param) {
         Page<WeChatPayConfig> mpPage = MpUtil.getMpPage(pageParam, WeChatPayConfig.class);
-        return lambdaQuery()
-                .select(WeChatPayConfig.class, MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getName()), WeChatPayConfig::getName,param.getName())
-                .like(StrUtil.isNotBlank(param.getAppId()),WeChatPayConfig::getAppId,param.getAppId())
-                .like(StrUtil.isNotBlank(param.getAppId()),WeChatPayConfig::getMchId,param.getMchId())
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return lambdaQuery().select(WeChatPayConfig.class, MpUtil::excludeBigField)
+                .like(StrUtil.isNotBlank(param.getName()), WeChatPayConfig::getName, param.getName())
+                .like(StrUtil.isNotBlank(param.getAppId()), WeChatPayConfig::getAppId, param.getAppId())
+                .like(StrUtil.isNotBlank(param.getAppId()), WeChatPayConfig::getMchId, param.getMchId())
+                .orderByDesc(MpIdEntity::getId).page(mpPage);
     }
 
     /**
@@ -65,14 +65,14 @@ public class WeChatPayConfigManager extends BaseManager<WeChatPayConfigMapper, W
      */
     public void removeAllActivity() {
         this.clearCache();
-        lambdaUpdate().eq(WeChatPayConfig::getActivity,Boolean.TRUE)
-                .set(WeChatPayConfig::getActivity,Boolean.FALSE);
+        lambdaUpdate().eq(WeChatPayConfig::getActivity, Boolean.TRUE).set(WeChatPayConfig::getActivity, Boolean.FALSE);
     }
 
     /**
      * 清除缓存
      */
-    public void clearCache(){
+    public void clearCache() {
         weChatPayConfig = null;
     }
+
 }

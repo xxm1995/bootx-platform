@@ -6,10 +6,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
-* 城市表
-* @author xxm
-* @date 2022-12-24
-*/
+ * 城市表
+ *
+ * @author xxm
+ * @date 2022-12-24
+ */
 @Data
 @TableName("base_city")
 public class City {
@@ -17,12 +18,16 @@ public class City {
     /** 市/地区编码 */
     @TableId
     private String code;
+
     /** 城市名称 */
     private String name;
+
     /** 省份code */
     private String provinceCode;
+
     /** 转换成dto */
     public RegionDto toDto() {
-        return new RegionDto(code,name,2).setParentCode(provinceCode);
+        return new RegionDto(code, name, 2).setParentCode(provinceCode);
     }
+
 }

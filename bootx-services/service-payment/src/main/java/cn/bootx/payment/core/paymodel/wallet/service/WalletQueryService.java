@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 钱包
+ *
  * @author xxm
  * @date 2022/3/11
  */
@@ -27,7 +28,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class WalletQueryService {
+
     private final WalletManager walletManager;
+
     private final UserQueryService userQueryService;
 
     /**
@@ -48,11 +51,11 @@ public class WalletQueryService {
     /**
      * 获取钱包综合信息
      */
-    public WalletInfoDto getWalletInfo(Long walletId){
+    public WalletInfoDto getWalletInfo(Long walletId) {
         Wallet wallet = walletManager.findById(walletId).orElseThrow(DataNotExistException::new);
         UserInfoDto userInfoDto = userQueryService.findById(wallet.getUserId());
         WalletInfoDto walletInfoDto = new WalletInfoDto();
-        BeanUtil.copyProperties(wallet,walletInfoDto);
+        BeanUtil.copyProperties(wallet, walletInfoDto);
         walletInfoDto.setUserName(userInfoDto.getName());
         return walletInfoDto;
     }
@@ -60,15 +63,15 @@ public class WalletQueryService {
     /**
      * 查询用户 分页
      */
-    public PageResult<WalletDto> page(PageParam pageParam, WalletPayParam param){
-        return MpUtil.convert2DtoPageResult(walletManager.page(pageParam,param));
+    public PageResult<WalletDto> page(PageParam pageParam, WalletPayParam param) {
+        return MpUtil.convert2DtoPageResult(walletManager.page(pageParam, param));
     }
 
     /**
      * 待开通钱包的用户列表
      */
-    public PageResult<UserInfoDto> pageByNotWallet(PageParam pageParam, UserInfoParam userInfoParam){
-        return MpUtil.convert2DtoPageResult(walletManager.pageByNotWallet(pageParam,userInfoParam));
+    public PageResult<UserInfoDto> pageByNotWallet(PageParam pageParam, UserInfoParam userInfoParam) {
+        return MpUtil.convert2DtoPageResult(walletManager.pageByNotWallet(pageParam, userInfoParam));
     }
 
 }

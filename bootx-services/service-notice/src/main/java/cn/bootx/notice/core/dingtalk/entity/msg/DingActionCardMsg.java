@@ -13,10 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-* 钉钉卡片工作通知消息
-* @author xxm  
-* @date 2022/7/20 
-*/
+ * 钉钉卡片工作通知消息
+ *
+ * @author xxm
+ * @date 2022/7/20
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉卡片工作通知消息")
@@ -44,32 +45,30 @@ public class DingActionCardMsg implements DingMsg {
     @Accessors(chain = true)
     @Schema(title = "独立跳转ActionCard样式时的按钮列表")
     public static class OrientationBtn {
+
         @Schema(description = "按钮的标题")
         private String title;
 
         @JsonProperty("action_url")
         @Schema(description = "跳转链接")
         private String actionUrl;
+
     }
 
     /**
      * 转换成钉钉消息
      */
-    public Msg toDingMsg(){
-        ActionCard actionCard = new ActionCard()
-                .setTitle(title)
-                .setMarkdown(markdown)
-                .setSingleTitle(singleTitle)
-                .setSingleUrl(singleUrl)
-                .setBtnOrientation(btnOrientation);
-        if (CollUtil.isNotEmpty(orientationBtnList)){
+    public Msg toDingMsg() {
+        ActionCard actionCard = new ActionCard().setTitle(title).setMarkdown(markdown).setSingleTitle(singleTitle)
+                .setSingleUrl(singleUrl).setBtnOrientation(btnOrientation);
+        if (CollUtil.isNotEmpty(orientationBtnList)) {
             List<ActionCard.BtnJson> btnJsons = orientationBtnList.stream()
                     .map(o -> new ActionCard.BtnJson().setTitle(o.title).setActionUrl(o.actionUrl))
                     .collect(Collectors.toList());
             actionCard.setBtnJsonList(btnJsons);
         }
 
-        return new ActionCardMsg()
-                .setActionCard(actionCard);
+        return new ActionCardMsg().setActionCard(actionCard);
     }
+
 }

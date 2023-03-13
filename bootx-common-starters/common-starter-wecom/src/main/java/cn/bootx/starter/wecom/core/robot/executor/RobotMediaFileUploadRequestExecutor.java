@@ -16,20 +16,20 @@ import java.io.IOException;
 
 /**
  * 机器人文件素材上传
+ *
  * @author xxm
- * @date 2022/7/23 
+ * @date 2022/7/23
  */
 public class RobotMediaFileUploadRequestExecutor implements RequestExecutor<WxMediaUploadResult, UploadMedia> {
 
     @Override
-    public WxMediaUploadResult execute(String uri, UploadMedia uploadMedia, WxType wxType) throws WxErrorException, IOException {
-        File tmpFile = FileUtils.createTmpFile(uploadMedia.getInputStream(), uploadMedia.getFilename(), uploadMedia.getFileType());
+    public WxMediaUploadResult execute(String uri, UploadMedia uploadMedia, WxType wxType)
+            throws WxErrorException, IOException {
+        File tmpFile = FileUtils.createTmpFile(uploadMedia.getInputStream(), uploadMedia.getFilename(),
+                uploadMedia.getFileType());
         String filename = uploadMedia.getFilename() + "." + uploadMedia.getFileType();
         String response;
-        response = HttpUtil.createPost(uri)
-                .form(WeComCode.MEDIA,tmpFile,filename)
-                .execute()
-                .body();
+        response = HttpUtil.createPost(uri).form(WeComCode.MEDIA, tmpFile, filename).execute().body();
 
         WxError result = WxError.fromJson(response);
         if (result.getErrorCode() != 0) {
@@ -39,7 +39,9 @@ public class RobotMediaFileUploadRequestExecutor implements RequestExecutor<WxMe
     }
 
     @Override
-    public void execute(String uri, UploadMedia data, ResponseHandler<WxMediaUploadResult> handler, WxType wxType) throws WxErrorException, IOException {
+    public void execute(String uri, UploadMedia data, ResponseHandler<WxMediaUploadResult> handler, WxType wxType)
+            throws WxErrorException, IOException {
         handler.handle(this.execute(uri, data, wxType));
     }
+
 }

@@ -2,6 +2,7 @@ package cn.bootx.notice.code;
 
 /**
  * 邮箱常量
+ *
  * @author xxm
  * @date 2021/8/5
  */

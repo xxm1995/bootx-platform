@@ -6,11 +6,12 @@ import cn.bootx.starter.audit.log.dto.OperateLogDto;
 import cn.bootx.starter.audit.log.param.OperateLogParam;
 import org.springframework.scheduling.annotation.Async;
 
-/**   
-* 操作日志
-* @author xxm  
-* @date 2021/8/12 
-*/
+/**
+ * 操作日志
+ *
+ * @author xxm
+ * @date 2021/8/12
+ */
 public interface OperateLogService {
 
     /**
@@ -33,4 +34,5 @@ public interface OperateLogService {
      * 删除
      */
     void delete(Long id);
+
 }

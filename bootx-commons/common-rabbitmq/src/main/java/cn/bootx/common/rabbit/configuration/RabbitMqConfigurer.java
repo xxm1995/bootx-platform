@@ -11,10 +11,11 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 
 /**
-* 消息队列配置
-* @author xxm
-* @date 2021/6/25
-*/
+ * 消息队列配置
+ *
+ * @author xxm
+ * @date 2021/6/25
+ */
 @EnableRabbit
 @Configuration
 public class RabbitMqConfigurer {
@@ -23,7 +24,7 @@ public class RabbitMqConfigurer {
      * 注册 RabbitTemplate 对象, 使用默认序列化方式
      */
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,ObjectMapper objectMapper) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, ObjectMapper objectMapper) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         // 使用系统同版jackson 序列化配置
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter(objectMapper));
@@ -42,4 +43,5 @@ public class RabbitMqConfigurer {
         factory.setMessageConverter(converter);
         return factory;
     }
+
 }

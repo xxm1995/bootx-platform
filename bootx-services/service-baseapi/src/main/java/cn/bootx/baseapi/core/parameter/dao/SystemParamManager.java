@@ -19,24 +19,25 @@ import java.util.Optional;
 
 import static cn.bootx.baseapi.code.CachingCode.SYSTEM_PARAM;
 
-/**   
-* 系统参数
-* @author xxm  
-* @date 2021/10/25 
-*/
+/**
+ * 系统参数
+ *
+ * @author xxm
+ * @date 2021/10/25
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class SystemParamManager extends BaseManager<SystemParamMapper, SystemParameter> {
 
     @Override
-    @CacheEvict(value = SYSTEM_PARAM,allEntries = true)
+    @CacheEvict(value = SYSTEM_PARAM, allEntries = true)
     public SystemParameter updateById(SystemParameter systemParameter) {
         return super.updateById(systemParameter);
     }
 
     @Override
-    @CacheEvict(value = SYSTEM_PARAM,allEntries = true)
+    @CacheEvict(value = SYSTEM_PARAM, allEntries = true)
     public boolean deleteById(Serializable id) {
         return super.deleteById(id);
     }
@@ -46,31 +47,31 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
      */
     @Cacheable(value = SYSTEM_PARAM, key = "#key")
     public Optional<SystemParameter> findByParamKey(String key) {
-        return this.findByField(SystemParameter::getParamKey,key);
+        return this.findByField(SystemParameter::getParamKey, key);
     }
 
     /**
      * key重复检查
      */
-    public boolean existsByKey(String key){
-        return existedByField(SystemParameter::getParamKey,key);
+    public boolean existsByKey(String key) {
+        return existedByField(SystemParameter::getParamKey, key);
     }
+
     /**
      * key重复检查
      */
-    public boolean existsByKey(String key, Long id){
-        return existedByField(SystemParameter::getParamKey,key,id);
+    public boolean existsByKey(String key, Long id) {
+        return existedByField(SystemParameter::getParamKey, key, id);
     }
 
     /**
      * 分页
      */
-    public Page<SystemParameter> page(PageParam pageParam, SystemParameterParam param){
+    public Page<SystemParameter> page(PageParam pageParam, SystemParameterParam param) {
         Page<SystemParameter> mpPage = MpUtil.getMpPage(pageParam, SystemParameter.class);
-        return lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getName()),SystemParameter::getName,param.getName())
-                .like(StrUtil.isNotBlank(param.getParamKey()),SystemParameter::getParamKey,param.getParamKey())
+        return lambdaQuery().orderByDesc(MpIdEntity::getId)
+                .like(StrUtil.isNotBlank(param.getName()), SystemParameter::getName, param.getName())
+                .like(StrUtil.isNotBlank(param.getParamKey()), SystemParameter::getParamKey, param.getParamKey())
                 .page(mpPage);
     }
 

@@ -43,4 +43,5 @@ public class MessageTemplate extends MpBaseEntity implements EntityBaseFunction<
     public MessageTemplateDto toDto() {
         return MessageTemplateConvert.CONVERT.convert(this);
     }
+
 }

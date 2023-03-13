@@ -9,9 +9,11 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface RoleConvert {
+
     RoleConvert CONVERT = Mappers.getMapper(RoleConvert.class);
 
     RoleDto convert(Role in);
 
     Role convert(RoleParam in);
+
 }

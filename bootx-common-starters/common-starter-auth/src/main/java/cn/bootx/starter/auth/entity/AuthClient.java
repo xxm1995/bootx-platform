@@ -6,10 +6,11 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
-* 认证应用
-* @author xxm  
-* @date 2022/6/27 
-*/
+ * 认证应用
+ *
+ * @author xxm
+ * @date 2022/6/27
+ */
 @Data
 @Accessors(chain = true)
 public class AuthClient {
@@ -31,4 +32,5 @@ public class AuthClient {
 
     /** 关联登录方式Id */
     private List<Long> loginTypeIds;
+
 }

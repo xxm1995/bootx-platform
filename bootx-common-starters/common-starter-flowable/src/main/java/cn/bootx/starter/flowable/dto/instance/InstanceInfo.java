@@ -8,8 +8,9 @@ import java.time.LocalDateTime;
 
 /**
  * 流程实例信息
+ *
  * @author xxm
- * @date 2022/8/27 
+ * @date 2022/8/27
  */
 @Data
 @Accessors(chain = true)
@@ -27,7 +28,7 @@ public class InstanceInfo {
 
     @Schema(description = "流程实例的状态")
     private String state;
-    
+
     @Schema(description = "开始时间")
     private LocalDateTime startTime;
 
@@ -39,4 +40,5 @@ public class InstanceInfo {
 
     @Schema(description = "发起人名称")
     private String startUserName;
+
 }

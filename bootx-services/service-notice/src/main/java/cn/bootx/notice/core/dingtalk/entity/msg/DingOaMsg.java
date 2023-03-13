@@ -10,11 +10,10 @@ import lombok.experimental.Accessors;
 import static cn.bootx.starter.dingtalk.param.notice.msg.OaMsg.*;
 import static cn.bootx.starter.dingtalk.param.notice.msg.OaMsg.Oa.*;
 
-/**   
-*
-* @author xxm  
-* @date 2022/7/19
-*/
+/**
+ * @author xxm
+ * @date 2022/7/19
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉OA消息")
@@ -43,13 +42,10 @@ public class DingOaMsg implements DingMsg {
      */
     @Override
     public Msg toDingMsg() {
-        Oa oa = new Oa()
-                .setMessageUrl(messageUrl)
-                .setPcMessageUrl(pcMessageUrl)
-                .setHead(head)
-                .setBody(body)
+        Oa oa = new Oa().setMessageUrl(messageUrl).setPcMessageUrl(pcMessageUrl).setHead(head).setBody(body)
                 .setStatusBar(statusBar);
 
         return new OaMsg(oa);
     }
+
 }

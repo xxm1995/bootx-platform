@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- *
  * @author xxm
  * @date 2022/7/26
  */
@@ -24,45 +23,44 @@ import java.util.List;
 @RequestMapping("/wecom/robot/config")
 @RequiredArgsConstructor
 public class WecomRobotConfigController {
-    private final WecomRobotConfigService robotConfigService;
 
+    private final WecomRobotConfigService robotConfigService;
 
     @Operation(summary = "新增机器人配置")
     @PostMapping("/add")
-    public ResResult<Void> add(@RequestBody WecomRobotConfigParam param){
+    public ResResult<Void> add(@RequestBody WecomRobotConfigParam param) {
         robotConfigService.add(param);
         return Res.ok();
     }
 
     @Operation(summary = "修改机器人配置")
     @PostMapping("/update")
-    public ResResult<Void> update(@RequestBody WecomRobotConfigParam param){
+    public ResResult<Void> update(@RequestBody WecomRobotConfigParam param) {
         robotConfigService.update(param);
         return Res.ok();
     }
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<WecomRobotConfigDto>> page(PageParam pageParam,WecomRobotConfigParam param){
-        return Res.ok(robotConfigService.page(pageParam,param));
+    public ResResult<PageResult<WecomRobotConfigDto>> page(PageParam pageParam, WecomRobotConfigParam param) {
+        return Res.ok(robotConfigService.page(pageParam, param));
     }
 
     @Operation(summary = "查询全部")
     @GetMapping("/findAll")
-    public ResResult<List<WecomRobotConfigDto>> findAll(){
+    public ResResult<List<WecomRobotConfigDto>> findAll() {
         return Res.ok(robotConfigService.findAll());
     }
 
-
     @Operation(summary = "获取详情")
     @GetMapping("/findById")
-    public ResResult<WecomRobotConfigDto> findById(Long id){
+    public ResResult<WecomRobotConfigDto> findById(Long id) {
         return Res.ok(robotConfigService.findById(id));
     }
 
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         robotConfigService.delete(id);
         return Res.ok();
     }
@@ -75,7 +73,8 @@ public class WecomRobotConfigController {
 
     @Operation(summary = "编码是否被使用(不包含自己)")
     @GetMapping("/existsByCodeNotId")
-    public ResResult<Boolean> existsByCode(String code,Long id) {
-        return Res.ok(robotConfigService.existsByCode(code,id));
+    public ResResult<Boolean> existsByCode(String code, Long id) {
+        return Res.ok(robotConfigService.existsByCode(code, id));
     }
+
 }

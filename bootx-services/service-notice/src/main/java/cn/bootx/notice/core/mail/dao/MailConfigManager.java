@@ -15,41 +15,39 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
-* @author xxm
-* @date 2020/4/8 13:27
-*/
+ * @author xxm
+ * @date 2020/4/8 13:27
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class MailConfigManager extends BaseManager<MailConfigMapper, MailConfig> {
 
     public Optional<MailConfig> findByActivity() {
-        return findByField(MailConfig::getActivity,Boolean.TRUE);
+        return findByField(MailConfig::getActivity, Boolean.TRUE);
     }
 
     public Optional<MailConfig> findByCode(String code) {
-        return findByField(MailConfig::getCode,code);
+        return findByField(MailConfig::getCode, code);
     }
 
-    public Page<MailConfig> page(PageParam pageParam, MailConfigParam param){
+    public Page<MailConfig> page(PageParam pageParam, MailConfigParam param) {
         Page<MailConfig> mpPage = MpUtil.getMpPage(pageParam, MailConfig.class);
         return this.lambdaQuery().orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getCode()),MailConfig::getCode,param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()),MailConfig::getName,param.getName())
-                .page(mpPage);
+                .like(StrUtil.isNotBlank(param.getCode()), MailConfig::getCode, param.getCode())
+                .like(StrUtil.isNotBlank(param.getName()), MailConfig::getName, param.getName()).page(mpPage);
     }
 
     public boolean existsByCode(String code) {
-        return existedByField(MailConfig::getCode,code);
+        return existedByField(MailConfig::getCode, code);
     }
 
-    public boolean existsByCode(String code, Long id){
-        return existedByField(MailConfig::getCode,code,id);
+    public boolean existsByCode(String code, Long id) {
+        return existedByField(MailConfig::getCode, code, id);
     }
 
     public void removeAllActivity() {
-        lambdaUpdate().eq(MailConfig::getActivity,Boolean.TRUE)
-                .set(MailConfig::getActivity,Boolean.FALSE)
-                .update();
+        lambdaUpdate().eq(MailConfig::getActivity, Boolean.TRUE).set(MailConfig::getActivity, Boolean.FALSE).update();
     }
+
 }

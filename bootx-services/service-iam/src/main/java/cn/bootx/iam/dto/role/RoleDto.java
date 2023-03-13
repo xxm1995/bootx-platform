@@ -9,13 +9,14 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
-* @author xxm
-*/
+ * @author xxm
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "角色")
 public class RoleDto extends BaseDto implements Serializable {
+
     private static final long serialVersionUID = 5532196699667233754L;
 
     @Schema(description = "角色code")

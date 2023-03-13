@@ -11,13 +11,16 @@ import java.util.List;
 
 /**
  * 跳过不启用权限控制的路径
+ *
  * @author xxm
  * @date 2022/5/27
  */
 @Component
 @RequiredArgsConstructor
 public class IgnorePathRouterCheck implements RouterCheck {
+
     private final PermPathService pathService;
+
     private final AntPathMatcher matcher = new AntPathMatcher();
 
     @Override
@@ -32,7 +35,7 @@ public class IgnorePathRouterCheck implements RouterCheck {
         // 获取不启用权限控制的路径
         List<String> ignorePaths = pathService.findIgnorePathByRequestType(method);
 
-        return ignorePaths.stream()
-                .anyMatch(pattern->matcher.match(pattern, path));
+        return ignorePaths.stream().anyMatch(pattern -> matcher.match(pattern, path));
     }
+
 }

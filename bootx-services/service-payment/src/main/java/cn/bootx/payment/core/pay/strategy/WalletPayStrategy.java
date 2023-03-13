@@ -17,19 +17,23 @@ import org.springframework.stereotype.Component;
 
 import static org.springframework.beans.factory.config.BeanDefinition.SCOPE_PROTOTYPE;
 
-/**   
-* 钱包支付策略
-* @author xxm  
-* @date 2020/12/11 
-*/
+/**
+ * 钱包支付策略
+ *
+ * @author xxm
+ * @date 2020/12/11
+ */
 @Scope(SCOPE_PROTOTYPE)
 @Component
 @RequiredArgsConstructor
 public class WalletPayStrategy extends AbsPayStrategy {
 
     private final WalletPaymentService walletPaymentService;
+
     private final WalletPayService walletPayService;
+
     private final WalletService walletService;
+
     private final PaymentService paymentService;
 
     private Wallet wallet;
@@ -48,7 +52,7 @@ public class WalletPayStrategy extends AbsPayStrategy {
         // 获取并校验钱包
         this.wallet = walletService.getNormalWalletByUserId(payParam.getUserId());
         // 判断余额
-        if (BigDecimalUtil.compareTo(this.wallet.getBalance(),getPayMode().getAmount()) < 0) {
+        if (BigDecimalUtil.compareTo(this.wallet.getBalance(), getPayMode().getAmount()) < 0) {
             throw new WalletLackOfBalanceException();
         }
     }
@@ -58,10 +62,8 @@ public class WalletPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doPayHandler() {
-        walletPayService.pay(getPayMode().getAmount(),
-                this.getPayment(),
-                this.wallet);
-        walletPaymentService.savePayment(this.getPayment(), this.getPayParam(),this.getPayMode(),this.wallet);
+        walletPayService.pay(getPayMode().getAmount(), this.getPayment(), this.wallet);
+        walletPaymentService.savePayment(this.getPayment(), this.getPayParam(), this.getPayMode(), this.wallet);
     }
 
     /**
@@ -86,9 +88,9 @@ public class WalletPayStrategy extends AbsPayStrategy {
      */
     @Override
     public void doRefundHandler() {
-        walletPayService.refund(this.getPayment().getId(),this.getPayMode().getAmount());
-        walletPaymentService.updateRefund(this.getPayment().getId(),this.getPayMode().getAmount());
-        paymentService.updateRefundSuccess(this.getPayment(),this.getPayMode().getAmount(), PayChannelEnum.WALLET);
+        walletPayService.refund(this.getPayment().getId(), this.getPayMode().getAmount());
+        walletPaymentService.updateRefund(this.getPayment().getId(), this.getPayMode().getAmount());
+        paymentService.updateRefundSuccess(this.getPayment(), this.getPayMode().getAmount(), PayChannelEnum.WALLET);
     }
 
 }

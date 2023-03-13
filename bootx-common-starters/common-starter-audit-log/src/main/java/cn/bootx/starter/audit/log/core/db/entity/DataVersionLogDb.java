@@ -13,10 +13,11 @@ import lombok.experimental.Accessors;
 import java.time.LocalDateTime;
 
 /**
-* 数据版本日志
-* @author xxm
-* @date 2022/1/10
-*/
+ * 数据版本日志
+ *
+ * @author xxm
+ * @date 2022/1/10
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -51,4 +52,5 @@ public class DataVersionLogDb extends MpIdEntity implements EntityBaseFunction<D
     public DataVersionLogDto toDto() {
         return LogConvert.CONVERT.convert(this);
     }
+
 }

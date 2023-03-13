@@ -1,10 +1,11 @@
 package cn.bootx.common.redis.listener;
 
 /**
-* redis订阅消息
-* @author xxm  
-* @date 2022/5/7 
-*/
+ * redis订阅消息
+ *
+ * @author xxm
+ * @date 2022/5/7
+ */
 public interface RedisTopicListener<T> {
 
     /**
@@ -17,6 +18,5 @@ public interface RedisTopicListener<T> {
      * @param obj 消息对象
      */
     void onMessage(T obj);
-
 
 }

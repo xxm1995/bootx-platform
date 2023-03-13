@@ -10,6 +10,7 @@ import java.util.Objects;
 
 /**
  * 注解方式过滤
+ *
  * @author xxm
  * @date 2021/12/21
  */
@@ -23,17 +24,18 @@ public class IgnoreAnnotationRouterCheck implements RouterCheck {
 
     @Override
     public boolean check(Object handler) {
-        if (handler instanceof HandlerMethod){
+        if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             // controller上是否加了跳过鉴权注解
             IgnoreAuth ignoreAuth = handlerMethod.getBeanType().getAnnotation(IgnoreAuth.class);
             if (Objects.isNull(ignoreAuth)) {
                 // 方法上上是否加了跳过鉴权注解
                 ignoreAuth = handlerMethod.getMethodAnnotation(IgnoreAuth.class);
-            } else {
+            }
+            else {
                 // controller和方法上都加了跳过鉴权注解,以方法上为准
                 IgnoreAuth annotation = handlerMethod.getMethodAnnotation(IgnoreAuth.class);
-                if (Objects.nonNull(annotation)){
+                if (Objects.nonNull(annotation)) {
                     ignoreAuth = annotation;
                 }
             }
@@ -45,18 +47,19 @@ public class IgnoreAnnotationRouterCheck implements RouterCheck {
     /**
      * 忽略鉴权注解处理
      */
-    private boolean ignoreAuth(IgnoreAuth ignoreAuth){
-        if (Objects.isNull(ignoreAuth)){
+    private boolean ignoreAuth(IgnoreAuth ignoreAuth) {
+        if (Objects.isNull(ignoreAuth)) {
             return false;
         }
         // 忽略鉴权
-        if (ignoreAuth.ignore()){
+        if (ignoreAuth.ignore()) {
             return true;
         }
         // 只校验登录状态
-        if (ignoreAuth.login()){
+        if (ignoreAuth.login()) {
             return SecurityUtil.getCurrentUser().isPresent();
         }
         return false;
     }
+
 }

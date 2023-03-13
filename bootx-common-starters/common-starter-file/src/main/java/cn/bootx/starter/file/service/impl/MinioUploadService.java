@@ -21,6 +21,7 @@ import java.util.Objects;
 
 /**
  * minio方式存储文件
+ *
  * @author xxm
  * @date 2022/1/12
  */
@@ -28,7 +29,9 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class MinioUploadService implements UploadService {
+
     private final FileUploadProperties fileUploadProperties;
+
     private MinioClient client;
 
     /**
@@ -37,7 +40,7 @@ public class MinioUploadService implements UploadService {
     @Override
     public boolean enable(FileUploadTypeEnum type) {
         boolean b = type == FileUploadTypeEnum.MINIO;
-        if (b){
+        if (b) {
             this.doInit();
         }
         return b;
@@ -50,17 +53,14 @@ public class MinioUploadService implements UploadService {
     @Override
     public UpdateFileInfo upload(MultipartFile file, UploadFileContext context) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
-        PutObjectArgs putObjectArgs = PutObjectArgs.builder()
-                .bucket(minio.getBucket()) // bucket 必须传递
-                .contentType(file.getContentType())
-                .object(context.getFileId()+"."+context.getFileSuffix())
+        PutObjectArgs putObjectArgs = PutObjectArgs.builder().bucket(minio.getBucket()) // bucket
+                                                                                        // 必须传递
+                .contentType(file.getContentType()).object(context.getFileId() + "." + context.getFileSuffix())
                 .stream(file.getInputStream(), file.getSize(), -1) // 文件内容
                 .build();
         // 执行上传
         client.putObject(putObjectArgs);
-        return new UpdateFileInfo()
-                .setExternalStorageId(putObjectArgs.object())
-                .setFileSize(file.getSize());
+        return new UpdateFileInfo().setExternalStorageId(putObjectArgs.object()).setFileSize(file.getSize());
     }
 
     /**
@@ -71,11 +71,9 @@ public class MinioUploadService implements UploadService {
     public void preview(UpdateFileInfo updateFileInfo, HttpServletResponse response) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         String storageId = updateFileInfo.getExternalStorageId();
-        GetObjectResponse inputStream = client.getObject(GetObjectArgs.builder()
-                .bucket(minio.getBucket())
-                .object(storageId)
-                .build());
-        //获取响应输出流
+        GetObjectResponse inputStream = client
+                .getObject(GetObjectArgs.builder().bucket(minio.getBucket()).object(storageId).build());
+        // 获取响应输出流
         ServletOutputStream os = response.getOutputStream();
         IoUtil.copy(inputStream, os);
         response.addHeader(HttpHeaders.CONTENT_DISPOSITION, updateFileInfo.getFileType());
@@ -91,8 +89,8 @@ public class MinioUploadService implements UploadService {
     public InputStream download(UpdateFileInfo updateFileInfo) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         String storageId = updateFileInfo.getExternalStorageId();
-        return client.getObject(GetObjectArgs.builder()
-                .bucket(minio.getBucket()) // bucket 必须传递
+        return client.getObject(GetObjectArgs.builder().bucket(minio.getBucket()) // bucket
+                                                                                  // 必须传递
                 .object(storageId) // 相对路径作为 key
                 .build());
     }
@@ -104,8 +102,8 @@ public class MinioUploadService implements UploadService {
     @Override
     public void delete(UpdateFileInfo updateFileInfo) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
-        client.removeObject(RemoveObjectArgs.builder()
-                .bucket(minio.getBucket()) // bucket 必须传递
+        client.removeObject(RemoveObjectArgs.builder().bucket(minio.getBucket()) // bucket
+                                                                                 // 必须传递
                 .object(updateFileInfo.getExternalStorageId()) // 相对路径作为 key
                 .build());
     }
@@ -114,15 +112,15 @@ public class MinioUploadService implements UploadService {
      * 初始化
      */
     protected void doInit() {
-        if (Objects.nonNull(client)){
+        if (Objects.nonNull(client)) {
             return;
         }
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         // 初始化客户端
-        client = MinioClient.builder()
-                .endpoint(minio.getEndpoint()) // Endpoint URL
+        client = MinioClient.builder().endpoint(minio.getEndpoint()) // Endpoint URL
                 .region(minio.getRegion()) // Region
                 .credentials(minio.getAccessKey(), minio.getAccessSecret()) // 认证密钥
                 .build();
     }
+
 }

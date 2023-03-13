@@ -7,13 +7,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-/**   
-* 消息模板转换
-* @author xxm  
-* @date 2021/8/10 
-*/
+/**
+ * 消息模板转换
+ *
+ * @author xxm
+ * @date 2021/8/10
+ */
 @Mapper
 public interface MessageTemplateConvert {
+
     MessageTemplateConvert CONVERT = Mappers.getMapper(MessageTemplateConvert.class);
 
     MessageTemplateDto convert(MessageTemplate in);
@@ -21,4 +23,5 @@ public interface MessageTemplateConvert {
     MessageTemplate convert(MessageTemplateDto in);
 
     MessageTemplate convert(MessageTemplateParam in);
+
 }

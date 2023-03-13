@@ -27,6 +27,7 @@ import static cn.bootx.payment.code.pay.PayStatusCode.TRADE_REFUNDED;
 
 /**
  * 取消订单处理
+ *
  * @author xxm
  * @date 2021/3/2
  */
@@ -34,6 +35,7 @@ import static cn.bootx.payment.code.pay.PayStatusCode.TRADE_REFUNDED;
 @Service
 @RequiredArgsConstructor
 public class PayCancelService {
+
     private final PaymentService paymentService;
 
     private final PaymentEventSender paymentEventSender;
@@ -48,23 +50,21 @@ public class PayCancelService {
         this.cancelPayment(payment);
     }
 
-
     /**
      * 根据paymentId取消支付记录
      */
     @Transactional(rollbackFor = Exception.class)
-    public void cancelByPaymentId(Long paymentId){
-        Payment payment = paymentService.findById(paymentId)
-                .orElseThrow(() -> new PayFailureException("未找到支付单"));
+    public void cancelByPaymentId(Long paymentId) {
+        Payment payment = paymentService.findById(paymentId).orElseThrow(() -> new PayFailureException("未找到支付单"));
         this.cancelPayment(payment);
     }
 
     /**
      * 取消支付记录
      */
-    private void cancelPayment(Payment payment){
+    private void cancelPayment(Payment payment) {
         // 状态检查, 成功/退款/退款中 不处理
-        List<Integer> trades = Arrays.asList(TRADE_SUCCESS,TRADE_REFUNDING,TRADE_REFUNDED);
+        List<Integer> trades = Arrays.asList(TRADE_SUCCESS, TRADE_REFUNDING, TRADE_REFUNDED);
         if (trades.contains(payment.getPayStatus())) {
             throw new PayFailureException("支付已完成, 无法撤销");
         }
@@ -84,7 +84,7 @@ public class PayCancelService {
         }
 
         // 3.执行取消订单
-        this.doHandler(payment,paymentStrategyList,(strategyList, paymentObj) -> {
+        this.doHandler(payment, paymentStrategyList, (strategyList, paymentObj) -> {
             // 发起取消进行的执行方法
             strategyList.forEach(AbsPayStrategy::doCancelHandler);
             // 取消订单
@@ -93,8 +93,7 @@ public class PayCancelService {
         });
 
         // 4. 获取支付记录信息
-        payment = paymentService.findById(payment.getId())
-                .orElseThrow(PayNotExistedException::new);
+        payment = paymentService.findById(payment.getId()).orElseThrow(PayNotExistedException::new);
 
         // 5. 发布撤销事件
         paymentEventSender.sendPayCancel(PayEventBuilder.buildPayCancel(payment));
@@ -106,17 +105,18 @@ public class PayCancelService {
      * @param strategyList 支付策略
      * @param successCallback 成功操作
      */
-    private void doHandler(Payment payment,
-                           List<AbsPayStrategy> strategyList,
-                           PayStrategyConsumer<List<AbsPayStrategy>, Payment> successCallback) {
+    private void doHandler(Payment payment, List<AbsPayStrategy> strategyList,
+            PayStrategyConsumer<List<AbsPayStrategy>, Payment> successCallback) {
 
         try {
             // 执行
             successCallback.accept(strategyList, payment);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // error事件的处理
             log.warn("取消订单失败");
             throw e;
         }
     }
+
 }

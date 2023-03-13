@@ -7,13 +7,15 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
-* 数据权限
-* @author xxm
-* @date 2021/11/23
-*/
+ * 数据权限
+ *
+ * @author xxm
+ * @date 2021/11/23
+ */
 @ComponentScan
 @ConfigurationPropertiesScan
 @MapperScan(annotationClass = Mapper.class)
 @AutoConfiguration
 public class DataPermAutoConfiguration {
+
 }

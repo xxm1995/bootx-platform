@@ -24,21 +24,23 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
-* 微信支付配置
-* @author xxm
-* @date 2021/3/5
-*/
+ * 微信支付配置
+ *
+ * @author xxm
+ * @date 2021/3/5
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WeChatPayConfigService {
+
     private final WeChatPayConfigManager weChatPayConfigManager;
 
     /**
      * 添加微信支付配置
      */
     @Transactional(rollbackFor = Exception.class)
-    public void add(WeChatPayConfigParam param){
+    public void add(WeChatPayConfigParam param) {
         WeChatPayConfig weChatPayConfig = WeChatPayConfig.init(param);
         weChatPayConfig.setActivity(false);
         weChatPayConfigManager.save(weChatPayConfig);
@@ -48,15 +50,16 @@ public class WeChatPayConfigService {
      * 修改
      */
     @Transactional(rollbackFor = Exception.class)
-    public void update(WeChatPayConfigParam param){
+    public void update(WeChatPayConfigParam param) {
         WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(param.getId())
                 .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
         param.setActivity(null);
-        BeanUtil.copyProperties(param,weChatPayConfig, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, weChatPayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
-        if (CollUtil.isNotEmpty(param.getPayWayList())){
+        if (CollUtil.isNotEmpty(param.getPayWayList())) {
             weChatPayConfig.setPayWays(String.join(",", param.getPayWayList()));
-        } else {
+        }
+        else {
             weChatPayConfig.setPayWays(null);
         }
         weChatPayConfigManager.updateById(weChatPayConfig);
@@ -65,17 +68,18 @@ public class WeChatPayConfigService {
     /**
      * 分页
      */
-    public PageResult<WeChatPayConfigDto> page(PageParam pageParam,WeChatPayConfigParam param){
-        return MpUtil.convert2DtoPageResult(weChatPayConfigManager.page(pageParam,param));
+    public PageResult<WeChatPayConfigDto> page(PageParam pageParam, WeChatPayConfigParam param) {
+        return MpUtil.convert2DtoPageResult(weChatPayConfigManager.page(pageParam, param));
     }
 
     /**
      * 设置启用的支付宝配置
      */
     @Transactional(rollbackFor = Exception.class)
-    public void setUpActivity(Long id){
-        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
-        if (Objects.equals(weChatPayConfig.getActivity(),Boolean.TRUE)){
+    public void setUpActivity(Long id) {
+        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id)
+                .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
+        if (Objects.equals(weChatPayConfig.getActivity(), Boolean.TRUE)) {
             return;
         }
         weChatPayConfigManager.removeAllActivity();
@@ -87,31 +91,28 @@ public class WeChatPayConfigService {
      * 清除启用状态
      */
     @Transactional(rollbackFor = Exception.class)
-    public void clearActivity(Long id){
-        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
-        if (Objects.equals(weChatPayConfig.getActivity(),Boolean.TRUE)){
+    public void clearActivity(Long id) {
+        WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id)
+                .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
+        if (Objects.equals(weChatPayConfig.getActivity(), Boolean.TRUE)) {
             return;
         }
         weChatPayConfig.setActivity(false);
         weChatPayConfigManager.updateById(weChatPayConfig);
     }
 
-
     /**
      * 获取
      */
-    public WeChatPayConfigDto findById(Long id){
-        return weChatPayConfigManager.findById(id)
-                .map(WeChatPayConfig::toDto)
-                .orElseThrow(DataNotExistException::new);
+    public WeChatPayConfigDto findById(Long id) {
+        return weChatPayConfigManager.findById(id).map(WeChatPayConfig::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 微信支持支付方式
      */
     public List<KeyValue> findPayWayList() {
-        return WeChatPayWay.getPayWays().stream()
-                .map(e->new KeyValue(e.getCode(),e.getName()))
+        return WeChatPayWay.getPayWays().stream().map(e -> new KeyValue(e.getCode(), e.getName()))
                 .collect(Collectors.toList());
     }
 

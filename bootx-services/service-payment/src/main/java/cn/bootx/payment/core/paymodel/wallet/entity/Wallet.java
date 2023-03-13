@@ -11,11 +11,12 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 
-/**   
-* 钱包
-* @author xxm  
-* @date 2020/12/8 
-*/
+/**
+ * 钱包
+ *
+ * @author xxm
+ * @date 2020/12/8
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -35,4 +36,5 @@ public class Wallet extends MpBaseEntity implements EntityBaseFunction<WalletDto
     public WalletDto toDto() {
         return WalletConvert.CONVERT.convert(this);
     }
+
 }

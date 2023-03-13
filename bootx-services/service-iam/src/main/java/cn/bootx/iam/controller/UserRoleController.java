@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2020/5/1 18:09
-*/
-@Tag(name ="用户角色管理")
+ * @author xxm
+ * @date 2020/5/1 18:09
+ */
+@Tag(name = "用户角色管理")
 @RestController
 @RequestMapping("/user/role")
 @AllArgsConstructor
@@ -26,7 +26,7 @@ public class UserRoleController {
 
     private final UserRoleService userRoleService;
 
-    @Operation( summary = "给用户分配角色")
+    @Operation(summary = "给用户分配角色")
     @PostMapping(value = "/saveAssign")
     public ResResult<Void> saveAssign(@RequestBody UserRoleParam param) {
         ValidationUtil.validateParam(param);
@@ -34,7 +34,7 @@ public class UserRoleController {
         return Res.ok();
     }
 
-    @Operation( summary = "给用户分配角色(批量)")
+    @Operation(summary = "给用户分配角色(批量)")
     @PostMapping(value = "/saveAssignBatch")
     public ResResult<Void> saveAssignBatch(@RequestBody UserRoleBatchParam param) {
         ValidationUtil.validateParam(param);
@@ -42,13 +42,13 @@ public class UserRoleController {
         return Res.ok();
     }
 
-    @Operation( summary = "根据用户ID获取到角色集合")
+    @Operation(summary = "根据用户ID获取到角色集合")
     @GetMapping(value = "/findRolesByUser")
     public ResResult<List<RoleDto>> findRolesByUser(Long id) {
         return Res.ok(userRoleService.findRolesByUser(id));
     }
 
-    @Operation( summary = "根据用户ID获取到角色id集合")
+    @Operation(summary = "根据用户ID获取到角色id集合")
     @GetMapping(value = "/findRoleIdsByUser")
     public ResResult<List<Long>> findRoleIdsByUser(Long id) {
         return Res.ok(userRoleService.findRoleIdsByUser(id));

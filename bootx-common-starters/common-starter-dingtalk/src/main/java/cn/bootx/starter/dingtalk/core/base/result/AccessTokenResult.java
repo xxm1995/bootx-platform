@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -14,12 +13,11 @@ import lombok.experimental.Accessors;
 public class AccessTokenResult<T> extends DingTalkResult<T> {
 
     @JsonProperty("access_token")
-    @Schema(description= "访问凭证")
+    @Schema(description = "访问凭证")
     private String accessToken;
 
     @JsonProperty("expires_in")
-    @Schema(description= "过期时间")
+    @Schema(description = "过期时间")
     private Integer expiresIn;
-
 
 }

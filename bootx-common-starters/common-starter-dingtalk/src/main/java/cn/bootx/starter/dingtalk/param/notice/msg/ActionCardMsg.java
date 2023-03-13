@@ -9,10 +9,11 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
-* 钉钉卡片消息
-* @author xxm
-* @date 2022/7/19
-*/
+ * 钉钉卡片消息
+ *
+ * @author xxm
+ * @date 2022/7/19
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -26,7 +27,7 @@ public class ActionCardMsg extends Msg {
     @Data
     @Accessors(chain = true)
     @Schema(title = "消息内容，支持markdown")
-    public static class ActionCard{
+    public static class ActionCard {
 
         @Schema(description = "透出到会话列表和通知的文案")
         private String title;
@@ -61,6 +62,9 @@ public class ActionCardMsg extends Msg {
             @JsonProperty("action_url")
             @Schema(description = "跳转链接")
             private String actionUrl;
+
         }
+
     }
+
 }

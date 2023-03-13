@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 /**
  * 储值卡支付
+ *
  * @author xxm
  * @date 2022/3/14
  */
@@ -41,7 +42,9 @@ import java.util.stream.Collectors;
 public class VoucherPayService {
 
     private final VoucherManager voucherManager;
+
     private final VoucherPaymentManager voucherPaymentManager;
+
     private final VoucherLogManager voucherLogManager;
 
     /**
@@ -54,10 +57,12 @@ public class VoucherPayService {
             String extraParamsJson = payModeParam.getExtraParamsJson();
             if (StrUtil.isNotBlank(extraParamsJson)) {
                 voucherPayParam = JSONUtil.toBean(extraParamsJson, VoucherPayParam.class);
-            } else {
+            }
+            else {
                 throw new PayFailureException("储值卡支付参数错误");
             }
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             throw new PayFailureException("储值卡支付参数错误");
         }
 
@@ -72,9 +77,7 @@ public class VoucherPayService {
             throw new PayFailureException("储值卡不再有效期内");
         }
         // 金额是否满足
-        BigDecimal amount = vouchers.stream().map(Voucher::getBalance)
-                .reduce(BigDecimal::add)
-                .orElse(BigDecimal.ZERO);
+        BigDecimal amount = vouchers.stream().map(Voucher::getBalance).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
         if (BigDecimalUtil.compareTo(amount, payModeParam.getAmount()) < 0) {
             throw new PayFailureException("储值卡余额不足");
         }
@@ -97,11 +100,8 @@ public class VoucherPayService {
 
             BigDecimal balance = voucher.getBalance();
             // 日志
-            VoucherLog voucherLog = new VoucherLog()
-                    .setPaymentId(payment.getId())
-                    .setBusinessId(payment.getBusinessId())
-                    .setType(VoucherCode.LOG_PAY)
-                    .setVoucherId(voucher.getId())
+            VoucherLog voucherLog = new VoucherLog().setPaymentId(payment.getId())
+                    .setBusinessId(payment.getBusinessId()).setType(VoucherCode.LOG_PAY).setVoucherId(voucher.getId())
                     .setVoucherNo(voucher.getCardNo());
 
             // 待支付额大于储值卡余额. 全扣光
@@ -109,7 +109,8 @@ public class VoucherPayService {
                 amount = amount.subtract(balance);
                 voucher.setBalance(BigDecimal.ZERO);
                 voucherLog.setAmount(balance);
-            } else {
+            }
+            else {
                 voucher.setBalance(balance.subtract(amount));
                 voucherLog.setAmount(amount);
             }
@@ -126,20 +127,17 @@ public class VoucherPayService {
         // 查找支付记录日志
         List<VoucherLog> voucherLogs = voucherLogManager.findByPaymentIdAndType(paymentId, VoucherCode.LOG_PAY);
         // 查出关联的储值卡
-        Map<Long, VoucherLog> voucherLogMap = voucherLogs.stream().collect(Collectors.toMap(VoucherLog::getVoucherId, Function.identity()));
+        Map<Long, VoucherLog> voucherLogMap = voucherLogs.stream()
+                .collect(Collectors.toMap(VoucherLog::getVoucherId, Function.identity()));
         List<Voucher> vouchers = voucherManager.findAllByIds(voucherLogMap.keySet());
         // 执行退款并记录日志
         List<VoucherLog> logs = new ArrayList<>();
         for (Voucher voucher : vouchers) {
             VoucherLog voucherLog = voucherLogMap.get(voucher.getId());
             voucher.setBalance(voucher.getBalance().add(voucherLog.getAmount()));
-            VoucherLog log = new VoucherLog()
-                    .setAmount(voucherLog.getAmount())
-                    .setPaymentId(paymentId)
-                    .setBusinessId(voucherLog.getBusinessId())
-                    .setVoucherId(voucher.getId())
-                    .setVoucherNo(voucher.getCardNo())
-                    .setType(VoucherCode.LOG_CLOSE);
+            VoucherLog log = new VoucherLog().setAmount(voucherLog.getAmount()).setPaymentId(paymentId)
+                    .setBusinessId(voucherLog.getBusinessId()).setVoucherId(voucher.getId())
+                    .setVoucherNo(voucher.getCardNo()).setType(VoucherCode.LOG_CLOSE);
             logs.add(log);
         }
         voucherManager.updateAllById(vouchers);
@@ -149,21 +147,18 @@ public class VoucherPayService {
     /**
      * 退款 TODO 延长卡的有效期,
      */
-    public void refund(Long paymentId, BigDecimal amount){
-        VoucherPayment voucherPayment = voucherPaymentManager.findByPaymentId(paymentId).orElseThrow(() -> new PayFailureException("储值卡支付记录不存在"));
+    public void refund(Long paymentId, BigDecimal amount) {
+        VoucherPayment voucherPayment = voucherPaymentManager.findByPaymentId(paymentId)
+                .orElseThrow(() -> new PayFailureException("储值卡支付记录不存在"));
 
         Long voucherId = Long.valueOf(voucherPayment.getVoucherIds().split(",")[0]);
         Voucher voucher = voucherManager.findById(voucherId).orElseThrow(DataNotExistException::new);
 
         voucher.setBalance(voucher.getBalance().add(amount));
 
-        VoucherLog log = new VoucherLog()
-                .setAmount(amount)
-                .setPaymentId(paymentId)
-                .setBusinessId(voucherPayment.getBusinessId())
-                .setVoucherId(voucher.getId())
-                .setVoucherNo(voucher.getCardNo())
-                .setType(VoucherCode.LOG_REFUND);
+        VoucherLog log = new VoucherLog().setAmount(amount).setPaymentId(paymentId)
+                .setBusinessId(voucherPayment.getBusinessId()).setVoucherId(voucher.getId())
+                .setVoucherNo(voucher.getCardNo()).setType(VoucherCode.LOG_REFUND);
         voucherManager.updateById(voucher);
         voucherLogManager.save(log);
     }
@@ -171,10 +166,11 @@ public class VoucherPayService {
     /**
      * 卡信息检查
      */
-    private boolean check(List<Voucher> vouchers){
+    private boolean check(List<Voucher> vouchers) {
         // 判断有效期
-        return vouchers.stream()
-                .filter(voucher -> !Objects.equals(voucher.getEnduring(),true))
-                .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(), voucher.getEndTime()));
+        return vouchers.stream().filter(voucher -> !Objects.equals(voucher.getEnduring(), true))
+                .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(),
+                        voucher.getEndTime()));
     }
+
 }

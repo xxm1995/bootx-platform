@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * 中国行政区域通用对象
+ *
  * @author xxm
  * @date 2022/12/24
  */

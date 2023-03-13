@@ -6,6 +6,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 文件上传oss信息
+ *
  * @author xxm
  * @date 2023/2/21
  */
@@ -13,7 +14,9 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(title = "文件上传oss信息")
 public class OssInfo {
+
     private String bucketName;
+
     /** bucket 文件访预览地址 */
     private String bucketURL;
 

@@ -12,24 +12,25 @@ import javax.validation.constraints.Null;
 import java.io.Serializable;
 
 /**
-* @author xxm
-* @date 2021/7/12
-*/
+ * @author xxm
+ * @date 2021/7/12
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "菜单权限")
 public class PermMenuParam implements Serializable {
+
     private static final long serialVersionUID = 3017200753543614579L;
 
-    @Null(groups = { edit.class})
-    @NotNull(groups = {ValidationGroup.add.class})
+    @Null(groups = { edit.class })
+    @NotNull(groups = { ValidationGroup.add.class })
     @Schema(description = "主键")
     private Long id;
 
     @Schema(description = "父id")
     private Long parentId;
 
-    @NotEmpty(groups = {ValidationGroup.add.class, edit.class})
+    @NotEmpty(groups = { ValidationGroup.add.class, edit.class })
     @Schema(description = "关联应用code")
     private String clientCode;
 

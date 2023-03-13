@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * SQL查询
+ *
  * @author xxm
  * @date 2023/3/9
  */
@@ -24,18 +26,19 @@ import java.util.List;
 @RequestMapping("/query/sql")
 @RequiredArgsConstructor
 public class QuerySqlController {
+
     private final QuerySqlService querySqlService;
 
     @Operation(summary = "测试SQL解析和执行")
     @PostMapping("/test")
-    public ResResult<Void> test(){
-        querySqlService.querySql();
+    public ResResult<Void> test(@RequestBody Map<String, Object> map) {
+        querySqlService.querySql(map);
         return Res.ok();
     }
 
     @Operation(summary = "通过SQL查出结果字段")
     @PostMapping("/queryFieldBySql")
-    public ResResult<List<String>> queryFieldBySql(@RequestBody QueryFieldParam param){
+    public ResResult<List<String>> queryFieldBySql(@RequestBody QueryFieldParam param) {
         return Res.ok(querySqlService.queryFieldBySql(param));
     }
 

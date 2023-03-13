@@ -22,37 +22,39 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2021/9/6
-*/
+ * @author xxm
+ * @date 2021/9/6
+ */
 @Validated
-@Tag(name ="管理用户(管理员级别)")
+@Tag(name = "管理用户(管理员级别)")
 @RestController
 @RequestMapping("/user/admin")
 @RequiredArgsConstructor
 public class UserAdminController {
+
     private final UserAdminService userAdminService;
+
     private final UserQueryService userQueryService;
 
-    @Operation( summary = "根据用户id查询用户")
+    @Operation(summary = "根据用户id查询用户")
     @GetMapping("/findById")
     public ResResult<UserInfoDto> findById(Long id) {
         return Res.ok(userQueryService.findById(id));
     }
 
-    @Operation( summary = "查询用户详情")
+    @Operation(summary = "查询用户详情")
     @GetMapping("/getUserInfoWhole")
-    public ResResult<UserInfoWhole> getUserInfoWhole(Long id){
+    public ResResult<UserInfoWhole> getUserInfoWhole(Long id) {
         return Res.ok(userAdminService.getUserInfoWhole(id));
     }
 
-    @Operation( summary = "根据邮箱查询用户")
+    @Operation(summary = "根据邮箱查询用户")
     @GetMapping("/getByEmail")
     public ResResult<UserInfoDto> getByEmail(String email) {
         return Res.ok(userQueryService.findByEmail(email));
     }
 
-    @Operation( summary = "根据手机号查询用户")
+    @Operation(summary = "根据手机号查询用户")
     @GetMapping("/getByPhone")
     public ResResult<UserInfoDto> getByPhone(String phone) {
         return Res.ok(userQueryService.findByPhone(phone));
@@ -60,63 +62,63 @@ public class UserAdminController {
 
     @Operation(summary = "添加用户")
     @PostMapping("/add")
-    public ResResult<Void> add(@RequestBody UserInfoParam userInfoParam){
+    public ResResult<Void> add(@RequestBody UserInfoParam userInfoParam) {
         userAdminService.add(userInfoParam);
         return Res.ok();
     }
 
     @Operation(summary = "修改用户")
     @PostMapping("/update")
-    public ResResult<Void> update(@RequestBody UserInfoParam userInfoParam){
+    public ResResult<Void> update(@RequestBody UserInfoParam userInfoParam) {
         userAdminService.update(userInfoParam);
         return Res.ok();
     }
 
     @Operation(summary = "重置密码")
-    @OperateLog(title = "重置密码",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "重置密码", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @PostMapping("/restartPassword")
     public ResResult<Void> restartPassword(@NotNull(message = "用户不可为空") Long userId,
-                                           @NotBlank(message = "新密码不能为空") String newPassword){
-        userAdminService.restartPassword(userId,newPassword);
+            @NotBlank(message = "新密码不能为空") String newPassword) {
+        userAdminService.restartPassword(userId, newPassword);
         return Res.ok();
     }
 
-    @OperateLog(title = "锁定用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "锁定用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "锁定用户")
     @PostMapping("/lock")
-    public ResResult<Void> lock(Long userId){
+    public ResResult<Void> lock(Long userId) {
         userAdminService.lock(userId);
         return Res.ok();
     }
 
-    @OperateLog(title = "批量锁定用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "批量锁定用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "批量锁定用户")
     @PostMapping("/lockBatch")
-    public ResResult<Void> lockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds){
+    public ResResult<Void> lockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds) {
         userAdminService.lockBatch(userIds);
         return Res.ok();
     }
 
-    @OperateLog(title = "解锁用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "解锁用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "解锁用户")
     @PostMapping("/unlock")
-    public ResResult<Void> unlock(@NotNull(message = "用户不可为空") Long userId){
+    public ResResult<Void> unlock(@NotNull(message = "用户不可为空") Long userId) {
         userAdminService.unlock(userId);
         return Res.ok();
     }
 
-    @OperateLog(title = "批量解锁用户",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "批量解锁用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "批量解锁用户")
     @PostMapping("/unlockBatch")
-    public ResResult<Void> unlockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds){
+    public ResResult<Void> unlockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds) {
         userAdminService.unlockBatch(userIds);
         return Res.ok();
     }
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<UserInfoDto>> page(PageParam pageParam, UserInfoParam userInfoParam){
-        return Res.ok(userAdminService.page(pageParam,userInfoParam));
+    public ResResult<PageResult<UserInfoDto>> page(PageParam pageParam, UserInfoParam userInfoParam) {
+        return Res.ok(userAdminService.page(pageParam, userInfoParam));
     }
 
 }

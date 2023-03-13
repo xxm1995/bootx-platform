@@ -7,10 +7,11 @@ import lombok.experimental.Accessors;
 
 import java.util.Map;
 
-/**   
+/**
  * 流程任务审批参数
- * @author xxm  
- * @date 2022/8/26 
+ *
+ * @author xxm
+ * @date 2022/8/26
  */
 @Data
 @Accessors(chain = true)
@@ -36,7 +37,7 @@ public class TaskApproveParam {
     private Object nextAssign;
 
     @Schema(description = "表单数据")
-    private Map<String,Object> formVariables;
+    private Map<String, Object> formVariables;
 
     @Schema(description = "审批意见")
     private String reason;

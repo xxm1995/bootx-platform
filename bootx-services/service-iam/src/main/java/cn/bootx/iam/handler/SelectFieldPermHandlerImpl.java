@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * 数据字段权限业务逻辑实现
+ *
  * @author xxm
  * @date 2023/1/22
  */
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class SelectFieldPermHandlerImpl implements SelectFieldPermHandler {
+
     @Lazy
     private final RolePermService rolePermService;
 
@@ -37,53 +39,50 @@ public class SelectFieldPermHandlerImpl implements SelectFieldPermHandler {
     public List<SelectItem> filterFields(List<SelectItem> selectItems, String tableName) {
         TableInfo tableInfo = MpUtil.getTableInfo(tableName);
         // 未被MybatisPlus管理
-        if (Objects.isNull(tableInfo)){
+        if (Objects.isNull(tableInfo)) {
             return selectItems;
         }
         Optional<UserDetail> currentUser = SecurityUtil.getCurrentUser();
         // 管理员直接拥有所有字段的权限
-        if (currentUser.map(UserDetail::isAdmin).orElse(false)){
+        if (currentUser.map(UserDetail::isAdmin).orElse(false)) {
             return selectItems;
         }
 
         // 获取类注解
         List<String> userPermCodes = currentUser.map(UserDetail::getId)
-                .map(rolePermService::findEffectPermCodesByUserId)
-                .orElse(new ArrayList<>(0));
+                .map(rolePermService::findEffectPermCodesByUserId).orElse(new ArrayList<>(0));
 
         Class<?> entityType = tableInfo.getEntityType();
         PermCode classPermCode = entityType.getAnnotation(PermCode.class);
-        if (!Objects.isNull(classPermCode)){
+        if (!Objects.isNull(classPermCode)) {
             boolean b = Arrays.stream(classPermCode.value()).anyMatch(userPermCodes::contains);
-            if (b){
+            if (b) {
                 return selectItems;
             }
         }
         // 处理字段注解
-        return selectItems.stream()
-                .filter(selectItem->{
-                    TableFieldInfo tableField = getTableFieldByColumn(tableInfo.getFieldList(),selectItem.toString());
-                    // 字段未被管理,不进行权限处理
-                    if (Objects.isNull(tableField)){
-                        return true;
-                    }
-                    PermCode permCode = tableField.getField().getAnnotation(PermCode.class);
-                    if (Objects.nonNull(permCode)){
-                        // 用户没有对应的权限码时, 过滤掉这个字段
-                        return Arrays.stream(permCode.value()).anyMatch(userPermCodes::contains);
-                    } else {
-                        return true;
-                    }
-                }).collect(Collectors.toList());
+        return selectItems.stream().filter(selectItem -> {
+            TableFieldInfo tableField = getTableFieldByColumn(tableInfo.getFieldList(), selectItem.toString());
+            // 字段未被管理,不进行权限处理
+            if (Objects.isNull(tableField)) {
+                return true;
+            }
+            PermCode permCode = tableField.getField().getAnnotation(PermCode.class);
+            if (Objects.nonNull(permCode)) {
+                // 用户没有对应的权限码时, 过滤掉这个字段
+                return Arrays.stream(permCode.value()).anyMatch(userPermCodes::contains);
+            }
+            else {
+                return true;
+            }
+        }).collect(Collectors.toList());
     }
 
     /**
      * 获取关联的字段配置
      */
-    private TableFieldInfo getTableFieldByColumn(List<TableFieldInfo> permCodeFields, String column){
-        return permCodeFields.stream()
-                .filter(o-> o.getColumn().equalsIgnoreCase(column))
-                .findFirst()
-                .orElse(null);
+    private TableFieldInfo getTableFieldByColumn(List<TableFieldInfo> permCodeFields, String column) {
+        return permCodeFields.stream().filter(o -> o.getColumn().equalsIgnoreCase(column)).findFirst().orElse(null);
     }
+
 }

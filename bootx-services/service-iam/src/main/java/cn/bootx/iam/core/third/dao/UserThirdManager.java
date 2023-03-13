@@ -13,38 +13,35 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-/**   
-* 三方登录
-* @author xxm  
-* @date 2021/8/2 
-*/
+/**
+ * 三方登录
+ *
+ * @author xxm
+ * @date 2021/8/2
+ */
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class UserThirdManager extends BaseManager<UserThirdMapper, UserThird> {
 
-    public Optional<UserThird> findByUserId(Long userId){
-        return findByField(UserThird::getUserId,userId);
+    public Optional<UserThird> findByUserId(Long userId) {
+        return findByField(UserThird::getUserId, userId);
     }
 
-    public boolean existsByUserId(Long userId){
-        return existedByField(UserThird::getUserId,userId);
+    public boolean existsByUserId(Long userId) {
+        return existedByField(UserThird::getUserId, userId);
     }
 
     /**
      * 解绑
      */
-    public void unbind(Long userId, SFunction<UserThird, String> function){
-        this.lambdaUpdate()
-                .set(function,null)
-                .eq(UserThird::getUserId,userId)
-                .update();
+    public void unbind(Long userId, SFunction<UserThird, String> function) {
+        this.lambdaUpdate().set(function, null).eq(UserThird::getUserId, userId).update();
     }
 
     public Page<UserThird> page(PageParam pageParam) {
         Page<UserThird> mpPage = MpUtil.getMpPage(pageParam, UserThird.class);
-        return lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
     }
+
 }

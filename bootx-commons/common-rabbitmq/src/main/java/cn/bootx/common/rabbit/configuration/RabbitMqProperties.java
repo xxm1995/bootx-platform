@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * MQTT配置
+ *
  * @author xxm
  * @date 2022/12/12
  */
@@ -14,9 +15,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties("bootx.common.rabbit")
 public class RabbitMqProperties {
+
     /**
      * 是否开启 RabbitMQ功能,
      * @see ConditionalOnRabbit 配合此注解使用
      */
     private boolean enable = false;
+
 }

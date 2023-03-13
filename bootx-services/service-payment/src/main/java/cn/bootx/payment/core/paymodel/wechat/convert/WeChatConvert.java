@@ -9,12 +9,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
-* 微信转换类
-* @author xxm
-* @date 2021/6/21
-*/
+ * 微信转换类
+ *
+ * @author xxm
+ * @date 2021/6/21
+ */
 @Mapper
 public interface WeChatConvert {
+
     WeChatConvert CONVERT = Mappers.getMapper(WeChatConvert.class);
 
     WeChatPayConfig convert(WeChatPayConfigParam in);
@@ -24,4 +26,5 @@ public interface WeChatConvert {
     WeChatPaymentDto convert(WeChatPayment in);
 
     WeChatPayment convert(WeChatPaymentDto in);
+
 }

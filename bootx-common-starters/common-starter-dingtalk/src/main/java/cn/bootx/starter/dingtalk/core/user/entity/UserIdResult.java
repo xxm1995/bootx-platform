@@ -13,6 +13,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @Schema(title = "钉钉id消息")
 public class UserIdResult {
+
     @JsonProperty("contact_type")
     @Schema(description = "联系类型")
     private String contactType;

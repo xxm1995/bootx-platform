@@ -22,15 +22,18 @@ import java.util.List;
 
 /**
  * 钱包
+ *
  * @author xxm
  * @date 2021/2/24
  */
-@Tag(name ="钱包相关的接口")
+@Tag(name = "钱包相关的接口")
 @RestController
 @RequestMapping("wallet")
 @AllArgsConstructor
 public class WalletController {
+
     private final WalletService walletService;
+
     private final WalletQueryService walletQueryService;
 
     @Operation(summary = "开通用户钱包操作")
@@ -39,6 +42,7 @@ public class WalletController {
         walletService.createWallet(userId);
         return Res.ok();
     }
+
     @Operation(summary = "批量开通用户钱包操作")
     @PostMapping("createWalletBatch")
     public ResResult<Void> createWalletBatch(@RequestBody List<Long> userIds) {
@@ -47,17 +51,17 @@ public class WalletController {
     }
 
     @Operation(summary = "解锁钱包")
-    @OperateLog(title = "解锁钱包",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "解锁钱包", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @PostMapping("/unlock")
-    public ResResult<Void> unlock(Long walletId){
+    public ResResult<Void> unlock(Long walletId) {
         walletService.unlock(walletId);
         return Res.ok();
     }
 
     @Operation(summary = "锁定钱包")
-    @OperateLog(title = "锁定钱包",businessType= OperateLog.BusinessType.UPDATE, saveParam = true)
+    @OperateLog(title = "锁定钱包", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @PostMapping("/lock")
-    public ResResult<Void> lock(Long walletId){
+    public ResResult<Void> lock(Long walletId) {
         walletService.lock(walletId);
         return Res.ok();
     }
@@ -71,14 +75,14 @@ public class WalletController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<WalletDto>> page(PageParam pageParam, WalletPayParam param){
-        return Res.ok(walletQueryService.page(pageParam,param));
+    public ResResult<PageResult<WalletDto>> page(PageParam pageParam, WalletPayParam param) {
+        return Res.ok(walletQueryService.page(pageParam, param));
     }
 
     @Operation(summary = "分页")
     @GetMapping("/pageByNotWallet")
-    public ResResult<PageResult<UserInfoDto>> pageByNotWallet(PageParam pageParam, UserInfoParam param){
-        return Res.ok(walletQueryService.pageByNotWallet(pageParam,param));
+    public ResResult<PageResult<UserInfoDto>> pageByNotWallet(PageParam pageParam, UserInfoParam param) {
+        return Res.ok(walletQueryService.pageByNotWallet(pageParam, param));
     }
 
     @Operation(summary = "根据用户查询钱包")
@@ -89,13 +93,13 @@ public class WalletController {
 
     @Operation(summary = "根据钱包ID查询钱包")
     @GetMapping("/findById")
-    public ResResult<WalletDto> findById( Long walletId) {
+    public ResResult<WalletDto> findById(Long walletId) {
         return Res.ok(walletQueryService.findById(walletId));
     }
 
     @Operation(summary = "获取钱包综合信息")
     @GetMapping("/getWalletInfo")
-        public ResResult<WalletInfoDto> getWalletInfo(Long walletId) {
+    public ResResult<WalletInfoDto> getWalletInfo(Long walletId) {
         return Res.ok(walletQueryService.getWalletInfo(walletId));
     }
 

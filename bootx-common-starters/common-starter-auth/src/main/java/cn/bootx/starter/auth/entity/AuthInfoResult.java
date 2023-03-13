@@ -5,13 +5,15 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 认证返回结果
-* @author xxm  
-* @date 2021/7/30 
-*/
+ * 认证返回结果
+ *
+ * @author xxm
+ * @date 2021/7/30
+ */
 @Data
 @Accessors(chain = true)
 public class AuthInfoResult {
+
     /** 用户id */
     private Object id;
 
@@ -23,4 +25,5 @@ public class AuthInfoResult {
 
     /** 用户对象 */
     private UserDetail userDetail;
+
 }

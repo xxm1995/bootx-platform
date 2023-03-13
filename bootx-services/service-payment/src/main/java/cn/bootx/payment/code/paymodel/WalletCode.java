@@ -1,10 +1,11 @@
 package cn.bootx.payment.code.paymodel;
 
 /**
-* 钱包涉及到的常量
-* @author xxm  
-* @date 2020/12/8 
-*/
+ * 钱包涉及到的常量
+ *
+ * @author xxm
+ * @date 2020/12/8
+ */
 public interface WalletCode {
 
     /**

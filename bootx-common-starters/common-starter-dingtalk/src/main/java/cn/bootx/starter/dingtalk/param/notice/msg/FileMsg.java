@@ -8,16 +8,18 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-/**   
-* 钉钉图片通知
-* @author xxm  
-* @date 2022/7/17 
-*/
+/**
+ * 钉钉图片通知
+ *
+ * @author xxm
+ * @date 2022/7/17
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉文件通知")
 public class FileMsg extends Msg implements Serializable {
+
     private static final long serialVersionUID = -835679566138176L;
 
     @Schema(description = "钉钉文件")
@@ -27,7 +29,7 @@ public class FileMsg extends Msg implements Serializable {
         super(DingTalkNoticeCode.MSG_FILE);
     }
 
-    public FileMsg(String mediaId){
+    public FileMsg(String mediaId) {
         super(DingTalkNoticeCode.MSG_FILE);
         this.file = new DingMedia(mediaId);
     }

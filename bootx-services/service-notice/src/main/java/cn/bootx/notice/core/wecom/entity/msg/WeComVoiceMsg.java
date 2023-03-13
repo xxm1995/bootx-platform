@@ -8,24 +8,22 @@ import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 /**
-*
-* @author xxm
-* @date 2022/7/23
-*/
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @Schema(title = "企微语音消息")
-public class WeComVoiceMsg implements WeComMsg{
+public class WeComVoiceMsg implements WeComMsg {
 
     @Schema(description = "资源id")
     private String mediaId;
 
     @Override
     public WxCpMessage toMsg() {
-        return WxCpMessage.VOICE()
-                .mediaId(mediaId)
-                .build();
+        return WxCpMessage.VOICE().mediaId(mediaId).build();
     }
+
 }

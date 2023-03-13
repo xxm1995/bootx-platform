@@ -8,11 +8,10 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 import java.util.List;
 
-/**   
-*
-* @author xxm  
-* @date 2022/7/23 
-*/
+/**
+ * @author xxm
+ * @date 2022/7/23
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "企业微信接收人参数")
@@ -33,20 +32,21 @@ public class WeComNoticeReceive {
     @Schema(description = "是否是保密消息")
     private boolean safe;
 
-    public void process(WxCpMessage wxCpMessage){
-        wxCpMessage.setSafe(safe?"1":"0");
-        if (toAllUser){
+    public void process(WxCpMessage wxCpMessage) {
+        wxCpMessage.setSafe(safe ? "1" : "0");
+        if (toAllUser) {
             wxCpMessage.setToUser("@all");
             return;
         }
-        if (CollUtil.isNotEmpty(useridList)){
-            wxCpMessage.setToUser(String.join("|",useridList));
+        if (CollUtil.isNotEmpty(useridList)) {
+            wxCpMessage.setToUser(String.join("|", useridList));
         }
-        if (CollUtil.isNotEmpty(deptIdList)){
-            wxCpMessage.setToParty(String.join("|",deptIdList));
+        if (CollUtil.isNotEmpty(deptIdList)) {
+            wxCpMessage.setToParty(String.join("|", deptIdList));
         }
-        if (CollUtil.isNotEmpty(tagList)){
-            wxCpMessage.setToTag(String.join("|",tagList));
+        if (CollUtil.isNotEmpty(tagList)) {
+            wxCpMessage.setToTag(String.join("|", tagList));
         }
     }
+
 }

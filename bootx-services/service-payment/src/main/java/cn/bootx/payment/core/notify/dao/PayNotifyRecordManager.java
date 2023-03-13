@@ -15,6 +15,7 @@ import java.util.Objects;
 
 /**
  * 支付消息通知回调
+ *
  * @author xxm
  * @date 2021/6/22
  */
@@ -23,13 +24,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PayNotifyRecordManager extends BaseManager<PayNotifyRecordMapper, PayNotifyRecord> {
 
-    public Page<PayNotifyRecord> page(PageParam pageParam, PayNotifyRecordDto param){
+    public Page<PayNotifyRecord> page(PageParam pageParam, PayNotifyRecordDto param) {
         Page<PayNotifyRecord> mpPage = MpUtil.getMpPage(pageParam, PayNotifyRecord.class);
-        return lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .like(Objects.nonNull(param.getPaymentId()),PayNotifyRecord::getPaymentId,param.getPaymentId())
-                .eq(Objects.nonNull(param.getPayChannel()),PayNotifyRecord::getPayChannel,param.getPayChannel())
-                .eq(Objects.nonNull(param.getStatus()),PayNotifyRecord::getStatus,param.getStatus())
-                .page(mpPage);
+        return lambdaQuery().orderByDesc(MpIdEntity::getId)
+                .like(Objects.nonNull(param.getPaymentId()), PayNotifyRecord::getPaymentId, param.getPaymentId())
+                .eq(Objects.nonNull(param.getPayChannel()), PayNotifyRecord::getPayChannel, param.getPayChannel())
+                .eq(Objects.nonNull(param.getStatus()), PayNotifyRecord::getStatus, param.getStatus()).page(mpPage);
     }
+
 }

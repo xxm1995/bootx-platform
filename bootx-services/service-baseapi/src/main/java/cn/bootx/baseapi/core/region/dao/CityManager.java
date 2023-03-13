@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 城市表
+ *
  * @author xxm
  * @date 2022-12-24
  */
@@ -16,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CityManager extends BaseManager<CityMapper, City> {
 
-
-    public List<City> findAllByProvinceCode(String provinceCode){
+    public List<City> findAllByProvinceCode(String provinceCode) {
         return findAllByField(City::getProvinceCode, provinceCode);
     }
+
 }

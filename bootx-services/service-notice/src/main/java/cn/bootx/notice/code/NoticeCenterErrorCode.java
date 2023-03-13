@@ -1,11 +1,13 @@
 package cn.bootx.notice.code;
 
-/**   
-* 通知中心错误码
-* @author xxm  
-* @date 2021/8/5 
-*/
+/**
+ * 通知中心错误码
+ *
+ * @author xxm
+ * @date 2021/8/5
+ */
 public interface NoticeCenterErrorCode {
+
     /**
      * 邮箱配置编号已存在
      */

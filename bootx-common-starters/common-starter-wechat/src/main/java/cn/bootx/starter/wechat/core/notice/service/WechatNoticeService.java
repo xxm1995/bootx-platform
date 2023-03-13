@@ -17,31 +17,35 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-* 微信消息通知功能
-* @author xxm  
-* @date 2022/7/15 
-*/
+ * 微信消息通知功能
+ *
+ * @author xxm
+ * @date 2022/7/15
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class WechatNoticeService {
+
     private final WxMpService wxMpService;
+
     private final WeChatTemplateManager weChatTemplateManager;
 
     /**
      * 发送模板信息 根据模板编号
      */
     @SneakyThrows
-    public String sentNotice(String code, String wxOpenId, List<KeyValue> keyValues){
-        WeChatTemplate weChatTemplate = weChatTemplateManager.findTemplateIdByCode(code).orElseThrow(() -> new DataNotExistException("微信消息模板不存在"));
-        return this.sentNoticeByTemplateId(weChatTemplate.getTemplateId(),wxOpenId,keyValues);
+    public String sentNotice(String code, String wxOpenId, List<KeyValue> keyValues) {
+        WeChatTemplate weChatTemplate = weChatTemplateManager.findTemplateIdByCode(code)
+                .orElseThrow(() -> new DataNotExistException("微信消息模板不存在"));
+        return this.sentNoticeByTemplateId(weChatTemplate.getTemplateId(), wxOpenId, keyValues);
     }
 
     /**
      * 发送模板信息 根据微信消息模板ID
      */
     @SneakyThrows
-    public String sentNoticeByTemplateId(String templateId, String wxOpenId, List<KeyValue> keyValues){
+    public String sentNoticeByTemplateId(String templateId, String wxOpenId, List<KeyValue> keyValues) {
         WxMpTemplateMsgService templateMsgService = wxMpService.getTemplateMsgService();
         WxMpTemplateMessage message = new WxMpTemplateMessage();
         message.setToUser(wxOpenId);
@@ -53,4 +57,5 @@ public class WechatNoticeService {
         message.setData(wxMpTemplateData);
         return templateMsgService.sendTemplateMsg(message);
     }
+
 }

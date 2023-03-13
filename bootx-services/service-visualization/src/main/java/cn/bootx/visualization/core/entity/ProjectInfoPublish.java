@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 自定义大屏编辑时缓存信息
+ *
  * @author xxm
  * @date 2023/2/21
  */

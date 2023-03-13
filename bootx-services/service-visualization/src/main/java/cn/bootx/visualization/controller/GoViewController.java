@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * GoView可视化大屏对接接口
+ *
  * @author xxm
  * @date 2023/2/21
  */
@@ -27,18 +28,20 @@ import java.util.List;
 @RequestMapping("/goview")
 @RequiredArgsConstructor
 public class GoViewController {
+
     private final ProjectInfoService projectInfoService;
 
     @IgnoreAuth
     @Operation(summary = "获取文件oss存储信息")
     @GetMapping("/getOssInfo")
-    public ResResult<OssInfo> getOssInfo(){
+    public ResResult<OssInfo> getOssInfo() {
         return Res.ok(projectInfoService.getOssInfo());
     }
+
     @Operation(summary = "获取项目列表分页 ")
     @GetMapping("/page")
-    public GoVIewPageResult<List<ProjectInfoResult>> page(Integer page, Integer limit){
-        return projectInfoService.pageByGoVIew(page,limit);
+    public GoVIewPageResult<List<ProjectInfoResult>> page(Integer page, Integer limit) {
+        return projectInfoService.pageByGoVIew(page, limit);
     }
 
     @IgnoreAuth
@@ -60,4 +63,5 @@ public class GoViewController {
         projectInfoService.update(param);
         return Res.ok();
     }
+
 }

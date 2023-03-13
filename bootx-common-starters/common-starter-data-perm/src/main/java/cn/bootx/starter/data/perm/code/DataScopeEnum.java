@@ -7,13 +7,14 @@ import lombok.Getter;
 import java.util.Arrays;
 
 /**
-* 数据范围权限类型
-* @author xxm
-* @date 2021/12/22
-*/
+ * 数据范围权限类型
+ * @author xxm
+ * @date 2021/12/22
+ */
 @Getter
 @AllArgsConstructor
 public enum DataScopeEnum {
+
     /** 自己的数据 */
     SELF(1),
     /** 指定用户级别 */
@@ -28,14 +29,14 @@ public enum DataScopeEnum {
     BELONG_DEPT(6),
     /** 所在及下级部门 */
     BELONG_DEPT_AND_SUB(7);
+
     private final int code;
+
     /**
      * 根据数字编号获取
      */
-    public static DataScopeEnum findByCode(int code){
-        return Arrays.stream(DataScopeEnum.values())
-                .filter(e -> e.getCode() == code)
-                .findFirst()
+    public static DataScopeEnum findByCode(int code) {
+        return Arrays.stream(DataScopeEnum.values()).filter(e -> e.getCode() == code).findFirst()
                 .orElseThrow(() -> new BizException("不支持的数据权限类型"));
     }
 

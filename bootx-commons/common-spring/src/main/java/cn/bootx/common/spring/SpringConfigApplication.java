@@ -6,4 +6,5 @@ import org.springframework.retry.annotation.EnableRetry;
 @EnableRetry
 @ComponentScan
 public class SpringConfigApplication {
+
 }

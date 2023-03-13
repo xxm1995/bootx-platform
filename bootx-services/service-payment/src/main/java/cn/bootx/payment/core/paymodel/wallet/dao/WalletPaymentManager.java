@@ -10,10 +10,10 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class WalletPaymentManager extends BaseManager<WalletPaymentMapper,WalletPayment> {
+public class WalletPaymentManager extends BaseManager<WalletPaymentMapper, WalletPayment> {
 
     public Optional<WalletPayment> findByPaymentId(Long paymentId) {
-        return findByField(BasePayment::getPaymentId,paymentId);
+        return findByField(BasePayment::getPaymentId, paymentId);
     }
 
 }

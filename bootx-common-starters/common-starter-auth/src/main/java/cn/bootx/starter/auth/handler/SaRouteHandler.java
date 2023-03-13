@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 鉴权路由配置类
+ *
  * @author xxm
  * @date 2021/8/2
  */
@@ -22,6 +23,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class SaRouteHandler implements InitializingBean {
+
     private final List<RouterCheck> routerChecks;
 
     @Override
@@ -33,13 +35,13 @@ public class SaRouteHandler implements InitializingBean {
     /**
      * 路由检查处理方法
      */
-    public SaFunction check(Object handler){
-        return ()->{
-            boolean check = routerChecks.stream()
-                    .anyMatch(routerCheck -> routerCheck.check(handler));
+    public SaFunction check(Object handler) {
+        return () -> {
+            boolean check = routerChecks.stream().anyMatch(routerCheck -> routerCheck.check(handler));
             if (check) {
                 SaRouter.stop();
-            } else {
+            }
+            else {
                 log.warn("{} 没有对应的权限", WebServletUtil.getPath());
                 throw new RouterCheckException();
             }

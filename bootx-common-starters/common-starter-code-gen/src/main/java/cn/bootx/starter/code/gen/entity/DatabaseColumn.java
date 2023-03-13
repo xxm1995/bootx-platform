@@ -3,11 +3,12 @@ package cn.bootx.starter.code.gen.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
-* 数据库行信息
-* @author xxm  
-* @date 2022/1/27 
-*/
+/**
+ * 数据库行信息
+ *
+ * @author xxm
+ * @date 2022/1/27
+ */
 @Data
 @Accessors(chain = true)
 public class DatabaseColumn {
@@ -23,6 +24,5 @@ public class DatabaseColumn {
 
     /** 主键类型 */
     private String columnKey;
-
 
 }

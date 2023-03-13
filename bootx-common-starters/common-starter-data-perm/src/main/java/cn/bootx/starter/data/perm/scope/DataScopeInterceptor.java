@@ -44,23 +44,27 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
-* 数据权限处理器
-* @author xxm
-* @date 2021/12/22
-*/
+ * 数据权限处理器
+ *
+ * @author xxm
+ * @date 2021/12/22
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class DataScopeInterceptor extends JsqlParserSupport implements InnerInterceptor {
+
     private final DataPermProperties dataPermProperties;
+
     private final DataPermScopeHandler dataPermScopeHandler;
 
     /**
      * 查询语句判断
      */
     @Override
-    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
-        if (!this.checkPermission()){
+    public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds,
+            ResultHandler resultHandler, BoundSql boundSql) {
+        if (!this.checkPermission()) {
             return;
         }
         PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
@@ -72,11 +76,11 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
      */
     @Override
     public void beforeUpdate(Executor executor, MappedStatement ms, Object parameter) {
-        if (!this.checkPermission()){
+        if (!this.checkPermission()) {
             return;
         }
         // 插入操作不处理
-        if (ms.getSqlCommandType() == SqlCommandType.INSERT){
+        if (ms.getSqlCommandType() == SqlCommandType.INSERT) {
             return;
         }
         // 更新处理 和 删除处理
@@ -84,7 +88,6 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
         PluginUtils.MPBoundSql mpBs = PluginUtils.mpBoundSql(boundSql);
         mpBs.sql(this.parserSingle(mpBs.sql(), ms.getId()));
     }
-
 
     /**
      * 查询处理
@@ -94,13 +97,13 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
         SelectBody selectBody = select.getSelectBody();
         if (selectBody instanceof PlainSelect) {
             this.setWhere((PlainSelect) selectBody);
-        } else if (selectBody instanceof SetOperationList) {
+        }
+        else if (selectBody instanceof SetOperationList) {
             SetOperationList setOperationList = (SetOperationList) selectBody;
             List<SelectBody> selectBodyList = setOperationList.getSelects();
             selectBodyList.forEach(s -> this.setWhere((PlainSelect) s));
         }
     }
-
 
     /**
      * update 语句处理
@@ -108,11 +111,11 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     @Override
     protected void processUpdate(Update update, int index, String sql, Object obj) {
         String tableName = update.getTable().getName();
-        if (!checkTableCreator(tableName)){
+        if (!checkTableCreator(tableName)) {
             return;
         }
         Expression where = update.getWhere();
-        final Expression sqlSegment = this.dataScope(where,null);
+        final Expression sqlSegment = this.dataScope(where, null);
         if (null != sqlSegment) {
             update.setWhere(sqlSegment);
         }
@@ -124,31 +127,29 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     @Override
     protected void processDelete(Delete delete, int index, String sql, Object obj) {
         String tableName = delete.getTable().getName();
-        if (!checkTableCreator(tableName)){
+        if (!checkTableCreator(tableName)) {
             return;
         }
-        final Expression sqlSegment = this.dataScope(delete.getWhere(),null);
+        final Expression sqlSegment = this.dataScope(delete.getWhere(), null);
         if (null != sqlSegment) {
             delete.setWhere(sqlSegment);
         }
     }
 
-
     /**
      * 设置 where 条件
-     *
-     * @param plainSelect  查询对象
+     * @param plainSelect 查询对象
      */
     protected void setWhere(PlainSelect plainSelect) {
         String tableName = plainSelect.getFromItem().toString();
-        if (!checkTableCreator(tableName)){
+        if (!checkTableCreator(tableName)) {
             return;
         }
         // 如果不是多表联查, 不需要传表名
-        if (CollUtil.isEmpty(plainSelect.getJoins())){
+        if (CollUtil.isEmpty(plainSelect.getJoins())) {
             tableName = null;
         }
-        Expression sqlSegment = this.dataScope(plainSelect.getWhere(),tableName);
+        Expression sqlSegment = this.dataScope(plainSelect.getWhere(), tableName);
         if (null != sqlSegment) {
             plainSelect.setWhere(sqlSegment);
         }
@@ -160,42 +161,43 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
      * @param mainTableName 数据表名称, 多表join时传主表
      * @return 新的表达式
      */
-    protected Expression dataScope(Expression where,String mainTableName) {
+    protected Expression dataScope(Expression where, String mainTableName) {
         DataPermScope dataPermScope = dataPermScopeHandler.getDataPermScope();
         Expression queryExpression;
         DataScopeEnum scopeType = dataPermScope.getScopeType();
-        switch (scopeType){
-            case SELF:{
+        switch (scopeType) {
+            case SELF: {
                 queryExpression = this.selfScope(mainTableName);
                 break;
             }
-            case DEPT_SCOPE:{
-                Expression deptScopeExpression = this.deptScope(dataPermScope.getDeptScopeIds(),mainTableName);
+            case DEPT_SCOPE: {
+                Expression deptScopeExpression = this.deptScope(dataPermScope.getDeptScopeIds(), mainTableName);
                 // 追加查询自身的数据
-                queryExpression = new OrExpression(deptScopeExpression,this.selfScope(mainTableName));
+                queryExpression = new OrExpression(deptScopeExpression, this.selfScope(mainTableName));
                 break;
             }
-            case USER_SCOPE:{
-                queryExpression = this.userScope(dataPermScope.getUserScopeIds(),mainTableName);
+            case USER_SCOPE: {
+                queryExpression = this.userScope(dataPermScope.getUserScopeIds(), mainTableName);
                 break;
             }
-            case DEPT_AND_USER_SCOPE:{
-                queryExpression = this.deptAndUserScope(dataPermScope.getDeptScopeIds(), dataPermScope.getUserScopeIds(),mainTableName);
+            case DEPT_AND_USER_SCOPE: {
+                queryExpression = this.deptAndUserScope(dataPermScope.getDeptScopeIds(),
+                        dataPermScope.getUserScopeIds(), mainTableName);
                 break;
             }
             case BELONG_DEPT:
             case BELONG_DEPT_AND_SUB: {
-                queryExpression = this.deptScope(dataPermScope.getDeptScopeIds(),mainTableName);
+                queryExpression = this.deptScope(dataPermScope.getDeptScopeIds(), mainTableName);
                 break;
             }
             case ALL_SCOPE:
                 return where;
-            default:{
+            default: {
                 throw new BizException("代码有问题");
             }
         }
         // 将查询条件与追加条件结合
-        if (Objects.nonNull(where)){
+        if (Objects.nonNull(where)) {
             return new AndExpression(new Parenthesis(queryExpression), where);
         }
         return new Parenthesis(queryExpression);
@@ -204,23 +206,20 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     /**
      * 查询自己的数据
      */
-    protected Expression selfScope(String mainTableName){
-        Long userId = DataPermContextHolder.getUserDetail()
-                .map(UserDetail::getId)
+    protected Expression selfScope(String mainTableName) {
+        Long userId = DataPermContextHolder.getUserDetail().map(UserDetail::getId)
                 .orElseThrow(NotLoginPermException::new);
-        return new EqualsTo(new Column(this.getPermColumn(mainTableName)),new LongValue(userId));
+        return new EqualsTo(new Column(this.getPermColumn(mainTableName)), new LongValue(userId));
     }
 
     /**
      * 查询用户范围的数据
      */
-    protected Expression userScope(Set<Long> userScopeIds, String mainTableName){
-        Long userId = DataPermContextHolder.getUserDetail()
-                .map(UserDetail::getId)
+    protected Expression userScope(Set<Long> userScopeIds, String mainTableName) {
+        Long userId = DataPermContextHolder.getUserDetail().map(UserDetail::getId)
                 .orElseThrow(NotLoginPermException::new);
         List<Expression> userExpressions = Optional.ofNullable(userScopeIds).orElse(new HashSet<>()).stream()
-                .map(LongValue::new)
-                .collect(Collectors.toList());
+                .map(LongValue::new).collect(Collectors.toList());
         // 追加自身
         userExpressions.add(new LongValue(userId));
         return new InExpression(new Column(this.getPermColumn(mainTableName)), new ExpressionList(userExpressions));
@@ -229,7 +228,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     /**
      * 查询部门范围的数据
      */
-    protected Expression deptScope(Set<Long> deptIds, String mainTableName){
+    protected Expression deptScope(Set<Long> deptIds, String mainTableName) {
         DataPermProperties.DataPerm dataPerm = dataPermProperties.getDataPerm();
         // 创建嵌套子查询
         PlainSelect plainSelect = new PlainSelect();
@@ -244,14 +243,14 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
 
         // 构建查询条件
         List<Expression> deptExpressions = Optional.ofNullable(deptIds).orElse(new HashSet<>()).stream()
-                .map(LongValue::new)
-                .collect(Collectors.toList());
+                .map(LongValue::new).collect(Collectors.toList());
         // 构造空查询
-        if (deptExpressions.size() == 0){
+        if (deptExpressions.size() == 0) {
             deptExpressions.add(null);
         }
         // 设置查询条件
-        plainSelect.setWhere(new InExpression(new Column(dataPerm.getWhereField()), new ExpressionList(deptExpressions)));
+        plainSelect
+                .setWhere(new InExpression(new Column(dataPerm.getWhereField()), new ExpressionList(deptExpressions)));
 
         // 拼接子查询
         SubSelect subSelect = new SubSelect();
@@ -262,54 +261,51 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
     /**
      * 查询部门和用户范围的数据
      */
-    protected Expression deptAndUserScope(Set<Long> deptScopeIds, Set<Long> userScopeIds, String mainTableName){
+    protected Expression deptAndUserScope(Set<Long> deptScopeIds, Set<Long> userScopeIds, String mainTableName) {
         Expression deptScopeExpression = this.deptScope(deptScopeIds, mainTableName);
         Expression userScopeExpression = this.userScope(userScopeIds, mainTableName);
-        return new OrExpression(deptScopeExpression,userScopeExpression);
+        return new OrExpression(deptScopeExpression, userScopeExpression);
     }
 
     /**
      * 判断是否需要进行数据权限控制
      */
-    protected boolean checkPermission(){
+    protected boolean checkPermission() {
         // 配置是否开启了权限控制
-        if (!dataPermProperties.isEnableDataPerm()){
+        if (!dataPermProperties.isEnableDataPerm()) {
             return false;
         }
         // 判断是否在嵌套执行环境中
         NestedPermission nestedPermission = DataPermContextHolder.getNestedPermission();
-        if (Objects.nonNull(nestedPermission) && !nestedPermission.dataScope()){
+        if (Objects.nonNull(nestedPermission) && !nestedPermission.dataScope()) {
             return false;
         }
         // 是否添加了对应的注解来开启数据权限控制
         Permission permission = DataPermContextHolder.getPermission();
-        if (Objects.isNull(permission) || !permission.dataScope()){
+        if (Objects.isNull(permission) || !permission.dataScope()) {
             return false;
         }
         // 检查是否已经登录和是否是超级管理员, 管理员跳过权限控制
-        return !DataPermContextHolder.getUserDetail()
-                .map(UserDetail::isAdmin)
-                .orElseThrow(NotLoginPermException::new);
+        return !DataPermContextHolder.getUserDetail().map(UserDetail::isAdmin).orElseThrow(NotLoginPermException::new);
     }
 
     /**
      * 语句中是否有 创建人字段 creator , 没有的话为了不影响系统执行, 将不进行权限控制, 只报警告
      */
-    protected boolean checkTableCreator(String tableName){
+    protected boolean checkTableCreator(String tableName) {
         TableInfo tableInfo = MpUtil.getTableInfo(tableName);
-        if (tableInfo == null){
-            log.warn("'{}' 数据表未找到对应的MybatisPlus实体类，将不会启用数据权限控制，请检查配置",tableName);
+        if (tableInfo == null) {
+            log.warn("'{}' 数据表未找到对应的MybatisPlus实体类，将不会启用数据权限控制，请检查配置", tableName);
             return false;
         }
         // 查看实体类上是否关闭了数据权限控制
         Permission permission = tableInfo.getEntityType().getAnnotation(Permission.class);
-        if (Objects.nonNull(permission)&&permission.dataScope()){
+        if (Objects.nonNull(permission) && permission.dataScope()) {
             return false;
         }
-        boolean b = tableInfo.getFieldList().stream()
-                .map(TableFieldInfo::getColumn)
+        boolean b = tableInfo.getFieldList().stream().map(TableFieldInfo::getColumn)
                 .anyMatch(CommonCode.CREATOR::equalsIgnoreCase);
-        if (!b){
+        if (!b) {
             log.warn("'{}' 数据表未找到权限控制字段 'creator' ，将不会启用数据权限控制，请检查配置", tableName);
         }
 
@@ -320,14 +316,16 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
      * 获取权限字段名称
      * @param mainTableName 主表名称, 表联合查询的时候需要传
      */
-    protected String getPermColumn(String mainTableName){
+    protected String getPermColumn(String mainTableName) {
         // 权限字段名
         String column;
-        if (StrUtil.isNotBlank(mainTableName)){
+        if (StrUtil.isNotBlank(mainTableName)) {
             column = mainTableName + "." + CommonCode.CREATOR;
-        } else {
+        }
+        else {
             column = CommonCode.CREATOR;
         }
         return column;
     }
+
 }

@@ -6,10 +6,12 @@ import cn.bootx.baseapi.core.dynamicsource.entity.DynamicDataSource;
 import cn.bootx.baseapi.core.dynamicsource.service.DynamicDataSourceService;
 import cn.bootx.baseapi.core.sql.dao.QuerySqlManager;
 import cn.bootx.baseapi.core.sql.entity.QuerySql;
+import cn.bootx.baseapi.core.sql.entity.SqlParam;
 import cn.bootx.baseapi.param.sql.QueryFieldParam;
 import cn.bootx.common.core.exception.DataNotExistException;
 import cn.bootx.common.core.function.CollectorsFunction;
 import cn.bootx.starter.auth.util.SecurityUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.db.Entity;
 import cn.hutool.db.handler.EntityHandler;
 import cn.hutool.db.handler.EntityListHandler;
@@ -30,7 +32,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author xxm
  * @date 2023/3/9
  */
@@ -38,67 +39,88 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class QuerySqlService {
+
     private final DynamicRoutingDataSource dynamicRoutingDataSource;
 
     private final DynamicDataSourceManager dynamicDataSourceManager;
+
     private final QuerySqlManager querySqlManager;
+
     private final DynamicDataSourceService dynamicDataSourceService;
 
     /**
-     * SQL查询
+     * 添加查询语句
+     */
+    public void add() {
+
+    }
+
+    /**
+     * 修改
+     */
+
+    /**
+     * 分页查询
+     */
+
+    /**
+     * 执行SQL查询
      */
     @SneakyThrows
-    public void querySql(){
-        Map<String,String> map = new HashMap<>();
-        map.put("code","hello");
+    public Object querySql(Map<String, Object> map) {
         // 获取SQL语句, 将 #{} 和 ${} 元素进行解析和替换
-        String sql = "select * from iam_client where code = ${code}";
-        QuerySql querySql = new QuerySql()
-                .setSql(sql);
+        String sql = "select * from iam_client where system=#{system}";
+        QuerySql querySql = new QuerySql().setDatabaseId(1633376006887067648L).setIsList(true).setSql(sql);
         SqlAndParam sqlAndParam = this.sqlParamParser(querySql, map);
 
-        // 将参数添加到语句中
-        DataSource dataSource = this.getDataSource(1633376006887067648L);
+        // 对SQL语句进行解析
+        DataSource dataSource = this.getDataSource(querySql.getDatabaseId());
         Connection connection = dataSource.getConnection();
-        List<Entity> query =  SqlExecutor.query(connection, sql, new EntityListHandler());
-
+        if (Objects.equals(querySql.getIsList(), true)) {
+            return SqlExecutor.query(connection, sqlAndParam.sql, new EntityListHandler(),
+                    ArrayUtil.toArray(sqlAndParam.param, Object.class));
+        }
+        else {
+            return SqlExecutor.query(connection, sqlAndParam.sql, new EntityHandler(),
+                    ArrayUtil.toArray(sqlAndParam.param, Object.class));
+        }
     }
 
     /**
      * 解析SQL
      */
-    private SqlAndParam sqlParamParser(QuerySql querySql, Map<String,String> map){
+    private SqlAndParam sqlParamParser(QuerySql querySql, Map<String, Object> map) {
         String sql = querySql.getSql();
-        Map<String, QuerySql.SqlParam> sqlParamMap = Optional.ofNullable(querySql.getParams()).orElse(new ArrayList<>(0)).stream()
-                .collect(Collectors.toMap(QuerySql.SqlParam::getName, Function.identity(), CollectorsFunction::retainLatest));
+        Map<String, SqlParam> sqlParamMap = Optional.ofNullable(querySql.getParams()).orElse(new ArrayList<>(0))
+                .stream()
+                .collect(Collectors.toMap(SqlParam::getName, Function.identity(), CollectorsFunction::retainLatest));
         // # 参数处理
-        GenericTokenParser replaceTokenParser = new GenericTokenParser("#{","}",content -> {
+        GenericTokenParser replaceTokenParser = new GenericTokenParser("#{", "}", content -> {
             // 获取类型, 看是否是获取用户信息一类的
-            QuerySql.SqlParam sqlParam = sqlParamMap.get(content);
-            if (Objects.equals(sqlParam.getType(), QuerySqlCode.TYPE_USER_ID)){
+            SqlParam sqlParam = sqlParamMap.get(content);
+            if (Objects.nonNull(sqlParam) && Objects.equals(sqlParam.getType(), QuerySqlCode.TYPE_USER_ID)) {
                 return String.valueOf(SecurityUtil.getUserId());
             }
-            return map.get(content);
+            return map.get(content).toString();
         });
         sql = replaceTokenParser.parse(sql);
 
         // $占位参数处理
-        List<String> list = new ArrayList<>();
-        GenericTokenParser preparedTokenParser = new GenericTokenParser("#{","}",content -> {
-            String param = map.get(content);
+        List<Object> list = new ArrayList<>();
+        GenericTokenParser preparedTokenParser = new GenericTokenParser("${", "}", content -> {
+            Object param = map.get(content);
             list.add(param);
             return "?";
         });
         sql = preparedTokenParser.parse(sql);
-        return new SqlAndParam(sql,list);
+        return new SqlAndParam(sql, list);
     }
-
 
     /**
      * 通过SQL查出结果字段
      */
     @SneakyThrows
-    public List<String> queryFieldBySql(QueryFieldParam param){
+    public List<String> queryFieldBySql(QueryFieldParam param) {
         String sql = "select * from iam_client";
         DataSource dataSource = this.getDataSource(param.getDatabaseId());
         Connection connection = dataSource.getConnection();
@@ -107,14 +129,13 @@ public class QuerySqlService {
         return new ArrayList<>(query.keySet());
     }
 
-
     /**
      * 获取数据源
      */
-    private DataSource getDataSource(Long id){
+    private DataSource getDataSource(Long id) {
         DynamicDataSource dataSource = dynamicDataSourceManager.findById(id).orElseThrow(DataNotExistException::new);
         DataSource source = dynamicRoutingDataSource.getDataSource(dataSource.getCode());
-        if (Objects.isNull(source)){
+        if (Objects.isNull(source)) {
             dynamicDataSourceService.addDynamicDataSource(dataSource);
             source = dynamicRoutingDataSource.getDataSource(dataSource.getCode());
         }
@@ -126,10 +147,14 @@ public class QuerySqlService {
      */
     @Getter
     @AllArgsConstructor
-    private static class SqlAndParam{
+    private static class SqlAndParam {
+
         /** 解析后的SQL语句 */
         private final String sql;
+
         /** 解析后的参数 */
-        private List<String> param;
+        private List<Object> param;
+
     }
+
 }

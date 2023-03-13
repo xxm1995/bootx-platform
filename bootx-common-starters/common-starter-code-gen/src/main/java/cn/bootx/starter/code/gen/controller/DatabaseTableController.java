@@ -19,43 +19,45 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
-* @author xxm
-* @date 2022/1/27
-*/
+ * @author xxm
+ * @date 2022/1/27
+ */
 @Tag(name = "数据库表信息")
 @RestController
 @RequestMapping("/gen/table")
 @RequiredArgsConstructor
 public class DatabaseTableController {
+
     private final DatabaseTableService databaseTableService;
 
     @Operation(summary = "表列表")
     @GetMapping("/findAll")
-    public ResResult<List<DatabaseTable>> findAll(){
+    public ResResult<List<DatabaseTable>> findAll() {
         return Res.ok(databaseTableService.findAll());
     }
 
     @Operation(summary = "表列表分页")
     @GetMapping("/page")
-    public ResResult<Page<DatabaseTable>> page(@ParameterObject PageParam pageParam,@ParameterObject DatabaseTable param){
-        return Res.ok(databaseTableService.page(pageParam,param));
+    public ResResult<Page<DatabaseTable>> page(@ParameterObject PageParam pageParam,
+            @ParameterObject DatabaseTable param) {
+        return Res.ok(databaseTableService.page(pageParam, param));
     }
 
     @Operation(summary = "获取表信息")
     @GetMapping("/findByTableName")
-    public ResResult<DatabaseTable> findByTableName(String tableName){
+    public ResResult<DatabaseTable> findByTableName(String tableName) {
         return Res.ok(databaseTableService.findByTableName(tableName));
     }
 
     @Operation(summary = "获取数据表行信息")
     @GetMapping("/findColumnByTableName")
-    public ResResult<List<DatabaseColumn>> findColumnByTableName(String tableName){
+    public ResResult<List<DatabaseColumn>> findColumnByTableName(String tableName) {
         return Res.ok(databaseTableService.findColumnByTableName(tableName));
     }
 
     @Operation(summary = "获取表相关的代码生成参数信息")
     @GetMapping("/getTableGenParam")
-    public ResResult<TableGenParamDto> getTableGenParam(String tableName){
+    public ResResult<TableGenParamDto> getTableGenParam(String tableName) {
         return Res.ok(databaseTableService.getTableGenParam(tableName));
     }
 

@@ -11,11 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-/**   
-* 钉钉工具类
-* @author xxm  
-* @date 2022/4/2 
-*/
+/**
+ * 钉钉工具类
+ *
+ * @author xxm
+ * @date 2022/4/2
+ */
 @Slf4j
 @UtilityClass
 public class DingTalkUtil {
@@ -30,9 +31,11 @@ public class DingTalkUtil {
             mac.init(new SecretKeySpec(sec.getBytes(StandardCharsets.UTF_8), HmacAlgorithm.HmacSHA256.getValue()));
             byte[] signData = mac.doFinal(combine.getBytes(StandardCharsets.UTF_8));
             return Base64.encodeBase64String(signData);
-        } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            log.warn(e.getMessage(),e);
+        }
+        catch (NoSuchAlgorithmException | InvalidKeyException e) {
+            log.warn(e.getMessage(), e);
         }
         return null;
     }
+
 }

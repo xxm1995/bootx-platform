@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Redis区间管理器
+ *
  * @author xxm
  * @date 2021/8/6
  */
@@ -23,11 +24,11 @@ import org.springframework.stereotype.Component;
 public class RedisSeqRangeManager implements SeqRangeManager {
 
     private final RedisClient redisClient;
+
     private final SequenceProperties sequenceProperties;
 
     /**
      * 获取指定区间名的下一个区间
-     *
      * @param name 区间名
      * @param seqRangeConfig 序列号区间配置
      * @return 返回区间
@@ -35,7 +36,7 @@ public class RedisSeqRangeManager implements SeqRangeManager {
      */
     @Override
     public SeqRange nextRange(String name, SeqRangeConfig seqRangeConfig) throws SeqException {
-        //第一次不存在，进行初始化,不存在就set，存在就忽略
+        // 第一次不存在，进行初始化,不存在就set，存在就忽略
         redisClient.setIfAbsent(this.getRealKey(name), String.valueOf(seqRangeConfig.getRangeStart()));
         int rangeStep = seqRangeConfig.getRangeStep();
         Long max = redisClient.increment(this.getRealKey(name), rangeStep);
@@ -49,4 +50,5 @@ public class RedisSeqRangeManager implements SeqRangeManager {
     private String getRealKey(String name) {
         return sequenceProperties.getKeyPrefix() + name;
     }
+
 }

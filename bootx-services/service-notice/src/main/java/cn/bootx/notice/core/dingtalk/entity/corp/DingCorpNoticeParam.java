@@ -8,11 +8,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**   
-* 钉钉企业通知消息父类
-* @author xxm  
-* @date 2022/7/19 
-*/
+/**
+ * 钉钉企业通知消息父类
+ *
+ * @author xxm
+ * @date 2022/7/19
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉企业通知消息父类")
@@ -30,10 +31,8 @@ public class DingCorpNoticeParam {
      * 转换成钉钉消息发送参数
      */
     public CorpNotice toDingCorpNotice() {
-        return new CorpNotice()
-                .setToAllUser(receive.isToAllUser())
-                .setDeptIdList(receive.getDeptIdList())
-                .setUseridList(receive.getUseridList())
-                .setMsg(dingMsg.toDingMsg());
+        return new CorpNotice().setToAllUser(receive.isToAllUser()).setDeptIdList(receive.getDeptIdList())
+                .setUseridList(receive.getUseridList()).setMsg(dingMsg.toDingMsg());
     }
+
 }

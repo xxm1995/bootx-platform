@@ -24,6 +24,7 @@ import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 
 /**
  * 钉钉访问凭证
+ *
  * @author xxm
  * @date 2022/4/2
  */
@@ -31,15 +32,18 @@ import static cn.bootx.starter.dingtalk.code.DingTalkCode.*;
 @Service
 @RequiredArgsConstructor
 public class DingAccessService {
+
     private final DingTalkProperties dingTalkProperties;
+
     private long expiresTime;
+
     private String accessToken;
 
     /**
      * 企业内部应用的access_token
      */
     public String getAccessToken() {
-        if (System.currentTimeMillis() < expiresTime){
+        if (System.currentTimeMillis() < expiresTime) {
             return accessToken;
         }
         Lock lock = new ReentrantLock();
@@ -50,11 +54,15 @@ public class DingAccessService {
                 if (System.currentTimeMillis() < expiresTime) {
                     return accessToken;
                 }
-            } while (!locked);
-            SpringUtil.getBean(getClass()).getAppAccessToken(dingTalkProperties.getAppKey(),dingTalkProperties.getAppSecret());
-        } catch (InterruptedException e) {
+            }
+            while (!locked);
+            SpringUtil.getBean(getClass()).getAppAccessToken(dingTalkProperties.getAppKey(),
+                    dingTalkProperties.getAppSecret());
+        }
+        catch (InterruptedException e) {
             throw new BizException("获取钉钉应用AccessToken失败");
-        } finally {
+        }
+        finally {
             if (locked) {
                 lock.unlock();
             }
@@ -66,24 +74,24 @@ public class DingAccessService {
      * 企业内部应用的access_token
      */
     @Retryable(value = RetryableException.class)
-    public void getAppAccessToken(String appKey, String appSecret){
+    public void getAppAccessToken(String appKey, String appSecret) {
         // 获取accessToken
-        Map<String,String> map = new HashMap<>();
-        map.put(APP_KEY,appKey);
-        map.put(APP_SECRET,appSecret);
+        Map<String, String> map = new HashMap<>();
+        map.put(APP_KEY, appKey);
+        map.put(APP_SECRET, appSecret);
         try {
-            String responseBody =  HttpUtil.createGet(StrUtil.format(APP_ACCESS_TOKEN_URL, map))
-                    .execute()
-                    .body();
+            String responseBody = HttpUtil.createGet(StrUtil.format(APP_ACCESS_TOKEN_URL, map)).execute().body();
             AccessTokenResult<?> dingTalkResult = JacksonUtil.toBean(responseBody, AccessTokenResult.class);
-            if (StrUtil.isBlank(dingTalkResult.getAccessToken())){
+            if (StrUtil.isBlank(dingTalkResult.getAccessToken())) {
                 throw new RetryableException();
             }
             this.accessToken = dingTalkResult.getAccessToken();
             // 设置超时时间
             this.expiresTime = System.currentTimeMillis() + (dingTalkResult.getExpiresIn() - 200) * 1000L;
-        } catch (HttpException e) {
+        }
+        catch (HttpException e) {
             throw new RetryableException();
         }
     }
+
 }

@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 项目大屏信息
+ *
  * @author xxm
  * @date 2023/2/24
  */
@@ -34,4 +35,5 @@ public class ProjectInfoDto extends BaseDto {
 
     /** 备注 */
     private String remark;
+
 }

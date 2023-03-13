@@ -9,12 +9,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-
 /**
-*
-* @author xxm
-* @date 2021/6/21
-*/
+ * @author xxm
+ * @date 2021/6/21
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -30,4 +28,5 @@ public class WeChatPayment extends BasePayment implements EntityBaseFunction<WeC
     public WeChatPaymentDto toDto() {
         return WeChatConvert.CONVERT.convert(this);
     }
+
 }

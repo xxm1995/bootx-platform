@@ -4,11 +4,11 @@ import cn.bootx.starter.dingtalk.core.media.entity.DingMediaMd5;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
-/**   
- *
- * @author xxm  
- * @date 2022/7/26 
+/**
+ * @author xxm
+ * @date 2022/7/26
  */
 @Mapper
 public interface DingMediaMd5Mapper extends BaseMapper<DingMediaMd5> {
+
 }

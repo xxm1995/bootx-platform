@@ -17,6 +17,7 @@ import java.util.Optional;
 
 /**
  * 定时任务日志切面
+ *
  * @author xxm
  * @date 2022/5/1
  */
@@ -25,12 +26,14 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class JobLogAspectHandler {
+
     private final QuartzJobLogService quartzJobLogService;
+
     /**
      * 配置织入点 Job 的子类 执行类
      */
     @Pointcut("within(org.quartz.Job+)&&args(org.quartz.JobExecutionContext)")
-    public void logPointCut(){
+    public void logPointCut() {
     }
 
     /**
@@ -44,13 +47,14 @@ public class JobLogAspectHandler {
         try {
             Object result = pjp.proceed();
             LocalDateTime end = LocalDateTime.now();
-            if (Optional.ofNullable(jobLog).map(JobLog::log).orElse(false)){
+            if (Optional.ofNullable(jobLog).map(JobLog::log).orElse(false)) {
                 // 保存正常日志
-                this.addLog(clazz,start,end);
+                this.addLog(clazz, start, end);
             }
             return result;
-        } catch (Throwable e) {
-            if (Optional.ofNullable(jobLog).map(JobLog::errorLog).orElse(false)){
+        }
+        catch (Throwable e) {
+            if (Optional.ofNullable(jobLog).map(JobLog::errorLog).orElse(false)) {
                 // 保存异常日志
                 this.addErrLog(clazz, start, e.getMessage());
             }
@@ -61,27 +65,20 @@ public class JobLogAspectHandler {
     /**
      * 记录日志
      */
-    private void addLog(Class<?> clazz, LocalDateTime start, LocalDateTime end){
+    private void addLog(Class<?> clazz, LocalDateTime start, LocalDateTime end) {
         long duration = LocalDateTimeUtil.between(start, end).toMillis();
-        QuartzJobLog quartzJobLog = new QuartzJobLog()
-                .setHandlerName(clazz.getSimpleName())
-                .setClassName(clazz.getName())
-                .setSuccess(true)
-                .setStartTime(start)
-                .setEndTime(end)
+        QuartzJobLog quartzJobLog = new QuartzJobLog().setHandlerName(clazz.getSimpleName())
+                .setClassName(clazz.getName()).setSuccess(true).setStartTime(start).setEndTime(end)
                 .setDuration(duration);
         quartzJobLogService.add(quartzJobLog);
     }
+
     /**
      * 记录日志
      */
-    private void addErrLog(Class<?> clazz, LocalDateTime start, String message){
-        QuartzJobLog quartzJobLog = new QuartzJobLog()
-                .setHandlerName(clazz.getSimpleName())
-                .setClassName(clazz.getName())
-                .setSuccess(false)
-                .setErrorMessage(message)
-                .setStartTime(start);
+    private void addErrLog(Class<?> clazz, LocalDateTime start, String message) {
+        QuartzJobLog quartzJobLog = new QuartzJobLog().setHandlerName(clazz.getSimpleName())
+                .setClassName(clazz.getName()).setSuccess(false).setErrorMessage(message).setStartTime(start);
         quartzJobLogService.add(quartzJobLog);
     }
 

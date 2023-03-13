@@ -18,12 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 邮件配置
+ *
  * @author xxm
  * @date 2020/4/8 13:29
  */
 @Service
 @AllArgsConstructor
 public class MailConfigService {
+
     private final MailConfigManager mailConfigManager;
 
     /**
@@ -46,11 +48,11 @@ public class MailConfigService {
     public MailConfigDto update(MailConfigParam param) {
         MailConfig mailConfig = mailConfigManager.findById(param.getId()).orElseThrow(MailConfigNotExistException::new);
 
-        if (mailConfigManager.existsByCode(param.getCode(),param.getId())) {
+        if (mailConfigManager.existsByCode(param.getCode(), param.getId())) {
             throw new MailConfigCodeAlreadyExistedException();
         }
 
-        BeanUtil.copyProperties(param,mailConfig, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, mailConfig, CopyOptions.create().ignoreNullValue());
         return mailConfigManager.updateById(mailConfig).toDto();
     }
 
@@ -71,8 +73,8 @@ public class MailConfigService {
     /**
      * 分页
      */
-    public PageResult<MailConfigDto> page(PageParam pageParam,MailConfigParam param){
-        return MpUtil.convert2DtoPageResult(mailConfigManager.page(pageParam,param));
+    public PageResult<MailConfigDto> page(PageParam pageParam, MailConfigParam param) {
+        return MpUtil.convert2DtoPageResult(mailConfigManager.page(pageParam, param));
     }
 
     /**
@@ -85,22 +87,22 @@ public class MailConfigService {
     /**
      * 编码是否已经存在
      */
-    public boolean existsByCode(String code){
+    public boolean existsByCode(String code) {
         return mailConfigManager.existsByCode(code);
     }
 
     /**
      * 编码是否已经存在(不包含自身)
      */
-    public boolean existsByCode(String code,Long id){
-        return mailConfigManager.existsByCode(code,id);
+    public boolean existsByCode(String code, Long id) {
+        return mailConfigManager.existsByCode(code, id);
     }
 
     /**
      * 设置活动邮箱
      */
     @Transactional(rollbackFor = Exception.class)
-    public void setUpActivity(Long id){
+    public void setUpActivity(Long id) {
         MailConfig mailConfig = mailConfigManager.findById(id).orElseThrow(MailConfigNotExistException::new);
         mailConfig.setActivity(true);
         mailConfigManager.removeAllActivity();
@@ -113,4 +115,5 @@ public class MailConfigService {
     public void delete(Long id) {
         mailConfigManager.deleteById(id);
     }
+
 }

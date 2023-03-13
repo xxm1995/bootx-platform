@@ -7,10 +7,11 @@ import lombok.experimental.FieldNameConstants;
 import java.time.LocalDateTime;
 
 /**
-* 表信息
-* @author xxm
-* @date 2022/1/27
-*/
+ * 表信息
+ *
+ * @author xxm
+ * @date 2022/1/27
+ */
 @Data
 @Accessors(chain = true)
 @FieldNameConstants
@@ -27,4 +28,5 @@ public class DatabaseTable {
 
     /** 创建时间 */
     private LocalDateTime createTime;
+
 }

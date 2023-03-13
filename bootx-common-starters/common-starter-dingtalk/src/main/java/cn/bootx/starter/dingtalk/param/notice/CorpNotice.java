@@ -12,10 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
-* 钉钉发送工作通知参数
-* @author xxm
-* @date 2022/7/17
-*/
+ * 钉钉发送工作通知参数
+ *
+ * @author xxm
+ * @date 2022/7/17
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉发送工作通知参数")
@@ -39,15 +40,16 @@ public class CorpNotice {
     /**
      * 输出参数
      */
-    public String toParam(){
-        Map<String,Object> map = new HashMap<>(5);
-        String useridList = Opt.ofEmptyAble(this.useridList).map(list->String.join(",", list)).orElse(null);
-        String deptIdList = Opt.ofEmptyAble(this.deptIdList).map(list->String.join(",", list)).orElse(null);
-        map.put("agent_id",agentId);
-        map.put("userid_list",useridList);
-        map.put("dept_id_list",deptIdList);
-        map.put("to_all_user",toAllUser);
-        map.put("msg",msg);
+    public String toParam() {
+        Map<String, Object> map = new HashMap<>(5);
+        String useridList = Opt.ofEmptyAble(this.useridList).map(list -> String.join(",", list)).orElse(null);
+        String deptIdList = Opt.ofEmptyAble(this.deptIdList).map(list -> String.join(",", list)).orElse(null);
+        map.put("agent_id", agentId);
+        map.put("userid_list", useridList);
+        map.put("dept_id_list", deptIdList);
+        map.put("to_all_user", toAllUser);
+        map.put("msg", msg);
         return JacksonUtil.toJson(map);
     }
+
 }

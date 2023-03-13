@@ -9,12 +9,11 @@ import cn.bootx.common.sequence.exception.SeqException;
  */
 public interface Sequence {
 
-	/**
-	 * 生成下一个序列号
-	 *
-	 * @return 序列号
-	 * @throws SeqException 序列号异常
-	 */
-	long next(String name) throws SeqException;
+    /**
+     * 生成下一个序列号
+     * @return 序列号
+     * @throws SeqException 序列号异常
+     */
+    long next(String name) throws SeqException;
 
 }

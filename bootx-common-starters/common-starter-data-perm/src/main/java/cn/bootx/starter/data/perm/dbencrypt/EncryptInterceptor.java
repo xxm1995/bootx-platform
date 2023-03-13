@@ -22,31 +22,34 @@ import java.util.Objects;
 
 /**
  * 数据字段解密插件
+ *
  * @author xxm
  * @date 2021/11/23
  */
 @Slf4j
-@Intercepts(@Signature(type= Executor.class,method="update",args={MappedStatement.class,Object.class}))
+@Intercepts(@Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }))
 @Component
 @RequiredArgsConstructor
 public class EncryptInterceptor implements Interceptor {
+
     private final DataPermProperties dataPermProperties;
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         Object[] args = invocation.getArgs();
-        if (dataPermProperties.isEnableFieldDecrypt() && args.length < 2){
+        if (dataPermProperties.isEnableFieldDecrypt() && args.length < 2) {
             return invocation.proceed();
         }
         // 获取第二个参数
         Object arg = args[1];
-        if (arg instanceof Map){
+        if (arg instanceof Map) {
             Map<String, ?> map = (Map<String, Object>) arg;
-            if (map.containsKey("et")){
+            if (map.containsKey("et")) {
                 Object object = map.get("et");
                 this.encrypt(object);
             }
-        } else {
+        }
+        else {
             this.encrypt(arg);
         }
         return invocation.proceed();
@@ -55,14 +58,15 @@ public class EncryptInterceptor implements Interceptor {
     /**
      * 加密
      */
-    public void encrypt(Object object){
-        if (Objects.isNull(object)){
+    public void encrypt(Object object) {
+        if (Objects.isNull(object)) {
             return;
         }
-        Field[] fields = ReflectUtil.getFields(object.getClass(), field -> Objects.nonNull(field.getAnnotation(EncryptionField.class)));
+        Field[] fields = ReflectUtil.getFields(object.getClass(),
+                field -> Objects.nonNull(field.getAnnotation(EncryptionField.class)));
         for (Field field : fields) {
             Object fieldValue = this.encryptValue(ReflectUtil.getFieldValue(object, field));
-            ReflectUtil.setFieldValue(object,field,fieldValue);
+            ReflectUtil.setFieldValue(object, field, fieldValue);
         }
 
     }
@@ -70,12 +74,14 @@ public class EncryptInterceptor implements Interceptor {
     /**
      * 对象值加密
      */
-    public Object encryptValue(Object fieldValue){
-        if (fieldValue instanceof String){
+    public Object encryptValue(Object fieldValue) {
+        if (fieldValue instanceof String) {
             AES aes = SecureUtil.aes(dataPermProperties.getFieldDecryptKey().getBytes(StandardCharsets.UTF_8));
             return aes.encryptBase64((String) fieldValue);
-        } else {
+        }
+        else {
             return fieldValue;
         }
     }
+
 }

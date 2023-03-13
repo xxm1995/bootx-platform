@@ -5,14 +5,16 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* 用户数据范围权限详细信息
-* @author xxm
-* @date 2022/1/5
-*/
+ * 用户数据范围权限详细信息
+ *
+ * @author xxm
+ * @date 2022/1/5
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户数据范围权限详细信息")
 public class DataScopeUserInfoDto {
+
     @Schema(description = "权限关联id")
     private Long id;
 
@@ -24,4 +26,5 @@ public class DataScopeUserInfoDto {
 
     @Schema(description = "用户账号")
     private String username;
+
 }

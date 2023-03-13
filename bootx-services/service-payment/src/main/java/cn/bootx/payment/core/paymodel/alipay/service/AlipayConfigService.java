@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 /**
  * 支付宝支付
+ *
  * @author xxm
  * @date 2020/12/15
  */
@@ -33,16 +34,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AlipayConfigService {
+
     private final AlipayConfigManager alipayConfigManager;
 
     /**
      * 添加支付宝配置
      */
     @Transactional(rollbackFor = Exception.class)
-    public void add(AlipayConfigParam param){
+    public void add(AlipayConfigParam param) {
         AlipayConfig alipayConfig = AlipayConfig.init(param);
-        alipayConfig.setActivity(false)
-                .setState(1);
+        alipayConfig.setActivity(false).setState(1);
         alipayConfigManager.save(alipayConfig);
     }
 
@@ -50,9 +51,9 @@ public class AlipayConfigService {
      * 设置启用的支付宝配置
      */
     @Transactional(rollbackFor = Exception.class)
-    public void setUpActivity(Long id){
+    public void setUpActivity(Long id) {
         AlipayConfig alipayConfig = alipayConfigManager.findById(id).orElseThrow(DataNotExistException::new);
-        if (Objects.equals(alipayConfig.getActivity(),Boolean.TRUE)){
+        if (Objects.equals(alipayConfig.getActivity(), Boolean.TRUE)) {
             return;
         }
         alipayConfigManager.removeAllActivity();
@@ -64,9 +65,10 @@ public class AlipayConfigService {
      * 清除启用状态
      */
     @Transactional(rollbackFor = Exception.class)
-    public void clearActivity(Long id){
-        AlipayConfig alipayConfig = alipayConfigManager.findById(id).orElseThrow(() -> new PayFailureException("支付宝配置不存在"));
-        if (Objects.equals(alipayConfig.getActivity(),Boolean.FALSE)){
+    public void clearActivity(Long id) {
+        AlipayConfig alipayConfig = alipayConfigManager.findById(id)
+                .orElseThrow(() -> new PayFailureException("支付宝配置不存在"));
+        if (Objects.equals(alipayConfig.getActivity(), Boolean.FALSE)) {
             return;
         }
         alipayConfig.setActivity(false);
@@ -77,14 +79,14 @@ public class AlipayConfigService {
      * 修改
      */
     @Transactional(rollbackFor = Exception.class)
-    public void update(AlipayConfigParam param){
-        AlipayConfig alipayConfig = alipayConfigManager.findById(param.getId())
-                .orElseThrow(DataNotExistException::new);
-        BeanUtil.copyProperties(param,alipayConfig, CopyOptions.create().ignoreNullValue());
+    public void update(AlipayConfigParam param) {
+        AlipayConfig alipayConfig = alipayConfigManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
+        BeanUtil.copyProperties(param, alipayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
-        if (CollUtil.isNotEmpty(param.getPayWayList())){
+        if (CollUtil.isNotEmpty(param.getPayWayList())) {
             alipayConfig.setPayWays(String.join(",", param.getPayWayList()));
-        } else {
+        }
+        else {
             alipayConfig.setPayWays(null);
         }
         alipayConfigManager.updateById(alipayConfig);
@@ -93,25 +95,22 @@ public class AlipayConfigService {
     /**
      * 获取
      */
-    public AlipayConfigDto findById(Long id){
-        return alipayConfigManager.findById(id)
-                .map(AlipayConfig::toDto)
-                .orElseThrow(DataNotExistException::new);
+    public AlipayConfigDto findById(Long id) {
+        return alipayConfigManager.findById(id).map(AlipayConfig::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 分页
      */
     public PageResult<AlipayConfigDto> page(PageParam pageParam, AlipayConfigQuery param) {
-        return MpUtil.convert2DtoPageResult(alipayConfigManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(alipayConfigManager.page(pageParam, param));
     }
 
     /**
      * 支付宝支持支付方式
      */
     public List<KeyValue> findPayWayList() {
-        return AliPayWay.getPayWays().stream()
-                .map(e->new KeyValue(e.getCode(),e.getName()))
+        return AliPayWay.getPayWays().stream().map(e -> new KeyValue(e.getCode(), e.getName()))
                 .collect(Collectors.toList());
     }
 

@@ -21,6 +21,7 @@ import static cn.bootx.common.translate.cache.TranslationCacheLocal.get;
 
 /**
  * 字典值转换工具类
+ *
  * @author xxm
  * @date 2022/12/15
  */
@@ -28,6 +29,7 @@ import static cn.bootx.common.translate.cache.TranslationCacheLocal.get;
 @Service
 @RequiredArgsConstructor
 public class DictTranslationServiceImpl implements DictTranslationService {
+
     private final DictionaryItemService dictionaryItemService;
 
     /**
@@ -40,37 +42,40 @@ public class DictTranslationServiceImpl implements DictTranslationService {
         // 如果字典项少于三个, 单独查, 字典类型少于三个, 查找项后本地筛选, 其他查全部后筛选
         long itemCount = dictItems.stream().distinct().count();
         long dictCount = dictItems.stream().map(TranslationCacheLocal.DictItem::getDictCode).distinct().count();
-        if (itemCount<=3){
+        if (itemCount <= 3) {
             val collect = dictItems.stream().distinct().collect(Collectors.toList());
             for (val dictItem : collect) {
                 String value = dictionaryItemService.findEnableByCode(dictItem.getDictCode(), dictItem.getCode())
-                        .map(DictionaryItem::getName)
-                        .orElse(null);
-                cache.addDictCache(dictItem.getDictCode(),dictItem.getCode(),value);
+                        .map(DictionaryItem::getName).orElse(null);
+                cache.addDictCache(dictItem.getDictCode(), dictItem.getCode(), value);
             }
-        } else if (dictCount<3) {
-            val dictCodes = dictItems.stream().map(TranslationCacheLocal.DictItem::getDictCode).collect(Collectors.toList());
+        }
+        else if (dictCount < 3) {
+            val dictCodes = dictItems.stream().map(TranslationCacheLocal.DictItem::getDictCode)
+                    .collect(Collectors.toList());
             for (val dictCode : dictCodes) {
                 Map<String, DictionaryItemDto> itemMap = dictionaryItemService.findEnableByDictCode(dictCode).stream()
-                        .collect(Collectors.toMap(DictionaryItemDto::getCode, Function.identity(), CollectorsFunction::retainLatest));
+                        .collect(Collectors.toMap(DictionaryItemDto::getCode, Function.identity(),
+                                CollectorsFunction::retainLatest));
                 val collect = dictItems.stream().filter(item -> Objects.equal(dictCode, item.getDictCode()))
                         .collect(Collectors.toList());
                 for (val dictItem : collect) {
                     String value = Optional.ofNullable(itemMap.get(dictItem.getCode())).map(DictionaryItemDto::getName)
                             .orElse(null);
-                    cache.addDictCache(dictItem.getDictCode(),dictItem.getCode(),value);
+                    cache.addDictCache(dictItem.getDictCode(), dictItem.getCode(), value);
                 }
             }
-        } else {
+        }
+        else {
             val allDictItems = dictionaryItemService.findAllByEnable();
             for (val dictItem : dictItems) {
                 String value = allDictItems.stream()
-                        .filter(o->Objects.equal(dictItem.getDictCode(),o.getDictCode())&&Objects.equal(dictItem.getCode(),o.getCode()))
-                        .findFirst()
-                        .map(DictionaryItemSimpleDto::getName)
-                        .orElse(null);
-                cache.addDictCache(dictItem.getDictCode(),dictItem.getCode(),value);
+                        .filter(o -> Objects.equal(dictItem.getDictCode(), o.getDictCode())
+                                && Objects.equal(dictItem.getCode(), o.getCode()))
+                        .findFirst().map(DictionaryItemSimpleDto::getName).orElse(null);
+                cache.addDictCache(dictItem.getDictCode(), dictItem.getCode(), value);
             }
         }
     }
+
 }

@@ -6,10 +6,11 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
-* 企业微信机器人配置
-* @author xxm
-* @date 2022/7/16
-*/
+ * 企业微信机器人配置
+ *
+ * @author xxm
+ * @date 2022/7/16
+ */
 public interface WeComRobotNoticeSender {
 
     /**
@@ -52,4 +53,5 @@ public interface WeComRobotNoticeSender {
      * 发送文件消息
      */
     void sendFIleNotice(String code, InputStream inputStream, String filename);
+
 }

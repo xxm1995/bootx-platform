@@ -23,6 +23,7 @@ import static cn.bootx.iam.code.CachingCode.USER_PERM_CODE;
 
 /**
  * 用户角色关系
+ *
  * @author xxm
  * @date 2021/8/3
  */
@@ -32,19 +33,21 @@ import static cn.bootx.iam.code.CachingCode.USER_PERM_CODE;
 public class UserRoleService {
 
     private final RoleManager roleManager;
+
     private final UserInfoManager userInfoManager;
+
     private final UserRoleManager userRoleManager;
 
     /**
      * 给用户分配角色
      */
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {USER_PATH,USER_PERM_CODE},allEntries = true)
-    public void saveAssign(Long userId, List<Long> roleIds){
+    @CacheEvict(value = { USER_PATH, USER_PERM_CODE }, allEntries = true)
+    public void saveAssign(Long userId, List<Long> roleIds) {
         // 先删除用户拥有的角色
         userRoleManager.deleteByUser(userId);
         // 然后给用户添加角色
-        List<UserRole> userRoles = this.createUserRoles(userId,roleIds);
+        List<UserRole> userRoles = this.createUserRoles(userId, roleIds);
         userRoleManager.saveAll(userRoles);
     }
 
@@ -52,17 +55,15 @@ public class UserRoleService {
      * 给用户分配角色
      */
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = {USER_PATH,USER_PERM_CODE},allEntries = true)
-    public void saveAssignBatch(List<Long> userIds, List<Long> roleIds){
+    @CacheEvict(value = { USER_PATH, USER_PERM_CODE }, allEntries = true)
+    public void saveAssignBatch(List<Long> userIds, List<Long> roleIds) {
         List<UserInfo> userInfos = userInfoManager.findAllByIds(userIds);
-        if (userInfos.size()!=userIds.size()){
+        if (userInfos.size() != userIds.size()) {
             throw new BizException("用户数据有问题");
         }
         userRoleManager.deleteByUsers(userIds);
-        List<UserRole> userRoles = userIds.stream()
-                .map(userId -> this.createUserRoles(userId, roleIds))
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        List<UserRole> userRoles = userIds.stream().map(userId -> this.createUserRoles(userId, roleIds))
+                .flatMap(Collection::stream).collect(Collectors.toList());
         userRoleManager.saveAll(userRoles);
     }
 
@@ -70,26 +71,22 @@ public class UserRoleService {
      * 根据id查询角色id
      */
     public List<Long> findRoleIdsByUser(Long userId) {
-        return userRoleManager.findAllByUser(userId).stream()
-                .map(UserRole::getRoleId)
-                .distinct()
+        return userRoleManager.findAllByUser(userId).stream().map(UserRole::getRoleId).distinct()
                 .collect(Collectors.toList());
     }
 
     /**
      * 查询用户所对应的角色
      */
-    public List<RoleDto> findRolesByUser(Long userId){
+    public List<RoleDto> findRolesByUser(Long userId) {
         return ResultConvertUtil.dtoListConvert(roleManager.findAllByIds(this.findRoleIdsByUser(userId)));
     }
-
 
     /**
      * 创建用户角色关联
      */
-    private List<UserRole> createUserRoles(Long userId, List<Long> roleIds){
-        return roleIds.stream()
-                .map(roleId -> new UserRole().setRoleId(roleId).setUserId(userId))
+    private List<UserRole> createUserRoles(Long userId, List<Long> roleIds) {
+        return roleIds.stream().map(roleId -> new UserRole().setRoleId(roleId).setUserId(userId))
                 .collect(Collectors.toList());
     }
 

@@ -9,11 +9,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-/**   
-* 储值卡支付记录
-* @author xxm  
-* @date 2022/3/14 
-*/
+/**
+ * 储值卡支付记录
+ *
+ * @author xxm
+ * @date 2022/3/14
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -27,4 +28,5 @@ public class VoucherPayment extends BasePayment implements EntityBaseFunction<Vo
     public VoucherPaymentDto toDto() {
         return VoucherConvert.CONVERT.convert(this);
     }
+
 }

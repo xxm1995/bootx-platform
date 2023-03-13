@@ -13,10 +13,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 /**
-* 数据版本日志
-* @author xxm
-* @date 2022/1/10
-*/
+ * 数据版本日志
+ *
+ * @author xxm
+ * @date 2022/1/10
+ */
 @Data
 @FieldNameConstants
 @Accessors(chain = true)
@@ -54,4 +55,5 @@ public class DataVersionLogMongo implements EntityBaseFunction<DataVersionLogDto
     public DataVersionLogDto toDto() {
         return LogConvert.CONVERT.convert(this);
     }
+
 }

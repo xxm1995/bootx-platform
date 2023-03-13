@@ -3,11 +3,12 @@ package cn.bootx.common.sequence.range;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
-* 序列号区间配置
-* @author xxm  
-* @date 2022/1/21 
-*/
+/**
+ * 序列号区间配置
+ *
+ * @author xxm
+ * @date 2022/1/21
+ */
 @Data
 @Accessors(chain = true)
 public class SeqRangeConfig {
@@ -26,4 +27,5 @@ public class SeqRangeConfig {
      * 序列生成器区间起始位置
      */
     private long rangeStart = 0;
+
 }

@@ -11,6 +11,7 @@ import java.util.Optional;
 
 /**
  * 流程处理时上下文
+ *
  * @author xxm
  * @date 2022/8/28
  */
@@ -23,10 +24,10 @@ public class BpmContext {
     private Long modelId;
 
     /** 提交的表单值 */
-    private Map<String,Object> formVariables;
+    private Map<String, Object> formVariables;
 
     /** 启动任务的用户 */
-    private Optional<UserDetail> startUser = Optional.empty() ;
+    private Optional<UserDetail> startUser = Optional.empty();
 
     /**
      * 实例处理状态

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- *
  * @author xxm
  * @date 2022/8/31
  */
@@ -16,9 +15,11 @@ public class ActivityInstanceChart {
 
     @Schema(description = "流程活动的id")
     private String activityId;
+
     @Schema(description = "流程活动的类型")
     private String activityType;
 
     @Schema(description = "运行中")
     private boolean running;
+
 }

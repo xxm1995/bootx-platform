@@ -7,19 +7,20 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
-* 查询参数
-* @author xxm  
-* @date 2021/11/17 
-*/
+ * 查询参数
+ *
+ * @author xxm
+ * @date 2021/11/17
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "查询参数")
 public class QueryParams {
 
-    @Schema(description= "参数集合")
+    @Schema(description = "参数集合")
     private List<QueryParam> queryParams;
 
-    @Schema(description= "排序集合")
+    @Schema(description = "排序集合")
     private List<QueryOrder> queryOrders;
 
 }

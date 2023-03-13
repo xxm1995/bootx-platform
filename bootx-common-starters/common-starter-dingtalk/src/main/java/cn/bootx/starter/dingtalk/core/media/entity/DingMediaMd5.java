@@ -8,10 +8,11 @@ import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
-/**   
+/**
  * 钉钉媒体文件MD5值关联关系
- * @author xxm  
- * @date 2022/7/26 
+ *
+ * @author xxm
+ * @date 2022/7/26
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

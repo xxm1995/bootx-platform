@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Actable 自动根据创建表
+ *
  * @author xxm
  * @date 2022/12/18
  */
@@ -16,4 +17,5 @@ import org.springframework.context.annotation.ComponentScan;
 @AutoConfiguration
 @MapperScan(annotationClass = Mapper.class)
 public class ActableAutoConfiguration {
+
 }

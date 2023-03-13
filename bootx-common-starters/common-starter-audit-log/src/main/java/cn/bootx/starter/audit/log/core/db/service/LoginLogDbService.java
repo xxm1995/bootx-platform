@@ -16,22 +16,24 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 /**
-* 登陆日志
-* @author xxm
-* @date 2021/8/12
-*/
+ * 登陆日志
+ *
+ * @author xxm
+ * @date 2021/8/12
+ */
 @Slf4j
 @Service
-@ConditionalOnProperty(prefix = "bootx.starter.audit-log", value = "store", havingValue = "jdbc",matchIfMissing = true)
+@ConditionalOnProperty(prefix = "bootx.starter.audit-log", value = "store", havingValue = "jdbc", matchIfMissing = true)
 @RequiredArgsConstructor
 public class LoginLogDbService implements LoginLogService {
+
     private final LoginLogDbManager loginLogManager;
 
     /**
      * 添加
      */
     @Override
-    public void add(LoginLogParam loginLog){
+    public void add(LoginLogParam loginLog) {
         loginLogManager.save(LogConvert.CONVERT.convert(loginLog));
     }
 
@@ -39,7 +41,7 @@ public class LoginLogDbService implements LoginLogService {
      * 获取
      */
     @Override
-    public LoginLogDto findById(Long id){
+    public LoginLogDto findById(Long id) {
         return loginLogManager.findById(id).map(LoginLogDb::toDto).orElseThrow(DataNotExistException::new);
     }
 
@@ -47,15 +49,16 @@ public class LoginLogDbService implements LoginLogService {
      * 分页
      */
     @Override
-    public PageResult<LoginLogDto> page(PageParam pageParam, LoginLogParam loginLogParam){
-        return MpUtil.convert2DtoPageResult(loginLogManager.page(pageParam,loginLogParam));
+    public PageResult<LoginLogDto> page(PageParam pageParam, LoginLogParam loginLogParam) {
+        return MpUtil.convert2DtoPageResult(loginLogManager.page(pageParam, loginLogParam));
     }
 
     /**
      * 删除
      */
     @Override
-    public void delete(Long id){
+    public void delete(Long id) {
         loginLogManager.deleteById(id);
     }
+
 }

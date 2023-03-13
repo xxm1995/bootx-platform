@@ -15,22 +15,24 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-/**   
-* 定时任务日志
-* @author xxm  
-* @date 2022/5/1 
-*/
+/**
+ * 定时任务日志
+ *
+ * @author xxm
+ * @date 2022/5/1
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class QuartzJobLogService {
+
     private final QuartzJobLogManager quartzJobLogManager;
 
     /**
      * 添加
      */
     @Async("asyncExecutor")
-    public void add(QuartzJobLog quartzJobLog){
+    public void add(QuartzJobLog quartzJobLog) {
         quartzJobLog.setCreateTime(LocalDateTime.now());
         quartzJobLogManager.save(quartzJobLog);
     }
@@ -38,18 +40,15 @@ public class QuartzJobLogService {
     /**
      * 分页
      */
-    public PageResult<QuartzJobLogDto> page(PageParam pageParam, QuartzJobLogQuery query){
-        return MpUtil.convert2DtoPageResult(quartzJobLogManager.page(pageParam,query));
+    public PageResult<QuartzJobLogDto> page(PageParam pageParam, QuartzJobLogQuery query) {
+        return MpUtil.convert2DtoPageResult(quartzJobLogManager.page(pageParam, query));
     }
 
     /**
      * 单条
      */
-    public QuartzJobLogDto findById(Long id){
-        return quartzJobLogManager.findById(id)
-                .map(QuartzJobLog::toDto)
-                .orElseThrow(DataNotExistException::new);
+    public QuartzJobLogDto findById(Long id) {
+        return quartzJobLogManager.findById(id).map(QuartzJobLog::toDto).orElseThrow(DataNotExistException::new);
     }
-
 
 }

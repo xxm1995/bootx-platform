@@ -17,13 +17,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
 /**
-* 登录失败
-* @author xxm
-* @date 2021/8/13
-*/
+ * 登录失败
+ *
+ * @author xxm
+ * @date 2021/8/13
+ */
 @Component
 @RequiredArgsConstructor
 public class LoginFailureHandlerImpl implements LoginFailureHandler {
+
     private final LoginLogService loginLogService;
 
     @Override
@@ -33,16 +35,11 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
         String ip = ServletUtil.getClientIP(request);
         String loginType = SecurityUtil.getLoginType(request);
         String client = SecurityUtil.getClient(request);
-        LoginLogParam loginLog = new LoginLogParam()
-                .setAccount(e.getUsername())
-                .setLogin(false)
-                .setClient(client)
-                .setLoginType(loginType)
-                .setMsg(e.getMessage())
-                .setIp(ip)
-                .setOs(userAgent.getOs().getName())
-                .setBrowser(userAgent.getBrowser().getName()+" "+userAgent.getVersion())
+        LoginLogParam loginLog = new LoginLogParam().setAccount(e.getUsername()).setLogin(false).setClient(client)
+                .setLoginType(loginType).setMsg(e.getMessage()).setIp(ip).setOs(userAgent.getOs().getName())
+                .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
                 .setLoginTime(LocalDateTime.now());
         loginLogService.add(loginLog);
     }
+
 }

@@ -13,10 +13,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 邮件配置
-* @author xxm  
-* @date 2020/4/8 11:14 
-*/
+ * 邮件配置
+ *
+ * @author xxm
+ * @date 2020/4/8 11:14
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
@@ -43,7 +44,7 @@ public class MailConfig extends MpBaseEntity implements EntityBaseFunction<MailC
     @EncryptionField
     private String password;
 
-    /** 邮箱服务器 发送人名称   */
+    /** 邮箱服务器 发送人名称 */
     private String sender;
 
     /** 邮箱服务器 发送人邮箱账号 */
@@ -64,4 +65,5 @@ public class MailConfig extends MpBaseEntity implements EntityBaseFunction<MailC
     public MailConfigDto toDto() {
         return MailConvert.CONVERT.convert(this);
     }
+
 }

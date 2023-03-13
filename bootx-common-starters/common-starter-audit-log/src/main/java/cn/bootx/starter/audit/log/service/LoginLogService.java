@@ -6,11 +6,12 @@ import cn.bootx.starter.audit.log.dto.LoginLogDto;
 import cn.bootx.starter.audit.log.param.LoginLogParam;
 import org.springframework.scheduling.annotation.Async;
 
-/**   
-* 登陆日志
-* @author xxm  
-* @date 2021/12/2 
-*/
+/**
+ * 登陆日志
+ *
+ * @author xxm
+ * @date 2021/12/2
+ */
 public interface LoginLogService {
 
     /**
@@ -33,4 +34,5 @@ public interface LoginLogService {
      * 删除
      */
     void delete(Long id);
+
 }

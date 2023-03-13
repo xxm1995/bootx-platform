@@ -14,13 +14,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
-* 支付宝配置
-* @author xxm
-* @date 2021/2/26
-*/
+ * 支付宝配置
+ *
+ * @author xxm
+ * @date 2021/2/26
+ */
 @Repository
 @RequiredArgsConstructor
-public class AlipayConfigManager extends BaseManager<AlipayConfigMapper,AlipayConfig> {
+public class AlipayConfigManager extends BaseManager<AlipayConfigMapper, AlipayConfig> {
+
     private Optional<AlipayConfig> alipayConfig;
 
     @Override
@@ -38,8 +40,8 @@ public class AlipayConfigManager extends BaseManager<AlipayConfigMapper,AlipayCo
     /**
      * 获取启用的支付宝配置
      */
-    public Optional<AlipayConfig> findActivity(){
-        if (Objects.isNull(alipayConfig)){
+    public Optional<AlipayConfig> findActivity() {
+        if (Objects.isNull(alipayConfig)) {
             alipayConfig = findByField(AlipayConfig::getActivity, Boolean.TRUE);
         }
         return alipayConfig;
@@ -50,11 +52,9 @@ public class AlipayConfigManager extends BaseManager<AlipayConfigMapper,AlipayCo
      */
     public Page<AlipayConfig> page(PageParam pageParam, AlipayConfigQuery param) {
         Page<AlipayConfig> mpPage = MpUtil.getMpPage(pageParam, AlipayConfig.class);
-        return lambdaQuery()
-                .select(AlipayConfig.class, MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getName()),AlipayConfig::getName,param.getName())
-                .like(StrUtil.isNotBlank(param.getAppId()),AlipayConfig::getAppId,param.getAppId())
-                .page(mpPage);
+        return lambdaQuery().select(AlipayConfig.class, MpUtil::excludeBigField)
+                .like(StrUtil.isNotBlank(param.getName()), AlipayConfig::getName, param.getName())
+                .like(StrUtil.isNotBlank(param.getAppId()), AlipayConfig::getAppId, param.getAppId()).page(mpPage);
     }
 
     /**
@@ -62,15 +62,15 @@ public class AlipayConfigManager extends BaseManager<AlipayConfigMapper,AlipayCo
      */
     public void removeAllActivity() {
         this.clearCache();
-        lambdaUpdate().eq(AlipayConfig::getActivity,Boolean.TRUE)
-                .set(AlipayConfig::getActivity,Boolean.FALSE)
+        lambdaUpdate().eq(AlipayConfig::getActivity, Boolean.TRUE).set(AlipayConfig::getActivity, Boolean.FALSE)
                 .update();
     }
 
     /**
      * 清除缓存
      */
-    public void clearCache(){
+    public void clearCache() {
         alipayConfig = null;
     }
+
 }

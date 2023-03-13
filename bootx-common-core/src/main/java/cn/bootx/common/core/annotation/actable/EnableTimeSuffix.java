@@ -14,14 +14,16 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface EnableTimeSuffix {
+
     /**
      * 开启时间后缀
      */
     boolean value() default true;
 
     /**
-     * 时间后缀格式
-     * <br> 使用常量类 {@link DatePattern}
+     * 时间后缀格式 <br>
+     * 使用常量类 {@link DatePattern}
      */
     String pattern() default DatePattern.SIMPLE_MONTH_PATTERN;
+
 }

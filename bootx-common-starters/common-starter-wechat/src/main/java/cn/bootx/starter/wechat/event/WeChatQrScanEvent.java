@@ -5,13 +5,16 @@ import org.springframework.context.ApplicationEvent;
 
 /**
  * 微信扫码关注事件
+ *
  * @author xxm
  * @date 2022/8/4
  */
 @Getter
 public class WeChatQrScanEvent extends ApplicationEvent {
+
     /** 微信id */
     private final String openId;
+
     /** key值 */
     private final String eventKey;
 
@@ -20,4 +23,5 @@ public class WeChatQrScanEvent extends ApplicationEvent {
         this.openId = openId;
         this.eventKey = eventKey;
     }
+
 }

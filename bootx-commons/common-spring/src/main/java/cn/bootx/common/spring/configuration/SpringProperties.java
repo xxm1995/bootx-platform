@@ -5,9 +5,9 @@ import lombok.experimental.Accessors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
-* @author xxm
-* @date 2020/4/9 13:50
-*/
+ * @author xxm
+ * @date 2020/4/9 13:50
+ */
 @ConfigurationProperties(prefix = "bootx.common.spring")
 @Data
 @Accessors(chain = true)
@@ -15,17 +15,17 @@ public class SpringProperties {
 
     /** cors跨域配置 */
     private Cors cors = new Cors();
+
     /** 线程池配置 */
     private Executor executor = new Executor();
 
+    /**
+     * @author xxm
+     * @date 2021/6/11
+     */
+    @Data
+    public static class Executor {
 
-
-	/**
-	* @author xxm
-	* @date 2021/6/11
-	*/
-	@Data
-	public static class Executor {
         /** 线程池维护线程的最少数量 */
         private int corePoolSize = 10;
 
@@ -37,10 +37,12 @@ public class SpringProperties {
 
         /** 保持活动秒数 */
         private int keepAliveSeconds = 60;
+
     }
 
     @Data
     public static class Cors {
+
         /** 允许跨域发送身份凭证 */
         private boolean enable = false;
 
@@ -57,4 +59,5 @@ public class SpringProperties {
         private String allowedOriginPatterns = "*";
 
     }
+
 }

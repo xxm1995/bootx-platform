@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 /**
  * 定时任务
+ *
  * @author xxm
  * @date 2021/11/2
  */
@@ -36,14 +37,16 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class QuartzJobService {
+
     private final QuartzJobScheduler jobScheduler;
+
     private final QuartzJobManager quartzJobManager;
 
     /**
      * 添加
      */
     @Transactional(rollbackFor = Exception.class)
-    public void add(QuartzJobParam param){
+    public void add(QuartzJobParam param) {
         QuartzJob quartzJob = QuartzJob.init(param);
         quartzJob.setState(QuartzJobCode.STOP);
         quartzJobManager.save(quartzJob);
@@ -53,14 +56,14 @@ public class QuartzJobService {
      * 更新
      */
     @Transactional(rollbackFor = Exception.class)
-    public void update(QuartzJobParam param){
-        QuartzJob quartzJob = quartzJobManager.findById(param.getId())
-                .orElseThrow(() -> new BizException("定时任务不存在"));
-        BeanUtil.copyProperties(param,quartzJob, CopyOptions.create().ignoreNullValue());
+    public void update(QuartzJobParam param) {
+        QuartzJob quartzJob = quartzJobManager.findById(param.getId()).orElseThrow(() -> new BizException("定时任务不存在"));
+        BeanUtil.copyProperties(param, quartzJob, CopyOptions.create().ignoreNullValue());
         quartzJobManager.updateById(quartzJob);
         jobScheduler.delete(quartzJob.getId());
-        if (Objects.equals(quartzJob.getState(), QuartzJobCode.RUNNING)){
-            jobScheduler.add(quartzJob.getId(),quartzJob.getJobClassName(),quartzJob.getCron(),quartzJob.getParameter());
+        if (Objects.equals(quartzJob.getState(), QuartzJobCode.RUNNING)) {
+            jobScheduler.add(quartzJob.getId(), quartzJob.getJobClassName(), quartzJob.getCron(),
+                    quartzJob.getParameter());
         }
     }
 
@@ -68,15 +71,16 @@ public class QuartzJobService {
      * 启动
      */
     @Transactional(rollbackFor = Exception.class)
-    public void start(Long id){
-        QuartzJob quartzJob = quartzJobManager.findById(id)
-                .orElseThrow(() -> new BizException("定时任务不存在"));
+    public void start(Long id) {
+        QuartzJob quartzJob = quartzJobManager.findById(id).orElseThrow(() -> new BizException("定时任务不存在"));
         // 非运行才进行操作
-        if (!Objects.equals(quartzJob.getState(),QuartzJobCode.RUNNING)){
+        if (!Objects.equals(quartzJob.getState(), QuartzJobCode.RUNNING)) {
             quartzJob.setState(QuartzJobCode.RUNNING);
             quartzJobManager.updateById(quartzJob);
-            jobScheduler.add(quartzJob.getId(),quartzJob.getJobClassName(),quartzJob.getCron(),quartzJob.getParameter());
-        } else {
+            jobScheduler.add(quartzJob.getId(), quartzJob.getJobClassName(), quartzJob.getCron(),
+                    quartzJob.getParameter());
+        }
+        else {
             throw new BizException("已经是启动状态");
         }
     }
@@ -85,14 +89,14 @@ public class QuartzJobService {
      * 停止
      */
     @Transactional(rollbackFor = Exception.class)
-    public void stop(Long id){
-        QuartzJob quartzJob = quartzJobManager.findById(id)
-                .orElseThrow(() -> new BizException("定时任务不存在"));
-        if (!Objects.equals(quartzJob.getState(),QuartzJobCode.STOP)){
+    public void stop(Long id) {
+        QuartzJob quartzJob = quartzJobManager.findById(id).orElseThrow(() -> new BizException("定时任务不存在"));
+        if (!Objects.equals(quartzJob.getState(), QuartzJobCode.STOP)) {
             quartzJob.setState(QuartzJobCode.STOP);
             quartzJobManager.updateById(quartzJob);
             jobScheduler.delete(id);
-        } else {
+        }
+        else {
             throw new BizException("已经是停止状态");
         }
     }
@@ -100,33 +104,30 @@ public class QuartzJobService {
     /**
      * 立即执行
      */
-    public void execute(Long id){
-        QuartzJob quartzJob = quartzJobManager.findById(id)
-                .orElseThrow(() -> new BizException("定时任务不存在"));
-        jobScheduler.execute(quartzJob.getJobClassName(),quartzJob.getParameter());
+    public void execute(Long id) {
+        QuartzJob quartzJob = quartzJobManager.findById(id).orElseThrow(() -> new BizException("定时任务不存在"));
+        jobScheduler.execute(quartzJob.getJobClassName(), quartzJob.getParameter());
     }
 
     /**
      * 分页
      */
-    public PageResult<QuartzJobDto> page(PageParam pageParam, QuartzJobParam param){
-        return MpUtil.convert2DtoPageResult(quartzJobManager.page(pageParam,param));
+    public PageResult<QuartzJobDto> page(PageParam pageParam, QuartzJobParam param) {
+        return MpUtil.convert2DtoPageResult(quartzJobManager.page(pageParam, param));
     }
 
     /**
      * 获取单条
      */
-    public QuartzJobDto findById(Long id){
-        return quartzJobManager.findById(id)
-                .map(QuartzJob::toDto)
-                .orElseThrow(DataNotExistException::new);
+    public QuartzJobDto findById(Long id) {
+        return quartzJobManager.findById(id).map(QuartzJob::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 删除
      */
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Long id){
+    public void delete(Long id) {
         quartzJobManager.deleteById(id);
         jobScheduler.delete(id);
     }
@@ -134,10 +135,11 @@ public class QuartzJobService {
     /**
      * 判断是否是定时任务类
      */
-    public String judgeJobClass(String jobClassName){
+    public String judgeJobClass(String jobClassName) {
         try {
             jobScheduler.getJobClass(jobClassName);
-        } catch (BizException e) {
+        }
+        catch (BizException e) {
             return e.getMessage();
         }
         return null;
@@ -146,9 +148,9 @@ public class QuartzJobService {
     /**
      * 同步状态
      */
-    public void syncJobStatus(){
+    public void syncJobStatus() {
         Map<String, QuartzJob> quartzJobMap = quartzJobManager.findRunning().stream()
-                .collect(Collectors.toMap(o->o.getId().toString(), Function.identity()));
+                .collect(Collectors.toMap(o -> o.getId().toString(), Function.identity()));
 
         List<Trigger> triggers = jobScheduler.findTriggers();
 
@@ -157,7 +159,8 @@ public class QuartzJobService {
             String triggerName = trigger.getKey().getName();
             if (!quartzJobMap.containsKey(triggerName)) {
                 jobScheduler.delete(Long.valueOf(triggerName));
-            } else {
+            }
+            else {
                 quartzJobMap.remove(triggerName);
             }
         }

@@ -37,6 +37,7 @@ import static cn.bootx.starter.flowable.code.ModelNodeCode.ASSIGN_SPONSOR;
 
 /**
  * 模型任务节点服务
+ *
  * @author xxm
  * @date 2022/8/25
  */
@@ -44,17 +45,20 @@ import static cn.bootx.starter.flowable.code.ModelNodeCode.ASSIGN_SPONSOR;
 @Service
 @RequiredArgsConstructor
 public class BpmModelNodeService {
+
     private final BpmModelManager bpmModelManager;
+
     private final BpmModelNodeManager bpmModelNodeManager;
 
     private final RepositoryService repositoryService;
 
-    private final List<String> nodeAssignTypes = CollUtil.toList(ASSIGN_SPONSOR,ASSIGN_SELECT);
+    private final List<String> nodeAssignTypes = CollUtil.toList(ASSIGN_SPONSOR, ASSIGN_SELECT);
+
     /**
      * 添加
      */
-    @CacheEvict(value = NODE_MODEL_ID,key = "#param.modelId")
-    public void add(BpmModelNodeParam param){
+    @CacheEvict(value = NODE_MODEL_ID, key = "#param.modelId")
+    public void add(BpmModelNodeParam param) {
         BpmModelNode bpmModelNode = BpmModelNode.init(param);
         bpmModelNodeManager.save(bpmModelNode);
     }
@@ -63,13 +67,13 @@ public class BpmModelNodeService {
      * 修改
      */
     @CacheEvict(value = NODE_MODEL_ID, key = "#param.modelId")
-    public void update(BpmModelNodeParam param){
+    public void update(BpmModelNodeParam param) {
         BpmModelNode bpmModelNode = bpmModelNodeManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
 
         BeanUtil.copyProperties(param, bpmModelNode, CopyOptions.create().ignoreNullValue());
 
         // 预防脏数据
-        if (nodeAssignTypes.contains(bpmModelNode.getAssignType())){
+        if (nodeAssignTypes.contains(bpmModelNode.getAssignType())) {
             bpmModelNode.setAssignRaw(null);
             bpmModelNode.setAssignShow(null);
         }
@@ -80,41 +84,38 @@ public class BpmModelNodeService {
     /**
      * 查询任务节点配置项
      */
-    public BpmModelNodeDto findByDefIdAndTaskId(String defId, String nodeId){
-        return bpmModelNodeManager.findByDefIdAndNodeId(defId,nodeId).map(BpmModelNode::toDto).orElseThrow(DataNotExistException::new);
+    public BpmModelNodeDto findByDefIdAndTaskId(String defId, String nodeId) {
+        return bpmModelNodeManager.findByDefIdAndNodeId(defId, nodeId).map(BpmModelNode::toDto)
+                .orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取下一步节点列表
      */
-    public List<LabelValue> getNextNodes(String defId, String nodeId){
+    public List<LabelValue> getNextNodes(String defId, String nodeId) {
 
-        BpmnModel bpmnModel = Optional.ofNullable(repositoryService.getBpmnModel(defId)).orElseThrow(ModelNotExistException::new);
+        BpmnModel bpmnModel = Optional.ofNullable(repositoryService.getBpmnModel(defId))
+                .orElseThrow(ModelNotExistException::new);
         Process process = bpmnModel.getMainProcess();
-        Task taskNode = process.getFlowElements().stream()
-                .filter(o -> Objects.equals(nodeId, o.getId()))
-                .findFirst()
-                .map(o->(Task)o)
-                .orElseThrow(() -> new BizException("节点不存在"));
+        Task taskNode = process.getFlowElements().stream().filter(o -> Objects.equals(nodeId, o.getId())).findFirst()
+                .map(o -> (Task) o).orElseThrow(() -> new BizException("节点不存在"));
         List<SequenceFlow> outgoingFlows = taskNode.getOutgoingFlows();
-        if (outgoingFlows.size() == 1){
+        if (outgoingFlows.size() == 1) {
             FlowElement flowElement = outgoingFlows.get(0).getTargetFlowElement();
-            if (flowElement instanceof Gateway){
+            if (flowElement instanceof Gateway) {
                 Gateway gateway = (Gateway) flowElement;
-                return gateway.getOutgoingFlows().stream()
-                        .map(SequenceFlow::getTargetFlowElement)
-                        .map(o->new LabelValue(o.getName(),o.getId()))
-                        .collect(Collectors.toList());
-            } else {
+                return gateway.getOutgoingFlows().stream().map(SequenceFlow::getTargetFlowElement)
+                        .map(o -> new LabelValue(o.getName(), o.getId())).collect(Collectors.toList());
+            }
+            else {
                 return Collections.singletonList(new LabelValue(flowElement.getName(), flowElement.getId()));
             }
         }
-        else if (outgoingFlows.size()>1){
-            return outgoingFlows.stream()
-                    .map(SequenceFlow::getTargetFlowElement)
-                    .map(o->new LabelValue(o.getName(),o.getId()))
-                    .collect(Collectors.toList());
-        } else {
+        else if (outgoingFlows.size() > 1) {
+            return outgoingFlows.stream().map(SequenceFlow::getTargetFlowElement)
+                    .map(o -> new LabelValue(o.getName(), o.getId())).collect(Collectors.toList());
+        }
+        else {
             return new ArrayList<>(0);
         }
     }
@@ -122,14 +123,14 @@ public class BpmModelNodeService {
     /**
      * 获取单条
      */
-    public BpmModelNodeDto findById(Long id){
+    public BpmModelNodeDto findById(Long id) {
         return bpmModelNodeManager.findById(id).map(BpmModelNode::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 获取全部
      */
-    public List<BpmModelNodeDto> findAllByModelId(Long modelId){
+    public List<BpmModelNodeDto> findAllByModelId(Long modelId) {
         return ResultConvertUtil.dtoListConvert(bpmModelNodeManager.findAllByModelId(modelId));
     }
 
@@ -137,7 +138,7 @@ public class BpmModelNodeService {
      * 删除
      */
     @CacheEvict(value = NODE_MODEL_ID, allEntries = true)
-    public void delete(Long id){
+    public void delete(Long id) {
         bpmModelNodeManager.deleteById(id);
     }
 
@@ -145,33 +146,29 @@ public class BpmModelNodeService {
      * 同步节点
      */
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(value = NODE_MODEL_ID,key = "#modelId")
-    public void sync(Long modelId){
+    @CacheEvict(value = NODE_MODEL_ID, key = "#modelId")
+    public void sync(Long modelId) {
         // 已经配置的
         List<BpmModelNode> taskNodes = bpmModelNodeManager.findAllByModelId(modelId);
         List<String> taskNodeIds = taskNodes.stream().map(BpmModelNode::getNodeId).collect(Collectors.toList());
         // bpmn文件中的
         List<BpmModelNode> flowNodes = this.getFlowNodes(modelId);
         List<String> flowNodeIds = flowNodes.stream().map(BpmModelNode::getNodeId).collect(Collectors.toList());
-        Map<String, BpmModelNode> flowNodeMap = flowNodes.stream().collect(Collectors.toMap(BpmModelNode::getNodeId, Function.identity()));
+        Map<String, BpmModelNode> flowNodeMap = flowNodes.stream()
+                .collect(Collectors.toMap(BpmModelNode::getNodeId, Function.identity()));
         // bpmn中有列表没有的添加, 双方都有的不动
-        List<BpmModelNode> saves = flowNodes.stream()
-                .filter(o -> !taskNodeIds.contains(o.getNodeId()))
-                .peek(o -> o.setModelId(modelId))
-                .collect(Collectors.toList());
+        List<BpmModelNode> saves = flowNodes.stream().filter(o -> !taskNodeIds.contains(o.getNodeId()))
+                .peek(o -> o.setModelId(modelId)).collect(Collectors.toList());
 
         // bpmn中没有列表有的删除
-        List<Long> deleteIds = taskNodes.stream()
-                .filter(o -> !flowNodeIds.contains(o.getNodeId()))
-                .map(MpIdEntity::getId)
-                .collect(Collectors.toList());
+        List<Long> deleteIds = taskNodes.stream().filter(o -> !flowNodeIds.contains(o.getNodeId()))
+                .map(MpIdEntity::getId).collect(Collectors.toList());
         // 双方都有的查看数据是否需要更新
-        List<BpmModelNode> updates = taskNodes.stream()
-                .filter(taskNode -> flowNodeIds.contains(taskNode.getNodeId()))
+        List<BpmModelNode> updates = taskNodes.stream().filter(taskNode -> flowNodeIds.contains(taskNode.getNodeId()))
                 .filter(taskNode -> {
                     BpmModelNode node = flowNodeMap.get(taskNode.getNodeId());
                     // 注意, 这里对任务做了处理
-                    return comparisonAndUpdateNodeAttr(node,taskNode);
+                    return comparisonAndUpdateNodeAttr(node, taskNode);
                 }).collect(Collectors.toList());
         bpmModelNodeManager.saveAll(saves);
         bpmModelNodeManager.updateAllById(updates);
@@ -179,10 +176,9 @@ public class BpmModelNodeService {
     }
 
     /**
-     * 查询流程定义各节点
-     * 后期需要修改成根据不同节点做不同的处理
+     * 查询流程定义各节点 后期需要修改成根据不同节点做不同的处理
      */
-    private List<BpmModelNode> getFlowNodes(Long id){
+    private List<BpmModelNode> getFlowNodes(Long id) {
         BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
 
         String modelEditorXml = bpmModel.getModelEditorXml();
@@ -190,29 +186,27 @@ public class BpmModelNodeService {
         Process process = bpmnModel.getMainProcess();
         List<UserTask> userTasks = process.findFlowElementsOfType(UserTask.class);
 
-        return userTasks.stream()
-                .map(userTask -> convert(userTask,bpmModel))
-                .collect(Collectors.toList());
+        return userTasks.stream().map(userTask -> convert(userTask, bpmModel)).collect(Collectors.toList());
     }
 
     /**
      * 比较节点属性并更新任务节点不一致的属性
-     * @return  是否进行了处理
+     * @return 是否进行了处理
      */
-    private boolean comparisonAndUpdateNodeAttr(BpmModelNode node, BpmModelNode userTask){
+    private boolean comparisonAndUpdateNodeAttr(BpmModelNode node, BpmModelNode userTask) {
         boolean flag = false;
         // 名称
-        if (!StrUtil.equals(node.getNodeName(),userTask.getNodeName())){
+        if (!StrUtil.equals(node.getNodeName(), userTask.getNodeName())) {
             userTask.setNodeName(node.getNodeName());
             flag = true;
         }
         // 是否多任务
-        if (node.isMulti() != userTask.isMulti()){
+        if (node.isMulti() != userTask.isMulti()) {
             userTask.setMulti(node.isMulti());
             flag = true;
         }
         // 是否串行任务
-        if (node.getSequential() != userTask.getSequential()){
+        if (node.getSequential() != userTask.getSequential()) {
             userTask.setSequential(node.getSequential());
             flag = true;
         }
@@ -224,19 +218,16 @@ public class BpmModelNodeService {
      * @param userTask flowable 任务节点
      * @param bpmModel
      */
-    public BpmModelNode convert(UserTask userTask, BpmModel bpmModel){
-        BpmModelNode modelNode = new BpmModelNode()
-                .setModelId(bpmModel.getId())
-                .setDefId(bpmModel.getDefId())
-                .setDefKey(bpmModel.getDefKey())
-                .setNodeId(userTask.getId())
-                .setNodeName(userTask.getName());
+    public BpmModelNode convert(UserTask userTask, BpmModel bpmModel) {
+        BpmModelNode modelNode = new BpmModelNode().setModelId(bpmModel.getId()).setDefId(bpmModel.getDefId())
+                .setDefKey(bpmModel.getDefKey()).setNodeId(userTask.getId()).setNodeName(userTask.getName());
         // 多实例(循环任务)处理
         val loopCharacteristics = userTask.getLoopCharacteristics();
-        if (Objects.nonNull(loopCharacteristics)){
+        if (Objects.nonNull(loopCharacteristics)) {
             modelNode.setMulti(true);
             modelNode.setSequential(loopCharacteristics.isSequential());
         }
         return modelNode;
     }
+
 }

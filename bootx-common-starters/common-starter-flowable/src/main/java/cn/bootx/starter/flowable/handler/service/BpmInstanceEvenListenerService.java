@@ -23,39 +23,37 @@ import java.util.Optional;
 
 import static cn.bootx.starter.flowable.code.InstanceCode.*;
 
-/**   
+/**
  * 流程实例事件处理类
- * @author xxm  
- * @date 2022/9/16 
+ *
+ * @author xxm
+ * @date 2022/9/16
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BpmInstanceEvenListenerService {
+
     private final BpmInstanceManager bpmInstanceManager;
+
     private final BpmTaskManager bpmTaskManager;
 
     private final BpmEventService messageService;
 
-
     /**
      * 流程创建
      */
-    public void processCreated(ProcessInstance instance){
+    public void processCreated(ProcessInstance instance) {
         BpmContext bpmContext = BpmContextLocal.get();
-        BpmInstance bpmInstance = new BpmInstance()
-                .setInstanceId(instance.getProcessInstanceId())
-                .setInstanceName(instance.getName())
-                .setModelId(bpmContext.getModelId())
-                .setDefId(instance.getProcessDefinitionId())
-                .setDefName(instance.getProcessDefinitionName())
+        BpmInstance bpmInstance = new BpmInstance().setInstanceId(instance.getProcessInstanceId())
+                .setInstanceName(instance.getName()).setModelId(bpmContext.getModelId())
+                .setDefId(instance.getProcessDefinitionId()).setDefName(instance.getProcessDefinitionName())
                 .setStartTime(LocalDateTimeUtil.of(instance.getStartTime()))
-                .setFormVariables(bpmContext.getFormVariables())
-                .setState(STATE_RUNNING);
+                .setFormVariables(bpmContext.getFormVariables()).setState(STATE_RUNNING);
 
         // 发起人信息
-        bpmContext.getStartUser().ifPresent(userDetail -> bpmInstance.setStartUserId(userDetail.getId())
-                .setStartUserName(userDetail.getName()));
+        bpmContext.getStartUser().ifPresent(
+                userDetail -> bpmInstance.setStartUserId(userDetail.getId()).setStartUserName(userDetail.getName()));
 
         bpmInstanceManager.save(bpmInstance);
         messageService.processCreated(bpmInstance);
@@ -71,25 +69,25 @@ public class BpmInstanceEvenListenerService {
         String instanceState = bpmContext.getInstanceState();
         bpmInstanceOpt.ifPresent(bpmInstance -> {
             String state = STATE_FINISH;
-            if (StrUtil.isNotBlank(instanceState)){
+            if (StrUtil.isNotBlank(instanceState)) {
                 state = instanceState;
             }
-            bpmInstance.setEndTime(LocalDateTime.now())
-                    .setState(state);
+            bpmInstance.setEndTime(LocalDateTime.now()).setState(state);
             bpmInstanceManager.updateById(bpmInstance);
-            if (Objects.equals(STATE_FINISH,state)){
+            if (Objects.equals(STATE_FINISH, state)) {
                 messageService.processCompleted(bpmInstance);
-            } else {
+            }
+            else {
                 messageService.processCancel(bpmInstance);
             }
         });
-        if (Objects.equals(instanceState,STATE_CANCEL)){
+        if (Objects.equals(instanceState, STATE_CANCEL)) {
             List<BpmTask> tasks = bpmTaskManager.findRunningByInstanceId(instance.getProcessInstanceId());
-            tasks.forEach(task->task.setState(TaskCode.STATE_CANCEL)
-                    .setResult(TaskCode.RESULT_CANCEL)
+            tasks.forEach(task -> task.setState(TaskCode.STATE_CANCEL).setResult(TaskCode.RESULT_CANCEL)
                     .setEndTime(LocalDateTime.now()));
             bpmTaskManager.updateAllById(tasks);
             messageService.taskCancel(tasks);
         }
     }
+
 }

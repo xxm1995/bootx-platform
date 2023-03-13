@@ -6,19 +6,20 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
-/**   
-* @author xxm
-* @date 2021/8/5 
-*/
+/**
+ * @author xxm
+ * @date 2021/8/5
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉机器人配置参数")
 public class DingRobotConfigParam implements Serializable {
 
     private static final long serialVersionUID = -3979174622716815670L;
+
     @Schema(description = "主键")
     private Long id;
-    
+
     @Schema(description = "编号")
     private String code;
 
@@ -34,6 +35,7 @@ public class DingRobotConfigParam implements Serializable {
     @Schema(description = "验签秘钥")
     private String signSecret;
 
-    @Schema(description= "描述")
+    @Schema(description = "描述")
     private String remark;
+
 }

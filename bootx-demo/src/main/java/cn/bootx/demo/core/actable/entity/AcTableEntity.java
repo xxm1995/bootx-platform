@@ -12,6 +12,7 @@ import java.util.Date;
 
 /**
  * actable测试
+ *
  * @author xxm
  * @date 2023/1/11
  */
@@ -23,7 +24,10 @@ import java.util.Date;
 public class AcTableEntity extends MpBaseEntity {
 
     private String h1;
+
     private Date date;
+
     @Column(ignore = true)
     private int he;
+
 }

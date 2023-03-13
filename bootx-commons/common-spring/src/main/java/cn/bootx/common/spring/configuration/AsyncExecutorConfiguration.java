@@ -13,6 +13,7 @@ import java.util.concurrent.Executor;
 
 /**
  * 异步执行配置
+ *
  * @author xxm
  * @date 2021/6/11
  */
@@ -21,6 +22,7 @@ import java.util.concurrent.Executor;
 @Configuration
 @RequiredArgsConstructor
 public class AsyncExecutorConfiguration implements AsyncConfigurer {
+
     /** TTL包装后的执行器 */
     private final Executor asyncExecutor;
 
@@ -45,8 +47,11 @@ public class AsyncExecutorConfiguration implements AsyncConfigurer {
         @SuppressWarnings("NullableProblems")
         @Override
         public void handleUncaughtException(Throwable throwable, Method method, Object... objects) {
-            log.error("异步方法中发生异常，方法：{}，参数：{}，异常：{}", method.getName(), JSONUtil.toJsonStr(objects),throwable.getMessage());
-            log.error("详细异常信息",throwable);
+            log.error("异步方法中发生异常，方法：{}，参数：{}，异常：{}", method.getName(), JSONUtil.toJsonStr(objects),
+                    throwable.getMessage());
+            log.error("详细异常信息", throwable);
         }
+
     }
+
 }

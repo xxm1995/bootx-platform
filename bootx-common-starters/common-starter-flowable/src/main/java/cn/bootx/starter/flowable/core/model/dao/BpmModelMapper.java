@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 流程模型
+ *
  * @author xxm
  * @date 2022-08-23
  */
 @Mapper
 public interface BpmModelMapper extends BaseMapper<BpmModel> {
+
 }

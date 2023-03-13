@@ -11,11 +11,12 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-/**   
-* 任务执行日志
-* @author xxm  
-* @date 2021/8/20 
-*/
+/**
+ * 任务执行日志
+ *
+ * @author xxm
+ * @date 2021/8/20
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -50,4 +51,5 @@ public class QuartzJobLog extends MpIdEntity implements EntityBaseFunction<Quart
     public QuartzJobLogDto toDto() {
         return QuartzJobConvert.CONVERT.convert(this);
     }
+
 }

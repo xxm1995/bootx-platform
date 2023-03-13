@@ -8,23 +8,25 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
-* jdbc区间管理
-* @author xxm
-* @date 2021/12/14
-*/
+ * jdbc区间管理
+ *
+ * @author xxm
+ * @date 2021/12/14
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class JdbcRangeHandler {
+
     private final SequenceRangeManager manager;
 
     /**
      * 第一次不存在，进行初始化,不存在就set，存在就忽略
      */
-    @Transactional(rollbackFor = Exception.class,isolation = Isolation.DEFAULT)
-    public void setIfAbsentRange(String key, long rangeStart){
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.DEFAULT)
+    public void setIfAbsentRange(String key, long rangeStart) {
         // 是否存在
-        if (!manager.existedByField(SequenceRange::getRangeKey,key)){
+        if (!manager.existedByField(SequenceRange::getRangeKey, key)) {
             manager.save(new SequenceRange().setRangeKey(key).setRangeValue(rangeStart));
         }
     }
@@ -42,4 +44,5 @@ public class JdbcRangeHandler {
         manager.updateById(range);
         return stepValue;
     }
+
 }

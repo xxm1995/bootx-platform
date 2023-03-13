@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 村庄/社区
+ *
  * @author xxm
  * @date 2023/2/3
  */
@@ -16,7 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class VillageManager extends BaseManager<VillageMapper, Village> {
 
-    public List<Village> findAllByStreetCode(String streetCode){
-        return findAllByField(Village::getStreetCode,streetCode);
+    public List<Village> findAllByStreetCode(String streetCode) {
+        return findAllByField(Village::getStreetCode, streetCode);
     }
+
 }

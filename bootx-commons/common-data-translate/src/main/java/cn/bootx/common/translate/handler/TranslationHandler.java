@@ -6,6 +6,7 @@ import java.lang.reflect.Type;
 
 /**
  * 字典值翻译接口
+ *
  * @author xxm
  * @date 2022/12/20
  */
@@ -23,6 +24,5 @@ public interface TranslationHandler {
      * 翻译
      */
     void translation(Object object, Type type, TranslationResult translationResult);
-
 
 }

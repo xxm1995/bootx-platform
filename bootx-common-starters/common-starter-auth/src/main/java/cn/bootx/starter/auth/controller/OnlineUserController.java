@@ -21,23 +21,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class OnlineUserController {
 
     private final OnlineUserService onlineUserService;
-    
+
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<OnlineUserDto>> page(PageParam pageParam){
+    public ResResult<PageResult<OnlineUserDto>> page(PageParam pageParam) {
         return Res.ok(onlineUserService.page(pageParam));
     }
 
     @Operation(summary = "获取单条")
     @GetMapping("/findBySessionId")
-    public ResResult<OnlineUserDto> findBySessionId(String sessionId){
+    public ResResult<OnlineUserDto> findBySessionId(String sessionId) {
         return Res.ok(onlineUserService.findBySessionId(sessionId));
     }
 
     @Operation(summary = "踢人下线")
     @PostMapping("/logoutByUserId")
-    public ResResult<Void> logoutByUserId(Long userId){
+    public ResResult<Void> logoutByUserId(Long userId) {
         onlineUserService.logoutByUserId(userId);
         return Res.ok();
     }
+
 }

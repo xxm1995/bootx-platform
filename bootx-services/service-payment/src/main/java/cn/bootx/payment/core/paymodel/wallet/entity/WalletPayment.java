@@ -10,10 +10,11 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
-* 钱包交易记录表
-* @author xxm
-* @date 2020/12/8
-*/
+ * 钱包交易记录表
+ *
+ * @author xxm
+ * @date 2020/12/8
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -27,4 +28,5 @@ public class WalletPayment extends BasePayment implements EntityBaseFunction<Wal
     public WalletPaymentDto toDto() {
         return WalletConvert.CONVERT.convert(this);
     }
+
 }

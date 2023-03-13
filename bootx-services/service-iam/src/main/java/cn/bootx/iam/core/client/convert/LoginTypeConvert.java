@@ -8,11 +8,13 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * 认证终端
+ *
  * @author bootx
  * @date 2022-02-20
  */
 @Mapper
 public interface LoginTypeConvert {
+
     LoginTypeConvert CONVERT = Mappers.getMapper(LoginTypeConvert.class);
 
     LonginType convert(LoginTypeParam in);

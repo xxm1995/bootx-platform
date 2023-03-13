@@ -1,10 +1,11 @@
 package cn.bootx.payment.code.pay;
 
-/**   
-* 支付方式扩展字段
-* @author xxm  
-* @date 2022/2/27 
-*/
+/**
+ * 支付方式扩展字段
+ *
+ * @author xxm
+ * @date 2022/2/27
+ */
 public interface PayModelExtraCode {
 
     /** 付款码 */
@@ -18,4 +19,5 @@ public interface PayModelExtraCode {
 
     /** 同步通知路径 支付完成跳转的页面地址 */
     String RETURN_URL = "returnUrl";
+
 }

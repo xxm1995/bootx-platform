@@ -9,53 +9,56 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-/**   
-* web服务器工具类
-* @author xxm  
-* @date 2021/8/13 
-*/
+/**
+ * web服务器工具类
+ *
+ * @author xxm
+ * @date 2021/8/13
+ */
 @UtilityClass
 public class WebServletUtil {
 
     /**
      * 获取http请求
      */
-    public HttpServletRequest getRequest(){
+    public HttpServletRequest getRequest() {
         return Optional.ofNullable(getRequestAttributes()).map(ServletRequestAttributes::getRequest).orElse(null);
     }
 
     /**
      * 获取请求类型
      */
-    public String getMethod(){
+    public String getMethod() {
         return Optional.ofNullable(getRequest()).map(HttpServletRequest::getMethod).orElse(null);
     }
+
     /**
      * 获取请求路径
      */
-    public String getPath(){
+    public String getPath() {
         return Optional.ofNullable(getRequest()).map(HttpServletRequest::getRequestURI).orElse(null);
     }
 
     /**
      * 获取参数
      */
-    public String getParameter(String name){
-        return Optional.ofNullable(getRequest()).map(o-> o.getParameter(name)).orElse(null);
+    public String getParameter(String name) {
+        return Optional.ofNullable(getRequest()).map(o -> o.getParameter(name)).orElse(null);
     }
 
     /**
      * 获取http响应
      */
-    public HttpServletResponse getResponse(){
+    public HttpServletResponse getResponse() {
         return Optional.ofNullable(getRequestAttributes()).map(ServletRequestAttributes::getResponse).orElse(null);
     }
 
     /**
      * 获取RequestAttributes
      */
-    public ServletRequestAttributes getRequestAttributes(){
+    public ServletRequestAttributes getRequestAttributes() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return (ServletRequestAttributes) attributes;
     }
+
 }

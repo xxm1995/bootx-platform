@@ -11,11 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 
-/**   
-* 认证上下文
-* @author xxm  
-* @date 2022/4/23 
-*/
+/**
+ * 认证上下文
+ *
+ * @author xxm
+ * @date 2022/4/23
+ */
 @Getter
 @Setter
 @Accessors(chain = true)
@@ -44,4 +45,5 @@ public class LoginAuthContext {
     /** 认证参数配置 */
     @NotNull
     private AuthProperties authProperties;
+
 }

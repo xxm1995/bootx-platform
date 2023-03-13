@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * Redis监控信息
+ *
  * @author xxm
  * @date 2022/6/12
  */
@@ -24,28 +25,27 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RedisMonitorService {
-    private final RedisTemplate<String,?> redisTemplate;
+
+    private final RedisTemplate<String, ?> redisTemplate;
 
     /**
      * 获取Redis服务信息
      */
-    public RedisMonitorResult getRedisInfo(){
+    public RedisMonitorResult getRedisInfo() {
         // 系统信息
         Properties properties = redisTemplate.execute((RedisCallback<Properties>) RedisServerCommands::info);
         // 获取当前选定数据库中可用键的总数
         Long dbSize = redisTemplate.execute(RedisServerCommands::dbSize);
         // 命令统计
-        Properties commandStats = Optional.ofNullable(redisTemplate.execute((
-                RedisCallback<Properties>) connection -> connection.info("commandstats"))
-        ).orElse(new Properties());
-        List<KeyValue> keyValues = commandStats.stringPropertyNames().stream()
-                .map((key) -> {
-                    String value = commandStats.getProperty(key);
-                    return new KeyValue()
-                            .setKey(StrUtil.removePrefix(key, "cmdstat_"))
-                            .setValue(StrUtil.subBetween(value, "calls=", ",usec"));
-                })
-                .collect(Collectors.toList());
+        Properties commandStats = Optional
+                .ofNullable(redisTemplate
+                        .execute((RedisCallback<Properties>) connection -> connection.info("commandstats")))
+                .orElse(new Properties());
+        List<KeyValue> keyValues = commandStats.stringPropertyNames().stream().map((key) -> {
+            String value = commandStats.getProperty(key);
+            return new KeyValue().setKey(StrUtil.removePrefix(key, "cmdstat_"))
+                    .setValue(StrUtil.subBetween(value, "calls=", ",usec"));
+        }).collect(Collectors.toList());
 
         RedisMonitorResult result = new RedisMonitorResult();
         result.setInfo(properties);
@@ -53,4 +53,5 @@ public class RedisMonitorService {
         result.setCommandStats(keyValues);
         return result;
     }
+
 }

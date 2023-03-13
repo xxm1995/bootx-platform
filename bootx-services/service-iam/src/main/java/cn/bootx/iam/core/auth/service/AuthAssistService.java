@@ -11,16 +11,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
-* 认证支撑服务
-* @author xxm
-* @date 2021/9/9
-*/
+ * 认证支撑服务
+ *
+ * @author xxm
+ * @date 2021/9/9
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthAssistService {
+
     private final CaptchaService captchaService;
+
     private final UserInfoManager userInfoManager;
+
     private final String smsCaptchaType = "login";
 
     /**
@@ -30,10 +34,11 @@ public class AuthAssistService {
         // 判断用户是否存在
         UserInfo userInfo = userInfoManager.findByPhone(phone).orElseThrow(UserInfoNotExistsException::new);
 
-        if (userInfo.getStatus() != UserStatusCode.NORMAL){
+        if (userInfo.getStatus() != UserStatusCode.NORMAL) {
             throw new BizException("用户状态异常");
         }
         // 有效期5分钟
-        captchaService.sendSmsCaptcha(phone,5*60,smsCaptchaType);
+        captchaService.sendSmsCaptcha(phone, 5 * 60, smsCaptchaType);
     }
+
 }

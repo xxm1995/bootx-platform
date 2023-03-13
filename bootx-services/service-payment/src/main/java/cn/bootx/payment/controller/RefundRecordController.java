@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
-* 退款记录
-* @author xxm
-* @date 2022/3/3
-*/
+ * 退款记录
+ *
+ * @author xxm
+ * @date 2022/3/3
+ */
 @Tag(name = "退款记录")
 @RestController
 @RequestMapping("/pay/refund")
@@ -28,13 +29,14 @@ public class RefundRecordController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<RefundRecordDto>> page(PageParam pageParam,RefundRecordDto param){
-        return Res.ok(refundRecordService.page(pageParam,param));
+    public ResResult<PageResult<RefundRecordDto>> page(PageParam pageParam, RefundRecordDto param) {
+        return Res.ok(refundRecordService.page(pageParam, param));
     }
 
     @Operation(summary = "根据id查询")
     @GetMapping("/findById")
-    public ResResult<RefundRecordDto> findById(Long id){
+    public ResResult<RefundRecordDto> findById(Long id) {
         return Res.ok(refundRecordService.findById(id));
     }
+
 }

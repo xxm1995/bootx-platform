@@ -7,16 +7,17 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
 import javax.annotation.Nullable;
 import java.util.Objects;
 
-/**   
-* 自定义RedisCache, 缓存值为空不报错
-* @author xxm  
-* @date 2021/7/6 
-*/
+/**
+ * 自定义RedisCache, 缓存值为空不报错
+ *
+ * @author xxm
+ * @date 2021/7/6
+ */
 public class BootxRedisCache extends RedisCache {
+
     /**
      * Create new {@link RedisCache}.
-     *
-     * @param name        must not be {@literal null}.
+     * @param name must not be {@literal null}.
      * @param cacheWriter must not be {@literal null}.
      * @param cacheConfig must not be {@literal null}.
      */
@@ -26,10 +27,11 @@ public class BootxRedisCache extends RedisCache {
 
     @SuppressWarnings("NullableProblems")
     @Override
-    public void put(Object key,  @Nullable Object value) {
+    public void put(Object key, @Nullable Object value) {
         // 允许为空或者非空值
         if (isAllowNullValues() || Objects.nonNull(value)) {
             super.put(key, value);
         }
     }
+
 }

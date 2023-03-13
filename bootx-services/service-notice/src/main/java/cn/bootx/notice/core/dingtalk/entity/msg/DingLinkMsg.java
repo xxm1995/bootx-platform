@@ -6,26 +6,27 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
-* 钉钉链接信息
-* @author xxm  
-* @date 2022/7/19 
-*/
+/**
+ * 钉钉链接信息
+ *
+ * @author xxm
+ * @date 2022/7/19
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "钉钉链接信息")
 public class DingLinkMsg implements DingMsg {
 
-    @Schema(description= "标题")
+    @Schema(description = "标题")
     private String title;
 
-    @Schema(description= "内容")
+    @Schema(description = "内容")
     private String text;
 
-    @Schema(description= "点击消息跳转的URL")
+    @Schema(description = "点击消息跳转的URL")
     private String messageUrl;
 
-    @Schema(description= "图片URL")
+    @Schema(description = "图片URL")
     private String picUrl;
 
     /**
@@ -33,6 +34,7 @@ public class DingLinkMsg implements DingMsg {
      */
     @Override
     public Msg toDingMsg() {
-        return new LinkMsg(title,text,messageUrl,picUrl);
+        return new LinkMsg(title, text, messageUrl, picUrl);
     }
+
 }

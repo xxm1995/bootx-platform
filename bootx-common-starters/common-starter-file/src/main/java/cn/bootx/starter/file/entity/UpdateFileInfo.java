@@ -13,11 +13,12 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
-/**   
-* 上传文件信息
-* @author xxm  
-* @date 2022/1/12 
-*/
+/**
+ * 上传文件信息
+ *
+ * @author xxm
+ * @date 2022/1/12
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -54,4 +55,5 @@ public class UpdateFileInfo extends MpIdEntity implements EntityBaseFunction<Upd
     public UpdateFileDto toDto() {
         return FileConvert.CONVERT.convert(this);
     }
+
 }

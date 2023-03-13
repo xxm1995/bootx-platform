@@ -4,17 +4,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-/**   
-* 认证终端
-* @author xxm  
-* @date 2021/8/25 
-*/
+/**
+ * 认证终端
+ *
+ * @author xxm
+ * @date 2021/8/25
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "登录方式")
 public class LoginTypeParam {
 
-    @Schema(description= "主键")
+    @Schema(description = "主键")
     private Long id;
 
     @Schema(description = "编码")

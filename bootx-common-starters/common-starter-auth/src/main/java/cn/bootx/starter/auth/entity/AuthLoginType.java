@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
-* @author xxm
-* @date 2021/8/25
-*/
+ * @author xxm
+ * @date 2021/8/25
+ */
 @Data
 @Accessors(chain = true)
 @Schema(title = "登录方式")
@@ -33,4 +33,5 @@ public class AuthLoginType {
 
     /** 是否需要验证码 */
     private boolean captcha;
+
 }

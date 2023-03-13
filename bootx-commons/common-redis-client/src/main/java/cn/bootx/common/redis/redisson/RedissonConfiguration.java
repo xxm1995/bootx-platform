@@ -15,17 +15,20 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**   
+/**
  * Redisson 自动配置
- * @author xxm  
- * @date 2022/12/19 
+ *
+ * @author xxm
+ * @date 2022/12/19
  */
 @Configuration
 @ConditionalOnBean(name = "org.redisson.Redisson")
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @AllArgsConstructor
 public class RedissonConfiguration {
+
     private final RedisProperties redisProperties;
+
     private final String REDIS_PREFIX = "redis://";
 
     /**
@@ -46,7 +49,8 @@ public class RedissonConfiguration {
         RedisProperties.Cluster cluster = redisProperties.getCluster();
         if (cluster == null || CollUtil.isEmpty(cluster.getNodes())) {
             initSingleConfig(config.useSingleServer());
-        } else {
+        }
+        else {
             initClusterConfig(config.useClusterServers());
         }
 
@@ -56,20 +60,18 @@ public class RedissonConfiguration {
     /**
      * 单节点模式
      */
-    private void initSingleConfig(SingleServerConfig singleServerConfig){
-        singleServerConfig.setAddress(REDIS_PREFIX+redisProperties.getHost()+":"+redisProperties.getPort())
-                .setDatabase(redisProperties.getDatabase())
-                .setPassword(redisProperties.getPassword());
+    private void initSingleConfig(SingleServerConfig singleServerConfig) {
+        singleServerConfig.setAddress(REDIS_PREFIX + redisProperties.getHost() + ":" + redisProperties.getPort())
+                .setDatabase(redisProperties.getDatabase()).setPassword(redisProperties.getPassword());
     }
 
     /**
      * 集群模式
      */
-    private void initClusterConfig(ClusterServersConfig clusterServersConfig){
-        String[] nodes = redisProperties.getCluster().getNodes().stream()
-                .map(node -> REDIS_PREFIX + node)
+    private void initClusterConfig(ClusterServersConfig clusterServersConfig) {
+        String[] nodes = redisProperties.getCluster().getNodes().stream().map(node -> REDIS_PREFIX + node)
                 .toArray(String[]::new);
-        clusterServersConfig.setPassword(redisProperties.getPassword())
-                .addNodeAddress(nodes);
+        clusterServersConfig.setPassword(redisProperties.getPassword()).addNodeAddress(nodes);
     }
+
 }

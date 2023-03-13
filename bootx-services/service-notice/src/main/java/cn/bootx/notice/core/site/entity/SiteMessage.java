@@ -15,20 +15,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
-* 站内信
-* @author xxm
-* @date 2021/8/7
-*/
+ * 站内信
+ *
+ * @author xxm
+ * @date 2021/8/7
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("notice_site_message")
 public class SiteMessage extends MpBaseEntity implements EntityBaseFunction<SiteMessageDto> {
 
-    /**消息标题*/
+    /** 消息标题 */
     private String title;
 
-    /**消息内容*/
+    /** 消息内容 */
     @BigField
     private String content;
 
@@ -44,13 +45,13 @@ public class SiteMessage extends MpBaseEntity implements EntityBaseFunction<Site
      */
     private String sendState;
 
-    /**发送者id*/
+    /** 发送者id */
     private Long senderId;
 
-    /**发送者姓名*/
+    /** 发送者姓名 */
     private String senderName;
 
-    /**发送时间*/
+    /** 发送时间 */
     private LocalDateTime senderTime;
 
     /** 撤销时间 */
@@ -59,9 +60,9 @@ public class SiteMessage extends MpBaseEntity implements EntityBaseFunction<Site
     /** 截至有效期 有效超过有效期后全体通知将无法看到 */
     private LocalDate efficientTime;
 
-
     @Override
     public SiteMessageDto toDto() {
         return SiteMessageConvert.CONVERT.convert(this);
     }
+
 }

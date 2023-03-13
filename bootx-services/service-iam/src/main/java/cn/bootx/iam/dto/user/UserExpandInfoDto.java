@@ -9,11 +9,10 @@ import lombok.experimental.Accessors;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**   
-*
-* @author xxm  
-* @date 2022/1/8 
-*/
+/**
+ * @author xxm
+ * @date 2022/1/8
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
@@ -23,7 +22,7 @@ public class UserExpandInfoDto extends BaseDto {
     @Schema(description = "性别")
     private Integer sex;
 
-    @Schema(description= "头像")
+    @Schema(description = "头像")
     private String avatar;
 
     @Schema(description = "生日")

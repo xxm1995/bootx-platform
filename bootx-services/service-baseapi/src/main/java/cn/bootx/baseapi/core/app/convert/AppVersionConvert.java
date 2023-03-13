@@ -7,13 +7,15 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-/**   
-* 转换
-* @author xxm  
-* @date 2021/8/9 
-*/
+/**
+ * 转换
+ *
+ * @author xxm
+ * @date 2021/8/9
+ */
 @Mapper
 public interface AppVersionConvert {
+
     AppVersionConvert CONVERT = Mappers.getMapper(AppVersionConvert.class);
 
     AppVersion convert(AppVersionParam in);
@@ -21,4 +23,5 @@ public interface AppVersionConvert {
     AppVersion convert(AppVersionDto in);
 
     AppVersionDto convert(AppVersion in);
+
 }

@@ -19,23 +19,27 @@ import java.util.Objects;
 import java.util.function.BiConsumer;
 
 /**
-* 用户绑定操作类
-* @author xxm
-* @date 2022/7/22
-*/
+ * 用户绑定操作类
+ *
+ * @author xxm
+ * @date 2022/7/22
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserTiredOperateService {
+
     private final UserThirdManager userThirdManager;
+
     private final UserThirdInfoManager userThirdInfoManager;
+
     private final UserInfoManager userInfoManager;
 
     /**
      * 判断该OpenId是否已经被使用
      */
-    public void checkOpenIdBind(String openId, SFunction<UserThird, String> field){
-        if (userThirdManager.existedByField(field,openId)){
+    public void checkOpenIdBind(String openId, SFunction<UserThird, String> field) {
+        if (userThirdManager.existedByField(field, openId)) {
             throw new BizException("该第三方平台已经被绑定");
         }
     }
@@ -43,18 +47,18 @@ public class UserTiredOperateService {
     /**
      * 绑定 开放平台id
      */
-    public void bindOpenId(Long userId, String openId, BiConsumer<UserThird, String> function){
+    public void bindOpenId(Long userId, String openId, BiConsumer<UserThird, String> function) {
         // 没有新增, 存在则更新
         UserThird userThird = userThirdManager.findByUserId(userId).orElse(null);
-        if (Objects.isNull(userThird)){
-            UserInfo userInfo = userInfoManager.findById(userId)
-                    .orElseThrow(UserInfoNotExistsException::new);
+        if (Objects.isNull(userThird)) {
+            UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
             userThird = new UserThird();
             userThird.setUserId(userInfo.getId());
-            function.accept(userThird,openId);
+            function.accept(userThird, openId);
             userThirdManager.save(userThird);
-        } else {
-            function.accept(userThird,openId);
+        }
+        else {
+            function.accept(userThird, openId);
             userThirdManager.updateById(userThird);
         }
     }
@@ -62,13 +66,9 @@ public class UserTiredOperateService {
     /**
      * 绑定开放平台信息
      */
-    public void bindOpenInfo(Long userId, AuthUser authUser, String clientCode){
-        UserThirdInfo userThirdInfo = new UserThirdInfo()
-                .setUserId(userId)
-                .setClientCode(clientCode)
-                .setUsername(authUser.getUsername())
-                .setNickname(authUser.getNickname())
-                .setAvatar(authUser.getAvatar())
+    public void bindOpenInfo(Long userId, AuthUser authUser, String clientCode) {
+        UserThirdInfo userThirdInfo = new UserThirdInfo().setUserId(userId).setClientCode(clientCode)
+                .setUsername(authUser.getUsername()).setNickname(authUser.getNickname()).setAvatar(authUser.getAvatar())
                 .setThirdUserId(authUser.getUuid());
         this.bindOpenInfo(userThirdInfo);
     }
@@ -77,9 +77,10 @@ public class UserTiredOperateService {
      * 绑定开放平台信息
      */
     @Transactional(rollbackFor = Exception.class)
-    public void bindOpenInfo(UserThirdInfo userThirdInfo){
+    public void bindOpenInfo(UserThirdInfo userThirdInfo) {
         // 详细信息 存在就删除重新添加
         userThirdInfoManager.deleteByUserAndClientCode(userThirdInfo.getUserId(), userThirdInfo.getClientCode());
         userThirdInfoManager.save(userThirdInfo);
     }
+
 }

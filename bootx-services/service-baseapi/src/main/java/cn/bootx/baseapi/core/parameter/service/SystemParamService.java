@@ -21,22 +21,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 /**
-* 系统参数
-* @author xxm
-* @date 2021/10/25
-*/
+ * 系统参数
+ *
+ * @author xxm
+ * @date 2021/10/25
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SystemParamService implements ParamService {
+
     private final SystemParamManager systemParamManager;
 
     /**
      * 添加
      */
-    public void add(SystemParameterParam param){
+    public void add(SystemParameterParam param) {
         SystemParameter systemParameter = SystemParameter.init(param);
-        if (systemParamManager.existsByKey(systemParameter.getParamKey())){
+        if (systemParamManager.existsByKey(systemParameter.getParamKey())) {
             throw new BizException("key重复");
         }
         // 默认非内置
@@ -52,10 +54,10 @@ public class SystemParamService implements ParamService {
         SystemParameter systemParameter = systemParamManager.findById(param.getId())
                 .orElseThrow(() -> new BizException("参数项不存在"));
 
-        if (systemParamManager.existsByKey(param.getParamKey(),param.getId())) {
+        if (systemParamManager.existsByKey(param.getParamKey(), param.getId())) {
             throw new BizException("key重复");
         }
-        BeanUtil.copyProperties(param,systemParameter, CopyOptions.create().ignoreNullValue());
+        BeanUtil.copyProperties(param, systemParameter, CopyOptions.create().ignoreNullValue());
         systemParamManager.updateById(systemParameter);
     }
 
@@ -63,24 +65,22 @@ public class SystemParamService implements ParamService {
      * 分页
      */
     public PageResult<SystemParameterDto> page(PageParam pageParam, SystemParameterParam param) {
-        return MpUtil.convert2DtoPageResult(systemParamManager.page(pageParam,param));
+        return MpUtil.convert2DtoPageResult(systemParamManager.page(pageParam, param));
     }
 
     /**
      * 获取单条
      */
-    public SystemParameterDto findById(Long id){
-       return systemParamManager.findById(id).map(SystemParameter::toDto)
-               .orElseThrow(DataNotExistException::new);
+    public SystemParameterDto findById(Long id) {
+        return systemParamManager.findById(id).map(SystemParameter::toDto).orElseThrow(DataNotExistException::new);
     }
 
     /**
      * 根据键名获取键值
      */
     public String findByParamKey(String key) {
-        val param = systemParamManager.findByParamKey(key)
-                .orElseThrow(DataNotExistException::new);
-        if (Objects.equals(param.getEnable(),false)){
+        val param = systemParamManager.findByParamKey(key).orElseThrow(DataNotExistException::new);
+        if (Objects.equals(param.getEnable(), false)) {
             throw new BizException("该参数已停用");
         }
         return param.getValue();
@@ -90,8 +90,9 @@ public class SystemParamService implements ParamService {
      * 删除
      */
     public void delete(Long id) {
-        SystemParameter systemParameter = systemParamManager.findById(id).orElseThrow(() -> new BizException("系统参数不存在"));
-        if (systemParameter.isInternal()){
+        SystemParameter systemParameter = systemParamManager.findById(id)
+                .orElseThrow(() -> new BizException("系统参数不存在"));
+        if (systemParameter.isInternal()) {
             throw new BizException("内置参数不可以被删除");
         }
         systemParamManager.deleteById(id);
@@ -100,15 +101,15 @@ public class SystemParamService implements ParamService {
     /**
      * 判断编码是否存在
      */
-    public boolean existsByKey(String key){
+    public boolean existsByKey(String key) {
         return systemParamManager.existsByKey(key);
     }
 
     /**
      * 判断编码是否存在
      */
-    public boolean existsByKey(String key,Long id){
-        return systemParamManager.existsByKey(key,id);
+    public boolean existsByKey(String key, Long id) {
+        return systemParamManager.existsByKey(key, id);
     }
 
     /**
@@ -118,4 +119,5 @@ public class SystemParamService implements ParamService {
     public String getValue(String key) {
         return systemParamManager.findByParamKey(key).map(SystemParameter::getValue).orElse(null);
     }
+
 }

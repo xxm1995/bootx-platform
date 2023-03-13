@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 
 /**
  * 用户角色关系
+ *
  * @author xxm
  * @date 2020/5/1 11:18
  */
@@ -24,4 +25,5 @@ public class UserRole extends MpIdEntity {
 
     /** 角色 */
     private Long roleId;
+
 }

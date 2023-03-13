@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- *
  * @author xxm
  * @date 2023/3/3
  */
@@ -22,4 +21,5 @@ public class ProjectInfoParam {
 
     @Schema(description = "备注")
     private String remark;
+
 }

@@ -38,27 +38,19 @@ public class DictConvertDemoController {
     @TranslationResult
     public ResResult<DictDemo> convert() throws NoSuchMethodException {
 
-        DictDemo dictDemo = new DictDemo()
-                .setSex("1")
-                .setSexInt(1)
-                .setSocialType("DingTalk")
-                .setSocialTypes(Arrays.asList("123","DingTalk"))
-                .setPerson(new Person()
-                        .setSexCode(1));
+        DictDemo dictDemo = new DictDemo().setSex("1").setSexInt(1).setSocialType("DingTalk")
+                .setSocialTypes(Arrays.asList("123", "DingTalk")).setPerson(new Person().setSexCode(1));
 
         return Res.ok(dictDemo);
     }
+
     @Operation(summary = "转换测试(map)")
     @GetMapping("/c1")
     @TranslationResult(convertType = TranslationResult.ConvertType.MAP)
     public ResResult<DictDemo> c1() {
-        DictDemo dictDemo = new DictDemo()
-                .setSex("1")
-                .setSocialType("DingTalk")
-                .setSocialTypes(Arrays.asList("123","DingTalk"))
-                .setPerson(new Person()
-                        .setSexCode(1)
-                        .setDataScopePerm(1));
+        DictDemo dictDemo = new DictDemo().setSex("1").setSocialType("DingTalk")
+                .setSocialTypes(Arrays.asList("123", "DingTalk"))
+                .setPerson(new Person().setSexCode(1).setDataScopePerm(1));
 
         return Res.ok(dictDemo);
     }
@@ -83,21 +75,21 @@ public class DictConvertDemoController {
     public static class DictDemo extends MpBaseEntity {
 
         /** 性别 */
-        @Translate(type = Translate.Type.DICT,dicCode = "Sex")
+        @Translate(type = Translate.Type.DICT, dicCode = "Sex")
         private String sex;
 
         /** 性别 */
-        @Translate(type = Translate.Type.DICT,dicCode = "Sex")
+        @Translate(type = Translate.Type.DICT, dicCode = "Sex")
         private Integer sexInt;
 
         /** 三方系统类别 */
-        @Translate(type = Translate.Type.DICT,dicCode = "SocialType")
+        @Translate(type = Translate.Type.DICT, dicCode = "SocialType")
         private String socialType;
 
         @TranslationResult
         private Person person;
 
-        @Translate(type = Translate.Type.DICT,dicCode = "SocialType")
+        @Translate(type = Translate.Type.DICT, dicCode = "SocialType")
         private List<String> socialTypes;
 
     }
@@ -111,11 +103,11 @@ public class DictConvertDemoController {
         private Integer sexCode;
 
         /** 性别 */
-        @Translate(type = Translate.Type.DICT,dicCode = "Sex",source = Fields.sexCode)
+        @Translate(type = Translate.Type.DICT, dicCode = "Sex", source = Fields.sexCode)
         private String sexName;
 
         /** 三方系统类别 */
-        @Translate(type = Translate.Type.DICT,dicCode = "DataScopePerm")
+        @Translate(type = Translate.Type.DICT, dicCode = "DataScopePerm")
         private Integer dataScopePerm;
 
     }

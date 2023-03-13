@@ -7,7 +7,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface UserThirdConvert {
+
     UserThirdConvert CONVERT = Mappers.getMapper(UserThirdConvert.class);
 
     UserThirdDto convert(UserThird in);
+
 }

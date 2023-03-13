@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 /**
  * 微信用户相关接口 (获取不到详细信息了)
+ *
  * @author xxm
  * @date 2022/7/15
  */
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class WeChatUserService {
+
     private final WxMpService wxMpService;
 
     private static final int SIZE = 100;
@@ -35,17 +37,16 @@ public class WeChatUserService {
     /**
      * 获取关注用户列表
      */
-    public void page(PageParam pageParam){
+    public void page(PageParam pageParam) {
         WxMpUserService userService = wxMpService.getUserService();
         WxMpUserQuery userQuery = new WxMpUserQuery();
     }
-
 
     /**
      * 同步粉丝
      */
     @Async("asyncExecutor")
-    public void sync(){
+    public void sync() {
         // 根据公众号查询已同步用户openid 查询最新的一条
     }
 
@@ -68,17 +69,13 @@ public class WeChatUserService {
         // 如果nextOpenId 不为空，则继续获取
     }
 
-
     /**
      * 构建对象
      */
-    private WechatFans buildFans(WxMpUser wxMpUser){
-        return new WechatFans()
-                .setOpenid(wxMpUser.getOpenId())
-                .setUnionId(wxMpUser.getUnionId())
-                .setSubscribe(true)
-                .setSubscribeTime(LocalDateTimeUtil.of(wxMpUser.getSubscribeTime()))
-                .setLanguage(wxMpUser.getLanguage())
+    private WechatFans buildFans(WxMpUser wxMpUser) {
+        return new WechatFans().setOpenid(wxMpUser.getOpenId()).setUnionId(wxMpUser.getUnionId()).setSubscribe(true)
+                .setSubscribeTime(LocalDateTimeUtil.of(wxMpUser.getSubscribeTime())).setLanguage(wxMpUser.getLanguage())
                 .setRemark(wxMpUser.getRemark());
     }
+
 }

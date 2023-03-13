@@ -8,6 +8,7 @@ import java.io.InputStream;
 
 /**
  * 钉钉消息通知服务
+ *
  * @author xxm
  * @date 2022/7/16
  */
@@ -96,7 +97,7 @@ public interface DingTalkNoticeSender {
     Long sendActionCardCorpNotice(DingActionCardMsg dingActionCardMsg, DingCorpNoticeReceive receive);
 
     /**
-     *  更新OA工作通知消息
+     * 更新OA工作通知消息
      */
     void updateOaCorpNotice(DingCorpNoticeUpdate updateCorpNotice);
 

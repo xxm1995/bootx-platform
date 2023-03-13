@@ -14,6 +14,7 @@ import java.util.Optional;
 
 /**
  * 微信公众号粉丝
+ *
  * @author xxm
  * @date 2022-07-16
  */
@@ -22,8 +23,8 @@ import java.util.Optional;
 public class WechatFansManager extends BaseManager<WechatFansMapper, WechatFans> {
 
     /**
-    * 分页
-    */
+     * 分页
+     */
     public Page<WechatFans> page(PageParam pageParam, WechatFansParam param) {
         Page<WechatFans> mpPage = MpUtil.getMpPage(pageParam, WechatFans.class);
         return lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
@@ -32,14 +33,13 @@ public class WechatFansManager extends BaseManager<WechatFansMapper, WechatFans>
     /**
      * 获取最新的一条
      */
-    public Optional<WechatFans> findLatest(){
-        Page<WechatFans> mpPage = new Page<>(0,1);
-        Page<WechatFans> fansPage = this.lambdaQuery()
-                .orderByDesc(MpIdEntity::getId)
-                .page(mpPage);
+    public Optional<WechatFans> findLatest() {
+        Page<WechatFans> mpPage = new Page<>(0, 1);
+        Page<WechatFans> fansPage = this.lambdaQuery().orderByDesc(MpIdEntity::getId).page(mpPage);
         if (fansPage.getTotal() > 0) {
             return Optional.of(fansPage.getRecords().get(0));
         }
         return Optional.empty();
     }
+
 }

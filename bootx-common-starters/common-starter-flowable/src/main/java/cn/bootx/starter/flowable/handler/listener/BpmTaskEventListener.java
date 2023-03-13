@@ -16,8 +16,9 @@ import static org.flowable.common.engine.api.delegate.event.FlowableEngineEventT
 
 /**
  * Bpm 任务事件监听器
+ *
  * @author xxm
- * @date 2022/8/24 
+ * @date 2022/8/24
  */
 @Slf4j
 @Component
@@ -25,14 +26,9 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
 
     private final BpmTaskEventListenerService bpmTaskEventListenerService;
 
-
     /** 处理的事件 */
-    private static final Set<FlowableEngineEventType> TASK_EVENTS = CollUtil.newHashSet(
-            TASK_CREATED,
-            TASK_ASSIGNED,
-            TASK_COMPLETED,
-            MULTI_INSTANCE_ACTIVITY_COMPLETED_WITH_CONDITION
-    );
+    private static final Set<FlowableEngineEventType> TASK_EVENTS = CollUtil.newHashSet(TASK_CREATED, TASK_ASSIGNED,
+            TASK_COMPLETED, MULTI_INSTANCE_ACTIVITY_COMPLETED_WITH_CONDITION);
 
     public BpmTaskEventListener(BpmTaskEventListenerService bpmTaskEventListenerService) {
         super(TASK_EVENTS);
@@ -73,4 +69,5 @@ public class BpmTaskEventListener extends AbstractFlowableEngineEventListener {
     protected void multiInstanceActivityCompletedWithCondition(FlowableMultiInstanceActivityCompletedEvent event) {
         bpmTaskEventListenerService.multiInstanceActivityCompletedWithCondition(event);
     }
+
 }

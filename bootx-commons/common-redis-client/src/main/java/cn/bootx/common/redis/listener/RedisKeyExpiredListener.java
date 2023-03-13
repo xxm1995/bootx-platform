@@ -1,10 +1,11 @@
 package cn.bootx.common.redis.listener;
 
-/**   
-* Key过期事件
-* @author xxm  
-* @date 2022/5/7 
-*/
+/**
+ * Key过期事件
+ *
+ * @author xxm
+ * @date 2022/5/7
+ */
 public interface RedisKeyExpiredListener {
 
     /**
@@ -17,4 +18,5 @@ public interface RedisKeyExpiredListener {
      * @param key 去除key前缀后的过期key值
      */
     void onMessage(String key);
+
 }
