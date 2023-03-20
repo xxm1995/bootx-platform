@@ -13,15 +13,11 @@
     <include resource="cn/bootx/common/log/logback-elk.xml"/>
     <include resource="cn/bootx/common/log/logback-plumelog.xml"/>
 
-    <!-- 测试用, 将日志存储到数据库中 -->
-    <appender name="DbAppender" class="cn.bootx.common.log.db.DbAppender"/>
-
     <!-- 开发输出级别 -->
     <root level="INFO">
         <appender-ref ref="console"/>
         <appender-ref ref="fileInfoLog"/>
         <appender-ref ref="elk"/>
         <appender-ref ref="plumelog"/>
-<!--        <appender-ref ref="DbAppender"/>-->
     </root>
 </configuration>
