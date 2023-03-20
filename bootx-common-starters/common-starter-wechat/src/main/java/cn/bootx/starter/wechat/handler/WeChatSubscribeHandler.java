@@ -39,9 +39,9 @@ public class WeChatSubscribeHandler implements WeChatMpMessageHandler {
             WxSessionManager sessionManager) {
         String openId = wxMessage.getFromUser();
         log.info("新关注用户 OPENID: " + openId);
-        // 判断是否携带参数, 携带参数出厂扫码情况
+        // 判断是否携带扫码登录参数,
         if (StrUtil.startWith(wxMessage.getEventKey(), EVENT_KEY_QRSCENE)) {
-            // 二维码key值
+            // 将扫码获取的二维码key值进行保存
             String qrCodeKey = StrUtil.subAfter(wxMessage.getEventKey(), EVENT_KEY_QRSCENE, true);
             weChatQrLoginService.setOpenId(qrCodeKey, openId);
         }

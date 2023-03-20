@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 微信接入入口
+ * 微信工作台接入入口
  *
  * @author xxm
  * @date 2022/7/16
