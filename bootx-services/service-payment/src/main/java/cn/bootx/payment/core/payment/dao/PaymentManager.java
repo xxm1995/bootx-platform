@@ -63,13 +63,13 @@ public class PaymentManager extends BaseManager<PaymentMapper, Payment> {
     public Page<Payment> page(PageParam pageParam, PaymentQuery param, OrderParam orderParam) {
         Page<Payment> mpPage = MpUtil.getMpPage(pageParam, Payment.class);
         return query().select(Payment.class, MpUtil::excludeBigField)
-                .orderBy(Objects.nonNull(orderParam.getSortField()), orderParam.isAsc(),
-                        StrUtil.toUnderlineCase(orderParam.getSortField()))
-                .like(Objects.nonNull(param.getPaymentId()), MpUtil.getColumnName(Payment::getId), param.getPaymentId())
-                .like(Objects.nonNull(param.getBusinessId()), MpUtil.getColumnName(Payment::getBusinessId),
-                        param.getBusinessId())
-                .like(Objects.nonNull(param.getTitle()), MpUtil.getColumnName(Payment::getTitle), param.getTitle())
-                .page(mpPage);
+            .orderBy(Objects.nonNull(orderParam.getSortField()), orderParam.isAsc(),
+                    StrUtil.toUnderlineCase(orderParam.getSortField()))
+            .like(Objects.nonNull(param.getPaymentId()), MpUtil.getColumnName(Payment::getId), param.getPaymentId())
+            .like(Objects.nonNull(param.getBusinessId()), MpUtil.getColumnName(Payment::getBusinessId),
+                    param.getBusinessId())
+            .like(Objects.nonNull(param.getTitle()), MpUtil.getColumnName(Payment::getTitle), param.getTitle())
+            .page(mpPage);
     }
 
     /**

@@ -50,8 +50,10 @@ public class AliPaymentService {
         payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         refundableInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         // 更新支付宝支付类型信息
-        payTypeInfos.add(new PayChannelInfo().setPayChannel(PayChannelCode.ALI).setPayWay(payModeParam.getPayWay())
-                .setAmount(payModeParam.getAmount()).setExtraParamsJson(payModeParam.getExtraParamsJson()));
+        payTypeInfos.add(new PayChannelInfo().setPayChannel(PayChannelCode.ALI)
+            .setPayWay(payModeParam.getPayWay())
+            .setAmount(payModeParam.getAmount())
+            .setExtraParamsJson(payModeParam.getExtraParamsJson()));
         payment.setPayChannelInfo(payTypeInfos);
         // 更新支付宝可退款类型信息
         refundableInfos.add(new RefundableInfo().setPayChannel(PayChannelCode.ALI).setAmount(payModeParam.getAmount()));
@@ -77,10 +79,14 @@ public class AliPaymentService {
     private void createAliPayment(Payment payment, PayModeParam payModeParam, String tradeNo) {
         // 创建支付宝支付记录
         AliPayment aliPayment = new AliPayment();
-        aliPayment.setTradeNo(tradeNo).setPaymentId(payment.getId()).setAmount(payModeParam.getAmount())
-                .setRefundableBalance(payModeParam.getAmount()).setBusinessId(payment.getBusinessId())
-                .setUserId(payment.getUserId()).setPayStatus(PayStatusCode.TRADE_SUCCESS)
-                .setPayTime(LocalDateTime.now());
+        aliPayment.setTradeNo(tradeNo)
+            .setPaymentId(payment.getId())
+            .setAmount(payModeParam.getAmount())
+            .setRefundableBalance(payModeParam.getAmount())
+            .setBusinessId(payment.getBusinessId())
+            .setUserId(payment.getUserId())
+            .setPayStatus(PayStatusCode.TRADE_SUCCESS)
+            .setPayTime(LocalDateTime.now());
         aliPaymentManager.save(aliPayment);
     }
 

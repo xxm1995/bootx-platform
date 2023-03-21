@@ -46,14 +46,18 @@ public class BpmTaskQueryService {
      */
     public PageResult<TaskInfo> pageMyTodo(PageParam pageParam) {
         // 查询待办任务
-        TaskQuery taskQuery = taskService.createTaskQuery().taskAssignee(String.valueOf(SecurityUtil.getUserId())) // 分配给自己
-                .orderByTaskCreateTime().desc(); // 创建时间倒序
+        TaskQuery taskQuery = taskService.createTaskQuery()
+            .taskAssignee(String.valueOf(SecurityUtil.getUserId())) // 分配给自己
+            .orderByTaskCreateTime()
+            .desc(); // 创建时间倒序
         List<Task> tasks = taskQuery.listPage(pageParam.start(), pageParam.getSize());
         long total = taskQuery.count();
         List<String> ids = tasks.stream().map(Task::getId).collect(Collectors.toList());
         List<TaskInfo> taskInfos = this.convertInstanceInfo(ids);
-        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent()).setRecords(taskInfos)
-                .setSize(pageParam.getSize()).setTotal(total);
+        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent())
+            .setRecords(taskInfos)
+            .setSize(pageParam.getSize())
+            .setTotal(total);
     }
 
     /**
@@ -61,14 +65,19 @@ public class BpmTaskQueryService {
      */
     public PageResult<TaskInfo> pageMyDone(PageParam pageParam) {
         // 查询已办任务
-        HistoricTaskInstanceQuery taskQuery = historyService.createHistoricTaskInstanceQuery().finished()
-                .taskAssignee(String.valueOf(SecurityUtil.getUserId())).orderByHistoricTaskInstanceStartTime().desc();
+        HistoricTaskInstanceQuery taskQuery = historyService.createHistoricTaskInstanceQuery()
+            .finished()
+            .taskAssignee(String.valueOf(SecurityUtil.getUserId()))
+            .orderByHistoricTaskInstanceStartTime()
+            .desc();
         List<HistoricTaskInstance> tasks = taskQuery.listPage(pageParam.start(), pageParam.getSize());
         long total = taskQuery.count();
         List<String> ids = tasks.stream().map(HistoricTaskInstance::getId).collect(Collectors.toList());
         List<TaskInfo> taskInfos = this.convertInstanceInfo(ids);
-        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent()).setRecords(taskInfos)
-                .setSize(pageParam.getSize()).setTotal(total);
+        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent())
+            .setRecords(taskInfos)
+            .setSize(pageParam.getSize())
+            .setTotal(total);
     }
 
     /**
@@ -89,15 +98,21 @@ public class BpmTaskQueryService {
      * 转换
      */
     public List<TaskInfo> convertInstanceInfo(List<String> taskIds) {
-        Map<String, BpmTask> bpmTaskMap = bpmTaskManager.findAllByTaskIds(taskIds).stream()
-                .collect(Collectors.toMap(BpmTask::getTaskId, Function.identity()));
+        Map<String, BpmTask> bpmTaskMap = bpmTaskManager.findAllByTaskIds(taskIds)
+            .stream()
+            .collect(Collectors.toMap(BpmTask::getTaskId, Function.identity()));
         return taskIds.stream().map(taskId -> {
             BpmTask bpmTask = Optional.ofNullable(bpmTaskMap.get(taskId)).orElse(new BpmTask());
-            return new TaskInfo().setTaskId(bpmTask.getTaskId()).setNodeName(bpmTask.getNodeName())
-                    .setExecutionId(bpmTask.getExecutionId()).setInstanceId(bpmTask.getInstanceId())
-                    .setInstanceName(bpmTask.getInstanceName()).setDefName(bpmTask.getDefName())
-                    .setStartTime(bpmTask.getStartTime()).setEndTime(bpmTask.getEndTime())
-                    .setStartUserId(bpmTask.getStartUserId()).setStartUserName(bpmTask.getStartUserName());
+            return new TaskInfo().setTaskId(bpmTask.getTaskId())
+                .setNodeName(bpmTask.getNodeName())
+                .setExecutionId(bpmTask.getExecutionId())
+                .setInstanceId(bpmTask.getInstanceId())
+                .setInstanceName(bpmTask.getInstanceName())
+                .setDefName(bpmTask.getDefName())
+                .setStartTime(bpmTask.getStartTime())
+                .setEndTime(bpmTask.getEndTime())
+                .setStartUserId(bpmTask.getStartUserId())
+                .setStartUserName(bpmTask.getStartUserName());
         }).collect(Collectors.toList());
     }
 

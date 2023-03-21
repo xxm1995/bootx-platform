@@ -24,7 +24,8 @@ public class OnRabbitEnable implements Condition {
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
         RabbitMqProperties rabbitMqProperties = Binder.get(context.getEnvironment())
-                .bind(rabbitPropertiesPrefix, RabbitMqProperties.class).orElse(new RabbitMqProperties());
+            .bind(rabbitPropertiesPrefix, RabbitMqProperties.class)
+            .orElse(new RabbitMqProperties());
         return rabbitMqProperties.isEnable();
     }
 

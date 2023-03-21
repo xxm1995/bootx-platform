@@ -52,7 +52,7 @@ public class DingRobotConfigService {
     @Transactional(rollbackFor = Exception.class)
     public DingRobotConfigDto update(DingRobotConfigParam param) {
         DingRobotConfig dingRobotConfig = robotConfigManager.findById(param.getId())
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         BeanUtil.copyProperties(param, dingRobotConfig, CopyOptions.create().ignoreNullValue());
         return robotConfigManager.updateById(dingRobotConfig).toDto();
     }

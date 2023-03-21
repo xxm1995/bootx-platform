@@ -30,8 +30,10 @@ public class SiteMessageUserManager extends BaseManager<SiteMessageUserMapper, S
      * 阅读
      */
     public void readById(Long id) {
-        lambdaUpdate().eq(MpIdEntity::getId, id).set(SiteMessageUser::isHaveRead, Boolean.TRUE)
-                .set(SiteMessageUser::getReadTime, LocalDateTime.now()).update();
+        lambdaUpdate().eq(MpIdEntity::getId, id)
+            .set(SiteMessageUser::isHaveRead, Boolean.TRUE)
+            .set(SiteMessageUser::getReadTime, LocalDateTime.now())
+            .update();
     }
 
     /**

@@ -33,8 +33,8 @@ public class DeptRuleService {
         // 顶级机构
         if (Objects.isNull(parentId)) {
             Dept dept = MpUtil
-                    .findOne(deptManager.lambdaQuery().isNull(Dept::getParentId).orderByDesc(Dept::getOrgCode))
-                    .orElse(null);
+                .findOne(deptManager.lambdaQuery().isNull(Dept::getParentId).orderByDesc(Dept::getOrgCode))
+                .orElse(null);
             if (Objects.isNull(dept)) {
                 return "1";
             }
@@ -46,8 +46,11 @@ public class DeptRuleService {
             // 父亲
             Dept parenDept = deptManager.findById(parentId).orElseThrow(() -> new BizException("父机构不存在"));
             // 最新的兄弟
-            Dept dept = MpUtil.findOne(deptManager.lambdaQuery().eq(Dept::getParentId, parenDept.getId())
-                    .orderByDesc(Dept::getOrgCategory)).orElse(null);
+            Dept dept = MpUtil
+                .findOne(deptManager.lambdaQuery()
+                    .eq(Dept::getParentId, parenDept.getId())
+                    .orderByDesc(Dept::getOrgCategory))
+                .orElse(null);
             if (Objects.isNull(dept)) {
                 return parenDept.getOrgCode() + "_1";
             }

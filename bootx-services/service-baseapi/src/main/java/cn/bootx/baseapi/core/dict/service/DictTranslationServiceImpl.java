@@ -46,22 +46,27 @@ public class DictTranslationServiceImpl implements DictTranslationService {
             val collect = dictItems.stream().distinct().collect(Collectors.toList());
             for (val dictItem : collect) {
                 String value = dictionaryItemService.findEnableByCode(dictItem.getDictCode(), dictItem.getCode())
-                        .map(DictionaryItem::getName).orElse(null);
+                    .map(DictionaryItem::getName)
+                    .orElse(null);
                 cache.addDictCache(dictItem.getDictCode(), dictItem.getCode(), value);
             }
         }
         else if (dictCount < 3) {
-            val dictCodes = dictItems.stream().map(TranslationCacheLocal.DictItem::getDictCode)
-                    .collect(Collectors.toList());
+            val dictCodes = dictItems.stream()
+                .map(TranslationCacheLocal.DictItem::getDictCode)
+                .collect(Collectors.toList());
             for (val dictCode : dictCodes) {
-                Map<String, DictionaryItemDto> itemMap = dictionaryItemService.findEnableByDictCode(dictCode).stream()
-                        .collect(Collectors.toMap(DictionaryItemDto::getCode, Function.identity(),
-                                CollectorsFunction::retainLatest));
-                val collect = dictItems.stream().filter(item -> Objects.equal(dictCode, item.getDictCode()))
-                        .collect(Collectors.toList());
+                Map<String, DictionaryItemDto> itemMap = dictionaryItemService.findEnableByDictCode(dictCode)
+                    .stream()
+                    .collect(Collectors.toMap(DictionaryItemDto::getCode, Function.identity(),
+                            CollectorsFunction::retainLatest));
+                val collect = dictItems.stream()
+                    .filter(item -> Objects.equal(dictCode, item.getDictCode()))
+                    .collect(Collectors.toList());
                 for (val dictItem : collect) {
-                    String value = Optional.ofNullable(itemMap.get(dictItem.getCode())).map(DictionaryItemDto::getName)
-                            .orElse(null);
+                    String value = Optional.ofNullable(itemMap.get(dictItem.getCode()))
+                        .map(DictionaryItemDto::getName)
+                        .orElse(null);
                     cache.addDictCache(dictItem.getDictCode(), dictItem.getCode(), value);
                 }
             }
@@ -70,9 +75,11 @@ public class DictTranslationServiceImpl implements DictTranslationService {
             val allDictItems = dictionaryItemService.findAllByEnable();
             for (val dictItem : dictItems) {
                 String value = allDictItems.stream()
-                        .filter(o -> Objects.equal(dictItem.getDictCode(), o.getDictCode())
-                                && Objects.equal(dictItem.getCode(), o.getCode()))
-                        .findFirst().map(DictionaryItemSimpleDto::getName).orElse(null);
+                    .filter(o -> Objects.equal(dictItem.getDictCode(), o.getDictCode())
+                            && Objects.equal(dictItem.getCode(), o.getCode()))
+                    .findFirst()
+                    .map(DictionaryItemSimpleDto::getName)
+                    .orElse(null);
                 cache.addDictCache(dictItem.getDictCode(), dictItem.getCode(), value);
             }
         }

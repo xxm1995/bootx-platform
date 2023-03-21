@@ -67,9 +67,12 @@ public class UserTiredOperateService {
      * 绑定开放平台信息
      */
     public void bindOpenInfo(Long userId, AuthUser authUser, String clientCode) {
-        UserThirdInfo userThirdInfo = new UserThirdInfo().setUserId(userId).setClientCode(clientCode)
-                .setUsername(authUser.getUsername()).setNickname(authUser.getNickname()).setAvatar(authUser.getAvatar())
-                .setThirdUserId(authUser.getUuid());
+        UserThirdInfo userThirdInfo = new UserThirdInfo().setUserId(userId)
+            .setClientCode(clientCode)
+            .setUsername(authUser.getUsername())
+            .setNickname(authUser.getNickname())
+            .setAvatar(authUser.getAvatar())
+            .setThirdUserId(authUser.getUuid());
         this.bindOpenInfo(userThirdInfo);
     }
 

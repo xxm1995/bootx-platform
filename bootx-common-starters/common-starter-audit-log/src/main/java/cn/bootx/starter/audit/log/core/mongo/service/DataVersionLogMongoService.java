@@ -47,17 +47,21 @@ public class DataVersionLogMongoService implements DataVersionLogService {
     @Override
     public void add(DataVersionLogParam param) {
         // 查询数据最新版本
-        Criteria criteria = Criteria.where(DataVersionLogMongo.Fields.tableName).is(param.getDataName())
-                .and(DataVersionLogMongo.Fields.dataId).is(param.getDataId());
+        Criteria criteria = Criteria.where(DataVersionLogMongo.Fields.tableName)
+            .is(param.getDataName())
+            .and(DataVersionLogMongo.Fields.dataId)
+            .is(param.getDataId());
         Sort sort = Sort.by(Sort.Order.desc(DataVersionLogMongo.Fields.version));
         Query query = new Query().addCriteria(criteria).with(sort).limit(1);
         DataVersionLogMongo one = mongoTemplate.findOne(query, DataVersionLogMongo.class);
         Integer maxVersion = Optional.ofNullable(one).map(DataVersionLogMongo::getVersion).orElse(0);
 
         DataVersionLogMongo dataVersionLog = new DataVersionLogMongo().setTableName(param.getTableName())
-                .setDataName(param.getDataName()).setDataId(param.getDataId())
-                .setCreator(SecurityUtil.getUserIdOrDefaultId()).setCreateTime(LocalDateTime.now())
-                .setVersion(maxVersion + 1);
+            .setDataName(param.getDataName())
+            .setDataId(param.getDataId())
+            .setCreator(SecurityUtil.getUserIdOrDefaultId())
+            .setCreateTime(LocalDateTime.now())
+            .setVersion(maxVersion + 1);
         if (param.getDataContent() instanceof String) {
             dataVersionLog.setDataContent((String) param.getDataContent());
         }
@@ -84,7 +88,9 @@ public class DataVersionLogMongoService implements DataVersionLogService {
     @Override
     public PageResult<DataVersionLogDto> page(PageParam pageParam, DataVersionLogParam param) {
         DataVersionLogMongo dataVersionLogMongo = new DataVersionLogMongo().setDataId(param.getDataId())
-                .setVersion(param.getVersion()).setTableName(param.getTableName()).setDataName(param.getDataName());
+            .setVersion(param.getVersion())
+            .setTableName(param.getTableName())
+            .setDataName(param.getDataName());
         // 查询条件
         ExampleMatcher matching = ExampleMatcher.matching().withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
         Example<DataVersionLogMongo> example = Example.of(dataVersionLogMongo, matching);
@@ -93,11 +99,15 @@ public class DataVersionLogMongoService implements DataVersionLogService {
         Pageable pageable = PageRequest.of(pageParam.getCurrent() - 1, pageParam.getSize(), sort);
 
         Page<DataVersionLogMongo> page = repository.findAll(example, pageable);
-        List<DataVersionLogDto> records = page.getContent().stream().map(DataVersionLogMongo::toDto)
-                .collect(Collectors.toList());
+        List<DataVersionLogDto> records = page.getContent()
+            .stream()
+            .map(DataVersionLogMongo::toDto)
+            .collect(Collectors.toList());
 
-        return new PageResult<DataVersionLogDto>().setCurrent(pageParam.getCurrent()).setSize(pageParam.getSize())
-                .setRecords(records).setTotal(page.getTotalElements());
+        return new PageResult<DataVersionLogDto>().setCurrent(pageParam.getCurrent())
+            .setSize(pageParam.getSize())
+            .setRecords(records)
+            .setTotal(page.getTotalElements());
     }
 
     @Override

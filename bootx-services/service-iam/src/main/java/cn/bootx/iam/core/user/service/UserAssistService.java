@@ -41,7 +41,7 @@ public class UserAssistService {
      */
     public void sendCurrentPhoneChangeCaptcha() {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         this.sendPhoneChangeCaptcha(userInfo.getPhone());
     }
 
@@ -50,7 +50,7 @@ public class UserAssistService {
      */
     public boolean validateCurrentPhoneChangeCaptcha(String captcha) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         return this.validatePhoneChangeCaptcha(userInfo.getPhone(), captcha);
     }
 
@@ -82,7 +82,7 @@ public class UserAssistService {
      */
     public void sendCurrentEmailChangeCaptcha() {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         this.sendEmailChangeCaptcha(userInfo.getEmail());
     }
 
@@ -91,7 +91,7 @@ public class UserAssistService {
      */
     public boolean validateCurrentChangeEmailCaptcha(String captcha) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         return this.validateEmailChangeCaptcha(userInfo.getEmail(), captcha);
     }
 

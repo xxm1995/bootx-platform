@@ -197,13 +197,16 @@ public class PayService {
         List<PayModeParam> oldPayModes = oldPaymentParam.getPayModeList();
         // 旧的异步支付方式
         PayModeParam oldModeParam = oldPayModes.stream()
-                .filter(payMode -> PayChannelCode.ASYNC_TYPE.contains(payMode.getPayChannel())).findFirst()
-                .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
+            .filter(payMode -> PayChannelCode.ASYNC_TYPE.contains(payMode.getPayChannel()))
+            .findFirst()
+            .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
 
         // 新的异步支付方式
-        PayModeParam payModeParam = payParam.getPayModeList().stream()
-                .filter(payMode -> PayChannelCode.ASYNC_TYPE.contains(payMode.getPayChannel())).findFirst()
-                .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
+        PayModeParam payModeParam = payParam.getPayModeList()
+            .stream()
+            .filter(payMode -> PayChannelCode.ASYNC_TYPE.contains(payMode.getPayChannel()))
+            .findFirst()
+            .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
         payModeParam.setAmount(oldModeParam.getAmount());
 
         return payModeParam;

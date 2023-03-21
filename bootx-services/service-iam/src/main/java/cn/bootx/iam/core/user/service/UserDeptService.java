@@ -52,8 +52,10 @@ public class UserDeptService {
         // 先删除用户拥有的部门
         userDeptManager.deleteByUsers(userIds);
         // 然后给用户添加部门
-        List<UserDept> userDeptList = userIds.stream().map(userId -> this.createUserDepots(userId, deptIds))
-                .flatMap(Collection::stream).collect(Collectors.toList());
+        List<UserDept> userDeptList = userIds.stream()
+            .map(userId -> this.createUserDepots(userId, deptIds))
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
         userDeptManager.saveAll(userDeptList);
     }
 
@@ -61,8 +63,11 @@ public class UserDeptService {
      * 根据用户Id查询部门id
      */
     public List<Long> findDeptIdsByUser(Long userId) {
-        return userDeptManager.findDeptIdsByUser(userId).stream().map(UserDept::getDeptId).distinct()
-                .collect(Collectors.toList());
+        return userDeptManager.findDeptIdsByUser(userId)
+            .stream()
+            .map(UserDept::getDeptId)
+            .distinct()
+            .collect(Collectors.toList());
     }
 
     /**

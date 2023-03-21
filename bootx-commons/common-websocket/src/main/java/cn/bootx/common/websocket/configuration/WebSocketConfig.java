@@ -44,12 +44,12 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry
-                // WebSocket 连接处理器
-                .addHandler(userNoticeWebSocketHandler, "/ws/user")
-                // WebSocket 拦截器
-                .addInterceptors(userNoticeWebSocketInterceptor)
-                // 允许跨域
-                .setAllowedOrigins("*");
+            // WebSocket 连接处理器
+            .addHandler(userNoticeWebSocketHandler, "/ws/user")
+            // WebSocket 拦截器
+            .addInterceptors(userNoticeWebSocketInterceptor)
+            // 允许跨域
+            .setAllowedOrigins("*");
     }
 
 }

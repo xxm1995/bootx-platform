@@ -53,11 +53,13 @@ public class MinioUploadService implements UploadService {
     @Override
     public UpdateFileInfo upload(MultipartFile file, UploadFileContext context) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
-        PutObjectArgs putObjectArgs = PutObjectArgs.builder().bucket(minio.getBucket()) // bucket
-                                                                                        // 必须传递
-                .contentType(file.getContentType()).object(context.getFileId() + "." + context.getFileSuffix())
-                .stream(file.getInputStream(), file.getSize(), -1) // 文件内容
-                .build();
+        PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+            .bucket(minio.getBucket()) // bucket
+                                       // 必须传递
+            .contentType(file.getContentType())
+            .object(context.getFileId() + "." + context.getFileSuffix())
+            .stream(file.getInputStream(), file.getSize(), -1) // 文件内容
+            .build();
         // 执行上传
         client.putObject(putObjectArgs);
         return new UpdateFileInfo().setExternalStorageId(putObjectArgs.object()).setFileSize(file.getSize());
@@ -72,7 +74,7 @@ public class MinioUploadService implements UploadService {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         String storageId = updateFileInfo.getExternalStorageId();
         GetObjectResponse inputStream = client
-                .getObject(GetObjectArgs.builder().bucket(minio.getBucket()).object(storageId).build());
+            .getObject(GetObjectArgs.builder().bucket(minio.getBucket()).object(storageId).build());
         // 获取响应输出流
         ServletOutputStream os = response.getOutputStream();
         IoUtil.copy(inputStream, os);
@@ -89,10 +91,11 @@ public class MinioUploadService implements UploadService {
     public InputStream download(UpdateFileInfo updateFileInfo) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         String storageId = updateFileInfo.getExternalStorageId();
-        return client.getObject(GetObjectArgs.builder().bucket(minio.getBucket()) // bucket
-                                                                                  // 必须传递
-                .object(storageId) // 相对路径作为 key
-                .build());
+        return client.getObject(GetObjectArgs.builder()
+            .bucket(minio.getBucket()) // bucket
+                                       // 必须传递
+            .object(storageId) // 相对路径作为 key
+            .build());
     }
 
     /**
@@ -102,10 +105,11 @@ public class MinioUploadService implements UploadService {
     @Override
     public void delete(UpdateFileInfo updateFileInfo) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
-        client.removeObject(RemoveObjectArgs.builder().bucket(minio.getBucket()) // bucket
-                                                                                 // 必须传递
-                .object(updateFileInfo.getExternalStorageId()) // 相对路径作为 key
-                .build());
+        client.removeObject(RemoveObjectArgs.builder()
+            .bucket(minio.getBucket()) // bucket
+                                       // 必须传递
+            .object(updateFileInfo.getExternalStorageId()) // 相对路径作为 key
+            .build());
     }
 
     /**
@@ -117,10 +121,11 @@ public class MinioUploadService implements UploadService {
         }
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         // 初始化客户端
-        client = MinioClient.builder().endpoint(minio.getEndpoint()) // Endpoint URL
-                .region(minio.getRegion()) // Region
-                .credentials(minio.getAccessKey(), minio.getAccessSecret()) // 认证密钥
-                .build();
+        client = MinioClient.builder()
+            .endpoint(minio.getEndpoint()) // Endpoint URL
+            .region(minio.getRegion()) // Region
+            .credentials(minio.getAccessKey(), minio.getAccessSecret()) // 认证密钥
+            .build();
     }
 
 }

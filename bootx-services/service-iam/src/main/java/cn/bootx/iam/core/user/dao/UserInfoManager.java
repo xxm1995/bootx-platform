@@ -64,7 +64,8 @@ public class UserInfoManager extends BaseManager<UserInfoMapper, UserInfo> {
 
         Page<UserInfo> mpPage = MpUtil.getMpPage(pageParam, UserInfo.class);
         lambdaQuery().like(StrUtil.isNotBlank(param.getUsername()), UserInfo::getUsername, param.getUsername())
-                .like(StrUtil.isNotBlank(param.getName()), UserInfo::getName, param.getName()).page(mpPage);
+            .like(StrUtil.isNotBlank(param.getName()), UserInfo::getName, param.getName())
+            .page(mpPage);
         return mpPage;
     }
 

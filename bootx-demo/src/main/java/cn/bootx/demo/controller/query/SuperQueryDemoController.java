@@ -71,8 +71,11 @@ public class SuperQueryDemoController {
     @Operation(summary = "MP查询生成器测试")
     @GetMapping("/mpGenerator")
     public ResResult<String> mpGenerator() {
-        SuperQueryDemo queryDemo = new SuperQueryDemo().setName("222").setAge(24).setWorkTime(LocalTime.now())
-                .setVip(true).setRegistrationTime(LocalDateTime.now());
+        SuperQueryDemo queryDemo = new SuperQueryDemo().setName("222")
+            .setAge(24)
+            .setWorkTime(LocalTime.now())
+            .setVip(true)
+            .setRegistrationTime(LocalDateTime.now());
         queryDemo.setId(1122L);
         QueryWrapper<SuperQueryDemo> generator = QueryGenerator.generator(queryDemo);
         generator = QueryGenerator.generator(queryDemo, SuperQueryDemo.class);

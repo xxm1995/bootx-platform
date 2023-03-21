@@ -82,7 +82,7 @@ public class SecurityUtil {
         if (!userDetail.isPresent()) {
             try {
                 userDetail = Optional.ofNullable(StpUtil.getSession())
-                        .map(saSession -> saSession.getModel(CommonCode.USER, UserDetail.class));
+                    .map(saSession -> saSession.getModel(CommonCode.USER, UserDetail.class));
                 SessionCacheLocal.put(userDetail.orElse(null));
             }
             catch (SaTokenException e) {

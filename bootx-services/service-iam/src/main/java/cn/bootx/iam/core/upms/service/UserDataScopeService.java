@@ -82,8 +82,9 @@ public class UserDataScopeService {
     public void saveAssignBatch(List<Long> userIds, Long dataScopeId) {
         // 先删除用户拥有的数据权限
         userDataScopeManager.deleteByUsers(userIds);
-        List<UserDataScope> userDataScopes = userIds.stream().map(userId -> new UserDataScope(userId, dataScopeId))
-                .collect(Collectors.toList());
+        List<UserDataScope> userDataScopes = userIds.stream()
+            .map(userId -> new UserDataScope(userId, dataScopeId))
+            .collect(Collectors.toList());
         userDataScopeManager.saveAll(userDataScopes);
     }
 
@@ -94,8 +95,9 @@ public class UserDataScopeService {
         if (Objects.isNull(this.findDataScopeIdByUser(userId))) {
             return new DataScopeDto();
         }
-        return dataScopeManager.findById(this.findDataScopeIdByUser(userId)).map(DataScope::toDto)
-                .orElseThrow(DataNotExistException::new);
+        return dataScopeManager.findById(this.findDataScopeIdByUser(userId))
+            .map(DataScope::toDto)
+            .orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -121,33 +123,43 @@ public class UserDataScopeService {
         }
         UserDataScope userDataScope = userDataScopes.get(0);
         DataScope dataScope = dataScopeManager.findById(userDataScope.getDataScopeId())
-                .orElseThrow(() -> new BizException("数据权限[配置不存在"));
+            .orElseThrow(() -> new BizException("数据权限[配置不存在"));
 
         dataPermScope.setScopeType(DataScopeEnum.findByCode(dataScope.getType()));
         // 用户
         if (Objects.equals(dataScope.getType(), DataScopeEnum.USER_SCOPE.getCode())) {
-            Set<Long> collect = dataScopeUserManager.findByDateScopeId(dataScope.getId()).stream()
-                    .map(DataScopeUser::getUserId).collect(Collectors.toSet());
+            Set<Long> collect = dataScopeUserManager.findByDateScopeId(dataScope.getId())
+                .stream()
+                .map(DataScopeUser::getUserId)
+                .collect(Collectors.toSet());
             return dataPermScope.setUserScopeIds(collect);
         }
         // 部门
         else if (Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_SCOPE.getCode())) {
-            Set<Long> collect = dataScopeDeptManager.findByDateScopeId(dataScope.getId()).stream()
-                    .map(DataScopeDept::getDeptId).collect(Collectors.toSet());
+            Set<Long> collect = dataScopeDeptManager.findByDateScopeId(dataScope.getId())
+                .stream()
+                .map(DataScopeDept::getDeptId)
+                .collect(Collectors.toSet());
             return dataPermScope.setDeptScopeIds(collect);
         }
         // 用户和部门
         else if (Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())) {
-            Set<Long> userIds = dataScopeUserManager.findByDateScopeId(dataScope.getId()).stream()
-                    .map(DataScopeUser::getUserId).collect(Collectors.toSet());
-            Set<Long> deptIds = dataScopeDeptManager.findByDateScopeId(dataScope.getId()).stream()
-                    .map(DataScopeDept::getDeptId).collect(Collectors.toSet());
+            Set<Long> userIds = dataScopeUserManager.findByDateScopeId(dataScope.getId())
+                .stream()
+                .map(DataScopeUser::getUserId)
+                .collect(Collectors.toSet());
+            Set<Long> deptIds = dataScopeDeptManager.findByDateScopeId(dataScope.getId())
+                .stream()
+                .map(DataScopeDept::getDeptId)
+                .collect(Collectors.toSet());
             return dataPermScope.setDeptScopeIds(deptIds).setUserScopeIds(userIds);
         }
         // 自己所属的部门
         else if (Objects.equals(dataScope.getType(), DataScopeEnum.BELONG_DEPT.getCode())) {
-            Set<Long> deptIds = userDeptManager.findDeptIdsByUser(userId).stream().map(UserDept::getDeptId)
-                    .collect(Collectors.toSet());
+            Set<Long> deptIds = userDeptManager.findDeptIdsByUser(userId)
+                .stream()
+                .map(UserDept::getDeptId)
+                .collect(Collectors.toSet());
             return dataPermScope.setDeptScopeIds(deptIds);
         }
         // 自己所属的部门和下级部门
@@ -165,13 +177,19 @@ public class UserDataScopeService {
      * 查找自己及子级部门
      */
     private Set<Long> findSubDeptList(Long userId) {
-        Set<Long> deptIds = userDeptManager.findDeptIdsByUser(userId).stream().map(UserDept::getDeptId)
-                .collect(Collectors.toSet());
-        Map<Long, Dept> deptMap = deptManager.findAll().stream()
-                .collect(Collectors.toMap(MpIdEntity::getId, Function.identity()));
+        Set<Long> deptIds = userDeptManager.findDeptIdsByUser(userId)
+            .stream()
+            .map(UserDept::getDeptId)
+            .collect(Collectors.toSet());
+        Map<Long, Dept> deptMap = deptManager.findAll()
+            .stream()
+            .collect(Collectors.toMap(MpIdEntity::getId, Function.identity()));
         Set<String> deptOrgCodes = deptIds.stream().map(deptMap::get).map(Dept::getOrgCode).collect(Collectors.toSet());
-        return deptMap.values().stream().filter(dept -> this.judgeSubDept(dept.getOrgCode(), deptOrgCodes))
-                .map(MpIdEntity::getId).collect(Collectors.toSet());
+        return deptMap.values()
+            .stream()
+            .filter(dept -> this.judgeSubDept(dept.getOrgCode(), deptOrgCodes))
+            .map(MpIdEntity::getId)
+            .collect(Collectors.toSet());
     }
 
     /**

@@ -54,11 +54,11 @@ public class WeChatLoginHandler implements OpenIdAuthentication {
 
         // 获取微信公众号关联的用户id
         UserThird userThird = userThirdManager.findByField(UserThird::getWeChatId, authUser.getUuid())
-                .orElseThrow(() -> new LoginFailureException("没有找到绑定的微信公众号用户"));
+            .orElseThrow(() -> new LoginFailureException("没有找到绑定的微信公众号用户"));
 
         // 获取用户信息
         UserInfo userInfo = userInfoManager.findById(userThird.getUserId())
-                .orElseThrow(() -> new LoginFailureException("用户不存在"));
+            .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());
     }

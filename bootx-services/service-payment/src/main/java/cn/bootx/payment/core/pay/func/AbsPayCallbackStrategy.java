@@ -100,8 +100,11 @@ public abstract class AbsPayCallbackStrategy {
      */
     public void saveNotifyRecord(PayCallbackResult result) {
         PayNotifyRecord payNotifyRecord = new PayNotifyRecord().setNotifyInfo(JSONUtil.toJsonStr(PARAMS.get()))
-                .setNotifyTime(LocalDateTime.now()).setPaymentId(this.getPaymentId())
-                .setPayChannel(this.getPayChannel()).setStatus(result.getCode()).setMsg(result.getMsg());
+            .setNotifyTime(LocalDateTime.now())
+            .setPaymentId(this.getPaymentId())
+            .setPayChannel(this.getPayChannel())
+            .setStatus(result.getCode())
+            .setMsg(result.getMsg());
         payNotifyRecordManager.save(payNotifyRecord);
     }
 

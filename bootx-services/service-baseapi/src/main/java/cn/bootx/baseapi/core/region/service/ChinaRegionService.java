@@ -52,8 +52,10 @@ public class ChinaRegionService {
             return streetManager.findAllByAreaCode(parentCode).stream().map(Street::toDto).collect(Collectors.toList());
         }
         else if (parentCode.length() == ChinaRegionCode.IMPORT_TYPE_STREET.getLength()) {
-            return villageManager.findAllByStreetCode(parentCode).stream().map(Village::toDto)
-                    .collect(Collectors.toList());
+            return villageManager.findAllByStreetCode(parentCode)
+                .stream()
+                .map(Village::toDto)
+                .collect(Collectors.toList());
         }
         else {
             return new ArrayList<>(0);
@@ -73,8 +75,10 @@ public class ChinaRegionService {
      */
     @Cacheable(value = CHINA_REGION, key = "'pc'")
     public List<RegionDto> findAllProvinceAndCity() {
-        List<RegionDto> provinceList = provinceManager.findAll().stream().map(Province::toDto)
-                .collect(Collectors.toList());
+        List<RegionDto> provinceList = provinceManager.findAll()
+            .stream()
+            .map(Province::toDto)
+            .collect(Collectors.toList());
         List<RegionDto> regionList = cityManager.findAll().stream().map(City::toDto).collect(Collectors.toList());
         List<RegionDto> regions = new ArrayList<>(regionList.size() + regionList.size());
         regions.addAll(provinceList);
@@ -88,8 +92,10 @@ public class ChinaRegionService {
      */
     @Cacheable(value = CHINA_REGION, key = "'pca'")
     public List<RegionDto> findAllProvinceAndCityAndArea() {
-        List<RegionDto> provinceList = provinceManager.findAll().stream().map(Province::toDto)
-                .collect(Collectors.toList());
+        List<RegionDto> provinceList = provinceManager.findAll()
+            .stream()
+            .map(Province::toDto)
+            .collect(Collectors.toList());
         List<RegionDto> regionList = cityManager.findAll().stream().map(City::toDto).collect(Collectors.toList());
         List<RegionDto> areaList = areaManager.findAll().stream().map(Area::toDto).collect(Collectors.toList());
         List<RegionDto> regions = new ArrayList<>(regionList.size() + regionList.size() + areaList.size());

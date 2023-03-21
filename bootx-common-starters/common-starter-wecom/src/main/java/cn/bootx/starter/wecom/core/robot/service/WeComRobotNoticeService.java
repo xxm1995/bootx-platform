@@ -46,7 +46,7 @@ public class WeComRobotNoticeService {
     @SneakyThrows
     public void sendTextNotice(String code, String content, List<String> mentionedList, List<String> mobileList) {
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
+            .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         WxCpGroupRobotService robotService = wxCpService.getGroupRobotService();
         robotService.sendText(robotConfig.toWebhookUrl(), content, mentionedList, mobileList);
     }
@@ -57,7 +57,7 @@ public class WeComRobotNoticeService {
     @SneakyThrows
     public void sendMarkdownNotice(String code, String content) {
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
+            .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         WxCpGroupRobotService robotService = wxCpService.getGroupRobotService();
         robotService.sendMarkdown(robotConfig.toWebhookUrl(), content);
     }
@@ -68,7 +68,7 @@ public class WeComRobotNoticeService {
     @SneakyThrows
     public void sendImageNotice(String code, String imageBase64, String md5) {
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
+            .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         WxCpGroupRobotService robotService = wxCpService.getGroupRobotService();
         robotService.sendImage(robotConfig.toWebhookUrl(), imageBase64, md5);
     }
@@ -79,7 +79,7 @@ public class WeComRobotNoticeService {
     @SneakyThrows
     public void sendNewsNotice(String code, List<NewArticle> articleList) {
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
+            .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         WxCpGroupRobotService robotService = wxCpService.getGroupRobotService();
         robotService.sendNews(robotConfig.toWebhookUrl(), articleList);
     }
@@ -90,7 +90,7 @@ public class WeComRobotNoticeService {
     @SneakyThrows
     public void sendFIleNotice(String code, String mediaId) {
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
+            .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         WxCpGroupRobotService robotService = wxCpService.getGroupRobotService();
         robotService.sendFile(robotConfig.toWebhookUrl(), mediaId);
     }
@@ -102,10 +102,11 @@ public class WeComRobotNoticeService {
     public String updatedMedia(String code, InputStream inputStream) {
         byte[] bytes = IoUtil.readBytes(inputStream);
         String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes));
-        UploadMedia uploadMedia = new UploadMedia().setFileType(fileType).setFilename(IdUtil.getSnowflakeNextIdStr())
-                .setInputStream(new ByteArrayInputStream(bytes));
+        UploadMedia uploadMedia = new UploadMedia().setFileType(fileType)
+            .setFilename(IdUtil.getSnowflakeNextIdStr())
+            .setInputStream(new ByteArrayInputStream(bytes));
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
+            .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         String url = StrUtil.format(ROBOT_UPLOAD_URL, robotConfig.getWebhookKey());
         WxMediaUploadResult result = wxCpService.execute(new RobotMediaFileUploadRequestExecutor(), url, uploadMedia);
         return result.getMediaId();
@@ -118,10 +119,11 @@ public class WeComRobotNoticeService {
     public String updatedMedia(String code, InputStream inputStream, String filename) {
         byte[] bytes = IoUtil.readBytes(inputStream);
         String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes), filename);
-        UploadMedia uploadMedia = new UploadMedia().setFileType(fileType).setFilename(FileNameUtil.mainName(filename))
-                .setInputStream(new ByteArrayInputStream(bytes));
+        UploadMedia uploadMedia = new UploadMedia().setFileType(fileType)
+            .setFilename(FileNameUtil.mainName(filename))
+            .setInputStream(new ByteArrayInputStream(bytes));
         WecomRobotConfig robotConfig = robotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
+            .orElseThrow(() -> new DataNotExistException("企业微信机器人配置未找到"));
         String url = StrUtil.format(ROBOT_UPLOAD_URL, robotConfig.getWebhookKey());
         WxMediaUploadResult result = wxCpService.execute(new RobotMediaFileUploadRequestExecutor(), url, uploadMedia);
         return result.getMediaId();

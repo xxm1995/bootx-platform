@@ -110,8 +110,10 @@ public class WeChatMenuService {
         WxMpMenuService menuService = wxMpService.getMenuService();
         WxMpMenu wxMpMenu = menuService.menuGet();
         WeChatMenuInfo weChatMenuInfo = WeChatMenuInfo.init(wxMpMenu);
-        WeChatMenu weChatMenu = new WeChatMenu().setName("微信自定义菜单").setRemark("导入时间" + DateUtil.now()).setPublish(true)
-                .setMenuInfo(weChatMenuInfo);
+        WeChatMenu weChatMenu = new WeChatMenu().setName("微信自定义菜单")
+            .setRemark("导入时间" + DateUtil.now())
+            .setPublish(true)
+            .setMenuInfo(weChatMenuInfo);
         weChatMenuManager.clearPublish();
         weChatMenuManager.save(weChatMenu);
     }

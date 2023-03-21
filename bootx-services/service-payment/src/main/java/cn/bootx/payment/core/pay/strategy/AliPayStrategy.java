@@ -199,19 +199,27 @@ public class AliPayStrategy extends AbsPayStrategy {
         AliPayApiConfig aliPayApiConfig;
         // 公钥
         if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_KEY)) {
-            aliPayApiConfig = AliPayApiConfig.builder().setAppId(alipayConfig.getAppId())
-                    .setPrivateKey(alipayConfig.getPrivateKey()).setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
-                    .setCharset(CharsetUtil.UTF_8).setServiceUrl(alipayConfig.getServerUrl())
-                    .setSignType(alipayConfig.getSignType()).build();
+            aliPayApiConfig = AliPayApiConfig.builder()
+                .setAppId(alipayConfig.getAppId())
+                .setPrivateKey(alipayConfig.getPrivateKey())
+                .setAliPayPublicKey(alipayConfig.getAlipayPublicKey())
+                .setCharset(CharsetUtil.UTF_8)
+                .setServiceUrl(alipayConfig.getServerUrl())
+                .setSignType(alipayConfig.getSignType())
+                .build();
         }
         // 证书
         else if (Objects.equals(alipayConfig.getAuthType(), AliPayCode.AUTH_TYPE_CART)) {
-            aliPayApiConfig = AliPayApiConfig.builder().setAppId(alipayConfig.getAppId())
-                    .setPrivateKey(alipayConfig.getPrivateKey()).setAppCertContent(alipayConfig.getAppCert())
-                    .setAliPayCertContent(alipayConfig.getAlipayCert())
-                    .setAliPayRootCertContent(alipayConfig.getAlipayRootCert()).setCharset(CharsetUtil.UTF_8)
-                    .setServiceUrl(alipayConfig.getServerUrl()).setSignType(alipayConfig.getSignType())
-                    .buildByCertContent();
+            aliPayApiConfig = AliPayApiConfig.builder()
+                .setAppId(alipayConfig.getAppId())
+                .setPrivateKey(alipayConfig.getPrivateKey())
+                .setAppCertContent(alipayConfig.getAppCert())
+                .setAliPayCertContent(alipayConfig.getAlipayCert())
+                .setAliPayRootCertContent(alipayConfig.getAlipayRootCert())
+                .setCharset(CharsetUtil.UTF_8)
+                .setServiceUrl(alipayConfig.getServerUrl())
+                .setSignType(alipayConfig.getSignType())
+                .buildByCertContent();
         }
         else {
             throw new BizException("支付宝认证方式不可为空");

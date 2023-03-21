@@ -207,8 +207,9 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
      * 查询自己的数据
      */
     protected Expression selfScope(String mainTableName) {
-        Long userId = DataPermContextHolder.getUserDetail().map(UserDetail::getId)
-                .orElseThrow(NotLoginPermException::new);
+        Long userId = DataPermContextHolder.getUserDetail()
+            .map(UserDetail::getId)
+            .orElseThrow(NotLoginPermException::new);
         return new EqualsTo(new Column(this.getPermColumn(mainTableName)), new LongValue(userId));
     }
 
@@ -216,10 +217,14 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
      * 查询用户范围的数据
      */
     protected Expression userScope(Set<Long> userScopeIds, String mainTableName) {
-        Long userId = DataPermContextHolder.getUserDetail().map(UserDetail::getId)
-                .orElseThrow(NotLoginPermException::new);
-        List<Expression> userExpressions = Optional.ofNullable(userScopeIds).orElse(new HashSet<>()).stream()
-                .map(LongValue::new).collect(Collectors.toList());
+        Long userId = DataPermContextHolder.getUserDetail()
+            .map(UserDetail::getId)
+            .orElseThrow(NotLoginPermException::new);
+        List<Expression> userExpressions = Optional.ofNullable(userScopeIds)
+            .orElse(new HashSet<>())
+            .stream()
+            .map(LongValue::new)
+            .collect(Collectors.toList());
         // 追加自身
         userExpressions.add(new LongValue(userId));
         return new InExpression(new Column(this.getPermColumn(mainTableName)), new ExpressionList(userExpressions));
@@ -242,15 +247,18 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
         plainSelect.setFromItem(new Table(dataPerm.getTable()));
 
         // 构建查询条件
-        List<Expression> deptExpressions = Optional.ofNullable(deptIds).orElse(new HashSet<>()).stream()
-                .map(LongValue::new).collect(Collectors.toList());
+        List<Expression> deptExpressions = Optional.ofNullable(deptIds)
+            .orElse(new HashSet<>())
+            .stream()
+            .map(LongValue::new)
+            .collect(Collectors.toList());
         // 构造空查询
         if (deptExpressions.size() == 0) {
             deptExpressions.add(null);
         }
         // 设置查询条件
         plainSelect
-                .setWhere(new InExpression(new Column(dataPerm.getWhereField()), new ExpressionList(deptExpressions)));
+            .setWhere(new InExpression(new Column(dataPerm.getWhereField()), new ExpressionList(deptExpressions)));
 
         // 拼接子查询
         SubSelect subSelect = new SubSelect();
@@ -303,8 +311,10 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
         if (Objects.nonNull(permission) && permission.dataScope()) {
             return false;
         }
-        boolean b = tableInfo.getFieldList().stream().map(TableFieldInfo::getColumn)
-                .anyMatch(CommonCode.CREATOR::equalsIgnoreCase);
+        boolean b = tableInfo.getFieldList()
+            .stream()
+            .map(TableFieldInfo::getColumn)
+            .anyMatch(CommonCode.CREATOR::equalsIgnoreCase);
         if (!b) {
             log.warn("'{}' 数据表未找到权限控制字段 'creator' ，将不会启用数据权限控制，请检查配置", tableName);
         }

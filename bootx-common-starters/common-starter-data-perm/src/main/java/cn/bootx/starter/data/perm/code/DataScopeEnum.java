@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 /**
  * 数据范围权限类型
+ *
  * @author xxm
  * @date 2021/12/22
  */
@@ -36,8 +37,10 @@ public enum DataScopeEnum {
      * 根据数字编号获取
      */
     public static DataScopeEnum findByCode(int code) {
-        return Arrays.stream(DataScopeEnum.values()).filter(e -> e.getCode() == code).findFirst()
-                .orElseThrow(() -> new BizException("不支持的数据权限类型"));
+        return Arrays.stream(DataScopeEnum.values())
+            .filter(e -> e.getCode() == code)
+            .findFirst()
+            .orElseThrow(() -> new BizException("不支持的数据权限类型"));
     }
 
 }

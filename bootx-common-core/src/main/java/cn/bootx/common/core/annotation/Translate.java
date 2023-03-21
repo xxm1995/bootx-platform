@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 翻译注解
+ *
  * @author xxm
  * @date 2022/12/14
  */

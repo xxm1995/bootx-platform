@@ -38,7 +38,7 @@ public class DingRobotSendService {
      */
     public void sendNotice(String code, Msg body) {
         DingRobotConfig dingRobotConfig = dingRobotConfigManager.findByCode(code)
-                .orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
+            .orElseThrow(() -> new DataNotExistException("钉钉机器人配置不存在"));
         long timestamp = System.currentTimeMillis();
 
         Map<String, Object> map = new HashMap<>(3);
@@ -55,8 +55,10 @@ public class DingRobotSendService {
         }
 
         // 请求消息
-        String responseBody = HttpUtil.createPost(StrUtil.format(url, map)).body(JacksonUtil.toJson(body)).execute()
-                .body();
+        String responseBody = HttpUtil.createPost(StrUtil.format(url, map))
+            .body(JacksonUtil.toJson(body))
+            .execute()
+            .body();
         DingTalkResult<?> dingTalkResult = JacksonUtil.toBean(responseBody, DingTalkResult.class);
         if (!Objects.equals(SUCCESS_CODE, dingTalkResult.getCode())) {
             log.error("钉钉机器人发送消息失败: {}", dingTalkResult.getMsg());

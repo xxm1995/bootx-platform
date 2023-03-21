@@ -65,7 +65,7 @@ public class NcDemoController {
     @PostMapping("/sendDingImageMsg")
     public ResResult<Void> sendDingImageMsg(MultipartFile file) {
         DingCorpNoticeReceive receive = new DingCorpNoticeReceive()
-                .setUseridList(Collections.singletonList("manager7303"));
+            .setUseridList(Collections.singletonList("manager7303"));
         dingTalkNoticeSender.sendImageCorpNotice(file.getInputStream(), receive);
         return Res.ok();
     }
@@ -75,7 +75,7 @@ public class NcDemoController {
     @PostMapping("/sendDingFileMsg")
     public ResResult<Void> sendDingFileMsg(MultipartFile file) {
         DingCorpNoticeReceive receive = new DingCorpNoticeReceive()
-                .setUseridList(Collections.singletonList("manager7303"));
+            .setUseridList(Collections.singletonList("manager7303"));
         dingTalkNoticeSender.sendFileCorpNotice(file.getInputStream(), file.getOriginalFilename(), receive);
         return Res.ok();
     }

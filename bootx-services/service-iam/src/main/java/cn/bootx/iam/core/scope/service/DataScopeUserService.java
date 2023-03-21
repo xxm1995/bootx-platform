@@ -45,19 +45,23 @@ public class DataScopeUserService {
      * 关联用户列表
      */
     public List<DataScopeUserInfoDto> findUsersByDataScopeId(Long dataScopeId) {
-        Map<Long, DataScopeUser> dataScopeUserMap = dataScopeUserManager.findByDateScopeId(dataScopeId).stream()
-                .collect(Collectors.toMap(DataScopeUser::getUserId, Function.identity(),
-                        CollectorsFunction::retainLatest));
+        Map<Long, DataScopeUser> dataScopeUserMap = dataScopeUserManager.findByDateScopeId(dataScopeId)
+            .stream()
+            .collect(Collectors.toMap(DataScopeUser::getUserId, Function.identity(), CollectorsFunction::retainLatest));
         // 查询出用户id
-        List<Long> userIds = dataScopeUserMap.values().stream().map(DataScopeUser::getUserId)
-                .collect(Collectors.toList());
+        List<Long> userIds = dataScopeUserMap.values()
+            .stream()
+            .map(DataScopeUser::getUserId)
+            .collect(Collectors.toList());
         // 查询出用户
         List<UserInfo> userInfos = userInfoManager.findAllByIds(userIds);
 
         return userInfos.stream()
-                .map(userInfo -> new DataScopeUserInfoDto().setId(dataScopeUserMap.get(userInfo.getId()).getId())
-                        .setUserId(userInfo.getId()).setUsername(userInfo.getUsername()).setName(userInfo.getName()))
-                .collect(Collectors.toList());
+            .map(userInfo -> new DataScopeUserInfoDto().setId(dataScopeUserMap.get(userInfo.getId()).getId())
+                .setUserId(userInfo.getId())
+                .setUsername(userInfo.getUsername())
+                .setName(userInfo.getName()))
+            .collect(Collectors.toList());
     }
 
     /**
@@ -71,11 +75,15 @@ public class DataScopeUserService {
                 && Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())) {
             throw new BizException("非法操作");
         }
-        List<Long> dataScopeUserIds = dataScopeUserManager.findByDateScopeId(dataScopeId).stream()
-                .map(DataScopeUser::getUserId).collect(Collectors.toList());
+        List<Long> dataScopeUserIds = dataScopeUserManager.findByDateScopeId(dataScopeId)
+            .stream()
+            .map(DataScopeUser::getUserId)
+            .collect(Collectors.toList());
 
-        List<DataScopeUser> dataScopeUsers = userIds.stream().filter(userId -> !dataScopeUserIds.contains(userId))
-                .map(userId -> new DataScopeUser(dataScopeId, userId)).collect(Collectors.toList());
+        List<DataScopeUser> dataScopeUsers = userIds.stream()
+            .filter(userId -> !dataScopeUserIds.contains(userId))
+            .map(userId -> new DataScopeUser(dataScopeId, userId))
+            .collect(Collectors.toList());
         dataScopeUserManager.saveAll(dataScopeUsers);
     }
 

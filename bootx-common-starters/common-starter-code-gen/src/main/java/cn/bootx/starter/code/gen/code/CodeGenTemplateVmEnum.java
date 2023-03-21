@@ -9,6 +9,7 @@ import java.util.Objects;
 
 /**
  * 代码生成模板枚举
+ *
  * @author xxm
  * @date 2022/2/17
  */
@@ -41,8 +42,10 @@ public enum CodeGenTemplateVmEnum {
     private final String fileSuffixName;
 
     public static CodeGenTemplateVmEnum findByName(String name) {
-        return Arrays.stream(CodeGenTemplateVmEnum.values()).filter(e -> Objects.equals(name, e.getName())).findFirst()
-                .orElseThrow(() -> new BizException("不支持的模板类型"));
+        return Arrays.stream(CodeGenTemplateVmEnum.values())
+            .filter(e -> Objects.equals(name, e.getName()))
+            .findFirst()
+            .orElseThrow(() -> new BizException("不支持的模板类型"));
     }
 
 }

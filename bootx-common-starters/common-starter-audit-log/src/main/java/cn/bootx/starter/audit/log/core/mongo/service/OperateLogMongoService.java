@@ -58,11 +58,15 @@ public class OperateLogMongoService implements OperateLogService {
         Pageable pageable = PageRequest.of(pageParam.getCurrent() - 1, pageParam.getSize(), sort);
 
         Page<OperateLogMongo> page = repository.findAll(example, pageable);
-        List<OperateLogDto> records = page.getContent().stream().map(OperateLogMongo::toDto)
-                .collect(Collectors.toList());
+        List<OperateLogDto> records = page.getContent()
+            .stream()
+            .map(OperateLogMongo::toDto)
+            .collect(Collectors.toList());
 
-        return new PageResult<OperateLogDto>().setCurrent(pageParam.getCurrent()).setSize(pageParam.getSize())
-                .setRecords(records).setTotal(page.getTotalElements());
+        return new PageResult<OperateLogDto>().setCurrent(pageParam.getCurrent())
+            .setSize(pageParam.getSize())
+            .setRecords(records)
+            .setTotal(page.getTotalElements());
     }
 
     @Override

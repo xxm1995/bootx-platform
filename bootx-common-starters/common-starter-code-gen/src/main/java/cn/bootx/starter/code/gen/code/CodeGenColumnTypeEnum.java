@@ -9,6 +9,7 @@ import java.util.Objects;
 
 /**
  * 数据库字段类型与java类型映射
+ *
  * @author xxm
  * @date 2022/2/17
  */
@@ -37,16 +38,22 @@ public enum CodeGenColumnTypeEnum {
      * 数据库类型转换成java类型
      */
     public static String convertJavaType(String columnType) {
-        return Arrays.stream(CodeGenColumnTypeEnum.values()).filter(e -> Objects.equals(columnType, e.getColumnType()))
-                .findFirst().orElseThrow(() -> new BizException("不支持的数据库字段类型")).getJavaType();
+        return Arrays.stream(CodeGenColumnTypeEnum.values())
+            .filter(e -> Objects.equals(columnType, e.getColumnType()))
+            .findFirst()
+            .orElseThrow(() -> new BizException("不支持的数据库字段类型"))
+            .getJavaType();
     }
 
     /**
      * 数据库类型转换成TS类型
      */
     public static String convertTsType(String columnType) {
-        return Arrays.stream(CodeGenColumnTypeEnum.values()).filter(e -> Objects.equals(columnType, e.getColumnType()))
-                .findFirst().orElseThrow(() -> new BizException("不支持的数据库字段类型")).getTsType();
+        return Arrays.stream(CodeGenColumnTypeEnum.values())
+            .filter(e -> Objects.equals(columnType, e.getColumnType()))
+            .findFirst()
+            .orElseThrow(() -> new BizException("不支持的数据库字段类型"))
+            .getTsType();
     }
 
 }

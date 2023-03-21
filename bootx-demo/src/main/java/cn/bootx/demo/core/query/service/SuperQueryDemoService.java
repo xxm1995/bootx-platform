@@ -62,7 +62,7 @@ public class SuperQueryDemoService {
      */
     public void update(SuperQueryDemo param) {
         SuperQueryDemo SuperQueryDemo = superQueryDemoManager.findById(param.getId())
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         BeanUtil.copyProperties(param, SuperQueryDemo, CopyOptions.create().ignoreNullValue());
         superQueryDemoManager.updateById(SuperQueryDemo);
     }

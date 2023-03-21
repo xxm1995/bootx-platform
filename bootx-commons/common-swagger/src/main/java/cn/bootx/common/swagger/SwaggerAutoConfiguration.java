@@ -67,12 +67,12 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
             matchIfMissing = true)
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title(swaggerProperties.getTitle()).description(swaggerProperties.getDescription())
-                        .version(swaggerProperties.getVersion())
-                        .contact(new Contact().name(swaggerProperties.getAuthor()))
-                        .license(new License().name(swaggerProperties.getLicenseName())
-                                .url(swaggerProperties.getLicenseUrl())))
-                .externalDocs(new ExternalDocumentation().url(swaggerProperties.getTermsOfServiceUrl()));
+            .info(new Info().title(swaggerProperties.getTitle())
+                .description(swaggerProperties.getDescription())
+                .version(swaggerProperties.getVersion())
+                .contact(new Contact().name(swaggerProperties.getAuthor()))
+                .license(new License().name(swaggerProperties.getLicenseName()).url(swaggerProperties.getLicenseUrl())))
+            .externalDocs(new ExternalDocumentation().url(swaggerProperties.getTermsOfServiceUrl()));
     }
 
     /**
@@ -101,8 +101,8 @@ public class SwaggerAutoConfiguration implements BeanDefinitionRegistryPostProce
      */
     @Override
     public void setEnvironment(@NotNull Environment environment) {
-        BindResult<SwaggerProperties> bind = Binder.get(environment).bind(swaggerPropertiesPrefix,
-                SwaggerProperties.class);
+        BindResult<SwaggerProperties> bind = Binder.get(environment)
+            .bind(swaggerPropertiesPrefix, SwaggerProperties.class);
         this.swaggerProperties = bind.get();
     }
 

@@ -45,19 +45,22 @@ public class UserInfoService {
      */
     public LoginAfterUserInfo getLoginAfterUserInfo() {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
-        return new LoginAfterUserInfo().setAvatar(userExpandInfo.getAvatar()).setUserId(userInfo.getId())
-                .setUsername(userInfo.getUsername()).setName(userInfo.getName());
+            .orElseThrow(UserInfoNotExistsException::new);
+        return new LoginAfterUserInfo().setAvatar(userExpandInfo.getAvatar())
+            .setUserId(userInfo.getId())
+            .setUsername(userInfo.getUsername())
+            .setName(userInfo.getName());
     }
 
     /**
      * 获取用户安全信息
      */
     public UserInfoDto getUserSecurityInfo() {
-        return userInfoManager.findById(SecurityUtil.getUserId()).map(UserInfo::toDto)
-                .orElseThrow(UserInfoNotExistsException::new);
+        return userInfoManager.findById(SecurityUtil.getUserId())
+            .map(UserInfo::toDto)
+            .orElseThrow(UserInfoNotExistsException::new);
     }
 
     /**
@@ -65,11 +68,14 @@ public class UserInfoService {
      */
     public UserBaseInfoDto getUserBaseInfo() {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
-        return new UserBaseInfoDto().setId(userInfo.getId()).setSex(userExpandInfo.getSex()).setName(userInfo.getName())
-                .setBirthday(userExpandInfo.getBirthday()).setAvatar(userExpandInfo.getAvatar());
+            .orElseThrow(UserInfoNotExistsException::new);
+        return new UserBaseInfoDto().setId(userInfo.getId())
+            .setSex(userExpandInfo.getSex())
+            .setName(userInfo.getName())
+            .setBirthday(userExpandInfo.getBirthday())
+            .setAvatar(userExpandInfo.getAvatar());
     }
 
     /**
@@ -78,9 +84,9 @@ public class UserInfoService {
     @Transactional(rollbackFor = Exception.class)
     public void updateUserBaseInfo(UserBaseInfoParam param) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         param.setId(null);
         BeanUtil.copyProperties(param, userExpandInfo, CopyOptions.create().ignoreNullValue());
         BeanUtil.copyProperties(param, userInfo, CopyOptions.create().ignoreNullValue());
@@ -96,9 +102,9 @@ public class UserInfoService {
     @Transactional(rollbackFor = Exception.class)
     public void updatePassword(String password, String newPassword) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         // 新密码进行加密
         newPassword = passwordEncoder.encode(newPassword);
 
@@ -121,7 +127,7 @@ public class UserInfoService {
     @Transactional(rollbackFor = Exception.class)
     public void updatePhone(String phone, String oldCaptcha, String newCaptcha) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         // 判断旧手机的验证码是否正常
         if (!userAssistService.validatePhoneChangeCaptcha(userInfo.getPhone(), oldCaptcha)) {
             throw new BizException("短信验证码不正确");
@@ -146,7 +152,7 @@ public class UserInfoService {
     @Transactional(rollbackFor = Exception.class)
     public void updateEmail(String email, String oldCaptcha, String newCaptcha) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         // 判断旧手机的验证码是否正常
         if (!userAssistService.validatePhoneChangeCaptcha(userInfo.getPhone(), oldCaptcha)) {
             throw new BizException("短信验证码不正确");
@@ -175,7 +181,7 @@ public class UserInfoService {
         }
         UserInfo userInfo = userInfoManager.findByPhone(phone).orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         userInfo.setPassword(passwordEncoder.encode(password));
         userExpandInfo.setLastChangePasswordTime(LocalDateTime.now()).setInitialPassword(false);
         userInfoManager.updateById(userInfo);
@@ -192,7 +198,7 @@ public class UserInfoService {
         }
         UserInfo userInfo = userInfoManager.findByEmail(email).orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         userInfo.setPassword(passwordEncoder.encode(password));
         userExpandInfo.setLastChangePasswordTime(LocalDateTime.now()).setInitialPassword(false);
         userInfoManager.updateById(userInfo);
@@ -205,7 +211,7 @@ public class UserInfoService {
      */
     public void bindPhone(String phone, String captcha) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         // 判断新手机验证码是否正常
         if (!userAssistService.validatePhoneChangeCaptcha(phone, captcha)) {
             throw new BizException("短信验证码不正确");
@@ -224,7 +230,7 @@ public class UserInfoService {
      */
     public void bindEmail(String email, String captcha) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         // 判断新邮箱验证码是否正常
         if (!userAssistService.validateEmailChangeCaptcha(email, captcha)) {
             throw new BizException("短信验证码不正确");

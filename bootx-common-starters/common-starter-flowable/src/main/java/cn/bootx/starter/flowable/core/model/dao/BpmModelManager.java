@@ -29,9 +29,11 @@ public class BpmModelManager extends BaseManager<BpmModelMapper, BpmModel> {
      */
     public Page<BpmModel> page(PageParam pageParam, BpmModelParam param) {
         Page<BpmModel> mpPage = MpUtil.getMpPage(pageParam, BpmModel.class);
-        return this.lambdaQuery().select(this.getEntityClass(), MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getName()), BpmModel::getName, param.getName())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+        return this.lambdaQuery()
+            .select(this.getEntityClass(), MpUtil::excludeBigField)
+            .like(StrUtil.isNotBlank(param.getName()), BpmModel::getName, param.getName())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
     /**

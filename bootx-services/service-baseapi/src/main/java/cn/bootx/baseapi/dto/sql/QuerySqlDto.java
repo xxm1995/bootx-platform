@@ -11,7 +11,6 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
- *
  * @author xxm
  * @date 2023/3/13
  */
@@ -41,4 +40,5 @@ public class QuerySqlDto extends BaseDto {
 
     @Schema(description = "SQL查询结果字段")
     private List<SqlField> fields;
+
 }

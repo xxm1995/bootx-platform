@@ -59,8 +59,11 @@ public class TokenService {
         AuthLoginType authLoginType = this.getAuthLoginType(request);
         AuthClient authClient = this.getAuthApplication(request);
         try {
-            LoginAuthContext loginAuthContext = new LoginAuthContext().setRequest(request).setResponse(response)
-                    .setAuthProperties(authProperties).setAuthLoginType(authLoginType).setAuthClient(authClient);
+            LoginAuthContext loginAuthContext = new LoginAuthContext().setRequest(request)
+                .setResponse(response)
+                .setAuthProperties(authProperties)
+                .setAuthLoginType(authLoginType)
+                .setAuthClient(authClient);
             // 校验登录终端
             this.validateAuthClient(loginAuthContext);
             // 认证并获取结果
@@ -147,8 +150,11 @@ public class TokenService {
      */
     private @NotNull AuthInfoResult authentication(LoginAuthContext context) {
         String loginType = context.getAuthLoginType().getCode();
-        return abstractAuthentications.stream().filter(o -> o.adaptation(loginType)).findFirst()
-                .map(o -> o.authentication(context)).orElseThrow(() -> new LoginFailureException("未找到对应的登录认证器"));
+        return abstractAuthentications.stream()
+            .filter(o -> o.adaptation(loginType))
+            .findFirst()
+            .map(o -> o.authentication(context))
+            .orElseThrow(() -> new LoginFailureException("未找到对应的登录认证器"));
     }
 
     /**
@@ -158,7 +164,7 @@ public class TokenService {
         AuthLoginType authLoginType = context.getAuthLoginType();
         AuthClient authClient = context.getAuthClient();
         SaLoginModel saLoginModel = new SaLoginModel().setDevice(authClient.getCode())
-                .setTimeout(authLoginType.getTimeout() * 60);
+            .setTimeout(authLoginType.getTimeout() * 60);
 
         authInfoResult.setClient(authClient.getCode()).setLoginType(authLoginType.getCode());
         StpUtil.login(authInfoResult.getId(), saLoginModel);

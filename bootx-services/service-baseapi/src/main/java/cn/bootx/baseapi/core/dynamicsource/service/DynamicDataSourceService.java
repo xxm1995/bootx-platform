@@ -70,7 +70,7 @@ public class DynamicDataSourceService {
      */
     public void update(DynamicDataSourceParam param) {
         DynamicDataSource dynamicDataSource = dynamicDataSourceManager.findById(param.getId())
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         if (Objects.equals(dynamicDataSourceProperties.getPrimary(), param.getCode())) {
             throw new BizException("名称不可为 " + dynamicDataSourceProperties.getPrimary());
         }
@@ -92,8 +92,9 @@ public class DynamicDataSourceService {
      * 获取单条
      */
     public DynamicDataSourceDto findById(Long id) {
-        return dynamicDataSourceManager.findById(id).map(DynamicDataSource::toDto)
-                .orElseThrow(DataNotExistException::new);
+        return dynamicDataSourceManager.findById(id)
+            .map(DynamicDataSource::toDto)
+            .orElseThrow(DataNotExistException::new);
     }
 
     /**
@@ -180,7 +181,7 @@ public class DynamicDataSourceService {
      */
     public void addDynamicDataSourceByCode(String code) {
         DynamicDataSource dataSource = dynamicDataSourceManager.findByCode(code)
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         this.addDynamicDataSource(dataSource);
     }
 

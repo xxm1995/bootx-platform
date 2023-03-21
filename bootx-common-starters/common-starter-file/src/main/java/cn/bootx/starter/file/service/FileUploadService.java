@@ -58,8 +58,10 @@ public class FileUploadService {
     @Transactional(rollbackFor = Exception.class)
     public UpdateFileDto upload(MultipartFile file, String fileName) throws IOException {
         val uploadType = fileUploadProperties.getUploadType();
-        UploadService uploadService = uploadServices.stream().filter(s -> s.enable(uploadType)).findFirst()
-                .orElseThrow(() -> new BizException("未找到该类的上传处理器"));
+        UploadService uploadService = uploadServices.stream()
+            .filter(s -> s.enable(uploadType))
+            .findFirst()
+            .orElseThrow(() -> new BizException("未找到该类的上传处理器"));
         if (file.isEmpty()) {
             throw new BizException("文件不可为空");
         }
@@ -74,8 +76,9 @@ public class FileUploadService {
         if (StrUtil.isBlank(fileSuffix)) {
             fileSuffix = StrUtil.subAfter(fileName, ".", true);
         }
-        UploadFileContext context = new UploadFileContext().setFileId(IdUtil.getSnowflakeNextId()).setFileName(fileName)
-                .setFileSuffix(fileSuffix);
+        UploadFileContext context = new UploadFileContext().setFileId(IdUtil.getSnowflakeNextId())
+            .setFileName(fileName)
+            .setFileSuffix(fileSuffix);
 
         UpdateFileInfo uploadInfo = uploadService.upload(file, context);
         uploadInfo.setFileSuffix(fileSuffix).setFileType(fileType).setFileName(fileName);
@@ -89,8 +92,10 @@ public class FileUploadService {
      */
     public void preview(Long id, HttpServletResponse response) {
         val uploadType = fileUploadProperties.getUploadType();
-        UploadService uploadService = uploadServices.stream().filter(s -> s.enable(uploadType)).findFirst()
-                .orElseThrow(() -> new BizException("未找到该类的上传处理器"));
+        UploadService uploadService = uploadServices.stream()
+            .filter(s -> s.enable(uploadType))
+            .findFirst()
+            .orElseThrow(() -> new BizException("未找到该类的上传处理器"));
         UpdateFileInfo updateFileInfo = updateFileManager.findById(id).orElseThrow(() -> new BizException("文件不存在"));
         uploadService.preview(updateFileInfo, response);
     }
@@ -100,8 +105,10 @@ public class FileUploadService {
      */
     public ResponseEntity<byte[]> download(Long id) {
         val uploadType = fileUploadProperties.getUploadType();
-        UploadService uploadService = uploadServices.stream().filter(s -> s.enable(uploadType)).findFirst()
-                .orElseThrow(() -> new BizException("未找到该类文件的处理器"));
+        UploadService uploadService = uploadServices.stream()
+            .filter(s -> s.enable(uploadType))
+            .findFirst()
+            .orElseThrow(() -> new BizException("未找到该类文件的处理器"));
         UpdateFileInfo updateFileInfo = updateFileManager.findById(id).orElseThrow(() -> new BizException("文件不存在"));
         InputStream inputStream = uploadService.download(updateFileInfo);
         // 设置header信息
@@ -117,8 +124,10 @@ public class FileUploadService {
      */
     public byte[] getFileBytes(Long id) {
         val uploadType = fileUploadProperties.getUploadType();
-        UploadService uploadService = uploadServices.stream().filter(s -> s.enable(uploadType)).findFirst()
-                .orElseThrow(() -> new BizException("未找到该类文件的处理器"));
+        UploadService uploadService = uploadServices.stream()
+            .filter(s -> s.enable(uploadType))
+            .findFirst()
+            .orElseThrow(() -> new BizException("未找到该类文件的处理器"));
         UpdateFileInfo updateFileInfo = updateFileManager.findById(id).orElseThrow(() -> new BizException("文件不存在"));
         InputStream inputStream = uploadService.download(updateFileInfo);
         return IoUtil.readBytes(inputStream);

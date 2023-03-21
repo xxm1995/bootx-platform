@@ -68,8 +68,9 @@ public class PaymentRabbitMqConfiguration {
     /** 绑定支付超时通知 */
     @Bean
     public Binding bindPaymentExpiredTime() {
-        return BindingBuilder.bind(paymentExpiredTime()).to(paymentExchange())
-                .with(PaymentEventCode.PAYMENT_EXPIRED_TIME);
+        return BindingBuilder.bind(paymentExpiredTime())
+            .to(paymentExchange())
+            .with(PaymentEventCode.PAYMENT_EXPIRED_TIME);
     }
 
 }

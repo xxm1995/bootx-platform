@@ -29,8 +29,9 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
     public Page<Client> page(PageParam pageParam, ClientParam param) {
         Page<Client> mpPage = MpUtil.getMpPage(pageParam, Client.class);
         return lambdaQuery().like(StrUtil.isNotBlank(param.getCode()), Client::getCode, param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()), Client::getName, param.getName())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+            .like(StrUtil.isNotBlank(param.getName()), Client::getName, param.getName())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
     public Optional<Client> findByCode(String code) {

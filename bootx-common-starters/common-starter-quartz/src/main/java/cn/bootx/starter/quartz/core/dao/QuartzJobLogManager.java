@@ -28,9 +28,11 @@ public class QuartzJobLogManager extends BaseManager<QuartzJobLogMapper, QuartzJ
     public Page<QuartzJobLog> page(PageParam pageParam, QuartzJobLogQuery query) {
         Page<QuartzJobLog> mpPage = MpUtil.getMpPage(pageParam, QuartzJobLog.class);
 
-        return this.lambdaQuery().eq(QuartzJobLog::getClassName, query.getClassName())
-                .eq(Objects.nonNull(query.getSuccess()), QuartzJobLog::getSuccess, query.getSuccess())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+        return this.lambdaQuery()
+            .eq(QuartzJobLog::getClassName, query.getClassName())
+            .eq(Objects.nonNull(query.getSuccess()), QuartzJobLog::getSuccess, query.getSuccess())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
 }

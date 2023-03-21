@@ -27,8 +27,9 @@ public class SequenceUtil {
         if (Objects.isNull(rangeManager)) {
             throw new FatalException("序列号生成器创建失败，缺少区间管理器");
         }
-        SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(step).setRangeStart(rangeStep)
-                .setRangeStep(rangeStart);
+        SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(step)
+            .setRangeStart(rangeStep)
+            .setRangeStep(rangeStart);
         return new DefaultRangeSequence(rangeManager, seqRangeConfig);
     }
 

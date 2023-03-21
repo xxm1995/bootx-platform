@@ -62,8 +62,10 @@ public class UserRoleService {
             throw new BizException("用户数据有问题");
         }
         userRoleManager.deleteByUsers(userIds);
-        List<UserRole> userRoles = userIds.stream().map(userId -> this.createUserRoles(userId, roleIds))
-                .flatMap(Collection::stream).collect(Collectors.toList());
+        List<UserRole> userRoles = userIds.stream()
+            .map(userId -> this.createUserRoles(userId, roleIds))
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
         userRoleManager.saveAll(userRoles);
     }
 
@@ -71,8 +73,11 @@ public class UserRoleService {
      * 根据id查询角色id
      */
     public List<Long> findRoleIdsByUser(Long userId) {
-        return userRoleManager.findAllByUser(userId).stream().map(UserRole::getRoleId).distinct()
-                .collect(Collectors.toList());
+        return userRoleManager.findAllByUser(userId)
+            .stream()
+            .map(UserRole::getRoleId)
+            .distinct()
+            .collect(Collectors.toList());
     }
 
     /**
@@ -86,8 +91,9 @@ public class UserRoleService {
      * 创建用户角色关联
      */
     private List<UserRole> createUserRoles(Long userId, List<Long> roleIds) {
-        return roleIds.stream().map(roleId -> new UserRole().setRoleId(roleId).setUserId(userId))
-                .collect(Collectors.toList());
+        return roleIds.stream()
+            .map(roleId -> new UserRole().setRoleId(roleId).setUserId(userId))
+            .collect(Collectors.toList());
     }
 
 }

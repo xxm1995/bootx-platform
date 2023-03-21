@@ -38,11 +38,10 @@ public class DingRobotConfigManager extends BaseManager<DingRobotConfigMapper, D
     public Page<DingRobotConfig> page(PageParam pageParam, DingRobotConfigParam param) {
         Page<DingRobotConfig> mpPage = MpUtil.getMpPage(pageParam, DingRobotConfig.class);
         return lambdaQuery().orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getCode()), DingRobotConfig::getCode, param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()), DingRobotConfig::getName, param.getName())
-                .like(StrUtil.isNotBlank(param.getAccessToken()), DingRobotConfig::getAccessToken,
-                        param.getAccessToken())
-                .page(mpPage);
+            .like(StrUtil.isNotBlank(param.getCode()), DingRobotConfig::getCode, param.getCode())
+            .like(StrUtil.isNotBlank(param.getName()), DingRobotConfig::getName, param.getName())
+            .like(StrUtil.isNotBlank(param.getAccessToken()), DingRobotConfig::getAccessToken, param.getAccessToken())
+            .page(mpPage);
     }
 
 }

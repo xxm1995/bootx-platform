@@ -37,13 +37,18 @@ public class VoucherPaymentService {
      * 添加支付记录
      */
     public void savePayment(Payment payment, PayParam payParam, PayModeParam payMode, List<Voucher> vouchers) {
-        String voucherIds = vouchers.stream().map(MpIdEntity::getId).map(String::valueOf)
-                .collect(Collectors.joining(","));
+        String voucherIds = vouchers.stream()
+            .map(MpIdEntity::getId)
+            .map(String::valueOf)
+            .collect(Collectors.joining(","));
 
         VoucherPayment walletPayment = new VoucherPayment().setVoucherIds(voucherIds);
-        walletPayment.setPaymentId(payment.getId()).setUserId(payment.getUserId())
-                .setBusinessId(payParam.getBusinessId()).setAmount(payMode.getAmount())
-                .setRefundableBalance(payMode.getAmount()).setPayStatus(payment.getPayStatus());
+        walletPayment.setPaymentId(payment.getId())
+            .setUserId(payment.getUserId())
+            .setBusinessId(payParam.getBusinessId())
+            .setAmount(payMode.getAmount())
+            .setRefundableBalance(payMode.getAmount())
+            .setPayStatus(payment.getPayStatus());
         voucherPaymentManager.save(walletPayment);
     }
 
@@ -64,7 +69,7 @@ public class VoucherPaymentService {
      */
     public void updateClose(Long paymentId) {
         VoucherPayment payment = voucherPaymentManager.findByPaymentId(paymentId)
-                .orElseThrow(() -> new BizException("未查询到查询交易记录"));
+            .orElseThrow(() -> new BizException("未查询到查询交易记录"));
         payment.setPayStatus(PayStatusCode.TRADE_CANCEL);
         voucherPaymentManager.updateById(payment);
     }

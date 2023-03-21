@@ -84,13 +84,15 @@ public class OperateLogAspectHandler {
 
         for (OperateLog log : logs) {
             OperateLogParam operateLog = new OperateLogParam().setTitle(log.title())
-                    .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
-                    .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
-                    .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
-                    .setOperateUrl(HeaderHolder.getHeader(ServletCode.REQUEST_URI))
-                    .setMethod(className + "#" + methodName)
-                    .setRequestMethod(HeaderHolder.getHeader(ServletCode.METHOD)).setSuccess(true).setOperateIp(ip)
-                    .setOperateTime(LocalDateTime.now());
+                .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
+                .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
+                .setOperateUrl(HeaderHolder.getHeader(ServletCode.REQUEST_URI))
+                .setMethod(className + "#" + methodName)
+                .setRequestMethod(HeaderHolder.getHeader(ServletCode.METHOD))
+                .setSuccess(true)
+                .setOperateIp(ip)
+                .setOperateTime(LocalDateTime.now());
 
             // 异常流
             if (Objects.nonNull(e)) {
@@ -117,7 +119,9 @@ public class OperateLogAspectHandler {
      */
     private List<OperateLog> getMethodAnnotation(JoinPoint joinPoint) {
         List<OperateLog> operateLogs = Optional.ofNullable(AopUtil.getMethodAnnotation(joinPoint, OperateLogs.class))
-                .map(OperateLogs::value).map(ListUtil::of).orElse(null);
+            .map(OperateLogs::value)
+            .map(ListUtil::of)
+            .orElse(null);
         if (CollUtil.isEmpty(operateLogs)) {
             operateLogs = ListUtil.of(AopUtil.getMethodAnnotation(joinPoint, OperateLog.class));
         }

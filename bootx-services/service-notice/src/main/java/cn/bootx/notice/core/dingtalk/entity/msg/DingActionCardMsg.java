@@ -59,12 +59,15 @@ public class DingActionCardMsg implements DingMsg {
      * 转换成钉钉消息
      */
     public Msg toDingMsg() {
-        ActionCard actionCard = new ActionCard().setTitle(title).setMarkdown(markdown).setSingleTitle(singleTitle)
-                .setSingleUrl(singleUrl).setBtnOrientation(btnOrientation);
+        ActionCard actionCard = new ActionCard().setTitle(title)
+            .setMarkdown(markdown)
+            .setSingleTitle(singleTitle)
+            .setSingleUrl(singleUrl)
+            .setBtnOrientation(btnOrientation);
         if (CollUtil.isNotEmpty(orientationBtnList)) {
             List<ActionCard.BtnJson> btnJsons = orientationBtnList.stream()
-                    .map(o -> new ActionCard.BtnJson().setTitle(o.title).setActionUrl(o.actionUrl))
-                    .collect(Collectors.toList());
+                .map(o -> new ActionCard.BtnJson().setTitle(o.title).setActionUrl(o.actionUrl))
+                .collect(Collectors.toList());
             actionCard.setBtnJsonList(btnJsons);
         }
 

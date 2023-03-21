@@ -51,7 +51,7 @@ public class BpmTaskOperateService {
     public void approve(TaskApproveParam param) {
         // 查询到任务和扩展属性
         Task task = Optional.ofNullable(taskService.createTaskQuery().taskId(param.getTaskId()).singleResult())
-                .orElseThrow(TaskNotExistException::new);
+            .orElseThrow(TaskNotExistException::new);
         // 实际处理人与设置处理人不一致进行更改
         String userId = String.valueOf(SecurityUtil.getUserId());
         if (!Objects.equals(task.getAssignee(), String.valueOf(userId))) {
@@ -90,8 +90,11 @@ public class BpmTaskOperateService {
     @Transactional(rollbackFor = Exception.class)
     public void pass(TaskApproveParam param, Task task) {
         BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setTaskReason(param.getReason()).setTaskState(TaskCode.STATE_PASS).setTaskResult(RESULT_PASS)
-                .setNextAssign(param.getNextAssign()).setFormVariables(param.getFormVariables());
+        bpmContext.setTaskReason(param.getReason())
+            .setTaskState(TaskCode.STATE_PASS)
+            .setTaskResult(RESULT_PASS)
+            .setNextAssign(param.getNextAssign())
+            .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
 
         if (Objects.nonNull(param.getNextNodeId())) {
@@ -110,9 +113,11 @@ public class BpmTaskOperateService {
     @Transactional(rollbackFor = Exception.class)
     public void abstain(TaskApproveParam param, Task task) {
         BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setTaskReason(param.getReason()).setTaskState(TaskCode.STATE_PASS)
-                .setTaskResult(TaskCode.RESULT_ABSTAIN).setNextAssign(param.getNextAssign())
-                .setFormVariables(param.getFormVariables());
+        bpmContext.setTaskReason(param.getReason())
+            .setTaskState(TaskCode.STATE_PASS)
+            .setTaskResult(TaskCode.RESULT_ABSTAIN)
+            .setNextAssign(param.getNextAssign())
+            .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         if (Objects.nonNull(param.getNextNodeId())) {
             Map<String, Object> map = new HashMap<>();
@@ -130,9 +135,11 @@ public class BpmTaskOperateService {
     @Transactional(rollbackFor = Exception.class)
     public void notPass(TaskApproveParam param, Task task) {
         BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setTaskReason(param.getReason()).setTaskState(TaskCode.STATE_PASS)
-                .setTaskResult(TaskCode.RESULT_NOT_PASS).setNextAssign(param.getNextAssign())
-                .setFormVariables(param.getFormVariables());
+        bpmContext.setTaskReason(param.getReason())
+            .setTaskState(TaskCode.STATE_PASS)
+            .setTaskResult(TaskCode.RESULT_NOT_PASS)
+            .setNextAssign(param.getNextAssign())
+            .setFormVariables(param.getFormVariables());
         BpmContextLocal.put(bpmContext);
         if (Objects.nonNull(param.getNextNodeId())) {
             Map<String, Object> map = new HashMap<>();
@@ -182,16 +189,18 @@ public class BpmTaskOperateService {
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(),
                 task.getTaskDefinitionKey());
         // 当前任务状态为驳回, 其他的为取消
-        Optional<BpmTask> first = tasks.stream().filter(bpmTask -> Objects.equals(bpmTask.getTaskId(), task.getId()))
-                .findFirst();
+        Optional<BpmTask> first = tasks.stream()
+            .filter(bpmTask -> Objects.equals(bpmTask.getTaskId(), task.getId()))
+            .findFirst();
         first.ifPresent(bpmTask -> {
             bpmTask.setReason(reason).setState(result).setResult(result).setEndTime(LocalDateTime.now());
             bpmTaskManager.updateById(bpmTask);
         });
         // 其他的设置为取消
-        List<BpmTask> bpmTasks = tasks.stream().filter(bpmTask -> !Objects.equals(bpmTask.getTaskId(), task.getId()))
-                .peek(bpmTask -> bpmTask.setState(result).setResult(RESULT_CANCEL).setEndTime(LocalDateTime.now()))
-                .collect(Collectors.toList());
+        List<BpmTask> bpmTasks = tasks.stream()
+            .filter(bpmTask -> !Objects.equals(bpmTask.getTaskId(), task.getId()))
+            .peek(bpmTask -> bpmTask.setState(result).setResult(RESULT_CANCEL).setEndTime(LocalDateTime.now()))
+            .collect(Collectors.toList());
         bpmTaskManager.updateAllById(bpmTasks);
         bpmEventService.taskCancel(tasks);
     }

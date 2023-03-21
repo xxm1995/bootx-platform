@@ -35,8 +35,9 @@ public class TaskRetrieveCmd implements Command<Void> {
         TaskEntity taskEntity = taskService.getTask(taskId);
 
         List<ActivityInstance> activityInstancesByQueryCriteria = CommandContextUtil.getActivityInstanceEntityManager()
-                .findActivityInstancesByQueryCriteria(new ActivityInstanceQueryImpl()
-                        .processInstanceId(taskEntity.getProcessInstanceId()).orderByActivityInstanceStartTime());
+            .findActivityInstancesByQueryCriteria(
+                    new ActivityInstanceQueryImpl().processInstanceId(taskEntity.getProcessInstanceId())
+                        .orderByActivityInstanceStartTime());
 
         List<ActivityInstance> reverse = Lists.reverse(activityInstancesByQueryCriteria);
 

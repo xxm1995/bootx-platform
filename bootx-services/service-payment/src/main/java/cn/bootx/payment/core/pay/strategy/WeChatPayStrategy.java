@@ -167,7 +167,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     public void doRefundHandler() {
         this.initWeChatPayConfig();
         WeChatPayment weChatPayment = weChatPaymentManager.findByPaymentId(this.getPayment().getId())
-                .orElseThrow(() -> new PayFailureException("微信支付记录不存在"));
+            .orElseThrow(() -> new PayFailureException("微信支付记录不存在"));
         weChatPayCancelService.refund(this.getPayment(), weChatPayment, this.getPayMode().getAmount(),
                 this.weChatPayConfig);
         weChatPaymentService.updatePayRefund(weChatPayment, this.getPayMode().getAmount());
@@ -190,7 +190,7 @@ public class WeChatPayStrategy extends AbsPayStrategy {
     private void initWeChatPayConfig() {
         // 检查并获取微信支付配置
         this.weChatPayConfig = Optional.ofNullable(this.weChatPayConfig)
-                .orElse(weChatPayConfigManager.findActivity().orElseThrow(() -> new PayFailureException("支付配置不存在")));
+            .orElse(weChatPayConfigManager.findActivity().orElseThrow(() -> new PayFailureException("支付配置不存在")));
     }
 
 }

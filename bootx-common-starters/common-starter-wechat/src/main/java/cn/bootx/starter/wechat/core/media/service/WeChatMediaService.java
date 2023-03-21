@@ -47,8 +47,10 @@ public class WeChatMediaService {
         // val result = new WxMpMaterialFileBatchGetResult();
         val items = result.getItems().stream().map(WeChatMediaDto::init).collect(Collectors.toList());
         PageResult<WeChatMediaDto> pageResult = new PageResult<>();
-        pageResult.setCurrent(pageParam.getCurrent()).setRecords(items).setSize(pageParam.getSize())
-                .setTotal(result.getTotalCount());
+        pageResult.setCurrent(pageParam.getCurrent())
+            .setRecords(items)
+            .setSize(pageParam.getSize())
+            .setTotal(result.getTotalCount());
         return pageResult;
     }
 
@@ -61,8 +63,10 @@ public class WeChatMediaService {
         val result = materialService.materialNewsBatchGet(pageParam.start(), pageParam.getSize());
         val items = result.getItems();
         PageResult<WxMaterialNewsBatchGetNewsItem> pageResult = new PageResult<>();
-        pageResult.setCurrent(pageParam.getCurrent()).setRecords(items).setSize(pageParam.getSize())
-                .setTotal(result.getTotalCount());
+        pageResult.setCurrent(pageParam.getCurrent())
+            .setRecords(items)
+            .setSize(pageParam.getSize())
+            .setTotal(result.getTotalCount());
         return pageResult;
     }
 

@@ -1,6 +1,7 @@
 package cn.bootx.starter.wechat.handler;
 
 import cn.bootx.starter.wechat.core.login.service.WeChatQrLoginService;
+import cn.bootx.starter.wechat.handler.qrscene.WeChatQrSceneMsgHandler;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +13,9 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
 import me.chanjar.weixin.mp.builder.outxml.TextBuilder;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
-
-import static cn.bootx.starter.wechat.code.WeChatCode.EVENT_KEY_QRSCENE;
+import java.util.Objects;
 
 /**
  * 新增关注订阅消息
@@ -27,7 +28,7 @@ import static cn.bootx.starter.wechat.code.WeChatCode.EVENT_KEY_QRSCENE;
 @RequiredArgsConstructor
 public class WeChatSubscribeHandler implements WeChatMpMessageHandler {
 
-    private final WeChatQrLoginService weChatQrLoginService;
+    private final List<WeChatQrSceneMsgHandler> weChatQrSceneMsgHandlers;
 
     @Override
     public String getEvent() {
@@ -38,16 +39,22 @@ public class WeChatSubscribeHandler implements WeChatMpMessageHandler {
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
             WxSessionManager sessionManager) {
         String openId = wxMessage.getFromUser();
+        // 处理关注事件
         log.info("新关注用户 OPENID: " + openId);
-        // 判断是否携带扫码登录参数,
-        if (StrUtil.startWith(wxMessage.getEventKey(), EVENT_KEY_QRSCENE)) {
-            // 将扫码获取的二维码key值进行保存
-            String qrCodeKey = StrUtil.subAfter(wxMessage.getEventKey(), EVENT_KEY_QRSCENE, true);
-            weChatQrLoginService.setOpenId(qrCodeKey, openId);
-        }
 
-        return new TextBuilder().fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser()).content("感谢关注")
-                .build();
+        // 判断是否携带扫码参数
+        for (WeChatQrSceneMsgHandler msgHandler : weChatQrSceneMsgHandlers) {
+            if (StrUtil.startWith(wxMessage.getEventKey(), msgHandler.getPrefix())) {
+                WxMpXmlOutMessage message = msgHandler.handler(wxMessage, context, wxMpService, sessionManager);
+                if (Objects.nonNull(message)) {
+                    return message;
+                }
+            }
+        }
+        return new TextBuilder().fromUser(wxMessage.getToUser())
+            .toUser(wxMessage.getFromUser())
+            .content("感谢关注")
+            .build();
     }
 
 }

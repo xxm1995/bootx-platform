@@ -122,19 +122,24 @@ public class PermMenuService {
      */
     public List<PermMenuDto> findResourceByMenuId(Long menuId) {
         UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
-        List<PermMenu> resources = permMenuManager.findAllByParentId(menuId).stream()
-                .filter(permMenu -> Objects.equals(permMenu.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
-                .collect(Collectors.toList());
+        List<PermMenu> resources = permMenuManager.findAllByParentId(menuId)
+            .stream()
+            .filter(permMenu -> Objects.equals(permMenu.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
+            .collect(Collectors.toList());
         // 管理员返回全部
         if (userDetail.isAdmin()) {
             return resources.stream().map(PermMenu::toDto).collect(Collectors.toList());
         }
         // 普通用户只能看到自己有权限的
         List<Long> roleIds = userRoleService.findRoleIdsByUser(userDetail.getId());
-        List<Long> roleMenuIds = roleMenuManager.findAllByRoles(roleIds).stream().map(RoleMenu::getPermissionId)
-                .collect(Collectors.toList());
-        return resources.stream().filter(permMenu -> roleMenuIds.contains(permMenu.getId())).map(PermMenu::toDto)
-                .collect(Collectors.toList());
+        List<Long> roleMenuIds = roleMenuManager.findAllByRoles(roleIds)
+            .stream()
+            .map(RoleMenu::getPermissionId)
+            .collect(Collectors.toList());
+        return resources.stream()
+            .filter(permMenu -> roleMenuIds.contains(permMenu.getId()))
+            .map(PermMenu::toDto)
+            .collect(Collectors.toList());
     }
 
     /**

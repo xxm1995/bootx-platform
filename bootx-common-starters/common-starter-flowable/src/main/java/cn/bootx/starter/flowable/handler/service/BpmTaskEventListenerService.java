@@ -59,10 +59,10 @@ public class BpmTaskEventListenerService {
     public void taskCreated(TaskEntity task) {
         BpmContext bpmContext = BpmContextLocal.get();
         BpmInstance bpmInstance = bpmInstanceManager.findByInstanceId(task.getProcessInstanceId())
-                .orElse(new BpmInstance());
+            .orElse(new BpmInstance());
         BpmModelNode modelTask = bpmModelNodeManager
-                .findByDefIdAndNodeId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
-                .orElseThrow(ModelNodeNotExistException::new);
+            .findByDefIdAndNodeId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
+            .orElseThrow(ModelNodeNotExistException::new);
 
         BpmTask bpmTask = this.convert(task, bpmInstance);
 
@@ -80,7 +80,7 @@ public class BpmTaskEventListenerService {
         // 是否分配了用户
         if (StrUtil.isNotBlank(task.getAssignee())) {
             UserDetail userDetail = userDetailService.findByUserId(Long.valueOf(task.getAssignee()))
-                    .orElse(new UserDetail());
+                .orElse(new UserDetail());
             bpmTask.setUserId(userDetail.getId()).setUserName(userDetail.getName());
         }
 
@@ -105,9 +105,11 @@ public class BpmTaskEventListenerService {
                 task.getId());
         BpmContext bpmContext = BpmContextLocal.get();
         bpmTaskOpt.ifPresent(bpmTask -> {
-            bpmTask.setEndTime(LocalDateTime.now()).setState(bpmContext.getTaskState())
-                    .setResult(bpmContext.getTaskResult()).setReason(bpmContext.getTaskReason())
-                    .setFormVariables(bpmContext.getFormVariables());
+            bpmTask.setEndTime(LocalDateTime.now())
+                .setState(bpmContext.getTaskState())
+                .setResult(bpmContext.getTaskResult())
+                .setReason(bpmContext.getTaskReason())
+                .setFormVariables(bpmContext.getFormVariables());
             bpmTaskManager.updateById(bpmTask);
             eventService.taskCompleted(Collections.singletonList(bpmTask), false);
         });
@@ -137,12 +139,18 @@ public class BpmTaskEventListenerService {
      * 转换
      */
     private BpmTask convert(TaskEntity task, BpmInstance bpmInstance) {
-        return new BpmTask().setTaskId(task.getId()).setNodeId(task.getTaskDefinitionKey()).setNodeName(task.getName())
-                .setState(STATE_PROCESS).setFormVariables(task.getCaseVariables()).setExecutionId(task.getExecutionId())
-                .setInstanceId(task.getProcessInstanceId()).setInstanceName(bpmInstance.getInstanceName())
-                .setDefName(bpmInstance.getDefName()).setStartUserId(bpmInstance.getStartUserId())
-                .setStartUserName(bpmInstance.getStartUserName())
-                .setStartTime(LocalDateTimeUtil.of(task.getCreateTime()));
+        return new BpmTask().setTaskId(task.getId())
+            .setNodeId(task.getTaskDefinitionKey())
+            .setNodeName(task.getName())
+            .setState(STATE_PROCESS)
+            .setFormVariables(task.getCaseVariables())
+            .setExecutionId(task.getExecutionId())
+            .setInstanceId(task.getProcessInstanceId())
+            .setInstanceName(bpmInstance.getInstanceName())
+            .setDefName(bpmInstance.getDefName())
+            .setStartUserId(bpmInstance.getStartUserId())
+            .setStartUserName(bpmInstance.getStartUserName())
+            .setStartTime(LocalDateTimeUtil.of(task.getCreateTime()));
     }
 
     /**
@@ -159,9 +167,10 @@ public class BpmTaskEventListenerService {
 
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(event.getProcessInstanceId(),
                 event.getActivityId());
-        List<BpmTask> updateTasks = tasks.stream().filter(o -> Objects.equals(o.getState(), STATE_PROCESS))
-                .peek(bpmTask -> bpmTask.setResult(RESULT_AUTO_FINISH).setState(STATE_PASS))
-                .collect(Collectors.toList());
+        List<BpmTask> updateTasks = tasks.stream()
+            .filter(o -> Objects.equals(o.getState(), STATE_PROCESS))
+            .peek(bpmTask -> bpmTask.setResult(RESULT_AUTO_FINISH).setState(STATE_PASS))
+            .collect(Collectors.toList());
         bpmTaskManager.updateAllById(updateTasks);
         eventService.taskCompleted(updateTasks, true);
     }

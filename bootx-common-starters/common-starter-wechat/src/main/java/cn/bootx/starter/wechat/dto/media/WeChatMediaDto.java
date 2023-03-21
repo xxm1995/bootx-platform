@@ -30,8 +30,10 @@ public class WeChatMediaDto {
     private LocalDateTime updateTime;
 
     public static WeChatMediaDto init(WxMaterialFileBatchGetNewsItem item) {
-        return new WeChatMediaDto().setMediaId(item.getMediaId()).setName(item.getName()).setUrl(item.getUrl())
-                .setUpdateTime(LocalDateTimeUtil.of(item.getUpdateTime()));
+        return new WeChatMediaDto().setMediaId(item.getMediaId())
+            .setName(item.getName())
+            .setUrl(item.getUrl())
+            .setUpdateTime(LocalDateTimeUtil.of(item.getUpdateTime()));
     }
 
 }

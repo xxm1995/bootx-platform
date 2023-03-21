@@ -20,7 +20,7 @@ public class PayEventBuilder {
      */
     public PayCompleteEvent buildPayComplete(Payment payment) {
         PayCompleteEvent event = new PayCompleteEvent().setPaymentId(payment.getId())
-                .setBusinessId(payment.getBusinessId());
+            .setBusinessId(payment.getBusinessId());
         return event;
     }
 
@@ -29,7 +29,7 @@ public class PayEventBuilder {
      */
     public PayCancelEvent buildPayCancel(Payment payment) {
         PayCancelEvent event = new PayCancelEvent().setPaymentId(payment.getId())
-                .setBusinessId(payment.getBusinessId());
+            .setBusinessId(payment.getBusinessId());
         return event;
     }
 
@@ -38,7 +38,7 @@ public class PayEventBuilder {
      */
     public PayRefundEvent buildPayRefund(Payment payment) {
         PayRefundEvent event = new PayRefundEvent().setPaymentId(payment.getId())
-                .setBusinessId(payment.getBusinessId());
+            .setBusinessId(payment.getBusinessId());
         return event;
     }
 

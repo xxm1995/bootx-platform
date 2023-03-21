@@ -35,11 +35,15 @@ public class LoginSuccessHandlerImpl implements LoginSuccessHandler {
             AuthInfoResult authInfoResult) {
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader(WebHeaderCode.USER_AGENT));
         String ip = ServletUtil.getClientIP(request);
-        LoginLogParam loginLog = new LoginLogParam().setLogin(true).setUserId(authInfoResult.getUserDetail().getId())
-                .setClient(authInfoResult.getClient()).setLoginType(authInfoResult.getLoginType())
-                .setAccount(authInfoResult.getUserDetail().getUsername()).setIp(ip).setOs(userAgent.getOs().getName())
-                .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
-                .setLoginTime(LocalDateTime.now());
+        LoginLogParam loginLog = new LoginLogParam().setLogin(true)
+            .setUserId(authInfoResult.getUserDetail().getId())
+            .setClient(authInfoResult.getClient())
+            .setLoginType(authInfoResult.getLoginType())
+            .setAccount(authInfoResult.getUserDetail().getUsername())
+            .setIp(ip)
+            .setOs(userAgent.getOs().getName())
+            .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
+            .setLoginTime(LocalDateTime.now());
         loginLogService.add(loginLog);
         userExpandInfoService.updateLoginTime(loginLog.getUserId());
     }

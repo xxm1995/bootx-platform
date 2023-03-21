@@ -58,7 +58,7 @@ public class PhoneLoginHandler implements AbstractAuthentication {
         }
         // 获取用户信息
         UserInfo userInfo = userInfoManager.findByPhone(phone)
-                .orElseThrow(() -> new LoginFailureException(phone, "手机号不存在"));
+            .orElseThrow(() -> new LoginFailureException(phone, "手机号不存在"));
 
         captchaService.deleteSmsCaptcha(phone, smsCaptchaType);
         return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());

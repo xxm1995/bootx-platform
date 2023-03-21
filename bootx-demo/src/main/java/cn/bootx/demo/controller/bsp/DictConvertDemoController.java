@@ -38,8 +38,11 @@ public class DictConvertDemoController {
     @TranslationResult
     public ResResult<DictDemo> convert() throws NoSuchMethodException {
 
-        DictDemo dictDemo = new DictDemo().setSex("1").setSexInt(1).setSocialType("DingTalk")
-                .setSocialTypes(Arrays.asList("123", "DingTalk")).setPerson(new Person().setSexCode(1));
+        DictDemo dictDemo = new DictDemo().setSex("1")
+            .setSexInt(1)
+            .setSocialType("DingTalk")
+            .setSocialTypes(Arrays.asList("123", "DingTalk"))
+            .setPerson(new Person().setSexCode(1));
 
         return Res.ok(dictDemo);
     }
@@ -48,9 +51,10 @@ public class DictConvertDemoController {
     @GetMapping("/c1")
     @TranslationResult(convertType = TranslationResult.ConvertType.MAP)
     public ResResult<DictDemo> c1() {
-        DictDemo dictDemo = new DictDemo().setSex("1").setSocialType("DingTalk")
-                .setSocialTypes(Arrays.asList("123", "DingTalk"))
-                .setPerson(new Person().setSexCode(1).setDataScopePerm(1));
+        DictDemo dictDemo = new DictDemo().setSex("1")
+            .setSocialType("DingTalk")
+            .setSocialTypes(Arrays.asList("123", "DingTalk"))
+            .setPerson(new Person().setSexCode(1).setDataScopePerm(1));
 
         return Res.ok(dictDemo);
     }

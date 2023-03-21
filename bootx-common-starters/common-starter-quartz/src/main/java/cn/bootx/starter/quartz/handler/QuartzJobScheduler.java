@@ -46,8 +46,10 @@ public class QuartzJobScheduler {
             // 启动调度器
             scheduler.start();
             // 构建job信息
-            JobDetail jobDetail = JobBuilder.newJob(getJobClass(jobClassName)).withIdentity(idStr)
-                    .usingJobData(PARAMETER, parameter).build();
+            JobDetail jobDetail = JobBuilder.newJob(getJobClass(jobClassName))
+                .withIdentity(idStr)
+                .usingJobData(PARAMETER, parameter)
+                .build();
 
             // 表达式调度构建器(即任务执行的时间)
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cron);
@@ -89,11 +91,15 @@ public class QuartzJobScheduler {
             String identity = jobClassName + RandomUtil.randomString(8);
 
             // 定义一个Trigger
-            SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger().withIdentity(identity, JOB_TEST_GROUP)
-                    .startNow().build();
+            SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
+                .withIdentity(identity, JOB_TEST_GROUP)
+                .startNow()
+                .build();
             // 构建job信息
-            JobDetail jobDetail = JobBuilder.newJob(getJobClass(jobClassName)).withIdentity(identity)
-                    .usingJobData(PARAMETER, parameter).build();
+            JobDetail jobDetail = JobBuilder.newJob(getJobClass(jobClassName))
+                .withIdentity(identity)
+                .usingJobData(PARAMETER, parameter)
+                .build();
             // 将trigger和 jobDetail 加入这个调度
             scheduler.scheduleJob(jobDetail, trigger);
             // 启动scheduler
@@ -112,8 +118,10 @@ public class QuartzJobScheduler {
         try {
             GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
             Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
-            return jobKeys.stream().map(this::getTriggersOfJob).flatMap(Collection::stream)
-                    .collect(Collectors.toList());
+            return jobKeys.stream()
+                .map(this::getTriggersOfJob)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
 
         }
         catch (SchedulerException e) {

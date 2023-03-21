@@ -21,8 +21,10 @@ public class WsUserAuthServiceImpl implements WsUserAuthService {
 
     @Override
     public Long getUserIdByToken(String token) {
-        return Optional.ofNullable(StpUtil.getLoginIdByToken(token)).map(id -> (String) id).map(Long::valueOf)
-                .orElse(null);
+        return Optional.ofNullable(StpUtil.getLoginIdByToken(token))
+            .map(id -> (String) id)
+            .map(Long::valueOf)
+            .orElse(null);
     }
 
 }

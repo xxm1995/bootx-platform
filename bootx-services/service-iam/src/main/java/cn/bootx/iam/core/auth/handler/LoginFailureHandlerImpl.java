@@ -35,10 +35,15 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
         String ip = ServletUtil.getClientIP(request);
         String loginType = SecurityUtil.getLoginType(request);
         String client = SecurityUtil.getClient(request);
-        LoginLogParam loginLog = new LoginLogParam().setAccount(e.getUsername()).setLogin(false).setClient(client)
-                .setLoginType(loginType).setMsg(e.getMessage()).setIp(ip).setOs(userAgent.getOs().getName())
-                .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
-                .setLoginTime(LocalDateTime.now());
+        LoginLogParam loginLog = new LoginLogParam().setAccount(e.getUsername())
+            .setLogin(false)
+            .setClient(client)
+            .setLoginType(loginType)
+            .setMsg(e.getMessage())
+            .setIp(ip)
+            .setOs(userAgent.getOs().getName())
+            .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
+            .setLoginTime(LocalDateTime.now());
         loginLogService.add(loginLog);
     }
 

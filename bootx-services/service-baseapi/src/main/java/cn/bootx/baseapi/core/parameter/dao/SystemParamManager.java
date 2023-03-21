@@ -70,9 +70,9 @@ public class SystemParamManager extends BaseManager<SystemParamMapper, SystemPar
     public Page<SystemParameter> page(PageParam pageParam, SystemParameterParam param) {
         Page<SystemParameter> mpPage = MpUtil.getMpPage(pageParam, SystemParameter.class);
         return lambdaQuery().orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getName()), SystemParameter::getName, param.getName())
-                .like(StrUtil.isNotBlank(param.getParamKey()), SystemParameter::getParamKey, param.getParamKey())
-                .page(mpPage);
+            .like(StrUtil.isNotBlank(param.getName()), SystemParameter::getName, param.getName())
+            .like(StrUtil.isNotBlank(param.getParamKey()), SystemParameter::getParamKey, param.getParamKey())
+            .page(mpPage);
     }
 
 }

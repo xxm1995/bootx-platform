@@ -616,9 +616,16 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
 
         public String generateDataStr() {
             StringBuilder sb = new StringBuilder();
-            sb.append("\"").append(columnName).append("\"").append(":").append("\"")
-                    .append(convertDoubleQuotes(originalValue)).append("->").append(convertDoubleQuotes(updateValue))
-                    .append("\"").append(",");
+            sb.append("\"")
+                .append(columnName)
+                .append("\"")
+                .append(":")
+                .append("\"")
+                .append(convertDoubleQuotes(originalValue))
+                .append("->")
+                .append(convertDoubleQuotes(updateValue))
+                .append("\"")
+                .append(",");
             return sb.toString();
         }
 
@@ -679,8 +686,14 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             StringBuilder sb = new StringBuilder();
             sb.append("{");
             if (pkColumnName != null) {
-                sb.append("\"").append(pkColumnName).append("\"").append(":").append("\"")
-                        .append(convertDoubleQuotes(pkColumnVal)).append("\"").append(",");
+                sb.append("\"")
+                    .append(pkColumnName)
+                    .append("\"")
+                    .append(":")
+                    .append("\"")
+                    .append(convertDoubleQuotes(pkColumnVal))
+                    .append("\"")
+                    .append(",");
             }
             for (DataColumnChangeResult update : updatedColumns) {
                 sb.append(update.generateDataStr());

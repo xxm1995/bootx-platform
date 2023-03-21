@@ -58,8 +58,10 @@ public class LoginLogMongoService implements LoginLogService {
         Page<LoginLogMongo> page = repository.findAll(example, pageable);
         List<LoginLogDto> records = page.getContent().stream().map(LoginLogMongo::toDto).collect(Collectors.toList());
 
-        return new PageResult<LoginLogDto>().setCurrent(pageParam.getCurrent()).setSize(pageParam.getSize())
-                .setRecords(records).setTotal(page.getTotalElements());
+        return new PageResult<LoginLogDto>().setCurrent(pageParam.getCurrent())
+            .setSize(pageParam.getSize())
+            .setRecords(records)
+            .setTotal(page.getTotalElements());
     }
 
     @Override

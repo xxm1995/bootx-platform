@@ -99,7 +99,7 @@ public class SaTokenRedisConfiguration {
                 poolConfig.setMaxWait(pool.getMaxWait());
             }
             LettucePoolingClientConfiguration.LettucePoolingClientConfigurationBuilder builder = LettucePoolingClientConfiguration
-                    .builder();
+                .builder();
             // timeout
             if (aloneRedis.getTimeout() != null) {
                 builder.commandTimeout(aloneRedis.getTimeout());

@@ -89,14 +89,16 @@ public class PayStrategyFactory {
         List<AbsPayStrategy> list = new ArrayList<>(payModeParamList.size());
 
         // 同步支付
-        List<PayModeParam> syncPayModeParamList = payModeParamList.stream().filter(Objects::nonNull)
-                .filter(payModeParam -> !PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
-                .collect(Collectors.toList());
+        List<PayModeParam> syncPayModeParamList = payModeParamList.stream()
+            .filter(Objects::nonNull)
+            .filter(payModeParam -> !PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
+            .collect(Collectors.toList());
 
         // 异步支付
-        List<PayModeParam> asyncPayModeParamList = payModeParamList.stream().filter(Objects::nonNull)
-                .filter(payModeParam -> PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
-                .collect(Collectors.toList());
+        List<PayModeParam> asyncPayModeParamList = payModeParamList.stream()
+            .filter(Objects::nonNull)
+            .filter(payModeParam -> PayChannelCode.ASYNC_TYPE.contains(payModeParam.getPayChannel()))
+            .collect(Collectors.toList());
 
         List<PayModeParam> sortList = new ArrayList<>(payModeParamList.size());
 

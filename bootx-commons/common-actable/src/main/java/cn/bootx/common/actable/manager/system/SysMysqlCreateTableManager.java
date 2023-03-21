@@ -184,10 +184,10 @@ public class SysMysqlCreateTableManager {
                 map.put(SysMysqlTable.TABLE_ENGINE_KEY, tableEngine.toString());
             }
             baseTableMap.get(Constants.NEW_TABLE_MAP).put(tableName, new TableConfig(allFieldList, map));
-            baseTableMap.get(Constants.ADDINDEX_TABLE_MAP).put(tableName,
-                    new TableConfig(getAddIndexList(null, allFieldList)));
-            baseTableMap.get(Constants.ADDUNIQUE_TABLE_MAP).put(tableName,
-                    new TableConfig(getAddUniqueList(null, allFieldList)));
+            baseTableMap.get(Constants.ADDINDEX_TABLE_MAP)
+                .put(tableName, new TableConfig(getAddIndexList(null, allFieldList)));
+            baseTableMap.get(Constants.ADDUNIQUE_TABLE_MAP)
+                .put(tableName, new TableConfig(getAddUniqueList(null, allFieldList)));
             return;
         }
         else {
@@ -196,8 +196,10 @@ public class SysMysqlCreateTableManager {
                 map.put(SysMysqlTable.TABLE_COMMENT_KEY, tableComment);
             }
             // 判断表字符集是否要更新
-            if (tableCharset != null && tableCharset != MySqlCharset.DEFAULT && !tableCharset.toString().toLowerCase()
-                    .equals(table.getTable_collation().replace(SysMysqlTable.TABLE_COLLATION_SUFFIX, ""))) {
+            if (tableCharset != null && tableCharset != MySqlCharset.DEFAULT
+                    && !tableCharset.toString()
+                        .toLowerCase()
+                        .equals(table.getTable_collation().replace(SysMysqlTable.TABLE_COLLATION_SUFFIX, ""))) {
                 map.put(SysMysqlTable.TABLE_COLLATION_KEY, tableCharset.toString().toLowerCase());
             }
             // 判断表引擎是否要更新
@@ -259,8 +261,8 @@ public class SysMysqlCreateTableManager {
             baseTableMap.get(Constants.DROPKEY_TABLE_MAP).put(tableName, new TableConfig(dropKeyFieldList));
         }
         if (dropIndexAndUniqueFieldList.size() != 0) {
-            baseTableMap.get(Constants.DROPINDEXANDUNIQUE_TABLE_MAP).put(tableName,
-                    new TableConfig(dropIndexAndUniqueFieldList));
+            baseTableMap.get(Constants.DROPINDEXANDUNIQUE_TABLE_MAP)
+                .put(tableName, new TableConfig(dropIndexAndUniqueFieldList));
         }
         if (addIndexFieldList.size() != 0) {
             baseTableMap.get(Constants.ADDINDEX_TABLE_MAP).put(tableName, new TableConfig(addIndexFieldList));
@@ -569,10 +571,12 @@ public class SysMysqlCreateTableManager {
                 Index index = field.getAnnotation(Index.class);
                 if (null != index) {
                     String[] indexValue = index.columns();
-                    param.setFiledIndexName((index.value() == null || index.value().equals(""))
-                            ? (idxPrefix + ((indexValue.length == 0) ? ColumnUtils.getColumnName(field, clas)
-                                    : stringArrFormat(indexValue)))
-                            : idxPrefix + index.value());
+                    param
+                        .setFiledIndexName(
+                                (index.value() == null || index.value().equals(""))
+                                        ? (idxPrefix + ((indexValue.length == 0)
+                                                ? ColumnUtils.getColumnName(field, clas) : stringArrFormat(indexValue)))
+                                        : idxPrefix + index.value());
                     param.setFiledIndexValue(
                             indexValue.length == 0 ? Collections.singletonList(ColumnUtils.getColumnName(field, clas))
                                     : Arrays.asList(indexValue));

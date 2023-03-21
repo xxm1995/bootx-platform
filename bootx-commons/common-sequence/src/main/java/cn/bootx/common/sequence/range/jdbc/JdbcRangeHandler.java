@@ -37,7 +37,7 @@ public class JdbcRangeHandler {
     @Transactional(rollbackFor = Exception.class)
     public Long incrementRange(String key, int rangeStep) {
         SequenceRange range = manager.findByField(SequenceRange::getRangeKey, key)
-                .orElseThrow(() -> new SeqException("区间不存在"));
+            .orElseThrow(() -> new SeqException("区间不存在"));
         // 新区间开始值
         long stepValue = range.getRangeValue() + rangeStep;
         range.setRangeValue(stepValue);

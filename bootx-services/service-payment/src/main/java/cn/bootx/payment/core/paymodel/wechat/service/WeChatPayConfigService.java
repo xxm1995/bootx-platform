@@ -52,7 +52,7 @@ public class WeChatPayConfigService {
     @Transactional(rollbackFor = Exception.class)
     public void update(WeChatPayConfigParam param) {
         WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(param.getId())
-                .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
+            .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
         param.setActivity(null);
         BeanUtil.copyProperties(param, weChatPayConfig, CopyOptions.create().ignoreNullValue());
         // 支付方式
@@ -78,7 +78,7 @@ public class WeChatPayConfigService {
     @Transactional(rollbackFor = Exception.class)
     public void setUpActivity(Long id) {
         WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id)
-                .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
+            .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
         if (Objects.equals(weChatPayConfig.getActivity(), Boolean.TRUE)) {
             return;
         }
@@ -93,7 +93,7 @@ public class WeChatPayConfigService {
     @Transactional(rollbackFor = Exception.class)
     public void clearActivity(Long id) {
         WeChatPayConfig weChatPayConfig = weChatPayConfigManager.findById(id)
-                .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
+            .orElseThrow(() -> new PayFailureException("微信支付配置不存在"));
         if (Objects.equals(weChatPayConfig.getActivity(), Boolean.TRUE)) {
             return;
         }
@@ -112,8 +112,10 @@ public class WeChatPayConfigService {
      * 微信支持支付方式
      */
     public List<KeyValue> findPayWayList() {
-        return WeChatPayWay.getPayWays().stream().map(e -> new KeyValue(e.getCode(), e.getName()))
-                .collect(Collectors.toList());
+        return WeChatPayWay.getPayWays()
+            .stream()
+            .map(e -> new KeyValue(e.getCode(), e.getName()))
+            .collect(Collectors.toList());
     }
 
 }

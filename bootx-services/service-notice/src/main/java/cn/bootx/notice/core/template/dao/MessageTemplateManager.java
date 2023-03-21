@@ -40,8 +40,9 @@ public class MessageTemplateManager extends BaseManager<MessageTemplateMapper, M
     public Page<MessageTemplate> page(PageParam pageParam, MessageTemplateParam query) {
         Page<MessageTemplate> mpPage = MpUtil.getMpPage(pageParam, MessageTemplate.class);
         return lambdaQuery().like(StrUtil.isNotBlank(query.getCode()), MessageTemplate::getCode, query.getCode())
-                .like(StrUtil.isNotBlank(query.getName()), MessageTemplate::getName, query.getName())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+            .like(StrUtil.isNotBlank(query.getName()), MessageTemplate::getName, query.getName())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
 }

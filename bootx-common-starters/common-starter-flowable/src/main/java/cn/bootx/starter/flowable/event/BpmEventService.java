@@ -88,7 +88,7 @@ public class BpmEventService {
     public void taskAssign(BpmTask task, Long oldAssign, String oldAssignName, Long newAssign, String newAssignName) {
         this.afterCommit(() -> {
             eventPublisher
-                    .publishEvent(new TaskAssignEvent(this, task, oldAssign, oldAssignName, newAssign, newAssignName));
+                .publishEvent(new TaskAssignEvent(this, task, oldAssign, oldAssignName, newAssign, newAssignName));
         });
     }
 

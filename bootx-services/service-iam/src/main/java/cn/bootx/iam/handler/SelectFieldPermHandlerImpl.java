@@ -50,7 +50,8 @@ public class SelectFieldPermHandlerImpl implements SelectFieldPermHandler {
 
         // 获取类注解
         List<String> userPermCodes = currentUser.map(UserDetail::getId)
-                .map(rolePermService::findEffectPermCodesByUserId).orElse(new ArrayList<>(0));
+            .map(rolePermService::findEffectPermCodesByUserId)
+            .orElse(new ArrayList<>(0));
 
         Class<?> entityType = tableInfo.getEntityType();
         PermCode classPermCode = entityType.getAnnotation(PermCode.class);

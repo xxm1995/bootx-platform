@@ -35,7 +35,8 @@ public class AggregateService {
     public String createAggregatePay(CashierSinglePayParam param) {
         // 保存并生成code
         AggregatePayInfo aggregatePayInfo = new AggregatePayInfo().setAmount(param.getAmount())
-                .setTitle(param.getTitle()).setBusinessId(param.getBusinessId());
+            .setTitle(param.getTitle())
+            .setBusinessId(param.getBusinessId());
         String key = RandomUtil.randomString(10);
         redisClient.setWithTimeout(PREFIX_KEY + key, JSONUtil.toJsonStr(aggregatePayInfo), 5 * 60 * 1000);
         return key;
@@ -46,7 +47,7 @@ public class AggregateService {
      */
     public AggregatePayInfo getAggregateInfo(String key) {
         String jsonStr = Optional.ofNullable(redisClient.get(PREFIX_KEY + key))
-                .orElseThrow(() -> new PayFailureException("支付超时"));
+            .orElseThrow(() -> new PayFailureException("支付超时"));
         return JSONUtil.toBean(jsonStr, AggregatePayInfo.class);
     }
 

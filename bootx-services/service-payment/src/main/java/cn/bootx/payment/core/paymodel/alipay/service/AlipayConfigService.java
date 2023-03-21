@@ -67,7 +67,7 @@ public class AlipayConfigService {
     @Transactional(rollbackFor = Exception.class)
     public void clearActivity(Long id) {
         AlipayConfig alipayConfig = alipayConfigManager.findById(id)
-                .orElseThrow(() -> new PayFailureException("支付宝配置不存在"));
+            .orElseThrow(() -> new PayFailureException("支付宝配置不存在"));
         if (Objects.equals(alipayConfig.getActivity(), Boolean.FALSE)) {
             return;
         }
@@ -110,8 +110,10 @@ public class AlipayConfigService {
      * 支付宝支持支付方式
      */
     public List<KeyValue> findPayWayList() {
-        return AliPayWay.getPayWays().stream().map(e -> new KeyValue(e.getCode(), e.getName()))
-                .collect(Collectors.toList());
+        return AliPayWay.getPayWays()
+            .stream()
+            .map(e -> new KeyValue(e.getCode(), e.getName()))
+            .collect(Collectors.toList());
     }
 
 }

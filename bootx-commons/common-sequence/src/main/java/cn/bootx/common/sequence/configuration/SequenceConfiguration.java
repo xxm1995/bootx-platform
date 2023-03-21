@@ -27,7 +27,8 @@ public class SequenceConfiguration {
     @Primary
     public Sequence sequence(SeqRangeManager seqRangeManager) {
         SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(sequenceProperties.getStep())
-                .setRangeStart(sequenceProperties.getRangeStart()).setRangeStep(sequenceProperties.getRangeStep());
+            .setRangeStart(sequenceProperties.getRangeStart())
+            .setRangeStep(sequenceProperties.getRangeStep());
         return new DefaultRangeSequence(seqRangeManager, seqRangeConfig);
     }
 

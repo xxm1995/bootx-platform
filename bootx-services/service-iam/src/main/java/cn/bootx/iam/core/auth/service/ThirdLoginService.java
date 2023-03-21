@@ -43,8 +43,10 @@ public class ThirdLoginService {
      * 获取认证器
      */
     private OpenIdAuthentication getOpenIdAuthentication(String loginType) {
-        return openIdAuthentications.stream().filter(o -> o.adaptation(loginType)).findFirst()
-                .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
+        return openIdAuthentications.stream()
+            .filter(o -> o.adaptation(loginType))
+            .findFirst()
+            .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
 
 }

@@ -28,8 +28,10 @@ public class MpConfiguration {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor(List<MpInterceptor> interceptors) {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptors.stream().sorted(Comparator.comparing(MpInterceptor::getSortNo))
-                .map(MpInterceptor::getInnerInterceptor).forEach(interceptor::addInnerInterceptor);
+        interceptors.stream()
+            .sorted(Comparator.comparing(MpInterceptor::getSortNo))
+            .map(MpInterceptor::getInnerInterceptor)
+            .forEach(interceptor::addInnerInterceptor);
 
         return interceptor;
     }

@@ -55,8 +55,9 @@ public class TaskRejectHandler {
         Collection<FlowElement> flowNodes = FlowableUtil.getAllElements(process.getFlowElements(), null);
         // 获取当前任务节点元素
         FlowElement currentNode = flowNodes.stream()
-                .filter(flowElement -> Objects.equals(flowElement.getId(), task.getTaskDefinitionKey())).findAny()
-                .orElse(null);
+            .filter(flowElement -> Objects.equals(flowElement.getId(), task.getTaskDefinitionKey()))
+            .findAny()
+            .orElse(null);
 
         // 上级任务列表 目的获取所有跳转到的节点 targetIds
         List<UserTask> lastUserTaskList = FlowableUtil.findParentUserTasks(currentNode, null, null);
@@ -64,12 +65,16 @@ public class TaskRejectHandler {
             throw new BizException("当前节点为初始任务节点，不能驳回");
         }
         // 上级任务节点列表 节点 Key
-        List<String> lastUserTaskNodeIds = lastUserTaskList.stream().map(BaseElement::getId)
-                .collect(Collectors.toList());
+        List<String> lastUserTaskNodeIds = lastUserTaskList.stream()
+            .map(BaseElement::getId)
+            .collect(Collectors.toList());
 
         // 获取全部历史节点活动实例，即已经走过的节点历史，数据采用开始时间升序
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery()
-                .processInstanceId(task.getProcessInstanceId()).orderByHistoricTaskInstanceStartTime().asc().list();
+            .processInstanceId(task.getProcessInstanceId())
+            .orderByHistoricTaskInstanceStartTime()
+            .asc()
+            .list();
 
         // 数据清洗，将回滚导致的脏数据清洗掉
         List<String> lastHistoricTaskNodeIds = FlowableUtil.historicTaskInstanceClean(flowNodes,
@@ -106,8 +111,9 @@ public class TaskRejectHandler {
         UserTask oneUserTask = lastUserTaskList.get(0);
         // 获取所有正常进行的任务节点 Key，这些任务不能直接使用，需要找出其中需要撤回的任务
         List<Task> runTaskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).list();
-        List<String> runTaskKeyList = runTaskList.stream().map(TaskInfo::getTaskDefinitionKey)
-                .collect(Collectors.toList());
+        List<String> runTaskKeyList = runTaskList.stream()
+            .map(TaskInfo::getTaskDefinitionKey)
+            .collect(Collectors.toList());
 
         // 通过父级网关的出口连线，结合 runTaskList 比对，获取需要撤回的任务
         List<UserTask> currentUserTaskList = FlowableUtil.findChildUserTasks(oneUserTask, runTaskKeyList, null, null);
@@ -122,14 +128,18 @@ public class TaskRejectHandler {
             // 如果父级任务多于 1 个，说明当前节点不是并行节点，原因为不考虑多对多情况
             if (rejectIds.size() > 1) {
                 // 1 对 多任务跳转，currentIds 当前节点(1)，targetIds 跳转到的节点(多)
-                runtimeService.createChangeActivityStateBuilder().processInstanceId(task.getProcessInstanceId())
-                        .moveSingleActivityIdToActivityIds(currentIds.get(0), rejectIds).changeState();
+                runtimeService.createChangeActivityStateBuilder()
+                    .processInstanceId(task.getProcessInstanceId())
+                    .moveSingleActivityIdToActivityIds(currentIds.get(0), rejectIds)
+                    .changeState();
             }
             // 如果父级任务只有一个，因此当前任务可能为网关中的任务
             if (rejectIds.size() == 1) {
                 // 1 对 1 或 多 对 1 情况，currentIds 当前要跳转的节点列表(1或多)，targetIds.get(0) 跳转到的节点(1)
-                runtimeService.createChangeActivityStateBuilder().processInstanceId(task.getProcessInstanceId())
-                        .moveActivityIdsToSingleActivityId(currentIds, rejectIds.get(0)).changeState();
+                runtimeService.createChangeActivityStateBuilder()
+                    .processInstanceId(task.getProcessInstanceId())
+                    .moveActivityIdsToSingleActivityId(currentIds, rejectIds.get(0))
+                    .changeState();
             }
         }
         catch (FlowableObjectNotFoundException e) {
@@ -153,7 +163,8 @@ public class TaskRejectHandler {
         }
         // 获取流程定义信息
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionId(task.getProcessDefinitionId()).singleResult();
+            .processDefinitionId(task.getProcessDefinitionId())
+            .singleResult();
         // 获取所有节点信息
         Process process = repositoryService.getBpmnModel(processDefinition.getId()).getProcesses().get(0);
         // 获取全部节点列表，包含子节点
@@ -195,8 +206,10 @@ public class TaskRejectHandler {
 
         try {
             // 1 对 1 或 多 对 1 情况，currentIds 当前要跳转的节点列表(1或多)，targetKey 跳转到的节点(1)
-            runtimeService.createChangeActivityStateBuilder().processInstanceId(task.getProcessInstanceId())
-                    .moveActivityIdsToSingleActivityId(currentIds, targetKey).changeState();
+            runtimeService.createChangeActivityStateBuilder()
+                .processInstanceId(task.getProcessInstanceId())
+                .moveActivityIdsToSingleActivityId(currentIds, targetKey)
+                .changeState();
         }
         catch (FlowableObjectNotFoundException e) {
             log.error(e.getMessage(), e);
@@ -216,7 +229,8 @@ public class TaskRejectHandler {
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         // 获取流程定义信息
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionId(task.getProcessDefinitionId()).singleResult();
+            .processDefinitionId(task.getProcessDefinitionId())
+            .singleResult();
         // 获取所有节点信息，暂不考虑子流程情况
         Process process = repositoryService.getBpmnModel(processDefinition.getId()).getProcesses().get(0);
         Collection<FlowElement> flowElements = process.getFlowElements();

@@ -112,8 +112,10 @@ public class PermPathService {
      */
     @Cacheable(value = { IGNORE_PATH }, key = "#requestType")
     public List<String> findIgnorePathByRequestType(String requestType) {
-        return permPathManager.findByNotEnableAndRequestType(requestType).stream().map(PermPath::getPath)
-                .collect(Collectors.toList());
+        return permPathManager.findByNotEnableAndRequestType(requestType)
+            .stream()
+            .map(PermPath::getPath)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -165,8 +167,12 @@ public class PermPathService {
             if (StrUtil.isNotBlank(requestPath.getClassRemark()) && StrUtil.isNotBlank(requestPath.getMethodRemark())) {
                 remark = requestPath.getClassRemark() + " " + requestPath.getMethodRemark();
             }
-            return permPath.setCode(code).setName(requestPath.getMethodRemark()).setRemark(remark)
-                    .setGroupName(requestPath.getClassRemark()).setGenerate(true).setEnable(true);
+            return permPath.setCode(code)
+                .setName(requestPath.getMethodRemark())
+                .setRemark(remark)
+                .setGroupName(requestPath.getClassRemark())
+                .setGenerate(true)
+                .setEnable(true);
         }).collect(Collectors.toList());
         // 增量更新
         this.incrementUpdate(permPaths);
@@ -183,19 +189,23 @@ public class PermPathService {
         List<PermPath> pathList = permPathManager.findAll();
         List<String> paths = pathList.stream().map(PermPath::getPath).collect(Collectors.toList());
         // 过滤掉数据库已经存在的
-        List<PermPath> permPathList = permPaths.stream().filter(permPath -> !paths.contains(permPath.getPath()))
-                .collect(Collectors.toList());
+        List<PermPath> permPathList = permPaths.stream()
+            .filter(permPath -> !paths.contains(permPath.getPath()))
+            .collect(Collectors.toList());
 
         // 过滤出不存在的系统请求资源, 进行删除
         // 数据库已存在的路径集合
         Set<String> permPathSet = permPaths.stream().map(PermPath::getPath).collect(Collectors.toSet());
         // 挑出被删除的路径
-        List<String> removePaths = paths.stream().filter(path -> !permPathSet.contains(path))
-                .collect(Collectors.toList());
+        List<String> removePaths = paths.stream()
+            .filter(path -> !permPathSet.contains(path))
+            .collect(Collectors.toList());
         // 找到对应的数据条目(限定根据系统生成的条目)
-        List<Long> removeIds = pathList.stream().filter(PermPath::isGenerate)
-                .filter(permPath -> removePaths.contains(permPath.getPath())).map(MpIdEntity::getId)
-                .collect(Collectors.toList());
+        List<Long> removeIds = pathList.stream()
+            .filter(PermPath::isGenerate)
+            .filter(permPath -> removePaths.contains(permPath.getPath()))
+            .map(MpIdEntity::getId)
+            .collect(Collectors.toList());
         permPathManager.saveAll(permPathList);
         permPathManager.deleteByIds(removeIds);
     }

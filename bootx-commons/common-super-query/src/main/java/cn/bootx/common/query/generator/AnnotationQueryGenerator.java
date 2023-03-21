@@ -47,12 +47,13 @@ public class AnnotationQueryGenerator {
 
         // 读取参数的字段
         List<PropertyDescriptor> paramClassProps = Arrays
-                .stream(BeanUtil.getPropertyDescriptors(queryParams.getClass())).collect(Collectors.toList());
+            .stream(BeanUtil.getPropertyDescriptors(queryParams.getClass()))
+            .collect(Collectors.toList());
 
         // 读取实体类对象的字段
         Map<String, PropertyDescriptor> entityClassPropMap = Arrays.stream(BeanUtil.getPropertyDescriptors(clazz))
-                .collect(Collectors.toMap(PropertyDescriptor::getName, Function.identity(),
-                        CollectorsFunction::retainLatest));
+            .collect(Collectors.toMap(PropertyDescriptor::getName, Function.identity(),
+                    CollectorsFunction::retainLatest));
 
         // 遍历参数上的对象, 生成查询构造器条件
         for (PropertyDescriptor paramProp : paramClassProps) {
@@ -93,7 +94,8 @@ public class AnnotationQueryGenerator {
 
         // 读取参数的字段
         List<PropertyDescriptor> paramClassProps = Arrays
-                .stream(BeanUtil.getPropertyDescriptors(queryParams.getClass())).collect(Collectors.toList());
+            .stream(BeanUtil.getPropertyDescriptors(queryParams.getClass()))
+            .collect(Collectors.toList());
 
         // 遍历参数上的对象, 生成查询构造器条件
         for (PropertyDescriptor paramProp : paramClassProps) {

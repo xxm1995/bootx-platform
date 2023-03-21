@@ -61,11 +61,11 @@ public class WeComLoginHandler implements OpenIdAuthentication {
 
         // 获取企微关联的用户id
         UserThird userThird = userThirdManager.findByField(UserThird::getWeComId, authUser.getUuid())
-                .orElseThrow(() -> new LoginFailureException("企业微信没有找到绑定的用户"));
+            .orElseThrow(() -> new LoginFailureException("企业微信没有找到绑定的用户"));
 
         // 获取用户信息
         UserInfo userInfo = userInfoManager.findById(userThird.getUserId())
-                .orElseThrow(() -> new LoginFailureException("用户不存在"));
+            .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());
     }
@@ -115,9 +115,12 @@ public class WeComLoginHandler implements OpenIdAuthentication {
         if (Objects.isNull(thirdLogin)) {
             throw new LoginFailureException("企业微信登录配置有误");
         }
-        return new AuthWeChatEnterpriseQrcodeRequest(
-                AuthConfig.builder().clientId(thirdLogin.getClientId()).clientSecret(thirdLogin.getClientSecret())
-                        .redirectUri(thirdLogin.getRedirectUri()).agentId(thirdLogin.getAgentId()).build());
+        return new AuthWeChatEnterpriseQrcodeRequest(AuthConfig.builder()
+            .clientId(thirdLogin.getClientId())
+            .clientSecret(thirdLogin.getClientSecret())
+            .redirectUri(thirdLogin.getRedirectUri())
+            .agentId(thirdLogin.getAgentId())
+            .build());
     }
 
 }

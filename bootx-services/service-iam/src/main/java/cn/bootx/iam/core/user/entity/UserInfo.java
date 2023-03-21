@@ -84,8 +84,12 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     }
 
     public UserDetail toUserDetail() {
-        return new UserDetail().setId(this.getId()).setPassword(this.password).setUsername(this.getUsername())
-                .setName(this.name).setAdmin(this.admin).setStatus(this.status);
+        return new UserDetail().setId(this.getId())
+            .setPassword(this.password)
+            .setUsername(this.getUsername())
+            .setName(this.name)
+            .setAdmin(this.admin)
+            .setStatus(this.status);
     }
 
 }

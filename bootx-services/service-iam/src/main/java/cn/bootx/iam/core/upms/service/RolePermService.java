@@ -57,11 +57,14 @@ public class RolePermService {
         List<Long> roleMenuIds = RoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
         // 需要删除的
         List<Long> deleteIds = RoleMenus.stream()
-                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId())).map(MpIdEntity::getId)
-                .collect(Collectors.toList());
+            .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
+            .map(MpIdEntity::getId)
+            .collect(Collectors.toList());
 
-        List<RoleMenu> roleMenus = permissionIds.stream().filter(id -> !roleMenuIds.contains(id))
-                .map(permissionId -> new RoleMenu(roleId, clientCode, permissionId)).collect(Collectors.toList());
+        List<RoleMenu> roleMenus = permissionIds.stream()
+            .filter(id -> !roleMenuIds.contains(id))
+            .map(permissionId -> new RoleMenu(roleId, clientCode, permissionId))
+            .collect(Collectors.toList());
         roleMenuManager.deleteByIds(deleteIds);
         roleMenuManager.saveAll(roleMenus);
     }
@@ -80,8 +83,8 @@ public class RolePermService {
     public List<PermMenuDto> findMenuTree(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
         List<PermMenuDto> permissionsByNotButton = permissions.stream()
-                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-                .collect(Collectors.toList());
+            .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+            .collect(Collectors.toList());
         return this.recursiveBuildTree(permissionsByNotButton);
     }
 
@@ -97,8 +100,10 @@ public class RolePermService {
      */
     public List<Long> findMenuIds(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
-        return permissions.stream().filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-                .map(PermMenuDto::getId).collect(Collectors.toList());
+        return permissions.stream()
+            .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+            .map(PermMenuDto::getId)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -107,11 +112,13 @@ public class RolePermService {
     public MenuAndResourceDto getPermissions(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
         List<String> resourcePerms = permissions.stream()
-                .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-                .filter(PermMenuDto::isEffect).map(PermMenuDto::getPermCode).collect(Collectors.toList());
+            .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+            .filter(PermMenuDto::isEffect)
+            .map(PermMenuDto::getPermCode)
+            .collect(Collectors.toList());
         List<PermMenuDto> menus = permissions.stream()
-                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-                .collect(Collectors.toList());
+            .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+            .collect(Collectors.toList());
         return new MenuAndResourceDto().setResourcePerms(resourcePerms).setMenus(this.recursiveBuildTree(menus));
     }
 
@@ -128,8 +135,10 @@ public class RolePermService {
         }
         else {
             // 非管理员获取自身拥有的权限
-            permissions = this.findPermissionsByUser(userDetail.getId()).stream()
-                    .filter(o -> Objects.equals(clientCode, o.getClientCode())).collect(Collectors.toList());
+            permissions = this.findPermissionsByUser(userDetail.getId())
+                .stream()
+                .filter(o -> Objects.equals(clientCode, o.getClientCode()))
+                .collect(Collectors.toList());
         }
         return permissions;
     }
@@ -142,8 +151,11 @@ public class RolePermService {
     public List<String> findEffectPermCodesByUserId(Long userId) {
         // 获取关联的的权限码
         List<PermMenuDto> permissions = this.findPermissionsByUser(userId);
-        return permissions.stream().filter(o -> Objects.equals(o.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
-                .filter(PermMenuDto::isEffect).map(PermMenuDto::getPermCode).collect(Collectors.toList());
+        return permissions.stream()
+            .filter(o -> Objects.equals(o.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
+            .filter(PermMenuDto::isEffect)
+            .map(PermMenuDto::getPermCode)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -157,8 +169,10 @@ public class RolePermService {
             return permissions;
         }
         List<RoleMenu> roleMenus = roleMenuManager.findAllByRoles(roleIds);
-        List<Long> permissionIds = roleMenus.stream().map(RoleMenu::getPermissionId).distinct()
-                .collect(Collectors.toList());
+        List<Long> permissionIds = roleMenus.stream()
+            .map(RoleMenu::getPermissionId)
+            .distinct()
+            .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(permissionIds)) {
             permissions = permMenuService.findByIds(permissionIds);
         }

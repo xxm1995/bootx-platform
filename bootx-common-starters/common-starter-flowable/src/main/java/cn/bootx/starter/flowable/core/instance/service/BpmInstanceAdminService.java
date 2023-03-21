@@ -32,16 +32,20 @@ public class BpmInstanceAdminService {
      * 我的发起分页
      */
     public PageResult<InstanceInfo> page(PageParam pageParam) {
-        val instanceQuery = historyService.createHistoricProcessInstanceQuery().orderByProcessInstanceStartTime()
-                .desc();
+        val instanceQuery = historyService.createHistoricProcessInstanceQuery()
+            .orderByProcessInstanceStartTime()
+            .desc();
         val historicProcessInstances = instanceQuery.listPage(pageParam.start(), pageParam.getSize());
         long total = instanceQuery.count();
 
-        List<String> instanceId = historicProcessInstances.stream().map(HistoricProcessInstance::getId)
-                .collect(Collectors.toList());
+        List<String> instanceId = historicProcessInstances.stream()
+            .map(HistoricProcessInstance::getId)
+            .collect(Collectors.toList());
         List<InstanceInfo> instanceInfos = queryService.convertInstanceInfo(instanceId);
-        return new PageResult<InstanceInfo>().setCurrent(pageParam.getCurrent()).setRecords(instanceInfos)
-                .setSize(pageParam.getSize()).setTotal(total);
+        return new PageResult<InstanceInfo>().setCurrent(pageParam.getCurrent())
+            .setRecords(instanceInfos)
+            .setSize(pageParam.getSize())
+            .setTotal(total);
     }
 
 }

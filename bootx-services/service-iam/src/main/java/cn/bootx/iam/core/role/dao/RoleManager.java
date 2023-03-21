@@ -48,16 +48,20 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
     }
 
     public List<KeyValue> findDropdown() {
-        return lambdaQuery().select(Role::getId, Role::getName).list().stream()
-                .map(role -> new KeyValue(String.valueOf(role.getId()), role.getName())).collect(Collectors.toList());
+        return lambdaQuery().select(Role::getId, Role::getName)
+            .list()
+            .stream()
+            .map(role -> new KeyValue(String.valueOf(role.getId()), role.getName()))
+            .collect(Collectors.toList());
 
     }
 
     public Page<Role> page(PageParam pageParam, RoleParam roleParam) {
         Page<Role> mpPage = MpUtil.getMpPage(pageParam, Role.class);
         return lambdaQuery().like(StrUtil.isNotBlank(roleParam.getCode()), Role::getCode, roleParam.getCode())
-                .like(StrUtil.isNotBlank(roleParam.getName()), Role::getName, roleParam.getName())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+            .like(StrUtil.isNotBlank(roleParam.getName()), Role::getName, roleParam.getName())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
 }

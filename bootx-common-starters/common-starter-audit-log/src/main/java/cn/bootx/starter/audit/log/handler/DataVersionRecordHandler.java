@@ -39,7 +39,7 @@ public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor
         for (DataChangedRecord changedRecord : changedRecords) {
             // 原始数据
             List<DataColumnChangeResult> originalColumns = Optional.ofNullable(changedRecord.getOriginalColumns())
-                    .orElse(new ArrayList<>(0));
+                .orElse(new ArrayList<>(0));
             Map<String, Object> dataRecord = new HashMap<>();
             Map<String, Object> updateRecord = new HashMap<>();
             // 遍历原始数据的所有字段
@@ -48,7 +48,7 @@ public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor
             }
             // 用新数据进行替换
             List<DataColumnChangeResult> updatedColumns = Optional.ofNullable(changedRecord.getUpdatedColumns())
-                    .orElse(new ArrayList<>(0));
+                .orElse(new ArrayList<>(0));
             for (DataColumnChangeResult updatedColumn : updatedColumns) {
                 // 更新记录列表记录变更前的数据
                 updateRecord.put(updatedColumn.getColumnName(), dataRecord.get(updatedColumn.getColumnName()));
@@ -58,13 +58,17 @@ public class DataVersionRecordHandler extends DataChangeRecorderInnerInterceptor
             // insert手动获取下主键值
             if ("insert".equals(operationResult.getOperation())) {
                 String keyProperty = Optional.ofNullable(MpUtil.getTableInfo(operationResult.getTableName()))
-                        .map(TableInfo::getKeyProperty).map(String::toUpperCase).orElse(null);
+                    .map(TableInfo::getKeyProperty)
+                    .map(String::toUpperCase)
+                    .orElse(null);
                 pkColumnVal = dataRecord.get(keyProperty);
             }
             // 保存记录
             DataVersionLogParam dataVersionLogParam = new DataVersionLogParam().setDataId(pkColumnVal.toString())
-                    .setDataName(annotation.title()).setDataContent(dataRecord).setChangeContent(updateRecord)
-                    .setTableName(operationResult.getTableName());
+                .setDataName(annotation.title())
+                .setDataContent(dataRecord)
+                .setChangeContent(updateRecord)
+                .setTableName(operationResult.getTableName());
             dataVersionLogService.add(dataVersionLogParam);
         }
     }

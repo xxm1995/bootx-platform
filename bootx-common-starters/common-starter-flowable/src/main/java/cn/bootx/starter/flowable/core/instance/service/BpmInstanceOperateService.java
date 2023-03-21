@@ -53,7 +53,7 @@ public class BpmInstanceOperateService {
     @Transactional(rollbackFor = Exception.class)
     public void start(InstanceStartParam instanceParam) {
         BpmModel bpmModel = bpmModelManager.findById(instanceParam.getModelId())
-                .orElseThrow(ModelNotExistException::new);
+            .orElseThrow(ModelNotExistException::new);
         // 未发布
         if (!Objects.equals(bpmModel.getPublish(), PUBLISHED)) {
             throw new ModelNotPublishException();
@@ -66,8 +66,9 @@ public class BpmInstanceOperateService {
             title = bpmModel.getName() + "[" + userName + "]";
         }
         BpmContext bpmContext = BpmContextLocal.get();
-        bpmContext.setFormVariables(instanceParam.getFormVariables()).setModelId(bpmModel.getId())
-                .setStartUser(currentUser);
+        bpmContext.setFormVariables(instanceParam.getFormVariables())
+            .setModelId(bpmModel.getId())
+            .setStartUser(currentUser);
         BpmContextLocal.put(bpmContext);
 
         runtimeService.createProcessInstanceBuilder().processDefinitionId(bpmModel.getDefId()).name(title).start();
@@ -97,16 +98,17 @@ public class BpmInstanceOperateService {
         bpmContext.setInstanceState(STATE_CANCEL);
         BpmContextLocal.put(bpmContext);
         ProcessInstance processInstance = Optional
-                .ofNullable(runtimeService.createProcessInstanceQuery().processInstanceId(instanceId).singleResult())
-                .orElseThrow(InstanceNotExistException::new);
+            .ofNullable(runtimeService.createProcessInstanceQuery().processInstanceId(instanceId).singleResult())
+            .orElseThrow(InstanceNotExistException::new);
         // 1、获取终止节点
         List<EndEvent> endNodes = getEndNode(processInstance.getProcessDefinitionId());
         String endId = endNodes.get(0).getId();
         // 2、执行终止
         List<Execution> executions = runtimeService.createExecutionQuery().parentId(instanceId).list();
         List<String> executionIds = executions.stream().map(Execution::getId).collect(Collectors.toList());
-        runtimeService.createChangeActivityStateBuilder().moveExecutionsToSingleActivityId(executionIds, endId)
-                .changeState();
+        runtimeService.createChangeActivityStateBuilder()
+            .moveExecutionsToSingleActivityId(executionIds, endId)
+            .changeState();
     }
 
     /**
@@ -114,13 +116,15 @@ public class BpmInstanceOperateService {
      */
     private List<EndEvent> getEndNode(String processDefId) {
         Process mainProcess = Optional.ofNullable(repositoryService.getBpmnModel(processDefId).getMainProcess())
-                .orElseThrow(ModelNotExistException::new);
+            .orElseThrow(ModelNotExistException::new);
         Collection<FlowElement> list = mainProcess.getFlowElements();
         if (CollUtil.isEmpty(list)) {
             return new ArrayList<>(0);
         }
-        return list.stream().filter(f -> f instanceof EndEvent).map(flowElement -> (EndEvent) flowElement)
-                .collect(Collectors.toList());
+        return list.stream()
+            .filter(f -> f instanceof EndEvent)
+            .map(flowElement -> (EndEvent) flowElement)
+            .collect(Collectors.toList());
     }
 
 }

@@ -38,13 +38,13 @@ public class RedisMonitorService {
         Long dbSize = redisTemplate.execute(RedisServerCommands::dbSize);
         // 命令统计
         Properties commandStats = Optional
-                .ofNullable(redisTemplate
-                        .execute((RedisCallback<Properties>) connection -> connection.info("commandstats")))
-                .orElse(new Properties());
+            .ofNullable(
+                    redisTemplate.execute((RedisCallback<Properties>) connection -> connection.info("commandstats")))
+            .orElse(new Properties());
         List<KeyValue> keyValues = commandStats.stringPropertyNames().stream().map((key) -> {
             String value = commandStats.getProperty(key);
             return new KeyValue().setKey(StrUtil.removePrefix(key, "cmdstat_"))
-                    .setValue(StrUtil.subBetween(value, "calls=", ",usec"));
+                .setValue(StrUtil.subBetween(value, "calls=", ",usec"));
         }).collect(Collectors.toList());
 
         RedisMonitorResult result = new RedisMonitorResult();

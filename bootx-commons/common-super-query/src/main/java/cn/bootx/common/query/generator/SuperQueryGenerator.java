@@ -49,9 +49,11 @@ public class SuperQueryGenerator {
             else {
                 // 将当前查询条件与嵌套的查询条件组装成一个查询条件
                 QueryParam q = new QueryParam().setParamName(queryParam.getParamName())
-                        .setCompareType(queryParam.getCompareType()).setParamType(queryParam.getParamType())
-                        .setParamValue(queryParam.getParamValue()).setUnderLine(queryParam.isUnderLine())
-                        .setOr(queryParam.isOr());
+                    .setCompareType(queryParam.getCompareType())
+                    .setParamType(queryParam.getParamType())
+                    .setParamValue(queryParam.getParamValue())
+                    .setUnderLine(queryParam.isUnderLine())
+                    .setOr(queryParam.isOr());
                 nestedParams.add(0, q);
                 if (queryParam.isOr()) {
                     queryWrapper.or(wrapper -> initQueryParam(wrapper, nestedParams));
@@ -79,7 +81,7 @@ public class SuperQueryGenerator {
 
         // 查询匹配类型
         CompareTypeEnum compareTypeEnum = Optional.ofNullable(CompareTypeEnum.getByCode(queryParam.getCompareType()))
-                .orElseThrow(() -> new BizException("查询匹配类型非法"));
+            .orElseThrow(() -> new BizException("查询匹配类型非法"));
         switch (compareTypeEnum) {
             case GT:
                 queryWrapper.gt(paramName, paramValue);

@@ -41,6 +41,7 @@ public class ActableProperties {
 
     /**
      * 更新模式
+     *
      * @author xxm
      * @date 2023/1/16
      */

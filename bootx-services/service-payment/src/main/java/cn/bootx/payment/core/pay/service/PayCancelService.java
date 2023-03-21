@@ -46,7 +46,7 @@ public class PayCancelService {
     @Transactional(rollbackFor = Exception.class)
     public void cancelByBusinessId(String businessId) {
         Payment payment = paymentService.findByBusinessId(businessId)
-                .orElseThrow(() -> new PayFailureException("未找到支付单"));
+            .orElseThrow(() -> new PayFailureException("未找到支付单"));
         this.cancelPayment(payment);
     }
 

@@ -91,9 +91,10 @@ public class QuerySqlService {
      */
     private SqlAndParam sqlParamParser(QuerySql querySql, Map<String, Object> map) {
         String sql = querySql.getSql();
-        Map<String, SqlParam> sqlParamMap = Optional.ofNullable(querySql.getParams()).orElse(new ArrayList<>(0))
-                .stream()
-                .collect(Collectors.toMap(SqlParam::getName, Function.identity(), CollectorsFunction::retainLatest));
+        Map<String, SqlParam> sqlParamMap = Optional.ofNullable(querySql.getParams())
+            .orElse(new ArrayList<>(0))
+            .stream()
+            .collect(Collectors.toMap(SqlParam::getName, Function.identity(), CollectorsFunction::retainLatest));
         // # 参数处理
         GenericTokenParser replaceTokenParser = new GenericTokenParser("#{", "}", content -> {
             // 获取类型, 看是否是获取用户信息一类的

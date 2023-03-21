@@ -40,7 +40,9 @@ public class DingUserService {
         Map<String, String> map = new HashMap<>(1);
         map.put(UNION_ID, unionId);
         String responseBody = HttpUtil.createPost(StrUtil.format(USER_GET_URL, accessToken))
-                .body(JacksonUtil.toJson(map)).execute().body();
+            .body(JacksonUtil.toJson(map))
+            .execute()
+            .body();
         DingTalkResult<UserIdResult> dingTalkResult = JacksonUtil.toBean(responseBody,
                 new TypeReference<DingTalkResult<UserIdResult>>() {
                 });

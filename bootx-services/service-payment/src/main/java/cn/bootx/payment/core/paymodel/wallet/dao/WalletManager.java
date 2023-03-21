@@ -102,9 +102,10 @@ public class WalletManager extends BaseManager<WalletMapper, Wallet> {
     public Page<UserInfo> pageByNotWallet(PageParam pageParam, UserInfoParam userInfoParam) {
         Page<UserInfo> mpPage = MpUtil.getMpPage(pageParam, UserInfo.class);
         QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
-        wrapper.isNull("w.id").orderByDesc("w.id")
-                .like(StrUtil.isNotBlank(userInfoParam.getUsername()), "w.username", userInfoParam.getUsername())
-                .like(StrUtil.isNotBlank(userInfoParam.getName()), "w.name", userInfoParam.getName());
+        wrapper.isNull("w.id")
+            .orderByDesc("w.id")
+            .like(StrUtil.isNotBlank(userInfoParam.getUsername()), "w.username", userInfoParam.getUsername())
+            .like(StrUtil.isNotBlank(userInfoParam.getName()), "w.name", userInfoParam.getName());
         return walletMapper.pageByNotWallet(mpPage, wrapper);
     }
 
@@ -112,8 +113,13 @@ public class WalletManager extends BaseManager<WalletMapper, Wallet> {
      * 查询已经存在钱包的用户id
      */
     public List<Long> findExistUserIds(List<Long> userIds) {
-        return this.lambdaQuery().select(Wallet::getUserId).in(Wallet::getUserId, userIds).list().stream()
-                .map(Wallet::getUserId).collect(Collectors.toList());
+        return this.lambdaQuery()
+            .select(Wallet::getUserId)
+            .in(Wallet::getUserId, userIds)
+            .list()
+            .stream()
+            .map(Wallet::getUserId)
+            .collect(Collectors.toList());
 
     }
 

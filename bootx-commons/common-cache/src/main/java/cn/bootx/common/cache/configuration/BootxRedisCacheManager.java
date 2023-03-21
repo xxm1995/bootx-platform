@@ -60,8 +60,11 @@ public class BootxRedisCacheManager extends RedisCacheManager {
     @Override
     @SuppressWarnings({ "ConstantConditions", "NullableProblems" })
     protected RedisCache createRedisCache(@Nullable String name, @Nullable RedisCacheConfiguration cacheConfig) {
-        Optional<String> keyOptional = keysTtl.keySet().stream().sorted((o1, o2) -> StrUtil.compare(o2, o1, false))
-                .filter(name::startsWith).findFirst();
+        Optional<String> keyOptional = keysTtl.keySet()
+            .stream()
+            .sorted((o1, o2) -> StrUtil.compare(o2, o1, false))
+            .filter(name::startsWith)
+            .findFirst();
         // 是自定义的key
         if (keyOptional.isPresent()) {
             String key = keyOptional.get();

@@ -68,8 +68,11 @@ public class JobLogAspectHandler {
     private void addLog(Class<?> clazz, LocalDateTime start, LocalDateTime end) {
         long duration = LocalDateTimeUtil.between(start, end).toMillis();
         QuartzJobLog quartzJobLog = new QuartzJobLog().setHandlerName(clazz.getSimpleName())
-                .setClassName(clazz.getName()).setSuccess(true).setStartTime(start).setEndTime(end)
-                .setDuration(duration);
+            .setClassName(clazz.getName())
+            .setSuccess(true)
+            .setStartTime(start)
+            .setEndTime(end)
+            .setDuration(duration);
         quartzJobLogService.add(quartzJobLog);
     }
 
@@ -78,7 +81,10 @@ public class JobLogAspectHandler {
      */
     private void addErrLog(Class<?> clazz, LocalDateTime start, String message) {
         QuartzJobLog quartzJobLog = new QuartzJobLog().setHandlerName(clazz.getSimpleName())
-                .setClassName(clazz.getName()).setSuccess(false).setErrorMessage(message).setStartTime(start);
+            .setClassName(clazz.getName())
+            .setSuccess(false)
+            .setErrorMessage(message)
+            .setStartTime(start);
         quartzJobLogService.add(quartzJobLog);
     }
 

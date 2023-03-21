@@ -40,10 +40,10 @@ public class DictionaryManager extends BaseManager<DictionaryMapper, Dictionary>
     public Page<Dictionary> page(PageParam pageParam, DictionaryParam param) {
         Page<Dictionary> mpPage = MpUtil.getMpPage(pageParam, Dictionary.class);
         return lambdaQuery().orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()), Dictionary::getName, param.getName())
-                .like(StrUtil.isNotBlank(param.getGroupTag()), Dictionary::getGroupTag, param.getGroupTag())
-                .page(mpPage);
+            .like(StrUtil.isNotBlank(param.getCode()), Dictionary::getCode, param.getCode())
+            .like(StrUtil.isNotBlank(param.getName()), Dictionary::getName, param.getName())
+            .like(StrUtil.isNotBlank(param.getGroupTag()), Dictionary::getGroupTag, param.getGroupTag())
+            .page(mpPage);
     }
 
     public List<Dictionary> findAllByEnable(boolean enable) {

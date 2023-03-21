@@ -51,12 +51,14 @@ public class WeChatPaymentService {
         payTypeInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         refundableInfos.removeIf(payTypeInfo -> PayChannelCode.ASYNC_TYPE.contains(payTypeInfo.getPayChannel()));
         // 添加微信支付类型信息
-        payTypeInfos.add(new PayChannelInfo().setPayChannel(PayChannelCode.WECHAT).setPayWay(payModeParam.getPayWay())
-                .setAmount(payModeParam.getAmount()).setExtraParamsJson(payModeParam.getExtraParamsJson()));
+        payTypeInfos.add(new PayChannelInfo().setPayChannel(PayChannelCode.WECHAT)
+            .setPayWay(payModeParam.getPayWay())
+            .setAmount(payModeParam.getAmount())
+            .setExtraParamsJson(payModeParam.getExtraParamsJson()));
         payment.setPayChannelInfo(payTypeInfos);
         // 更新微信可退款类型信息
         refundableInfos
-                .add(new RefundableInfo().setPayChannel(PayChannelCode.WECHAT).setAmount(payModeParam.getAmount()));
+            .add(new RefundableInfo().setPayChannel(PayChannelCode.WECHAT).setAmount(payModeParam.getAmount()));
         payment.setRefundableInfo(refundableInfos);
         // 如果支付完成(付款码情况) 调用 updateSyncSuccess 创建微信支付记录
         if (Objects.equals(payment.getPayStatus(), PayStatusCode.TRADE_SUCCESS)) {
@@ -79,10 +81,14 @@ public class WeChatPaymentService {
 
         // 创建微信支付记录
         WeChatPayment wechatPayment = new WeChatPayment();
-        wechatPayment.setTradeNo(tradeNo).setPaymentId(payment.getId()).setAmount(payModeParam.getAmount())
-                .setRefundableBalance(payModeParam.getAmount()).setBusinessId(payment.getBusinessId())
-                .setUserId(payment.getUserId()).setPayStatus(PayStatusCode.TRADE_SUCCESS)
-                .setPayTime(LocalDateTime.now());
+        wechatPayment.setTradeNo(tradeNo)
+            .setPaymentId(payment.getId())
+            .setAmount(payModeParam.getAmount())
+            .setRefundableBalance(payModeParam.getAmount())
+            .setBusinessId(payment.getBusinessId())
+            .setUserId(payment.getUserId())
+            .setPayStatus(PayStatusCode.TRADE_SUCCESS)
+            .setPayTime(LocalDateTime.now());
         weChatPaymentManager.save(wechatPayment);
     }
 

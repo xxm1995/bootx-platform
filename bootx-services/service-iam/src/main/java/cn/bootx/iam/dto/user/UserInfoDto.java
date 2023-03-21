@@ -72,8 +72,13 @@ public class UserInfoDto extends BaseDto implements Serializable {
         if (CollUtil.isNotEmpty(this.getClientIdList())) {
             clientIds = this.getClientIdList().stream().map(Long::valueOf).collect(Collectors.toList());
         }
-        return new UserDetail().setId(this.getId()).setPassword(this.password).setUsername(this.getUsername())
-                .setName(this.name).setAdmin(this.admin).setAppIds(clientIds).setStatus(this.status);
+        return new UserDetail().setId(this.getId())
+            .setPassword(this.password)
+            .setUsername(this.getUsername())
+            .setName(this.name)
+            .setAdmin(this.admin)
+            .setAppIds(clientIds)
+            .setStatus(this.status);
     }
 
 }

@@ -42,8 +42,11 @@ public class DingOaMsg implements DingMsg {
      */
     @Override
     public Msg toDingMsg() {
-        Oa oa = new Oa().setMessageUrl(messageUrl).setPcMessageUrl(pcMessageUrl).setHead(head).setBody(body)
-                .setStatusBar(statusBar);
+        Oa oa = new Oa().setMessageUrl(messageUrl)
+            .setPcMessageUrl(pcMessageUrl)
+            .setHead(head)
+            .setBody(body)
+            .setStatusBar(statusBar);
 
         return new OaMsg(oa);
     }

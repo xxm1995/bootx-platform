@@ -42,7 +42,7 @@ public class MongoRangeHandler {
         Criteria criteria = Criteria.where(SequenceRange.Fields.rangeKey).is(key);
         Query query = new Query(criteria);
         SequenceRange range = Optional.ofNullable(mongoTemplate.findOne(query, SequenceRange.class))
-                .orElseThrow(() -> new SeqException("区间不存在"));
+            .orElseThrow(() -> new SeqException("区间不存在"));
         // 新区间开始值
         long stepValue = range.getRangeValue() + rangeStep;
         range.setRangeValue(stepValue);

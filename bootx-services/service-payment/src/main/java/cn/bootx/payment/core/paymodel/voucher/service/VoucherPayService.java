@@ -101,8 +101,10 @@ public class VoucherPayService {
             BigDecimal balance = voucher.getBalance();
             // 日志
             VoucherLog voucherLog = new VoucherLog().setPaymentId(payment.getId())
-                    .setBusinessId(payment.getBusinessId()).setType(VoucherCode.LOG_PAY).setVoucherId(voucher.getId())
-                    .setVoucherNo(voucher.getCardNo());
+                .setBusinessId(payment.getBusinessId())
+                .setType(VoucherCode.LOG_PAY)
+                .setVoucherId(voucher.getId())
+                .setVoucherNo(voucher.getCardNo());
 
             // 待支付额大于储值卡余额. 全扣光
             if (BigDecimalUtil.compareTo(amount, balance) == 1) {
@@ -128,16 +130,19 @@ public class VoucherPayService {
         List<VoucherLog> voucherLogs = voucherLogManager.findByPaymentIdAndType(paymentId, VoucherCode.LOG_PAY);
         // 查出关联的储值卡
         Map<Long, VoucherLog> voucherLogMap = voucherLogs.stream()
-                .collect(Collectors.toMap(VoucherLog::getVoucherId, Function.identity()));
+            .collect(Collectors.toMap(VoucherLog::getVoucherId, Function.identity()));
         List<Voucher> vouchers = voucherManager.findAllByIds(voucherLogMap.keySet());
         // 执行退款并记录日志
         List<VoucherLog> logs = new ArrayList<>();
         for (Voucher voucher : vouchers) {
             VoucherLog voucherLog = voucherLogMap.get(voucher.getId());
             voucher.setBalance(voucher.getBalance().add(voucherLog.getAmount()));
-            VoucherLog log = new VoucherLog().setAmount(voucherLog.getAmount()).setPaymentId(paymentId)
-                    .setBusinessId(voucherLog.getBusinessId()).setVoucherId(voucher.getId())
-                    .setVoucherNo(voucher.getCardNo()).setType(VoucherCode.LOG_CLOSE);
+            VoucherLog log = new VoucherLog().setAmount(voucherLog.getAmount())
+                .setPaymentId(paymentId)
+                .setBusinessId(voucherLog.getBusinessId())
+                .setVoucherId(voucher.getId())
+                .setVoucherNo(voucher.getCardNo())
+                .setType(VoucherCode.LOG_CLOSE);
             logs.add(log);
         }
         voucherManager.updateAllById(vouchers);
@@ -149,16 +154,19 @@ public class VoucherPayService {
      */
     public void refund(Long paymentId, BigDecimal amount) {
         VoucherPayment voucherPayment = voucherPaymentManager.findByPaymentId(paymentId)
-                .orElseThrow(() -> new PayFailureException("储值卡支付记录不存在"));
+            .orElseThrow(() -> new PayFailureException("储值卡支付记录不存在"));
 
         Long voucherId = Long.valueOf(voucherPayment.getVoucherIds().split(",")[0]);
         Voucher voucher = voucherManager.findById(voucherId).orElseThrow(DataNotExistException::new);
 
         voucher.setBalance(voucher.getBalance().add(amount));
 
-        VoucherLog log = new VoucherLog().setAmount(amount).setPaymentId(paymentId)
-                .setBusinessId(voucherPayment.getBusinessId()).setVoucherId(voucher.getId())
-                .setVoucherNo(voucher.getCardNo()).setType(VoucherCode.LOG_REFUND);
+        VoucherLog log = new VoucherLog().setAmount(amount)
+            .setPaymentId(paymentId)
+            .setBusinessId(voucherPayment.getBusinessId())
+            .setVoucherId(voucher.getId())
+            .setVoucherNo(voucher.getCardNo())
+            .setType(VoucherCode.LOG_REFUND);
         voucherManager.updateById(voucher);
         voucherLogManager.save(log);
     }
@@ -168,9 +176,10 @@ public class VoucherPayService {
      */
     private boolean check(List<Voucher> vouchers) {
         // 判断有效期
-        return vouchers.stream().filter(voucher -> !Objects.equals(voucher.getEnduring(), true))
-                .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(),
-                        voucher.getEndTime()));
+        return vouchers.stream()
+            .filter(voucher -> !Objects.equals(voucher.getEnduring(), true))
+            .allMatch(voucher -> LocalDateTimeUtil.between(LocalDateTime.now(), voucher.getStartTime(),
+                    voucher.getEndTime()));
     }
 
 }

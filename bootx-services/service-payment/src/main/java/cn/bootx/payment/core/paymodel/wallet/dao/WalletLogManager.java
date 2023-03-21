@@ -44,9 +44,11 @@ public class WalletLogManager extends BaseManager<WalletLogMapper, WalletLog> {
      */
     public Page<WalletLog> page(PageParam pageParam, WalletLogQueryParam query) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
-        return this.lambdaQuery().orderByDesc(MpIdEntity::getId)
-                .like(Objects.nonNull(query.getUserId()), WalletLog::getUserId, query.getUserId())
-                .like(Objects.nonNull(query.getWalletId()), WalletLog::getWalletId, query.getWalletId()).page(mpPage);
+        return this.lambdaQuery()
+            .orderByDesc(MpIdEntity::getId)
+            .like(Objects.nonNull(query.getUserId()), WalletLog::getUserId, query.getUserId())
+            .like(Objects.nonNull(query.getWalletId()), WalletLog::getWalletId, query.getWalletId())
+            .page(mpPage);
     }
 
     /**
@@ -54,8 +56,10 @@ public class WalletLogManager extends BaseManager<WalletLogMapper, WalletLog> {
      */
     public Page<WalletLog> pageByWalletId(PageParam pageParam, WalletLogQueryParam param) {
         Page<WalletLog> mpPage = MpUtil.getMpPage(pageParam, WalletLog.class);
-        return this.lambdaQuery().orderByDesc(MpIdEntity::getId).eq(WalletLog::getWalletId, param.getWalletId())
-                .page(mpPage);
+        return this.lambdaQuery()
+            .orderByDesc(MpIdEntity::getId)
+            .eq(WalletLog::getWalletId, param.getWalletId())
+            .page(mpPage);
     }
 
 }

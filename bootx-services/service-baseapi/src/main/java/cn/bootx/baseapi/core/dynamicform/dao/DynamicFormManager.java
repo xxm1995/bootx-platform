@@ -28,9 +28,10 @@ public class DynamicFormManager extends BaseManager<DynamicFormMapper, DynamicFo
     public Page<DynamicForm> page(PageParam pageParam, DynamicFormParam param) {
         Page<DynamicForm> mpPage = MpUtil.getMpPage(pageParam, DynamicForm.class);
         return lambdaQuery().select(DynamicForm.class, MpUtil::excludeBigField)
-                .like(Objects.nonNull(param.getCode()), DynamicForm::getCode, param.getCode())
-                .like(Objects.nonNull(param.getName()), DynamicForm::getName, param.getName())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+            .like(Objects.nonNull(param.getCode()), DynamicForm::getCode, param.getCode())
+            .like(Objects.nonNull(param.getName()), DynamicForm::getName, param.getName())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
     public boolean existsByCode(String code) {

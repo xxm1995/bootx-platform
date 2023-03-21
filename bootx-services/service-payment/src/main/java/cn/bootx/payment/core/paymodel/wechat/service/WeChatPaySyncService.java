@@ -31,10 +31,13 @@ public class WeChatPaySyncService {
      */
     public PaySyncResult syncPayStatus(Long paymentId, WeChatPayConfig weChatPayConfig) {
         PaySyncResult paySyncResult = new PaySyncResult().setPaySyncStatus(PaySyncStatus.FAIL);
-        Map<String, String> params = UnifiedOrderModel.builder().appid(weChatPayConfig.getAppId())
-                .mch_id(weChatPayConfig.getMchId()).nonce_str(WxPayKit.generateStr())
-                .out_trade_no(String.valueOf(paymentId)).build()
-                .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
+        Map<String, String> params = UnifiedOrderModel.builder()
+            .appid(weChatPayConfig.getAppId())
+            .mch_id(weChatPayConfig.getMchId())
+            .nonce_str(WxPayKit.generateStr())
+            .out_trade_no(String.valueOf(paymentId))
+            .build()
+            .createSign(weChatPayConfig.getApiKeyV2(), SignType.HMACSHA256);
         try {
             String xmlResult = WxPayApi.orderQuery(params);
             Map<String, String> result = WxPayKit.xmlToMap(xmlResult);

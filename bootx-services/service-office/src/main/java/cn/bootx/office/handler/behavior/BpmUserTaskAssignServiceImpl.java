@@ -82,8 +82,8 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
 
         // 情况三，如果非多实例的任务，则获取节点配置并设置处理人
         BpmModelNode modelTask = bpmModelNodeManager
-                .findByDefIdAndNodeId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
-                .orElseThrow(ModelNodeNotExistException::new);
+            .findByDefIdAndNodeId(task.getProcessDefinitionId(), task.getTaskDefinitionKey())
+            .orElseThrow(ModelNodeNotExistException::new);
         // 发起人
         if (Objects.equals(modelTask.getAssignType(), ASSIGN_SPONSOR)) {
             userId = this.getStartUserId(execution.getProcessInstanceId());
@@ -119,8 +119,11 @@ public class BpmUserTaskAssignServiceImpl implements BpmUserTaskAssignService {
         List<BpmTask> tasks = bpmTaskManager.findByInstanceIdAndNodeId(task.getProcessInstanceId(),
                 task.getTaskDefinitionKey());
         // noinspection OptionalGetWithoutIsPresent
-        return tasks.stream().filter(o -> Objects.nonNull(o.getEndTime()))
-                .max(Comparator.comparingLong(MpIdEntity::getId)).map(BpmTask::getUserId).get();
+        return tasks.stream()
+            .filter(o -> Objects.nonNull(o.getEndTime()))
+            .max(Comparator.comparingLong(MpIdEntity::getId))
+            .map(BpmTask::getUserId)
+            .get();
     }
 
     /**

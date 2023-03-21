@@ -59,7 +59,7 @@ public class MongoUploadService implements UploadService {
         Query query = new Query(criteria);
 
         GridFSFile gridFSFile = Optional.ofNullable(gridFsTemplate.findOne(query))
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         GridFsResource resource = gridFsTemplate.getResource(gridFSFile);
         InputStream inputStream = resource.getInputStream();
 
@@ -78,7 +78,7 @@ public class MongoUploadService implements UploadService {
         Query query = new Query(criteria);
 
         GridFSFile gridFSFile = Optional.ofNullable(gridFsTemplate.findOne(query))
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         GridFsResource resource = gridFsTemplate.getResource(gridFSFile);
         return resource.getInputStream();
     }

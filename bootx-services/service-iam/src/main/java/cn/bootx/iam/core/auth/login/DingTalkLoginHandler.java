@@ -71,11 +71,11 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
         AuthUser authUser = this.getAuthUser(authCode, state);
         // 获取钉钉关联的用户id
         UserThird userThird = userThirdManager.findByField(UserThird::getDingTalkId, authUser.getUuid())
-                .orElseThrow(() -> new LoginFailureException("钉钉没有找到绑定的用户"));
+            .orElseThrow(() -> new LoginFailureException("钉钉没有找到绑定的用户"));
 
         // 获取用户信息
         UserInfo userInfo = userInfoManager.findById(userThird.getUserId())
-                .orElseThrow(() -> new LoginFailureException("用户不存在"));
+            .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());
     }
@@ -121,9 +121,12 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
             throw new BizException("未在钉钉组织找到该用户，无法进行绑定");
         }
 
-        UserThirdInfo userThirdInfo = new UserThirdInfo().setUserId(userId).setClientCode(DING_TALK)
-                .setUsername(authUser.getUsername()).setNickname(authUser.getNickname()).setAvatar(authUser.getAvatar())
-                .setThirdUserId(thirdUserId);
+        UserThirdInfo userThirdInfo = new UserThirdInfo().setUserId(userId)
+            .setClientCode(DING_TALK)
+            .setUsername(authUser.getUsername())
+            .setNickname(authUser.getNickname())
+            .setAvatar(authUser.getAvatar())
+            .setThirdUserId(thirdUserId);
         userTiredOperateService.bindOpenInfo(userThirdInfo);
     }
 
@@ -135,8 +138,11 @@ public class DingTalkLoginHandler implements OpenIdAuthentication {
         if (Objects.isNull(thirdLogin)) {
             throw new LoginFailureException("钉钉开放登录配置有误");
         }
-        return new AuthDingTalkRequest(AuthConfig.builder().clientId(thirdLogin.getClientId())
-                .clientSecret(thirdLogin.getClientSecret()).redirectUri(thirdLogin.getRedirectUri()).build());
+        return new AuthDingTalkRequest(AuthConfig.builder()
+            .clientId(thirdLogin.getClientId())
+            .clientSecret(thirdLogin.getClientSecret())
+            .redirectUri(thirdLogin.getRedirectUri())
+            .build());
     }
 
 }

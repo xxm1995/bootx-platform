@@ -62,8 +62,11 @@ public class RequestPathService {
             String classFullName = beanClass.getName();
             String classRemark = this.getTagName(beanClass);
             for (RequestPath requestPath : requestPaths) {
-                requestPath.setClassName(className).setClassFullName(classFullName).setClassRemark(classRemark)
-                        .setMethodName(methodName).setMethodRemark(summary);
+                requestPath.setClassName(className)
+                    .setClassFullName(classFullName)
+                    .setClassRemark(classRemark)
+                    .setMethodName(methodName)
+                    .setMethodRemark(summary);
             }
             requestPathList.addAll(requestPaths);
         }
@@ -76,16 +79,22 @@ public class RequestPathService {
     private List<RequestPath> builderRequestPaths(RequestMappingInfo requestMappingInfo) {
         // 请求路径
         List<String> paths = Optional.ofNullable(requestMappingInfo.getPathPatternsCondition())
-                .map(PathPatternsRequestCondition::getPatternValues).map(CollUtil::newArrayList)
-                .orElse(new ArrayList<>(1));
+            .map(PathPatternsRequestCondition::getPatternValues)
+            .map(CollUtil::newArrayList)
+            .orElse(new ArrayList<>(1));
         if (CollUtil.isEmpty(paths)) {
             return null;
         }
         // 请求类型
-        List<String> requestMethods = requestMappingInfo.getMethodsCondition().getMethods().stream().map(Enum::name)
-                .collect(Collectors.toList());
-        return paths.stream().map(path -> this.builderRequestPaths(path, requestMethods)).flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        List<String> requestMethods = requestMappingInfo.getMethodsCondition()
+            .getMethods()
+            .stream()
+            .map(Enum::name)
+            .collect(Collectors.toList());
+        return paths.stream()
+            .map(path -> this.builderRequestPaths(path, requestMethods))
+            .flatMap(Collection::stream)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -93,8 +102,8 @@ public class RequestPathService {
      */
     private List<RequestPath> builderRequestPaths(String path, List<String> requestMethods) {
         return requestMethods.stream()
-                .map(requestMethod -> new RequestPath().setPath(path).setRequestType(requestMethod))
-                .collect(Collectors.toList());
+            .map(requestMethod -> new RequestPath().setPath(path).setRequestType(requestMethod))
+            .collect(Collectors.toList());
     }
 
     /**

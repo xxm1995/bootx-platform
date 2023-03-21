@@ -33,8 +33,9 @@ public class DataPermScopeHandlerImpl implements DataPermScopeHandler {
      */
     @Override
     public DataPermScope getDataPermScope() {
-        Long userId = DataPermContextHolder.getUserDetail().map(UserDetail::getId)
-                .orElseThrow(NotLoginPermException::new);
+        Long userId = DataPermContextHolder.getUserDetail()
+            .map(UserDetail::getId)
+            .orElseThrow(NotLoginPermException::new);
         return userDataScopeService.getDataPermScopeByUser(userId);
     }
 

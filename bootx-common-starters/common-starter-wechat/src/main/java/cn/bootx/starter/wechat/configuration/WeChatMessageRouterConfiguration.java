@@ -33,8 +33,12 @@ public class WeChatMessageRouterConfiguration {
 
         // 消息路由绑定
         for (WeChatMpMessageHandler weChatMpMessageHandler : weChatMpMessageHandlers) {
-            router.rule().async(false).msgType(weChatMpMessageHandler.getMsgType())
-                    .event(weChatMpMessageHandler.getEvent()).handler(weChatMpMessageHandler).end();
+            router.rule()
+                .async(false)
+                .msgType(weChatMpMessageHandler.getMsgType())
+                .event(weChatMpMessageHandler.getEvent())
+                .handler(weChatMpMessageHandler)
+                .end();
         }
         // 默认的 文本消息处理
         router.rule().async(false).handler(weChatMsgHandler).end();

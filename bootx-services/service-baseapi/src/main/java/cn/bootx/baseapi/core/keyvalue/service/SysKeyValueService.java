@@ -37,8 +37,10 @@ public class SysKeyValueService implements SystemKeyValueService {
      */
     @Override
     public List<KeyValue> gets(List<String> keys) {
-        return sysKeyValueManager.findAllByFields(SysKeyValue::getKey, keys).stream().map(SysKeyValue::toKeyValue)
-                .collect(Collectors.toList());
+        return sysKeyValueManager.findAllByFields(SysKeyValue::getKey, keys)
+            .stream()
+            .map(SysKeyValue::toKeyValue)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -47,7 +49,7 @@ public class SysKeyValueService implements SystemKeyValueService {
     @Override
     public void setup(String key, String value) {
         SysKeyValue sysKeyValue = sysKeyValueManager.findByField(SysKeyValue::getKey, key)
-                .orElse(new SysKeyValue().setKey(key).setValue(value));
+            .orElse(new SysKeyValue().setKey(key).setValue(value));
         sysKeyValueManager.saveOrUpdate(sysKeyValue);
     }
 

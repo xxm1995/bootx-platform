@@ -8,6 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * 敏感信息过滤
+ *
  * @author xxm
  * @date 2021/10/25
  */
@@ -33,6 +34,7 @@ public @interface SensitiveInfo {
 
     /**
      * 敏感信息
+     *
      * @author xxm
      * @date 2021/10/25
      */

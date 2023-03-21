@@ -52,7 +52,7 @@ public class SystemParamService implements ParamService {
     @Transactional(rollbackFor = Exception.class)
     public void update(SystemParameterParam param) {
         SystemParameter systemParameter = systemParamManager.findById(param.getId())
-                .orElseThrow(() -> new BizException("参数项不存在"));
+            .orElseThrow(() -> new BizException("参数项不存在"));
 
         if (systemParamManager.existsByKey(param.getParamKey(), param.getId())) {
             throw new BizException("key重复");
@@ -91,7 +91,7 @@ public class SystemParamService implements ParamService {
      */
     public void delete(Long id) {
         SystemParameter systemParameter = systemParamManager.findById(id)
-                .orElseThrow(() -> new BizException("系统参数不存在"));
+            .orElseThrow(() -> new BizException("系统参数不存在"));
         if (systemParameter.isInternal()) {
             throw new BizException("内置参数不可以被删除");
         }

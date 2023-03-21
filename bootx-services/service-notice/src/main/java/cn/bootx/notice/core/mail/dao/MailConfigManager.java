@@ -33,9 +33,11 @@ public class MailConfigManager extends BaseManager<MailConfigMapper, MailConfig>
 
     public Page<MailConfig> page(PageParam pageParam, MailConfigParam param) {
         Page<MailConfig> mpPage = MpUtil.getMpPage(pageParam, MailConfig.class);
-        return this.lambdaQuery().orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getCode()), MailConfig::getCode, param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()), MailConfig::getName, param.getName()).page(mpPage);
+        return this.lambdaQuery()
+            .orderByDesc(MpIdEntity::getId)
+            .like(StrUtil.isNotBlank(param.getCode()), MailConfig::getCode, param.getCode())
+            .like(StrUtil.isNotBlank(param.getName()), MailConfig::getName, param.getName())
+            .page(mpPage);
     }
 
     public boolean existsByCode(String code) {

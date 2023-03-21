@@ -46,14 +46,18 @@ public class BpmInstanceEvenListenerService {
     public void processCreated(ProcessInstance instance) {
         BpmContext bpmContext = BpmContextLocal.get();
         BpmInstance bpmInstance = new BpmInstance().setInstanceId(instance.getProcessInstanceId())
-                .setInstanceName(instance.getName()).setModelId(bpmContext.getModelId())
-                .setDefId(instance.getProcessDefinitionId()).setDefName(instance.getProcessDefinitionName())
-                .setStartTime(LocalDateTimeUtil.of(instance.getStartTime()))
-                .setFormVariables(bpmContext.getFormVariables()).setState(STATE_RUNNING);
+            .setInstanceName(instance.getName())
+            .setModelId(bpmContext.getModelId())
+            .setDefId(instance.getProcessDefinitionId())
+            .setDefName(instance.getProcessDefinitionName())
+            .setStartTime(LocalDateTimeUtil.of(instance.getStartTime()))
+            .setFormVariables(bpmContext.getFormVariables())
+            .setState(STATE_RUNNING);
 
         // 发起人信息
-        bpmContext.getStartUser().ifPresent(
-                userDetail -> bpmInstance.setStartUserId(userDetail.getId()).setStartUserName(userDetail.getName()));
+        bpmContext.getStartUser()
+            .ifPresent(userDetail -> bpmInstance.setStartUserId(userDetail.getId())
+                .setStartUserName(userDetail.getName()));
 
         bpmInstanceManager.save(bpmInstance);
         messageService.processCreated(bpmInstance);
@@ -83,8 +87,9 @@ public class BpmInstanceEvenListenerService {
         });
         if (Objects.equals(instanceState, STATE_CANCEL)) {
             List<BpmTask> tasks = bpmTaskManager.findRunningByInstanceId(instance.getProcessInstanceId());
-            tasks.forEach(task -> task.setState(TaskCode.STATE_CANCEL).setResult(TaskCode.RESULT_CANCEL)
-                    .setEndTime(LocalDateTime.now()));
+            tasks.forEach(task -> task.setState(TaskCode.STATE_CANCEL)
+                .setResult(TaskCode.RESULT_CANCEL)
+                .setEndTime(LocalDateTime.now()));
             bpmTaskManager.updateAllById(tasks);
             messageService.taskCancel(tasks);
         }

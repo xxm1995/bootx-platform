@@ -30,8 +30,10 @@ public class PayExpiredTimeTaskService {
      * 定时查询, 如果有过时的发送到消息队列
      */
     public void sync() {
-        List<Long> paymentIds = expiredTimeRepository.retrieveExpiredKeys(LocalDateTime.now()).stream()
-                .map(Long::valueOf).collect(Collectors.toList());
+        List<Long> paymentIds = expiredTimeRepository.retrieveExpiredKeys(LocalDateTime.now())
+            .stream()
+            .map(Long::valueOf)
+            .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(paymentIds)) {
             expiredTimeRepository.removeKeys(paymentIds.stream().map(String::valueOf).toArray(String[]::new));
             paymentIds.forEach(paymentEventSender::sendPaymentExpiredTime);

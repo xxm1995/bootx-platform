@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+import static cn.bootx.starter.wechat.code.WeChatCode.*;
+
 /**
  * 扫码事件
  *
@@ -40,8 +42,9 @@ public class WeChatQrLoginService {
         WxMpQrcodeService qrcodeService = wxMpService.getQrcodeService();
         long timeout = 5 * 60 * 1000;
         String qrCodeKey = IdUtil.getSnowflakeNextIdStr();
-        // 创建临时Key
-        WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(qrCodeKey, (int) timeout);
+        String wxKey = QRSCENE_LOGIN + qrCodeKey;
+        // 创建临时Key, 需要有指定的前缀
+        WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(wxKey, (int) timeout);
         String url = wxMpQrCodeTicket.getUrl();
         redisClient.setWithTimeout(PREFIX_KEY + qrCodeKey, "", timeout);
         return new WeChatLoginQrCode(qrCodeKey, url);
@@ -52,15 +55,17 @@ public class WeChatQrLoginService {
      */
     public String getStatus(String key) {
         String openId = redisClient.get(PREFIX_KEY + key);
-
+        // 超时
         if (Objects.isNull(openId)) {
-            return "expired";
+            return QR_LOGIN_EXPIRED;
         }
+        // 等待
         else if (StrUtil.isBlank(openId)) {
-            return "wait";
+            return QR_LOGIN_WAIT;
         }
+        // 登录成功
         else {
-            return "ok";
+            return QR_LOGIN_OK;
         }
     }
 

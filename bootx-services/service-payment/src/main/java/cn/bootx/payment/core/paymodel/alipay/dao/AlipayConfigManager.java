@@ -53,8 +53,9 @@ public class AlipayConfigManager extends BaseManager<AlipayConfigMapper, AlipayC
     public Page<AlipayConfig> page(PageParam pageParam, AlipayConfigQuery param) {
         Page<AlipayConfig> mpPage = MpUtil.getMpPage(pageParam, AlipayConfig.class);
         return lambdaQuery().select(AlipayConfig.class, MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getName()), AlipayConfig::getName, param.getName())
-                .like(StrUtil.isNotBlank(param.getAppId()), AlipayConfig::getAppId, param.getAppId()).page(mpPage);
+            .like(StrUtil.isNotBlank(param.getName()), AlipayConfig::getName, param.getName())
+            .like(StrUtil.isNotBlank(param.getAppId()), AlipayConfig::getAppId, param.getAppId())
+            .page(mpPage);
     }
 
     /**
@@ -62,8 +63,9 @@ public class AlipayConfigManager extends BaseManager<AlipayConfigMapper, AlipayC
      */
     public void removeAllActivity() {
         this.clearCache();
-        lambdaUpdate().eq(AlipayConfig::getActivity, Boolean.TRUE).set(AlipayConfig::getActivity, Boolean.FALSE)
-                .update();
+        lambdaUpdate().eq(AlipayConfig::getActivity, Boolean.TRUE)
+            .set(AlipayConfig::getActivity, Boolean.FALSE)
+            .update();
     }
 
     /**

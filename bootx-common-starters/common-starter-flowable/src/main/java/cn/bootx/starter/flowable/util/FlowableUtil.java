@@ -128,7 +128,7 @@ public class FlowableUtil {
                     // 获取子流程用户任务节点
                     List<UserTask> childUserTaskList = findChildProcessUserTasks(
                             (StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements()
-                                    .toArray()[0],
+                                .toArray()[0],
                             null, null);
                     // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
                     if (childUserTaskList != null && childUserTaskList.size() > 0) {
@@ -183,7 +183,7 @@ public class FlowableUtil {
                 if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
                     List<UserTask> childUserTaskList = findChildUserTasks(
                             (FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements()
-                                    .toArray()[0]),
+                                .toArray()[0]),
                             runTaskKeyList, hasSequenceFlow, null);
                     // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
                     if (childUserTaskList != null && childUserTaskList.size() > 0) {
@@ -232,7 +232,7 @@ public class FlowableUtil {
                 if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
                     List<UserTask> childUserTaskList = findChildProcessUserTasks(
                             (FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements()
-                                    .toArray()[0]),
+                                .toArray()[0]),
                             hasSequenceFlow, null);
                     // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
                     if (childUserTaskList != null && childUserTaskList.size() > 0) {
@@ -291,12 +291,12 @@ public class FlowableUtil {
                 if (sequenceFlow.getSourceFlowElement() instanceof SubProcess) {
                     dirtyRoads = findChildProcessAllDirtyRoad(
                             (StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements()
-                                    .toArray()[0],
+                                .toArray()[0],
                             null, dirtyRoads);
                     // 是否存在子流程上，true 是，false 否
                     Boolean isInChildProcess = dirtyTargetInChildProcess(
                             (StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements()
-                                    .toArray()[0],
+                                .toArray()[0],
                             null, targets, null);
                     if (isInChildProcess) {
                         // 已在子流程上找到，该路线结束
@@ -341,7 +341,7 @@ public class FlowableUtil {
                 if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
                     dirtyRoads = findChildProcessAllDirtyRoad(
                             (FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements()
-                                    .toArray()[0]),
+                                .toArray()[0]),
                             hasSequenceFlow, dirtyRoads);
                 }
                 // 继续迭代
@@ -386,7 +386,7 @@ public class FlowableUtil {
                 if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
                     inChildProcess = dirtyTargetInChildProcess(
                             (FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements()
-                                    .toArray()[0]),
+                                .toArray()[0]),
                             hasSequenceFlow, targets, inChildProcess);
                 }
                 // 继续迭代

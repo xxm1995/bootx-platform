@@ -33,10 +33,13 @@ public class SaTokenConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 注册路由拦截器，自定义验证规则
-        registry.addInterceptor(new SaRouteInterceptor((req, res, handler) -> SaRouter
-                .match(Collections.singletonList("/**")).notMatch(permitAllUrlProperties.getIgnoreUrls())
-                // 注册自定义鉴权路由配置
-                .check(saRouteHandler.check(handler)))).addPathPatterns("/**");
+        registry
+            .addInterceptor(
+                    new SaRouteInterceptor((req, res, handler) -> SaRouter.match(Collections.singletonList("/**"))
+                        .notMatch(permitAllUrlProperties.getIgnoreUrls())
+                        // 注册自定义鉴权路由配置
+                        .check(saRouteHandler.check(handler))))
+            .addPathPatterns("/**");
         // 注册注解拦截器
         registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
     }

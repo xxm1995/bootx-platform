@@ -66,8 +66,10 @@ public class TranslationCacheLocal {
 
         public String getDictValue(String dicCode, String code) {
             return dictItemCaches.stream()
-                    .filter(o -> Objects.equal(dicCode, o.getDictCode()) && Objects.equal(code, o.getCode()))
-                    .findFirst().map(DictItemValue::getValue).orElse(null);
+                .filter(o -> Objects.equal(dicCode, o.getDictCode()) && Objects.equal(code, o.getCode()))
+                .findFirst()
+                .map(DictItemValue::getValue)
+                .orElse(null);
         }
 
         public Object getTableValue(String table, String key, String param, String select) {

@@ -43,7 +43,7 @@ public class WecomRobotConfigService {
      */
     public void update(WecomRobotConfigParam param) {
         WecomRobotConfig wecomRobotConfig = robotConfigManager.findById(param.getId())
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
 
         BeanUtil.copyProperties(param, wecomRobotConfig, CopyOptions.create().ignoreNullValue());
         robotConfigManager.updateById(wecomRobotConfig);

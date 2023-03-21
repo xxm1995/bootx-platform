@@ -37,8 +37,11 @@ public class WeChatArticleDto {
     public static WeChatArticleDto init(WxMpFreePublishItem item) {
         DateTime date = DateUtil.date(Long.parseLong(item.getUpdateTime()));
         LocalDateTime localDateTime = DateUtil.toLocalDateTime(date);
-        String titles = item.getContent().getNewsItem().stream().map(WxMpFreePublishArticles::getTitle)
-                .collect(Collectors.joining(","));
+        String titles = item.getContent()
+            .getNewsItem()
+            .stream()
+            .map(WxMpFreePublishArticles::getTitle)
+            .collect(Collectors.joining(","));
         return new WeChatArticleDto().setArticleId(item.getArticleId()).setUpdateTime(localDateTime).setTitles(titles);
     }
 

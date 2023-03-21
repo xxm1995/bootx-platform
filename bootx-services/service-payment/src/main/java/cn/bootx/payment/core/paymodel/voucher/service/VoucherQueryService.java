@@ -43,8 +43,9 @@ public class VoucherQueryService {
      * 根据卡号查询
      */
     public VoucherDto findByCardNo(String cardNo) {
-        return voucherManager.findByCardNo(cardNo).map(Voucher::toDto)
-                .orElseThrow(() -> new DataNotExistException("储值卡不存在"));
+        return voucherManager.findByCardNo(cardNo)
+            .map(Voucher::toDto)
+            .orElseThrow(() -> new DataNotExistException("储值卡不存在"));
     }
 
 }

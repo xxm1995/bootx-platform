@@ -50,8 +50,10 @@ public class MpUtil {
         }
         List<T> collect = page.getRecords().stream().map(EntityBaseFunction::toDto).collect(Collectors.toList());
         // 构造 PageResult 对象
-        return new PageResult<T>().setSize(page.getSize()).setCurrent(page.getCurrent()).setTotal(page.getTotal())
-                .setRecords(collect);
+        return new PageResult<T>().setSize(page.getSize())
+            .setCurrent(page.getCurrent())
+            .setTotal(page.getTotal())
+            .setRecords(collect);
     }
 
     /**
@@ -62,8 +64,10 @@ public class MpUtil {
             return new PageResult<>();
         }
         // 构造 PageResult 对象
-        return new PageResult<T>().setSize(page.getSize()).setCurrent(page.getCurrent()).setTotal(page.getTotal())
-                .setRecords(page.getRecords());
+        return new PageResult<T>().setSize(page.getSize())
+            .setCurrent(page.getCurrent())
+            .setTotal(page.getTotal())
+            .setRecords(page.getRecords());
     }
 
     /**

@@ -66,9 +66,11 @@ public class PayModelUtil {
      * 获取异步支付参数
      */
     public PayModeParam getAsyncPayModeParam(PayParam payParam) {
-        return payParam.getPayModeList().stream()
-                .filter(payMode -> PayChannelCode.ASYNC_TYPE.contains(payMode.getPayChannel())).findFirst()
-                .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
+        return payParam.getPayModeList()
+            .stream()
+            .filter(payMode -> PayChannelCode.ASYNC_TYPE.contains(payMode.getPayChannel()))
+            .findFirst()
+            .orElseThrow(() -> new PayFailureException("支付方式数据异常"));
     }
 
     /**
@@ -81,11 +83,11 @@ public class PayModelUtil {
         switch (payChannelEnum) {
             case ALI: {
                 return JSONUtil.toJsonStr(new AliPayParam().setAuthCode(map.get(PayModelExtraCode.AUTH_CODE))
-                        .setReturnUrl(map.get(PayModelExtraCode.RETURN_URL)));
+                    .setReturnUrl(map.get(PayModelExtraCode.RETURN_URL)));
             }
             case WECHAT: {
                 return JSONUtil.toJsonStr(new WeChatPayParam().setOpenId(map.get(PayModelExtraCode.OPEN_ID))
-                        .setAuthCode(map.get(PayModelExtraCode.AUTH_CODE)));
+                    .setAuthCode(map.get(PayModelExtraCode.AUTH_CODE)));
             }
             case VOUCHER: {
                 String voucherNo = map.get(PayModelExtraCode.VOUCHER_NO);
@@ -120,8 +122,10 @@ public class PayModelUtil {
         // 组合支付时只允许有一个异步支付方式
         List<PayModeParam> payModeList = payParam.getPayModeList();
 
-        long asyncPayModeCount = payModeList.stream().map(PayModeParam::getPayChannel)
-                .filter(PayChannelCode.ASYNC_TYPE::contains).count();
+        long asyncPayModeCount = payModeList.stream()
+            .map(PayModeParam::getPayChannel)
+            .filter(PayChannelCode.ASYNC_TYPE::contains)
+            .count();
         if (asyncPayModeCount > 1) {
             throw new PayFailureException("组合支付时只允许有一个异步支付方式");
         }

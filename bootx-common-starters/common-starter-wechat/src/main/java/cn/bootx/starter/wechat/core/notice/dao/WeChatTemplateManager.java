@@ -25,11 +25,13 @@ public class WeChatTemplateManager extends BaseManager<WeChatTemplateMapper, WeC
 
     public Page<WeChatTemplate> page(PageParam pageParam, WeChatTemplateParam param) {
         Page<WeChatTemplate> mpPage = MpUtil.getMpPage(pageParam, WeChatTemplate.class);
-        return this.lambdaQuery().select(WeChatTemplate.class, MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getTemplateId()), WeChatTemplate::getTemplateId, param.getTemplateId())
-                .like(StrUtil.isNotBlank(param.getName()), WeChatTemplate::getName, param.getName())
-                .like(StrUtil.isNotBlank(param.getCode()), WeChatTemplate::getCode, param.getCode())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+        return this.lambdaQuery()
+            .select(WeChatTemplate.class, MpUtil::excludeBigField)
+            .like(StrUtil.isNotBlank(param.getTemplateId()), WeChatTemplate::getTemplateId, param.getTemplateId())
+            .like(StrUtil.isNotBlank(param.getName()), WeChatTemplate::getName, param.getName())
+            .like(StrUtil.isNotBlank(param.getCode()), WeChatTemplate::getCode, param.getCode())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
     public boolean existsByCode(String code, Long id) {

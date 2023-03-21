@@ -51,8 +51,9 @@ public class ProjectInfo extends MpBaseEntity implements EntityBaseFunction<Proj
     private String remark;
 
     public static ProjectInfo init(ProjectInfoSave param) {
-        ProjectInfo entity = new ProjectInfo().setName(param.getName()).setIndexImage(param.getIndexImage())
-                .setRemark(param.getRemark());
+        ProjectInfo entity = new ProjectInfo().setName(param.getName())
+            .setIndexImage(param.getIndexImage())
+            .setRemark(param.getRemark());
         entity.setId(param.getProjectId());
         if (CollUtil.isNotEmpty(param.getContent())) {
             entity.setContent(JacksonUtil.toJson(param.getContent()));

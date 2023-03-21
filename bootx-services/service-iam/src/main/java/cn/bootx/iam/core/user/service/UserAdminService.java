@@ -113,8 +113,11 @@ public class UserAdminService {
         BeanUtil.copyProperties(param, userInfoParam);
         userInfoParam.setName(param.getUsername());
         // TODO 默认注册就有所有终端的权限, 后期优化
-        List<String> ids = clientManager.findAll().stream().map(MpIdEntity::getId).map(String::valueOf)
-                .collect(Collectors.toList());
+        List<String> ids = clientManager.findAll()
+            .stream()
+            .map(MpIdEntity::getId)
+            .map(String::valueOf)
+            .collect(Collectors.toList());
         userInfoParam.setClientIdList(ids);
         this.add(userInfoParam);
     }
@@ -135,8 +138,10 @@ public class UserAdminService {
         }
         // 注册时间
         UserInfo userInfo = UserInfo.init(userInfoParam);
-        userInfo.setAdmin(false).setStatus(UserStatusCode.NORMAL)
-                .setPassword(passwordEncoder.encode(userInfo.getPassword())).setRegisterTime(LocalDateTime.now());
+        userInfo.setAdmin(false)
+            .setStatus(UserStatusCode.NORMAL)
+            .setPassword(passwordEncoder.encode(userInfo.getPassword()))
+            .setRegisterTime(LocalDateTime.now());
         userInfoManager.save(userInfo);
         // 扩展信息
         UserExpandInfo userExpandInfo = new UserExpandInfo();
@@ -164,7 +169,7 @@ public class UserAdminService {
      */
     public UserInfoDto update(UserInfoParam userInfoParam) {
         UserInfo userInfo = userInfoManager.findById(userInfoParam.getId())
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         userInfoParam.setPassword(null);
         BeanUtil.copyProperties(userInfoParam, userInfo, CopyOptions.create().ignoreNullValue());
         if (CollUtil.isNotEmpty(userInfoParam.getClientIdList())) {
@@ -183,13 +188,15 @@ public class UserAdminService {
         // 用户信息
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userId)
-                .orElseThrow(UserInfoNotExistsException::new);
+            .orElseThrow(UserInfoNotExistsException::new);
         // 角色信息
         List<RoleDto> rolesByUser = userRoleService.findRolesByUser(userId);
         // 部门组织
         List<DeptDto> deptListByUser = userDeptService.findDeptListByUser(userId);
-        return new UserInfoWhole().setUserInfo(userInfo.toDto()).setUserExpandInfo(userExpandInfo.toDto())
-                .setRoles(rolesByUser).setDeptList(deptListByUser);
+        return new UserInfoWhole().setUserInfo(userInfo.toDto())
+            .setUserExpandInfo(userExpandInfo.toDto())
+            .setRoles(rolesByUser)
+            .setDeptList(deptListByUser);
     }
 
 }

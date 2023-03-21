@@ -64,8 +64,10 @@ public class ProjectInfoService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ProjectInfoResult create(CreateParam param) {
-        ProjectInfo info = new ProjectInfo().setState(GoVIewCode.STATE_UN_PUBLISH).setEdit(false)
-                .setName(param.getProjectName()).setRemark(param.getRemark());
+        ProjectInfo info = new ProjectInfo().setState(GoVIewCode.STATE_UN_PUBLISH)
+            .setEdit(false)
+            .setName(param.getProjectName())
+            .setRemark(param.getRemark());
         projectInfoManager.save(info);
         ProjectInfoPublish projectInfoPublish = new ProjectInfoPublish();
         projectInfoPublish.setId(info.getId());
@@ -80,8 +82,10 @@ public class ProjectInfoService {
         Page<ProjectInfo> infoPage = projectInfoManager.page(new PageParam(page, limit), new ProjectInfoSave());
         GoVIewPageResult<List<ProjectInfoResult>> pageResult = new GoVIewPageResult<>();
         pageResult.setCount(Math.toIntExact(infoPage.getTotal()));
-        List<ProjectInfoResult> projectInfoResults = infoPage.getRecords().stream().map(this::toResult)
-                .collect(Collectors.toList());
+        List<ProjectInfoResult> projectInfoResults = infoPage.getRecords()
+            .stream()
+            .map(this::toResult)
+            .collect(Collectors.toList());
         pageResult.setData(projectInfoResults);
         return pageResult;
     }
@@ -105,10 +109,11 @@ public class ProjectInfoService {
      * 获取预览(已发布)数据
      */
     public ProjectInfoResult getPublishData(Long projectId) {
-        ProjectInfoResult projectInfoResult = projectInfoManager.findById(projectId).map(this::toResult)
-                .orElseThrow(DataNotExistException::new);
+        ProjectInfoResult projectInfoResult = projectInfoManager.findById(projectId)
+            .map(this::toResult)
+            .orElseThrow(DataNotExistException::new);
         ProjectInfoPublish projectInfoPublish = publishManager.findById(projectId)
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         if (StrUtil.isBlank(projectInfoPublish.getContent())) {
             return null;
         }
@@ -137,7 +142,7 @@ public class ProjectInfoService {
     public void update(ProjectInfoSave param) {
         ProjectInfo init = ProjectInfo.init(param);
         ProjectInfo projectInfo = projectInfoManager.findById(param.getProjectId())
-                .orElseThrow(DataNotExistException::new);
+            .orElseThrow(DataNotExistException::new);
         CopyOptions copyOptions = CopyOptions.create().ignoreNullValue().setIgnoreProperties(ProjectInfo::getVersion);
         BeanUtil.copyProperties(init, projectInfo, copyOptions);
         projectInfo.setEdit(true);
@@ -189,8 +194,11 @@ public class ProjectInfoService {
         ProjectInfo projectInfo = projectInfoManager.findById(id).orElseThrow(DataNotExistException::new);
         ProjectInfoPublish projectInfoPublish = publishManager.findById(id).orElseThrow(DataNotExistException::new);
         ProjectInfo newProjectInfo = new ProjectInfo().setName(projectInfo.getName() + "复制")
-                .setContent(projectInfo.getContent()).setRemark(projectInfo.getRemark())
-                .setState(projectInfo.getState()).setEdit(false).setIndexImage(projectInfo.getIndexImage());
+            .setContent(projectInfo.getContent())
+            .setRemark(projectInfo.getRemark())
+            .setState(projectInfo.getState())
+            .setEdit(false)
+            .setIndexImage(projectInfo.getIndexImage());
         projectInfoManager.save(newProjectInfo);
         ProjectInfoPublish newProjectInfoPublish = new ProjectInfoPublish().setContent(projectInfoPublish.getContent());
         newProjectInfoPublish.setId(newProjectInfo.getId());
@@ -240,8 +248,10 @@ public class ProjectInfoService {
      */
     private ProjectInfoResult toResult(ProjectInfo projectInfo) {
         ProjectInfoResult projectInfoResult = new ProjectInfoResult().setId(projectInfo.getId())
-                .setProjectName(projectInfo.getName()).setState(projectInfo.getState())
-                .setContent(projectInfo.getContent()).setRemarks(projectInfo.getRemark());
+            .setProjectName(projectInfo.getName())
+            .setState(projectInfo.getState())
+            .setContent(projectInfo.getContent())
+            .setRemarks(projectInfo.getRemark());
         // 转换访问地址
         String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
         if (Objects.nonNull(projectInfo.getIndexImage())) {

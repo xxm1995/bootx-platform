@@ -31,8 +31,10 @@ public class DingCorpNoticeParam {
      * 转换成钉钉消息发送参数
      */
     public CorpNotice toDingCorpNotice() {
-        return new CorpNotice().setToAllUser(receive.isToAllUser()).setDeptIdList(receive.getDeptIdList())
-                .setUseridList(receive.getUseridList()).setMsg(dingMsg.toDingMsg());
+        return new CorpNotice().setToAllUser(receive.isToAllUser())
+            .setDeptIdList(receive.getDeptIdList())
+            .setUseridList(receive.getUseridList())
+            .setMsg(dingMsg.toDingMsg());
     }
 
 }

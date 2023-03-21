@@ -24,7 +24,7 @@ public class CertUtil {
     @SneakyThrows
     public String getCertByContent(String certContent) {
         X509Certificate cert = X509Certificate
-                .getInstance(new ByteArrayInputStream(certContent.getBytes(StandardCharsets.UTF_8)));
+            .getInstance(new ByteArrayInputStream(certContent.getBytes(StandardCharsets.UTF_8)));
         PublicKey publicKey = cert.getPublicKey();
         return Base64Encoder.encode(publicKey.getEncoded());
     }

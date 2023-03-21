@@ -149,8 +149,9 @@ public class QuartzJobService {
      * 同步状态
      */
     public void syncJobStatus() {
-        Map<String, QuartzJob> quartzJobMap = quartzJobManager.findRunning().stream()
-                .collect(Collectors.toMap(o -> o.getId().toString(), Function.identity()));
+        Map<String, QuartzJob> quartzJobMap = quartzJobManager.findRunning()
+            .stream()
+            .collect(Collectors.toMap(o -> o.getId().toString(), Function.identity()));
 
         List<Trigger> triggers = jobScheduler.findTriggers();
 

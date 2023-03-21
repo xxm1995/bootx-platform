@@ -50,8 +50,11 @@ public class WalletService {
         Wallet wallet = new Wallet().setUserId(userId).setBalance(BigDecimal.ZERO).setStatus(WalletCode.STATUS_NORMAL);
         walletManager.save(wallet);
         // 激活 log
-        WalletLog activeLog = new WalletLog().setWalletId(wallet.getId()).setUserId(wallet.getUserId())
-                .setType(WalletCode.LOG_ACTIVE).setRemark("激活钱包").setOperationSource(WalletCode.OPERATION_SOURCE_USER);
+        WalletLog activeLog = new WalletLog().setWalletId(wallet.getId())
+            .setUserId(wallet.getUserId())
+            .setType(WalletCode.LOG_ACTIVE)
+            .setRemark("激活钱包")
+            .setOperationSource(WalletCode.OPERATION_SOURCE_USER);
         walletLogManager.save(activeLog);
     }
 
@@ -62,14 +65,20 @@ public class WalletService {
         // 查询出
         List<Long> existUserIds = walletManager.findExistUserIds(userIds);
         userIds.removeAll(existUserIds);
-        List<Wallet> wallets = userIds.stream().map(userId -> new Wallet().setUserId(userId)
-                .setStatus(WalletCode.STATUS_NORMAL).setBalance(BigDecimal.ZERO)).collect(Collectors.toList());
+        List<Wallet> wallets = userIds.stream()
+            .map(userId -> new Wallet().setUserId(userId)
+                .setStatus(WalletCode.STATUS_NORMAL)
+                .setBalance(BigDecimal.ZERO))
+            .collect(Collectors.toList());
         walletManager.saveAll(wallets);
         List<WalletLog> walletLogs = wallets.stream()
-                .map(wallet -> new WalletLog().setWalletId(wallet.getId()).setUserId(wallet.getUserId())
-                        .setAmount(BigDecimal.ZERO).setType(WalletCode.LOG_ACTIVE).setRemark("激活钱包")
-                        .setOperationSource(WalletCode.OPERATION_SOURCE_USER))
-                .collect(Collectors.toList());
+            .map(wallet -> new WalletLog().setWalletId(wallet.getId())
+                .setUserId(wallet.getUserId())
+                .setAmount(BigDecimal.ZERO)
+                .setType(WalletCode.LOG_ACTIVE)
+                .setRemark("激活钱包")
+                .setOperationSource(WalletCode.OPERATION_SOURCE_USER))
+            .collect(Collectors.toList());
         walletLogManager.saveAll(walletLogs);
     }
 
@@ -102,10 +111,12 @@ public class WalletService {
             return;
         }
         Wallet wallet = walletManager.findById(param.getWalletId()).orElseThrow(DataNotExistException::new);
-        WalletLog walletLog = new WalletLog().setAmount(param.getAmount()).setWalletId(wallet.getId())
-                .setType(WalletCode.LOG_ADMIN_CHANGER).setUserId(wallet.getUserId())
-                .setRemark(String.format("系统变动余额 %.2f ", param.getAmount()))
-                .setOperationSource(WalletCode.OPERATION_SOURCE_ADMIN);
+        WalletLog walletLog = new WalletLog().setAmount(param.getAmount())
+            .setWalletId(wallet.getId())
+            .setType(WalletCode.LOG_ADMIN_CHANGER)
+            .setUserId(wallet.getUserId())
+            .setRemark(String.format("系统变动余额 %.2f ", param.getAmount()))
+            .setOperationSource(WalletCode.OPERATION_SOURCE_ADMIN);
         walletLogManager.save(walletLog);
     }
 
@@ -139,11 +150,15 @@ public class WalletService {
         walletManager.reduceBalanceUnlimited(walletLog.getWalletId(), walletLog.getAmount());
 
         // 记录日志
-        WalletLog log = new WalletLog().setWalletId(walletLog.getWalletId()).setUserId(walletLog.getUserId())
-                .setPaymentId(paymentId).setAmount(walletLog.getAmount()).setType(WalletCode.LOG_SYSTEM_REDUCE_BALANCE)
-                .setRemark(String.format("系统减少余额 %.2f (" + remark + ")", walletLog.getAmount()))
-                .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM).setPaymentId(paymentId)
-                .setBusinessId(String.valueOf(orderId));
+        WalletLog log = new WalletLog().setWalletId(walletLog.getWalletId())
+            .setUserId(walletLog.getUserId())
+            .setPaymentId(paymentId)
+            .setAmount(walletLog.getAmount())
+            .setType(WalletCode.LOG_SYSTEM_REDUCE_BALANCE)
+            .setRemark(String.format("系统减少余额 %.2f (" + remark + ")", walletLog.getAmount()))
+            .setOperationSource(WalletCode.OPERATION_SOURCE_SYSTEM)
+            .setPaymentId(paymentId)
+            .setBusinessId(String.valueOf(orderId));
         walletLogManager.save(log);
 
     }

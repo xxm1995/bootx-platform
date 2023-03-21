@@ -42,9 +42,11 @@ public class DataVersionLogDbService implements DataVersionLogService {
     public void add(DataVersionLogParam param) {
         int maxVersion = manager.getMaxVersion(param.getTableName(), param.getDataId());
         DataVersionLogDb dataVersionLog = new DataVersionLogDb().setTableName(param.getTableName())
-                .setDataName(param.getDataName()).setDataId(param.getDataId())
-                .setCreator(SecurityUtil.getUserIdOrDefaultId()).setCreateTime(LocalDateTime.now())
-                .setVersion(maxVersion + 1);
+            .setDataName(param.getDataName())
+            .setDataId(param.getDataId())
+            .setCreator(SecurityUtil.getUserIdOrDefaultId())
+            .setCreateTime(LocalDateTime.now())
+            .setVersion(maxVersion + 1);
         if (param.getDataContent() instanceof String) {
             dataVersionLog.setDataContent((String) param.getDataContent());
         }

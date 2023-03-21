@@ -90,18 +90,17 @@ public class CachingConfiguration extends CachingConfigurerSupport {
 
         // redis缓存配置
         return RedisCacheConfiguration.defaultCacheConfig()
-                // 设置key为String
-                .serializeKeysWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                // 设置value 为自动转Json的Object
-                .serializeValuesWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer))
-                // 不缓存null
-                .disableCachingNullValues()
-                // 覆盖默认的构造key，否则会多出一个冒号
-                .computePrefixWith(name -> name + ":")
-                // 过期时间
-                .entryTtl(duration);
+            // 设置key为String
+            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+            // 设置value 为自动转Json的Object
+            .serializeValuesWith(
+                    RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer))
+            // 不缓存null
+            .disableCachingNullValues()
+            // 覆盖默认的构造key，否则会多出一个冒号
+            .computePrefixWith(name -> name + ":")
+            // 过期时间
+            .entryTtl(duration);
     }
 
 }

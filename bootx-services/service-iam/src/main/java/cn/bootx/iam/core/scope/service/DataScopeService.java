@@ -109,11 +109,14 @@ public class DataScopeService {
         // 要删除的
         List<Long> deptIds = param.getDeptIds();
         List<Long> deleteIds = dateScopedDeptList.stream()
-                .filter(dataScopeDept -> !deptIds.contains(dataScopeDept.getDeptId())).map(MpIdEntity::getId)
-                .collect(Collectors.toList());
+            .filter(dataScopeDept -> !deptIds.contains(dataScopeDept.getDeptId()))
+            .map(MpIdEntity::getId)
+            .collect(Collectors.toList());
         // 要增加的
-        List<DataScopeDept> dataScopeDepths = deptIds.stream().filter(id -> !deptIdsByDb.contains(id))
-                .map(deptId -> new DataScopeDept(param.getDataScopeId(), deptId)).collect(Collectors.toList());
+        List<DataScopeDept> dataScopeDepths = deptIds.stream()
+            .filter(id -> !deptIdsByDb.contains(id))
+            .map(deptId -> new DataScopeDept(param.getDataScopeId(), deptId))
+            .collect(Collectors.toList());
         dataScopeDeptManager.deleteByIds(deleteIds);
         dataScopeDeptManager.saveAll(dataScopeDepths);
     }
@@ -130,8 +133,10 @@ public class DataScopeService {
      * 获取关联的部门id集合
      */
     public List<Long> findDeptIds(Long id) {
-        return dataScopeDeptManager.findByDateScopeId(id).stream().map(DataScopeDept::getDeptId)
-                .collect(Collectors.toList());
+        return dataScopeDeptManager.findByDateScopeId(id)
+            .stream()
+            .map(DataScopeDept::getDeptId)
+            .collect(Collectors.toList());
     }
 
     /**

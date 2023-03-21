@@ -37,7 +37,7 @@ public class WechatNoticeService {
     @SneakyThrows
     public String sentNotice(String code, String wxOpenId, List<KeyValue> keyValues) {
         WeChatTemplate weChatTemplate = weChatTemplateManager.findTemplateIdByCode(code)
-                .orElseThrow(() -> new DataNotExistException("微信消息模板不存在"));
+            .orElseThrow(() -> new DataNotExistException("微信消息模板不存在"));
         return this.sentNoticeByTemplateId(weChatTemplate.getTemplateId(), wxOpenId, keyValues);
     }
 
@@ -52,8 +52,8 @@ public class WechatNoticeService {
         message.setTemplateId(templateId);
 
         List<WxMpTemplateData> wxMpTemplateData = keyValues.stream()
-                .map(keyValue -> new WxMpTemplateData(keyValue.getKey(), keyValue.getValue()))
-                .collect(Collectors.toList());
+            .map(keyValue -> new WxMpTemplateData(keyValue.getKey(), keyValue.getValue()))
+            .collect(Collectors.toList());
         message.setData(wxMpTemplateData);
         return templateMsgService.sendTemplateMsg(message);
     }

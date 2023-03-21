@@ -40,12 +40,14 @@ public class DynamicDataSourceManager extends BaseManager<DynamicDataSourceMappe
      */
     public Page<DynamicDataSource> page(PageParam pageParam, DynamicDataSourceParam param) {
         Page<DynamicDataSource> mpPage = MpUtil.getMpPage(pageParam, DynamicDataSource.class);
-        return this.lambdaQuery().select(this.getEntityClass(), MpUtil::excludeBigField)
-                .eq(StrUtil.isNotBlank(param.getDatabaseType()), DynamicDataSource::getDatabaseType,
-                        param.getDatabaseType())
-                .like(StrUtil.isNotBlank(param.getCode()), DynamicDataSource::getCode, param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()), DynamicDataSource::getName, param.getName())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+        return this.lambdaQuery()
+            .select(this.getEntityClass(), MpUtil::excludeBigField)
+            .eq(StrUtil.isNotBlank(param.getDatabaseType()), DynamicDataSource::getDatabaseType,
+                    param.getDatabaseType())
+            .like(StrUtil.isNotBlank(param.getCode()), DynamicDataSource::getCode, param.getCode())
+            .like(StrUtil.isNotBlank(param.getName()), DynamicDataSource::getName, param.getName())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
 }

@@ -47,9 +47,9 @@ public class DatabaseTableService {
         QueryWrapper<DatabaseTable> wrapper = new QueryWrapper<>();
 
         wrapper.like(StrUtil.isNotBlank(param.getTableName()), DatabaseTable.Fields.tableName, param.getTableName())
-                .like(StrUtil.isNotBlank(param.getTableComment()), DatabaseTable.Fields.tableComment,
-                        param.getTableComment())
-                .orderByDesc(DatabaseTable.Fields.createTime, DatabaseTable.Fields.tableName);
+            .like(StrUtil.isNotBlank(param.getTableComment()), DatabaseTable.Fields.tableComment,
+                    param.getTableComment())
+            .orderByDesc(DatabaseTable.Fields.createTime, DatabaseTable.Fields.tableName);
         return databaseTableMapper.page(mpPage, wrapper);
     }
 

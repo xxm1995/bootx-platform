@@ -57,10 +57,12 @@ public class FieldTranslationService {
         }
         // 遍历字段, 判断是否有嵌套对象
         List<ConvertInfo> list = Arrays.stream(BeanUtil.getPropertyDescriptors(object.getClass()))
-                .map(this::initConvertInfo).collect(Collectors.toList());
+            .map(this::initConvertInfo)
+            .collect(Collectors.toList());
         // 加注解的嵌套对象进行递归处理
-        List<ConvertInfo> translationResults = list.stream().filter(o -> Objects.nonNull(o.getTranslationResult()))
-                .collect(Collectors.toList());
+        List<ConvertInfo> translationResults = list.stream()
+            .filter(o -> Objects.nonNull(o.getTranslationResult()))
+            .collect(Collectors.toList());
         for (cn.bootx.common.translate.domain.ConvertInfo translationResult : translationResults) {
             Object fieldValue = BeanUtil.getFieldValue(object, translationResult.getName());
             if (Objects.nonNull(fieldValue)) {
@@ -72,8 +74,10 @@ public class FieldTranslationService {
             }
         }
         // 筛选出带翻译注解的进行字段翻译
-        list.stream().filter(o -> Objects.nonNull(o.getTranslate()))
-                .peek(convertInfo -> isAndGetFieldType(convertInfo, object)).forEach(o -> this.translation0(o, object));
+        list.stream()
+            .filter(o -> Objects.nonNull(o.getTranslate()))
+            .peek(convertInfo -> isAndGetFieldType(convertInfo, object))
+            .forEach(o -> this.translation0(o, object));
     }
 
     /**
@@ -136,8 +140,10 @@ public class FieldTranslationService {
         Translate translate = AnnotationUtil.getAnnotation(field, Translate.class);
         TranslationResult translationResult = AnnotationUtil.getAnnotation(field, TranslationResult.class);
 
-        return new ConvertInfo().setName(descriptor.getName()).setField(field).setTranslate(translate)
-                .setTranslationResult(translationResult);
+        return new ConvertInfo().setName(descriptor.getName())
+            .setField(field)
+            .setTranslate(translate)
+            .setTranslationResult(translationResult);
     }
 
     /**
@@ -173,8 +179,8 @@ public class FieldTranslationService {
 
         // 遍历字段, 判断是否有嵌套对象
         Map<String, ConvertInfo> convertInfoMap = Arrays.stream(BeanUtil.getPropertyDescriptors(object.getClass()))
-                .map(this::initConvertInfo)
-                .collect(Collectors.toMap(ConvertInfo::getName, Function.identity(), CollectorsFunction::retainLatest));
+            .map(this::initConvertInfo)
+            .collect(Collectors.toMap(ConvertInfo::getName, Function.identity(), CollectorsFunction::retainLatest));
 
         // 加注解的嵌套对象进行递归处理
         convertInfoMap.values().stream().filter(o -> Objects.nonNull(o.getTranslationResult())).forEach(o -> {
@@ -186,8 +192,10 @@ public class FieldTranslationService {
         });
 
         // 筛选出带翻译注解的进行字段翻译转换
-        convertInfoMap.values().stream().filter(o -> Objects.nonNull(o.getTranslate()))
-                .forEach(o -> this.translationToMap0(o, object, map));
+        convertInfoMap.values()
+            .stream()
+            .filter(o -> Objects.nonNull(o.getTranslate()))
+            .forEach(o -> this.translationToMap0(o, object, map));
         return map;
     }
 
@@ -231,8 +239,9 @@ public class FieldTranslationService {
     private Object getTranslationValue(Translate translate, Object fieldValue) {
         // 集合
         if (fieldValue instanceof Collection) {
-            return ((Collection<?>) fieldValue).stream().map(o -> this.getTranslationValue(translate, o))
-                    .collect(getCollectorType(fieldValue));
+            return ((Collection<?>) fieldValue).stream()
+                .map(o -> this.getTranslationValue(translate, o))
+                .collect(getCollectorType(fieldValue));
         }
 
         // 普通

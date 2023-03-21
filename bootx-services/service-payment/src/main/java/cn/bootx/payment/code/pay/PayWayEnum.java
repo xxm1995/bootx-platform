@@ -10,6 +10,7 @@ import java.util.Objects;
 
 /**
  * 支付方式
+ *
  * @author xxm
  * @date 2021/7/26
  */
@@ -36,16 +37,20 @@ public enum PayWayEnum {
      * 根据数字编号获取
      */
     public static PayWayEnum findByNo(int no) {
-        return Arrays.stream(PayWayEnum.values()).filter(e -> e.getNo() == no).findFirst()
-                .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
+        return Arrays.stream(PayWayEnum.values())
+            .filter(e -> e.getNo() == no)
+            .findFirst()
+            .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
 
     /**
      * 根据字符编码获取
      */
     public static PayWayEnum findByCode(String code) {
-        return Arrays.stream(PayWayEnum.values()).filter(e -> Objects.equals(code, e.getCode())).findFirst()
-                .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
+        return Arrays.stream(PayWayEnum.values())
+            .filter(e -> Objects.equals(code, e.getCode()))
+            .findFirst()
+            .orElseThrow(() -> new PayFailureException("不存在的支付方式"));
     }
 
 }

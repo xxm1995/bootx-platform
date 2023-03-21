@@ -58,8 +58,9 @@ public class UserThirdQueryService {
     public UserThirdBindInfo getThirdBindInfo() {
         Long userId = SecurityUtil.getUserId();
         UserThirdBindInfo userThirdBindInfo = new UserThirdBindInfo();
-        Map<String, UserThirdInfo> thirdInfoMap = userThirdInfoManager.findAllByUser(userId).stream()
-                .collect(Collectors.toMap(UserThirdInfo::getClientCode, Function.identity()));
+        Map<String, UserThirdInfo> thirdInfoMap = userThirdInfoManager.findAllByUser(userId)
+            .stream()
+            .collect(Collectors.toMap(UserThirdInfo::getClientCode, Function.identity()));
         userThirdBindInfo.setWeChat(getBindInfo(thirdInfoMap, WE_CHAT));
         userThirdBindInfo.setWeChatOpen(getBindInfo(thirdInfoMap, WE_CHAT_OPEN));
         userThirdBindInfo.setWeCom(getBindInfo(thirdInfoMap, WE_COM));

@@ -56,8 +56,8 @@ public class DingAccessService {
                 }
             }
             while (!locked);
-            SpringUtil.getBean(getClass()).getAppAccessToken(dingTalkProperties.getAppKey(),
-                    dingTalkProperties.getAppSecret());
+            SpringUtil.getBean(getClass())
+                .getAppAccessToken(dingTalkProperties.getAppKey(), dingTalkProperties.getAppSecret());
         }
         catch (InterruptedException e) {
             throw new BizException("获取钉钉应用AccessToken失败");

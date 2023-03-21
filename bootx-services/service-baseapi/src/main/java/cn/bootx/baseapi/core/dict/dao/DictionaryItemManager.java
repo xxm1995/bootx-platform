@@ -31,8 +31,10 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
     }
 
     public boolean existsByCode(String code, Long dictId, Long itemId) {
-        return lambdaQuery().eq(DictionaryItem::getCode, code).eq(DictionaryItem::getDictId, dictId)
-                .ne(MpIdEntity::getId, itemId).exists();
+        return lambdaQuery().eq(DictionaryItem::getCode, code)
+            .eq(DictionaryItem::getDictId, dictId)
+            .ne(MpIdEntity::getId, itemId)
+            .exists();
     }
 
     /**
@@ -54,8 +56,10 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
      */
     public Page<DictionaryItem> findAllByDictionaryId(Long dictId, PageParam pageParam) {
         Page<DictionaryItem> mpPage = MpUtil.getMpPage(pageParam, DictionaryItem.class);
-        return lambdaQuery().eq(DictionaryItem::getDictId, dictId).orderByAsc(DictionaryItem::getSortNo)
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+        return lambdaQuery().eq(DictionaryItem::getDictId, dictId)
+            .orderByAsc(DictionaryItem::getSortNo)
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
     public void updateDictCode(Long dictId, String dictCode) {
@@ -67,8 +71,10 @@ public class DictionaryItemManager extends BaseManager<DictionaryItemMapper, Dic
     }
 
     public Optional<DictionaryItem> findByCodeAndEnable(String dictCode, String code, boolean enable) {
-        return lambdaQuery().eq(DictionaryItem::getDictCode, dictCode).eq(DictionaryItem::getCode, code)
-                .eq(DictionaryItem::getEnable, enable).oneOpt();
+        return lambdaQuery().eq(DictionaryItem::getDictCode, dictCode)
+            .eq(DictionaryItem::getCode, code)
+            .eq(DictionaryItem::getEnable, enable)
+            .oneOpt();
     }
 
 }

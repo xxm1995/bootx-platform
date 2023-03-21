@@ -27,8 +27,9 @@ public class WeChatMenuManager extends BaseManager<WeChatMenuMapper, WeChatMenu>
     public Page<WeChatMenu> page(PageParam pageParam, WeChatMenuParam param) {
         Page<WeChatMenu> mpPage = MpUtil.getMpPage(pageParam, WeChatMenu.class);
         return lambdaQuery().select(this.getEntityClass(), MpUtil::excludeBigField)
-                .like(StrUtil.isNotBlank(param.getName()), WeChatMenu::getName, param.getName())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+            .like(StrUtil.isNotBlank(param.getName()), WeChatMenu::getName, param.getName())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
     /**

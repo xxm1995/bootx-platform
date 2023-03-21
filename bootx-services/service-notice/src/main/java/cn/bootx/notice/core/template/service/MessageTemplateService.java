@@ -55,7 +55,7 @@ public class MessageTemplateService {
             throw new BizException("模板编码不可重复");
         }
         MessageTemplate messageTemplate = messageTemplateManager.findById(param.getId())
-                .orElseThrow(() -> new BizException("消息模板不存在"));
+            .orElseThrow(() -> new BizException("消息模板不存在"));
         BeanUtil.copyProperties(param, messageTemplate, CopyOptions.create().ignoreNullValue());
         return messageTemplateManager.updateById(messageTemplate).toDto();
     }
@@ -100,7 +100,7 @@ public class MessageTemplateService {
      */
     public String rendering(String code, Map<String, Object> paramMap) {
         MessageTemplate messageTemplate = messageTemplateManager.findByCode(code)
-                .orElseThrow(() -> new BizException("消息模板不存在"));
+            .orElseThrow(() -> new BizException("消息模板不存在"));
         String date = messageTemplate.getData();
         TemplateEngine engine = TemplateUtil.createEngine();
         Template template = engine.getTemplate(date);

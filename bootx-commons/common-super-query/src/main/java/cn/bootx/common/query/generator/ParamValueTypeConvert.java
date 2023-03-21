@@ -36,7 +36,7 @@ public class ParamValueTypeConvert {
             return paramValue;
         }
         ParamTypeEnum paramTypeEnum = Optional.ofNullable(ParamTypeEnum.getByCode(queryParam.getParamType()))
-                .orElseThrow(() -> new BizException("不支持的数据类型"));
+            .orElseThrow(() -> new BizException("不支持的数据类型"));
         switch (paramTypeEnum) {
             // 原样返回
             case NUMBER:
@@ -64,7 +64,7 @@ public class ParamValueTypeConvert {
     private static Object convertType(Object paramValue, ParamTypeEnum paramTypeEnum) {
 
         ParamTypeEnum typeEnum = Optional.ofNullable(ParamTypeEnum.getByCode(paramTypeEnum.getCode()))
-                .orElseThrow(() -> new BizException("不支持的数据类型"));
+            .orElseThrow(() -> new BizException("不支持的数据类型"));
         switch (typeEnum) {
             // 原样返回
             case NUMBER:

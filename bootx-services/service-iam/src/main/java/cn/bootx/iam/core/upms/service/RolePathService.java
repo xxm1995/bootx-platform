@@ -57,11 +57,14 @@ public class RolePathService {
         List<Long> rolePathIds = rolePaths.stream().map(RolePath::getPermissionId).collect(Collectors.toList());
         // 需要删除的
         List<Long> deleteIds = rolePaths.stream()
-                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId())).map(MpIdEntity::getId)
-                .collect(Collectors.toList());
+            .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
+            .map(MpIdEntity::getId)
+            .collect(Collectors.toList());
 
-        List<RolePath> rolePermissions = permissionIds.stream().filter(id -> !rolePathIds.contains(id))
-                .map(permissionId -> new RolePath(roleId, permissionId)).collect(Collectors.toList());
+        List<RolePath> rolePermissions = permissionIds.stream()
+            .filter(id -> !rolePathIds.contains(id))
+            .map(permissionId -> new RolePath(roleId, permissionId))
+            .collect(Collectors.toList());
         rolePathManager.deleteByIds(deleteIds);
         rolePathManager.saveAll(rolePermissions);
     }
@@ -87,9 +90,12 @@ public class RolePathService {
      */
     @Cacheable(value = USER_PATH, key = "#method+':'+#userId")
     public List<String> findSimplePathsByUser(String method, Long userId) {
-        return SpringUtil.getBean(this.getClass()).findPathsByUser(userId).stream()
-                .filter(permPathDto -> Objects.equals(method, permPathDto.getRequestType())).map(PermPathDto::getPath)
-                .collect(Collectors.toList());
+        return SpringUtil.getBean(this.getClass())
+            .findPathsByUser(userId)
+            .stream()
+            .filter(permPathDto -> Objects.equals(method, permPathDto.getRequestType()))
+            .map(PermPathDto::getPath)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -119,8 +125,10 @@ public class RolePathService {
             return permissions;
         }
         List<RolePath> rolePaths = rolePathManager.findAllByRoles(roleIds);
-        List<Long> permissionIds = rolePaths.stream().map(RolePath::getPermissionId).distinct()
-                .collect(Collectors.toList());
+        List<Long> permissionIds = rolePaths.stream()
+            .map(RolePath::getPermissionId)
+            .distinct()
+            .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(permissionIds)) {
             permissions = pathService.findByIds(permissionIds);
         }

@@ -28,8 +28,11 @@ public class WeChatMsgHandler implements WxMpMessageHandler {
             WxSessionManager sessionManager) {
 
         // 回复消息的时候发送人和接收人要反过来
-        return WxMpXmlOutMessage.TEXT().toUser(wxMessage.getFromUser()).fromUser(wxMessage.getToUser())
-                .content("我复述了一遍: " + wxMessage.getContent()).build();
+        return WxMpXmlOutMessage.TEXT()
+            .toUser(wxMessage.getFromUser())
+            .fromUser(wxMessage.getToUser())
+            .content("我复述了一遍: " + wxMessage.getContent())
+            .build();
     }
 
 }

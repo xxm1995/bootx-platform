@@ -57,8 +57,8 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
 
         // 获取节点配置并设置处理人
         BpmModelNode modelNode = bpmModelNodeManager
-                .findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
-                .orElseThrow(ModelNodeNotExistException::new);
+            .findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
+            .orElseThrow(ModelNodeNotExistException::new);
 
         // 处理驳回情况的人员分配
         if (Objects.equals(bpmContext.getTaskState(), STATE_REJECT)) {
@@ -114,8 +114,11 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
         // 会签和串签处理方式不同
         if (Objects.equals(modelNode.getSequential(), true)) {
             // 串签只能拿到之前执行了的任务, 未执行到的不会进行生成
-            List<String> processedUserIds = tasks.stream().filter(task -> Objects.equals(multiId, task.getMultiId()))
-                    .map(BpmTask::getUserId).map(String::valueOf).collect(Collectors.toList());
+            List<String> processedUserIds = tasks.stream()
+                .filter(task -> Objects.equals(multiId, task.getMultiId()))
+                .map(BpmTask::getUserId)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
 
             // 补全未执行到的任务信息
             List<String> userIds = this.getUserIds(execution, modelNode, bpmContext);
@@ -130,8 +133,11 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
         }
         else {
             // 会签可以拿到之前所有的任务
-            return tasks.stream().filter(task -> Objects.equals(multiId, task.getMultiId())).map(BpmTask::getUserId)
-                    .map(String::valueOf).collect(Collectors.toList());
+            return tasks.stream()
+                .filter(task -> Objects.equals(multiId, task.getMultiId()))
+                .map(BpmTask::getUserId)
+                .map(String::valueOf)
+                .collect(Collectors.toList());
         }
     }
 
@@ -146,8 +152,11 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
      * 根据角色获取人员id集合
      */
     private List<String> getUserIdsByRole(List<Long> roleIds) {
-        return userRoleManager.findAllByRoles(roleIds).stream().map(UserRole::getUserId).map(String::valueOf)
-                .collect(Collectors.toList());
+        return userRoleManager.findAllByRoles(roleIds)
+            .stream()
+            .map(UserRole::getUserId)
+            .map(String::valueOf)
+            .collect(Collectors.toList());
     }
 
     /**
@@ -159,8 +168,8 @@ public class BpmMultiInstanceBehaviorServiceImpl implements BpmMultiInstanceBeha
 
         // 获取节点配置
         BpmModelNode node = bpmModelNodeManager
-                .findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
-                .orElseThrow(ModelNodeNotExistException::new);
+            .findByDefIdAndNodeId(execution.getProcessDefinitionId(), execution.getCurrentActivityId())
+            .orElseThrow(ModelNodeNotExistException::new);
         // 判断是否是或签
         if (Objects.equals(node.getOrSign(), true)) {
             // 获取当前人是否是通过选择了通过

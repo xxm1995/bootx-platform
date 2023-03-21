@@ -49,11 +49,13 @@ public class TranslationCacheService {
             return;
         }
         // 遍历字段, 判断是否有嵌套对象
-        List<ConvertInfo> list = Arrays.stream(BeanUtil.getPropertyDescriptors(object.getClass())).map(this::initCache0)
-                .collect(Collectors.toList());
+        List<ConvertInfo> list = Arrays.stream(BeanUtil.getPropertyDescriptors(object.getClass()))
+            .map(this::initCache0)
+            .collect(Collectors.toList());
         // 加注解的嵌套对象进行递归处理
-        List<ConvertInfo> translationResults = list.stream().filter(o -> Objects.nonNull(o.getTranslationResult()))
-                .collect(Collectors.toList());
+        List<ConvertInfo> translationResults = list.stream()
+            .filter(o -> Objects.nonNull(o.getTranslationResult()))
+            .collect(Collectors.toList());
         for (ConvertInfo translationResult : translationResults) {
             Object fieldValue = BeanUtil.getFieldValue(object, translationResult.getName());
             if (Objects.nonNull(fieldValue)) {
@@ -102,8 +104,10 @@ public class TranslationCacheService {
         Translate translate = AnnotationUtil.getAnnotation(field, Translate.class);
         TranslationResult translationResult = AnnotationUtil.getAnnotation(field, TranslationResult.class);
 
-        return new ConvertInfo().setName(descriptor.getName()).setField(field).setTranslate(translate)
-                .setTranslationResult(translationResult);
+        return new ConvertInfo().setName(descriptor.getName())
+            .setField(field)
+            .setTranslate(translate)
+            .setTranslationResult(translationResult);
     }
 
     /**

@@ -27,11 +27,11 @@ public class PermPathManager extends BaseManager<PermPathMapper, PermPath> {
     public Page<PermPath> page(PageParam pageParam, PermPathParam param) {
         Page<PermPath> mpPage = MpUtil.getMpPage(pageParam, PermPath.class);
         return lambdaQuery().orderByDesc(MpIdEntity::getId)
-                .like(StrUtil.isNotBlank(param.getCode()), PermPath::getCode, param.getCode())
-                .like(StrUtil.isNotBlank(param.getPath()), PermPath::getPath, param.getPath())
-                .like(StrUtil.isNotBlank(param.getName()), PermPath::getName, param.getName())
-                .like(StrUtil.isNotBlank(param.getGroupName()), PermPath::getGroupName, param.getGroupName())
-                .page(mpPage);
+            .like(StrUtil.isNotBlank(param.getCode()), PermPath::getCode, param.getCode())
+            .like(StrUtil.isNotBlank(param.getPath()), PermPath::getPath, param.getPath())
+            .like(StrUtil.isNotBlank(param.getName()), PermPath::getName, param.getName())
+            .like(StrUtil.isNotBlank(param.getGroupName()), PermPath::getGroupName, param.getGroupName())
+            .page(mpPage);
 
     }
 

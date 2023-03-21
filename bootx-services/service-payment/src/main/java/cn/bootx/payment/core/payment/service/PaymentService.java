@@ -77,8 +77,9 @@ public class PaymentService {
         // 删除旧有的退款记录, 替换退款完的新的
         List<RefundableInfo> refundableInfos = payment.getRefundableInfo();
         RefundableInfo refundableInfo = refundableInfos.stream()
-                .filter(o -> o.getPayChannel() == payChannelEnum.getNo()).findFirst()
-                .orElseThrow(() -> new PayFailureException("数据不存在"));
+            .filter(o -> o.getPayChannel() == payChannelEnum.getNo())
+            .findFirst()
+            .orElseThrow(() -> new PayFailureException("数据不存在"));
         refundableInfos.remove(refundableInfo);
         refundableInfo.setAmount(refundableInfo.getAmount().subtract(amount));
         refundableInfos.add(refundableInfo);

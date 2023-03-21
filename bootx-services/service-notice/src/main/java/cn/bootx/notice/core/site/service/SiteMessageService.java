@@ -61,26 +61,30 @@ public class SiteMessageService {
         SiteMessage siteMessage;
         if (Objects.nonNull(param.getId())) {
             siteMessage = siteMessageManager.findById(param.getId())
-                    .orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
+                .orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
             BeanUtil.copyProperties(param, siteMessage, CopyOptions.create().ignoreNullValue());
         }
         else {
-            siteMessage = new SiteMessage().setTitle(param.getTitle()).setSendState(STATE_DRAFT)
-                    .setContent(param.getContent()).setReceiveType(param.getReceiveType())
-                    .setEfficientTime(param.getEfficientTime()).setSenderTime(LocalDateTime.now());
+            siteMessage = new SiteMessage().setTitle(param.getTitle())
+                .setSendState(STATE_DRAFT)
+                .setContent(param.getContent())
+                .setReceiveType(param.getReceiveType())
+                .setEfficientTime(param.getEfficientTime())
+                .setSenderTime(LocalDateTime.now());
             // 添加消息关联人信息 暂时这段逻辑用不到, 现在发布的都是全体用户信心
             if (Objects.equals(RECEIVE_USER, param.getReceiveType())) {
-                List<SiteMessageUser> siteMessageUsers = param.getReceiveIds().stream()
-                        .map(userId -> new SiteMessageUser().setMessageId(param.getId()).setReceiveId(userId))
-                        .collect(Collectors.toList());
+                List<SiteMessageUser> siteMessageUsers = param.getReceiveIds()
+                    .stream()
+                    .map(userId -> new SiteMessageUser().setMessageId(param.getId()).setReceiveId(userId))
+                    .collect(Collectors.toList());
                 siteMessageUserManager.saveAll(siteMessageUsers);
             }
         }
         // 新增或更新站内信内容
         val userDetail = SecurityUtil.getCurrentUser();
         siteMessage.setTitle(param.getTitle())
-                .setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
-                .setSenderName(userDetail.map(UserDetail::getName).orElse("未知"));
+            .setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+            .setSenderName(userDetail.map(UserDetail::getName).orElse("未知"));
         siteMessageManager.saveOrUpdate(siteMessage);
 
     }
@@ -91,13 +95,14 @@ public class SiteMessageService {
     @Transactional(rollbackFor = Exception.class)
     public void send(Long id) {
         SiteMessage siteMessage = siteMessageManager.findById(id)
-                .orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
+            .orElseThrow(() -> new DataNotExistException("站内信信息不存在"));
         val userDetail = SecurityUtil.getCurrentUser();
 
         // 新增站内信内容
         siteMessage.setSenderId(userDetail.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
-                .setSendState(STATE_SENT).setSenderName(userDetail.map(UserDetail::getName).orElse("未知"))
-                .setSenderTime(LocalDateTime.now());
+            .setSendState(STATE_SENT)
+            .setSenderName(userDetail.map(UserDetail::getName).orElse("未知"))
+            .setSenderTime(LocalDateTime.now());
         siteMessageManager.updateById(siteMessage);
         userWsNoticeService.sendMessageByAll(WsRes.eventNotice(EVENT_MESSAGE_UPDATE));
     }
@@ -109,17 +114,22 @@ public class SiteMessageService {
     public void send(SendSiteMessageParam param) {
 
         // 新增站内信内容
-        SiteMessage siteMessage = new SiteMessage().setTitle(param.getTitle()).setContent(param.getContent())
-                .setSendState(STATE_SENT).setReceiveType(param.getReceiveType())
-                .setEfficientTime(param.getEfficientTime()).setSenderId(param.getSenderId())
-                .setSenderName(param.getSenderName()).setSenderTime(LocalDateTime.now());
+        SiteMessage siteMessage = new SiteMessage().setTitle(param.getTitle())
+            .setContent(param.getContent())
+            .setSendState(STATE_SENT)
+            .setReceiveType(param.getReceiveType())
+            .setEfficientTime(param.getEfficientTime())
+            .setSenderId(param.getSenderId())
+            .setSenderName(param.getSenderName())
+            .setSenderTime(LocalDateTime.now());
         siteMessageManager.save(siteMessage);
         // 添加消息关联人信息
         if (Objects.equals(RECEIVE_USER, param.getReceiveType())) {
 
-            List<SiteMessageUser> siteMessageUsers = param.getReceiveIds().stream()
-                    .map(userId -> new SiteMessageUser().setMessageId(siteMessage.getId()).setReceiveId(userId))
-                    .collect(Collectors.toList());
+            List<SiteMessageUser> siteMessageUsers = param.getReceiveIds()
+                .stream()
+                .map(userId -> new SiteMessageUser().setMessageId(siteMessage.getId()).setReceiveId(userId))
+                .collect(Collectors.toList());
             siteMessageUserManager.saveAll(siteMessageUsers);
             userWsNoticeService.sendMessageByUsers(WsRes.eventNotice(EVENT_MESSAGE_UPDATE), param.getReceiveIds());
         }
@@ -129,9 +139,12 @@ public class SiteMessageService {
      * 发送给单个用户信息, 发送人为系统
      */
     public void sendSingleUserBySystem(String title, String content, Long userId) {
-        val param = new SendSiteMessageParam().setTitle(title).setContent(content).setSenderId(SYSTEM_DEFAULT_USERID)
-                .setSenderName(SYSTEM_DEFAULT_USERNAME).setReceiveType(RECEIVE_USER)
-                .setReceiveIds(Collections.singletonList(userId));
+        val param = new SendSiteMessageParam().setTitle(title)
+            .setContent(content)
+            .setSenderId(SYSTEM_DEFAULT_USERID)
+            .setSenderName(SYSTEM_DEFAULT_USERNAME)
+            .setReceiveType(RECEIVE_USER)
+            .setReceiveIds(Collections.singletonList(userId));
         this.send(param);
     }
 
@@ -139,8 +152,12 @@ public class SiteMessageService {
      * 发送给多个用户信息, 发送人为系统
      */
     public void sendMultiUserBySystem(String title, String content, List<Long> userIds) {
-        val param = new SendSiteMessageParam().setTitle(title).setContent(content).setSenderId(SYSTEM_DEFAULT_USERID)
-                .setSenderName(SYSTEM_DEFAULT_USERNAME).setReceiveType(RECEIVE_USER).setReceiveIds(userIds);
+        val param = new SendSiteMessageParam().setTitle(title)
+            .setContent(content)
+            .setSenderId(SYSTEM_DEFAULT_USERID)
+            .setSenderName(SYSTEM_DEFAULT_USERNAME)
+            .setReceiveType(RECEIVE_USER)
+            .setReceiveIds(userIds);
         this.send(param);
     }
 
@@ -150,7 +167,7 @@ public class SiteMessageService {
     @Transactional(rollbackFor = Exception.class)
     public void cancel(Long messageId) {
         SiteMessage siteMessage = siteMessageManager.findById(messageId)
-                .orElseThrow(() -> new DataNotExistException("站内信不存在"));
+            .orElseThrow(() -> new DataNotExistException("站内信不存在"));
         siteMessage.setCancelTime(LocalDateTime.now()).setSendState(STATE_CANCEL);
         siteMessageManager.updateById(siteMessage);
         userWsNoticeService.sendMessageByAll(WsRes.eventNotice(EVENT_MESSAGE_UPDATE));
@@ -162,7 +179,7 @@ public class SiteMessageService {
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long messageId) {
         SiteMessage siteMessage = siteMessageManager.findById(messageId)
-                .orElseThrow(() -> new DataNotExistException("站内信不存在"));
+            .orElseThrow(() -> new DataNotExistException("站内信不存在"));
         if (!CollUtil.toList(STATE_CANCEL, STATE_DRAFT).contains(siteMessage.getSendState())) {
             throw new BizException("站内信不是撤回或草稿状态，无法被删除");
         }
@@ -209,7 +226,7 @@ public class SiteMessageService {
         Long userId = SecurityUtil.getUserId();
         // Long userId = 0L;
         SiteMessageUser siteMessageUser = siteMessageUserManager.findByMessageId(messageId)
-                .orElse(new SiteMessageUser().setReceiveId(userId).setMessageId(messageId));
+            .orElse(new SiteMessageUser().setReceiveId(userId).setMessageId(messageId));
         siteMessageUser.setHaveRead(true).setReadTime(LocalDateTime.now());
         siteMessageUserManager.saveOrUpdate(siteMessageUser);
     }

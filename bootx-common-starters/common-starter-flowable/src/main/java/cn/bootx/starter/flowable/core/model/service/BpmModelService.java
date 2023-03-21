@@ -64,9 +64,13 @@ public class BpmModelService {
     public void add(BpmModelParam bpmModelParam) {
 
         String xml = StrUtil.format(DEFAULT_XML, RandomUtil.randomString(8), RandomUtil.randomString(8));
-        BpmModel bpmModel = new BpmModel().setName(bpmModelParam.getName()).setModelType(bpmModelParam.getModelType())
-                .setMainProcess(false).setPublish(UNPUBLISHED).setModelEditorXml(xml).setEnable(false)
-                .setRemark(bpmModelParam.getRemark());
+        BpmModel bpmModel = new BpmModel().setName(bpmModelParam.getName())
+            .setModelType(bpmModelParam.getModelType())
+            .setMainProcess(false)
+            .setPublish(UNPUBLISHED)
+            .setModelEditorXml(xml)
+            .setEnable(false)
+            .setRemark(bpmModelParam.getRemark());
         bpmModelManager.save(bpmModel);
     }
 
@@ -86,9 +90,14 @@ public class BpmModelService {
     @Transactional(rollbackFor = Exception.class)
     public void copy(Long id) {
         BpmModel bpmModel = bpmModelManager.findById(id).orElseThrow(ModelNotExistException::new);
-        BpmModel newBpmModel = new BpmModel().setName(bpmModel.getName()).setFormId(bpmModel.getFormId())
-                .setModelType(bpmModel.getModelType()).setMainProcess(false).setPublish(UNPUBLISHED)
-                .setModelEditorXml(bpmModel.getModelEditorXml()).setEnable(false).setRemark(bpmModel.getRemark());
+        BpmModel newBpmModel = new BpmModel().setName(bpmModel.getName())
+            .setFormId(bpmModel.getFormId())
+            .setModelType(bpmModel.getModelType())
+            .setMainProcess(false)
+            .setPublish(UNPUBLISHED)
+            .setModelEditorXml(bpmModel.getModelEditorXml())
+            .setEnable(false)
+            .setRemark(bpmModel.getRemark());
         bpmModelManager.save(newBpmModel);
         List<BpmModelNode> bpmModelNodes = bpmModelNodeManager.findAllByModelId(id);
 
@@ -126,17 +135,25 @@ public class BpmModelService {
         DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
 
         Deployment deploy = deploymentBuilder.name(bpmModel.getName())
-                // 文件后缀名有要求
-                .addString(bpmModel.getName() + ".bpmn", bpmModel.getModelEditorXml()).key(bpmModel.getDefKey())
-                .category(bpmModel.getModelType()).deploy();
+            // 文件后缀名有要求
+            .addString(bpmModel.getName() + ".bpmn", bpmModel.getModelEditorXml())
+            .key(bpmModel.getDefKey())
+            .category(bpmModel.getModelType())
+            .deploy();
         // 流程定义
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .deploymentId(deploy.getId()).singleResult();
+            .deploymentId(deploy.getId())
+            .singleResult();
         // 回填属性
-        bpmModel.setDeployId(deploy.getId()).setDefId(processDefinition.getId()).setDefKey(processDefinition.getKey())
-                .setDefName(processDefinition.getName()).setDefRemark(processDefinition.getDescription())
-                .setMainProcess(true).setPublish(PUBLISHED).setEnable(true)
-                .setProcessVersion(processDefinition.getVersion());
+        bpmModel.setDeployId(deploy.getId())
+            .setDefId(processDefinition.getId())
+            .setDefKey(processDefinition.getKey())
+            .setDefName(processDefinition.getName())
+            .setDefRemark(processDefinition.getDescription())
+            .setMainProcess(true)
+            .setPublish(PUBLISHED)
+            .setEnable(true)
+            .setProcessVersion(processDefinition.getVersion());
         bpmModelManager.cancelMainProcessByDefKey(bpmModel.getDefKey());
         bpmModelManager.updateById(bpmModel);
         this.updateTaskNodes(bpmModel);
@@ -185,17 +202,21 @@ public class BpmModelService {
      * 获取生效并部署的主流程列表
      */
     public List<LabelValue> findMainProcess() {
-        return bpmModelManager.findMainProcess().stream()
-                .map(bpmModel -> new LabelValue(bpmModel.getName(), bpmModel.getId())).collect(Collectors.toList());
+        return bpmModelManager.findMainProcess()
+            .stream()
+            .map(bpmModel -> new LabelValue(bpmModel.getName(), bpmModel.getId()))
+            .collect(Collectors.toList());
     }
 
     /**
      * 更新关联任务节点信息
      */
     private void updateTaskNodes(BpmModel bpmModel) {
-        bpmModelNodeManager.lambdaUpdate().set(BpmModelNode::getDefId, bpmModel.getDefId())
-                .set(BpmModelNode::getDefKey, bpmModel.getDefKey()).eq(BpmModelNode::getModelId, bpmModel.getId())
-                .update();
+        bpmModelNodeManager.lambdaUpdate()
+            .set(BpmModelNode::getDefId, bpmModel.getDefId())
+            .set(BpmModelNode::getDefKey, bpmModel.getDefKey())
+            .eq(BpmModelNode::getModelId, bpmModel.getId())
+            .update();
     }
 
     /**
@@ -223,7 +244,7 @@ public class BpmModelService {
         List<BpmModelNode> bpmModelNodes = bpmModelNodeManager.findAllByModelId(bpmModel.getId());
 
         val bpmModelNodeMap = bpmModelNodes.stream()
-                .collect(Collectors.toMap(BpmModelNode::getNodeId, Function.identity()));
+            .collect(Collectors.toMap(BpmModelNode::getNodeId, Function.identity()));
 
         for (val userTask : userTasks) {
             BpmModelNode modelTask = bpmModelNodeMap.get(userTask.getId());

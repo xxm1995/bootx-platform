@@ -41,6 +41,7 @@ public class QuerySql extends MpBaseEntity implements EntityBaseFunction<QuerySq
     /** 是否集合 */
     @Column(comment = "是否集合")
     private Boolean isList;
+
     /** sql语句 */
     @BigField
     @Column(comment = "sql语句", type = MySqlFieldType.TEXT)
@@ -65,4 +66,5 @@ public class QuerySql extends MpBaseEntity implements EntityBaseFunction<QuerySq
     public QuerySqlDto toDto() {
         return QuerySqlConvert.CONVERT.convert(this);
     }
+
 }

@@ -29,8 +29,11 @@ public class OpenIdAuthenticationHandler {
      */
     public @NotNull AuthInfoResult authentication(LoginAuthContext context) {
         String clientCode = context.getAuthLoginType().getCode();
-        return openIdAuthentications.stream().filter(o -> o.adaptation(clientCode)).findFirst()
-                .map(o -> o.authentication(context)).orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
+        return openIdAuthentications.stream()
+            .filter(o -> o.adaptation(clientCode))
+            .findFirst()
+            .map(o -> o.authentication(context))
+            .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
 
 }

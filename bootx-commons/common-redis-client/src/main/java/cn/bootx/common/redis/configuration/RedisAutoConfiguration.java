@@ -129,8 +129,9 @@ public class RedisAutoConfiguration {
     @Primary
     public LettuceConnectionFactory factory(GenericObjectPoolConfig<LettucePoolingClientConfiguration> config,
             RedisConfiguration redisConfiguration) {
-        LettuceClientConfiguration clientConfiguration = LettucePoolingClientConfiguration.builder().poolConfig(config)
-                .build();
+        LettuceClientConfiguration clientConfiguration = LettucePoolingClientConfiguration.builder()
+            .poolConfig(config)
+            .build();
         return new LettuceConnectionFactory(redisConfiguration, clientConfiguration);
     }
 

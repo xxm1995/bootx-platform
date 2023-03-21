@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 /**
  * 中国行政区划
+ *
  * @author xxm
  * @date 2023/2/7
  */
@@ -39,8 +40,10 @@ public enum ChinaRegionCode {
      * 根据编码判断级别
      */
     public static ChinaRegionCode findByCode(String code) {
-        return Arrays.stream(ChinaRegionCode.values()).filter(e -> e.length == code.length()).findFirst()
-                .orElseThrow(() -> new BizException("不支持的数据权限类型"));
+        return Arrays.stream(ChinaRegionCode.values())
+            .filter(e -> e.length == code.length())
+            .findFirst()
+            .orElseThrow(() -> new BizException("不支持的数据权限类型"));
     }
 
 }

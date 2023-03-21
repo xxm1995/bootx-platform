@@ -50,8 +50,10 @@ public class BpmTaskAdminService {
         long total = taskQuery.count();
         List<String> ids = tasks.stream().map(Task::getId).collect(Collectors.toList());
         List<TaskInfo> taskInfos = queryService.convertInstanceInfo(ids);
-        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent()).setRecords(taskInfos)
-                .setSize(pageParam.getSize()).setTotal(total);
+        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent())
+            .setRecords(taskInfos)
+            .setSize(pageParam.getSize())
+            .setTotal(total);
     }
 
     /**
@@ -59,14 +61,19 @@ public class BpmTaskAdminService {
      */
     public PageResult<TaskInfo> pageByDone(PageParam pageParam) {
         // 查询已办任务
-        HistoricTaskInstanceQuery taskQuery = historyService.createHistoricTaskInstanceQuery().finished()
-                .taskAssignee(String.valueOf(SecurityUtil.getUserId())).orderByHistoricTaskInstanceStartTime().desc();
+        HistoricTaskInstanceQuery taskQuery = historyService.createHistoricTaskInstanceQuery()
+            .finished()
+            .taskAssignee(String.valueOf(SecurityUtil.getUserId()))
+            .orderByHistoricTaskInstanceStartTime()
+            .desc();
         List<HistoricTaskInstance> tasks = taskQuery.listPage(pageParam.start(), pageParam.getSize());
         long total = taskQuery.count();
         List<String> ids = tasks.stream().map(HistoricTaskInstance::getId).collect(Collectors.toList());
         List<TaskInfo> taskInfos = queryService.convertInstanceInfo(ids);
-        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent()).setRecords(taskInfos)
-                .setSize(pageParam.getSize()).setTotal(total);
+        return new PageResult<TaskInfo>().setCurrent(pageParam.getCurrent())
+            .setRecords(taskInfos)
+            .setSize(pageParam.getSize())
+            .setTotal(total);
     }
 
     /**

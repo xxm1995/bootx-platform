@@ -6,6 +6,7 @@ import lombok.Getter;
 
 /**
  * 匹配条件类型
+ *
  * @author xxm
  * @date 2021/11/17
  */

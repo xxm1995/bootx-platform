@@ -33,8 +33,10 @@ public class WeChatArticleService {
         val result = freePublishService.getPublicationRecords(pageParam.start(), pageParam.getSize());
         val items = result.getItems().stream().map(WeChatArticleDto::init).collect(Collectors.toList());
         PageResult<WeChatArticleDto> pageResult = new PageResult<>();
-        pageResult.setCurrent(pageParam.getCurrent()).setRecords(items).setSize(pageParam.getSize())
-                .setTotal(result.getTotalCount());
+        pageResult.setCurrent(pageParam.getCurrent())
+            .setRecords(items)
+            .setSize(pageParam.getSize())
+            .setTotal(result.getTotalCount());
         return pageResult;
     }
 

@@ -44,9 +44,10 @@ public class WecomRobotConfigManager extends BaseManager<WecomRobotConfigMapper,
     public Page<WecomRobotConfig> page(PageParam pageParam, WecomRobotConfigParam param) {
         Page<WecomRobotConfig> mpPage = MpUtil.getMpPage(pageParam, WecomRobotConfig.class);
         return lambdaQuery().like(StrUtil.isNotBlank(param.getCode()), WecomRobotConfig::getCode, param.getCode())
-                .like(StrUtil.isNotBlank(param.getName()), WecomRobotConfig::getCode, param.getName())
-                .like(StrUtil.isNotBlank(param.getWebhookKey()), WecomRobotConfig::getWebhookKey, param.getWebhookKey())
-                .orderByDesc(MpIdEntity::getId).page(mpPage);
+            .like(StrUtil.isNotBlank(param.getName()), WecomRobotConfig::getCode, param.getName())
+            .like(StrUtil.isNotBlank(param.getWebhookKey()), WecomRobotConfig::getWebhookKey, param.getWebhookKey())
+            .orderByDesc(MpIdEntity::getId)
+            .page(mpPage);
     }
 
 }

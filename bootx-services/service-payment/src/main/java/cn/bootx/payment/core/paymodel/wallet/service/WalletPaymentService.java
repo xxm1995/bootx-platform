@@ -35,9 +35,12 @@ public class WalletPaymentService {
      */
     public void savePayment(Payment payment, PayParam payParam, PayModeParam payMode, Wallet wallet) {
         WalletPayment walletPayment = new WalletPayment().setWalletId(wallet.getId());
-        walletPayment.setPaymentId(payment.getId()).setUserId(payment.getUserId())
-                .setBusinessId(payParam.getBusinessId()).setAmount(payMode.getAmount())
-                .setRefundableBalance(payMode.getAmount()).setPayStatus(payment.getPayStatus());
+        walletPayment.setPaymentId(payment.getId())
+            .setUserId(payment.getUserId())
+            .setBusinessId(payParam.getBusinessId())
+            .setAmount(payMode.getAmount())
+            .setRefundableBalance(payMode.getAmount())
+            .setPayStatus(payment.getPayStatus());
         walletPaymentManager.save(walletPayment);
     }
 
@@ -58,7 +61,7 @@ public class WalletPaymentService {
      */
     public void updateClose(Long paymentId) {
         WalletPayment walletPayment = walletPaymentManager.findByPaymentId(paymentId)
-                .orElseThrow(() -> new BizException("未查询到查询交易记录"));
+            .orElseThrow(() -> new BizException("未查询到查询交易记录"));
         walletPayment.setPayStatus(PayStatusCode.TRADE_CANCEL);
         walletPaymentManager.updateById(walletPayment);
     }

@@ -51,8 +51,11 @@ public class DingMediaService {
         String fileType = FileTypeUtil.getType(new ByteArrayInputStream(bytes), fileName);
         File tmpFile = FileUtil.createTempFile(new ByteArrayInputStream(bytes), filePrefix, fileType);
         String body = HttpUtil
-                .createPost(StrUtil.format(DingTalkCode.MEDIA_UPLOAD_URL, dingAccessService.getAccessToken()))
-                .form(MEDIA, tmpFile, fileName).form(TYPE, mediaType).execute().body();
+            .createPost(StrUtil.format(DingTalkCode.MEDIA_UPLOAD_URL, dingAccessService.getAccessToken()))
+            .form(MEDIA, tmpFile, fileName)
+            .form(TYPE, mediaType)
+            .execute()
+            .body();
         MediaResult mediaResult = JacksonUtil.toBean(body, MediaResult.class);
         if (!Objects.equals(mediaResult.getCode(), SUCCESS_CODE)) {
             throw new BizException(mediaResult.getMsg());
@@ -73,8 +76,11 @@ public class DingMediaService {
         File tmpFile = FileUtil.createTempFile(new ByteArrayInputStream(bytes), IdUtil.getSnowflakeNextIdStr(),
                 fileType);
         String body = HttpUtil
-                .createPost(StrUtil.format(DingTalkCode.MEDIA_UPLOAD_URL, dingAccessService.getAccessToken()))
-                .form(MEDIA, tmpFile).form(TYPE, mediaType).execute().body();
+            .createPost(StrUtil.format(DingTalkCode.MEDIA_UPLOAD_URL, dingAccessService.getAccessToken()))
+            .form(MEDIA, tmpFile)
+            .form(TYPE, mediaType)
+            .execute()
+            .body();
         MediaResult mediaResult = JacksonUtil.toBean(body, MediaResult.class);
         if (!Objects.equals(mediaResult.getCode(), SUCCESS_CODE)) {
             throw new BizException(mediaResult.getMsg());

@@ -42,8 +42,9 @@ public class OnlineUserService {
      * 分页查询
      */
     public PageResult<OnlineUserDto> page(PageParam pageParam) {
-        ArrayList<String> keys = Optional.ofNullable(stringRedisTemplate.keys(SessionPattern)).map(ArrayList::new)
-                .orElseGet(ArrayList::new);
+        ArrayList<String> keys = Optional.ofNullable(stringRedisTemplate.keys(SessionPattern))
+            .map(ArrayList::new)
+            .orElseGet(ArrayList::new);
         List<String> list = new ArrayList<>();
         int start = pageParam.start();
         int end = pageParam.end();
@@ -56,9 +57,14 @@ public class OnlineUserService {
             }
         }
         List<OnlineUserDto> onlineUsers = Optional.ofNullable(objectRedisTemplate.opsForValue().multiGet(list))
-                .orElseGet(ArrayList::new).stream().map(this::convert).collect(Collectors.toList());
-        return new PageResult<OnlineUserDto>().setCurrent(pageParam.getCurrent()).setSize(pageParam.getSize())
-                .setTotal(keys.size()).setRecords(onlineUsers);
+            .orElseGet(ArrayList::new)
+            .stream()
+            .map(this::convert)
+            .collect(Collectors.toList());
+        return new PageResult<OnlineUserDto>().setCurrent(pageParam.getCurrent())
+            .setSize(pageParam.getSize())
+            .setTotal(keys.size())
+            .setRecords(onlineUsers);
     }
 
     /**
@@ -66,7 +72,7 @@ public class OnlineUserService {
      */
     public OnlineUserDto findBySessionId(String sessionId) {
         SaSession saSession = Optional.ofNullable(objectRedisTemplate.opsForValue().get(sessionId))
-                .orElseThrow(() -> new BizException("会话不存在"));
+            .orElseThrow(() -> new BizException("会话不存在"));
         return this.convert(saSession);
     }
 
@@ -75,15 +81,19 @@ public class OnlineUserService {
      */
     private OnlineUserDto convert(SaSession saSession) {
         UserDetail userDetail = saSession.getModel(CommonCode.USER, UserDetail.class);
-        List<OnlineUserDto.TokenSign> tokenSignList = saSession.getTokenSignList().stream()
-                .map(tokenSign -> new OnlineUserDto.TokenSign().setDevice(tokenSign.getDevice())
-                        .setValue(tokenSign.getValue()))
-                .collect(Collectors.toList());
+        List<OnlineUserDto.TokenSign> tokenSignList = saSession.getTokenSignList()
+            .stream()
+            .map(tokenSign -> new OnlineUserDto.TokenSign().setDevice(tokenSign.getDevice())
+                .setValue(tokenSign.getValue()))
+            .collect(Collectors.toList());
 
-        return new OnlineUserDto().setUserId(userDetail.getId()).setUserName(userDetail.getUsername())
-                .setName(userDetail.getName()).setTimeout(saSession.getTimeout())
-                .setCreationTime(LocalDateTimeUtil.of(saSession.getCreateTime())).setSessionId(saSession.getId())
-                .setTokenSigns(tokenSignList);
+        return new OnlineUserDto().setUserId(userDetail.getId())
+            .setUserName(userDetail.getUsername())
+            .setName(userDetail.getName())
+            .setTimeout(saSession.getTimeout())
+            .setCreationTime(LocalDateTimeUtil.of(saSession.getCreateTime()))
+            .setSessionId(saSession.getId())
+            .setTokenSigns(tokenSignList);
     }
 
     /**

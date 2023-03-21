@@ -32,9 +32,12 @@ public class CashService {
      */
     public void pay(PayModeParam payMode, Payment payment, PayParam payParam) {
         CashPayment walletPayment = new CashPayment();
-        walletPayment.setPaymentId(payment.getId()).setUserId(payment.getUserId())
-                .setBusinessId(payParam.getBusinessId()).setAmount(payMode.getAmount())
-                .setRefundableBalance(payMode.getAmount()).setPayStatus(payment.getPayStatus());
+        walletPayment.setPaymentId(payment.getId())
+            .setUserId(payment.getUserId())
+            .setBusinessId(payParam.getBusinessId())
+            .setAmount(payMode.getAmount())
+            .setRefundableBalance(payMode.getAmount())
+            .setPayStatus(payment.getPayStatus());
         cashPaymentManager.save(walletPayment);
     }
 

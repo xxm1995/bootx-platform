@@ -47,8 +47,10 @@ public class DingNoticeService {
      */
     public ChatNoticeResult sendChatNotice(ChatNotice param) {
         String accessToken = dingAccessService.getAccessToken();
-        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CHAT_URL, accessToken)).body(param.toParam())
-                .execute().body();
+        String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CHAT_URL, accessToken))
+            .body(param.toParam())
+            .execute()
+            .body();
         return JacksonUtil.toBean(responseBody, ChatNoticeResult.class);
     }
 
@@ -61,7 +63,9 @@ public class DingNoticeService {
     public CorpNoticeResult sendCorpNotice(CorpNotice param) {
         String accessToken = dingAccessService.getAccessToken();
         String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_SEND_URL, accessToken))
-                .body(param.toParam()).execute().body();
+            .body(param.toParam())
+            .execute()
+            .body();
         return JacksonUtil.toBean(responseBody, CorpNoticeResult.class);
     }
 
@@ -73,7 +77,9 @@ public class DingNoticeService {
     public CorpNoticeResult updateCorpNotice(UpdateCorpNotice param) {
         String accessToken = dingAccessService.getAccessToken();
         String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_UPDATE_URL, accessToken))
-                .body(param.toParam()).execute().body();
+            .body(param.toParam())
+            .execute()
+            .body();
         return JacksonUtil.toBean(responseBody, CorpNoticeResult.class);
     }
 
@@ -86,7 +92,9 @@ public class DingNoticeService {
 
         String accessToken = dingAccessService.getAccessToken();
         String responseBody = HttpUtil.createPost(StrUtil.format(NOTICE_CORP_RECALL_URL, accessToken))
-                .body(param.toParam()).execute().body();
+            .body(param.toParam())
+            .execute()
+            .body();
         return JacksonUtil.toBean(responseBody, DingTalkResult.class);
     }
 

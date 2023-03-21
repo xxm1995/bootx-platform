@@ -62,15 +62,19 @@ public class RedissonConfiguration {
      */
     private void initSingleConfig(SingleServerConfig singleServerConfig) {
         singleServerConfig.setAddress(REDIS_PREFIX + redisProperties.getHost() + ":" + redisProperties.getPort())
-                .setDatabase(redisProperties.getDatabase()).setPassword(redisProperties.getPassword());
+            .setDatabase(redisProperties.getDatabase())
+            .setPassword(redisProperties.getPassword());
     }
 
     /**
      * 集群模式
      */
     private void initClusterConfig(ClusterServersConfig clusterServersConfig) {
-        String[] nodes = redisProperties.getCluster().getNodes().stream().map(node -> REDIS_PREFIX + node)
-                .toArray(String[]::new);
+        String[] nodes = redisProperties.getCluster()
+            .getNodes()
+            .stream()
+            .map(node -> REDIS_PREFIX + node)
+            .toArray(String[]::new);
         clusterServersConfig.setPassword(redisProperties.getPassword()).addNodeAddress(nodes);
     }
 

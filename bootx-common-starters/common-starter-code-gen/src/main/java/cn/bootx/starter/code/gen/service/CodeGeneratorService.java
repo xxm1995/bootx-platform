@@ -69,14 +69,16 @@ public class CodeGeneratorService {
         // 获取生成代码所用的数据
         Map<String, Object> map = this.getCodeGenInfo(codeGenParam);
         // 遍历生成代码预览
-        return Arrays.stream(CodeGenTemplateVmEnum.values()).filter(o -> filterVue(o, codeGenParam.getVueVersion()))
-                .map(vmEnum -> {
-                    VelocityContext context = new VelocityContext(map);
-                    StringWriter sw = new StringWriter();
-                    Template template = Velocity.getTemplate(vmEnum.getPath(), CharsetUtil.UTF_8);
-                    template.merge(context, sw);
-                    return new CodeGenPreview().setName(vmEnum.getName()).setContent(sw.toString());
-                }).collect(Collectors.toList());
+        return Arrays.stream(CodeGenTemplateVmEnum.values())
+            .filter(o -> filterVue(o, codeGenParam.getVueVersion()))
+            .map(vmEnum -> {
+                VelocityContext context = new VelocityContext(map);
+                StringWriter sw = new StringWriter();
+                Template template = Velocity.getTemplate(vmEnum.getPath(), CharsetUtil.UTF_8);
+                template.merge(context, sw);
+                return new CodeGenPreview().setName(vmEnum.getName()).setContent(sw.toString());
+            })
+            .collect(Collectors.toList());
     }
 
     /**
@@ -102,23 +104,29 @@ public class CodeGeneratorService {
 
         // 数据库字段
         List<CodeGenColumnData> columns = databaseColumns.stream()
-                .map(databaseColumn -> new CodeGenColumnData().setComments(databaseColumn.getColumnComment())
-                        .setJavaType(CodeGenColumnTypeEnum.convertJavaType(databaseColumn.getDataType()))
-                        .setTsType(CodeGenColumnTypeEnum.convertTsType(databaseColumn.getDataType()))
-                        .setName(NamingCase.toCamelCase(databaseColumn.getColumnName())))
-                .filter(codeGenColumn -> !entityFilterFields.contains(codeGenColumn.getName()))
-                .collect(Collectors.toList());
+            .map(databaseColumn -> new CodeGenColumnData().setComments(databaseColumn.getColumnComment())
+                .setJavaType(CodeGenColumnTypeEnum.convertJavaType(databaseColumn.getDataType()))
+                .setTsType(CodeGenColumnTypeEnum.convertTsType(databaseColumn.getDataType()))
+                .setName(NamingCase.toCamelCase(databaseColumn.getColumnName())))
+            .filter(codeGenColumn -> !entityFilterFields.contains(codeGenColumn.getName()))
+            .collect(Collectors.toList());
 
         CodeGenData codeGenData = new CodeGenData().setTableName(databaseTable.getTableName())
-                .setEntityUpName(codeGenParam.getEntityName())
-                .setEntityLowName(StrUtil.lowerFirst(codeGenParam.getEntityName()))
-                .setEntityDashName(NamingCase.toKebabCase(codeGenParam.getEntityName()))
-                .setBaseClass(codeGenParam.getBaseEntity()).setCorePack(codeGenParam.getCorePack())
-                .setEditType(codeGenParam.getEditType()).setDeleteType(codeGenParam.getDeleteType())
-                .setParamPack(codeGenParam.getParamPack()).setDtoPack(codeGenParam.getDtoPack())
-                .setControllerPack(codeGenParam.getControllerPack()).setRequestPath(codeGenParam.getRequestPath())
-                .setVueApiPath(codeGenParam.getVueApiPath()).setAuthor(codeGenParam.getAuthor())
-                .setComments(databaseTable.getTableComment()).setColumns(columns);
+            .setEntityUpName(codeGenParam.getEntityName())
+            .setEntityLowName(StrUtil.lowerFirst(codeGenParam.getEntityName()))
+            .setEntityDashName(NamingCase.toKebabCase(codeGenParam.getEntityName()))
+            .setBaseClass(codeGenParam.getBaseEntity())
+            .setCorePack(codeGenParam.getCorePack())
+            .setEditType(codeGenParam.getEditType())
+            .setDeleteType(codeGenParam.getDeleteType())
+            .setParamPack(codeGenParam.getParamPack())
+            .setDtoPack(codeGenParam.getDtoPack())
+            .setControllerPack(codeGenParam.getControllerPack())
+            .setRequestPath(codeGenParam.getRequestPath())
+            .setVueApiPath(codeGenParam.getVueApiPath())
+            .setAuthor(codeGenParam.getAuthor())
+            .setComments(databaseTable.getTableComment())
+            .setColumns(columns);
 
         return BeanUtil.beanToMap(codeGenData, false, false);
     }

@@ -40,9 +40,9 @@ public class LoginTypeManager extends BaseManager<LoginTypeMapper, LonginType> {
     public Page<LonginType> page(PageParam pageParam, LoginTypeParam loginTypeParam) {
         Page<LonginType> mpPage = MpUtil.getMpPage(pageParam, LonginType.class);
         return lambdaQuery()
-                .like(StrUtil.isNotBlank(loginTypeParam.getName()), LonginType::getName, loginTypeParam.getName())
-                .like(StrUtil.isNotBlank(loginTypeParam.getCode()), LonginType::getCode, loginTypeParam.getCode())
-                .page(mpPage);
+            .like(StrUtil.isNotBlank(loginTypeParam.getName()), LonginType::getName, loginTypeParam.getName())
+            .like(StrUtil.isNotBlank(loginTypeParam.getCode()), LonginType::getCode, loginTypeParam.getCode())
+            .page(mpPage);
     }
 
     /**
