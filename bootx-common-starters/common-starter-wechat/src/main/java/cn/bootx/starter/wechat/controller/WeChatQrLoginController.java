@@ -31,15 +31,15 @@ public class WeChatQrLoginController {
     @Operation(summary = "申请登录用QR码")
     @PostMapping("/applyQrCode")
     public ResResult<WeChatLoginQrCode> applyQrCode() {
-        // return Res.ok(weChatQrLoginService.applyQrCode());
-        return Res.ok(new WeChatLoginQrCode().setQrCodeKey("123").setQrCodeUrl("xxkl"));
+         return Res.ok(weChatQrLoginService.applyQrCode());
+//        return Res.ok(new WeChatLoginQrCode().setQrCodeKey("123").setQrCodeUrl("xxkl"));
     }
 
     @Operation(summary = "获取扫码状态")
     @GetMapping("/getStatus")
     public ResResult<String> getStatus(String qrCodeKey) {
-        // return Res.ok(weChatQrLoginService.getStatus(qrCodeKey));
-        return Res.ok("wait");
+         return Res.ok(weChatQrLoginService.getStatus(qrCodeKey));
+//        return Res.ok("wait");
     }
 
 }

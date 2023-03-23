@@ -80,12 +80,4 @@ public class DataVersionLogDbService implements DataVersionLogService {
         return MpUtil.convert2DtoPageResult(manager.page(pageParam, param));
     }
 
-    /**
-     * 删除
-     */
-    @Override
-    public void delete(Long id) {
-
-    }
-
 }

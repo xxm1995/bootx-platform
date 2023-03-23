@@ -42,8 +42,8 @@ public class WeChatQrLoginService {
         WxMpQrcodeService qrcodeService = wxMpService.getQrcodeService();
         long timeout = 5 * 60 * 1000;
         String qrCodeKey = IdUtil.getSnowflakeNextIdStr();
+        // 创建微信临时Key, 需要有指定的前缀
         String wxKey = QRSCENE_LOGIN + qrCodeKey;
-        // 创建临时Key, 需要有指定的前缀
         WxMpQrCodeTicket wxMpQrCodeTicket = qrcodeService.qrCodeCreateTmpTicket(wxKey, (int) timeout);
         String url = wxMpQrCodeTicket.getUrl();
         redisClient.setWithTimeout(PREFIX_KEY + qrCodeKey, "", timeout);

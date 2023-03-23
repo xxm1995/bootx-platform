@@ -1,5 +1,6 @@
 package cn.bootx.starter.audit.log.service;
 
+import cn.bootx.common.core.exception.BizException;
 import cn.bootx.common.core.rest.PageResult;
 import cn.bootx.common.core.rest.param.PageParam;
 import cn.bootx.starter.audit.log.dto.DataVersionLogDto;
@@ -33,6 +34,8 @@ public interface DataVersionLogService {
     /**
      * 删除
      */
-    void delete(Long id);
+    default void delete(Long id) {
+        throw new BizException("日志不允许删除");
+    }
 
 }

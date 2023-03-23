@@ -110,9 +110,4 @@ public class DataVersionLogMongoService implements DataVersionLogService {
             .setTotal(page.getTotalElements());
     }
 
-    @Override
-    public void delete(Long id) {
-
-    }
-
 }
