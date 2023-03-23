@@ -1,8 +1,7 @@
 package cn.bootx.starter.auth.configuration;
 
 import cn.bootx.starter.auth.handler.SaRouteHandler;
-import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
-import cn.dev33.satoken.interceptor.SaRouteInterceptor;
+import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.router.SaRouter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -32,16 +31,16 @@ public class SaTokenConfigure implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        SaInterceptor saInterceptor = new SaInterceptor(handler ->
+                SaRouter.match(Collections.singletonList("/**"))
+                .notMatch(permitAllUrlProperties.getIgnoreUrls())
+                // 注册自定义鉴权路由配置
+                .check(saRouteHandler.check(handler))
+        );
         // 注册路由拦截器，自定义验证规则
         registry
-            .addInterceptor(
-                    new SaRouteInterceptor((req, res, handler) -> SaRouter.match(Collections.singletonList("/**"))
-                        .notMatch(permitAllUrlProperties.getIgnoreUrls())
-                        // 注册自定义鉴权路由配置
-                        .check(saRouteHandler.check(handler))))
+            .addInterceptor(saInterceptor)
             .addPathPatterns("/**");
-        // 注册注解拦截器
-        registry.addInterceptor(new SaAnnotationInterceptor()).addPathPatterns("/**");
     }
 
 }
