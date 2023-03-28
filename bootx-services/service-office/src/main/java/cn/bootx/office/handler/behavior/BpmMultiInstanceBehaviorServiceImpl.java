@@ -29,7 +29,7 @@ import static cn.bootx.starter.flowable.code.TaskCode.RESULT_PASS;
 import static cn.bootx.starter.flowable.code.TaskCode.STATE_REJECT;
 
 /**
- * Bpm 多实例行为服务
+ * 重写 flowable 多实例行为服务
  *
  * @author xxm
  * @date 2022/9/4
