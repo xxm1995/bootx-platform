@@ -1,4 +1,4 @@
-package cn.bootx.common.log;
+package cn.bootx.common.log.handler;
 
 import ch.qos.logback.classic.pattern.MessageConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;

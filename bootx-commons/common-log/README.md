@@ -15,8 +15,8 @@
 
 ```xml
 <!-- 敏感数据脱敏 -->
-<conversionRule conversionWord="msg" converterClass="cn.bootx.common.log.SensitiveDataLogConverter"/>
-<conversionRule conversionWord="message" converterClass="cn.bootx.common.log.SensitiveDataLogConverter"/>
+<conversionRule conversionWord="msg" converterClass="cn.bootx.common.log.handler.SensitiveDataLogConverter"/>
+<conversionRule conversionWord="message" converterClass="cn.bootx.common.log.handler.SensitiveDataLogConverter"/>
 ```
 
 如果引入默认的`Logback`xml配置，需要在这条引入语句上面声明项目名称和日志存储地址，如本项目默认的日志输出文件，如果不引入而自己进行编写日志配置文件的话，可以参照`logback-bootx-common.xml`进行编写。

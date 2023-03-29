@@ -1,4 +1,4 @@
-package cn.bootx.common.log;
+package cn.bootx.common.log.handler;
 
 import cn.bootx.common.core.code.CommonCode;
 import cn.hutool.core.util.RandomUtil;
