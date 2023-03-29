@@ -5,6 +5,7 @@ import cn.bootx.common.core.annotation.IgnoreAuth;
 import cn.bootx.common.core.annotation.OperateLog;
 import cn.bootx.common.core.rest.Res;
 import cn.bootx.common.core.rest.ResResult;
+import cn.bootx.common.log.plumelog.PlumeLogAutoDeleteLogs;
 import cn.bootx.common.sequence.func.Sequence;
 import cn.bootx.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.common.sequence.range.SeqRangeConfig;
@@ -44,12 +45,15 @@ public class TestController {
 
     private final UserWsNoticeService userWsNoticeService;
 
+    private final PlumeLogAutoDeleteLogs autoDeleteLogs;
+
     @OperateLog(title = "测试日志")
     @OperateLog(title = "测试重复日志")
     @Idempotent
     @Operation(summary = "测试")
     @GetMapping("/hello")
     public ResResult<String> hello() {
+        autoDeleteLogs.task();
         return Res.ok("hello");
     }
 

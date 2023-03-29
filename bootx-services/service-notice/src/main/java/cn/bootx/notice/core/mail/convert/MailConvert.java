@@ -4,7 +4,6 @@ import cn.bootx.notice.core.mail.entity.MailConfig;
 import cn.bootx.notice.dto.mail.MailConfigDto;
 import cn.bootx.notice.param.mail.MailConfigParam;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**

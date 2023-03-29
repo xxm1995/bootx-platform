@@ -4,7 +4,6 @@ import cn.bootx.baseapi.core.app.entity.AppVersion;
 import cn.bootx.baseapi.dto.app.AppVersionDto;
 import cn.bootx.baseapi.param.app.AppVersionParam;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 /**
