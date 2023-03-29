@@ -3,6 +3,8 @@ package cn.bootx.starter.auth.util;
 import cn.bootx.starter.auth.configuration.AuthProperties;
 import cn.dev33.satoken.secure.SaSecureUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -13,6 +15,7 @@ import java.util.Objects;
  * @author xxm
  * @date 2021/7/30
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PasswordEncoder {
@@ -35,7 +38,7 @@ public class PasswordEncoder {
      * @return 如果原始密码在编码后与存储中的编码密码匹配，则为 true
      */
     public boolean matches(String rawPassword, String encodedPassword) {
-        return Objects.equals(encodedPassword, encode(rawPassword));
+        return StringUtils.equals(encodedPassword, encode(rawPassword));
     }
 
     /**

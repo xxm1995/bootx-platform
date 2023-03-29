@@ -109,7 +109,7 @@ public class UserInfoService {
         newPassword = passwordEncoder.encode(newPassword);
 
         // 判断原有密码是否相同
-        if (passwordEncoder.matches(password, userInfo.getPassword())) {
+        if (!passwordEncoder.matches(password, userInfo.getPassword())) {
             throw new BizException("旧密码错误");
         }
         userInfo.setPassword(newPassword);
