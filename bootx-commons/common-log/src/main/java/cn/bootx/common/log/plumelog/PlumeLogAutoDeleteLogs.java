@@ -2,6 +2,7 @@ package cn.bootx.common.log.plumelog;
 
 import cn.bootx.common.log.configuration.LogProperties;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import com.plumelog.lite.client.IndexUtil;
 import com.plumelog.lite.client.InitConfig;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -36,18 +38,24 @@ public class PlumeLogAutoDeleteLogs {
                 .mapToObj(i -> IndexUtil.getRunLogIndex(System.currentTimeMillis() - i * InitConfig.MILLS_ONE_DAY))
                 .collect(Collectors.toSet());
 
-        // 日志文件夹
-        File dir = new File(InitConfig.LITE_MODE_LOG_PATH+"/data");
+        // 每天的日志文件夹进行清理
+        File dir = new File(InitConfig.LITE_MODE_LOG_PATH + "/data");
         if (dir.isDirectory()) {
-            // 每天的日志文件夹进行清理
-            File[] subs = dir.listFiles();
-            for (File sub : subs) {
+            File[] files = dir.listFiles();
+            if (Objects.isNull(files)){
+                return;
+            }
+            for (File file : files) {
+                // 如果不是日志文件夹, 继续向下执行
+                if (!StrUtil.startWith(file.getName(),"")){
+                    continue;
+                }
                 // 如果属于不需要删除的日志, 继续向下执行
-                if (logDirSeq.contains(sub.getName())){
+                if (logDirSeq.contains(file.getName())){
                     continue;
                 }
                 // 删除过时的日志文件夹
-                FileUtil.del(sub);
+                FileUtil.del(file);
             }
         }
     }
