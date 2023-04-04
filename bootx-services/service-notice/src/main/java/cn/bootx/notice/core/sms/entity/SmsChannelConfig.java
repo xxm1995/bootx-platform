@@ -27,7 +27,7 @@ public class SmsChannelConfig extends MpBaseEntity {
     @Column(comment = "短信签名")
     private String signature;
     /** 短信ApiKey */
-    @Column(comment = "")
+    @Column(comment = "短信ApiKey")
     private String apiKey;
     /** 短信Api秘钥 */
     @Column(comment = "短信Api秘钥")
