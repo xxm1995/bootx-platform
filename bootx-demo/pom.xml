@@ -66,5 +66,10 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-actable</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.bootx</groupId>
+            <artifactId>mybatis-table-modify</artifactId>
+            <version>1.5.1.RELEASE</version>
+        </dependency>
     </dependencies>
 </project>

@@ -139,7 +139,6 @@ public class ColumnUtils {
 
     /**
      * 获取数据库字段的排序
-     * @return
      */
     public static int getColumnOrder(Field field, Class<?> clazz) {
         Column column = getColumn(field, clazz);

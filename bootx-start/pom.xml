@@ -64,6 +64,12 @@
             <artifactId>xml-apis</artifactId>
             <version>${xml-apis.version}</version>
         </dependency>
+        <!-- plumeLog日志 -->
+        <dependency>
+            <groupId>com.plumelog</groupId>
+            <artifactId>plumelog-logback</artifactId>
+            <version>3.5.3</version>
+        </dependency>
 
     </dependencies>
 
