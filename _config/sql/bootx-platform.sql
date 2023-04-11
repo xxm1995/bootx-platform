@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 阿里
+ Source Server         : bootx
  Source Server Type    : MySQL
  Source Server Version : 50735
 
@@ -9,7 +9,7 @@
  Target Server Version : 50735
  File Encoding         : 65001
 
- Date: 03/03/2023 16:59:26
+ Date: 11/04/2023 09:16:10
 */
 
 SET NAMES utf8mb4;
@@ -3425,7 +3425,8 @@ INSERT INTO `base_dict` VALUES (1563083969989423104, 'BpmTaskAssignType', '工�
 INSERT INTO `base_dict` VALUES (1567091641298386944, 'BpmTaskState', '流程任务状态', b'1', '工作流', '流程任务状态', 1399985191002447872, '2022-09-06 18:05:37', 1399985191002447872, '2022-09-06 18:05:47', 0, 1);
 INSERT INTO `base_dict` VALUES (1570343684024705024, 'BpmTaskResult', '流程任务处理结果', b'1', '工作流', '流程任务处理结果', 1399985191002447872, '2022-09-15 17:28:05', 1414143554414059520, '2022-10-19 23:13:40', 0, 1);
 INSERT INTO `base_dict` VALUES (1570764395519111168, 'BpmInstanceState', '流程实例状态', b'1', '工作流', '流程实例状态', 1399985191002447872, '2022-09-16 21:19:50', 1414143554414059520, '2022-10-19 23:13:33', 0, 1);
-INSERT INTO `base_dict` VALUES (1589527951317389312, 'DataScopePerm', '数据范围权限', b'1', '系统属性', '数据范围权限', 1414143554414059520, '2022-11-07 15:59:30', 1414143554414059520, '2022-11-07 16:00:27', 0, 1);
+INSERT INTO `base_dict` VALUES (1589527951317389312, 'DataScopePerm', '数据范围权限', b'1', '系统属性', '数据范围权限', 1414143554414059520, '2022-11-07 15:59:30', 1399985191002447872, '2022-12-09 22:09:25', 0, 3);
+INSERT INTO `base_dict` VALUES (1633393287952257024, 'DatabaseType', '数据库类型', b'1', '开发', '数据库类型', 1414143554414059520, '2023-03-08 17:04:41', 1414143554414059520, '2023-03-08 17:04:41', 0, 0);
 
 -- ----------------------------
 -- Table structure for base_dict_item
@@ -3571,7 +3572,7 @@ INSERT INTO `base_dict_item` VALUES (1570343826018672640, 1570343684024705024, '
 INSERT INTO `base_dict_item` VALUES (1570343873737269248, 1570343684024705024, 'BpmTaskResult', 'back', '退回', b'1', 0.00, '', 1399985191002447872, '2022-09-15 17:28:50', 1399985191002447872, '2022-09-15 17:28:50', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1570343913918701568, 1570343684024705024, 'BpmTaskResult', 'retrieve', '取回', b'1', 0.00, '', 1399985191002447872, '2022-09-15 17:28:59', 1399985191002447872, '2022-09-15 17:28:59', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1570685888076120064, 1570343684024705024, 'BpmTaskResult', 'autoFinish', '自动完成', b'1', 0.00, '', 1399985191002447872, '2022-09-16 16:07:52', 1399985191002447872, '2022-09-16 16:08:02', 0, 1);
-INSERT INTO `base_dict_item` VALUES (1570764765255397376, 1570764395519111168, 'BpmInstanceState', 'running', '运行中', b'1', 0.00, '', 1399985191002447872, '2022-09-16 21:21:18', 1399985191002447872, '2022-09-16 21:21:18', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1570764765255397376, 1570764395519111168, 'BpmInstanceState', 'running', '运行中', b'1', 0.00, '', 1399985191002447872, '2022-09-16 21:21:18', 1399985191002447872, '2022-12-09 22:15:46', 0, 2);
 INSERT INTO `base_dict_item` VALUES (1570764802047832064, 1570764395519111168, 'BpmInstanceState', 'finish', '已完成', b'1', 0.00, '', 1399985191002447872, '2022-09-16 21:21:27', 1399985191002447872, '2022-09-16 21:21:27', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1570764836319490048, 1570764395519111168, 'BpmInstanceState', 'cancel', '取消', b'1', 0.00, '', 1399985191002447872, '2022-09-16 21:21:35', 1399985191002447872, '2022-09-16 21:21:35', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1570784215744585728, 1570343684024705024, 'BpmTaskResult', 'cancel', '取消', b'1', 0.00, '', 1399985191002447872, '2022-09-16 22:38:35', 1399985191002447872, '2022-09-16 22:38:35', 0, 0);
@@ -3584,6 +3585,9 @@ INSERT INTO `base_dict_item` VALUES (1589528340267782144, 1589527951317389312, '
 INSERT INTO `base_dict_item` VALUES (1589528367228768256, 1589527951317389312, 'DataScopePerm', '3', '部门范围', b'1', 0.00, '', 1414143554414059520, '2022-11-07 16:01:09', 1414143554414059520, '2022-11-07 16:01:09', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1589528393292173312, 1589527951317389312, 'DataScopePerm', '2', '用户范围', b'1', 0.00, '', 1414143554414059520, '2022-11-07 16:01:16', 1414143554414059520, '2022-11-07 16:01:16', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1589528423956729856, 1589527951317389312, 'DataScopePerm', '1', '自身数据', b'1', 0.00, '', 1414143554414059520, '2022-11-07 16:01:23', 1414143554414059520, '2022-11-07 16:01:23', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1633403429028536320, 1633393287952257024, 'DatabaseType', 'mysql', 'MySQL', b'1', 1.00, '', 1414143554414059520, '2023-03-08 17:44:59', 1414143554414059520, '2023-03-08 17:44:59', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1633403459470794752, 1633393287952257024, 'DatabaseType', 'oracle', 'Oracle', b'1', 2.00, '', 1414143554414059520, '2023-03-08 17:45:07', 1414143554414059520, '2023-03-08 17:45:07', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1633403498695925760, 1633393287952257024, 'DatabaseType', 'mssql', 'SQLServer', b'1', 3.00, '', 1414143554414059520, '2023-03-08 17:45:16', 1414143554414059520, '2023-03-08 17:45:16', 0, 0);
 
 -- ----------------------------
 -- Table structure for base_dynamic_data_source
@@ -4445,6 +4449,8 @@ INSERT INTO `iam_perm_menu` VALUES (1623325795944439808, 'adminv3', 159937899281
 INSERT INTO `iam_perm_menu` VALUES (1623494586215579648, 'admin', 1552207982510706688, '行政区划', 'ChinaRegion', NULL, b'0', '', b'1', b'0', 'develop/region/ChinaRegionList', NULL, '/develop/region', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2023-02-09 09:30:47', 1399985191002447872, '2023-02-09 17:50:05', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1629039360928075776, 'adminv3', 1582276341792985088, '可视化大屏', 'ProjectInfoList', NULL, b'0', '', b'0', b'0', '/modules/develop/report/ProjectInfoList', NULL, '/develop/report', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-02-24 16:43:44', 1414143554414059520, '2023-02-24 16:44:17', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1631946120891707392, 'admin', 1552207982510706688, '可视化大屏', 'ProjectInfoList', NULL, b'0', '', b'0', b'0', 'develop/report/ProjectInfoList', NULL, '/develop/report', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1399985191002447872, '2023-03-04 17:14:10', 1399985191002447872, '2023-03-04 17:14:10', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1635274568758435840, 'adminv3', 1582276341792985088, 'SQL查询语句', 'QuerySqlList', NULL, b'0', '', b'0', b'0', '/modules/develop/query/QuerySqlList', NULL, '/develop/querySql', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-03-13 21:40:14', 1414143554414059520, '2023-03-13 21:43:05', 2, 0);
+INSERT INTO `iam_perm_menu` VALUES (1635895711235022848, 'adminv3', 1582276447602692096, '流程设计器', 'ProcessDesign', NULL, b'0', '', b'0', b'0', '/modules/bpm/design/ProcessDesign.vue', NULL, '/bpm/design', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-03-15 14:48:26', 1414143554414059520, '2023-03-15 14:48:26', 0, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -4833,6 +4839,30 @@ INSERT INTO `notice_site_message_user` VALUES (1558781525422428160, 155878152520
 INSERT INTO `notice_site_message_user` VALUES (1559917646856540160, 1424212599079161857, 1399985191002447872, b'1', '2022-08-17 22:58:43', 1399985191002447872, '2022-08-17 22:58:44', 0);
 INSERT INTO `notice_site_message_user` VALUES (1561379790089302016, 1561368170558623744, 1399985191002447872, b'1', '2022-08-21 23:48:43', 1399985191002447872, '2022-08-21 23:48:46', 0);
 INSERT INTO `notice_site_message_user` VALUES (1561379841968648192, 1561365894804766720, 1399985191002447872, b'1', '2022-08-21 23:48:58', 1399985191002447872, '2022-08-21 23:48:58', 0);
+
+-- ----------------------------
+-- Table structure for notice_sms_channel_config
+-- ----------------------------
+DROP TABLE IF EXISTS `notice_sms_channel_config`;
+CREATE TABLE `notice_sms_channel_config`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '渠道编码',
+  `signature` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '短信签名',
+  `api_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '短信ApiKey',
+  `api_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '短信Api秘钥',
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '回调地址',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建者ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修者ID',
+  `last_modified_time` datetime(0) NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '乐观锁',
+  `deleted` bit(1) NOT NULL COMMENT '删除标志',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '短信渠道配置' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of notice_sms_channel_config
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for notice_sms_config
