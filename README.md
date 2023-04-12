@@ -67,7 +67,7 @@
   - [ ] 短信通知
 ## 🥂 Quick Start
 
-[后端](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
+Spring Boot后端: [后端启动流程](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
 
 Vue2前端: [Vue2前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备)
 
