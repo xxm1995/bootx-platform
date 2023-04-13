@@ -203,6 +203,8 @@ bootx:
     # 审计日志存储
     audit-log:
       store: jdbc
+      ip2region:
+        file-path: D:\data\ip2region\ip2region.xdb
     # 文件上传
     file-upload:
       upload-type: local

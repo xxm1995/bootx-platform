@@ -14,6 +14,8 @@ import cn.bootx.common.spring.exception.RetryableException;
 import cn.bootx.common.websocket.entity.WsRes;
 import cn.bootx.common.websocket.entity.WsResult;
 import cn.bootx.common.websocket.service.UserWsNoticeService;
+import cn.bootx.starter.audit.log.ip2region.IpRegion;
+import cn.bootx.starter.audit.log.ip2region.IpToRegionService;
 import cn.hutool.extra.spring.SpringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,6 +40,8 @@ import javax.validation.constraints.NotNull;
 @RequestMapping("/test")
 @RequiredArgsConstructor
 public class TestController {
+
+    private final IpToRegionService ipToRegionService;
 
     private final Sequence sequence;
 
@@ -118,4 +122,9 @@ public class TestController {
         throw new RetryableException();
     }
 
+    @Operation(summary = "ip地址查询")
+    @GetMapping("/ipToRegion")
+    public ResResult<IpRegion> ipToRegion(String ip){
+        return Res.ok(ipToRegionService.getRegionByIp(ip));
+    }
 }
