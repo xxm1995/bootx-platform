@@ -127,4 +127,10 @@ public class TestController {
     public ResResult<IpRegion> ipToRegion(String ip){
         return Res.ok(ipToRegionService.getRegionByIp(ip));
     }
+
+    @Operation(summary = "ip地址查询(文本)")
+    @GetMapping("/getRegionStrByIp")
+    public ResResult<String> getRegionStrByIp(String ip){
+        return Res.ok(ipToRegionService.getRegionStrByIp(ip));
+    }
 }

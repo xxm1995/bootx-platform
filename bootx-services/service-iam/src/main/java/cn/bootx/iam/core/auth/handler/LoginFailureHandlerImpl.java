@@ -1,6 +1,8 @@
 package cn.bootx.iam.core.auth.handler;
 
 import cn.bootx.common.core.code.WebHeaderCode;
+import cn.bootx.common.spring.util.WebServletUtil;
+import cn.bootx.starter.audit.log.ip2region.IpToRegionService;
 import cn.bootx.starter.audit.log.param.LoginLogParam;
 import cn.bootx.starter.audit.log.service.LoginLogService;
 import cn.bootx.starter.auth.exception.LoginFailureException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * 登录失败
@@ -28,22 +31,33 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
 
     private final LoginLogService loginLogService;
 
+    private final IpToRegionService ipToRegionService;
+
     @Override
     public void onLoginFailure(HttpServletRequest request, HttpServletResponse response, LoginFailureException e) {
 
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader(WebHeaderCode.USER_AGENT));
-        String ip = ServletUtil.getClientIP(request);
+        // ip信息
+        String ip = "未知";
+        String location = "未知";
+        Optional<String> ipOpt = Optional.ofNullable(WebServletUtil.getRequest()).map(ServletUtil::getClientIP);
+        if (ipOpt.isPresent()){
+            ip = ipOpt.get();
+            location = ipToRegionService.getRegionStrByIp(ip);
+        }
+
         String loginType = SecurityUtil.getLoginType(request);
         String client = SecurityUtil.getClient(request);
         LoginLogParam loginLog = new LoginLogParam().setAccount(e.getUsername())
-            .setLogin(false)
-            .setClient(client)
-            .setLoginType(loginType)
-            .setMsg(e.getMessage())
-            .setIp(ip)
-            .setOs(userAgent.getOs().getName())
-            .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
-            .setLoginTime(LocalDateTime.now());
+                .setLogin(false)
+                .setClient(client)
+                .setLoginType(loginType)
+                .setMsg(e.getMessage())
+                .setIp(ip)
+                .setLoginLocation(location)
+                .setOs(userAgent.getOs().getName())
+                .setBrowser(userAgent.getBrowser().getName() + " " + userAgent.getVersion())
+                .setLoginTime(LocalDateTime.now());
         loginLogService.add(loginLog);
     }
 

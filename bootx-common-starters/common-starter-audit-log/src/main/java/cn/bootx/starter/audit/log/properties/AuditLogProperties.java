@@ -52,7 +52,7 @@ public class AuditLogProperties {
      * Ip2region查询类型
      */
     public enum Ip2regionSearch {
-        /** 完全基于文件的查询(不体检) */
+        /** 完全基于文件的查询(不推荐) */
         FILE,
         /** 缓存 VectorIndex 索引 */
         VECTOR_INDEX,

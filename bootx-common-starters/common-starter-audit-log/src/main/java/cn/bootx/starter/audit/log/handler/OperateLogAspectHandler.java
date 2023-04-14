@@ -8,6 +8,7 @@ import cn.bootx.common.headerholder.HeaderHolder;
 import cn.bootx.common.jackson.util.JacksonUtil;
 import cn.bootx.common.spring.util.AopUtil;
 import cn.bootx.common.spring.util.WebServletUtil;
+import cn.bootx.starter.audit.log.ip2region.IpToRegionService;
 import cn.bootx.starter.audit.log.param.OperateLogParam;
 import cn.bootx.starter.audit.log.service.OperateLogService;
 import cn.bootx.starter.auth.util.SecurityUtil;
@@ -43,6 +44,7 @@ import java.util.Optional;
 public class OperateLogAspectHandler {
 
     private final OperateLogService operateLogService;
+    private final IpToRegionService ipToRegionService;
 
     /**
      * 配置织入点
@@ -75,8 +77,14 @@ public class OperateLogAspectHandler {
         if (CollUtil.isEmpty(logs)) {
             return;
         }
-        // 基础信息
-        String ip = Optional.ofNullable(WebServletUtil.getRequest()).map(ServletUtil::getClientIP).orElse("未知");
+        // ip信息
+        String ip = "未知";
+        String location = "未知";
+        Optional<String> ipOpt = Optional.ofNullable(WebServletUtil.getRequest()).map(ServletUtil::getClientIP);
+        if (ipOpt.isPresent()){
+            ip = ipOpt.get();
+            location = ipToRegionService.getRegionStrByIp(ip);
+        }
         Optional<UserDetail> currentUser = SecurityUtil.getCurrentUser();
         // 设置方法名称
         String className = joinPoint.getTarget().getClass().getName();
@@ -84,15 +92,16 @@ public class OperateLogAspectHandler {
 
         for (OperateLog log : logs) {
             OperateLogParam operateLog = new OperateLogParam().setTitle(log.title())
-                .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
-                .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
-                .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
-                .setOperateUrl(HeaderHolder.getHeader(ServletCode.REQUEST_URI))
-                .setMethod(className + "#" + methodName)
-                .setRequestMethod(HeaderHolder.getHeader(ServletCode.METHOD))
-                .setSuccess(true)
-                .setOperateIp(ip)
-                .setOperateTime(LocalDateTime.now());
+                    .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
+                    .setUsername(currentUser.map(UserDetail::getUsername).orElse("未知"))
+                    .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
+                    .setOperateUrl(HeaderHolder.getHeader(ServletCode.REQUEST_URI))
+                    .setMethod(className + "#" + methodName)
+                    .setRequestMethod(HeaderHolder.getHeader(ServletCode.METHOD))
+                    .setSuccess(true)
+                    .setOperateIp(ip)
+                    .setOperateLocation(location)
+                    .setOperateTime(LocalDateTime.now());
 
             // 异常流
             if (Objects.nonNull(e)) {
@@ -119,9 +128,9 @@ public class OperateLogAspectHandler {
      */
     private List<OperateLog> getMethodAnnotation(JoinPoint joinPoint) {
         List<OperateLog> operateLogs = Optional.ofNullable(AopUtil.getMethodAnnotation(joinPoint, OperateLogs.class))
-            .map(OperateLogs::value)
-            .map(ListUtil::of)
-            .orElse(null);
+                .map(OperateLogs::value)
+                .map(ListUtil::of)
+                .orElse(null);
         if (CollUtil.isEmpty(operateLogs)) {
             operateLogs = ListUtil.of(AopUtil.getMethodAnnotation(joinPoint, OperateLog.class));
         }

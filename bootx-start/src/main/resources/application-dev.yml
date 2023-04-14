@@ -200,11 +200,16 @@ bootx:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/weChat
           client-id: ??
           client-secret: ??
-    # 审计日志存储
+    # 审计日志
     audit-log:
+      # 审计日志存储
       store: jdbc
+      # ip归属地
       ip2region:
-        file-path: D:\data\ip2region\ip2region.xdb
+        # 数据文件路径
+        file-path: /data/ip2region/ip2region.xdb
+        # 查询方式
+        search-type: cache
     # 文件上传
     file-upload:
       upload-type: local
