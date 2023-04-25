@@ -11,12 +11,13 @@
 ## 🙏🙏🙏 求star呀，走过路过留个star吧，非常非常感谢。🙏🙏🙏
 
 ## 🍈项目介绍
+> 目前Bootx-Platform的开发重点是，将核心中的业务代码剥离出子项目，作为单独系统使用，
+保持脚手架核心的精简，同时对不同的业务模块也可以专门优化和适配，使其加易用和强大。
 
 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
 致力将开源版打造成超越商业版后台管理框架的项目。
 
 - 单体版本使用Spring Boot相关技术栈
-- 分布式版本使用Spring Cloud Alibaba技术栈
 - vue2使用 [ANTD PRO VUE](https://pro.antdv.com/) 作为脚手架
 - vue3使用 [Vben-Admin](https://vvbin.cn/doc-next/) 作为脚手架
 - 可视化大屏使用 [Go-VIew](https://gitee.com/dromara/go-view) 作为基础框架
@@ -30,6 +31,13 @@
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove)、[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
+
+## 🍁子项目
+- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/daxpay)
+- mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
+- bpm-plus：工作流办公平台 
+- 待命名：可视化大屏
+
 ## 🛠️功能亮点
 
 低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏，可以适用于需要快速开发各种数据看板的场景。
@@ -114,12 +122,6 @@ bootx-platform
 ```
 
 ##  🥪 关于我们
-
-微信扫码加入交流群，或添加微信号：`xxxx` 邀请进群
-
-
-钉钉扫码加入钉钉交流群
-
 
 QQ扫码加入QQ交流群
 <p>
