@@ -63,8 +63,8 @@
             <artifactId>common-starter-quartz</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>common-actable</artifactId>
+            <groupId>cn.bootx</groupId>
+            <artifactId>mybatis-table-modify</artifactId>
         </dependency>
     </dependencies>
 </project>

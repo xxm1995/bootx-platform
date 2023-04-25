@@ -1,9 +1,6 @@
 package cn.bootx.visualization.core.entity;
 
 import cn.bootx.common.core.annotation.BigField;
-import cn.bootx.common.core.annotation.actable.Column;
-import cn.bootx.common.core.annotation.actable.Table;
-import cn.bootx.common.core.code.actable.MySqlFieldType;
 import cn.bootx.common.core.function.EntityBaseFunction;
 import cn.bootx.common.core.util.CollUtil;
 import cn.bootx.common.jackson.util.JacksonUtil;

@@ -1,6 +1,6 @@
 package cn.bootx.common.mybatisplus.base;
 
-import cn.bootx.common.core.annotation.actable.Column;
+import cn.bootx.mybatis.table.modify.annotation.DbColumn;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public abstract class MpIdEntity implements Serializable {
 
     private static final long serialVersionUID = 3982181843202226124L;
 
-    @Column(comment = "主键", isKey = true, order = Integer.MIN_VALUE + 100)
+    @DbColumn(comment = "主键", isKey = true, order = Integer.MIN_VALUE + 100)
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 

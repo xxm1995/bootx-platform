@@ -32,7 +32,6 @@
 <!--        <module>common-mqtt</module>-->
         <module>common-rabbitmq</module>
         <module>common-lock</module>
-        <module>common-actable</module>
         <module>common-data-translate</module>
     </modules>
 

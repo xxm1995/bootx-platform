@@ -1,8 +1,8 @@
-package cn.bootx.demo.core.actable.entity;
+package cn.bootx.demo.core.mtm.entity;
 
-import cn.bootx.common.core.annotation.actable.Column;
-import cn.bootx.common.core.annotation.actable.Table;
 import cn.bootx.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.mybatis.table.modify.annotation.DbColumn;
+import cn.bootx.mybatis.table.modify.annotation.DbTable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,17 +17,17 @@ import java.util.Date;
  * @date 2023/1/11
  */
 @EqualsAndHashCode(callSuper = true)
-@Table(comment = "actable测试")
+@DbTable(value = "",comment = "actable测试")
 @Data
 @Accessors(chain = true)
 @Schema(title = "cs")
-public class AcTableEntity extends MpBaseEntity {
+public class MtmableEntity extends MpBaseEntity {
 
     private String h1;
 
     private Date date;
 
-    @Column(ignore = true)
+    @DbColumn(ignore = true)
     private int he;
 
 }

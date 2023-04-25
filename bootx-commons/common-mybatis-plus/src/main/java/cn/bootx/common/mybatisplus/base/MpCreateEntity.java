@@ -1,6 +1,6 @@
 package cn.bootx.common.mybatisplus.base;
 
-import cn.bootx.common.core.annotation.actable.Column;
+import cn.bootx.mybatis.table.modify.annotation.DbColumn;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Getter;
@@ -19,12 +19,12 @@ import java.time.LocalDateTime;
 public abstract class MpCreateEntity extends MpIdEntity {
 
     /** 创建者ID */
-    @Column(comment = "创建者ID", length = 20, order = Integer.MAX_VALUE - 600)
+    @DbColumn(comment = "创建者ID", length = 20, order = Integer.MAX_VALUE - 600)
     @TableField(fill = FieldFill.INSERT)
     private Long creator;
 
     /** 创建时间 */
-    @Column(comment = "创建时间", order = Integer.MAX_VALUE - 500)
+    @DbColumn(comment = "创建时间", order = Integer.MAX_VALUE - 500)
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 

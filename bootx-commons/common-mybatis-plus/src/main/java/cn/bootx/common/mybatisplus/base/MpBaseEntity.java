@@ -1,6 +1,6 @@
 package cn.bootx.common.mybatisplus.base;
 
-import cn.bootx.common.core.annotation.actable.Column;
+import cn.bootx.mybatis.table.modify.annotation.DbColumn;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public abstract class MpBaseEntity extends MpDelEntity implements Serializable {
 
     /** 删除标志 */
     @TableLogic
-    @Column(comment = "删除标志", isNull = false, order = Integer.MAX_VALUE - 100)
+    @DbColumn(comment = "删除标志", isNull = false, order = Integer.MAX_VALUE - 100)
     private boolean deleted;
 
 }
