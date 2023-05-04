@@ -22,8 +22,13 @@
 - vue3使用 [Vben-Admin](https://vvbin.cn/doc-next/) 作为脚手架
 - 可视化大屏使用 [Go-VIew](https://gitee.com/dromara/go-view) 作为基础框架
 - 移动端使用 [Taro](https://taro.jd.com/)、[NutUI](https://nutui.jd.com/) vue3+TS为技术栈。
+## 🍁子项目
+- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/daxpay)
+- mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
+- bpm-plus：工作流办公平台
+- 待命名：可视化大屏
 
-## 🍒文档
+## 📚文档
 
 - 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)、[管理平台(vue3)](http://v3.platform.bootx.cn/)、[可视化大屏](http://visualization.platform.bootx.cn/)
 - 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)、[可视化大屏](https://gitee.com/bootx/bootx-platform-visualization)
@@ -31,12 +36,6 @@
 - 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove)、[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
-
-## 🍁子项目
-- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/daxpay)
-- mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
-- bpm-plus：工作流办公平台 
-- 待命名：可视化大屏
 
 ## 🛠️功能亮点
 
