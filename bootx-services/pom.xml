@@ -17,7 +17,6 @@
     <modules>
         <module>service-baseapi</module>
         <module>service-iam</module>
-        <module>service-payment</module>
         <module>service-notice</module>
         <module>service-office</module>
         <module>service-visualization</module>
