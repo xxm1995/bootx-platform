@@ -13,9 +13,40 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.bootx.platform</groupId>
-    <artifactId>bootx-platform</artifactId>
+    <artifactId>bootx-platform-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.2.3</version>
+
+    <!-- 项目信息 -->
+    <name>bootx-platform</name>
+    <description>bootx-platform 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案</description>
+    <url>https://gitee.com/bootx/bootx-platform</url>
+
+    <!-- 许可证 -->
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <name>bootx</name>
+            <email>xxm1995@outlook.com</email>
+            <organization>bootx</organization>
+            <url>https://gitee.com/bootx/bootx-platform</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git@gitee.com:bootx/bootx-platform.git</connection>
+        <developerConnection>scm:git:git@gitee.com:bootx/bootx-platform.git</developerConnection>
+        <url>https://gitee.com/bootx/bootx-platform</url>
+    </scm>
+
 
     <modules>
         <module>bootx-common-core</module>
@@ -366,11 +397,6 @@
     </repositories>
     <build>
         <plugins>
-            <!-- maven 版本号升级插件 -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>versions-maven-plugin</artifactId>
-            </plugin>
             <!--代码格式插件，默认使用spring 规则-->
             <plugin>
                 <groupId>io.spring.javaformat</groupId>
@@ -389,6 +415,85 @@
                         <nonFilteredFileExtension>docx</nonFilteredFileExtension>
                         <nonFilteredFileExtension>doc</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+            <!-- 编译插件，设置源码以及编译的jdk版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <!--打包源码的插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc 文档生成插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <!-- 忽略生成文档中的错误 -->
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                    <aggregate>true</aggregate>
+                    <!-- utf-8读取文件 -->
+                    <charset>UTF-8</charset>
+                    <!-- utf-8进行编码代码 -->
+                    <encoding>UTF-8</encoding>
+                    <!-- utf-8进行编码文档 -->
+                    <docencoding>UTF-8</docencoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--公钥私钥插件，也就是上传需要进行验证用户名和密码过程中需要用到的插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--部署插件-->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- setting.xml中配置仓库平台id -->
+                    <serverId>sonatype</serverId>
+                    <!-- 仓库平台地址 -->
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <!-- 自动完成在平台上close的操作 -->
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>
@@ -417,5 +522,18 @@
             </resource>
         </resources>
     </build>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype</id>
+            <name>OSS Snapshots Repository</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype</id>
+            <name>OSS Staging Repository</name>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
 </project>

@@ -4,12 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>cn.bootx.platform</groupId>
-        <artifactId>bootx-platform</artifactId>
+        <artifactId>bootx-platform-parent</artifactId>
         <version>1.2.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bootx-start</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+        <!-- 不发布到maven仓库中 -->
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.install.skip>true</maven.install.skip>
+    </properties>
 
     <dependencies>
         <!-- web mvc -->

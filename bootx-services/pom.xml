@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>cn.bootx.platform</groupId>
-        <artifactId>bootx-platform</artifactId>
+        <artifactId>bootx-platform-parent</artifactId>
         <version>1.2.3</version>
     </parent>
 
