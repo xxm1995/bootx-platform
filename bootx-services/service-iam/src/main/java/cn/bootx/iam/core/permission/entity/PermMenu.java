@@ -88,6 +88,7 @@ public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMen
     private boolean hiddenHeaderContent;
 
     /** 系统菜单 */
+    @TableField("`admin`")
     private boolean admin;
 
     /** 描述 */

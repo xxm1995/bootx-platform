@@ -9,6 +9,7 @@ import cn.bootx.iam.dto.user.UserInfoDto;
 import cn.bootx.iam.param.user.UserInfoParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,6 +54,7 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     private String source;
 
     /** 是否管理员 */
+    @TableField("`admin`")
     private boolean admin;
 
     /**
