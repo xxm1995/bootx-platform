@@ -11,7 +11,10 @@
 
     <artifactId>service-office</artifactId>
     <description>办公模块</description>
-
+    <properties>
+        <!-- 不发布到maven仓库中 -->
+        <maven.install.skip>true</maven.install.skip>
+    </properties>
     <dependencies>
         <!-- mysql -->
         <dependency>

@@ -17,11 +17,11 @@ import java.util.Date;
  * @date 2023/1/11
  */
 @EqualsAndHashCode(callSuper = true)
-@DbTable(value = "",comment = "actable测试")
+@DbTable(name = "mtm_table",comment = "actable测试")
 @Data
 @Accessors(chain = true)
 @Schema(title = "cs")
-public class MtmableEntity extends MpBaseEntity {
+public class MtmTableEntity extends MpBaseEntity {
 
     private String h1;
 

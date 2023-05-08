@@ -14,13 +14,31 @@
     <packaging>pom</packaging>
     <description>业务服务父pom</description>
 
-    <modules>
-        <module>service-baseapi</module>
-        <module>service-iam</module>
-        <module>service-notice</module>
-        <module>service-office</module>
-        <module>service-visualization</module>
-    </modules>
+    <profiles>
+        <!-- 非部署模式 -->
+        <profile>
+            <id>noDeploy</id>
+            <modules>
+                <module>service-baseapi</module>
+                <module>service-iam</module>
+                <module>service-notice</module>
+                <module>service-office</module>
+                <module>service-visualization</module>
+            </modules>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 部署模式 -->
+        <profile>
+            <id>deploy</id>
+            <modules>
+                <module>service-baseapi</module>
+                <module>service-iam</module>
+                <module>service-notice</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!-- 公共包 -->
@@ -68,24 +86,28 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- lombok 配合 mapstruct -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok-mapstruct-binding</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 类型转换处理器 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 类型转换 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- TTL容器 -->
@@ -113,6 +135,13 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-ui</artifactId>
             <version>${knife4j.version}</version>
+        </dependency>
+
+        <!-- 自动维护表结构 -->
+        <dependency>
+            <groupId>cn.bootx</groupId>
+            <artifactId>mybatis-table-modify</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- starter json序列化 -->

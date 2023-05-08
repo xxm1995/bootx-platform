@@ -48,14 +48,34 @@
     </scm>
 
 
-    <modules>
-        <module>bootx-common-core</module>
-        <module>bootx-common-starters</module>
-        <module>bootx-commons</module>
-        <module>bootx-services</module>
-        <module>bootx-start</module>
-        <module>bootx-demo</module>
-    </modules>
+    <profiles>
+        <!-- 非部署模式 -->
+        <profile>
+            <id>noDeploy</id>
+            <modules>
+                <module>bootx-common-core</module>
+                <module>bootx-common-starters</module>
+                <module>bootx-commons</module>
+                <module>bootx-services</module>
+                <module>bootx-start</module>
+                <module>bootx-demo</module>
+            </modules>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 部署模式 -->
+        <profile>
+            <id>deploy</id>
+            <modules>
+                <module>bootx-common-core</module>
+                <module>bootx-common-starters</module>
+                <module>bootx-commons</module>
+                <module>bootx-services</module>
+            </modules>
+        </profile>
+    </profiles>
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -65,7 +85,7 @@
         <!-- 二方库版本 -->
         <bootx-platform.version>1.2.3</bootx-platform.version>
         <!-- 三方库 -->
-        <hutool.version>5.8.15</hutool.version>
+        <hutool.version>5.8.18</hutool.version>
         <oshi.version>6.4.0</oshi.version>
         <jackson.version>2.12.3</jackson.version>
         <lang3.version>3.11</lang3.version>
@@ -81,7 +101,7 @@
         <xml-apis.version>1.4.01</xml-apis.version>
         <flowable.version>6.8.0</flowable.version>
         <!-- 升级新版本会有兼容性问题 -->
-        <logback-classic.version>1.2.4</logback-classic.version>
+        <logback-classic.version>1.2.12</logback-classic.version>
         <!-- 3.5.3 有bug -->
         <plumelog.version>3.5.2</plumelog.version>
         <easyexcel.version>3.2.1</easyexcel.version>
@@ -155,6 +175,7 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok-mapstruct-binding</artifactId>
                 <version>${lombok-mapstruct.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- 类型转换处理器 -->
@@ -162,6 +183,7 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- 类型转换 -->
@@ -169,6 +191,7 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- 模板引擎 -->
@@ -389,12 +412,8 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <!-- jitpack镜像库 -->
-<!--        <repository>-->
-<!--            <id>jitpack.io</id>-->
-<!--            <url>https://jitpack.io</url>-->
-<!--        </repository>-->
     </repositories>
+
     <build>
         <plugins>
             <!--代码格式插件，默认使用spring 规则-->
@@ -492,8 +511,8 @@
                     <serverId>sonatype</serverId>
                     <!-- 仓库平台地址 -->
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <!-- 自动完成在平台上close的操作 -->
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <!-- 自动完成在平台上close后的release的操作 -->
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
                 </configuration>
             </plugin>
         </plugins>

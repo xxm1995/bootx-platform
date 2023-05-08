@@ -39,6 +39,7 @@
         <dependency>
             <groupId>cn.bootx</groupId>
             <artifactId>mybatis-table-modify</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

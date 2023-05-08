@@ -13,11 +13,15 @@
 
     <properties>
         <!-- 不发布到maven仓库中 -->
-        <maven.deploy.skip>true</maven.deploy.skip>
         <maven.install.skip>true</maven.install.skip>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>service-baseapi</artifactId>

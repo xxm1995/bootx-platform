@@ -29,7 +29,6 @@
         <module>common-xxl-job</module>
         <module>common-mongo</module>
         <module>common-websocket</module>
-<!--        <module>common-mqtt</module>-->
         <module>common-rabbitmq</module>
         <module>common-lock</module>
         <module>common-data-translate</module>
@@ -44,17 +43,20 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <dependencyManagement>

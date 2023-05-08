@@ -13,11 +13,16 @@
 
     <properties>
         <!-- 不发布到maven仓库中 -->
-        <maven.deploy.skip>true</maven.deploy.skip>
         <maven.install.skip>true</maven.install.skip>
     </properties>
 
     <dependencies>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- web mvc -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
