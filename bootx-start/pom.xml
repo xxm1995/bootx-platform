@@ -81,6 +81,27 @@
             <artifactId>plumelog-logback</artifactId>
             <version>3.5.3</version>
         </dependency>
+        <!-- 不能被排除, 否者会 java.lang.NoClassDefFoundError: net/sf/json/JSONException -->
+        <dependency>
+            <groupId>com.plumelog</groupId>
+            <artifactId>plumelog-lite-spring-boot-starter</artifactId>
+            <scope>provided</scope>
+            <exclusions>
+                <!-- 不能被排除, 否者会 java.lang.NoClassDefFoundError: net/sf/json/JSONException -->
+                <!--                <exclusion>-->
+                <!--                    <artifactId>commons-io</artifactId>-->
+                <!--                    <groupId>commons-io</groupId>-->
+                <!--                </exclusion>-->
+                <!--                <exclusion>-->
+                <!--                    <artifactId>commons-lang</artifactId>-->
+                <!--                    <groupId>commons-lang</groupId>-->
+                <!--                </exclusion>-->
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
     </dependencies>
 

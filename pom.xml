@@ -99,7 +99,6 @@
         <ttl.version>2.14.2</ttl.version>
         <flyway.version>7.15.0</flyway.version>
         <xml-apis.version>1.4.01</xml-apis.version>
-        <flowable.version>6.8.0</flowable.version>
         <!-- 升级新版本会有兼容性问题 -->
         <logback-classic.version>1.2.12</logback-classic.version>
         <!-- 3.5.3 有bug -->
@@ -380,12 +379,6 @@
                 <version>${bootx-platform.version}</version>
             </dependency>
 
-            <!-- 工作流 -->
-            <dependency>
-                <groupId>cn.bootx.platform</groupId>
-                <artifactId>common-starter-flowable</artifactId>
-                <version>${bootx-platform.version}</version>
-            </dependency>
         </dependencies>
 
     </dependencyManagement>

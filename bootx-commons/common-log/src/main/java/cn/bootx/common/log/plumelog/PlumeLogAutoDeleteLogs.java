@@ -6,6 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.plumelog.lite.client.IndexUtil;
 import com.plumelog.lite.client.InitConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import java.util.stream.IntStream;
  * @date 2023/3/29
  */
 @Component
+@ConditionalOnClass(name = "com.plumelog.lite.client.InitConfig")
 @RequiredArgsConstructor
 public class PlumeLogAutoDeleteLogs {
     private final LogProperties logProperties;

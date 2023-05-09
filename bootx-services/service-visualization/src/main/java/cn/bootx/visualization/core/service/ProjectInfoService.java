@@ -180,13 +180,6 @@ public class ProjectInfoService {
     }
 
     /**
-     * 重置编辑数据为已发布的内容
-     */
-    public void reset() {
-
-    }
-
-    /**
      * 复制
      */
     @Transactional(rollbackFor = Exception.class)

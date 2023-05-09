@@ -39,11 +39,6 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-office</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
             <artifactId>service-visualization</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
