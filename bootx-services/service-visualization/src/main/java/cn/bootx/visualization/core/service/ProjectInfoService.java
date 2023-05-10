@@ -64,10 +64,11 @@ public class ProjectInfoService {
      */
     @Transactional(rollbackFor = Exception.class)
     public ProjectInfoResult create(CreateParam param) {
-        ProjectInfo info = new ProjectInfo().setState(GoVIewCode.STATE_UN_PUBLISH)
-            .setEdit(false)
-            .setName(param.getProjectName())
-            .setRemark(param.getRemark());
+        ProjectInfo info = new ProjectInfo()
+                .setState(GoVIewCode.STATE_UN_PUBLISH)
+                .setEdit(false)
+                .setName(param.getName())
+                .setRemark(param.getRemark());
         projectInfoManager.save(info);
         ProjectInfoPublish projectInfoPublish = new ProjectInfoPublish();
         projectInfoPublish.setId(info.getId());

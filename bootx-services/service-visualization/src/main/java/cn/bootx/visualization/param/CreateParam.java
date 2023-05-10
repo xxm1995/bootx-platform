@@ -14,7 +14,7 @@ import lombok.Data;
 public class CreateParam {
 
     @Schema(description = "项目名称")
-    private String projectName;
+    private String name;
 
     @Schema(description = "备注")
     private String remark;
