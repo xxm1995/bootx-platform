@@ -1,12 +1,6 @@
 package ${corePack}.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-import cn.bootx.common.core.function.EntityBaseFunction;
-import cn.bootx.common.mybatisplus.base.${baseClass};
+    ${baseClass};
 import com.baomidou.mybatisplus.annotation.TableName;
 import ${dtoPack}.${entityUpName}Dto;
 import ${paramPack}.${entityUpName}Param;

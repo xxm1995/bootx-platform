@@ -79,6 +79,11 @@ logging:
   level:
     cn.bootx.**: debug
     org.springframework.data.mongodb.core: debug
+# 自动建表配置
+mybatis-table:
+  update-type: update
+  database-type: mysql
+  scan-package: cn.bootx
 # 项目配置
 bootx:
   common:
@@ -86,7 +91,7 @@ bootx:
     swagger:
       enabled: true
       author: bootx
-      version: 1.2.3
+      version: 1.3.0
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
       # basic认证
@@ -94,27 +99,23 @@ bootx:
         enable: true
       # 多模块扫码
       base-packages:
-        "[基础API]": cn.bootx.baseapi
-        "[身份识别和管理]": cn.bootx.iam
-        "[消息服务]": cn.bootx.notice
-        "[办公服务]":
-          - cn.bootx.office
-          - cn.bootx.starter.flowable
-        "[支付服务]": cn.bootx.payment
+        "[基础API]": cn.bootx.platform.baseapi
+        "[身份识别和管理]": cn.bootx.platform.iam
+        "[消息服务]": cn.bootx.platform.notice
         "[演示模块]": cn.bootx.demo
         "[可视化大屏]": cn.bootx.visualization
         "[第三方对接]":
-          - cn.bootx.starter.dingtalk
-          - cn.bootx.starter.wecom
-          - cn.bootx.starter.wechat
+          - cn.bootx.platform.starter.dingtalk
+          - cn.bootx.platform.starter.wecom
+          - cn.bootx.platform.starter.wechat
         "[认证与权限]":
-          - cn.bootx.starter.auth
-          - cn.bootx.starter.data.perm
+          - cn.bootx.platform.starter.auth
+          - cn.bootx.platform.starter.data.perm
         "[其他starter组件]":
-          - cn.bootx.starter.audit.log
-          - cn.bootx.starter.file
-          - cn.bootx.starter.quartz
-          - cn.bootx.starter.monitor
+          - cn.bootx.platform.starter.audit.log
+          - cn.bootx.platform.starter.file
+          - cn.bootx.platform.starter.quartz
+          - cn.bootx.platform.starter.monitor
     # 缓存
     cache:
       # 默认超时时间 30分钟
@@ -134,18 +135,6 @@ bootx:
     # 是否启用Rabbit, 并不是停用了Rabbit, 需配合 ConditionalOnRabbit 注解使用
     rabbit:
       enable: false
-    # 表结构自动维护
-    actable:
-      # 数据库类型
-      database-type: mysql
-      # 更新类型 none为不进行任何操作
-      update-type: update
-      # 扫描包路径, 可以用 ,和 ; 分隔
-      scan-package: cn.bootx.**.entity
-      # 指定生成索引前缀
-      prefix-index: idx_
-      # 指定生成唯一约束前缀
-      prefix-unique: uni_
   starter:
     # 三方平台
     third:
@@ -200,9 +189,16 @@ bootx:
           redirect-uri: http://127.0.0.1:9999/auth/third/callback/weChat
           client-id: ??
           client-secret: ??
-    # 审计日志存储
+    # 审计日志
     audit-log:
+      # 审计日志存储
       store: jdbc
+      # ip归属地
+      ip2region:
+        # 数据文件路径
+        file-path: /data/ip2region/ip2region.xdb
+        # 查询方式
+        search-type: cache
     # 文件上传
     file-upload:
       upload-type: local
@@ -210,6 +206,7 @@ bootx:
       local:
         local-path: /data/file
       mongo:
+        # 储存桶
         bucket: fs
       minio:
         # 地址

@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>cn.bootx.platform</groupId>
-        <artifactId>bootx-platform</artifactId>
-        <version>1.2.3</version>
+        <artifactId>bootx-platform-parent</artifactId>
+        <version>1.3.0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -14,14 +14,30 @@
     <packaging>pom</packaging>
     <description>业务服务父pom</description>
 
-    <modules>
-        <module>service-baseapi</module>
-        <module>service-iam</module>
-        <module>service-payment</module>
-        <module>service-notice</module>
-        <module>service-office</module>
-        <module>service-visualization</module>
-    </modules>
+    <profiles>
+        <!-- 非部署模式 -->
+        <profile>
+            <id>noDeploy</id>
+            <modules>
+                <module>service-baseapi</module>
+                <module>service-iam</module>
+                <module>service-notice</module>
+                <module>service-visualization</module>
+            </modules>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <!-- 部署模式 -->
+        <profile>
+            <id>deploy</id>
+            <modules>
+                <module>service-baseapi</module>
+                <module>service-iam</module>
+                <module>service-notice</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <dependencies>
         <!-- 公共包 -->
@@ -34,17 +50,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- thymeleaf 模板引擎 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!-- thymeleaf配套 -->
-        <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
         </dependency>
 
         <!-- 监控端点 -->
@@ -65,22 +70,39 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <!--若使用redisTemplate作为分布式锁底层，则需要引入-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>lock4j-redis-template-spring-boot-starter</artifactId>
+            <version>${lock4j.version}</version>
+        </dependency>
+        <!--若使用redisson作为分布式锁底层，则需要引入-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.baomidou</groupId>-->
+        <!--            <artifactId>lock4j-redisson-spring-boot-starter</artifactId>-->
+        <!--            <version>${lock4j.version}</version>-->
+        <!--        </dependency>-->
+
+
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- lombok 配合 mapstruct -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok-mapstruct-binding</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 类型转换处理器 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 类型转换 -->
@@ -114,6 +136,13 @@
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-ui</artifactId>
             <version>${knife4j.version}</version>
+        </dependency>
+
+        <!-- 自动维护表结构 -->
+        <dependency>
+            <groupId>cn.bootx</groupId>
+            <artifactId>mybatis-table-modify</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- starter json序列化 -->

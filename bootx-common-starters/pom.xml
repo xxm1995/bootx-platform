@@ -3,9 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>bootx-platform</artifactId>
         <groupId>cn.bootx.platform</groupId>
-        <version>1.2.3</version>
+        <artifactId>bootx-platform-parent</artifactId>
+        <version>1.3.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -23,35 +23,39 @@
         <module>common-starter-monitor</module>
         <module>common-starter-wechat</module>
         <module>common-starter-wecom</module>
-        <module>common-starter-flowable</module>
     </modules>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- lombok 配合 mapstruct -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok-mapstruct-binding</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 类型转换处理器 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 类型转换 -->

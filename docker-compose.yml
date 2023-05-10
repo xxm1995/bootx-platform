@@ -10,3 +10,4 @@ services:
       - /data/logs/bootx-platform:/logs
       # 外部化配置文件
       - ./application.yml:/application.yml
+      - ./logback-spring.xml:/logback-spring.xml
