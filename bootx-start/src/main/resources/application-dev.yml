@@ -8,28 +8,22 @@ spring:
         # 默认数据源
         master:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://124.221.116.114:33066/bootx-platform?serverTimezone=GMT%2B8&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true
-          username: bootx-platform
-          password: RZzsKjxNBdF2RfAd
-        bigScreen:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://124.221.116.114:33066/mkpi?serverTimezone=GMT%2B8&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true
-          username: mkpi
-          password: wip4SKB4P7ah8c76
+          url: jdbc:mysql://127.0.0.1:3306/bootx-platform?serverTimezone=GMT%2B8&characterEncoding=utf8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true
+          username: root
+          password: root
     hikari:
       # 30 秒, 心跳检测
       keepalive-time: 30000
       # 300 分钟, 连接最大存活时间
       max-lifetime: 18000000
   redis:
-    host: 124.221.116.114
+    host: 127.0.0.1
     port: 6379
     database: 1
-    password: 'fnckerpoi@Redis'
   # 如果不使用MQ的话, 可以将项目中 @EnableRabbit 给注释掉, 就不会一直报错了
   rabbitmq:
     # 虚拟主机
-    #    virtual-host: bootx-platform
+#    virtual-host: bootx-platform
     host: 127.0.0.1
     port: 5672
     username: guest
@@ -43,7 +37,7 @@ spring:
   data:
     mongodb:
       host: 127.0.0.1
-      database: admin
+      database: platform
       port: 27017
       username: admin
       password: '123456'
@@ -214,7 +208,7 @@ bootx:
       upload-type: local
       server-url: http://127.0.0.1:8080
       local:
-        local-path: /Users/duriea/Documents/data/file/
+        local-path: /data/file
       mongo:
         bucket: fs
       minio:
@@ -232,4 +226,4 @@ bootx:
   service:
     # 可视化平台
     visualization:
-      go-view-url: http://localhost:3002
+      go-view-url: http://localhost:6000
