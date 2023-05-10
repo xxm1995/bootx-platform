@@ -35,8 +35,8 @@
 例子：
 ```xml
     <dependency>
-        <groupId>cn.bootx。</groupId>
-        <artifactId>mybatis-table-modify</artifactId>
+        <groupId>cn.bootx.platform</groupId>
+        <artifactId>service.iam</artifactId>
         <version>${latest.version}</version>
     </dependency>
 ```
