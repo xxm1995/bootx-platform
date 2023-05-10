@@ -22,11 +22,24 @@
 - vue3使用 [Vben-Admin](https://vvbin.cn/doc-next/) 作为脚手架
 - 可视化大屏使用 [Go-VIew](https://gitee.com/dromara/go-view) 作为基础框架
 - 移动端使用 [Taro](https://taro.jd.com/)、[NutUI](https://nutui.jd.com/) vue3+TS为技术栈。
+
 ## 🍁子项目
 - dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/dax-pay)
 - bpm-plus：工作流办公平台[Gitee地址](https://gitee.com/bootx/bpm-plus)
 - mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
 - 待命名：可视化大屏
+
+## 项目Maven坐标
+> 项目各模块都已经发布到maven中央仓库中，进行二开时可以对不进行更改的模块，使用Maven方式进行引入，方便后续进行版本升级
+
+例子：
+```xml
+    <dependency>
+        <groupId>cn.bootx。</groupId>
+        <artifactId>mybatis-table-modify</artifactId>
+        <version>${latest.version}</version>
+    </dependency>
+```
 
 ## 📚文档
 
@@ -71,7 +84,7 @@ Vue3后端: [Vue3前端启动流程](https://bootx.gitee.io/doc/overview/config/
 
 可视化大屏: [可视化大屏启动流程](https://bootx.gitee.io/doc/overview/)
 
-## 🥞项目整体结构
+## 🥞项目模块结构
 ```lua
 bootx-platform 
     ├── _config -- 项目相关配置
@@ -96,10 +109,8 @@ bootx-platform
        ├── common-header-holder -- 请求头获取工具
        ├── common-idempotency -- 幂等控制组件
        ├── common-jackson -- Json序列化配置
-       ├── common-lock -- 分布式锁
        ├── common-log -- 日志配置
        ├── common-mongo -- MongoDB配置
-       ├── common-mqtt -- mqtt配置（停用）
        ├── common-mybatis-plus -- Mybatis Plus扩展
        ├── common-rabbitmq -- rabbitmq消息队列
        ├── common-redis-client -- Redis客户端封装和配置
@@ -114,7 +125,6 @@ bootx-platform
        ├── service-baseapi -- 基础api功能服务
        ├── service-iam -- 身份识别与访问管理
        ├── service-notice -- 消息通知服务
-       ├── service-office -- 办公服务
        ├── service-visualization -- 可视化大屏管理
     ├── bootx-start -- 启动模块
 ```

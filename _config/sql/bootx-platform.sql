@@ -5699,15 +5699,6 @@ CREATE TABLE `starter_file_upload_info`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '上传文件信息' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of starter_file_upload_info
--- ----------------------------
-INSERT INTO `starter_file_upload_info` VALUES (1495330622946631680, NULL, 'blob', 'jpg', 'jpg', 68, '62120ac9efeec06e2275fc52', 1399985191002447872, '2022-02-20 17:32:57');
-INSERT INTO `starter_file_upload_info` VALUES (1495331213525606400, NULL, 'blob', 'jpg', 'jpg', 68, '62120b55efeec06e2275fc54', 1399985191002447872, '2022-02-20 17:35:28');
-INSERT INTO `starter_file_upload_info` VALUES (1495331812178616320, NULL, 'blob', 'jpg', 'jpg', 74, '62120be4efeec06e2275fc56', 1399985191002447872, '2022-02-20 17:37:43');
-INSERT INTO `starter_file_upload_info` VALUES (1495331905770315776, NULL, 'blob', 'jpg', 'jpg', 76, '62120bfaefeec06e2275fc58', 1399985191002447872, '2022-02-20 17:38:03');
-INSERT INTO `starter_file_upload_info` VALUES (1530065639127871488, NULL, 'blob', 'jpg', 'jpg', 83, '6290684abf0e90583f414dcf', 1414143554414059520, '2022-05-27 13:57:31');
-
--- ----------------------------
 -- Table structure for starter_quartz_job
 -- ----------------------------
 DROP TABLE IF EXISTS `starter_quartz_job`;

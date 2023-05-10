@@ -291,12 +291,6 @@
                 <artifactId>common-rabbitmq</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-            <!-- 分布式锁 -->
-            <dependency>
-                <groupId>cn.bootx.platform</groupId>
-                <artifactId>common-lock</artifactId>
-                <version>${bootx-platform.version}</version>
-            </dependency>
             <!-- 自动建表 -->
             <dependency>
                 <groupId>cn.bootx</groupId>

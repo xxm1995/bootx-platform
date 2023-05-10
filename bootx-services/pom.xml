@@ -52,17 +52,6 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- thymeleaf 模板引擎 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!-- thymeleaf配套 -->
-        <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
-        </dependency>
-
         <!-- 监控端点 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -80,6 +69,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+        <!--若使用redisTemplate作为分布式锁底层，则需要引入-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>lock4j-redis-template-spring-boot-starter</artifactId>
+            <version>${lock4j.version}</version>
+        </dependency>
+        <!--若使用redisson作为分布式锁底层，则需要引入-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.baomidou</groupId>-->
+        <!--            <artifactId>lock4j-redisson-spring-boot-starter</artifactId>-->
+        <!--            <version>${lock4j.version}</version>-->
+        <!--        </dependency>-->
+
 
         <!-- lombok -->
         <dependency>
@@ -106,7 +109,6 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-<!--            <scope>provided</scope>-->
         </dependency>
 
         <!-- TTL容器 -->
