@@ -1,20 +1,19 @@
 package cn.bootx.platform.demo.controller;
 
-import cn.bootx.platform.common.websocket.entity.WsRes;
-import cn.bootx.platform.common.websocket.entity.WsResult;
-import cn.bootx.platform.common.websocket.service.UserWsNoticeService;
-import cn.bootx.platform.starter.audit.log.ip2region.IpRegion;
 import cn.bootx.platform.common.core.annotation.Idempotent;
 import cn.bootx.platform.common.core.annotation.IgnoreAuth;
 import cn.bootx.platform.common.core.annotation.OperateLog;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
-import cn.bootx.platform.common.log.plumelog.PlumeLogAutoDeleteLogs;
 import cn.bootx.platform.common.sequence.func.Sequence;
 import cn.bootx.platform.common.sequence.impl.DefaultRangeSequence;
 import cn.bootx.platform.common.sequence.range.SeqRangeConfig;
 import cn.bootx.platform.common.sequence.range.SeqRangeManager;
 import cn.bootx.platform.common.spring.exception.RetryableException;
+import cn.bootx.platform.common.websocket.entity.WsRes;
+import cn.bootx.platform.common.websocket.entity.WsResult;
+import cn.bootx.platform.common.websocket.service.UserWsNoticeService;
+import cn.bootx.platform.starter.audit.log.ip2region.IpRegion;
 import cn.bootx.platform.starter.audit.log.ip2region.IpToRegionService;
 import cn.hutool.extra.spring.SpringUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -49,15 +48,12 @@ public class TestController {
 
     private final UserWsNoticeService userWsNoticeService;
 
-    private final PlumeLogAutoDeleteLogs autoDeleteLogs;
-
     @OperateLog(title = "测试日志")
     @OperateLog(title = "测试重复日志")
     @Idempotent
     @Operation(summary = "测试")
     @GetMapping("/hello")
     public ResResult<String> hello() {
-        autoDeleteLogs.task();
         return Res.ok("hello");
     }
 

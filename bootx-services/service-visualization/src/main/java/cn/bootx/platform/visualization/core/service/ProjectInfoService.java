@@ -66,7 +66,7 @@ public class ProjectInfoService {
     public ProjectInfoResult create(CreateParam param) {
         ProjectInfo info = new ProjectInfo().setState(GoVIewCode.STATE_UN_PUBLISH)
             .setEdit(false)
-            .setName(param.getProjectName())
+            .setName(param.getName())
             .setRemark(param.getRemark());
         projectInfoManager.save(info);
         ProjectInfoPublish projectInfoPublish = new ProjectInfoPublish();

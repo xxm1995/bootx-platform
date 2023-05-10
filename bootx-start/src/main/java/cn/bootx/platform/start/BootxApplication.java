@@ -34,12 +34,9 @@ public class BootxApplication {
         String appInfo = StrUtil.format("应用 '{}' 运行成功! \n\t", appName);
         // swagger栏
         String swagger = StrUtil.format("Swagger文档: \t\thttp://{}:{}{}{}/doc.html\n\t", host, port, contextPath, path);
-        // plumelog栏
-        String plumelog = StrUtil.format("PlumeLog日志管理: \t\thttp://{}:{}{}{}/plumelog/#/", host, port, contextPath,
-                path);
 
-        log.info("\n----------------------------------------------------------\n\t" + "{}{}{} \n"
-                + "----------------------------------------------------------", appInfo, swagger, plumelog);
+        log.info("\n----------------------------------------------------------\n\t" + "{}{} \n"
+                + "----------------------------------------------------------", appInfo, swagger);
     }
 
 }
