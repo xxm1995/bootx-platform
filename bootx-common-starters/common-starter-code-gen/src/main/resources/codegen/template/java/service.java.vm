@@ -1,16 +1,15 @@
 package ${corePack}.service;
 
-import cn.bootx.common.core.exception.DataNotExistException;
-import cn.bootx.common.core.rest.PageResult;
-import cn.bootx.common.core.rest.param.PageParam;
-import cn.bootx.common.core.util.ResultConvertUtil;
-import cn.bootx.common.mybatisplus.util.MpUtil;
+import cn.bootx.platform.common.core.exception.DataNotExistException;
+import cn.bootx.platform.common.core.rest.PageResult;
+import cn.bootx.platform.common.core.rest.param.PageParam;
+import cn.bootx.platform.common.core.util.ResultConvertUtil;
+import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import ${dtoPack}.${entityUpName}Dto;
 import ${paramPack}.${entityUpName}Param;
 import ${corePack}.convert.${entityUpName}Convert;
 import ${corePack}.entity.${entityUpName};
 import ${corePack}.dao.${entityUpName}Manager;
-import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

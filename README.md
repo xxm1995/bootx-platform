@@ -1,8 +1,8 @@
-# Bootx-Platform (v1.2.3)
+# Bootx-Platform (v1.3.0-园博园)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.2.3-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.3.0-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Spring%20Boot-2.7.11-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
@@ -23,9 +23,9 @@
 - 可视化大屏使用 [Go-VIew](https://gitee.com/dromara/go-view) 作为基础框架
 - 移动端使用 [Taro](https://taro.jd.com/)、[NutUI](https://nutui.jd.com/) vue3+TS为技术栈。
 ## 🍁子项目
-- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/daxpay)
+- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/dax-pay)
+- bpm-plus：工作流办公平台[Gitee地址](https://gitee.com/bootx/bpm-plus)
 - mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
-- bpm-plus：工作流办公平台
 - 待命名：可视化大屏
 
 ## 📚文档
@@ -122,7 +122,8 @@ bootx-platform
 ##  🥂 Bootx 项目合集
 - Bootx-Platform：单体版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-platform)
 - Bootx-Cloud：微服务版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-cloud)
-- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/daxpay)
+- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/dax-pay)
+- bpm-plus：开源支付系统 [Gitee地址](https://gitee.com/bootx/bpm-plus)
 - mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
 
 ##  🥪 关于我们
