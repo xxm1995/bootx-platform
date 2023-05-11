@@ -73,11 +73,6 @@ bootx:
     # 序列生成器
     sequence:
       type: jdbc
-    mqtt:
-      url: tcp://127.0.0.1:1883
-      client-id: bootx
-      # 自动追加终端id后缀 client@xxx
-      auto-client-id-suffix: true
   starter:
     auth:
       default-password: 123456

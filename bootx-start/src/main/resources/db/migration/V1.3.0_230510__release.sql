@@ -4,7 +4,6 @@
  Source Server         : bootx
  Source Server Type    : MySQL
  Source Server Version : 50735
- Source Host           : mysql.dev.bootx.cn:3306
  Source Schema         : bootx-platform
 
  Target Server Type    : MySQL

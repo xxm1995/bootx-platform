@@ -42,11 +42,12 @@
         </dependency>
 
         <!-- 商城模块 -->
-<!--        <dependency>-->
-<!--            <groupId>cn.bootx.platform</groupId>-->
-<!--            <artifactId>module-eshop</artifactId>-->
-<!--            <version>${bootx-platform.version}</version>-->
-<!--        </dependency>-->
+        <!-- flyway -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
+        </dependency>
 
         <!-- 演示模块 -->
         <dependency>
