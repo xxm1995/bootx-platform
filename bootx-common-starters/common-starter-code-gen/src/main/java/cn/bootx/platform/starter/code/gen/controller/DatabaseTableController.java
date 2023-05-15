@@ -1,5 +1,6 @@
 package cn.bootx.platform.starter.code.gen.controller;
 
+import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
@@ -38,9 +39,9 @@ public class DatabaseTableController {
 
     @Operation(summary = "表列表分页")
     @GetMapping("/page")
-    public ResResult<Page<DatabaseTable>> page(@ParameterObject PageParam pageParam,
-            @ParameterObject DatabaseTable param,
-            @ParameterObject String dataSourceCode)
+    public ResResult<PageResult<DatabaseTable>> page(@ParameterObject PageParam pageParam,
+                                                     @ParameterObject DatabaseTable param,
+                                                     @ParameterObject String dataSourceCode)
     {
         return Res.ok(databaseTableService.page(pageParam, param,dataSourceCode));
     }

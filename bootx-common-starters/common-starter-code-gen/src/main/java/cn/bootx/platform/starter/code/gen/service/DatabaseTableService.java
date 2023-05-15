@@ -1,6 +1,7 @@
 package cn.bootx.platform.starter.code.gen.service;
 
 import cn.bootx.platform.common.core.exception.DataNotExistException;
+import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.starter.code.gen.dao.DatabaseTableMapper;
@@ -45,10 +46,9 @@ public class DatabaseTableService {
 
     /**
      * 分页
-     * TODO:根据数据源编码,切换数据源进行列表查询.
      */
     @DS("#dataSourceName")
-    public Page<DatabaseTable> page(PageParam pageParam, DatabaseTable param,String dataSourceName) {
+    public PageResult<DatabaseTable> page(PageParam pageParam, DatabaseTable param, String dataSourceName) {
         val mpPage = MpUtil.getMpPage(pageParam, DatabaseTable.class);
         QueryWrapper<DatabaseTable> wrapper = new QueryWrapper<>();
 
@@ -56,8 +56,8 @@ public class DatabaseTableService {
             .like(StrUtil.isNotBlank(param.getTableComment()), DatabaseTable.Fields.tableComment,
                     param.getTableComment())
             .orderByDesc(DatabaseTable.Fields.createTime, DatabaseTable.Fields.tableName);
-        Page<DatabaseTable> result = databaseTableMapper.page(mpPage, wrapper);
-        return result;
+
+        return MpUtil.convert2PageResult(databaseTableMapper.page(mpPage, wrapper)) ;
     }
 
     /**
