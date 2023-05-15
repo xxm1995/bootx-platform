@@ -103,7 +103,7 @@ bootx:
         "[身份识别和管理]": cn.bootx.platform.iam
         "[消息服务]": cn.bootx.platform.notice
         "[演示模块]": cn.bootx.demo
-        "[可视化大屏]": cn.bootx.visualization
+        "[可视化大屏]": cn.bootx.platform.visualization
         "[第三方对接]":
           - cn.bootx.platform.starter.dingtalk
           - cn.bootx.platform.starter.wecom
