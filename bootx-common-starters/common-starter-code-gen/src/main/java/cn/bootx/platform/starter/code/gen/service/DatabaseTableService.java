@@ -9,6 +9,7 @@ import cn.bootx.platform.starter.code.gen.entity.DatabaseColumn;
 import cn.bootx.platform.starter.code.gen.entity.DatabaseTable;
 import cn.bootx.platform.starter.code.gen.util.CodeGenUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 /**
@@ -30,6 +32,7 @@ import java.util.List;
 public class DatabaseTableService {
 
     private final DatabaseTableMapper databaseTableMapper;
+    private final DataSource bigScreen;
 
     /**
      * 查询全部
@@ -41,8 +44,9 @@ public class DatabaseTableService {
 
     /**
      * 分页
+     * TODO:根据数据源编码,切换数据源进行列表查询.
      */
-    public Page<DatabaseTable> page(PageParam pageParam, DatabaseTable param) {
+    public Page<DatabaseTable> page(PageParam pageParam, DatabaseTable param,String dataSourceName) {
         val mpPage = MpUtil.getMpPage(pageParam, DatabaseTable.class);
         QueryWrapper<DatabaseTable> wrapper = new QueryWrapper<>();
 
@@ -50,7 +54,11 @@ public class DatabaseTableService {
             .like(StrUtil.isNotBlank(param.getTableComment()), DatabaseTable.Fields.tableComment,
                     param.getTableComment())
             .orderByDesc(DatabaseTable.Fields.createTime, DatabaseTable.Fields.tableName);
-        return databaseTableMapper.page(mpPage, wrapper);
+
+        DynamicDataSourceContextHolder.push(dataSourceName);
+        Page<DatabaseTable> result = databaseTableMapper.page(mpPage, wrapper);
+        DynamicDataSourceContextHolder.poll();
+        return result;
     }
 
     /**
@@ -70,9 +78,11 @@ public class DatabaseTableService {
     /**
      * 获取表相关的代码生成参数信息
      */
-    public TableGenParamDto getTableGenParam(String tableName) {
+    public TableGenParamDto getTableGenParam(String dataBaseName, String tableName) {
+        DynamicDataSourceContextHolder.push(dataBaseName);
         DatabaseTable databaseTable = this.findByTableName(tableName);
         String entityName = CodeGenUtil.tableToJava(databaseTable.getTableName());
+        DynamicDataSourceContextHolder.poll();
         return new TableGenParamDto().setEntityName(entityName).setModule(entityName.toLowerCase());
     }
 
