@@ -40,9 +40,9 @@ public class DatabaseTableController {
     @GetMapping("/page")
     public ResResult<Page<DatabaseTable>> page(@ParameterObject PageParam pageParam,
             @ParameterObject DatabaseTable param,
-            @ParameterObject String dataSourceName)
+            @ParameterObject String dataSourceCode)
     {
-        return Res.ok(databaseTableService.page(pageParam, param,dataSourceName));
+        return Res.ok(databaseTableService.page(pageParam, param,dataSourceCode));
     }
 
     @Operation(summary = "获取表信息")
@@ -59,8 +59,8 @@ public class DatabaseTableController {
 
     @Operation(summary = "获取表相关的代码生成参数信息")
     @GetMapping("/getTableGenParam")
-    public ResResult<TableGenParamDto> getTableGenParam(String dataBaseName, String tableName) {
-        return Res.ok(databaseTableService.getTableGenParam(dataBaseName,tableName));
+    public ResResult<TableGenParamDto> getTableGenParam(String dataSourceCode, String tableName) {
+        return Res.ok(databaseTableService.getTableGenParam(dataSourceCode,tableName));
     }
 
 }
