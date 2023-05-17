@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -48,6 +49,13 @@ public class DynamicDataSourceManager extends BaseManager<DynamicDataSourceMappe
             .like(StrUtil.isNotBlank(param.getName()), DynamicDataSource::getName, param.getName())
             .orderByDesc(MpIdEntity::getId)
             .page(mpPage);
+    }
+
+    /**
+     * 查询开启自动加载的数据源
+     */
+    public List<DynamicDataSource>findAllByAutoLoad(){
+        return this.findAllByField(DynamicDataSource::isAutoLoad,true);
     }
 
 }

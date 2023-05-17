@@ -1,5 +1,9 @@
 package ${dtoPack};
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import cn.bootx.platform.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package cn.bootx.platform.starter.code.gen.controller;
 
-import cn.bootx.platform.common.core.function.SystemKeyValueService;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.starter.code.gen.dto.CodeGenPreview;
@@ -30,8 +29,6 @@ import java.util.List;
 public class CodeGeneratorController {
 
     private final CodeGeneratorService generatorService;
-
-    private final SystemKeyValueService systemKeyValueService;
 
     @Operation(summary = "预览生成代码")
     @PostMapping("/codeGenPreview")
