@@ -23,6 +23,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>service-baseapi</artifactId>
             <version>${bootx-platform.version}</version>
