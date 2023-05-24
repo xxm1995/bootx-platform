@@ -12,6 +12,8 @@ import ${corePack}.entity.${entityUpName};
 import ${corePack}.dao.${entityUpName}Manager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.bean.copier.CopyOptions;
 
 import java.util.List;
 
