@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
@@ -32,6 +33,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
+@ConditionalOnClass(name="org.springframework.data.mongodb.gridfs.GridFsTemplate")
 @RequiredArgsConstructor
 public class MongoUploadService implements UploadService {
 
