@@ -80,7 +80,8 @@ public class IpToRegionService {
         // 判断IP是否合法
         Matcher matcher = PatternPool.IPV4.matcher(ip);
         if (!matcher.matches()) {
-            throw new BizException("IP非法");
+            log.warn("非法IPv4地址: {}",ip);
+            return null;
         }
 
         // 根据类型获取 Searcher 对象
@@ -101,6 +102,7 @@ public class IpToRegionService {
         }
         // 无法进行查询
         if (Objects.isNull(searcher)){
+            log.warn("");
             return null;
         }
 
@@ -130,7 +132,7 @@ public class IpToRegionService {
         IpRegion region = this.getRegionByIp(ip);
         // 未查询到
         if (Objects.isNull(region)){
-            location = "未知";
+            return  "未知";
         }
         // 中国 港澳台
         if (region.isBigChina()){

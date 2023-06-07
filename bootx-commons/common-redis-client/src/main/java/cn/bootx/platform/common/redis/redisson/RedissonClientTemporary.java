@@ -64,6 +64,23 @@ public class RedissonClientTemporary implements RedissonClient {
     }
 
     /**
+     * @return
+     */
+    @Override
+    public RSearch getSearch() {
+        return null;
+    }
+
+    /**
+     * @param codec
+     * @return
+     */
+    @Override
+    public RSearch getSearch(Codec codec) {
+        return null;
+    }
+
+    /**
      * @param s
      * @return
      */

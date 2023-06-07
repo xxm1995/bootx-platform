@@ -1,8 +1,8 @@
-# Bootx-Platform (v1.3.0-园博园)
+# Bootx-Platform (v1.3.1-园博园)
 
 <p>
  <img src='https://gitee.com/bootx/bootx-platform/badge/star.svg?theme=dark' alt='star'/>
- <img src="https://img.shields.io/badge/Boot%20Platform-1.3.0-success.svg" alt="Build Status"/>
+ <img src="https://img.shields.io/badge/Boot%20Platform-1.3.1-success.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Author-Bootx-orange.svg" alt="Build Status"/>
  <img src="https://img.shields.io/badge/Spring%20Boot-2.7.11-blue.svg" alt="Downloads"/>
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
@@ -43,10 +43,10 @@
 
 ## 📚文档
 
-- 系统演示地址：[管理平台(vue2)](http://web.platform.bootx.cn/)、[管理平台(vue3)](http://v3.platform.bootx.cn/)、[可视化大屏](http://visualization.platform.bootx.cn/)
-- 前端项目地址：[前端项目(vue2)](https://gitee.com/bootx/bootx-platform-ui)、[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)、[可视化大屏](https://gitee.com/bootx/bootx-platform-visualization)
+- 系统演示地址：[管理平台(vue3)](http://v3.platform.bootx.cn/)、[可视化大屏](http://visualization.platform.bootx.cn/)
+- 前端项目地址：[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)、[可视化大屏](https://gitee.com/bootx/bootx-platform-visualization)、[前端项目(vue2只维护不再更新)](https://gitee.com/bootx/bootx-platform-ui)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
-- 日志收集：[ELK](http://elk.dev.bootx.cn:5601/app/discove)、[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
+- 日志收集：[[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 
@@ -59,8 +59,6 @@
 ![](https://oscimg.oschina.net/oscnet/up-22b8de0f4951ee6165e2ae604ad77b0af44.png)
 
 支持支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务
-
-结算台演示地址：[http://web.platform.bootx.cn/cashier](http://web.platform.bootx.cn/cashier)
 
 ![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
 
