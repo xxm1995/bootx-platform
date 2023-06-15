@@ -1,6 +1,7 @@
 package cn.bootx.platform.starter.file.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
@@ -14,6 +15,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
  * @date 2022/2/15
  */
 @Configuration
+@ConditionalOnClass(name="org.springframework.data.mongodb.gridfs.GridFsTemplate")
 @RequiredArgsConstructor
 public class FileUploadConfiguration {
 

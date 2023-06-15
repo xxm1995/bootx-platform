@@ -198,7 +198,10 @@ public class AnnotationQueryGenerator {
         // 读取注解， 判断有没有自定义字段名, 有自定义字段名直接返回
         val queryParam = getQueryParamAnnotation(paramDescriptor, paramClass, entityDescriptor, entityClass);
         if (queryParam.map(QueryParam::fieldName).isPresent()) {
-            return queryParam.map(QueryParam::fieldName).get();
+            String fieldName = queryParam.map(QueryParam::fieldName).get();
+            if (StrUtil.isNotBlank(fieldName)){
+                return fieldName;
+            }
         }
         switch (namingCase) {
             case LAMBDA: {

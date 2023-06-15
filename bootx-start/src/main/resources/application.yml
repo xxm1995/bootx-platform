@@ -15,6 +15,8 @@ spring:
   flyway:
     # 默认不启用
     enabled: false
+    # 如果 flyway_schema_history 不存在自动创建
+    baseline-on-migrate: false
     # 对特殊占位符不进行替换
     placeholder-replacement: false
 # mp配置

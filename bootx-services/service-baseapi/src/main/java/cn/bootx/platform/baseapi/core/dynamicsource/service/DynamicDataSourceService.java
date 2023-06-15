@@ -177,15 +177,6 @@ public class DynamicDataSourceService {
     }
 
     /**
-     * 根据编码进行添加
-     */
-    public void addDynamicDataSourceByCode(String code) {
-        DynamicDataSource dataSource = dynamicDataSourceManager.findByCode(code)
-            .orElseThrow(DataNotExistException::new);
-        this.addDynamicDataSource(dataSource);
-    }
-
-    /**
      * 查询当前数据源列表
      */
     public List<KeyValue> findAllDataSource() {
@@ -209,6 +200,20 @@ public class DynamicDataSourceService {
             throw new BizException(key + " 数据源不可被删除");
         }
         dynamicRoutingDataSource.removeDataSource(key);
+    }
+
+    /**
+     * 启动时初始化加载
+     */
+    public void initLoad(){
+        for (DynamicDataSource dynamicDataSource : dynamicDataSourceManager.findAllByAutoLoad()) {
+            try {
+                addDynamicDataSource(dynamicDataSource);
+            } catch (Exception e){
+                String errorMsg = dynamicDataSource.getName()+"数据源加载失败";
+                log.error(errorMsg,e);
+            }
+        }
     }
 
 }

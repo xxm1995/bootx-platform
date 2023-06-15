@@ -23,6 +23,7 @@ import com.baomidou.mybatisplus.core.toolkit.PluginUtils;
 import com.baomidou.mybatisplus.extension.plugins.inner.InnerInterceptor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.JdbcParameter;
 import net.sf.jsqlparser.parser.CCJSqlParserUtil;
@@ -85,7 +86,13 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             long startTs = System.currentTimeMillis();
             DataVersionLog dataVersion;
             try {
-                Statement statement = CCJSqlParserUtil.parse(mpBs.sql());
+                Statement statement = null;
+                try {
+                    statement = CCJSqlParserUtil.parse(mpBs.sql());
+                } catch (JSQLParserException e) {
+                    log.warn("sql无法解析,可能是DDL相关语句, SQL语句:{}", mpBs.sql());
+                    return;
+                }
                 // 判断是否需要进行处理
                 dataVersion = this.getDataVersionAnno(statement);
                 if (Objects.isNull(dataVersion)) {
@@ -161,7 +168,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
     }
 
     public OperationResult processUpdate(Update updateStmt, MappedStatement mappedStatement, BoundSql boundSql,
-            Connection connection) {
+                                         Connection connection) {
         Expression where = updateStmt.getWhere();
         Select selectStmt = new Select();
         PlainSelect selectBody = new PlainSelect();
@@ -214,7 +221,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
      * @return
      */
     private List<ParameterMapping> prepareParameterMapping4Select(List<ParameterMapping> originalMappingList,
-            Update updateStmt) {
+                                                                  Update updateStmt) {
         List<Expression> updateValueExpressions = new ArrayList<>();
         for (UpdateSet updateSet : updateStmt.getUpdateSets()) {
             updateValueExpressions.addAll(updateSet.getExpressions());
@@ -234,7 +241,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
      * @return
      */
     private List<DataChangedRecord> compareAndGetUpdatedColumnDatas(String tableName, BoundSql updateSql,
-            Statement statement, OriginalDataObj originalDataObj) {
+                                                                    Statement statement, OriginalDataObj originalDataObj) {
         Map<String, Object> columnNameValMap = new HashMap<>(updateSql.getParameterMappings().size());
         List<Column> selectItemsFromUpdateSql = new ArrayList<>();
         if (statement instanceof Update) {
@@ -301,7 +308,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
     }
 
     private String buildOriginalData(Select selectStmt, MappedStatement mappedStatement, BoundSql boundSql,
-            Connection connection) {
+                                     Connection connection) {
         try (PreparedStatement statement = connection.prepareStatement(selectStmt.toString())) {
             DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement,
                     boundSql.getParameterObject(), boundSql);
@@ -339,7 +346,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
      * 构建原始对象数据
      */
     private OriginalDataObj buildOriginalObjectData(Select selectStmt, Column pk, MappedStatement mappedStatement,
-            BoundSql boundSql, Connection connection) {
+                                                    BoundSql boundSql, Connection connection) {
         try (PreparedStatement statement = connection.prepareStatement(selectStmt.toString())) {
 
             DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement,
@@ -414,7 +421,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
     }
 
     public OperationResult processDelete(Delete deleteStmt, MappedStatement mappedStatement, BoundSql boundSql,
-            Connection connection) {
+                                         Connection connection) {
         Table table = deleteStmt.getTable();
         Expression where = deleteStmt.getWhere();
         Select selectStmt = new Select();
@@ -617,15 +624,15 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         public String generateDataStr() {
             StringBuilder sb = new StringBuilder();
             sb.append("\"")
-                .append(columnName)
-                .append("\"")
-                .append(":")
-                .append("\"")
-                .append(convertDoubleQuotes(originalValue))
-                .append("->")
-                .append(convertDoubleQuotes(updateValue))
-                .append("\"")
-                .append(",");
+                    .append(columnName)
+                    .append("\"")
+                    .append(":")
+                    .append("\"")
+                    .append(convertDoubleQuotes(originalValue))
+                    .append("->")
+                    .append(convertDoubleQuotes(updateValue))
+                    .append("\"")
+                    .append(",");
             return sb.toString();
         }
 
@@ -660,7 +667,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
         private List<DataColumnChangeResult> updatedColumns;
 
         public boolean hasUpdate(Map<String, Object> columnNameValMap, Set<String> ignoredColumns,
-                Set<String> ignoreAllColumns) {
+                                 Set<String> ignoreAllColumns) {
             if (originalColumns == null) {
                 return true;
             }
@@ -687,13 +694,13 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
             sb.append("{");
             if (pkColumnName != null) {
                 sb.append("\"")
-                    .append(pkColumnName)
-                    .append("\"")
-                    .append(":")
-                    .append("\"")
-                    .append(convertDoubleQuotes(pkColumnVal))
-                    .append("\"")
-                    .append(",");
+                        .append(pkColumnName)
+                        .append("\"")
+                        .append(":")
+                        .append("\"")
+                        .append(convertDoubleQuotes(pkColumnVal))
+                        .append("\"")
+                        .append(",");
             }
             for (DataColumnChangeResult update : updatedColumns) {
                 sb.append(update.generateDataStr());

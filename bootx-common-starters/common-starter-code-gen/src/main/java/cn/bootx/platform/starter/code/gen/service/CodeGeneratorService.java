@@ -15,6 +15,8 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -135,6 +137,7 @@ public class CodeGeneratorService {
      * 生成代码文件压缩包
      */
     @SneakyThrows
+    @DS("#codeGenParam.getDataSourceCode()")
     public ResponseEntity<byte[]> genCodeZip(CodeGenParam codeGenParam) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ZipOutputStream zip = new ZipOutputStream(outputStream);

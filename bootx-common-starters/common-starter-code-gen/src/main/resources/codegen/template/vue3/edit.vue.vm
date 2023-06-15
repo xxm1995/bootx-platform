@@ -33,7 +33,7 @@
         :label-col="labelCol"
         :wrapper-col="wrapperCol"
       >
-        <a-form-item label="主键" :hidden="true">
+        <a-form-item label="主键" name="id" :hidden="true">
           <a-input v-model:value="form.id" :disabled="showable" />
         </a-form-item>
       #foreach ($column in $columns)
@@ -98,13 +98,19 @@
   const rules = reactive({} as Record<string, Rule[]>)
   // 事件
   const emits = defineEmits(['ok'])
-  // 入口
+
+  /**
+   * 入口
+   */
   function init(id, editType: FormEditType) {
     initFormEditType(editType)
     resetForm()
     getInfo(id, editType)
   }
-  // 获取信息
+
+  /**
+   * 获取信息
+   */
   function getInfo(id, editType: FormEditType) {
     if ([FormEditType.Edit, FormEditType.Show].includes(editType)) {
       confirmLoading.value = true
@@ -116,7 +122,10 @@
       confirmLoading.value = false
     }
   }
-  // 保存
+
+  /**
+   * 保存
+   */
   function handleOk() {
     formRef?.validate().then(async () => {
       confirmLoading.value = true
@@ -131,7 +140,9 @@
     })
   }
 
-  // 重置表单
+  /**
+   * 重置表单
+   */
   function resetForm() {
     nextTick(() => {
       formRef?.resetFields()

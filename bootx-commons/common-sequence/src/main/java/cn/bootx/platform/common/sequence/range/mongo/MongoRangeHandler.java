@@ -3,6 +3,7 @@ package cn.bootx.platform.common.sequence.range.mongo;
 import cn.bootx.platform.common.sequence.exception.SeqException;
 import cn.hutool.core.util.IdUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -16,6 +17,7 @@ import java.util.Optional;
  * @author xxm
  * @date 2022/1/21
  */
+@ConditionalOnClass(name="org.springframework.data.mongodb.core.MongoTemplate")
 @Repository
 @RequiredArgsConstructor
 public class MongoRangeHandler {

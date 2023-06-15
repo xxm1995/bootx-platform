@@ -4,7 +4,7 @@
       <b-query :query-params="model.queryParam" :fields="fields" @query="queryPage" @reset="resetQueryParams" />
     </div>
     <div class="m-3 p-3 bg-white">
-      <vxe-toolbar ref="xToolbar" custom :refresh="{ query: queryPage }">
+      <vxe-toolbar ref="xToolbar" custom :refresh="{ queryMethod: queryPage }">
         <template #buttons>
           <a-space>
             <a-button type="primary" pre-icon="ant-design:plus-outlined" @click="add">新建</a-button>
@@ -28,7 +28,9 @@
             </span>
             <a-divider type="vertical" />
 #if($deleteType == "confirm")
-            <a-link danger @click="remove(row)" >删除</a-link>
+            <span>
+              <a-link danger @click="remove(row)" >删除</a-link>
+            </span>
 #end
 #if($deleteType == "popconfirm")
             <a-popconfirm title="是否删除" @confirm="remove(row)" okText="是" cancelText="否">
@@ -57,7 +59,7 @@
   import { del, page } from './${entityUpName}.api'
   import useTablePage from '/@/hooks/bootx/useTablePage'
   import ${entityUpName}Edit from './${entityUpName}Edit.vue'
-  import { VxeTableInstance, VxeToolbarInstance } from 'vxe-table'
+  import { VxeTableInstance, VxeToolbarInstance, VxeTable, VxeColumn, VxePager, VxeToolbar } from 'vxe-table'
   import BQuery from '/@/components/Bootx/Query/BQuery.vue'
   import { FormEditType } from '/@/enums/formTypeEnum'
   import { useMessage } from '/@/hooks/web/useMessage'
@@ -78,11 +80,17 @@
     vxeBind()
     queryPage()
   })
+
+  /**
+   * 初始化绑定
+   */
   function vxeBind() {
     xTable?.connect(xToolbar as VxeToolbarInstance)
   }
 
-  // 分页查询
+  /**
+   * 分页查询
+   */
   function queryPage() {
     loading.value = true
     page({
@@ -91,21 +99,33 @@
     }).then(({ data }) => {
       pageQueryResHandel(data)
     })
+    return Promise.resolve()
   }
-  // 新增
+
+  /**
+   * 新增
+   */
   function add() {
     ${entityLowName}Edit.init(null, FormEditType.Add)
   }
-  // 编辑
+
+  /**
+   * 编辑
+   */
   function edit(record) {
     ${entityLowName}Edit.init(record.id, FormEditType.Edit)
   }
-  // 查看
+
+  /**
+   * 查看
+   */
   function show(record) {
     ${entityLowName}Edit.init(record.id, FormEditType.Show)
   }
 
-  // 删除
+  /**
+   * 删除
+   */
   function remove(record) {
     #if($deleteType == "confirm")
     createConfirm({

@@ -91,7 +91,7 @@ bootx:
     swagger:
       enabled: true
       author: bootx
-      version: 1.3.0
+      version: 1.3.1
       title: bootx开发平台单体版
       description: bootx-platform开发平台单体版
       # basic认证
@@ -103,7 +103,7 @@ bootx:
         "[身份识别和管理]": cn.bootx.platform.iam
         "[消息服务]": cn.bootx.platform.notice
         "[演示模块]": cn.bootx.demo
-        "[可视化大屏]": cn.bootx.visualization
+        "[可视化大屏]": cn.bootx.platform.visualization
         "[第三方对接]":
           - cn.bootx.platform.starter.dingtalk
           - cn.bootx.platform.starter.wecom

@@ -48,7 +48,7 @@ public class TreeBuildUtil {
             return null;
         }
         for (T region : children) {
-            List<T> childrenList = build(list, getId.apply(region), getId, getPid, setChildren);
+            List<T> childrenList = build(list, getId.apply(region), getId, getPid, setChildren,comparator);
             setChildren.accept(region, childrenList);
         }
         // 排序

@@ -97,6 +97,7 @@ public class MpUtil {
      * @param clazz 实体类类型. 辅助进行判断, 传多个只有第一个生效，可以为空, 为空时使用读取方法对应的Class类，
      * @return 字段名
      */
+    @SafeVarargs
     public static <T> String getColumnName(Method readMethod, Class<T>... clazz) {
         Class<?> beanClass;
         if (ArrayUtil.isNotEmpty(clazz)) {

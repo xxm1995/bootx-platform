@@ -15,6 +15,9 @@ import lombok.experimental.Accessors;
 @Schema(title = "代码生成参数")
 public class CodeGenParam {
 
+    @Schema(description = "数据库源")
+    private String dataSourceCode;
+
     @Schema(description = "表名")
     private String tableName;
 

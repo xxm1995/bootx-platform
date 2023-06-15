@@ -2,10 +2,8 @@ package cn.bootx.platform.starter.monitor.controller;
 
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
-import cn.bootx.platform.starter.monitor.entity.MongoMonitorResult;
 import cn.bootx.platform.starter.monitor.entity.RedisMonitorResult;
 import cn.bootx.platform.starter.monitor.entity.SystemMonitorResult;
-import cn.bootx.platform.starter.monitor.service.MongoMonitorService;
 import cn.bootx.platform.starter.monitor.service.RedisMonitorService;
 import cn.bootx.platform.starter.monitor.service.SystemMonitorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,8 +27,6 @@ public class SystemMonitorController {
 
     private final RedisMonitorService redisMonitorService;
 
-    private final MongoMonitorService mongoMonitorService;
-
     @Operation(summary = "获取系统消息")
     @GetMapping("/getSystemInfo")
     public ResResult<SystemMonitorResult> getSystemInfo() {
@@ -41,12 +37,6 @@ public class SystemMonitorController {
     @GetMapping("/getRedisInfo")
     public ResResult<RedisMonitorResult> getRedisInfo() {
         return Res.ok(redisMonitorService.getRedisInfo());
-    }
-
-    @Operation(summary = "获取MongoDB信息")
-    @GetMapping("/getMongoInfo")
-    public ResResult<MongoMonitorResult> getMongoInfo() {
-        return Res.ok(mongoMonitorService.getMongoInfo());
     }
 
 }

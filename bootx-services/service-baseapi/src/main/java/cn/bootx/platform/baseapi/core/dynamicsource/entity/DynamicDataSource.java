@@ -32,6 +32,9 @@ public class DynamicDataSource extends MpBaseEntity implements EntityBaseFunctio
     /** 数据库类型 */
     private String databaseType;
 
+    /** 是否启动自动加载 */
+    private boolean autoLoad;
+
     /** 驱动类 */
     private String dbDriver;
 

@@ -1,5 +1,6 @@
 package cn.bootx.platform.starter.code.gen.controller;
 
+import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
@@ -38,9 +39,11 @@ public class DatabaseTableController {
 
     @Operation(summary = "表列表分页")
     @GetMapping("/page")
-    public ResResult<Page<DatabaseTable>> page(@ParameterObject PageParam pageParam,
-            @ParameterObject DatabaseTable param) {
-        return Res.ok(databaseTableService.page(pageParam, param));
+    public ResResult<PageResult<DatabaseTable>> page(@ParameterObject PageParam pageParam,
+                                                     @ParameterObject DatabaseTable param,
+                                                     @ParameterObject String dataSourceCode)
+    {
+        return Res.ok(databaseTableService.page(pageParam, param,dataSourceCode));
     }
 
     @Operation(summary = "获取表信息")
@@ -57,8 +60,8 @@ public class DatabaseTableController {
 
     @Operation(summary = "获取表相关的代码生成参数信息")
     @GetMapping("/getTableGenParam")
-    public ResResult<TableGenParamDto> getTableGenParam(String tableName) {
-        return Res.ok(databaseTableService.getTableGenParam(tableName));
+    public ResResult<TableGenParamDto> getTableGenParam(String dataSourceCode, String tableName) {
+        return Res.ok(databaseTableService.getTableGenParam(dataSourceCode,tableName));
     }
 
 }
