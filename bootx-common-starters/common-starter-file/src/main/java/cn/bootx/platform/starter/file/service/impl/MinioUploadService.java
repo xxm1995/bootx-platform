@@ -92,8 +92,7 @@ public class MinioUploadService implements UploadService {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         String storageId = updateFileInfo.getExternalStorageId();
         return client.getObject(GetObjectArgs.builder()
-            .bucket(minio.getBucket()) // bucket
-                                       // 必须传递
+            .bucket(minio.getBucket()) // bucket 必须传递
             .object(storageId) // 相对路径作为 key
             .build());
     }
