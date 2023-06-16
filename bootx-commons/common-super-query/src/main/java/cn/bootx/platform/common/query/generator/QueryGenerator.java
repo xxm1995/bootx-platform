@@ -1,5 +1,6 @@
 package cn.bootx.platform.common.query.generator;
 
+import cn.bootx.platform.common.query.entity.QueryOrder;
 import cn.bootx.platform.common.query.entity.QueryParams;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
@@ -33,8 +34,8 @@ public class QueryGenerator {
      * @param <T> 泛型
      * @return 查询器
      */
-    public static <T> QueryWrapper<T> generator(Object queryParams) {
-        return AnnotationQueryGenerator.generator(queryParams);
+    public static <T> QueryWrapper<T> generator(Object queryParams, QueryOrder...queryOrder) {
+        return AnnotationQueryGenerator.generator(queryParams,queryOrder);
     }
 
     /**
