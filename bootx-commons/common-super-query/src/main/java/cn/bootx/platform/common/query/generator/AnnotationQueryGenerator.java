@@ -3,12 +3,15 @@ package cn.bootx.platform.common.query.generator;
 import cn.bootx.platform.common.core.annotation.QueryParam;
 import cn.bootx.platform.common.core.function.CollectorsFunction;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
+import cn.bootx.platform.common.query.entity.QueryOrder;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.collect.Lists;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 
@@ -80,7 +83,7 @@ public class AnnotationQueryGenerator {
      * @param <T> 泛型
      * @return 查询器
      */
-    <T> QueryWrapper<T> generator(Object queryParams) {
+    <T> QueryWrapper<T> generator(Object queryParams, QueryOrder...queryOrder) {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
 
         if (Objects.isNull(queryParams)) {
@@ -110,6 +113,9 @@ public class AnnotationQueryGenerator {
                 compareTypeSwitch(compareType, wrapper, columnName, paramValue);
             }
         }
+
+        // 处理排序条件
+        initQueryOrder(wrapper,Objects.isNull(queryOrder)?null: Lists.newArrayList(queryOrder));
 
         return wrapper;
     }
@@ -193,7 +199,7 @@ public class AnnotationQueryGenerator {
     /**
      * 获取字段对应的数据库字段名
      */
-    public String getDatabaseFieldName(PropertyDescriptor paramDescriptor, Class<?> paramClass,
+    private String getDatabaseFieldName(PropertyDescriptor paramDescriptor, Class<?> paramClass,
             PropertyDescriptor entityDescriptor, Class<?> entityClass, QueryParam.NamingCaseEnum namingCase) {
         // 读取注解， 判断有没有自定义字段名, 有自定义字段名直接返回
         val queryParam = getQueryParamAnnotation(paramDescriptor, paramClass, entityDescriptor, entityClass);
@@ -215,6 +221,26 @@ public class AnnotationQueryGenerator {
             }
         }
         return "";
+    }
+
+    /**
+     * 组装排序条件
+     * @param queryWrapper 查询器
+     * @param queryOrders 排序条件
+     * @param <T> 泛型
+     */
+    private <T> void initQueryOrder(QueryWrapper<T> queryWrapper, List<QueryOrder> queryOrders) {
+        if (CollUtil.isEmpty(queryOrders)) {
+            return;
+        }
+        for (QueryOrder queryOrder : queryOrders) {
+            if (queryOrder.isUnderLine()) {
+                queryWrapper.orderBy(true, queryOrder.isAsc(), StrUtil.toUnderlineCase(queryOrder.getSortField()));
+            }
+            else {
+                queryWrapper.orderBy(true, queryOrder.isAsc(), queryOrder.getSortField());
+            }
+        }
     }
 
 }
