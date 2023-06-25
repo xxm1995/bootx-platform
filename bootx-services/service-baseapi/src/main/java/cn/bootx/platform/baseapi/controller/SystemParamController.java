@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * 系统参数
  *
  * @author xxm
- * @date 2021/10/25
+ * @since 2021/10/25
  */
 @Tag(name = "系统参数")
 @RestController

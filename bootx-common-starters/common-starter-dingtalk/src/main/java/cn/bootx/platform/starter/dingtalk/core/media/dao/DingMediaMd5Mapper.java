@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2022/7/26
+ * @since 2022/7/26
  */
 @Mapper
 public interface DingMediaMd5Mapper extends BaseMapper<DingMediaMd5> {

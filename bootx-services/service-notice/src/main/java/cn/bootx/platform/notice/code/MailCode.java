@@ -4,7 +4,7 @@ package cn.bootx.platform.notice.code;
  * 邮箱常量
  *
  * @author xxm
- * @date 2021/8/5
+ * @since 2021/8/5
  */
 public interface MailCode {
 

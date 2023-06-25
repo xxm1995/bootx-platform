@@ -6,7 +6,7 @@ import cn.bootx.platform.common.core.exception.BizException;
  * 登录方式不存在
  *
  * @author xxm
- * @date 2022/11/6
+ * @since 2022/11/6
  */
 public class LonginTypeNotFoundException extends BizException {
 

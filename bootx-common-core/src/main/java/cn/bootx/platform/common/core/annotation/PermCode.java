@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * 放在数据库实体类及字段上时，会在启用查询字段权限的时候，对用户没有权限码的字段不进行SQL查询
  *
  * @author xxm
- * @date 2023/1/22
+ * @since 2023/1/22
  */
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

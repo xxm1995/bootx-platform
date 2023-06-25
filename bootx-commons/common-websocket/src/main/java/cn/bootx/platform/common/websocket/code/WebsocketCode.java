@@ -4,7 +4,7 @@ package cn.bootx.platform.common.websocket.code;
  * websocket常量码
  *
  * @author xxm
- * @date 2022/6/9
+ * @since 2022/6/9
  */
 public interface WebsocketCode {
 

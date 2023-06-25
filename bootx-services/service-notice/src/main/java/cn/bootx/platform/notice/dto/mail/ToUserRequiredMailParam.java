@@ -9,7 +9,7 @@ import java.io.Serializable;
  * touser 必需时使用的参数
  *
  * @author xxm
- * @date 2020/5/2 20:32
+ * @since 2020/5/2 20:32
  */
 @Data
 @Accessors(chain = true)

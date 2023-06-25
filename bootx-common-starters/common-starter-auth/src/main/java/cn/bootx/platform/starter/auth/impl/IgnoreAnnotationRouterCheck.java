@@ -12,7 +12,7 @@ import java.util.Objects;
  * 注解方式过滤
  *
  * @author xxm
- * @date 2021/12/21
+ * @since 2021/12/21
  */
 @Component
 public class IgnoreAnnotationRouterCheck implements RouterCheck {

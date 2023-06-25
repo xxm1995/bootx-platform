@@ -21,7 +21,7 @@ import static cn.bootx.platform.starter.wechat.code.WeChatCode.*;
  * 扫码事件
  *
  * @author xxm
- * @date 2022/8/4
+ * @since 2022/8/4
  */
 @Slf4j
 @Service

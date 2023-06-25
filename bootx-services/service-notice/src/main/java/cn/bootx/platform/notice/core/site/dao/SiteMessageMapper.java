@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * 站内信
  *
  * @author xxm
- * @date 2021/8/7
+ * @since 2021/8/7
  */
 @Mapper
 public interface SiteMessageMapper extends BaseMapper<SiteMessage> {

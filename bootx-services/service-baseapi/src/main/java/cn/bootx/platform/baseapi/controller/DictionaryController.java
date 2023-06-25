@@ -20,7 +20,7 @@ import java.util.List;
  * 字典
  *
  * @author xxm
- * @date 2021/8/4
+ * @since 2021/8/4
  */
 @Tag(name = "字典")
 @RestController

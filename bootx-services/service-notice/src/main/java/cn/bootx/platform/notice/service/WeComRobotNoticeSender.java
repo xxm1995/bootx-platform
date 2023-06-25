@@ -9,7 +9,7 @@ import java.util.List;
  * 企业微信机器人配置
  *
  * @author xxm
- * @date 2022/7/16
+ * @since 2022/7/16
  */
 public interface WeComRobotNoticeSender {
 

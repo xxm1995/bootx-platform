@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * @author xxm
- * @date 2020/5/2 14:42
+ * @since 2020/5/2 14:42
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

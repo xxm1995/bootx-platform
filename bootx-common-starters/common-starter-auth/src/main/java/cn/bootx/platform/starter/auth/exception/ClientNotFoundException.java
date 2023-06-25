@@ -6,7 +6,7 @@ import cn.bootx.platform.common.core.exception.BizException;
  * 终端不存在
  *
  * @author xxm
- * @date 2021/8/25
+ * @since 2021/8/25
  */
 public class ClientNotFoundException extends BizException {
 

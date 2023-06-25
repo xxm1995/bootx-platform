@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * 消息用户关联信息
  *
  * @author xxm
- * @date 2022/8/13
+ * @since 2022/8/13
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

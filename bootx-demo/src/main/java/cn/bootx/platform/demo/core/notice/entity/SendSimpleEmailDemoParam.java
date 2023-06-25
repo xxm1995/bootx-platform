@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * 简单邮件发送参数
  *
  * @author xxm
- * @date 2022/8/3
+ * @since 2022/8/3
  */
 @Data
 @Accessors(chain = true)

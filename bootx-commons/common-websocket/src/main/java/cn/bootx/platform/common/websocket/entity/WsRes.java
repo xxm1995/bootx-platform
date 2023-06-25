@@ -7,7 +7,7 @@ import lombok.experimental.UtilityClass;
  * websocket 响应工具类
  *
  * @author xxm
- * @date 2022/6/9
+ * @since 2022/6/9
  */
 @UtilityClass
 public class WsRes {

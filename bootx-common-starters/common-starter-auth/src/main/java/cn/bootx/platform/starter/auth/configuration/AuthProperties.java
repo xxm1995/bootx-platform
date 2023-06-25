@@ -12,7 +12,7 @@ import java.util.List;
  * 认证配置参数
  *
  * @author xxm
- * @date 2021/7/30
+ * @since 2021/7/30
  */
 @Getter
 @Setter

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 /**
  * ${comments}
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 @Repository
 @RequiredArgsConstructor

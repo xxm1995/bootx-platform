@@ -15,7 +15,7 @@ import java.util.List;
  * mpnews类型的图文消息，跟普通的图文消息一致，唯一的差异是图文内容存储在企业微信。 多次发送mpnews，会被认为是不同的图文，阅读、点赞的统计会被分开计算。
  *
  * @author xxm
- * @date 2022/7/23
+ * @since 2022/7/23
  */
 @Data
 @Accessors(chain = true)

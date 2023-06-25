@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 审计日志配置
  *
  * @author xxm
- * @date 2021/12/2
+ * @since 2021/12/2
  */
 @Getter
 @Setter

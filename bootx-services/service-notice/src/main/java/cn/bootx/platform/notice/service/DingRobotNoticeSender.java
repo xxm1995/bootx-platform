@@ -8,7 +8,7 @@ import cn.bootx.platform.starter.dingtalk.param.notice.msg.TextMsg;
  * 钉钉机器人消息通知
  *
  * @author xxm
- * @date 2022/7/16
+ * @since 2022/7/16
  */
 public interface DingRobotNoticeSender {
 

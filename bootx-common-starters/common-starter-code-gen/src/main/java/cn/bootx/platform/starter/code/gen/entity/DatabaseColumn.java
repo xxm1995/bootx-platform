@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
  * 数据库行信息
  *
  * @author xxm
- * @date 2022/1/27
+ * @since 2022/1/27
  */
 @Data
 @Accessors(chain = true)

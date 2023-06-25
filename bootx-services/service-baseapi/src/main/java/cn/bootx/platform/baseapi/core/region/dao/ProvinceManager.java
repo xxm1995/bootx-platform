@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * 省份表
  *
  * @author xxm
- * @date 2022-12-24
+ * @since 2022-12-24
  */
 @Repository
 @RequiredArgsConstructor

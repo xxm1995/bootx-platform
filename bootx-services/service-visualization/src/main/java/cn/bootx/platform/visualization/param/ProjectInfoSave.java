@@ -10,7 +10,7 @@ import java.util.Map;
  * 大屏更新参数
  *
  * @author xxm
- * @date 2023/2/21
+ * @since 2023/2/21
  */
 @Data
 @Accessors(chain = true)

@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.dingtalk.code;
  * 钉钉消息类型
  *
  * @author xxm
- * @date 2020/11/30
+ * @since 2020/11/30
  */
 public interface DingTalkCode {
 

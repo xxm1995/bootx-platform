@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * 日志配置
  * @author xxm
- * @date 2023/3/29
+ * @since 2023/3/29
  */
 @Getter
 @Setter

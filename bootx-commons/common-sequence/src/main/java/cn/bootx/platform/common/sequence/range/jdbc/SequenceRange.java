@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
  * 队列区间
  *
  * @author xxm
- * @date 2021/12/14
+ * @since 2021/12/14
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

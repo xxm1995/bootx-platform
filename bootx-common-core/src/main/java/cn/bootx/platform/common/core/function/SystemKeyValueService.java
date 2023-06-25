@@ -8,7 +8,7 @@ import java.util.List;
  * kv存储接口 (必须实现)
  *
  * @author xxm
- * @date 2022/6/13
+ * @since 2022/6/13
  */
 public interface SystemKeyValueService {
 

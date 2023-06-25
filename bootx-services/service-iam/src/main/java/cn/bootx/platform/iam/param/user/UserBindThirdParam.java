@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  * 用户绑定第三方开放平台参数
  *
  * @author xxm
- * @date 2022/7/2
+ * @since 2022/7/2
  */
 @Data
 @Accessors(chain = true)

@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
  * 项目大屏信息
  *
  * @author xxm
- * @date 2023/2/24
+ * @since 2023/2/24
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

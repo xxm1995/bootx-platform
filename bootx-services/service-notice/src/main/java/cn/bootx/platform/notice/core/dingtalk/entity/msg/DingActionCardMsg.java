@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * 钉钉卡片工作通知消息
  *
  * @author xxm
- * @date 2022/7/20
+ * @since 2022/7/20
  */
 @Data
 @Accessors(chain = true)

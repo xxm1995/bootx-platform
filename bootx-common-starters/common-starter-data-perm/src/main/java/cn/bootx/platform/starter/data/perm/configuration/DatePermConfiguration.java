@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * 数据权限配置
  *
  * @author xxm
- * @date 2021/12/21
+ * @since 2021/12/21
  */
 @Configuration
 @RequiredArgsConstructor

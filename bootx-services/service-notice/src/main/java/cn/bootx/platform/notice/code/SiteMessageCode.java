@@ -4,7 +4,7 @@ package cn.bootx.platform.notice.code;
  * 站内信编码
  *
  * @author xxm
- * @date 2022/8/14
+ * @since 2022/8/14
  */
 public interface SiteMessageCode {
 

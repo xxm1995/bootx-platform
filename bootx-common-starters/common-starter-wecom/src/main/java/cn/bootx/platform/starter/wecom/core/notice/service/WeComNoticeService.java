@@ -24,7 +24,7 @@ import static cn.bootx.platform.starter.wecom.code.WeComCode.NOTICE_RECALL_URL;
  * 企业微信消息发送
  *
  * @author xxm
- * @date 2022/7/23
+ * @since 2022/7/23
  */
 @Slf4j
 @Service

@@ -9,7 +9,7 @@ import lombok.Data;
  * 省份表
  *
  * @author xxm
- * @date 2022-12-24
+ * @since 2022-12-24
  */
 @Data
 @TableName("base_province")

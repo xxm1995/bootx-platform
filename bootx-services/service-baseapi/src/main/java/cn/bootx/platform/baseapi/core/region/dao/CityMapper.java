@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 城市表
  *
  * @author xxm
- * @date 2022-12-24
+ * @since 2022-12-24
  */
 @Mapper
 public interface CityMapper extends BaseMapper<City> {

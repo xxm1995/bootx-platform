@@ -10,7 +10,7 @@ import java.util.List;
  * 行政区域初始化
  *
  * @author xxm
- * @date 2023/2/7
+ * @since 2023/2/7
  */
 @Component
 public class ChinaRegionInitSqlHandler extends SimpleDdl {

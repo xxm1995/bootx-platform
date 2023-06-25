@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 队列区间
  *
  * @author xxm
- * @date 2021/12/14
+ * @since 2021/12/14
  */
 @Mapper
 public interface SequenceRangeMapper extends BaseMapper<SequenceRange> {

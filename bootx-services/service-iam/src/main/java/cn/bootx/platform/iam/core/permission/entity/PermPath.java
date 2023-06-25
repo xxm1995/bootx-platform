@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * 权限资源(url请求)
  *
  * @author xxm
- * @date 2020/5/10 23:09
+ * @since 2020/5/10 23:09
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

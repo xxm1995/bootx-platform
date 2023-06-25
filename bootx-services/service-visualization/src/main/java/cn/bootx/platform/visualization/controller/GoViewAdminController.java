@@ -22,7 +22,7 @@ import javax.validation.Valid;
  * GoView可视化大屏管理接口
  *
  * @author xxm
- * @date 2023/2/24
+ * @since 2023/2/24
  */
 @Validated
 @Tag(name = "GoView可视化大屏管理接口")

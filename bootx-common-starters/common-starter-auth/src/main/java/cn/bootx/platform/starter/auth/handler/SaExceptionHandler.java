@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * 过滤SaTokenException,需要运行在 RestExceptionHandler 之前
  *
  * @author xxm
- * @date 2021/8/5
+ * @since 2021/8/5
  */
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
 @Slf4j

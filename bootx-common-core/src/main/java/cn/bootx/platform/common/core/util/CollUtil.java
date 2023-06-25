@@ -8,7 +8,7 @@ import java.util.Collection;
  * 集合工具类
  *
  * @author xxm
- * @date 2020/11/28
+ * @since 2020/11/28
  */
 @UtilityClass
 public class CollUtil extends cn.hutool.core.collection.CollUtil {

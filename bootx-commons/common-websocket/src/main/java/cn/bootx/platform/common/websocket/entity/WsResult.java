@@ -12,7 +12,7 @@ import java.io.Serializable;
  * websocket响应消息类
  *
  * @author xxm
- * @date 2022/6/9
+ * @since 2022/6/9
  */
 @Getter
 @Setter

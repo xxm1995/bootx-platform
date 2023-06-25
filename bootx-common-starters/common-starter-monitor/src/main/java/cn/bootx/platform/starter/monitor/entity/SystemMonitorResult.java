@@ -34,7 +34,7 @@ import java.util.List;
  * 系统属性结果
  *
  * @author xxm
- * @date 2022/6/10
+ * @since 2022/6/10
  */
 @Data
 @Schema(title = "系统属性结果")

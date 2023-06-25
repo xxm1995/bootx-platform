@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * @author xxm
- * @date 2023/2/21
+ * @since 2023/2/21
  */
 @Repository
 public class ProjectInfoManager extends BaseManager<ProjectInfoMapper, ProjectInfo> {

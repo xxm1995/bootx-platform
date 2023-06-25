@@ -12,7 +12,7 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
  * 企业微信发送消息参数
  *
  * @author xxm
- * @date 2022/7/23
+ * @since 2022/7/23
  */
 @Data
 @Accessors(chain = true)

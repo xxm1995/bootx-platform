@@ -11,7 +11,7 @@ import java.util.Objects;
  * 数据库字段类型与java类型映射
  *
  * @author xxm
- * @date 2022/2/17
+ * @since 2022/2/17
  */
 @Getter
 @AllArgsConstructor

@@ -26,7 +26,7 @@ import static cn.bootx.platform.starter.dingtalk.code.DingTalkCode.*;
  * 钉钉访问凭证
  *
  * @author xxm
- * @date 2022/4/2
+ * @since 2022/4/2
  */
 @Slf4j
 @Service

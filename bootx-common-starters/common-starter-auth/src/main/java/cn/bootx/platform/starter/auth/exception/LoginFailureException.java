@@ -7,7 +7,7 @@ import lombok.Getter;
  * 登录错误异常
  *
  * @author xxm
- * @date 2021/8/13
+ * @since 2021/8/13
  */
 @Getter
 public class LoginFailureException extends BizException {

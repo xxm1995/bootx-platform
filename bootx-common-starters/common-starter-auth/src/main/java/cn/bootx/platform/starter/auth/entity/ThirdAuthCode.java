@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
  * 三方登录认证码
  *
  * @author xxm
- * @date 2022/6/29
+ * @since 2022/6/29
  */
 @Data
 @Accessors(chain = true)

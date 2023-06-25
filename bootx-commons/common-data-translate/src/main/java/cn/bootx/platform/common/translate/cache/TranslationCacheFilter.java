@@ -16,7 +16,7 @@ import java.io.IOException;
  * session缓存,用来减少一个请求中多次获取用户信息导致的多次访问redis
  *
  * @author xxm
- * @date 2022/1/8
+ * @since 2022/1/8
  */
 @Order(value = Integer.MIN_VALUE + 1)
 @Component

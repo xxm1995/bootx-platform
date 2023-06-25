@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author xxm
- * @date 2022/1/10
+ * @since 2022/1/10
  */
 @Tag(name = "数据版本日志")
 @RestController

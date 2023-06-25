@@ -22,7 +22,7 @@ import java.util.function.BiConsumer;
  * 用户绑定操作类
  *
  * @author xxm
- * @date 2022/7/22
+ * @since 2022/7/22
  */
 @Slf4j
 @Service

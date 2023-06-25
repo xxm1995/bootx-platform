@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
  * 测试通知接收者管理
  *
  * @author xxm
- * @date 2020/5/3 10:56
+ * @since 2020/5/3 10:56
  */
 @EqualsAndHashCode(callSuper = true)
 @Schema(title = "通知接收者配置dto")

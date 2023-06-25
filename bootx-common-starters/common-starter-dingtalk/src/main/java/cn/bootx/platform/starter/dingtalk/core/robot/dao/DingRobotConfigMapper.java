@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 钉钉机器人配置
  *
  * @author xxm
- * @date 2021/8/5
+ * @since 2021/8/5
  */
 @Mapper
 public interface DingRobotConfigMapper extends BaseMapper<DingRobotConfig> {

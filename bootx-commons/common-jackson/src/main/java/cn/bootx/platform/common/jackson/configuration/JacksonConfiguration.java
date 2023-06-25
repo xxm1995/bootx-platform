@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Primary;
  * jackson 序列化
  *
  * @author xxm
- * @date 2020/4/23 22:28
+ * @since 2020/4/23 22:28
  */
 @Configuration
 @AutoConfigureBefore(JacksonAutoConfiguration.class)

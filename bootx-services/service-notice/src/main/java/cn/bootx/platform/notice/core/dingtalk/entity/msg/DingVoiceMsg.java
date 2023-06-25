@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * 声音消息
  *
  * @author xxm
- * @date 2022/7/19
+ * @since 2022/7/19
  */
 @Data
 @Accessors(chain = true)

@@ -10,7 +10,7 @@ import static cn.bootx.platform.notice.code.NoticeCenterErrorCode.MAIL_CONFIG_CO
  * 邮箱配置编号 已存在异常
  *
  * @author xxm
- * @date 2020/5/2 14:12
+ * @since 2020/5/2 14:12
  */
 public class MailConfigCodeAlreadyExistedException extends BizException implements Serializable {
 

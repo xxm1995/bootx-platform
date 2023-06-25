@@ -12,7 +12,7 @@ import java.util.List;
  * 发邮件的参数
  *
  * @author xxm
- * @date 2020/5/2 20:31
+ * @since 2020/5/2 20:31
  */
 @Schema(title = "发邮件的参数")
 @Data

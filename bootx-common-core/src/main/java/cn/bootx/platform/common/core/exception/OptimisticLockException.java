@@ -8,7 +8,7 @@ import static cn.bootx.platform.common.core.code.CommonErrorCode.DATA_OUT_OF_DAT
  * 乐观锁异常
  *
  * @author xxm
- * @date 2020/4/15 14:11
+ * @since 2020/4/15 14:11
  */
 public class OptimisticLockException extends SystemException implements Serializable {
 

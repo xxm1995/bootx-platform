@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * 钉钉机器人配置
  *
  * @author xxm
- * @date 2020/11/29
+ * @since 2020/11/29
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

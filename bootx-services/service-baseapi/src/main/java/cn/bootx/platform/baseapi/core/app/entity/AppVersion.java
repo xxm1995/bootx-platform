@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * App版本
  *
  * @author xxm
- * @date 2021/8/9
+ * @since 2021/8/9
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

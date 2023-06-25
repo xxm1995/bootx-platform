@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xxm
- * @date 2022/1/2
+ * @since 2022/1/2
  */
 @Tag(name = "用户数据权限配置")
 @RestController

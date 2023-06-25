@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * spring默认配置
  * @author xxm
- * @date 2023/3/29
+ * @since 2023/3/29
  */
 @EnableScheduling
 @EnableRetry

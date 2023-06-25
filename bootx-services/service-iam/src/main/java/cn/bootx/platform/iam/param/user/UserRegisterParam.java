@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
  * 注册用户参数
  *
  * @author xxm
- * @date 2022/6/26
+ * @since 2022/6/26
  */
 @Data
 @Accessors(chain = true)

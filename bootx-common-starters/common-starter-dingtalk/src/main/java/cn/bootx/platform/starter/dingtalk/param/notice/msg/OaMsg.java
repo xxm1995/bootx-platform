@@ -14,7 +14,7 @@ import java.util.List;
  * 钉钉OA消息
  *
  * @author xxm
- * @date 2022/7/19
+ * @since 2022/7/19
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

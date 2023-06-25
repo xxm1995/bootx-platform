@@ -6,7 +6,7 @@ import cn.bootx.platform.starter.auth.entity.AuthClient;
  * 获取认证终端
  *
  * @author xxm
- * @date 2022/6/27
+ * @since 2022/6/27
  */
 public interface GetAuthClientService {
 

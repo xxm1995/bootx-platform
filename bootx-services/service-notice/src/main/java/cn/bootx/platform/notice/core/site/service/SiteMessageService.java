@@ -39,7 +39,7 @@ import static cn.bootx.platform.notice.code.SiteMessageCode.*;
  * 站内信
  *
  * @author xxm
- * @date 2021/8/7
+ * @since 2021/8/7
  */
 @Slf4j
 @Service

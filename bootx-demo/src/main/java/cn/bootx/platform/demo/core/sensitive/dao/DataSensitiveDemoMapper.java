@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2022/3/24
+ * @since 2022/3/24
  */
 @Mapper
 public interface DataSensitiveDemoMapper extends BaseMapper<DataSensitiveDemo> {

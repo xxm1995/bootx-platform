@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
  * 定时任务转换
  *
  * @author xxm
- * @date 2021/11/2
+ * @since 2021/11/2
  */
 @Mapper
 public interface QuartzJobConvert {

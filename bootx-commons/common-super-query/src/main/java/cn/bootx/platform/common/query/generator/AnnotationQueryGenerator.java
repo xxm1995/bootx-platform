@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * 注解参数查询生成器
  *
  * @author xxm
- * @date 2022/12/14
+ * @since 2022/12/14
  */
 @UtilityClass
 public class AnnotationQueryGenerator {

@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 
 /**
  * @author xxm
- * @date 2022/7/30
+ * @since 2022/7/30
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

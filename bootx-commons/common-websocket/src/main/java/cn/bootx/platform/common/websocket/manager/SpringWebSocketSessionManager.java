@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * websocket管理器 (Spring封装的socket)
  *
  * @author xxm
- * @date 2022/5/27
+ * @since 2022/5/27
  */
 public class SpringWebSocketSessionManager {
 

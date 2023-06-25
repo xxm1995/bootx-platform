@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xxm
- * @date 2020/5/2 14:38
+ * @since 2020/5/2 14:38
  */
 @Tag(name = "邮箱配置")
 @RestController

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * 获取认证终端
  *
  * @author xxm
- * @date 2021/8/25
+ * @since 2021/8/25
  */
 @Slf4j
 @Service

@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
  * 用户三方登录绑定详情
  *
  * @author xxm
- * @date 2022-07-02
+ * @since 2022-07-02
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

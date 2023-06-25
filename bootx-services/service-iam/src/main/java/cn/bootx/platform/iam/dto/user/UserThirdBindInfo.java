@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
  * 用户三方绑定信息
  *
  * @author xxm
- * @date 2022/7/2
+ * @since 2022/7/2
  */
 @Data
 @Accessors(chain = true)

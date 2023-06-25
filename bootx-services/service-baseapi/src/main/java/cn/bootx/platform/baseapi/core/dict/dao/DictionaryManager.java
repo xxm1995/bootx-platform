@@ -17,7 +17,7 @@ import java.util.List;
  * 字典
  *
  * @author xxm
- * @date 2020/11/13
+ * @since 2020/11/13
  */
 @Repository
 @AllArgsConstructor

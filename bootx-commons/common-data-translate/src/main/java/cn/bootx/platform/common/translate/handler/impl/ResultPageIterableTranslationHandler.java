@@ -17,7 +17,7 @@ import java.util.Map;
  * ResResult返回类的处理, 泛型 T 为 Iterable 的实现, 比如 List
  *
  * @author xxm
- * @date 2022/12/20
+ * @since 2022/12/20
  */
 @Component
 @RequiredArgsConstructor

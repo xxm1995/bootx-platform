@@ -8,7 +8,7 @@ import static cn.bootx.platform.iam.code.IamErrorCode.ROLE_ALREADY_EXISTED;
 
 /**
  * @author xxm
- * @date 2020/4/29 14:37
+ * @since 2020/4/29 14:37
  */
 public class RoleAlreadyExistedException extends BizException implements Serializable {
 

@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
  * 消息模板转换
  *
  * @author xxm
- * @date 2021/8/10
+ * @since 2021/8/10
  */
 @Mapper
 public interface MessageTemplateConvert {

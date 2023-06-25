@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 字典转换标示注解, 标注此注解会对对应对象进行字典值转换处理
  *
  * @author xxm
- * @date 2022/12/15
+ * @since 2022/12/15
  */
 @Target({ ElementType.METHOD, ElementType.TYPE, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)

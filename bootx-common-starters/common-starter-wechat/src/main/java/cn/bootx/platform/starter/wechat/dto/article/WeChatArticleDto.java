@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * 微信文章
  *
  * @author xxm
- * @date 2022/8/12
+ * @since 2022/8/12
  */
 @Data
 @Accessors(chain = true)

@@ -12,7 +12,7 @@ import java.util.Map;
  * swagger配置
  *
  * @author xxm
- * @date 2020/4/9 13:36
+ * @since 2020/4/9 13:36
  */
 @Getter
 @Setter

@@ -38,7 +38,7 @@ import static cn.bootx.platform.iam.code.CachingCode.USER_DATA_SCOPE;
  * 数据范围权限
  *
  * @author xxm
- * @date 2021/12/24
+ * @since 2021/12/24
  */
 @Slf4j
 @Service

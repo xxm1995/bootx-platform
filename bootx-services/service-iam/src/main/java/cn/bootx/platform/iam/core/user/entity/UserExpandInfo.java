@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * 用户扩展信息
  *
  * @author xxm
- * @date 2022/1/8
+ * @since 2022/1/8
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

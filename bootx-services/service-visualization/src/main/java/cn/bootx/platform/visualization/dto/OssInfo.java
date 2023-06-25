@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
  * 文件上传oss信息
  *
  * @author xxm
- * @date 2023/2/21
+ * @since 2023/2/21
  */
 @Data
 @Accessors(chain = true)

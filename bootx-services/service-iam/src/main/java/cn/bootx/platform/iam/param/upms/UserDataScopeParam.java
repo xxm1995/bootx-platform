@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author xxm
- * @date 2022/1/2
+ * @since 2022/1/2
  */
 @Data
 @Schema(title = "用户数据权限参数")

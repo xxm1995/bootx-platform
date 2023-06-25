@@ -55,7 +55,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 数据变动记录插件, 基于MP官方进行修改
  *
  * @author xxm
- * @date 2023/1/5
+ * @since 2023/1/5
  */
 @Slf4j
 public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
@@ -649,7 +649,7 @@ public class DataChangeRecorderInnerInterceptor implements InnerInterceptor {
      * 数据变动记录
      *
      * @author xxm
-     * @date 2023/1/7
+     * @since 2023/1/7
      */
     @Data
     public static class DataChangedRecord {

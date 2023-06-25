@@ -14,7 +14,7 @@ import java.util.Objects;
  * 序列号生成工具类
  *
  * @author xxm
- * @date 2022/12/27
+ * @since 2022/12/27
  */
 @UtilityClass
 public class SequenceUtil {

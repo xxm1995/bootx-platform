@@ -8,7 +8,7 @@ import java.util.List;
  * 分页包装类
  *
  * @author xxm
- * @date 2020/4/21 14:37
+ * @since 2020/4/21 14:37
  */
 public class PageResult<T> implements Serializable {
 

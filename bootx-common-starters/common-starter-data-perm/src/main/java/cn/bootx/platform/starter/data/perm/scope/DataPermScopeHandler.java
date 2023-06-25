@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.data.perm.scope;
  * 数据范围权限业务实现接口
  *
  * @author xxm
- * @date 2021/12/22
+ * @since 2021/12/22
  */
 public interface DataPermScopeHandler {
 

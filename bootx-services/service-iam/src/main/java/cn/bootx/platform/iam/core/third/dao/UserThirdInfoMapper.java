@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 用户三方登录绑定详情
  *
  * @author xxm
- * @date 2022-07-02
+ * @since 2022-07-02
  */
 @Mapper
 public interface UserThirdInfoMapper extends BaseMapper<UserThirdInfo> {

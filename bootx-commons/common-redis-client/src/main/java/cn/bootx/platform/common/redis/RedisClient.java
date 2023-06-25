@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * redis请求类
  *
  * @author xxm
- * @date 2020/4/9 15:34
+ * @since 2020/4/9 15:34
  */
 @RequiredArgsConstructor
 public class RedisClient {

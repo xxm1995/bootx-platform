@@ -4,7 +4,7 @@ package cn.bootx.platform.common.redis.listener;
  * Key过期事件
  *
  * @author xxm
- * @date 2022/5/7
+ * @since 2022/5/7
  */
 public interface RedisKeyExpiredListener {
 

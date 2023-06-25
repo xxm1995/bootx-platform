@@ -13,7 +13,7 @@ import java.util.Set;
  * BeanValidation 工具类
  *
  * @author xxm
- * @date 2020/5/26 18:14
+ * @since 2020/5/26 18:14
  */
 @UtilityClass
 public class ValidationUtil {

@@ -6,7 +6,7 @@ import static cn.bootx.platform.common.core.code.CommonErrorCode.DATA_NOT_EXIST;
  * 数据不存在异常
  *
  * @author xxm
- * @date 2022/1/10
+ * @since 2022/1/10
  */
 public class DataNotExistException extends BizException {
 

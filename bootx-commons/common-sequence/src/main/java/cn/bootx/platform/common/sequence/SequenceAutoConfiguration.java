@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
  * sequence序列生成器
  *
  * @author xxm
- * @date 2021/12/14
+ * @since 2021/12/14
  */
 @ComponentScan
 @AutoConfiguration

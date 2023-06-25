@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 响应包装类
  *
  * @author xxm
- * @date 2020/1/22 15:26
+ * @since 2020/1/22 15:26
  */
 @Getter
 @Setter

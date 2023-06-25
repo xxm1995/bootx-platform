@@ -4,7 +4,7 @@ package cn.bootx.platform.baseapi.code;
  * 查询SQL
  *
  * @author xxm
- * @date 2023/3/12
+ * @since 2023/3/12
  */
 public interface QuerySqlCode {
 

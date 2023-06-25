@@ -14,7 +14,7 @@ import java.util.Date;
  * actable测试
  *
  * @author xxm
- * @date 2023/1/11
+ * @since 2023/1/11
  */
 @EqualsAndHashCode(callSuper = true)
 @DbTable(name = "mtm_table",comment = "actable测试")

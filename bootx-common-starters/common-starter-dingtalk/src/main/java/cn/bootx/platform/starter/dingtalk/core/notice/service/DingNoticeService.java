@@ -21,7 +21,7 @@ import static cn.bootx.platform.starter.dingtalk.code.DingTalkCode.*;
  * 钉钉通知发送服务
  *
  * @author xxm
- * @date 2022/7/17
+ * @since 2022/7/17
  */
 @Slf4j
 @Service

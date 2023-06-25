@@ -6,7 +6,7 @@ import cn.bootx.platform.common.core.exception.BizException;
  * 路径检查异常
  *
  * @author xxm
- * @date 2021/12/21
+ * @since 2021/12/21
  */
 public class RouterCheckException extends BizException {
 

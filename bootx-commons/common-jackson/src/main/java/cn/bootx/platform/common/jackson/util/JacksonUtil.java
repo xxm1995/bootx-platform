@@ -12,7 +12,7 @@ import java.util.List;
  * jackson常用工具类封装
  *
  * @author xxm
- * @date 2020/11/29
+ * @since 2020/11/29
  */
 @Slf4j
 public class JacksonUtil {

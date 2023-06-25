@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author xxm
- * @date 2023/3/2
+ * @since 2023/3/2
  */
 @Data
 @Accessors(chain = true)

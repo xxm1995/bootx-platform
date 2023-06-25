@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2022/8/14
+ * @since 2022/8/14
  */
 @Mapper
 public interface SiteMessageUserMapper extends BaseMapper<SiteMessageUser> {

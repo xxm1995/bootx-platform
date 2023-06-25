@@ -15,7 +15,7 @@ import java.io.Serializable;
  * 钉钉语音消息
  *
  * @author xxm
- * @date 2022/7/17
+ * @since 2022/7/17
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

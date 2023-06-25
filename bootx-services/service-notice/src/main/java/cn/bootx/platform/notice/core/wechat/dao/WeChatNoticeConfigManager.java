@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * 微信消息配置
  *
  * @author xxm
- * @date 2021/8/10
+ * @since 2021/8/10
  */
 @Slf4j
 @Repository

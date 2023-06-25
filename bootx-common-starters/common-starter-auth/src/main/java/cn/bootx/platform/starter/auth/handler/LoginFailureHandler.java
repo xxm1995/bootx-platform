@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
  * 登录失败处理器
  *
  * @author xxm
- * @date 2021/8/13
+ * @since 2021/8/13
  */
 public interface LoginFailureHandler {
 

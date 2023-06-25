@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async;
  * 登陆日志
  *
  * @author xxm
- * @date 2021/12/2
+ * @since 2021/12/2
  */
 public interface LoginLogService {
 

@@ -11,7 +11,7 @@ import java.util.Properties;
  * Redis监控信息
  *
  * @author xxm
- * @date 2022/6/12
+ * @since 2022/6/12
  */
 @Data
 @Schema(title = "Redis监控信息")

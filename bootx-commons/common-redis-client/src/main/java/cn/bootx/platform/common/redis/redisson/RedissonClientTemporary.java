@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * 只是在初始化时候使用一下，之后就会被替换
  *
  * @author xxm
- * @date 2022/11/30
+ * @since 2022/11/30
  */
 public class RedissonClientTemporary implements RedissonClient {
 

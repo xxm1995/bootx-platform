@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author xxm
- * @date 2020/4/21 11:54
+ * @since 2020/4/21 11:54
  */
 public class DictItemNotExistedException extends BizException implements Serializable {
 

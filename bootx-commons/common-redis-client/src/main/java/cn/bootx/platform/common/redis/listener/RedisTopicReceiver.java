@@ -16,7 +16,7 @@ import java.util.List;
  * redis订阅消息接收
  *
  * @author xxm
- * @date 2022/5/7
+ * @since 2022/5/7
  */
 @SuppressWarnings("rawtypes")
 @Slf4j

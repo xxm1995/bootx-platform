@@ -8,7 +8,7 @@ import me.zhyd.oauth.model.AuthUser;
  * OpenId登录认证器 (微信/钉钉/飞书/QQ/企微等)
  *
  * @author xxm
- * @date 2021/7/30
+ * @since 2021/7/30
  */
 public interface OpenIdAuthentication extends AbstractAuthentication {
 

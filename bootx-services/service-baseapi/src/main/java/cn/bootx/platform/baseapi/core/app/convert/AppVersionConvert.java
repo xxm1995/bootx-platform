@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
  * 转换
  *
  * @author xxm
- * @date 2021/8/9
+ * @since 2021/8/9
  */
 @Mapper
 public interface AppVersionConvert {

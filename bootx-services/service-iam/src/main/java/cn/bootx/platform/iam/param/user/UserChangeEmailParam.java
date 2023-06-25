@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
  * 用户修改邮箱参数
  *
  * @author xxm
- * @date 2022/6/19
+ * @since 2022/6/19
  */
 @Data
 @Accessors(chain = true)

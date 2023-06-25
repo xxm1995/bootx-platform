@@ -18,7 +18,7 @@ import java.util.List;
  * 认证终端
  *
  * @author xxm
- * @date 2022-06-27
+ * @since 2022-06-27
  */
 @Tag(name = "认证终端")
 @RestController

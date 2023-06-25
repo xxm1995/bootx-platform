@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
  * mongo配置
  *
  * @author xxm
- * @date 2022/1/21
+ * @since 2022/1/21
  */
 @ComponentScan
 @AutoConfiguration

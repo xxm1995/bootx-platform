@@ -10,7 +10,7 @@ import static cn.bootx.platform.iam.code.IamErrorCode.USER_PASSWORD_INVALID;
  * 用户密码不正确异常
  *
  * @author xxm
- * @date 2020/5/7 18:16
+ * @since 2020/5/7 18:16
  */
 public class UserPasswordInvalidException extends BizException implements Serializable {
 

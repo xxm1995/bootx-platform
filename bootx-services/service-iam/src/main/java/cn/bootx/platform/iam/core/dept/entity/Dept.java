@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * 部门表
  *
  * @author xxm
- * @date 2020/5/7 17:38
+ * @since 2020/5/7 17:38
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

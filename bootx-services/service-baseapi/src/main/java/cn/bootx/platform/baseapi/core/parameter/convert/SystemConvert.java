@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
  * 系统参数和系统配置实体类转换
  *
  * @author xxm
- * @date 2021/10/25
+ * @since 2021/10/25
  */
 @Mapper
 public interface SystemConvert {

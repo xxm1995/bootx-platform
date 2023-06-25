@@ -4,7 +4,7 @@ package cn.bootx.platform.common.core.validation;
  * 校验分组
  *
  * @author xxm
- * @date 2021/5/7
+ * @since 2021/5/7
  */
 public interface ValidationGroup {
 

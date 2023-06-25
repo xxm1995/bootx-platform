@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @author xxm
- * @date 2023/1/2
+ * @since 2023/1/2
  */
 @Configuration
 public class DataVersionConfiguration {

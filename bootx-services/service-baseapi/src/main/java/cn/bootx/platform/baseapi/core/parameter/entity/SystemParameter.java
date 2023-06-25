@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * 系统参数
  *
  * @author xxm
- * @date 2021/10/25
+ * @since 2021/10/25
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

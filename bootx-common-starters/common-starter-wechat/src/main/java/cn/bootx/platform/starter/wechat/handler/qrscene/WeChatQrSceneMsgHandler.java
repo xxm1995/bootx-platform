@@ -11,7 +11,7 @@ import java.util.Map;
  * 微信扫码消息处理
  *
  * @author xxm
- * @date 2023/3/21
+ * @since 2023/3/21
  */
 public interface WeChatQrSceneMsgHandler {
 

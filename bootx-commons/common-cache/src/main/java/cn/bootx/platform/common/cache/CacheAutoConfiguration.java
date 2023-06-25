@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 缓存配置
  *
  * @author xxm
- * @date 2022/12/18
+ * @since 2022/12/18
  */
 @ComponentScan
 @ConfigurationPropertiesScan

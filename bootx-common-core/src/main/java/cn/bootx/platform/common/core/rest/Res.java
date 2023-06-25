@@ -7,7 +7,7 @@ import static cn.bootx.platform.common.core.code.CommonCode.SUCCESS_CODE;
  * 返回工具类
  *
  * @author xxm
- * @date 2020/1/22 15:29
+ * @since 2020/1/22 15:29
  */
 public class Res {
 

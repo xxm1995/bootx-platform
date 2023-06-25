@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * 用户的核心信息
  *
  * @author xxm
- * @date 2020/4/24 15:21
+ * @since 2020/4/24 15:21
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

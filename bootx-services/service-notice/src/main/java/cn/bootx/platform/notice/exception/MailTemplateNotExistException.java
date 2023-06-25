@@ -8,7 +8,7 @@ import static cn.bootx.platform.notice.code.NoticeCenterErrorCode.MAIL_TEMPLATE_
  * 模板不存在
  *
  * @author xxm
- * @date 2020/11/18
+ * @since 2020/11/18
  */
 public class MailTemplateNotExistException extends FatalException {
 

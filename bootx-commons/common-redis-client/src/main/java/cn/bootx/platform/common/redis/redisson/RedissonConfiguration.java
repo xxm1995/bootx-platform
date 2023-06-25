@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  * Redisson 自动配置
  *
  * @author xxm
- * @date 2022/12/19
+ * @since 2022/12/19
  */
 @Configuration
 @ConditionalOnBean(name = "org.redisson.Redisson")

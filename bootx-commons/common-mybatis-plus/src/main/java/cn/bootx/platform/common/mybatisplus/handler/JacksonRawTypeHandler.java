@@ -12,7 +12,7 @@ import org.apache.ibatis.type.MappedTypes;
  * Jackson 实现 JSON 字段类型处理器, 会记录对象属性类型, 通常用于被容器(List、Set、Map)包装的属性上
  *
  * @author xxm
- * @date 2022/7/11
+ * @since 2022/7/11
  */
 @Slf4j
 @MappedTypes({ Object.class })

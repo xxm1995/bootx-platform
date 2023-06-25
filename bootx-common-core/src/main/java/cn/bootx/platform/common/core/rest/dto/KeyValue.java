@@ -10,7 +10,7 @@ import java.io.Serializable;
  * kv键值对象
  *
  * @author xxm
- * @date 2021/5/18
+ * @since 2021/5/18
  */
 @Getter
 @Setter

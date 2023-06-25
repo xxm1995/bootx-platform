@@ -9,7 +9,7 @@ import java.io.InputStream;
  * 企业微信通知服务
  *
  * @author xxm
- * @date 2022/7/16
+ * @since 2022/7/16
  */
 public interface WeComNoticeSender {
 

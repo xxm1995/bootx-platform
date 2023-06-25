@@ -4,7 +4,7 @@ package cn.bootx.platform.common.core.function;
  * stream流处理时进行Collectors时的函数
  *
  * @author xxm
- * @date 2023/3/12
+ * @since 2023/3/12
  */
 public interface CollectorsFunction {
 

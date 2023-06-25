@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2022/3/30
+ * @since 2022/3/30
  */
 @Mapper
 public interface SysKeyValueMapper extends BaseMapper<SysKeyValue> {

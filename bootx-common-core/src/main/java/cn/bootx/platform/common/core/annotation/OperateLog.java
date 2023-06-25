@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * 操作日志注解(支持重复注解)
  *
  * @author xxm
- * @date 2021/8/13
+ * @since 2021/8/13
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)

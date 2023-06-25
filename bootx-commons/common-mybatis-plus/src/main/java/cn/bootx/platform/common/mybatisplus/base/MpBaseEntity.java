@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 基础实体类 (带软删除)
  *
  * @author xxm
- * @date 2021/7/27
+ * @since 2021/7/27
  */
 @Getter
 @Setter

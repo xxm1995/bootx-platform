@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @author xxm
- * @date 2022/7/26
+ * @since 2022/7/26
  */
 @Tag(name = "企业微信机器人配置")
 @RestController

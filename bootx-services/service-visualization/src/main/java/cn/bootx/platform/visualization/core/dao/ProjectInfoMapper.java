@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2023/2/21
+ * @since 2023/2/21
  */
 @Mapper
 public interface ProjectInfoMapper extends BaseMapper<ProjectInfo> {

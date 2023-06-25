@@ -10,7 +10,7 @@ import static cn.bootx.platform.notice.code.NoticeCenterErrorCode.MAIL_CONFIG_CO
  * 邮箱代码已经存在
  *
  * @author xxm
- * @date 2020/6/10 16:21
+ * @since 2020/6/10 16:21
  */
 public class CodeTemplateExistedException extends BizException implements Serializable {
 

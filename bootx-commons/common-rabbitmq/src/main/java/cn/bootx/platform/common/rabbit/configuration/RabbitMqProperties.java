@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * MQTT配置
  *
  * @author xxm
- * @date 2022/12/12
+ * @since 2022/12/12
  */
 @Getter
 @Setter

@@ -15,7 +15,7 @@ import java.util.Map;
  * 钉钉发送工作通知参数
  *
  * @author xxm
- * @date 2022/7/17
+ * @since 2022/7/17
  */
 @Data
 @Accessors(chain = true)

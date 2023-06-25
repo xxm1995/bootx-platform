@@ -10,7 +10,7 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
  * Rabbit 侦听器配置器
  *
  * @author xxm
- * @date 2021/6/25
+ * @since 2021/6/25
  */
 @Configuration
 @RequiredArgsConstructor

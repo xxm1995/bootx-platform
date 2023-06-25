@@ -20,7 +20,7 @@ import static cn.bootx.platform.common.core.code.WebHeaderCode.ACCESS_TOKEN;
  * 全局用户WS通知拦截鉴权
  *
  * @author xxm
- * @date 2022/6/9
+ * @since 2022/6/9
  */
 @Slf4j
 @Component

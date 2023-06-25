@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
  * 异步执行配置
  *
  * @author xxm
- * @date 2021/6/11
+ * @since 2021/6/11
  */
 @Slf4j
 @EnableAsync
