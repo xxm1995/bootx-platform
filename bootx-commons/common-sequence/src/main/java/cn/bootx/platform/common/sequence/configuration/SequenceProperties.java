@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 序列生成器参数
  *
  * @author xxm
- * @date 2021/8/6
+ * @since 2021/8/6
  */
 @Getter
 @Setter

@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
  * 钉钉媒体上传返回类
  *
  * @author xxm
- * @date 2022/7/25
+ * @since 2022/7/25
  */
 @Data
 @Accessors(chain = true)

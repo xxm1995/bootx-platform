@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 /**
  * ${comments}
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 @Mapper
 public interface ${entityUpName}Convert {

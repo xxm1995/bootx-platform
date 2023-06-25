@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 测试Redis消息队列
  *
  * @author xxm
- * @date 2022/5/7
+ * @since 2022/5/7
  */
 @Slf4j
 @Component

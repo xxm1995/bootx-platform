@@ -11,7 +11,7 @@ import java.util.Map;
  * 敏感数据脱敏
  *
  * @author xxm
- * @date 2021/1/4
+ * @since 2021/1/4
  */
 public class SensitiveDataLogConverter extends MessageConverter {
 

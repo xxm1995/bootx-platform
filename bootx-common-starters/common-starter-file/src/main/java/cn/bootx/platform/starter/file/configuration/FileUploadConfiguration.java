@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
  * 文件上传配置
  *
  * @author xxm
- * @date 2022/2/15
+ * @since 2022/2/15
  */
 @Configuration
 @ConditionalOnClass(name="org.springframework.data.mongodb.gridfs.GridFsTemplate")

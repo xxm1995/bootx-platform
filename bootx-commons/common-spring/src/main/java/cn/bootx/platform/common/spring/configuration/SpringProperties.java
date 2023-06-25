@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author xxm
- * @date 2020/4/9 13:50
+ * @since 2020/4/9 13:50
  */
 @ConfigurationProperties(prefix = "bootx.common.spring")
 @Data
@@ -21,7 +21,7 @@ public class SpringProperties {
 
     /**
      * @author xxm
-     * @date 2021/6/11
+     * @since 2021/6/11
      */
     @Data
     public static class Executor {

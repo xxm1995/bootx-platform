@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 定时任务日志
  *
  * @author xxm
- * @date 2022/5/1
+ * @since 2022/5/1
  */
 @Mapper
 public interface QuartzJobLogMapper extends BaseMapper<QuartzJobLog> {

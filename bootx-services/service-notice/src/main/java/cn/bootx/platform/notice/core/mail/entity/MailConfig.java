@@ -16,7 +16,7 @@ import lombok.experimental.Accessors;
  * 邮件配置
  *
  * @author xxm
- * @date 2020/4/8 11:14
+ * @since 2020/4/8 11:14
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

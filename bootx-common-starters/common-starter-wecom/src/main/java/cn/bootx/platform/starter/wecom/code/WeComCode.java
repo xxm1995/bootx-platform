@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.wecom.code;
  * 企微常量
  *
  * @author xxm
- * @date 2022/7/23
+ * @since 2022/7/23
  */
 public interface WeComCode {
 

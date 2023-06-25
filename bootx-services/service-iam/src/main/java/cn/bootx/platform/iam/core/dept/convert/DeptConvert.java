@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
  * 部门机构转换
  *
  * @author xxm
- * @date 2021/8/4
+ * @since 2021/8/4
  */
 @Mapper
 public interface DeptConvert {

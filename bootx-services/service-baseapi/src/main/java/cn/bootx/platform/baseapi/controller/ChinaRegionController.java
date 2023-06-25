@@ -17,7 +17,7 @@ import java.util.List;
  * 中国行政区划
  *
  * @author xxm
- * @date 2022/12/24
+ * @since 2022/12/24
  */
 @Tag(name = "中国行政区划")
 @RestController

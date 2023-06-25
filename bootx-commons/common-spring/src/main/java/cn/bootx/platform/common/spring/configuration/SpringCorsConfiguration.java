@@ -18,7 +18,7 @@ import java.time.Duration;
  * 跨域处理
  *
  * @author xxm
- * @date 2021/7/14
+ * @since 2021/7/14
  */
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)

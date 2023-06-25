@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * 基础Dto
  *
  * @author xxm
- * @date 2020/6/1 16:12
+ * @since 2020/6/1 16:12
  */
 @Getter
 @Setter

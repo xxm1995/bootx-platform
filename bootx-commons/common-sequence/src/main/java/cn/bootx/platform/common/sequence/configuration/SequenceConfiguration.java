@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Primary;
  * 序列化生成器
  *
  * @author xxm
- * @date 2021/8/6
+ * @since 2021/8/6
  */
 @Configuration
 @RequiredArgsConstructor

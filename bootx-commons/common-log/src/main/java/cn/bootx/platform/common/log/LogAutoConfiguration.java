@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 日志扫描
  *
  * @author xxm
- * @date 2022/6/6
+ * @since 2022/6/6
  */
 @ComponentScan
 @ConfigurationPropertiesScan

@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * 文件管理
  *
  * @author xxm
- * @date 2022/1/12
+ * @since 2022/1/12
  */
 @ComponentScan
 @ConfigurationPropertiesScan

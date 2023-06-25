@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.wechat.code;
  * 微信编码
  *
  * @author xxm
- * @date 2022/8/5
+ * @since 2022/8/5
  */
 public interface WeChatCode {
 

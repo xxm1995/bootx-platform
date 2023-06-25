@@ -8,7 +8,7 @@ import org.springframework.data.redis.stream.StreamListener;
  * RedisStream 消息队列 (未实现)
  *
  * @author xxm
- * @date 2022/6/4
+ * @since 2022/6/4
  */
 public class DemoRedisStreamListener implements StreamListener<String, ObjectRecord<String, String>> {
 

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 异常处理程序
  *
  * @author xxm
- * @date 2022/12/18
+ * @since 2022/12/18
  */
 @ComponentScan
 @ConfigurationPropertiesScan

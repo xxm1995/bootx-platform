@@ -8,7 +8,7 @@ import lombok.Setter;
  * 错误响应类,携带链路追踪标示 trackId
  *
  * @author xxm
- * @date 2021/9/9
+ * @since 2021/9/9
  */
 @Getter
 @Setter

@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
  * 企业通知(OA消息)更新
  *
  * @author xxm
- * @date 2022/7/20
+ * @since 2022/7/20
  */
 @Data
 @Accessors(chain = true)

@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 村庄/社区
  *
  * @author xxm
- * @date 2023/2/3
+ * @since 2023/2/3
  */
 @Mapper
 public interface VillageMapper extends BaseMapper<Village> {

@@ -10,7 +10,7 @@ import static cn.bootx.platform.iam.code.IamErrorCode.NONE_PHONE_AND_EMAIL;
  * 用户手机号和邮箱不可都为空的异常
  *
  * @author xxm
- * @date 2020/5/7 18:30
+ * @since 2020/5/7 18:30
  */
 public class UserNonePhoneAndEmailException extends BizException implements Serializable {
 

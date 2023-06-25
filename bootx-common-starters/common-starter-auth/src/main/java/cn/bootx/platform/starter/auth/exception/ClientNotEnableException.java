@@ -6,7 +6,7 @@ import cn.bootx.platform.common.core.exception.BizException;
  * 终端方式被停用
  *
  * @author xxm
- * @date 2021/9/7
+ * @since 2021/9/7
  */
 public class ClientNotEnableException extends BizException {
 

@@ -4,7 +4,7 @@ package cn.bootx.platform.iam.code;
  * 用户状态码
  *
  * @author xxm
- * @date 2021/9/9
+ * @since 2021/9/9
  */
 public interface UserStatusCode {
 

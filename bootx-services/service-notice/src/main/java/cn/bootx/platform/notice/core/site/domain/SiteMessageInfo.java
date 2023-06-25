@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * 站内信信息详情
  *
  * @author xxm
- * @date 2022/8/14
+ * @since 2022/8/14
  */
 @Data
 @Accessors(chain = true)

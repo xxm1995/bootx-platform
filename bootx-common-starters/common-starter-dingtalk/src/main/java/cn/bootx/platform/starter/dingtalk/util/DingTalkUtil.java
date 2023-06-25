@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  * 钉钉工具类
  *
  * @author xxm
- * @date 2022/4/2
+ * @since 2022/4/2
  */
 @Slf4j
 @UtilityClass

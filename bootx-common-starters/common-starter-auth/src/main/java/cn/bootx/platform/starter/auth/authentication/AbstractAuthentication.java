@@ -14,7 +14,7 @@ import java.util.Objects;
  * 抽象认证器
  *
  * @author xxm
- * @date 2021/7/30
+ * @since 2021/7/30
  */
 public interface AbstractAuthentication {
 

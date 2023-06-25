@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * 上传文件信息
  *
  * @author xxm
- * @date 2022/1/12
+ * @since 2022/1/12
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

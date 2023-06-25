@@ -11,7 +11,7 @@ import java.util.List;
  * 角色权限
  *
  * @author xxm
- * @date 2020/11/14
+ * @since 2020/11/14
  */
 @Mapper
 public interface RolePathMapper extends BaseMapper<RolePath> {

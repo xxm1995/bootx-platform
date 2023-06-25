@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 用户信息
  *
  * @author xxm
- * @date 2021/7/30
+ * @since 2021/7/30
  */
 @Mapper
 public interface UserInfoMapper extends BaseMapper<UserInfo> {

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * Redis区间管理器
  *
  * @author xxm
- * @date 2021/8/6
+ * @since 2021/8/6
  */
 @Slf4j
 @Component

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 定时任务
  *
  * @author xxm
- * @date 2021/11/2
+ * @since 2021/11/2
  */
 @ComponentScan
 @ConfigurationPropertiesScan

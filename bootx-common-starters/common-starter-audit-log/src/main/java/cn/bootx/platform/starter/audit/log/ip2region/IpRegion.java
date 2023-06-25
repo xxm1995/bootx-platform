@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * IP对应地址区域信息
  * @author xxm
- * @date 2023/4/13
+ * @since 2023/4/13
  */
 @Data
 @Accessors(chain = true)

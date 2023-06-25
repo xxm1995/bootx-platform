@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
  * spring 线程池 配置
  *
  * @author xxm
- * @date 2021/6/11
+ * @since 2021/6/11
  */
 @Configuration
 @EnableConfigurationProperties({ SpringProperties.class })

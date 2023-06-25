@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
  * Long 类型序列化为String
  *
  * @author xxm
- * @date 2020/4/14 13:35
+ * @since 2020/4/14 13:35
  */
 public class JavaLongTypeModule extends SimpleModule {
 

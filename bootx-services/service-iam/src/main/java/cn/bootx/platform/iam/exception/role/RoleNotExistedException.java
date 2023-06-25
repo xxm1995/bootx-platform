@@ -10,7 +10,7 @@ import static cn.bootx.platform.iam.code.IamErrorCode.ROLE_NOT_EXISTED;
  * 角色不存在
  *
  * @author xxm
- * @date 2020/5/7 18:04
+ * @since 2020/5/7 18:04
  */
 public class RoleNotExistedException extends BizException implements Serializable {
 

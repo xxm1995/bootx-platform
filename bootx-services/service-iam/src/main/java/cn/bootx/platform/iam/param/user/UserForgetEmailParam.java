@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
  * 通过邮件验证码忘记密码参数
  *
  * @author xxm
- * @date 2022/6/26
+ * @since 2022/6/26
  */
 @Data
 @Accessors(chain = true)

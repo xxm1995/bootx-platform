@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
  * 用户登录后所需的基础信息信息
  *
  * @author xxm
- * @date 2022/1/8
+ * @since 2022/1/8
  */
 @Data
 @Accessors(chain = true)

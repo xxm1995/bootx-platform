@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationEvent;
  * 用户创建事件
  *
  * @author xxm
- * @date 2022/7/2
+ * @since 2022/7/2
  */
 @Getter
 public class UserCreateEvent extends ApplicationEvent {

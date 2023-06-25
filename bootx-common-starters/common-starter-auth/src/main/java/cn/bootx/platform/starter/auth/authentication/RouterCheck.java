@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.auth.authentication;
  * 路由拦截检查
  *
  * @author xxm
- * @date 2021/12/21
+ * @since 2021/12/21
  */
 public interface RouterCheck {
 

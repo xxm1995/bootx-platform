@@ -29,7 +29,7 @@ import static cn.bootx.platform.starter.wecom.code.WeComCode.ROBOT_UPLOAD_URL;
  * 企微机器人消息通知
  *
  * @author xxm
- * @date 2022/7/23
+ * @since 2022/7/23
  */
 @Slf4j
 @Service

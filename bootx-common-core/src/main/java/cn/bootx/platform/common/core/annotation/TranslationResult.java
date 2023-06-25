@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * ResResult 使用, 其他场合使用 FieldTranslationService 进行手动处理
  *
  * @author xxm
- * @date 2022/12/15
+ * @since 2022/12/15
  */
 @Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)

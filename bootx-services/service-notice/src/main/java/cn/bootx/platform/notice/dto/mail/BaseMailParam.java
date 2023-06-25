@@ -9,7 +9,7 @@ import java.io.Serializable;
  * 基础通知参数
  *
  * @author xxm
- * @date 2020/5/2 20:32
+ * @since 2020/5/2 20:32
  */
 @Data
 @Accessors(chain = true)

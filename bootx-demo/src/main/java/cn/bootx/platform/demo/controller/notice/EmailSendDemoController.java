@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author xxm
- * @date 2022/8/3
+ * @since 2022/8/3
  */
 @Tag(name = "测试消息队列")
 @RestController

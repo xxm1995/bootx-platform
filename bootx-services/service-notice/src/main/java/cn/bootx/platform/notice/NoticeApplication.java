@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 通知中心
  *
  * @author xxm
- * @date 2021/8/5
+ * @since 2021/8/5
  */
 @ComponentScan
 @MapperScan(annotationClass = Mapper.class)

@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 数据权限配置
  *
  * @author xxm
- * @date 2021/12/3
+ * @since 2021/12/3
  */
 @Getter
 @Setter

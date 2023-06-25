@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
  * 邮件附件参数
  *
  * @author xxm
- * @date 2020/5/2 20:33
+ * @since 2020/5/2 20:33
  */
 @Data
 @Accessors(chain = true)

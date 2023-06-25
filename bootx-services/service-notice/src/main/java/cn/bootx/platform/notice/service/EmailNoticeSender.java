@@ -6,7 +6,7 @@ import cn.bootx.platform.notice.dto.mail.SendMailParam;
  * 邮件发送服务
  *
  * @author xxm
- * @date 2022/7/16
+ * @since 2022/7/16
  */
 public interface EmailNoticeSender {
 

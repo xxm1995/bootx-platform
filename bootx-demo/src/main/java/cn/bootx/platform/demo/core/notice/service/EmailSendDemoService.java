@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * 邮件消息发送测试
  *
  * @author xxm
- * @date 2022/8/3
+ * @since 2022/8/3
  */
 @Slf4j
 @Service

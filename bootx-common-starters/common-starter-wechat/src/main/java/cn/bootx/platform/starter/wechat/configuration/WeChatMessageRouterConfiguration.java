@@ -15,7 +15,7 @@ import java.util.List;
  * 微信信息路由配置
  *
  * @author xxm
- * @date 2022/7/16
+ * @since 2022/7/16
  */
 @Slf4j
 @Configuration

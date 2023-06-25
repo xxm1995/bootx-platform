@@ -4,7 +4,7 @@ package cn.bootx.platform.common.websocket.func;
  * websocket用户认证相关接口
  *
  * @author xxm
- * @date 2022/6/9
+ * @since 2022/6/9
  */
 public interface WsUserAuthService {
 

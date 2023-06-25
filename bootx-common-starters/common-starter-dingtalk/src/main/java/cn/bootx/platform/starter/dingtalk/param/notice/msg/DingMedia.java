@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
  * 钉钉图片
  *
  * @author xxm
- * @date 2022/7/17
+ * @since 2022/7/17
  */
 @Data
 @Accessors(chain = true)

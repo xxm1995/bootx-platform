@@ -12,7 +12,7 @@ import java.util.List;
  * 查询语句参数类
  *
  * @author xxm
- * @date 2023/3/13
+ * @since 2023/3/13
  */
 @Data
 @Accessors(chain = true)

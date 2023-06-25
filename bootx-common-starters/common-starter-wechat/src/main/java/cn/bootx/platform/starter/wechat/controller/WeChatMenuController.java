@@ -18,7 +18,7 @@ import java.util.List;
  * 微信菜单管理
  *
  * @author xxm
- * @date 2022/8/6
+ * @since 2022/8/6
  */
 @Tag(name = "微信菜单管理")
 @RestController

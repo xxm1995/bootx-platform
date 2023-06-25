@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * xxl-job配置
  *
  * @author xxm
- * @date 2021/3/11
+ * @since 2021/3/11
  */
 @Data
 @ConfigurationProperties(prefix = "bootx.common.xxl-job")

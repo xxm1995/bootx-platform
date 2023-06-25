@@ -9,7 +9,7 @@ import java.util.List;
  * 部门删除事件
  *
  * @author xxm
- * @date 2022/1/3
+ * @since 2022/1/3
  */
 @Getter
 public class DeptDeleteEvent extends ApplicationEvent {

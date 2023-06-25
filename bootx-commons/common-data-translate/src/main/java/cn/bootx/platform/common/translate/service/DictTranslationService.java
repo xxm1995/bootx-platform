@@ -2,7 +2,7 @@ package cn.bootx.platform.common.translate.service;
 
 /**
  * @author xxm
- * @date 2023/1/29
+ * @since 2023/1/29
  */
 public interface DictTranslationService {
 

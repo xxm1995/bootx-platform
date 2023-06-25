@@ -25,7 +25,7 @@ import javax.validation.ValidationException;
  * Web 项目异常处理
  *
  * @author xxm
- * @date 2020/5/8 15:30
+ * @since 2020/5/8 15:30
  */
 @Slf4j
 @RestControllerAdvice

@@ -20,7 +20,7 @@ import java.util.List;
  * GoView可视化大屏对接接口
  *
  * @author xxm
- * @date 2023/2/21
+ * @since 2023/2/21
  */
 @Validated
 @Tag(name = "GoView可视化大屏对接接口")

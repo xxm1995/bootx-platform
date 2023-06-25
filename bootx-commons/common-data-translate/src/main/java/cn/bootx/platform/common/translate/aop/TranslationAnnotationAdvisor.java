@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * 字段翻译切入点配置
  *
  * @author xxm
- * @date 2022/12/20
+ * @since 2022/12/20
  */
 @Component
 @RequiredArgsConstructor

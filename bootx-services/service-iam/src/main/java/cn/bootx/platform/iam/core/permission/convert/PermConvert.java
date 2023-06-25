@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
  * 权限转换
  *
  * @author xxm
- * @date 2021/8/3
+ * @since 2021/8/3
  */
 @Mapper
 public interface PermConvert {

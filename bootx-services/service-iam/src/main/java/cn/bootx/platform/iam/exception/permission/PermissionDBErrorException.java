@@ -8,7 +8,7 @@ import static cn.bootx.platform.iam.code.IamErrorCode.PERMISSION_DB_ERROR;
 
 /**
  * @author xxm
- * @date 2020/5/7 18:01
+ * @since 2020/5/7 18:01
  */
 public class PermissionDBErrorException extends BizException implements Serializable {
 

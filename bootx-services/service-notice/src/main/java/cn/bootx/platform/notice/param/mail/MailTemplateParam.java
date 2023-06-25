@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
  * 邮件模板
  *
  * @author xxm
- * @date 2021/8/5
+ * @since 2021/8/5
  */
 @Data
 @Accessors(chain = true)

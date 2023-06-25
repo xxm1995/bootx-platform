@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * @author xxm
- * @date 2020/5/2 14:42
+ * @since 2020/5/2 14:42
  */
 @Data
 @Schema(title = "邮箱配置 DTO")

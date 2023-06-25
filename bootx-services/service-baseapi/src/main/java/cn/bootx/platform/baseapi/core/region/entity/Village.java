@@ -9,7 +9,7 @@ import lombok.Data;
  * 村庄/社区
  *
  * @author xxm
- * @date 2023/2/3
+ * @since 2023/2/3
  */
 @Data
 @TableName("base_village")

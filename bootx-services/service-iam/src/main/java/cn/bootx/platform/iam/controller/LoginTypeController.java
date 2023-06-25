@@ -20,7 +20,7 @@ import java.util.List;
  * 登录方式
  *
  * @author xxm
- * @date 2021/8/25
+ * @since 2021/8/25
  */
 @Tag(name = "登录方式管理")
 @RestController

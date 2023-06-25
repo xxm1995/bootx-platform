@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * 登录方式
  *
  * @author xxm
- * @date 2022/7/5
+ * @since 2022/7/5
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

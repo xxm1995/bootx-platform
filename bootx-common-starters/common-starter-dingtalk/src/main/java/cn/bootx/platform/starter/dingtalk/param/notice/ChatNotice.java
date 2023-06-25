@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * 钉钉发送企业群消息参数
  *
  * @author xxm
- * @date 2022/7/20
+ * @since 2022/7/20
  */
 @Data
 @Accessors(chain = true)

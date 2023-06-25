@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * 区间管理器MongoDB数据库方式实现
  *
  * @author xxm
- * @date 2022/1/21
+ * @since 2022/1/21
  */
 @Slf4j
 @Component

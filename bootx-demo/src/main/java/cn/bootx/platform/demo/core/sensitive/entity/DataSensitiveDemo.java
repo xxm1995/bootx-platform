@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * 数据脱敏
  *
  * @author xxm
- * @date 2022/3/24
+ * @since 2022/3/24
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

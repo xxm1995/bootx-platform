@@ -7,7 +7,7 @@ import lombok.experimental.Accessors;
  * 序列号区间配置
  *
  * @author xxm
- * @date 2022/1/21
+ * @since 2022/1/21
  */
 @Data
 @Accessors(chain = true)

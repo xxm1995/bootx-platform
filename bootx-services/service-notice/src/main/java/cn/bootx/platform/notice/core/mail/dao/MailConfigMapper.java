@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 邮件[配置
  *
  * @author xxm
- * @date 2020/4/8 13:22
+ * @since 2020/4/8 13:22
  */
 @Mapper
 public interface MailConfigMapper extends BaseMapper<MailConfig> {

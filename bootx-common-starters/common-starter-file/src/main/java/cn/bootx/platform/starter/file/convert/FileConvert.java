@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * @author xxm
- * @date 2022/1/12
+ * @since 2022/1/12
  */
 @Mapper
 public interface FileConvert {

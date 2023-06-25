@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 邮件配置
  *
  * @author xxm
- * @date 2020/4/8 13:29
+ * @since 2020/4/8 13:29
  */
 @Service
 @AllArgsConstructor

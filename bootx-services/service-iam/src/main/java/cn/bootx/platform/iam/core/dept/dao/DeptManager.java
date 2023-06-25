@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author xxm
- * @date 2020/5/7 17:42
+ * @since 2020/5/7 17:42
  */
 @Repository
 public class DeptManager extends BaseManager<DeptMapper, Dept> {

@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
  * 角色权限关联关系
  *
  * @author xxm
- * @date 2021/8/3
+ * @since 2021/8/3
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

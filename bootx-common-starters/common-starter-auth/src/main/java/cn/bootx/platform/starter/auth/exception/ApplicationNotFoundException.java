@@ -6,7 +6,7 @@ import cn.bootx.platform.common.core.exception.BizException;
  * 应用不存在
  *
  * @author xxm
- * @date 2022/6/27
+ * @since 2022/6/27
  */
 public class ApplicationNotFoundException extends BizException {
 

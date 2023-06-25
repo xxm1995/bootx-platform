@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2021/10/25
+ * @since 2021/10/25
  */
 @Mapper
 public interface SystemParamMapper extends BaseMapper<SystemParameter> {

@@ -7,7 +7,7 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
 
 /**
  * @author xxm
- * @date 2022/7/23
+ * @since 2022/7/23
  */
 @Data
 @Accessors(chain = true)

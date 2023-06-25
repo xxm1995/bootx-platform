@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * 结果转换工具类工具类
  *
  * @author xxm
- * @date 2020/8/27
+ * @since 2020/8/27
  */
 @UtilityClass
 public class ResultConvertUtil {

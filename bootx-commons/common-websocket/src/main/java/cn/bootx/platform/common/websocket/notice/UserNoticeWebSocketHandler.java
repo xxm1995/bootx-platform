@@ -18,7 +18,7 @@ import static cn.bootx.platform.common.core.code.CommonCode.USER_ID;
  * 全局用户WS通知
  *
  * @author xxm
- * @date 2022/3/27
+ * @since 2022/3/27
  */
 @Slf4j
 @Component

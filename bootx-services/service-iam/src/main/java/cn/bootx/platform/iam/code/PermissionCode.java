@@ -4,7 +4,7 @@ package cn.bootx.platform.iam.code;
  * 权限相关编码
  *
  * @author xxm
- * @date 2021/7/12
+ * @since 2021/7/12
  */
 public interface PermissionCode {
 

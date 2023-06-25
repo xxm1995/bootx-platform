@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2021/8/9
+ * @since 2021/8/9
  */
 @Mapper
 public interface MessageTemplateMapper extends BaseMapper<MessageTemplate> {

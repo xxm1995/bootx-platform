@@ -8,7 +8,7 @@ import static cn.bootx.platform.common.core.code.CommonErrorCode.REPETITIVE_OPER
  * 重复操作异常
  *
  * @author xxm
- * @date 2021/1/2
+ * @since 2021/1/2
  */
 public class RepetitiveOperationException extends SystemException implements Serializable {
 

@@ -8,7 +8,7 @@ import static cn.bootx.platform.iam.code.IamErrorCode.USER_INFO_NOT_EXISTS;
  * 用户信息不存在异常
  *
  * @author xxm
- * @date 2020/5/7 18:29
+ * @since 2020/5/7 18:29
  */
 public class UserInfoNotExistsException extends FatalException {
 

@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 文件上传配置
  *
  * @author xxm
- * @date 2022/1/14
+ * @since 2022/1/14
  */
 @Data
 @Accessors(chain = true)

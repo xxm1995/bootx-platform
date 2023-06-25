@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 钉钉响应结果
  *
  * @author xxm
- * @date 2020/11/30
+ * @since 2020/11/30
  */
 @Data
 @Accessors(chain = true)

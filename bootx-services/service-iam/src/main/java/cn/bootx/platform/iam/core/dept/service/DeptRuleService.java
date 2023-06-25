@@ -17,7 +17,7 @@ import java.util.*;
  * 部门规则工具类
  *
  * @author xxm
- * @date 2020/5/10 15:01
+ * @since 2020/5/10 15:01
  */
 @Service
 @RequiredArgsConstructor

@@ -10,7 +10,7 @@ import java.io.InputStream;
  * 钉钉消息通知服务
  *
  * @author xxm
- * @date 2022/7/16
+ * @since 2022/7/16
  */
 public interface DingTalkNoticeSender {
 

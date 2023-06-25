@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 /**
  * 初始化数据源函数
  * @author xxm
- * @date 2023/5/17
+ * @since 2023/5/17
  */
 @Slf4j
 @Component

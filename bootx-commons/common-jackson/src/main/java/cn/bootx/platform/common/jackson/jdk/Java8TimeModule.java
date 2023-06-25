@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
  * java8 时间序列化
  *
  * @author xxm
- * @date 2020/4/14 13:33
+ * @since 2020/4/14 13:33
  */
 public class Java8TimeModule extends SimpleModule {
 

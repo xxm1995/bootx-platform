@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * 项目启动时Redisson替换RedissonClient的实现, Redisson连接失败是会导致项目无法启动, 选择改为项目启动成功后, 替换掉原有的Bean
  *
  * @author xxm
- * @date 2022/11/30
+ * @since 2022/11/30
  */
 @Component
 @ConditionalOnBean(name = "org.redisson.Redisson")

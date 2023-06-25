@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
  * LabelValue
  *
  * @author xxm
- * @date 2022/5/4
+ * @since 2022/5/4
  */
 @Getter
 @Setter

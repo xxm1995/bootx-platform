@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * 认证终端
  *
  * @author xxm
- * @date 2021/8/25
+ * @since 2021/8/25
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

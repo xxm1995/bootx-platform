@@ -11,7 +11,7 @@ import java.util.List;
  * 角色权限关系
  *
  * @author xxm
- * @date 2021/8/3
+ * @since 2021/8/3
  */
 @Mapper
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {

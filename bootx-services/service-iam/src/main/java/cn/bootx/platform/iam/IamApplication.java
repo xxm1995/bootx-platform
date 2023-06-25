@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 身份识别与访问管理
  *
  * @author xxm
- * @date 2021/7/29
+ * @since 2021/7/29
  */
 @ComponentScan
 @MapperScan(annotationClass = Mapper.class)

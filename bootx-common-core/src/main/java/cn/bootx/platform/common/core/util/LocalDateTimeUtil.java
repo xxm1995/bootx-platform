@@ -11,7 +11,7 @@ import java.time.ZoneId;
  * java8 时间工具类
  *
  * @author xxm
- * @date 2020/11/10
+ * @since 2020/11/10
  */
 @UtilityClass
 public class LocalDateTimeUtil extends cn.hutool.core.date.LocalDateTimeUtil {

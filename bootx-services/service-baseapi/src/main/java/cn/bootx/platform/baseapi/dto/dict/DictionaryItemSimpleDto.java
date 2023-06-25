@@ -10,7 +10,7 @@ import java.io.Serializable;
  * 数据字典项(简单)
  *
  * @author xxm
- * @date 2020/4/15 17:55
+ * @since 2020/4/15 17:55
  */
 @Data
 @Accessors(chain = true)

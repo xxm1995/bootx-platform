@@ -24,7 +24,7 @@ import java.util.Objects;
  * 数据版本日志数据库实现
  *
  * @author xxm
- * @date 2022/1/10
+ * @since 2022/1/10
  */
 @Slf4j
 @Service

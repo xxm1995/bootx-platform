@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
  * Jackson模块
  *
  * @author xxm
- * @date 2021/12/2
+ * @since 2021/12/2
  */
 @ComponentScan
 @AutoConfiguration

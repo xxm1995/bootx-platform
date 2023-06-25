@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * 微信粉丝
  *
  * @author xxm
- * @date 2022/7/15
+ * @since 2022/7/15
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

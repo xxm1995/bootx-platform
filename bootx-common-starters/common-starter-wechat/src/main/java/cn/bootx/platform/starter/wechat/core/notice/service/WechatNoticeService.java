@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * 微信消息通知功能
  *
  * @author xxm
- * @date 2022/7/15
+ * @since 2022/7/15
  */
 @Slf4j
 @Service

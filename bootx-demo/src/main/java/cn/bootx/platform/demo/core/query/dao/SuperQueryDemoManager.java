@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  * 超级查询
  *
  * @author xxm
- * @date 2022/2/21
+ * @since 2022/2/21
  */
 @Slf4j
 @Repository

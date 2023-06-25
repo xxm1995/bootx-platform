@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * xxl-job自动配置
  *
  * @author xxm
- * @date 2021/3/11
+ * @since 2021/3/11
  */
 @Configuration
 @EnableConfigurationProperties(XxlJobProperties.class)

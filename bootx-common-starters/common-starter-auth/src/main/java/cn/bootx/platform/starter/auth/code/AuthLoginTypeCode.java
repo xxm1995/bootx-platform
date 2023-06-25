@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.auth.code;
  * 认证录方式
  *
  * @author xxm
- * @date 2021/8/2
+ * @since 2021/8/2
  */
 public interface AuthLoginTypeCode {
 

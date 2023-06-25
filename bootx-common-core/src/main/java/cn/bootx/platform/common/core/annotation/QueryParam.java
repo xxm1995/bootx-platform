@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * 查询参数 生效顺序 QueryParams 查询参数字段 > Entity 数据库实体字段 > QueryParams 查询类 > Entity 数据库实体类
  *
  * @author xxm
- * @date 2022/12/12
+ * @since 2022/12/12
  */
 @Target({ ElementType.TYPE, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)

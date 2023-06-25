@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
  * 雪花id生成器
  *
  * @author xxm
- * @date 2021/8/18
+ * @since 2021/8/18
  */
 @RequiredArgsConstructor
 public class SnowflakeIdentifierGenerator implements IdentifierGenerator {

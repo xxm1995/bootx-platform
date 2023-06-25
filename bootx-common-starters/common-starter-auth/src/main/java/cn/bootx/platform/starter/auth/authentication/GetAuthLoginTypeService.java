@@ -6,7 +6,7 @@ import cn.bootx.platform.starter.auth.entity.AuthLoginType;
  * 获取认证登录方式对象服务
  *
  * @author xxm
- * @date 2021/8/25
+ * @since 2021/8/25
  */
 public interface GetAuthLoginTypeService {
 

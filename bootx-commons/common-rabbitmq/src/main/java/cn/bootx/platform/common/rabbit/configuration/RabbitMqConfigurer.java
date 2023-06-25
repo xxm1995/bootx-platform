@@ -14,7 +14,7 @@ import org.springframework.messaging.handler.annotation.support.DefaultMessageHa
  * 消息队列配置
  *
  * @author xxm
- * @date 2021/6/25
+ * @since 2021/6/25
  */
 @EnableRabbit
 @Configuration

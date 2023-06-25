@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * app版本
  *
  * @author xxm
- * @date 2021/8/9
+ * @since 2021/8/9
  */
 @Mapper
 public interface AppVersionMapper extends BaseMapper<AppVersion> {

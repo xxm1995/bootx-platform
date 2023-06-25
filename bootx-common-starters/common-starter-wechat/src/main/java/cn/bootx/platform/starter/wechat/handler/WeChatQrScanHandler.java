@@ -21,7 +21,7 @@ import java.util.Objects;
  * 微信扫码事件
  *
  * @author xxm
- * @date 2022/8/4
+ * @since 2022/8/4
  */
 @Slf4j
 @Component

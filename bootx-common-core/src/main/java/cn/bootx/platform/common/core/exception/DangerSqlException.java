@@ -6,7 +6,7 @@ import static cn.bootx.platform.common.core.code.CommonErrorCode.DANGER_SQL;
  * SQL相关异常
  *
  * @author xxm
- * @date 2023/3/9
+ * @since 2023/3/9
  */
 public class DangerSqlException extends BizException {
 

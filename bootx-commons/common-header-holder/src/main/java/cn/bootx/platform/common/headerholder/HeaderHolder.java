@@ -14,7 +14,7 @@ import java.util.Objects;
  * 请求头获取工具类
  *
  * @author xxm
- * @date 2020/4/14 15:23
+ * @since 2020/4/14 15:23
  */
 @UtilityClass
 public class HeaderHolder {

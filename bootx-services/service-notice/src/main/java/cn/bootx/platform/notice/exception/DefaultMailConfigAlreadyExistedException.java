@@ -10,7 +10,7 @@ import static cn.bootx.platform.notice.code.NoticeCenterErrorCode.DEFAULT_MAIL_C
  * 默认邮箱配置 已存在异常
  *
  * @author xxm
- * @date 2020/5/2 14:43
+ * @since 2020/5/2 14:43
  */
 public class DefaultMailConfigAlreadyExistedException extends BizException implements Serializable {
 

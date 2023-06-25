@@ -8,7 +8,7 @@ import static cn.bootx.platform.common.core.code.CommonErrorCode.UN_SUPPORTED_OP
  * 不支持的操作异常
  *
  * @author xxm
- * @date 2022/7/27
+ * @since 2022/7/27
  */
 public class UnSupportOperateException extends ErrorCodeRuntimeException implements Serializable {
 

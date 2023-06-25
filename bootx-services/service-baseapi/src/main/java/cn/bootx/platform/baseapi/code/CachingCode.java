@@ -4,7 +4,7 @@ package cn.bootx.platform.baseapi.code;
  * 缓存
  *
  * @author xxm
- * @date 2022/5/1
+ * @since 2022/5/1
  */
 public interface CachingCode {
 

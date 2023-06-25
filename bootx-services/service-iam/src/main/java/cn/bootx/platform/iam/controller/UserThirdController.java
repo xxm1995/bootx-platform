@@ -23,7 +23,7 @@ import javax.validation.constraints.NotBlank;
  * 用户三方登录管理
  *
  * @author xxm
- * @date 2021/8/4
+ * @since 2021/8/4
  */
 @Validated
 @Tag(name = "用户三方登录管理")

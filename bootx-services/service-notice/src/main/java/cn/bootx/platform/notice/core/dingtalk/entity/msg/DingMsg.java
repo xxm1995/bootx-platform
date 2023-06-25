@@ -6,7 +6,7 @@ import cn.bootx.platform.starter.dingtalk.param.notice.msg.Msg;
  * 钉钉消息接口
  *
  * @author xxm
- * @date 2022/7/20
+ * @since 2022/7/20
  */
 public interface DingMsg {
 

@@ -10,7 +10,7 @@ import java.util.Arrays;
  * 数据范围权限类型
  *
  * @author xxm
- * @date 2021/12/22
+ * @since 2021/12/22
  */
 @Getter
 @AllArgsConstructor

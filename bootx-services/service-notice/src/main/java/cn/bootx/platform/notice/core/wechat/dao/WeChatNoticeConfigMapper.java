@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author xxm
- * @date 2021/8/10
+ * @since 2021/8/10
  */
 @Mapper
 public interface WeChatNoticeConfigMapper extends BaseMapper<WeChatNoticeConfig> {

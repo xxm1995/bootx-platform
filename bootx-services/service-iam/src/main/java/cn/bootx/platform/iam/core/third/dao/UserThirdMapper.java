@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 三方登录
  *
  * @author xxm
- * @date 2021/8/2
+ * @since 2021/8/2
  */
 @Mapper
 public interface UserThirdMapper extends BaseMapper<UserThird> {

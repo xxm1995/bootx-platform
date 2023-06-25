@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * 数据范围部门关联配置
  *
  * @author xxm
- * @date 2021/12/23
+ * @since 2021/12/23
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

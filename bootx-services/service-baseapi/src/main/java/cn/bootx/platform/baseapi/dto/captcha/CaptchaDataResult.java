@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
  * 验证码数据
  *
  * @author xxm
- * @date 2021/8/2
+ * @since 2021/8/2
  */
 @Data
 @Accessors(chain = true)

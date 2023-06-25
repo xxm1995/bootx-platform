@@ -30,7 +30,7 @@ import java.util.Objects;
  * 微信开放平台登录
  *
  * @author xxm
- * @date 2022/8/4
+ * @since 2022/8/4
  */
 @Slf4j
 @Component

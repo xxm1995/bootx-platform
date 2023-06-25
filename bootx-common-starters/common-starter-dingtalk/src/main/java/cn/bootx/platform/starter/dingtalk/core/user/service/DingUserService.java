@@ -22,7 +22,7 @@ import static cn.bootx.platform.starter.dingtalk.code.DingTalkCode.*;
  * 钉钉用户信息
  *
  * @author xxm
- * @date 2022/7/17
+ * @since 2022/7/17
  */
 @Slf4j
 @Service

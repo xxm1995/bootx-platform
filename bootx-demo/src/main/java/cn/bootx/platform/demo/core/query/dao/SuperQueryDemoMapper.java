@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 超级查询
  *
  * @author xxm
- * @date 2022/2/21
+ * @since 2022/2/21
  */
 @Mapper
 public interface SuperQueryDemoMapper extends BaseMapper<SuperQueryDemo> {

@@ -4,7 +4,7 @@ package cn.bootx.platform.iam.code;
  * 缓存名称
  *
  * @author xxm
- * @date 2021/6/16
+ * @since 2021/6/16
  */
 public interface CachingCode {
 

@@ -18,7 +18,7 @@ import static org.quartz.impl.jdbcjobstore.Constants.DEFAULT_TABLE_PREFIX;
  * 支持配置文件自动提示
  *
  * @author xxm
- * @date 2021/12/2
+ * @since 2021/12/2
  */
 @Getter
 @Setter

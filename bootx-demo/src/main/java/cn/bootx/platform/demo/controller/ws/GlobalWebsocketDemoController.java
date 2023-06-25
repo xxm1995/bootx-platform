@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author xxm
- * @date 2022/6/10
+ * @since 2022/6/10
  */
 @Tag(name = "全局websocket通知demo")
 @RestController

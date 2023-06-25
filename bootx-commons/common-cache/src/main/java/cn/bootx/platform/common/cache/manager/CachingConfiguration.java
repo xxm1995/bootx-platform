@@ -25,7 +25,7 @@ import java.time.Duration;
  * 缓存自动配置
  *
  * @author xxm
- * @date 2021/6/11
+ * @since 2021/6/11
  */
 @Configuration
 @EnableCaching

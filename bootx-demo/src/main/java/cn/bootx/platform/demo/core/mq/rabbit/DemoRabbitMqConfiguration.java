@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  * 演示RabbitMQ消息队列配置
  *
  * @author xxm
- * @date 2022/5/30
+ * @since 2022/5/30
  */
 @Configuration
 public class DemoRabbitMqConfiguration {

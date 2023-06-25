@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
  * MongoDB监控信息
  *
  * @author xxm
- * @date 2022/6/12
+ * @since 2022/6/12
  */
 @Data
 @Accessors(chain = true)

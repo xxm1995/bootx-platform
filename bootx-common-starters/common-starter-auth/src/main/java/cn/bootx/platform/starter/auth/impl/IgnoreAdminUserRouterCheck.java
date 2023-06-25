@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 超级管理员跳过各种限制
  *
  * @author xxm
- * @date 2022/5/27
+ * @since 2022/5/27
  */
 @Component
 @RequiredArgsConstructor

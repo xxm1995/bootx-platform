@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 /**
  * ${comments}
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 @Data
 @Schema(title = "${comments}")

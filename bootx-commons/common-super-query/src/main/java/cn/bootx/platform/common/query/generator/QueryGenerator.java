@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
  * 查询条件生成器
  *
  * @author xxm
- * @date 2021/11/17
+ * @since 2021/11/17
  */
 public class QueryGenerator {
 

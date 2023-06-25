@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * sa-token Redis 插件配置
  *
  * @author xxm
- * @date 2021/8/2
+ * @since 2021/8/2
  */
 @ConfigurationProperties(prefix = "sa-token.plugins.redis")
 public class SaTokenRedisProperties {

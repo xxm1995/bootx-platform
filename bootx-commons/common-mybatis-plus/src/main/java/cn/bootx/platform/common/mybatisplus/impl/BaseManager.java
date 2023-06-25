@@ -34,7 +34,7 @@ import java.util.function.BiConsumer;
  * 自定义的基础数据库Manager操作类 类似自带的ServiceImpl类
  *
  * @author xxm
- * @date 2020/4/15 14:26
+ * @since 2020/4/15 14:26
  */
 public class BaseManager<M extends BaseMapper<T>, T> {
 

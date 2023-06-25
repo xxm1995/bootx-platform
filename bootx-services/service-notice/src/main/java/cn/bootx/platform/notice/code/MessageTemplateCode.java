@@ -4,7 +4,7 @@ package cn.bootx.platform.notice.code;
  * 消息模板类型
  *
  * @author xxm
- * @date 2021/8/10
+ * @since 2021/8/10
  */
 public interface MessageTemplateCode {
 

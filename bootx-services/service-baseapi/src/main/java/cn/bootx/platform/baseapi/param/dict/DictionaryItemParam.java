@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 字典项参数
  *
  * @author xxm
- * @date 2021/8/4
+ * @since 2021/8/4
  */
 @Data
 @Accessors(chain = true)

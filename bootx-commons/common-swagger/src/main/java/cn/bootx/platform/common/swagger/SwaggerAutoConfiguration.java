@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * swagger 自动配置
  *
  * @author xxm
- * @date 2020/4/9 13:33
+ * @since 2020/4/9 13:33
  */
 @Slf4j
 @Configuration

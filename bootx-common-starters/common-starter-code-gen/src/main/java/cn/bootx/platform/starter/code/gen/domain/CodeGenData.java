@@ -11,7 +11,7 @@ import java.util.List;
  * 代码生成所需的参数数据
  *
  * @author xxm
- * @date 2022/8/1
+ * @since 2022/8/1
  */
 @Data
 @Accessors(chain = true)
@@ -72,7 +72,7 @@ public class CodeGenData {
      * 行信息
      *
      * @author xxm
-     * @date 2022/8/1
+     * @since 2022/8/1
      */
     @Data
     @Accessors(chain = true)

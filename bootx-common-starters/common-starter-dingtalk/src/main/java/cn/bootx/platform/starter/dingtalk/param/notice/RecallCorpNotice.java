@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
  * 钉钉撤回工作通知
  *
  * @author xxm
- * @date 2022/7/20
+ * @since 2022/7/20
  */
 @Data
 @Accessors(chain = true)

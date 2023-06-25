@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /**
  * @author xxm
- * @date 2022/12/14
+ * @since 2022/12/14
  */
 @UtilityClass
 public class SuperQueryGenerator {

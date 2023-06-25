@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
  * 角色路径权限表
  *
  * @author xxm
- * @date 2020/5/11 22:25
+ * @since 2020/5/11 22:25
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

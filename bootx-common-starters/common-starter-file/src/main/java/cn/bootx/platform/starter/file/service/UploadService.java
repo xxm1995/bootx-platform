@@ -12,7 +12,7 @@ import java.io.InputStream;
  * 文件上传接口
  *
  * @author xxm
- * @date 2022/1/14
+ * @since 2022/1/14
  */
 public interface UploadService {
 

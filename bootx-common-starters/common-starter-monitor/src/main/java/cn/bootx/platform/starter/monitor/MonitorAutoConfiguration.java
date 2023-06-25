@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
  * 系统信息监控模块
  *
  * @author xxm
- * @date 2022/6/10
+ * @since 2022/6/10
  */
 @ComponentScan
 @AutoConfiguration

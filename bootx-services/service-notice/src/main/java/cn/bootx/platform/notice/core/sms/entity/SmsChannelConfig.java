@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 /**
  * 短信渠道配置
  * @author xxm
- * @date 2023/3/28
+ * @since 2023/3/28
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

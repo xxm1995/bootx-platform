@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * Redis配置
  *
  * @author xxm
- * @date 2020/4/9 15:40
+ * @since 2020/4/9 15:40
  */
 @Configuration
 @ConditionalOnClass(StringRedisTemplate.class)

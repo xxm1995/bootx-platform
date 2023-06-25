@@ -4,7 +4,7 @@ package cn.bootx.platform.common.core.code;
  * 公共常量
  *
  * @author xxm
- * @date 2020/4/8 10:58
+ * @since 2020/4/8 10:58
  */
 public interface CommonCode {
 

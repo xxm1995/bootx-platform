@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 字典项
  *
  * @author xxm
- * @date 2020/11/13
+ * @since 2020/11/13
  */
 @Mapper
 public interface DictionaryItemMapper extends BaseMapper<DictionaryItem> {

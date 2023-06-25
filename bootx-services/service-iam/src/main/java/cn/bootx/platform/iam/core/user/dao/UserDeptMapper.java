@@ -11,7 +11,7 @@ import java.util.List;
  * 用户部门关系
  *
  * @author xxm
- * @date 2021/9/29
+ * @since 2021/9/29
  */
 @Mapper
 public interface UserDeptMapper extends BaseMapper<UserDept> {

@@ -20,7 +20,7 @@ import static cn.bootx.platform.starter.wechat.code.WeChatCode.QRSCENE_LOGIN;
  * 微信扫码登录
  *
  * @author xxm
- * @date 2023/3/21
+ * @since 2023/3/21
  */
 @Slf4j
 @Component

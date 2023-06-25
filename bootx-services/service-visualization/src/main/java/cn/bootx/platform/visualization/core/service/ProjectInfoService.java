@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  * 自定义大屏数据接口
  *
  * @author xxm
- * @date 2023/2/21
+ * @since 2023/2/21
  */
 @Slf4j
 @Service

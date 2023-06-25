@@ -9,7 +9,7 @@ import lombok.Data;
  * 区域表(县区)
  *
  * @author xxm
- * @date 2022-12-24
+ * @since 2022-12-24
  */
 @Data
 @TableName("base_area")

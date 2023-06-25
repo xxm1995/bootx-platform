@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @author xxm
- * @date 2020/4/16 22:08
+ * @since 2020/4/16 22:08
  */
 public class DictChildItemExistedException extends BizException implements Serializable {
 

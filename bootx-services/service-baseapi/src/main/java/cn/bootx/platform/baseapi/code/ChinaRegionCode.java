@@ -10,7 +10,7 @@ import java.util.Arrays;
  * 中国行政区划
  *
  * @author xxm
- * @date 2023/2/7
+ * @since 2023/2/7
  */
 @Getter
 @AllArgsConstructor

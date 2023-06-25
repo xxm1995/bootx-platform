@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
  * 字典值翻译接口
  *
  * @author xxm
- * @date 2022/12/20
+ * @since 2022/12/20
  */
 public interface TranslationHandler {
 

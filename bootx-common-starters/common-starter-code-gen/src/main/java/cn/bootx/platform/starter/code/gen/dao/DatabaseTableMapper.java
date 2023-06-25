@@ -16,7 +16,7 @@ import java.util.Optional;
  * 表信息查询
  *
  * @author xxm
- * @date 2022/1/27
+ * @since 2022/1/27
  */
 @Mapper
 public interface DatabaseTableMapper {

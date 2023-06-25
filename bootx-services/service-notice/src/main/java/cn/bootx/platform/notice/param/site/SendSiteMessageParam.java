@@ -12,7 +12,7 @@ import java.util.List;
  * 站内信发送参数
  *
  * @author xxm
- * @date 2021/8/8
+ * @since 2021/8/8
  */
 @Data
 @Accessors(chain = true)

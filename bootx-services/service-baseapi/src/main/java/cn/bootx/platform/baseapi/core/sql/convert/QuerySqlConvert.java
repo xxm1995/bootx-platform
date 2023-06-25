@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 /**
  * @author xxm
- * @date 2023/3/13
+ * @since 2023/3/13
  */
 @Mapper
 public interface QuerySqlConvert {

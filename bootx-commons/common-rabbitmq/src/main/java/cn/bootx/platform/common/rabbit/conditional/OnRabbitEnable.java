@@ -10,7 +10,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  * 判断是否在启用了Rabbit, 用来控制在没启用Rabbit情况下. 不将 @RabbitListener 修饰的监听器注册为Bean, 不然会导致无限尝试重连
  *
  * @author xxm
- * @date 2022/12/12
+ * @since 2022/12/12
  */
 public class OnRabbitEnable implements Condition {
 

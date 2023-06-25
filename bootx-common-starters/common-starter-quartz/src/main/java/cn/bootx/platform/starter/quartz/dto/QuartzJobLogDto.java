@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * 任务执行日志
  *
  * @author xxm
- * @date 2021/8/20
+ * @since 2021/8/20
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

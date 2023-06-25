@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 /**
  * PlumeLog日志删除定时任务的重新实现, 原有的日志清除逻辑是基于Lucene实现的, 文件夹将会残留, 同时还会创建出每个小时的新文件夹
  * @author xxm
- * @date 2023/3/29
+ * @since 2023/3/29
  */
 @Component
 @ConditionalOnClass(name = "com.plumelog.lite.client.InitConfig")

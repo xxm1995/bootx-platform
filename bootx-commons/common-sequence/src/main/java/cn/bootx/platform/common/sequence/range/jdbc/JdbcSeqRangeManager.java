@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * 区间管理器jdbc数据库方式实现
  *
  * @author xxm
- * @date 2021/12/14
+ * @since 2021/12/14
  */
 @Slf4j
 @Component

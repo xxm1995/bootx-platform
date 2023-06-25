@@ -15,7 +15,7 @@ import java.util.List;
  * mybatis自动配置
  *
  * @author xxm
- * @date 2021/7/27
+ * @since 2021/7/27
  */
 @Configuration
 @RequiredArgsConstructor

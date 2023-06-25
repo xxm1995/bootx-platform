@@ -29,7 +29,7 @@ import static cn.bootx.platform.starter.dingtalk.code.DingTalkCode.*;
  * 钉钉媒体文件管理
  *
  * @author xxm
- * @date 2022/7/25
+ * @since 2022/7/25
  */
 @Slf4j
 @Service

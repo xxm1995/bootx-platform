@@ -11,7 +11,7 @@ import java.nio.file.Files;
  * 文件配置
  *
  * @author xxm
- * @date 2022/7/25
+ * @since 2022/7/25
  */
 @UtilityClass
 public class FileUtil extends cn.hutool.core.io.FileUtil {

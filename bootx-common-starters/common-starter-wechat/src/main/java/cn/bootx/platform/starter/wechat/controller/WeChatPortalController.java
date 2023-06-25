@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * 微信工作台接入入口
  *
  * @author xxm
- * @date 2022/7/16
+ * @since 2022/7/16
  */
 @IgnoreAuth
 @Slf4j

@@ -8,7 +8,7 @@ import static cn.bootx.platform.common.core.code.CommonErrorCode.UN_SUPPORTED_RE
  * 不支持的读取操作
  *
  * @author xxm
- * @date 2020/4/10 14:05
+ * @since 2020/4/10 14:05
  */
 public class UnSupportReadException extends BizException implements Serializable {
 

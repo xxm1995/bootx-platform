@@ -13,7 +13,7 @@ import java.util.List;
  * 用户信息类
  *
  * @author xxm
- * @date 2021/7/30
+ * @since 2021/7/30
  */
 @Getter
 @Setter

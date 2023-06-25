@@ -16,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * 序列号区间生成器接口默认实现
  *
  * @author xxm
- * @date 2021/8/6
+ * @since 2021/8/6
  */
 @Setter
 @Getter

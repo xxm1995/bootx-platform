@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.quartz.code;
  * 定时任务状态
  *
  * @author xxm
- * @date 2021/11/2
+ * @since 2021/11/2
  */
 public interface QuartzJobCode {
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 验证码服务
  *
  * @author xxm
- * @date 2021/8/2
+ * @since 2021/8/2
  */
 @Tag(name = "验证码服务")
 @RestController

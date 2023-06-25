@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * @author xxm
- * @date 2022/12/19
+ * @since 2022/12/19
  */
 @Tag(name = "字典测试")
 @RestController

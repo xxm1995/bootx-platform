@@ -10,7 +10,7 @@ import java.util.List;
  * 企业通知接收人配置
  *
  * @author xxm
- * @date 2022/7/20
+ * @since 2022/7/20
  */
 @Data
 @Accessors(chain = true)

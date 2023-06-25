@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
  * 钉钉相关类转换
  *
  * @author xxm
- * @date 2021/8/5
+ * @since 2021/8/5
  */
 @Mapper
 public interface MailConvert {

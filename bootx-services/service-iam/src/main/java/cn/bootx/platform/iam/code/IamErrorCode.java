@@ -4,7 +4,7 @@ package cn.bootx.platform.iam.code;
  * 用户中心错误码(21000-21999)
  *
  * @author xxm
- * @date 2020/4/24 16:01
+ * @since 2020/4/24 16:01
  */
 public interface IamErrorCode {
 

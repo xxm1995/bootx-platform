@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
  * 渠道转换
  *
  * @author xxm
- * @date 2021/7/6
+ * @since 2021/7/6
  */
 @Mapper
 public interface DictionaryConvert {

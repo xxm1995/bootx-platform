@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author xxm
- * @date 2022/6/7
+ * @since 2022/6/7
  */
 @Data
 @Schema(title = "用户数据权限批量设置参数")

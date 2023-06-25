@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * 字典项
  *
  * @author xxm
- * @date 2020/4/15 17:45
+ * @since 2020/4/15 17:45
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

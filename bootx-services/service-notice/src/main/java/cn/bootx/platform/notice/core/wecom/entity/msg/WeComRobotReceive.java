@@ -10,7 +10,7 @@ import java.util.List;
  * 企微机器人接收人配置
  *
  * @author xxm
- * @date 2022/7/24
+ * @since 2022/7/24
  */
 @Data
 @Accessors(chain = true)

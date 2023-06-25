@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  *
  * @see NestedPermission 通常在嵌套方法不启用数据权限时使用
  * @author xxm
- * @date 2021/12/22
+ * @since 2021/12/22
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

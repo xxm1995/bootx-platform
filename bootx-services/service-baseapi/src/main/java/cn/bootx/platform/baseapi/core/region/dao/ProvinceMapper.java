@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 省份表
  *
  * @author xxm
- * @date 2022-12-24
+ * @since 2022-12-24
  */
 @Mapper
 public interface ProvinceMapper extends BaseMapper<Province> {

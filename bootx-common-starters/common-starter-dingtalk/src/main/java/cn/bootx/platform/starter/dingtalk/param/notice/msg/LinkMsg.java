@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 钉钉链接消息
  *
  * @author xxm
- * @date 2020/11/30
+ * @since 2020/11/30
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

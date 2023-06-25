@@ -4,7 +4,7 @@ package cn.bootx.platform.starter.file.code;
  * 文件上传类型
  *
  * @author xxm
- * @date 2022/1/14
+ * @since 2022/1/14
  */
 public enum FileUploadTypeEnum {
 

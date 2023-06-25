@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 /**
  * ${comments}
  * @author ${author}
- * @date ${datetime}
+ * @since ${datetime}
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

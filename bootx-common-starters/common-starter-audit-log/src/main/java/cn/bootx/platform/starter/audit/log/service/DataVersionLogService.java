@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Async;
  * 数据版本日志
  *
  * @author xxm
- * @date 2022/1/10
+ * @since 2022/1/10
  */
 public interface DataVersionLogService {
 

@@ -17,7 +17,7 @@ import java.util.List;
  * 鉴权路由配置类
  *
  * @author xxm
- * @date 2021/8/2
+ * @since 2021/8/2
  */
 @Slf4j
 @Component

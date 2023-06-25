@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
  * app版本参数
  *
  * @author xxm
- * @date 2021/8/9
+ * @since 2021/8/9
  */
 @Data
 @Accessors(chain = true)

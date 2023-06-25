@@ -6,7 +6,7 @@ import me.chanjar.weixin.cp.bean.message.WxCpMessage;
  * 企业微信通知消息
  *
  * @author xxm
- * @date 2022/7/23
+ * @since 2022/7/23
  */
 public interface WeComMsg {
 

@@ -18,7 +18,7 @@ import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
  * 权限配置
  *
  * @author xxm
- * @date 2021/8/3
+ * @since 2021/8/3
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
