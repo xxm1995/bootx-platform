@@ -186,17 +186,17 @@ public class UserDataScopeService {
             .collect(Collectors.toMap(MpIdEntity::getId, Function.identity()));
         Set<String> deptOrgCodes = deptIds.stream().map(deptMap::get).map(Dept::getOrgCode).collect(Collectors.toSet());
         return deptMap.values()
-            .stream()
-            .filter(dept -> this.judgeSubDept(dept.getOrgCode(), deptOrgCodes))
-            .map(MpIdEntity::getId)
-            .collect(Collectors.toSet());
+                .stream()
+                .filter(dept -> this.judgeSubDept(dept.getOrgCode(), deptOrgCodes))
+                .map(MpIdEntity::getId)
+                .collect(Collectors.toSet());
     }
 
     /**
      * 判断是否是子部门
      */
     private boolean judgeSubDept(String orgCode, Set<String> orgCodes) {
-        return orgCodes.stream().anyMatch(s -> StrUtil.startWith(s, orgCode));
+        return orgCodes.stream().anyMatch(s -> StrUtil.startWith(orgCode,s) && orgCode.length()>=s.length());
     }
 
 }
