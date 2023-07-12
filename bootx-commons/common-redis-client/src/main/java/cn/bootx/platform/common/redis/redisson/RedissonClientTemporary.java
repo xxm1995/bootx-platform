@@ -155,13 +155,13 @@ public class RedissonClientTemporary implements RedissonClient {
     /**
      * @param s
      * @param codec
-     * @param mapOptions
+     * @param mapCacheOptions
      * @param <K>
      * @param <V>
      * @return
      */
     @Override
-    public <K, V> RMapCache<K, V> getMapCache(String s, Codec codec, MapOptions<K, V> mapOptions) {
+    public <K, V> RMapCache<K, V> getMapCache(String s, Codec codec, MapCacheOptions<K, V> mapCacheOptions) {
         return null;
     }
 
@@ -178,13 +178,13 @@ public class RedissonClientTemporary implements RedissonClient {
 
     /**
      * @param s
-     * @param mapOptions
+     * @param mapCacheOptions
      * @param <K>
      * @param <V>
      * @return
      */
     @Override
-    public <K, V> RMapCache<K, V> getMapCache(String s, MapOptions<K, V> mapOptions) {
+    public <K, V> RMapCache<K, V> getMapCache(String s, MapCacheOptions<K, V> mapCacheOptions) {
         return null;
     }
 
