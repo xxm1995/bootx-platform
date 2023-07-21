@@ -29,6 +29,7 @@ public class JacksonUtil {
         if (objectMapperFlag) {
             throw new RepetitiveOperationException();
         }
+        objectMapperFlag = true;
         JacksonUtil.objectMapper = objectMapper;
     }
 
@@ -36,6 +37,7 @@ public class JacksonUtil {
         if (typeObjectMapperFlag) {
             throw new RepetitiveOperationException();
         }
+        typeObjectMapperFlag = true;
         JacksonUtil.typeObjectMapper = typeObjectMapper;
     }
 
