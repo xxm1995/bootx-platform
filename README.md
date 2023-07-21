@@ -23,11 +23,12 @@
 - 可视化大屏使用 [Go-VIew](https://gitee.com/dromara/go-view) 作为基础框架
 - 移动端使用 [Taro](https://taro.jd.com/)、[NutUI](https://nutui.jd.com/) vue3+TS为技术栈。
 
-## 🍁子项目
+## 🍁 Bootx 项目合集
+- Bootx-Platform：单体版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-platform)
+- Bootx-Cloud：微服务版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-cloud)
 - dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/dax-pay)
-- bpm-plus：工作流办公平台[Gitee地址](https://gitee.com/bootx/bpm-plus)
+- bpm-plus：开源支付系统 [Gitee地址](https://gitee.com/bootx/bpm-plus)
 - mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
-- 待命名：可视化大屏
 
 ## 项目Maven坐标
 > 项目各模块都已经发布到maven中央仓库中，进行二开时可以对不进行更改的模块，使用Maven方式进行引入，方便后续进行版本升级
@@ -46,7 +47,7 @@
 - 系统演示地址：[管理平台(vue3)](http://v3.platform.bootx.cn/)、[可视化大屏](http://visualization.platform.bootx.cn/)
 - 前端项目地址：[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)、[可视化大屏](https://gitee.com/bootx/bootx-platform-visualization)、[前端项目(vue2只维护不再更新)](https://gitee.com/bootx/bootx-platform-ui)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
-- 日志收集：[[PlumeLog](http://platform.dev.bootx.cn:8080/plumelog/#/)
+- 日志收集：[PlumeLog](http://139.198.29.219:8891/)
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
 
@@ -126,13 +127,6 @@ bootx-platform
        ├── service-visualization -- 可视化大屏管理
     ├── bootx-start -- 启动模块
 ```
-
-##  🥂 Bootx 项目合集
-- Bootx-Platform：单体版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-platform)
-- Bootx-Cloud：微服务版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-cloud)
-- dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/dax-pay)
-- bpm-plus：开源支付系统 [Gitee地址](https://gitee.com/bootx/bpm-plus)
-- mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
 
 ##  🥪 关于我们
 
