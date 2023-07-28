@@ -31,6 +31,7 @@
         <module>common-websocket</module>
         <module>common-rabbitmq</module>
         <module>common-data-translate</module>
+        <module>common-eventer</module>
     </modules>
 
     <dependencies>
