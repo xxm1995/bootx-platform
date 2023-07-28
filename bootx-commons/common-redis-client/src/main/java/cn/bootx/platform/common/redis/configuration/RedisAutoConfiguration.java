@@ -43,8 +43,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RedisAutoConfiguration {
 
-    private final ObjectMapper objectMapper;
-
     /**
      * 默认 RedisClient
      */
@@ -58,7 +56,6 @@ public class RedisAutoConfiguration {
     /**
      * 默认 RedisTemplate
      */
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Bean
     @Primary
     public RedisTemplate<String, ?> redisTemplate(RedisConnectionFactory redisConnectionFactory,
