@@ -17,7 +17,7 @@ import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
-import cn.bootx.platform.iam.core.user.event.UserCreateEvent;
+import cn.bootx.platform.iam.event.user.UserCreateEvent;
 import cn.bootx.platform.iam.dto.dept.DeptDto;
 import cn.bootx.platform.iam.dto.role.RoleDto;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;

@@ -1,4 +1,4 @@
-package cn.bootx.platform.iam.core.user.event;
+package cn.bootx.platform.iam.event.user;
 
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
 import lombok.Getter;
