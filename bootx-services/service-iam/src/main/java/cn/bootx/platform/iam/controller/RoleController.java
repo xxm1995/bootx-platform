@@ -30,10 +30,10 @@ public class RoleController {
 
     @Operation(summary = "添加角色（返回角色对象）")
     @PostMapping(value = "/add")
-    public ResResult<RoleDto> add(@RequestBody RoleParam roleParam) {
+    public ResResult<Void> add(@RequestBody RoleParam roleParam) {
         ValidationUtil.validateParam(roleParam);
-        RoleDto result = roleService.add(roleParam);
-        return Res.ok(result);
+        roleService.add(roleParam);
+        return Res.ok();
     }
 
     @Operation(summary = "删除角色")

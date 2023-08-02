@@ -8,16 +8,15 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * 锁定用户
+ * 更改用户密码操作
  * @author xxm
- * @since 2023/7/29
+ * @since 2023/8/2
  */
 @Getter
-public class UserLockEvent extends ApplicationEvent {
-
+public class UserChangePasswordEvent extends ApplicationEvent {
     private final List<Long> userIds;
 
-    public UserLockEvent(Object source, Long ...userIds) {
+    public UserChangePasswordEvent(Object source, Long ...userIds) {
         super(source);
         if (Objects.nonNull(userIds)){
             this.userIds = Arrays.asList(userIds);
@@ -25,7 +24,8 @@ public class UserLockEvent extends ApplicationEvent {
             this.userIds = null;
         }
     }
-    public UserLockEvent(Object source, List<Long> userIds) {
+
+    public UserChangePasswordEvent(Object source, List<Long> userIds) {
         super(source);
         this.userIds = userIds;
     }

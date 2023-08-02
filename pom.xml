@@ -113,7 +113,7 @@
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <springdoc.version>1.6.15</springdoc.version>
         <redisson.version>3.23.0</redisson.version>
-        <knife4j.version>4.1.0</knife4j.version>
+        <knife4j.version>4.2.0</knife4j.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <lombok-mapstruct.version>0.2.0</lombok-mapstruct.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>

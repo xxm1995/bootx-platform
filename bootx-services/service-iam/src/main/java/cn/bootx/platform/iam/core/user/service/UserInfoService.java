@@ -1,10 +1,6 @@
 package cn.bootx.platform.iam.core.user.service;
 
 import cn.bootx.platform.common.core.exception.BizException;
-import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
-import cn.bootx.platform.iam.param.user.UserBaseInfoParam;
-import cn.bootx.platform.starter.auth.util.PasswordEncoder;
-import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
@@ -12,9 +8,16 @@ import cn.bootx.platform.iam.core.user.entity.UserInfo;
 import cn.bootx.platform.iam.dto.user.LoginAfterUserInfo;
 import cn.bootx.platform.iam.dto.user.UserBaseInfoDto;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
+import cn.bootx.platform.iam.event.user.UserChangePasswordEvent;
+import cn.bootx.platform.iam.event.user.UserUpdateEvent;
+import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
+import cn.bootx.platform.iam.param.user.UserBaseInfoParam;
+import cn.bootx.platform.starter.auth.util.PasswordEncoder;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +42,8 @@ public class UserInfoService {
     private final UserExpandInfoManager userExpandInfoManager;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final ApplicationEventPublisher eventPublisher;
 
     /**
      * 登录后获取用户信息
@@ -92,6 +97,7 @@ public class UserInfoService {
         BeanUtil.copyProperties(param, userInfo, CopyOptions.create().ignoreNullValue());
         userExpandInfoManager.updateById(userExpandInfo);
         userInfoManager.updateById(userInfo);
+        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
     }
 
     /**
@@ -116,6 +122,7 @@ public class UserInfoService {
         userInfoManager.updateById(userInfo);
         userExpandInfo.setLastChangePasswordTime(LocalDateTime.now());
         userExpandInfoManager.updateById(userExpandInfo);
+        eventPublisher.publishEvent(new UserChangePasswordEvent(this,userInfo.getId()));
     }
 
     /**
@@ -144,6 +151,7 @@ public class UserInfoService {
         userInfo.setPhone(phone);
         userInfoManager.updateById(userInfo);
         userAssistService.deletePhoneChangeCaptcha(phone);
+        eventPublisher.publishEvent(new UserUpdateEvent(this,userInfo.toDto()));
     }
 
     /**
@@ -169,6 +177,7 @@ public class UserInfoService {
         userInfo.setEmail(email);
         userInfoManager.updateById(userInfo);
         userAssistService.deleteEmailChangeCaptcha(email);
+        eventPublisher.publishEvent(new UserUpdateEvent(this,userInfo.toDto()));
     }
 
     /**
@@ -187,6 +196,7 @@ public class UserInfoService {
         userInfoManager.updateById(userInfo);
         userExpandInfoManager.updateById(userExpandInfo);
         userAssistService.deletePhoneForgetCaptcha(phone);
+        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
     }
 
     /**
@@ -204,6 +214,7 @@ public class UserInfoService {
         userInfoManager.updateById(userInfo);
         userExpandInfoManager.updateById(userExpandInfo);
         userAssistService.deleteEmailForgetCaptcha(email);
+        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
     }
 
     /**
@@ -223,6 +234,7 @@ public class UserInfoService {
         userInfo.setPhone(phone);
         userInfoManager.updateById(userInfo);
         userAssistService.deletePhoneChangeCaptcha(phone);
+        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
     }
 
     /**
@@ -242,6 +254,7 @@ public class UserInfoService {
         userInfo.setEmail(email);
         userInfoManager.updateById(userInfo);
         userAssistService.deleteEmailChangeCaptcha(userInfo.getEmail());
+        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
     }
 
 }

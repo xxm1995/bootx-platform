@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,6 +33,13 @@ public class ClientManager extends BaseManager<ClientMapper, Client> {
             .like(StrUtil.isNotBlank(param.getName()), Client::getName, param.getName())
             .orderByDesc(MpIdEntity::getId)
             .page(mpPage);
+    }
+
+    /**
+     * 查询
+     */
+    public List<Client> findAllByDefaultEndow(Boolean defaultEndow){
+        return findAllByField(Client::getDefaultEndow,defaultEndow);
     }
 
     public Optional<Client> findByCode(String code) {

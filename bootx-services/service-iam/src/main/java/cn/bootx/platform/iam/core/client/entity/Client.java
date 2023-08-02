@@ -1,5 +1,7 @@
 package cn.bootx.platform.iam.core.client.entity;
 
+import cn.bootx.mybatis.table.modify.annotation.DbColumn;
+import cn.bootx.mybatis.table.modify.annotation.DbTable;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.iam.core.client.convert.ClientConvert;
 import cn.bootx.platform.iam.param.client.ClientParam;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@DbTable(comment = "认证终端",isAppend = true)
 @TableName("iam_client")
 @Accessors(chain = true)
 public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto> {
@@ -44,6 +47,10 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
 
     /** 关联登录方式 */
     private String loginTypeIds;
+
+    /** 新注册的用户是否默认赋予该终端 */
+    @DbColumn(comment = "新注册的用户是否默认赋予该终端")
+    private Boolean defaultEndow;
 
     /** 描述 */
     private String description;
