@@ -41,7 +41,6 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!-- 商城模块 -->
         <!-- flyway -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -53,6 +52,13 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>bootx-demo</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
+        <!-- 小程序 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-miniapp</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
 

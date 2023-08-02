@@ -27,7 +27,7 @@
 - Bootx-Platform：单体版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-platform)
 - Bootx-Cloud：微服务版脚手架 [Gitee地址](https://gitee.com/bootx/bootx-cloud)
 - dax-pay：开源支付系统 [Gitee地址](https://gitee.com/bootx/dax-pay)
-- bpm-plus：开源支付系统 [Gitee地址](https://gitee.com/bootx/bpm-plus)
+- bpm-plus：协同办公系统 [Gitee地址](https://gitee.com/bootx/bpm-plus)
 - mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
 
 ## 项目Maven坐标
@@ -77,11 +77,7 @@
 
 Spring Boot后端: [后端启动流程](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
 
-Vue2前端: [Vue2前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备)
-
 Vue3后端: [Vue3前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备-1)
-
-可视化大屏: [可视化大屏启动流程](https://bootx.gitee.io/doc/overview/)
 
 ## 🥞项目模块结构
 ```lua
@@ -123,6 +119,7 @@ bootx-platform
     ├── bootx-services -- 业务服务模块
        ├── service-baseapi -- 基础api功能服务
        ├── service-iam -- 身份识别与访问管理
+       ├── service-miniapp -- 小程序服务
        ├── service-notice -- 消息通知服务
        ├── service-visualization -- 可视化大屏管理
     ├── bootx-start -- 启动模块

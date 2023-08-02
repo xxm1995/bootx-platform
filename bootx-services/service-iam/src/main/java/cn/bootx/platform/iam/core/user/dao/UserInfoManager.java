@@ -1,16 +1,19 @@
 package cn.bootx.platform.iam.core.user.dao;
 
 import cn.bootx.platform.common.core.rest.param.PageParam;
+import cn.bootx.platform.common.mybatisplus.base.MpDelEntity;
 import cn.bootx.platform.common.mybatisplus.impl.BaseManager;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
 import cn.bootx.platform.iam.param.user.UserInfoParam;
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +80,24 @@ public class UserInfoManager extends BaseManager<UserInfoMapper, UserInfo> {
      * 批量更新用户状态
      */
     public void setUpStatusBatch(List<Long> userIds, int status) {
-        lambdaUpdate().in(MpIdEntity::getId, userIds).set(UserInfo::getStatus, status).update();
+        lambdaUpdate()
+                .in(MpIdEntity::getId, userIds)
+                .set(UserInfo::getStatus, status)
+                .set(MpDelEntity::getLastModifiedTime, LocalDateTime.now())
+                .set(MpDelEntity::getLastModifier, SecurityUtil.getUserIdOrDefaultId())
+                .update();
+    }
+
+    /**
+     * 批量重置用户密码
+     */
+    public void restartPasswordBatch(List<Long> userIds,String password){
+        lambdaUpdate()
+                .in(MpIdEntity::getId, userIds)
+                .set(UserInfo::getPassword, password)
+                .set(MpDelEntity::getLastModifiedTime, LocalDateTime.now())
+                .set(MpDelEntity::getLastModifier, SecurityUtil.getUserIdOrDefaultId())
+                .update();
     }
 
 }

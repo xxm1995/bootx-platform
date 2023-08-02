@@ -82,8 +82,7 @@ logging:
 # 自动建表配置
 mybatis-table:
   update-type: update
-  database-type: mysql
-  scan-package: cn.bootx
+  scan-package: cn.bootx.platform
 # 项目配置
 bootx:
   common:
@@ -104,6 +103,7 @@ bootx:
         "[消息服务]": cn.bootx.platform.notice
         "[演示模块]": cn.bootx.demo
         "[可视化大屏]": cn.bootx.platform.visualization
+        "[微信小程序]": cn.bootx.platform.miniapp
         "[第三方对接]":
           - cn.bootx.platform.starter.dingtalk
           - cn.bootx.platform.starter.wecom

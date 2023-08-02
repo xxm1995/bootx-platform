@@ -1,27 +1,27 @@
 package cn.bootx.platform.iam.core.user.service;
 
+import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
-import cn.bootx.platform.common.mybatisplus.util.MpUtil;
-import cn.bootx.platform.iam.core.client.dao.ClientManager;
-import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
-import cn.bootx.platform.iam.param.user.UserInfoParam;
-import cn.bootx.platform.iam.param.user.UserRegisterParam;
-import cn.bootx.platform.starter.auth.util.PasswordEncoder;
-import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
+import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.iam.code.UserStatusCode;
+import cn.bootx.platform.iam.core.client.dao.ClientManager;
 import cn.bootx.platform.iam.core.upms.service.UserRoleService;
 import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
-import cn.bootx.platform.iam.event.user.UserCreateEvent;
 import cn.bootx.platform.iam.dto.dept.DeptDto;
 import cn.bootx.platform.iam.dto.role.RoleDto;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
 import cn.bootx.platform.iam.dto.user.UserInfoWhole;
+import cn.bootx.platform.iam.event.user.*;
+import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
+import cn.bootx.platform.iam.param.user.UserInfoParam;
+import cn.bootx.platform.iam.param.user.UserRegisterParam;
+import cn.bootx.platform.starter.auth.util.PasswordEncoder;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
@@ -31,7 +31,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -77,6 +76,7 @@ public class UserAdminService {
      */
     public void lock(Long userId) {
         userInfoManager.setUpStatus(userId, UserStatusCode.BAN);
+        eventPublisher.publishEvent(new UserLockEvent(this, userId));
     }
 
     /**
@@ -84,6 +84,7 @@ public class UserAdminService {
      */
     public void lockBatch(List<Long> userIds) {
         userInfoManager.setUpStatusBatch(userIds, UserStatusCode.BAN);
+        eventPublisher.publishEvent(new UserLockEvent(this, userIds));
     }
 
     /**
@@ -91,6 +92,7 @@ public class UserAdminService {
      */
     public void unlock(Long userId) {
         userInfoManager.setUpStatus(userId, UserStatusCode.NORMAL);
+        eventPublisher.publishEvent(new UserUnlockEvent(this, userId));
     }
 
     /**
@@ -98,6 +100,7 @@ public class UserAdminService {
      */
     public void unlockBatch(List<Long> userIds) {
         userInfoManager.setUpStatusBatch(userIds, UserStatusCode.NORMAL);
+        eventPublisher.publishEvent(new UserUnlockEvent(this, userIds));
     }
 
     /**
@@ -112,13 +115,13 @@ public class UserAdminService {
         UserInfoParam userInfoParam = new UserInfoParam();
         BeanUtil.copyProperties(param, userInfoParam);
         userInfoParam.setName(param.getUsername());
-        // TODO 默认注册就有所有终端的权限, 后期优化
-        List<String> ids = clientManager.findAll()
+        // 添加默认注册就有权限的终端
+        List<String> clientIds = clientManager.findAllByDefaultEndow(true)
             .stream()
             .map(MpIdEntity::getId)
             .map(String::valueOf)
             .collect(Collectors.toList());
-        userInfoParam.setClientIdList(ids);
+        userInfoParam.setClientIdList(clientIds);
         this.add(userInfoParam);
     }
 
@@ -147,27 +150,37 @@ public class UserAdminService {
         UserExpandInfo userExpandInfo = new UserExpandInfo();
         userExpandInfo.setInitialPassword(true).setId(userInfo.getId());
         userExpandInfoManager.save(userExpandInfo);
-        // 发送用户注册事件
         eventPublisher.publishEvent(new UserCreateEvent(this, userInfo.toDto()));
-
     }
 
     /**
      * 重置密码
      */
-    public void restartPassword(Long userId, @NotBlank(message = "新密码不能为空") String newPassword) {
+    public void restartPassword(Long userId, String newPassword) {
 
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
         // 新密码进行加密
         newPassword = passwordEncoder.encode(newPassword);
         userInfo.setPassword(newPassword);
         userInfoManager.updateById(userInfo);
+        eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userInfo.getId()));
+    }
+
+    /**
+     * 批量重置密码
+     */
+    public void restartPasswordBatch(List<Long> userIds, String newPassword){
+        // 新密码进行加密
+        String password = passwordEncoder.encode(newPassword);
+        // 批量重置密码
+        userInfoManager.restartPasswordBatch(userIds,password);
+        eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userIds));
     }
 
     /**
      * 编辑用户信息
      */
-    public UserInfoDto update(UserInfoParam userInfoParam) {
+    public void update(UserInfoParam userInfoParam) {
         UserInfo userInfo = userInfoManager.findById(userInfoParam.getId())
             .orElseThrow(UserInfoNotExistsException::new);
         userInfoParam.setPassword(null);
@@ -178,7 +191,8 @@ public class UserAdminService {
         else {
             userInfo.setClientIds("");
         }
-        return userInfoManager.updateById(userInfo).toDto();
+        UserInfoDto userInfoDto = userInfoManager.updateById(userInfo).toDto();
+        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfoDto));
     }
 
     /**

@@ -8,6 +8,9 @@ import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.platform.iam.core.upms.dao.RolePathManager;
 import cn.bootx.platform.iam.core.upms.dao.UserRoleManager;
+import cn.bootx.platform.iam.event.role.RoleCreateEvent;
+import cn.bootx.platform.iam.event.role.RoleDeleteEvent;
+import cn.bootx.platform.iam.event.role.RoleUpdateEvent;
 import cn.bootx.platform.iam.exception.role.RoleAlreadyExistedException;
 import cn.bootx.platform.iam.exception.role.RoleAlreadyUsedException;
 import cn.bootx.platform.iam.exception.role.RoleNotExistedException;
@@ -20,6 +23,7 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,11 +51,13 @@ public class RoleService {
 
     private final RoleMenuManager roleMenuManager;
 
+    private final ApplicationEventPublisher eventPublisher;
+
     /**
      * 添加
      */
     @Transactional(rollbackFor = Exception.class)
-    public RoleDto add(RoleParam roleParam) {
+    public void add(RoleParam roleParam) {
         // Name唯一性校验（名称code不能相同）
         if (roleManager.existsByCode(roleParam.getCode())) {
             throw new RoleAlreadyExistedException();
@@ -60,14 +66,15 @@ public class RoleService {
             throw new RoleAlreadyExistedException();
         }
         Role role = Role.init(roleParam);
-        return roleManager.save(role).toDto();
+        RoleDto roleDto = roleManager.save(role).toDto();
+        eventPublisher.publishEvent(new RoleCreateEvent(this,roleDto));
     }
 
     /**
      * 修改
      */
     @Transactional(rollbackFor = Exception.class)
-    public RoleDto update(RoleParam roleParam) {
+    public void update(RoleParam roleParam) {
         Long id = roleParam.getId();
 
         // name和code唯一性校验
@@ -80,8 +87,9 @@ public class RoleService {
 
         Role role = roleManager.findById(id).orElseThrow(RoleNotExistedException::new);
         BeanUtil.copyProperties(roleParam, role, CopyOptions.create().ignoreNullValue());
-
-        return roleManager.updateById(role).toDto();
+        RoleDto roleDto = roleManager.updateById(role)
+                .toDto();
+        eventPublisher.publishEvent(new RoleUpdateEvent(this,roleDto));
     }
 
     /**
@@ -102,6 +110,7 @@ public class RoleService {
         // 删除关联的请求和菜单权限
         rolePathManager.deleteByRole(roleId);
         roleMenuManager.deleteByRole(roleId);
+        eventPublisher.publishEvent(new RoleDeleteEvent(this,roleId));
     }
 
     /**

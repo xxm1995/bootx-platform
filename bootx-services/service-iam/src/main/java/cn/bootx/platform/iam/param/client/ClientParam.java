@@ -32,6 +32,9 @@ public class ClientParam {
     @Schema(description = "是否可用")
     private Boolean enable;
 
+    @Schema(description = "新注册的用户是否默认赋予该终端")
+    private Boolean defaultEndow;
+
     @Schema(description = "关联终端")
     private List<String> loginTypeIdList;
 
