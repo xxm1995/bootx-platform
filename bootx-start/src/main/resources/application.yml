@@ -32,8 +32,9 @@ mybatis-plus:
 sa-token:
   is-print: false
   token-name: AccessToken
-# 工作流
-flowable:
-  activityFontName: "宋体"
-  annotation-font-name: "宋体"
-  label-font-name: "宋体"
+# 短信配置
+sms:
+  # 是否使用redis进行缓存 默认false
+  redis-cache: true
+  # 打印banner
+  is-print: false

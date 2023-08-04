@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 登录成功处理器
+ * 登录成功处理器接口
  *
  * @author xxm
  * @since 2021/8/13

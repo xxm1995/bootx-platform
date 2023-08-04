@@ -2,19 +2,22 @@ package cn.bootx.platform.iam.core.upms.service;
 
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.util.ResultConvertUtil;
-import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
-import cn.bootx.platform.iam.core.user.entity.UserInfo;
 import cn.bootx.platform.iam.core.role.dao.RoleManager;
 import cn.bootx.platform.iam.core.upms.dao.UserRoleManager;
 import cn.bootx.platform.iam.core.upms.entity.UserRole;
+import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
+import cn.bootx.platform.iam.core.user.entity.UserInfo;
 import cn.bootx.platform.iam.dto.role.RoleDto;
+import cn.bootx.platform.iam.event.user.UserAssignRoleEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,9 @@ public class UserRoleService {
 
     private final UserRoleManager userRoleManager;
 
+    private final ApplicationEventPublisher eventPublisher;
+
+
     /**
      * 给用户分配角色
      */
@@ -49,6 +55,7 @@ public class UserRoleService {
         // 然后给用户添加角色
         List<UserRole> userRoles = this.createUserRoles(userId, roleIds);
         userRoleManager.saveAll(userRoles);
+        eventPublisher.publishEvent(new UserAssignRoleEvent(this, Collections.singletonList(userId),roleIds));
     }
 
     /**
@@ -67,6 +74,7 @@ public class UserRoleService {
             .flatMap(Collection::stream)
             .collect(Collectors.toList());
         userRoleManager.saveAll(userRoles);
+        eventPublisher.publishEvent(new UserAssignRoleEvent(this, userIds,roleIds));
     }
 
     /**

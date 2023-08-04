@@ -33,7 +33,7 @@ public class MessageTemplate extends MpBaseEntity implements EntityBaseFunction<
      * 模板类型
      * @see MessageTemplateCode
      */
-    private Integer type;
+    private String type;
 
     public static MessageTemplate init(MessageTemplateParam in) {
         return MessageTemplateConvert.CONVERT.convert(in);
