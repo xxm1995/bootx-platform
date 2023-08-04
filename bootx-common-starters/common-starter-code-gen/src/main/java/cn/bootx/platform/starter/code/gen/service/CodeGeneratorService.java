@@ -16,7 +16,6 @@ import cn.hutool.core.text.NamingCase;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
-import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

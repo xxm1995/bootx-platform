@@ -1,16 +1,14 @@
 package cn.bootx.platform.baseapi.controller;
 
 import cn.bootx.platform.baseapi.core.sql.service.QuerySqlService;
+import cn.bootx.platform.baseapi.param.sql.QueryFieldParam;
+import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
-import cn.bootx.platform.baseapi.param.sql.QueryFieldParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +26,27 @@ import java.util.Map;
 public class QuerySqlController {
 
     private final QuerySqlService querySqlService;
+
+
+    @Operation(summary = "分页查询")
+    @GetMapping("/page")
+    public ResResult<PageResult<Void>> page(){
+        return Res.ok();
+    }
+
+    @Operation(summary = "新建")
+    @PostMapping("/add")
+    public ResResult<Void> add(){
+        querySqlService.add();
+        return Res.ok();
+    }
+
+    @Operation(summary = "修改")
+    @PostMapping("/update")
+    public ResResult<Void> update(){
+        querySqlService.update();
+        return Res.ok();
+    }
 
     @Operation(summary = "测试SQL解析和执行")
     @PostMapping("/test")

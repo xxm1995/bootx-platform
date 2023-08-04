@@ -13,6 +13,7 @@ import cn.bootx.platform.common.core.function.CollectorsFunction;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.db.Entity;
+import cn.hutool.db.PageResult;
 import cn.hutool.db.handler.EntityHandler;
 import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
@@ -58,10 +59,16 @@ public class QuerySqlService {
     /**
      * 修改
      */
+    public void update(){
+
+    }
 
     /**
      * 分页查询
      */
+    public PageResult<QuerySql> page(){
+        return new PageResult<>();
+    }
 
     /**
      * 执行SQL查询

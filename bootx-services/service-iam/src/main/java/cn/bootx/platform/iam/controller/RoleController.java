@@ -47,8 +47,8 @@ public class RoleController {
     @PostMapping(value = "/update")
     public ResResult<RoleDto> update(@RequestBody RoleParam roleParam) {
         ValidationUtil.validateParam(roleParam);
-        RoleDto result = roleService.update(roleParam);
-        return Res.ok(result);
+        roleService.update(roleParam);
+        return Res.ok();
     }
 
     @Operation(summary = "通过ID查询角色")

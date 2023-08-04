@@ -45,6 +45,5 @@ public class MessageTemplateParam implements Serializable {
      * 模板类型
      * @see MessageTemplateCode
      */
-    private Integer type;
-
+    private String type;
 }

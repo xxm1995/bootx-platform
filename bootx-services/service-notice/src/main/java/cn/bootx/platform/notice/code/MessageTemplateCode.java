@@ -9,21 +9,15 @@ package cn.bootx.platform.notice.code;
 public interface MessageTemplateCode {
 
     /** 站内信 */
-    int SITE = 0;
+    String SITE = "site";
 
     /** 钉钉 */
-    int DING_TALK = 1;
+    String DING_TALK = "ding_talk";
 
     /** 钉钉机器人 */
-    int DING_TALK_ROBOT = 2;
-
-    /** 短信 */
-    int SMS = 3;
+    String DING_TALK_ROBOT = "ding_talk_robot";
 
     /** Email */
-    int EMAIL = 4;
-
-    /** 微信 */
-    int WECHAT = 5;
+    String EMAIL = "email";
 
 }
