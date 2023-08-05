@@ -9,6 +9,8 @@ import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.notice.core.sms.convert.SmsChannelConfigConvert;
 import cn.bootx.platform.notice.dto.sms.SmsChannelConfigDto;
 import cn.bootx.platform.notice.param.sms.SmsChannelConfigParam;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,6 +34,7 @@ public class SmsChannelConfig extends MpBaseEntity implements EntityBaseFunction
      * @see SupplierType#name()
      */
     @DbColumn(comment = "渠道类型编码")
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private String code;
 
     /**
@@ -58,15 +61,19 @@ public class SmsChannelConfig extends MpBaseEntity implements EntityBaseFunction
 
     /** 配置字符串 */
     @DbMySqlFieldType(MySqlFieldTypeEnum.TEXT)
-    @DbColumn(comment = "状态")
+    @DbColumn(comment = "配置字符串")
     private String config;
 
     /** 图片 */
     @DbColumn(comment = "图片")
     private Long image;
 
+    /** 排序 */
+    @DbColumn(comment = "排序")
+    private Double sortNo;
+
     /** 备注 */
-    @DbColumn(comment = "状态")
+    @DbColumn(comment = "备注")
     private String remark;
 
     /** 创建对象 */

@@ -46,6 +46,13 @@ public class FIleUpLoadController {
         return Res.ok(uploadService.upload(file, fileName));
     }
 
+    @Operation(summary = "删除")
+    @DeleteMapping("/delete")
+    public ResResult<Void> delete(Long id){
+        uploadService.delete(id);
+        return Res.ok();
+    }
+
     @Operation(summary = "获取文件预览地址")
     @GetMapping("getFilePreviewUrl")
     public ResResult<String> getFilePreviewUrl(Long id) {

@@ -29,6 +29,9 @@ public class FileUploadProperties {
     /** 本地存储 */
     private Local local = new Local();
 
+    /** 数据库存储 */
+    private JDBC jdbc = new JDBC();
+
     /** mongo存储配置 */
     private Mongo mongo = new Mongo();
 
@@ -44,6 +47,18 @@ public class FileUploadProperties {
 
         /** 本地存储路径 */
         private String localPath = "/data/file/";
+
+    }
+
+    /**
+     * 数据库存储
+     */
+    @Getter
+    @Setter
+    public static class JDBC {
+
+        /** 是否以Base64方式进行存储 */
+        private boolean base64 = false;
 
     }
 
