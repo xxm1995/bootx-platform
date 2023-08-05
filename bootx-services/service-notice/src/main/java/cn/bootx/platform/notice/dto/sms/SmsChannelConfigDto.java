@@ -29,6 +29,8 @@ public class SmsChannelConfigDto extends BaseDto {
     private String accessSecret;
     @Schema(description = "配置")
     private String config;
+    @Schema(description = "排序")
+    private Double sortNo;
     @Schema(description = "备注")
     private String remark;
 

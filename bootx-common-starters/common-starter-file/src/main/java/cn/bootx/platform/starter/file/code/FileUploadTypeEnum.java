@@ -10,6 +10,8 @@ public enum FileUploadTypeEnum {
 
     /** 本地存储 */
     LOCAL,
+    /** 数据库存储 */
+    JDBC,
     /** Mongo存储 */
     MONGO,
     /** minio存储 */

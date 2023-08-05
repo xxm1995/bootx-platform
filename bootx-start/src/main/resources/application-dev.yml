@@ -1,6 +1,9 @@
 server:
   port: 9999
 spring:
+#  profiles:
+#    include:
+#      - bootx-dev
   datasource:
     dynamic:
       primary: master
@@ -201,7 +204,7 @@ bootx:
         search-type: cache
     # 文件上传
     file-upload:
-      upload-type: local
+      upload-type: jdbc
       server-url: http://127.0.0.1:8080
       local:
         local-path: /data/file

@@ -10,6 +10,7 @@ import io.minio.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +28,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Service
+@ConditionalOnMissingClass("io.minio.MinioClient")
 @RequiredArgsConstructor
 public class MinioUploadService implements UploadService {
 
@@ -39,11 +41,11 @@ public class MinioUploadService implements UploadService {
      */
     @Override
     public boolean enable(FileUploadTypeEnum type) {
-        boolean b = type == FileUploadTypeEnum.MINIO;
-        if (b) {
+        boolean initFlag = type == FileUploadTypeEnum.MINIO;
+        if (initFlag) {
             this.doInit();
         }
-        return b;
+        return initFlag;
     }
 
     /**
@@ -54,8 +56,7 @@ public class MinioUploadService implements UploadService {
     public UpdateFileInfo upload(MultipartFile file, UploadFileContext context) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         PutObjectArgs putObjectArgs = PutObjectArgs.builder()
-            .bucket(minio.getBucket()) // bucket
-                                       // 必须传递
+            .bucket(minio.getBucket()) // bucket必须传递
             .contentType(file.getContentType())
             .object(context.getFileId() + "." + context.getFileSuffix())
             .stream(file.getInputStream(), file.getSize(), -1) // 文件内容
@@ -105,8 +106,7 @@ public class MinioUploadService implements UploadService {
     public void delete(UpdateFileInfo updateFileInfo) {
         FileUploadProperties.Minio minio = fileUploadProperties.getMinio();
         client.removeObject(RemoveObjectArgs.builder()
-            .bucket(minio.getBucket()) // bucket
-                                       // 必须传递
+            .bucket(minio.getBucket()) // bucket必须传递
             .object(updateFileInfo.getExternalStorageId()) // 相对路径作为 key
             .build());
     }

@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Tag(name ="短信模板配置")
 @RestController
-@RequestMapping("/sms")
+@RequestMapping("/sms/template")
 @RequiredArgsConstructor
 public class SmsTemplateController {
     private final SmsTemplateService smsTemplateService;

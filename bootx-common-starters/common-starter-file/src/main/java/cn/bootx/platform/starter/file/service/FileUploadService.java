@@ -88,6 +88,21 @@ public class FileUploadService {
     }
 
     /**
+     * 文件删除
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Long id){
+        val uploadType = fileUploadProperties.getUploadType();
+        UploadService uploadService = uploadServices.stream()
+                .filter(s -> s.enable(uploadType))
+                .findFirst()
+                .orElseThrow(() -> new BizException("未找到该类的上传处理器"));
+        UpdateFileInfo updateFileInfo = updateFileManager.findById(id).orElseThrow(() -> new BizException("文件不存在"));
+        uploadService.delete(updateFileInfo);
+        updateFileManager.deleteById(updateFileInfo.getId());
+    }
+
+    /**
      * 浏览
      */
     public void preview(Long id, HttpServletResponse response) {
