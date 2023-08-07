@@ -3,6 +3,7 @@ package cn.bootx.platform.notice.core.sms.service;
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
 import cn.bootx.platform.common.core.function.CollectorsFunction;
+import cn.bootx.platform.common.core.util.CollUtil;
 import cn.bootx.platform.common.jackson.util.JacksonUtil;
 import cn.bootx.platform.notice.core.sms.dao.SmsChannelConfigManager;
 import cn.bootx.platform.notice.core.sms.entity.SmsChannelConfig;
@@ -12,9 +13,12 @@ import cn.bootx.platform.notice.event.sms.SmsChannelUpdateEvent;
 import cn.bootx.platform.notice.param.sms.SmsChannelConfigParam;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.dromara.sms4j.aliyun.config.AlibabaConfig;
+import org.dromara.sms4j.api.universal.SupplierConfig;
 import org.dromara.sms4j.cloopen.config.CloopenConfig;
 import org.dromara.sms4j.comm.exception.SmsBlendException;
 import org.dromara.sms4j.core.config.SupplierFactory;
@@ -31,6 +35,7 @@ import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.function.Function;
@@ -44,6 +49,45 @@ public class SmsChannelConfigService {
     private final SmsChannelConfigManager configManager;
 
     private final ApplicationEventPublisher eventPublisher;
+
+    /**
+     * 添加
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void add(Map<String,Object> map){
+        SmsChannelConfigParam param = BeanUtil.toBean(map, SmsChannelConfigParam.class);
+        SmsChannelConfig channelConfig = SmsChannelConfig.init(param);
+        // 编码不能重复
+        if (configManager.existsByCode(param.getCode())) {
+            throw new BizException("编码已存在");
+        }
+        String supplierConfig = getSupplierConfig(channelConfig, map);
+        channelConfig.setConfig(supplierConfig);
+        configManager.save(channelConfig);
+        this.initChannelConfig(channelConfig);
+        eventPublisher.publishEvent(new SmsChannelAddEvent(this,channelConfig.toDto()));
+    }
+
+    /**
+     * 更新
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void update(Map<String,Object> map){
+        SmsChannelConfigParam param = BeanUtil.toBean(map, SmsChannelConfigParam.class);
+        SmsChannelConfig channelConfig = configManager.findById(param.getId())
+                .orElseThrow(DataNotExistException::new);
+        // 编码不能重复
+        if (configManager.existsByCode(param.getCode(), param.getId())) {
+            throw new BizException("编码已存在");
+        }
+        BeanUtil.copyProperties(param, channelConfig, CopyOptions.create().ignoreNullValue());
+        String supplierConfig = getSupplierConfig(channelConfig, map);
+        channelConfig.setConfig(supplierConfig);
+        configManager.updateById(channelConfig);
+        this.initChannelConfig(channelConfig);
+        eventPublisher.publishEvent(new SmsChannelUpdateEvent(this,channelConfig.toDto()));
+    }
+
 
     /**
      * 查询全部配置
@@ -65,37 +109,15 @@ public class SmsChannelConfigService {
     }
 
     /**
-     * 添加
+     * 根据ID查询
      */
-    public void add(SmsChannelConfigParam param){
-        SmsChannelConfig channelConfig = SmsChannelConfig.init(param);
-        // 编码不能重复
-        if (configManager.existsByCode(param.getCode())) {
-            throw new BizException("编码已存在");
-        }
-        configManager.save(channelConfig);
-        this.initChannelConfig(channelConfig);
-        eventPublisher.publishEvent(new SmsChannelAddEvent(this,channelConfig.toDto()));
-    }
-
-    /**
-     * 更新
-     */
-    public void update(SmsChannelConfigParam param){
-        SmsChannelConfig channelConfig = configManager.findById(param.getId())
+    public SmsChannelConfigDto findById(Long id) {
+        return configManager.findById(id).map(SmsChannelConfig::toDto)
                 .orElseThrow(DataNotExistException::new);
-        // 编码不能重复
-        if (configManager.existsByCode(param.getCode(), param.getId())) {
-            throw new BizException("编码已存在");
-        }
-        BeanUtil.copyProperties(param, channelConfig, CopyOptions.create().ignoreNullValue());
-        configManager.updateById(channelConfig);
-        this.initChannelConfig(channelConfig);
-        eventPublisher.publishEvent(new SmsChannelUpdateEvent(this,channelConfig.toDto()));
     }
 
     /**
-     * 根据创查询
+     * 根据code查询
      */
     public SmsChannelConfigDto findByCode(String code) {
         return configManager.findByCode(code).map(SmsChannelConfig::toDto)
@@ -117,29 +139,98 @@ public class SmsChannelConfigService {
     public void initChannelConfig(SmsChannelConfig channelConfig){
         SupplierType supplierType = getSupplierType(channelConfig.getCode());
         String config = channelConfig.getConfig();
+        if (StrUtil.isBlank(config)){
+            return;
+        }
+        SupplierConfig bean;
         if (supplierType == SupplierType.ALIBABA) {
-            SupplierFactory.setAlibabaConfig(JacksonUtil.toBean(config,AlibabaConfig.class));
+            bean = JacksonUtil.toBean(config, AlibabaConfig.class);
         } else if (supplierType == SupplierType.HUAWEI) {
-            SupplierFactory.setHuaweiConfig(JacksonUtil.toBean(config,HuaweiConfig.class));
+            bean = JacksonUtil.toBean(config, HuaweiConfig.class);
         } else if (supplierType == SupplierType.UNI_SMS) {
-            SupplierFactory.setUniConfig(JacksonUtil.toBean(config,UniConfig.class));
+            bean = JacksonUtil.toBean(config, UniConfig.class);
         } else if (supplierType == SupplierType.TENCENT) {
-            SupplierFactory.setTencentConfig(JacksonUtil.toBean(config,TencentConfig.class));
+            bean = JacksonUtil.toBean(config, TencentConfig.class);
         } else if (supplierType == SupplierType.YUNPIAN) {
-            SupplierFactory.setYunpianConfig(JacksonUtil.toBean(config,YunpianConfig.class));
+            bean = JacksonUtil.toBean(config, YunpianConfig.class);
         } else if (supplierType == SupplierType.JD_CLOUD) {
-            SupplierFactory.setJdCloudConfig(JacksonUtil.toBean(config,JdCloudConfig.class));
+            bean = JacksonUtil.toBean(config, JdCloudConfig.class);
         } else if (supplierType == SupplierType.CLOOPEN) {
-            SupplierFactory.setCloopenConfig(JacksonUtil.toBean(config,CloopenConfig.class));
+            bean = JacksonUtil.toBean(config, CloopenConfig.class);
         } else if (supplierType == SupplierType.EMAY) {
-            SupplierFactory.setEmayConfig(JacksonUtil.toBean(config,EmayConfig.class));
+            bean = JacksonUtil.toBean(config, EmayConfig.class);
         } else if (supplierType == SupplierType.CTYUN) {
-            SupplierFactory.setCtyunConfig(JacksonUtil.toBean(config,CtyunConfig.class));
+            bean = JacksonUtil.toBean(config, CtyunConfig.class);
         } else if (supplierType == SupplierType.NETEASE) {
-            SupplierFactory.setNeteaseConfig(JacksonUtil.toBean(config,NeteaseConfig.class));
+            bean = JacksonUtil.toBean(config, NeteaseConfig.class);
         } else {
             throw new SmsBlendException("短信加载失败！请检查配置类型.");
         }
+        SupplierFactory.setSupplierConfig(bean);
+    }
+
+    /**
+     * 获取供应商配置的序列化
+     */
+    private String getSupplierConfig(SmsChannelConfig channelConfig, Map<String,Object> map){
+        SupplierType supplierType = getSupplierType(channelConfig.getCode());
+        if (CollUtil.isEmpty(map)){
+            return null;
+        }
+        if (supplierType == SupplierType.ALIBABA) {
+            val bean = BeanUtil.toBean(map, AlibabaConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.HUAWEI) {
+            val bean = BeanUtil.toBean(map, HuaweiConfig.class);
+            bean.setAppKey(channelConfig.getAccessKey());
+            bean.setAppSecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.UNI_SMS) {
+            val bean = BeanUtil.toBean(map, UniConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.TENCENT) {
+            val bean = BeanUtil.toBean(map, TencentConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.YUNPIAN) {
+            val bean = BeanUtil.toBean(map, YunpianConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.JD_CLOUD) {
+            val bean = BeanUtil.toBean(map, JdCloudConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.CLOOPEN) {
+            val bean = BeanUtil.toBean(map, CloopenConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.EMAY) {
+            val bean = BeanUtil.toBean(map, EmayConfig.class);
+            bean.setAppId(channelConfig.getAccessKey());
+            bean.setSecretKey(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.CTYUN) {
+            val bean = BeanUtil.toBean(map, CtyunConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else if (supplierType == SupplierType.NETEASE) {
+            val bean = BeanUtil.toBean(map, NeteaseConfig.class);
+            bean.setAccessKeyId(channelConfig.getAccessKey());
+            bean.setAccessKeySecret(channelConfig.getAccessSecret());
+            return JacksonUtil.toJson(bean);
+        } else {
+            throw new SmsBlendException("短信加载失败！请检查配置类型.");
+        }
+
     }
 
     /**
