@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -26,16 +27,22 @@ public class SmsChannelConfigController {
 
     @Operation(summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody SmsChannelConfigParam param) {
-        configService.add(param);
+    public ResResult<Void> add(@RequestBody Map<String,Object> map) {
+        configService.add(map);
         return Res.ok();
     }
 
     @Operation(summary = "修改")
     @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody SmsChannelConfigParam param) {
-        configService.update(param);
+    public ResResult<Void> update(@RequestBody Map<String,Object> map) {
+        configService.update(map);
         return Res.ok();
+    }
+
+    @Operation(summary = "通过ID查询")
+    @GetMapping(value = "/findById")
+    public ResResult<SmsChannelConfigDto> findById(Long id) {
+        return Res.ok(configService.findById(id));
     }
 
     @Operation(summary = "通过Code查询")

@@ -31,6 +31,8 @@ public class SmsChannelConfigDto extends BaseDto {
     private String config;
     @Schema(description = "排序")
     private Double sortNo;
+    @Schema(description = "图片")
+    private Long image;
     @Schema(description = "备注")
     private String remark;
 
