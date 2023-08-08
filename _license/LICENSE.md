@@ -44,3 +44,6 @@ https://gitee.com/dromara/easy_trans
 
 vxe-table暗黑主题灵感
 https://github.com/adoin
+
+DFA算法实现的敏感词过滤工具，支持Skip参数控制敏感词干扰噪音，支持白名单跳过白名单词汇，支持在线添加和删除敏感词，管理敏感词库:
+https://gitee.com/humingzhang/wordfilter
