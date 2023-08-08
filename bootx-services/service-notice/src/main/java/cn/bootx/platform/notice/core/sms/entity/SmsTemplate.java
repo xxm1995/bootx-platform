@@ -1,18 +1,11 @@
 package cn.bootx.platform.notice.core.sms.entity;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
-
-import com.baomidou.mybatisplus.annotation.TableName;
+import cn.bootx.platform.notice.core.sms.convert.SmsTemplateConvert;
 import cn.bootx.platform.notice.dto.sms.SmsTemplateDto;
 import cn.bootx.platform.notice.param.sms.SmsTemplateParam;
-import cn.bootx.platform.notice.core.sms.convert.SmsTemplateConvert;
-
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -30,7 +23,7 @@ public class SmsTemplate extends MpBaseEntity implements EntityBaseFunction<SmsT
 
     /** 短信渠道商类型 */
     private String supplierType;
-    /** 短信渠道商类型 */
+    /** 短信模板id */
     private String templateId;
     /** 短信模板名称 */
     private String name;

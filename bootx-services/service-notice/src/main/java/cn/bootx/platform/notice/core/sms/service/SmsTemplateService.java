@@ -41,7 +41,6 @@ public class SmsTemplateService {
      */
     public void update(SmsTemplateParam param){
         SmsTemplate smsTemplate = smsTemplateManager.findById(param.getId()).orElseThrow(DataNotExistException::new);
-
         BeanUtil.copyProperties(param,smsTemplate, CopyOptions.create().ignoreNullValue());
         smsTemplateManager.updateById(smsTemplate);
     }
