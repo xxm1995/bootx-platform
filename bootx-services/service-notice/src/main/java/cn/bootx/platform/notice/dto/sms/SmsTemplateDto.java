@@ -19,7 +19,7 @@ public class SmsTemplateDto extends BaseDto {
 
     @Schema(description = "短信渠道商类型")
     private String supplierType;
-    @Schema(description = "短信渠道商类型")
+    @Schema(description = "短信模板id")
     private String templateId;
     @Schema(description = "短信模板名称")
     private String name;
