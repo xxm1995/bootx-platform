@@ -23,6 +23,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>cn.bootx</groupId>
+            <artifactId>mybatis-table-modify-mysql-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-annotation</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
@@ -65,10 +75,6 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-rabbitmq</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.bootx</groupId>
-            <artifactId>mybatis-table-modify-mysql-boot-starter</artifactId>
         </dependency>
     </dependencies>
 </project>

@@ -61,7 +61,7 @@ public class ${entityUpName}Controller {
 
     @Operation( summary = "分页查询")
     @GetMapping(value = "/page")
-    public ResResult<PageResult<${entityUpName}Dto>> page(PageParam pageParam, ${entityUpName}Param ${entityLowName}Param){
-        return Res.ok(${entityLowName}Service.page(pageParam,${entityLowName}Param));
+    public ResResult<PageResult<${entityUpName}Dto>> page(PageParam pageParam, ${entityUpName}Param query){
+        return Res.ok(${entityLowName}Service.page(pageParam,query));
     }
 }

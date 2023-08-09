@@ -1,15 +1,17 @@
 package cn.bootx.platform.baseapi.core.chinaword.entity;
 
+import cn.bootx.mybatis.table.modify.annotation.DbColumn;
 import cn.bootx.mybatis.table.modify.annotation.DbTable;
+import cn.bootx.platform.baseapi.core.chinaword.convert.ChinaWordConvert;
+import cn.bootx.platform.baseapi.dto.chinaword.ChinaWordDto;
+import cn.bootx.platform.baseapi.param.chinaword.ChinaWordParam;
+import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpDelEntity;
-import cn.bootx.platform.common.mybatisplus.handler.StringListTypeHandler;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import java.util.List;
 
 /**
  * 敏感词
@@ -20,20 +22,32 @@ import java.util.List;
 @Data
 @DbTable(comment = "敏感词")
 @Accessors(chain = true)
-@TableName(value = "base_china_word",autoResultMap = true)
-public class ChinaWord extends MpDelEntity {
+@TableName(value = "base_black_china_word",autoResultMap = true)
+public class ChinaWord extends MpDelEntity implements EntityBaseFunction<ChinaWordDto> {
 
     /** 敏感词 */
-    private String name;
+    @DbColumn(comment = "敏感词")
+    private String word;
+    /** 类型 */
+    @DbColumn(comment = "分类")
+    private String type;
     /** 描述 */
+    @DbColumn(comment = "描述")
     private String description;
-    /**
-     * 标签数组
-     * 不同的业务场景下，需要启用不同标签的敏感词。
-     *
-     */
-    @TableField(typeHandler = StringListTypeHandler.class)
-    private List<String> tags;
     /** 是否启用 */
+    @DbColumn(comment = "是否启用")
     private Boolean enable;
+    @Schema(description = "是否是白名单名词")
+    private Boolean white;
+
+    /** 创建对象 */
+    public static ChinaWord init(ChinaWordParam in) {
+        return ChinaWordConvert.CONVERT.convert(in);
+    }
+
+    /** 转换成dto */
+    @Override
+    public ChinaWordDto toDto() {
+        return ChinaWordConvert.CONVERT.convert(this);
+    }
 }

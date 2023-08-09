@@ -49,8 +49,8 @@ public class ${entityUpName}Service {
     /**
      * 分页
      */
-    public PageResult<${entityUpName}Dto> page(PageParam pageParam,${entityUpName}Param ${entityLowName}Param){
-        return MpUtil.convert2DtoPageResult(${entityLowName}Manager.page(pageParam,${entityLowName}Param));
+    public PageResult<${entityUpName}Dto> page(PageParam pageParam,${entityUpName}Param query){
+        return MpUtil.convert2DtoPageResult(${entityLowName}Manager.page(pageParam,query));
     }
 
     /**

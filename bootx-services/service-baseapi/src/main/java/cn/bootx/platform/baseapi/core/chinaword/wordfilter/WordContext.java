@@ -1,8 +1,17 @@
 package cn.bootx.platform.baseapi.core.chinaword.wordfilter;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.*;
+import lombok.Getter;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static cn.bootx.platform.baseapi.code.WordFilterCode.IS_END;
+import static cn.bootx.platform.baseapi.code.WordFilterCode.IS_WHITE_WORD;
+
 /**
  * 词库上下文环境
  * <p>
@@ -10,6 +19,9 @@ import java.util.*;
  *
  * @author minghu.zhang
  */
+@Getter
+@Service
+@Component
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class WordContext {
 
@@ -19,51 +31,15 @@ public class WordContext {
     private final Map wordMap = new HashMap(1024);
 
     /**
-     * 是否已初始化
+     * 初始化敏感词库
      */
-    private boolean init;
-    /**
-     * 黑名单列表
-     */
-    private final String blackList;
-    /**
-     * 白名单列表
-     */
-    private final String whiteList;
-
-    public WordContext() {
-        this.blackList = "/blacklist.txt";
-        this.whiteList = "/whitelist.txt";
-        initKeyWord();
-    }
-
-    public WordContext(String blackList, String whiteList) {
-        this.blackList = blackList;
-        this.whiteList = whiteList;
-        initKeyWord();
-    }
-
-    /**
-     * 获取初始化的敏感词列表
-     *
-     * @return 敏感词列表
-     */
-    public Map getWordMap() {
-        return wordMap;
-    }
-
-    /**
-     * 初始化
-     */
-    private synchronized void initKeyWord() {
+    public synchronized void initKeyWord(Iterable<String> blackList,Iterable<String> whiteList) {
         try {
-            if (!init) {
-                // 将敏感词库加入到HashMap中
-                addWord(readWordFile(blackList), WordType.BLACK);
-                // 将非敏感词库也加入到HashMap中
-                addWord(readWordFile(whiteList), WordType.WHITE);
-            }
-            init = true;
+            wordMap.clear();
+            // 将敏感词库加入到HashMap中
+            addWord(blackList, WordType.BLACK);
+            // 将非敏感词库也加入到HashMap中
+            addWord(whiteList, WordType.WHITE );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +51,7 @@ public class WordContext {
      * isEnd = 1 人 = {isEnd = 0 民 = {isEnd = 1} } 男 = { isEnd = 0 人 = { isEnd = 1 }
      * } } } 五 = { isEnd = 0 星 = { isEnd = 0 红 = { isEnd = 0 旗 = { isEnd = 1 } } } }
      */
-    public void addWord(Iterable<String> wordList, WordType wordType) {
+    public synchronized void addWord(Iterable<String> wordList, WordType wordType) {
         Map nowMap;
         Map<String, String> newWorMap;
         // 迭代keyWordSet
@@ -93,15 +69,15 @@ public class WordContext {
                     // 不存在则构建一个map，同时将isEnd设置为0，因为他不是最后一个
                     newWorMap = new HashMap<>(4);
                     // 不是最后一个
-                    newWorMap.put("isEnd", String.valueOf(EndType.HAS_NEXT.ordinal()));
+                    newWorMap.put(IS_END, String.valueOf(EndType.HAS_NEXT.ordinal()));
                     nowMap.put(keyChar, newWorMap);
                     nowMap = newWorMap;
                 }
 
                 if (i == key.length() - 1) {
                     // 最后一个
-                    nowMap.put("isEnd", String.valueOf(EndType.IS_END.ordinal()));
-                    nowMap.put("isWhiteWord", String.valueOf(wordType.ordinal()));
+                    nowMap.put(IS_END, String.valueOf(EndType.IS_END.ordinal()));
+                    nowMap.put(IS_WHITE_WORD, String.valueOf(wordType.ordinal()));
                 }
             }
         }
@@ -136,25 +112,25 @@ public class WordContext {
                     for (int j = cacheList.size() - 1; j >= 0; j--) {
                         Map cacheMap = cacheList.get(j);
                         if (j == cacheList.size() - 1) {
-                            if (String.valueOf(WordType.BLACK.ordinal()).equals(cacheMap.get("isWhiteWord"))) {
+                            if (String.valueOf(WordType.BLACK.ordinal()).equals(cacheMap.get(IS_WHITE_WORD))) {
                                 if (wordType == WordType.WHITE) {
                                     return;
                                 }
                             }
-                            if (String.valueOf(WordType.WHITE.ordinal()).equals(cacheMap.get("isWhiteWord"))) {
+                            if (String.valueOf(WordType.WHITE.ordinal()).equals(cacheMap.get(IS_WHITE_WORD))) {
                                 if (wordType == WordType.BLACK) {
                                     return;
                                 }
                             }
-                            cacheMap.remove("isWhiteWord");
-                            cacheMap.remove("isEnd");
-                            if (cacheMap.size() == 0) {
+                            cacheMap.remove(IS_WHITE_WORD);
+                            cacheMap.remove(IS_END);
+                            if (cacheMap.isEmpty()) {
                                 cleanable = true;
                                 continue;
                             }
                         }
                         if (cleanable) {
-                            Object isEnd = cacheMap.get("isEnd");
+                            Object isEnd = cacheMap.get(IS_END);
                             if (String.valueOf(EndType.IS_END.ordinal()).equals(isEnd)) {
                                 cleanable = false;
                             }
@@ -169,26 +145,5 @@ public class WordContext {
                 }
             }
         }
-    }
-
-    /**
-     * 读取敏感词库中的内容，将内容添加到set集合中
-     */
-    private Set<String> readWordFile(String file) throws Exception {
-        Set<String> set;
-        // 字符编码
-        String encoding = "UTF-8";
-        try (InputStreamReader read = new InputStreamReader(
-                this.getClass().getResourceAsStream(file), encoding)) {
-            set = new HashSet<>();
-            BufferedReader bufferedReader = new BufferedReader(read);
-            String txt;
-            // 读取文件，将文件内容放入到set中
-            while ((txt = bufferedReader.readLine()) != null) {
-                set.add(txt);
-            }
-        }
-        // 关闭文件流
-        return set;
     }
 }

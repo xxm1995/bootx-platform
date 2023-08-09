@@ -1,5 +1,8 @@
 package cn.bootx.platform.baseapi.core.chinaword.wordfilter;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,21 +13,11 @@ import java.util.Objects;
  *
  * @author minghu.zhang
  */
+@Component
+@RequiredArgsConstructor
 @SuppressWarnings("rawtypes")
 public class WordFilter {
-
-    /**
-     * 敏感词表
-     */
-    private final Map wordMap;
-
-    /**
-     * 构造函数
-     */
-    public WordFilter(WordContext context) {
-        this.wordMap = context.getWordMap();
-    }
-
+    private final WordContext context;
     /**
      * 替换敏感词
      *
@@ -36,6 +29,11 @@ public class WordFilter {
 
     /**
      * 替换敏感词
+     * 查找敏感词，距离越长，过滤越严格，效率越低，开发者可以根据具体需求设置，
+     * 这里以“紧急”为敏感词举例，以此类推:
+     * 0 匹配紧急
+     * 1 匹配不紧不急，紧x急
+     * 2 匹配紧急，紧x急，紧xx急
      *
      * @param text   输入文本
      * @param symbol 替换符号
@@ -78,7 +76,12 @@ public class WordFilter {
     }
 
     /**
-     * 是否包含敏感词
+     * 是否包含敏感词,  程序会跳过不同的距离，
+     * 查找敏感词，距离越长，过滤越严格，效率越低，开发者可以根据具体需求设置，
+     * 这里以“紧急”为敏感词举例，以此类推:
+     * 0 匹配紧急
+     * 1 匹配不紧不急，紧x急
+     * 2 匹配紧急，紧x急，紧xx急
      *
      * @param text 输入文本
      * @param skip 文本距离
@@ -177,7 +180,7 @@ public class WordFilter {
     private FlagIndex getFlagIndex(final char[] charset, final int begin, final int skip) {
         FlagIndex fi = new FlagIndex();
 
-        Map current = wordMap;
+        Map current = context.getWordMap();
         boolean flag = false;
         int count = 0;
         List<Integer> index = new ArrayList<>();
