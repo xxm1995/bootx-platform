@@ -17,7 +17,7 @@ public class ChinaWordVerifyResult {
     @Schema(description = "是否敏感")
     private boolean sensitive;
     @Schema(description = "敏感词数量")
-    private Integer count;
+    private int count;
     @Schema(description = "脱敏后的文本")
     private String text;
 }

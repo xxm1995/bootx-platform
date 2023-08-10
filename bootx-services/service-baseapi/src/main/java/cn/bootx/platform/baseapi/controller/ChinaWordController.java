@@ -2,7 +2,9 @@ package cn.bootx.platform.baseapi.controller;
 
 import cn.bootx.platform.baseapi.core.chinaword.service.ChinaWordService;
 import cn.bootx.platform.baseapi.dto.chinaword.ChinaWordDto;
+import cn.bootx.platform.baseapi.dto.chinaword.ChinaWordVerifyResult;
 import cn.bootx.platform.baseapi.param.chinaword.ChinaWordParam;
+import cn.bootx.platform.baseapi.param.chinaword.ChinaWordVerifyParam;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
@@ -47,14 +49,6 @@ public class ChinaWordController {
         return Res.ok();
     }
 
-
-    @Operation( summary = "添加")
-    @PostMapping(value = "/verify")
-    public ResResult<Void> verify(@RequestBody ChinaWordParam param){
-        chinaWordService.add(param);
-        return Res.ok();
-    }
-
     @Operation( summary = "通过ID查询")
     @GetMapping(value = "/findById")
     public ResResult<ChinaWordDto> findById(Long id){
@@ -66,6 +60,12 @@ public class ChinaWordController {
     public ResResult<ChinaWordDto> refresh(){
         chinaWordService.refresh();
         return Res.ok();
+    }
+
+    @Operation( summary = "测试敏感词效果")
+    @PostMapping(value = "/verify")
+    public ResResult<ChinaWordVerifyResult> verify(@RequestBody ChinaWordVerifyParam param){
+        return Res.ok(chinaWordService.verify(param.getText(),param.getSkip(),param.getSymbol()));
     }
 
     @Operation( summary = "查询所有")
