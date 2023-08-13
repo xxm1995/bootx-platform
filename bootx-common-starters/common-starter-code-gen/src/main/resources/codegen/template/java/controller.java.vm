@@ -47,6 +47,13 @@ public class ${entityUpName}Controller {
         return Res.ok();
     }
 
+    @Operation(summary = "批量删除")
+    @DeleteMapping("/deleteBatch")
+    public ResResult<Void> deleteBatch(@RequestBody List<Long> ids) {
+        ${entityLowName}Service.deleteBatch(ids);
+        return Res.ok();
+    }
+
     @Operation( summary = "通过ID查询")
     @GetMapping(value = "/findById")
     public ResResult<${entityUpName}Dto> findById(Long id){

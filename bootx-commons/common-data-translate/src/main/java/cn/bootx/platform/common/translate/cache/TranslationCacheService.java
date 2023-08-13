@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
+ * 翻译缓存服务
  * @author xxm
  * @since 2023/1/30
  */

@@ -9,11 +9,19 @@ import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
+import cn.hutool.core.io.IoUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.*;
+import java.nio.file.Files;
 import java.util.List;
 
 /**
@@ -78,5 +86,21 @@ public class ChinaWordController {
     @GetMapping(value = "/page")
     public ResResult<PageResult<ChinaWordDto>> page(PageParam pageParam, ChinaWordParam query){
         return Res.ok(chinaWordService.page(pageParam,query));
+    }
+
+    @Operation(summary = "批量导入")
+    @PostMapping("/importBatch")
+    public ResResult<Void> local(MultipartFile file, String type) throws IOException {
+        chinaWordService.importBatch(file, type);
+        return Res.ok();
+    }
+
+    @Operation(summary = "获取模板")
+    @GetMapping("/getTemplate")
+    public ResponseEntity<byte[]> getTemplate() throws IOException {
+        InputStream is = Files.newInputStream(new File("D:/data/洛阳工作量报价.xlsx").toPath());
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<>(IoUtil.readBytes(is), headers, HttpStatus.OK);
     }
 }

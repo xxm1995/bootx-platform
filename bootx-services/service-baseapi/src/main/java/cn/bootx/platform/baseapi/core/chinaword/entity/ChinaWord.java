@@ -22,7 +22,7 @@ import lombok.experimental.Accessors;
 @Data
 @DbTable(comment = "敏感词")
 @Accessors(chain = true)
-@TableName(value = "base_black_china_word",autoResultMap = true)
+@TableName(value = "base_china_word",autoResultMap = true)
 public class ChinaWord extends MpDelEntity implements EntityBaseFunction<ChinaWordDto> {
 
     /** 敏感词 */

@@ -62,6 +62,16 @@ export function del(id) {
 }
 
 /**
+ * 批量删除
+ */
+export function deleteBatch(ids) {
+  return defHttp.delete({
+    url: '${requestPath}/template/delete',
+    data: ids,
+  })
+}
+
+/**
  * ${comments}
  */
 export interface ${entityUpName} extends BaseEntity {

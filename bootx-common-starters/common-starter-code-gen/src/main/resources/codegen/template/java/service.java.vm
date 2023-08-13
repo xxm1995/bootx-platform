@@ -73,4 +73,12 @@ public class ${entityUpName}Service {
     public void delete(Long id){
         ${entityLowName}Manager.deleteById(id);
     }
+
+
+    /**
+     * 批量删除
+     */
+    public void deleteBatch(List<Long> ids){
+        ${entityLowName}Manager.deleteByIds(ids);
+    }
 }
