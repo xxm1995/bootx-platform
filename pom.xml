@@ -47,32 +47,24 @@
         <url>https://gitee.com/bootx/bootx-platform</url>
     </scm>
 
+    <modules>
+        <module>bootx-common-core</module>
+        <module>bootx-common-starters</module>
+        <module>bootx-commons</module>
+        <module>bootx-services</module>
+    </modules>
 
     <profiles>
         <!-- 非部署模式 -->
         <profile>
             <id>noDeploy</id>
             <modules>
-                <module>bootx-common-core</module>
-                <module>bootx-common-starters</module>
-                <module>bootx-commons</module>
-                <module>bootx-services</module>
                 <module>bootx-start</module>
                 <module>bootx-demo</module>
             </modules>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-        </profile>
-        <!-- 部署模式 -->
-        <profile>
-            <id>deploy</id>
-            <modules>
-                <module>bootx-common-core</module>
-                <module>bootx-common-starters</module>
-                <module>bootx-commons</module>
-                <module>bootx-services</module>
-            </modules>
         </profile>
     </profiles>
 

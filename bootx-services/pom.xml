@@ -7,9 +7,6 @@
         <artifactId>bootx-platform-parent</artifactId>
         <version>1.3.3</version>
     </parent>
-    <modules>
-        <module>service-miniapp</module>
-    </modules>
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,28 +14,23 @@
     <packaging>pom</packaging>
     <description>业务服务父pom</description>
 
+    <modules>
+        <module>service-baseapi</module>
+        <module>service-iam</module>
+        <module>service-notice</module>
+    </modules>
+
     <profiles>
-        <!-- 非部署模式 -->
+        <!-- 不发布到maven中央仓库的模块 -->
         <profile>
             <id>noDeploy</id>
             <modules>
-                <module>service-baseapi</module>
-                <module>service-iam</module>
-                <module>service-notice</module>
                 <module>service-visualization</module>
+                <module>service-miniapp</module>
             </modules>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-        </profile>
-        <!-- 部署模式 -->
-        <profile>
-            <id>deploy</id>
-            <modules>
-                <module>service-baseapi</module>
-                <module>service-iam</module>
-                <module>service-notice</module>
-            </modules>
         </profile>
     </profiles>
 
