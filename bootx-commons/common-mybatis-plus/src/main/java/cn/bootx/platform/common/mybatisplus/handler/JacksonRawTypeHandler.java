@@ -9,7 +9,8 @@ import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
 
 /**
- * Jackson 实现 JSON 字段类型处理器, 会记录对象属性类型, 通常用于被容器(List、Set、Map)包装的属性上
+ * Jackson 实现 JSON 字段类型处理器, 会记录对象属性类型, 通常用于储存不确定对象的属性上
+ * 例如: 泛型对象、存储的数据是字段类型的子类等
  *
  * @author xxm
  * @since 2022/7/11
