@@ -1,11 +1,13 @@
 package cn.bootx.platform.iam.core.auth.service;
 
+import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.platform.common.core.exception.BizException;
+import cn.bootx.platform.iam.code.UserStatusCode;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
+import cn.bootx.platform.iam.dto.auth.LoginContentResult;
 import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
-import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
-import cn.bootx.platform.iam.code.UserStatusCode;
+import cn.bootx.platform.iam.param.auth.LoginContentParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,20 @@ public class AuthAssistService {
         }
         // 有效期5分钟
         captchaService.sendSmsCaptcha(phone, 5 * 60, smsCaptchaType);
+    }
+
+    /**
+     * 登录⻚上下⽂信息
+     */
+    public LoginContentResult getLoginContent(LoginContentParam param){
+        return null;
+    }
+
+    /**
+     * 二次校验信息
+     */
+    public void getSecondCheck(){
+
     }
 
 }

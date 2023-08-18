@@ -22,6 +22,9 @@ public class JacksonRawTypeHandler extends AbstractJsonTypeHandler<Object> {
 
     private final Class<?> type;
 
+    /**
+     * @param type 对象类型
+     */
     public JacksonRawTypeHandler(Class<?> type) {
         if (log.isTraceEnabled()) {
             log.trace("JacksonRawTypeHandler(" + type + ")");
@@ -35,6 +38,10 @@ public class JacksonRawTypeHandler extends AbstractJsonTypeHandler<Object> {
         return JacksonUtil.toTypeBean(json, type);
     }
 
+    /**
+     *
+     * @param obj
+     */
     @Override
     protected String toJson(Object obj) {
         return JacksonUtil.toTypeJson(obj);

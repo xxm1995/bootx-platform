@@ -38,6 +38,12 @@
             <artifactId>service-baseapi</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+        <!--平台服务 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-platform</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
         <!-- 审计日志 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
