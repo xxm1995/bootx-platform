@@ -1,5 +1,6 @@
 package cn.bootx.platform.starter.file.service;
 
+import cn.bootx.platform.starter.file.code.FileUploadTypeEnum;
 import cn.bootx.platform.starter.file.configuration.FileUploadProperties;
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.function.ParamService;
@@ -7,9 +8,12 @@ import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.starter.file.dao.UpdateFileManager;
+import cn.bootx.platform.starter.file.dto.TempCredential;
 import cn.bootx.platform.starter.file.dto.UpdateFileDto;
 import cn.bootx.platform.starter.file.entity.UpdateFileInfo;
 import cn.bootx.platform.starter.file.entity.UploadFileContext;
+import cn.bootx.platform.starter.file.service.impl.OssUploadService;
+import cn.bootx.platform.starter.file.service.impl.TencentOssUploadService;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.IdUtil;
@@ -187,4 +191,12 @@ public class FileUploadService {
         return serverUrl;
     }
 
+    public  TempCredential getTempCredentials() {
+
+        TencentOssUploadService ossUploadService=(TencentOssUploadService)uploadServices.stream().filter(s -> s.enable(FileUploadTypeEnum.TENCENT_OSS))
+                .findFirst().orElseThrow(() -> new BizException("未找到该类文件的处理器"));
+
+        return ossUploadService.getTemplateCredential();
+
+    }
 }

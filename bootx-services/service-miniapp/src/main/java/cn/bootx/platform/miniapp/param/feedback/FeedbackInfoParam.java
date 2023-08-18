@@ -3,6 +3,7 @@ package cn.bootx.platform.miniapp.param.feedback;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +30,7 @@ public class FeedbackInfoParam {
     private String name;
     @Schema(description = "反馈用户ID")
     private Long userId;
+    @Length(max = 200,min = 1,message = "反馈内容长度应处于1到1000之间")
     @Schema(description = "内容")
     private String content;
 

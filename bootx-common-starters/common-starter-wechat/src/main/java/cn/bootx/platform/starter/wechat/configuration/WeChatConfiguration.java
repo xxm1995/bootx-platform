@@ -1,5 +1,9 @@
 package cn.bootx.platform.starter.wechat.configuration;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.mp.api.*;
 import me.chanjar.weixin.mp.api.impl.*;
@@ -19,6 +23,8 @@ import org.springframework.context.annotation.Configuration;
 public class WeChatConfiguration {
 
     private final WeChatProperties weChatProperties;
+
+    private final WeChatAppletProperties weChatAppletProperties;
 
     /**
      * 微信公众号APIService
@@ -42,5 +48,17 @@ public class WeChatConfiguration {
         config.setAesKey(weChatProperties.getEncodingAesKey()); // 消息加解密密钥
         return config;
     }
-
+    @Bean
+    public WxMaService wxMaService(WxMaConfig wxMaConfigStorage) {
+        WxMaService wxMpService = new WxMaServiceImpl();
+        wxMpService.setWxMaConfig(wxMaConfigStorage);
+        return wxMpService;
+    }
+    @Bean
+    public WxMaConfig wxMaConfigStorage() {
+        WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
+        config.setAppid(weChatAppletProperties.getAppId()); // 设置微信公众号的appid
+        config.setSecret(weChatAppletProperties.getAppSecret()); // 设置微信公众号的app corpSecret
+        return config;
+    }
 }

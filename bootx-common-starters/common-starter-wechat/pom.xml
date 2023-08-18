@@ -43,6 +43,26 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- weixin-java 公众号（包括订阅号和服务号） -->
+        <dependency>
+            <groupId>com.github.binarywang</groupId>
+            <artifactId>weixin-java-miniapp</artifactId>
+            <version>${wxjava.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-io</artifactId>
+                    <groupId>commons-io</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.thoughtworks.xstream</groupId>
+                    <artifactId>xstream</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- TODO 有cve高危漏洞, 先替换下版本 -->
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>

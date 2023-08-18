@@ -1,5 +1,6 @@
 package cn.bootx.platform.miniapp.controller;
 
+import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
@@ -10,6 +11,9 @@ import cn.bootx.platform.miniapp.param.feedback.FeedbackInfoParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +32,10 @@ public class FeedbackInfoController {
 
     @Operation( summary = "添加")
     @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody FeedbackInfoParam param){
+    public ResResult<Void> add(@Validated  @RequestBody FeedbackInfoParam param, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            throw new BizException("参数绑定异常");
+        }
         feedbackInfoService.add(param);
         return Res.ok();
     }

@@ -5,6 +5,7 @@ import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
+import cn.bootx.platform.starter.file.dto.TempCredential;
 import cn.bootx.platform.starter.file.dto.UpdateFileDto;
 import cn.bootx.platform.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,7 +49,7 @@ public class FIleUpLoadController {
 
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         uploadService.delete(id);
         return Res.ok();
     }
@@ -81,6 +82,12 @@ public class FIleUpLoadController {
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> download(@PathVariable Long id) {
         return uploadService.download(id);
+    }
+
+    @Operation(summary = "获取临时oss密钥")
+    @GetMapping("/getTempCredentials")
+    public ResResult<TempCredential> getTempCredentials() {
+        return Res.ok(uploadService.getTempCredentials());
     }
 
 }
