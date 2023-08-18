@@ -1,5 +1,6 @@
 package cn.bootx.platform.demo.core.query.service;
 
+import cn.bootx.platform.common.core.annotation.QueryParam;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
  * @author xxm
  * @since 2022/2/21
  */
+@QueryParam(type = QueryParam.CompareTypeEnum.LIKE)
 @Slf4j
 @Service
 @RequiredArgsConstructor

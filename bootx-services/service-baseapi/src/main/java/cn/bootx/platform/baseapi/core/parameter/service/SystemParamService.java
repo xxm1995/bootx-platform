@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * 系统参数
@@ -117,7 +118,11 @@ public class SystemParamService implements ParamService {
      */
     @Override
     public String getValue(String key) {
-        return systemParamManager.findByParamKey(key).map(SystemParameter::getValue).orElse(null);
+        Optional<SystemParameter> opt = systemParamManager.findByParamKey(key);
+        if (opt.isPresent()&&Objects.equals(opt.get().getEnable(), true)) {
+            return opt.map(SystemParameter::getValue).orElse(null);
+        }
+        return null;
     }
 
 }

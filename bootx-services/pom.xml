@@ -18,6 +18,7 @@
         <module>service-baseapi</module>
         <module>service-iam</module>
         <module>service-notice</module>
+        <module>service-platform</module>
     </modules>
 
     <profiles>

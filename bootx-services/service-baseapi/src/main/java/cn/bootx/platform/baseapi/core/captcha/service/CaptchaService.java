@@ -2,7 +2,6 @@ package cn.bootx.platform.baseapi.core.captcha.service;
 
 import cn.bootx.platform.baseapi.dto.captcha.CaptchaDataResult;
 import cn.bootx.platform.common.redis.RedisClient;
-import cn.bootx.platform.common.websocket.service.UserWsNoticeService;
 import cn.hutool.core.util.RandomUtil;
 import com.wf.captcha.ArithmeticCaptcha;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +29,6 @@ public class CaptchaService {
 
     /** 邮箱验证码前缀 */
     private final String emailCaptchaPrefix = "email:captcha:";
-
-    private final UserWsNoticeService userWsNoticeService;
 
     private final RedisClient redisClient;
 
