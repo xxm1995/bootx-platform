@@ -92,7 +92,6 @@ public class TencentOssUploadService implements UploadService {
     public TempCredential getTemplateCredential() {
         TempCredential tempCredential;
         FileUploadProperties.TencentOss oss = fileUploadProperties.getTencentOss();
-
         TreeMap<String, Object> config = new TreeMap<String, Object>();
         config.put("secretId", oss.getSecretId());
         config.put("secretKey", oss.getSecretKey());
@@ -115,6 +114,7 @@ public class TencentOssUploadService implements UploadService {
                 "name/cos:UploadPart",
                 "name/cos:CompleteMultipartUpload"
         };
+
         config.put("allowActions", allowActions);
         try {
             Response response = CosStsClient.getCredential(config);
@@ -126,21 +126,24 @@ public class TencentOssUploadService implements UploadService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
         LocalDateTime startTime = LocalDateTime.now();
-
         LocalDateTime endTime = startTime.plus(5, MINUTES);
-        String keyTime = LocalDateTimeUtil.toEpochMilli(startTime) / 1000 + ":" + LocalDateTimeUtil.toEpochMilli(endTime) / 1000;
+        String keyTime = LocalDateTimeUtil.toEpochMilli(startTime) / 1000 + ";" + LocalDateTimeUtil.toEpochMilli(endTime) / 1000;
         TreeMap<String, String> formData = new TreeMap<>();
         ObjectNode root = objectMapper.createObjectNode();
-
-        root.put("expiration", endTime.plus(30, MINUTES).atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of("Z")).withNano(0).toString());
-       // root.put("expiration", endTime.plus(30, MINUTES).withNano(0).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        root.put("expiration", endTime.plus(30, MINUTES).withNano(0).atZone(ZoneId.of("Z"))
+                .toString());
         ArrayNode conditions = objectMapper.createArrayNode();
         root.putIfAbsent("conditions", conditions);
         ObjectNode child = objectMapper.createObjectNode();
+        child.put("acl", "default");
+        child = objectMapper.createObjectNode();
         child.put("bucket", oss.getBucket());
+        ArrayNode tempArr = objectMapper.createArrayNode();
+        tempArr.add("starts-with");
+        tempArr.add("$key");
+        tempArr.add("bootx/");
+        conditions.addPOJO(tempArr);
         conditions.addPOJO(child);
         child = objectMapper.createObjectNode();
         child.put("q-sign-algorithm", "sha1");
@@ -153,19 +156,17 @@ public class TencentOssUploadService implements UploadService {
         child.put("q-sign-time", keyTime);
         conditions.addPOJO(child);
         formData.put("x-cos-security-token", tempCredential.getSessionToken());
-
-        formData.put("policy", Base64Encoder.encode(JacksonUtil.toJson(root)));
+        String policyText= JacksonUtil.toJson(root);
+        formData.put("policy",Base64Encoder.encode(policyText));
+        formData.put("acl", "default");
         formData.put("q-sign-algorithm", "sha1");
-
         formData.put("q-ak", tempCredential.getTmpSecretId());
-
         formData.put("q-key-time", keyTime);
-
         String signKey = SecureUtil.hmacSha1(tempCredential.getTmpSecretKey()).digestHex(keyTime);
-        String stringToSign = SecureUtil.sha1(signKey);
+        String stringToSign = SecureUtil.sha1().digestHex(policyText);
         String signature = SecureUtil.hmacSha1(signKey).digestHex(stringToSign);
         formData.put("q-signature", signature);
-
+        log.info("signKey:{},stringToSign:{},signature:{}",signKey,stringToSign,signature);
         tempCredential.setFormData(formData);
         tempCredential.setUploadUrl("https://" + oss.getBucket() + ".cos.ap-beijing.myqcloud.com");
         return tempCredential;
