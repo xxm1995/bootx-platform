@@ -29,6 +29,10 @@ public class UserThirdBindInfo {
     @Schema(description = "钉钉绑定信息")
     private BindInfo dingTalk;
 
+    @Schema(description = "钉钉绑定信息")
+    private BindInfo weChatApplet;
+
+
     @Getter
     @Setter
     @Schema(title = "用户信息")

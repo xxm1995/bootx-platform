@@ -2,9 +2,12 @@ package cn.bootx.platform.iam.core.auth.login;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.jackson.util.JacksonUtil;
 import cn.bootx.platform.iam.core.third.dao.UserThirdManager;
 import cn.bootx.platform.iam.core.third.entity.UserThird;
+import cn.bootx.platform.iam.core.third.entity.UserThirdInfo;
+import cn.bootx.platform.iam.core.third.service.UserTiredOperateService;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
 import cn.bootx.platform.starter.auth.authentication.OpenIdAuthentication;
@@ -14,6 +17,8 @@ import cn.bootx.platform.starter.auth.entity.AuthInfoResult;
 import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
 import cn.bootx.platform.starter.auth.entity.ThirdAuthCode;
 import cn.bootx.platform.starter.auth.exception.LoginFailureException;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
+import cn.bootx.platform.starter.wechat.core.user.service.WeChatUserService;
 import cn.hutool.http.HttpUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +31,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @Component
@@ -33,11 +39,15 @@ import java.util.Map;
 public class WeChatAppletLoginHandler implements OpenIdAuthentication {
 
 
+    private final UserTiredOperateService userTiredOperateService;
     private final WxMaService wxMaService;
 
     private final UserThirdManager userThirdManager;
 
     private final UserInfoManager userInfoManager;
+
+
+    private final WeChatUserService weChatUserService;
 
     @Override
     public String getLoginType() {
@@ -98,8 +108,8 @@ public class WeChatAppletLoginHandler implements OpenIdAuthentication {
             WxMaJscode2SessionResult result = wxMaService.getUserService().getSessionInfo(authCode);
             log.debug("微信服务器返回的用户信息:{}", JacksonUtil.toJson(result));
             return AuthUser.builder()
-                    .avatar(null)
-                    .uuid(result.getUnionid()).
+                    .avatar("")
+                    .uuid(result.getOpenid()).
                     nickname("未知")
                     .username("未知")
                     .avatar("未知")
@@ -113,6 +123,17 @@ public class WeChatAppletLoginHandler implements OpenIdAuthentication {
 
     @Override
     public void bindUser(String authCode, String state) {
-        OpenIdAuthentication.super.bindUser(authCode, state);
+        Long userId = SecurityUtil.getUserId();
+        AuthUser authUser = this.getAuthUser(authCode, state);
+        userTiredOperateService.checkOpenIdBind(authUser.getUuid(), UserThird::getWeChatId);
+        userTiredOperateService.bindOpenId(userId, authUser.getUuid(), UserThird::setWeChatId);
+
+        UserThirdInfo userThirdInfo = new UserThirdInfo().setUserId(userId)
+                .setClientCode(AuthLoginTypeCode.WE_CHAT)
+                .setUsername(authUser.getUsername())
+                .setNickname(authUser.getNickname())
+                .setAvatar(authUser.getAvatar())
+                .setThirdUserId(authUser.getUuid());
+        userTiredOperateService.bindOpenInfo(userThirdInfo);
     }
 }
