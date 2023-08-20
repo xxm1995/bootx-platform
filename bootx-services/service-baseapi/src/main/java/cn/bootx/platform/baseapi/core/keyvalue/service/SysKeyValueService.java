@@ -7,6 +7,7 @@ import cn.bootx.platform.baseapi.core.keyvalue.entity.SysKeyValue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,11 +55,15 @@ public class SysKeyValueService implements SystemKeyValueService {
     }
 
     /**
-     * 设置多个
+     * 保存多个值
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void setupBatch(List<KeyValue> list) {
-
+        List<SysKeyValue> collect = list.stream()
+                .map(SysKeyValue::init)
+                .collect(Collectors.toList());
+        sysKeyValueManager.saveAll(collect);
     }
 
 }

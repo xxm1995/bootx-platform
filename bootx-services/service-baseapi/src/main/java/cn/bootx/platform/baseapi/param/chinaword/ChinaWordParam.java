@@ -25,7 +25,7 @@ public class ChinaWordParam {
     private String description;
     @Schema(description = "是否启用")
     private Boolean enable;
-    @Schema(description = "是否是白名单名词")
+    @Schema(description = "白名单名词")
     private Boolean white;
 
 }

@@ -1,7 +1,7 @@
 package cn.bootx.platform.baseapi.core.keyvalue.entity;
 
 import cn.bootx.platform.common.core.rest.dto.KeyValue;
-import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.platform.common.mybatisplus.base.MpDelEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +21,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 @TableName("base_key_value")
-public class SysKeyValue extends MpBaseEntity {
+public class SysKeyValue extends MpDelEntity {
 
     /**
      * key值

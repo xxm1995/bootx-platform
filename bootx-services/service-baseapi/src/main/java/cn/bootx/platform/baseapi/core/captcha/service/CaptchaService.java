@@ -48,6 +48,7 @@ public class CaptchaService {
 
     /**
      * 校验图片验证码
+     * @param key 验证码Key
      */
     public boolean validateImgCaptcha(String key, String captcha) {
         // 比较验证码是否正确
@@ -56,7 +57,8 @@ public class CaptchaService {
     }
 
     /**
-     * 失效图片验证码
+     * 将图片验证码设置为失效
+     * @param key 验证码Key
      */
     public void deleteImgCaptcha(String key) {
         redisClient.deleteKey(imgCaptchaPrefix + key);
@@ -64,6 +66,10 @@ public class CaptchaService {
 
     /**
      * 发送手机验证码
+     * @param phone 手机号
+     * @param timeoutSec 超时时间
+     * @param type 业务类型, 用来区分不同业务的短信验证码
+     * @return 验证码
      */
     public int sendSmsCaptcha(String phone, long timeoutSec, String type) {
         int captcha = RandomUtil.randomInt(100000, 1000000);
@@ -73,7 +79,7 @@ public class CaptchaService {
     }
 
     /**
-     * 手机发送的验证码是否还有效
+     * 验证手机发送的验证码是否还在有效时间内
      */
     public boolean existsSmsCaptcha(String phone, String type) {
         return redisClient.exists(getSmsCaptchaPrefix(type) + phone);
@@ -89,7 +95,7 @@ public class CaptchaService {
     }
 
     /**
-     * 失效手机验证码
+     * 将手机验证码验证码设置为失效
      */
     public void deleteSmsCaptcha(String phone, String type) {
         redisClient.deleteKey(getSmsCaptchaPrefix(type) + phone);

@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Set;
+
 /**
  * 敏感词验证结果
  * @author xxm
@@ -18,6 +20,8 @@ public class ChinaWordVerifyResult {
     private boolean sensitive;
     @Schema(description = "敏感词数量")
     private int count;
+    @Schema(description = "去重后的敏感词列表")
+    private Set<String> sensitiveWords;
     @Schema(description = "脱敏后的文本")
     private String text;
 }

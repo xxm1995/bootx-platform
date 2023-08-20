@@ -3,10 +3,7 @@ package cn.bootx.platform.baseapi.core.chinaword.wordfilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 敏感词过滤器
@@ -139,7 +136,7 @@ public class WordFilter {
      *
      * @param text 输入文本
      */
-    public List<String> wordList(final String text) {
+    public Set<String> wordList(String text) {
         return wordList(text, 0);
     }
 
@@ -149,8 +146,8 @@ public class WordFilter {
      * @param text 输入文本
      * @param skip 文本距离
      */
-    public List<String> wordList(final String text, final int skip) {
-        List<String> wordList = new ArrayList<>();
+    public Set<String> wordList(final String text, final int skip) {
+        Set<String> wordSet = new LinkedHashSet<>();
         char[] charset = text.toCharArray();
         for (int i = 0; i < charset.length; i++) {
             FlagIndex fi = getFlagIndex(charset, i, skip);
@@ -163,11 +160,11 @@ public class WordFilter {
                         char word = text.charAt(j);
                         builder.append(word);
                     }
-                    wordList.add(builder.toString());
+                    wordSet.add(builder.toString());
                 }
             }
         }
-        return wordList;
+        return wordSet;
     }
 
     /**

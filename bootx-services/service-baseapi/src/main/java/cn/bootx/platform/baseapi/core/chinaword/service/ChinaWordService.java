@@ -120,8 +120,10 @@ public class ChinaWordService {
         if (wordFilter.include(text,skip)) {
             String replaceText = wordFilter.replace(text, skip, symbol);
             int count = wordFilter.wordCount(text, skip);
+            Set<String> wordList = wordFilter.wordList(text, skip);
             result.setText(replaceText)
                     .setCount(count)
+                    .setSensitiveWords(wordList)
                     .setSensitive(true);
         }
         return result;
