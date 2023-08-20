@@ -48,7 +48,10 @@ public class FileUploadProperties {
      */
     private Minio minio = new Minio();
 
-    private TencentOss tencentOss=new TencentOss();
+    /**
+     * 腾讯云存储配置
+     */
+    private TencentOss tencentOss = new TencentOss();
 
     /**
      * 本地存储
@@ -130,14 +133,28 @@ public class FileUploadProperties {
     @Setter
     public static class TencentOss {
 
+        /**
+         *  地域
+         */
         private String region;
 
+        /**
+         * 标识Id
+         */
         private String secretId;
-
+        /**
+         * 秘钥
+         */
         private String secretKey;
 
+        /**
+         * 会话Token
+         */
         private String sessionToken;
 
+        /**
+         * 存储桶
+         */
         private String bucket;
     }
 

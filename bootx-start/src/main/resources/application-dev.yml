@@ -158,6 +158,10 @@ bootx:
         corp-secret: ??
         token: ??
         encoding-aes-key: ??
+      # 微信小程序
+      wechat-applet:
+        app-id: ??
+        app-secret: ??
     # 认证
     auth:
       default-password: 123456

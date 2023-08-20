@@ -5,6 +5,8 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    environment:
+      - JAVA_OPTS= -Xms256m -Xmx1G -Dlogging.config=./logback-spring.xml
     volumes:
       # 读取外部化配置文件(根据实际服务器环境做修改), 宿主机目录:容器目录
       - /data/logs/dax-start:/logs # 日志
