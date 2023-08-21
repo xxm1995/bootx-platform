@@ -44,6 +44,9 @@ public class UserThirdBindInfo {
         @Schema(description = "名称")
         private String username;
 
+        @Schema(description = "第三方UUID")
+        private String thirdUserId;
+
     }
 
 }

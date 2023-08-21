@@ -77,6 +77,7 @@ public class UserThirdQueryService {
         if (Objects.nonNull(userThirdInfo)) {
             bindInfo.setBind(true);
             bindInfo.setUsername(userThirdInfo.getUsername());
+            bindInfo.setThirdUserId(userThirdInfo.getThirdUserId());
         }
         return bindInfo;
     }

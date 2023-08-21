@@ -15,7 +15,9 @@ import lombok.val;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static cn.bootx.platform.notice.code.SiteMessageCode.STATE_SENT;
 
@@ -37,15 +39,15 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
         val mpPage = MpUtil.getMpPage(pageParam, SiteMessageInfo.class);
 
         val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
-            .and(o -> o
-                .and(p -> p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
-                    .gt(SiteMessageInfo::getEfficientTime, LocalDate.now()))
-                .or()
-                .eq(SiteMessageInfo::getReceiveId, userId))
-            .eq(SiteMessageInfo::getSendState, STATE_SENT)
-            .eq(StrUtil.isNotBlank(query.getTitle()), SiteMessageInfo::getTitle, query.getTitle())
-            .orderByAsc(SiteMessageInfo::getHaveRead)
-            .orderByDesc(SiteMessageInfo::getReadTime);
+                .and(o -> o
+                        .and(p -> p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                                .gt(SiteMessageInfo::getEfficientTime, LocalDate.now()))
+                        .or()
+                        .eq(SiteMessageInfo::getReceiveId, userId))
+                .eq(SiteMessageInfo::getSendState, STATE_SENT)
+                .eq(StrUtil.isNotBlank(query.getTitle()), SiteMessageInfo::getTitle, query.getTitle())
+                .orderByAsc(SiteMessageInfo::getHaveRead)
+                .orderByDesc(SiteMessageInfo::getReadTime);
         if (Objects.equals(query.getHaveRead(), true)) {
             wrapper.eq(SiteMessageInfo::getHaveRead, query.getHaveRead());
         }
@@ -63,16 +65,34 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
      */
     public Integer countByReceiveNotRead(Long userId) {
         val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
-            .and(o -> o
-                .and(p -> p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
-                    .gt(SiteMessageInfo::getEfficientTime, LocalDate.now()))
-                .or()
-                .eq(SiteMessageInfo::getReceiveId, userId))
-            .and(o -> o.eq(SiteMessageInfo::getHaveRead, false).or().isNull(SiteMessageInfo::getHaveRead))
-            .eq(SiteMessageInfo::getSendState, STATE_SENT)
-            .orderByAsc(SiteMessageInfo::getHaveRead)
-            .orderByDesc(SiteMessageInfo::getReadTime);
+                .and(o -> o
+                        .and(p -> p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                                .gt(SiteMessageInfo::getEfficientTime, LocalDate.now()))
+                        .or()
+                        .eq(SiteMessageInfo::getReceiveId, userId))
+                .and(o -> o.eq(SiteMessageInfo::getHaveRead, false).or().isNull(SiteMessageInfo::getHaveRead))
+                .eq(SiteMessageInfo::getSendState, STATE_SENT)
+                .orderByAsc(SiteMessageInfo::getHaveRead)
+                .orderByDesc(SiteMessageInfo::getReadTime);
         return baseMapper.countMassage(wrapper);
+    }
+
+    public List<String> listByReceiveNotRead(Long userId) {
+        Page<SiteMessageInfo> page = new Page<>();
+        page.setSize(5);
+        page.setSize(1);
+        val wrapper = new LambdaQueryWrapper<SiteMessageInfo>()
+                .and(o -> o
+                        .and(p -> p.eq(SiteMessageInfo::getReceiveType, SiteMessageCode.RECEIVE_ALL)
+                                .gt(SiteMessageInfo::getEfficientTime, LocalDate.now()))
+                        .or()
+                        .eq(SiteMessageInfo::getReceiveId, userId))
+                .and(o -> o.eq(SiteMessageInfo::getHaveRead, false).or().isNull(SiteMessageInfo::getHaveRead))
+                .eq(SiteMessageInfo::getSendState, STATE_SENT)
+                .orderByAsc(SiteMessageInfo::getHaveRead)
+                .orderByDesc(SiteMessageInfo::getReadTime);
+        return baseMapper.pageMassage(page, wrapper).getRecords().stream()
+                .map(SiteMessageInfo::getTitle).collect(Collectors.toList());
     }
 
     /**
@@ -81,12 +101,12 @@ public class SiteMessageManager extends BaseManager<SiteMessageMapper, SiteMessa
     public Page<SiteMessage> pageBySender(PageParam pageParam, SiteMessageInfo query, Long userId) {
         Page<SiteMessage> mpPage = MpUtil.getMpPage(pageParam, SiteMessage.class);
         return lambdaQuery().select(SiteMessage.class, MpUtil::excludeBigField)
-            .eq(SiteMessage::getSenderId, userId)
-            .like(StrUtil.isNotBlank(query.getTitle()), SiteMessage::getSenderId, query.getTitle())
-            .eq(StrUtil.isNotBlank(query.getSendState()), SiteMessage::getSendState, query.getSendState())
-            .eq(StrUtil.isNotBlank(query.getReceiveType()), SiteMessage::getReceiveType, query.getReceiveType())
-            .orderByDesc(SiteMessage::getId)
-            .page(mpPage);
+                .eq(SiteMessage::getSenderId, userId)
+                .like(StrUtil.isNotBlank(query.getTitle()), SiteMessage::getSenderId, query.getTitle())
+                .eq(StrUtil.isNotBlank(query.getSendState()), SiteMessage::getSendState, query.getSendState())
+                .eq(StrUtil.isNotBlank(query.getReceiveType()), SiteMessage::getReceiveType, query.getReceiveType())
+                .orderByDesc(SiteMessage::getId)
+                .page(mpPage);
     }
 
 }
