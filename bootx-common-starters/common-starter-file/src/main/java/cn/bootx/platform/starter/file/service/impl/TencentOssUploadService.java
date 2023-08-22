@@ -4,25 +4,21 @@ import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.jackson.util.JacksonUtil;
 import cn.bootx.platform.starter.file.code.FileUploadTypeEnum;
 import cn.bootx.platform.starter.file.configuration.FileUploadProperties;
-import cn.bootx.platform.starter.file.dto.TempCredential;
+import cn.bootx.platform.starter.file.dto.UpLoadOptions;
 import cn.bootx.platform.starter.file.entity.UpdateFileInfo;
 import cn.bootx.platform.starter.file.entity.UploadFileContext;
 import cn.bootx.platform.starter.file.service.UploadService;
 import cn.hutool.core.codec.Base64Encoder;
 import cn.hutool.core.date.LocalDateTimeUtil;
-import cn.hutool.core.date.SystemClock;
-import cn.hutool.core.util.RandomUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.POJONode;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.exception.CosClientException;
-import com.qcloud.cos.exception.CosServiceException;
 import com.qcloud.cos.http.HttpMethodName;
 import com.qcloud.cos.http.HttpProtocol;
 import com.qcloud.cos.model.GeneratePresignedUrlRequest;
@@ -37,8 +33,6 @@ import com.tencent.cloud.CosStsClient;
 import com.tencent.cloud.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,10 +42,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -121,7 +111,11 @@ public class TencentOssUploadService implements UploadService {
         Date expirationDate = new Date(System.currentTimeMillis() + 30L * 60L * 1000L);
         req.setExpiration(expirationDate);
         URL url = client.generatePresignedUrl(req);
-        response.encodeRedirectURL(url.toString());
+        try {
+            response.sendRedirect(url.toString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -146,8 +140,8 @@ public class TencentOssUploadService implements UploadService {
         client.deleteObject(oss.getBucket(), updateFileInfo.getFileName());
     }
 
-    public TempCredential getTemplateCredential() {
-        TempCredential tempCredential;
+    public UpLoadOptions getTemplateCredential() {
+        UpLoadOptions options;
         FileUploadProperties.TencentOss oss = fileUploadProperties.getTencentOss();
         TreeMap<String, Object> config = new TreeMap<String, Object>();
         config.put("secretId", oss.getSecretId());
@@ -175,11 +169,11 @@ public class TencentOssUploadService implements UploadService {
         config.put("allowActions", allowActions);
         try {
             Response response = CosStsClient.getCredential(config);
-            tempCredential = new TempCredential();
-            tempCredential.setSessionToken(response.credentials.sessionToken);
-            tempCredential.setTmpSecretKey(response.credentials.tmpSecretKey);
-            tempCredential.setTmpSecretId(response.credentials.tmpSecretId);
-            tempCredential.setExpiredTime(1800L);
+            options = new UpLoadOptions();
+            options.setSessionToken(response.credentials.sessionToken);
+            options.setTmpSecretKey(response.credentials.tmpSecretKey);
+            options.setTmpSecretId(response.credentials.tmpSecretId);
+            options.setExpiredTime(1800L);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -206,27 +200,29 @@ public class TencentOssUploadService implements UploadService {
         child.put("q-sign-algorithm", "sha1");
         conditions.addPOJO(child);
         child = objectMapper.createObjectNode();
-        child.put("q-ak", tempCredential.getTmpSecretId());
+        child.put("q-ak", options.getTmpSecretId());
 
         conditions.addPOJO(child);
         child = objectMapper.createObjectNode();
         child.put("q-sign-time", keyTime);
         conditions.addPOJO(child);
-        formData.put("x-cos-security-token", tempCredential.getSessionToken());
+        formData.put("x-cos-security-token", options.getSessionToken());
         String policyText = JacksonUtil.toJson(root);
         formData.put("policy", Base64Encoder.encode(policyText));
         formData.put("acl", "default");
         formData.put("q-sign-algorithm", "sha1");
-        formData.put("q-ak", tempCredential.getTmpSecretId());
+        formData.put("q-ak", options.getTmpSecretId());
         formData.put("q-key-time", keyTime);
-        String signKey = SecureUtil.hmacSha1(tempCredential.getTmpSecretKey()).digestHex(keyTime);
+        String signKey = SecureUtil.hmacSha1(options.getTmpSecretKey()).digestHex(keyTime);
         String stringToSign = SecureUtil.sha1().digestHex(policyText);
         String signature = SecureUtil.hmacSha1(signKey).digestHex(stringToSign);
         formData.put("q-signature", signature);
         log.info("signKey:{},stringToSign:{},signature:{}", signKey, stringToSign, signature);
-        tempCredential.setFormData(formData);
-        tempCredential.setUploadUrl("https://" + oss.getBucket() + ".cos.ap-beijing.myqcloud.com");
-        return tempCredential;
+        options.setFormData(formData);
+        options.setUploadUrl("https://" + oss.getBucket() + ".cos.ap-beijing.myqcloud.com");
+        
+        
+        return options;
     }
 
     protected void doInit() {
@@ -245,7 +241,7 @@ public class TencentOssUploadService implements UploadService {
         transferManager = new TransferManager(client, threadPool);
         TransferManagerConfiguration transferManagerConfiguration = new TransferManagerConfiguration();
         transferManagerConfiguration.setMultipartUploadThreshold(5 * 1024 * 1024);
-        transferManagerConfiguration.setMinimumUploadPartSize(1 * 1024 * 1024);
+        transferManagerConfiguration.setMinimumUploadPartSize(1024 * 1024);
         transferManager.setConfiguration(transferManagerConfiguration);
 
     }

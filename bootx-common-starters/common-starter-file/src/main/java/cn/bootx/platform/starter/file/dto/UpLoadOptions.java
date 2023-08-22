@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.TreeMap;
 
 @Data
-public class TempCredential {
+public class UpLoadOptions {
     private String tmpSecretId;
     private String tmpSecretKey;
     private String sessionToken;
@@ -15,5 +15,7 @@ public class TempCredential {
     private TreeMap<String,String> formData;
 
     private String uploadUrl;
+
+    private String key;
 
 }
