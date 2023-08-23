@@ -2,6 +2,7 @@ package cn.bootx.platform.visualization.core.service;
 
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
+import cn.bootx.platform.common.core.function.ParamService;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
@@ -50,6 +51,8 @@ public class ProjectInfoService {
     private final ProjectInfoManager projectInfoManager;
 
     private final ProjectInfoPublishManager publishManager;
+
+    private final ParamService paramService;
 
     /**
      * 获取文件上传oss信息
@@ -265,7 +268,12 @@ public class ProjectInfoService {
      * GoView服务地址
      */
     public String getGoViewUrl() {
-        return visualizationProperties.getGoViewUrl();
+        String serverUrl = paramService.getValue("FileServerUrl");
+        if (StrUtil.isBlank(serverUrl)) {
+            serverUrl = visualizationProperties.getGoViewUrl();
+        }
+        return serverUrl;
+
     }
 
 }
