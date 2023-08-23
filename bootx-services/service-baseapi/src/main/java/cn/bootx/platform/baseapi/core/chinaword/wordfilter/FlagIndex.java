@@ -1,5 +1,8 @@
 package cn.bootx.platform.baseapi.core.chinaword.wordfilter;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
 /**
@@ -7,6 +10,8 @@ import java.util.List;
  *
  * @author minghu.zhang
  */
+@Getter
+@Setter
 public class FlagIndex {
 
     /**
@@ -22,27 +27,4 @@ public class FlagIndex {
      */
     private List<Integer> index;
 
-    public boolean isFlag() {
-        return flag;
-    }
-
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
-    public List<Integer> getIndex() {
-        return index;
-    }
-
-    public void setIndex(List<Integer> index) {
-        this.index = index;
-    }
-
-    public boolean isWhiteWord() {
-        return isWhiteWord;
-    }
-
-    public void setWhiteWord(boolean whiteWord) {
-        isWhiteWord = whiteWord;
-    }
 }

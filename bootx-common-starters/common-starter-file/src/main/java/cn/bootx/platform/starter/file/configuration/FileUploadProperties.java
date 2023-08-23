@@ -23,20 +23,35 @@ public class FileUploadProperties {
      */
     private FileUploadTypeEnum uploadType = FileUploadTypeEnum.LOCAL;
 
-    /** 服务器地址,优先级低于系统参数配置 */
+    /**
+     * 服务器地址,优先级低于系统参数配置
+     */
     private String serverUrl = "http://127.0.0.1:9999";
 
-    /** 本地存储 */
+    /**
+     * 本地存储
+     */
     private Local local = new Local();
 
-    /** 数据库存储 */
+    /**
+     * 数据库存储
+     */
     private JDBC jdbc = new JDBC();
 
-    /** mongo存储配置 */
+    /**
+     * mongo存储配置
+     */
     private Mongo mongo = new Mongo();
 
-    /** minio存储配置 */
+    /**
+     * minio存储配置
+     */
     private Minio minio = new Minio();
+
+    /**
+     * 腾讯云存储配置
+     */
+    private TencentOss tencentOss = new TencentOss();
 
     /**
      * 本地存储
@@ -45,7 +60,9 @@ public class FileUploadProperties {
     @Setter
     public static class Local {
 
-        /** 本地存储路径 */
+        /**
+         * 本地存储路径
+         */
         private String localPath = "/data/file/";
 
     }
@@ -57,7 +74,9 @@ public class FileUploadProperties {
     @Setter
     public static class JDBC {
 
-        /** 是否以Base64方式进行存储 */
+        /**
+         * 是否以Base64方式进行存储
+         */
         private boolean base64 = false;
 
     }
@@ -69,7 +88,9 @@ public class FileUploadProperties {
     @Setter
     public static class Mongo {
 
-        /** 存储桶 */
+        /**
+         * 存储桶
+         */
         private String bucket = "fs";
 
     }
@@ -81,21 +102,60 @@ public class FileUploadProperties {
     @Setter
     public static class Minio {
 
-        /** 端点地址 */
+        /**
+         * 端点地址
+         */
         private String endpoint;
 
-        /** 区域 */
+        /**
+         * 区域
+         */
         private String region;
 
-        /** 访问 key */
+        /**
+         * 访问 key
+         */
         private String accessKey;
 
-        /** 访问 Secret */
+        /**
+         * 访问 Secret
+         */
         private String accessSecret;
 
-        /** 存储桶 需要至少三位 */
+        /**
+         * 存储桶 需要至少三位
+         */
         private String bucket = "bootx";
 
+    }
+
+    @Getter
+    @Setter
+    public static class TencentOss {
+
+        /**
+         *  地域
+         */
+        private String region;
+
+        /**
+         * 标识Id
+         */
+        private String secretId;
+        /**
+         * 秘钥
+         */
+        private String secretKey;
+
+        /**
+         * 会话Token
+         */
+        private String sessionToken;
+
+        /**
+         * 存储桶
+         */
+        private String bucket;
     }
 
 }

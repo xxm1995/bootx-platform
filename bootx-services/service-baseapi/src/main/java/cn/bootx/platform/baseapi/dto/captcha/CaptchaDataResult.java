@@ -1,7 +1,6 @@
 package cn.bootx.platform.baseapi.dto.captcha;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -16,7 +15,7 @@ import lombok.experimental.Accessors;
 @Schema(title = "验证码数据")
 public class CaptchaDataResult {
 
-    @Schema(description = "验证码标示")
+    @Schema(description = "验证码标识KEY")
     private String captchaKey;
 
     @Schema(description = "验证码base64数据")

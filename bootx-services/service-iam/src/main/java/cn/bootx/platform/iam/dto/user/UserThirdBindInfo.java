@@ -29,6 +29,10 @@ public class UserThirdBindInfo {
     @Schema(description = "钉钉绑定信息")
     private BindInfo dingTalk;
 
+    @Schema(description = "钉钉绑定信息")
+    private BindInfo weChatApplet;
+
+
     @Getter
     @Setter
     @Schema(title = "用户信息")
@@ -39,6 +43,9 @@ public class UserThirdBindInfo {
 
         @Schema(description = "名称")
         private String username;
+
+        @Schema(description = "第三方UUID")
+        private String thirdUserId;
 
     }
 

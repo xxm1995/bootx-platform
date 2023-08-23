@@ -10,6 +10,7 @@ import lombok.experimental.FieldNameConstants;
 import java.time.LocalDateTime;
 
 /**
+ * 创建实体类 (不带逻辑删除)
  * @author xxm
  * @since 2022/7/26
  */

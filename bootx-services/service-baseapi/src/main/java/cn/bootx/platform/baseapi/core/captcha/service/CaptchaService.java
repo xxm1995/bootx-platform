@@ -2,7 +2,6 @@ package cn.bootx.platform.baseapi.core.captcha.service;
 
 import cn.bootx.platform.baseapi.dto.captcha.CaptchaDataResult;
 import cn.bootx.platform.common.redis.RedisClient;
-import cn.bootx.platform.common.websocket.service.UserWsNoticeService;
 import cn.hutool.core.util.RandomUtil;
 import com.wf.captcha.ArithmeticCaptcha;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +30,6 @@ public class CaptchaService {
     /** 邮箱验证码前缀 */
     private final String emailCaptchaPrefix = "email:captcha:";
 
-    private final UserWsNoticeService userWsNoticeService;
-
     private final RedisClient redisClient;
 
     /**
@@ -51,6 +48,7 @@ public class CaptchaService {
 
     /**
      * 校验图片验证码
+     * @param key 验证码Key
      */
     public boolean validateImgCaptcha(String key, String captcha) {
         // 比较验证码是否正确
@@ -59,7 +57,8 @@ public class CaptchaService {
     }
 
     /**
-     * 失效图片验证码
+     * 将图片验证码设置为失效
+     * @param key 验证码Key
      */
     public void deleteImgCaptcha(String key) {
         redisClient.deleteKey(imgCaptchaPrefix + key);
@@ -67,6 +66,10 @@ public class CaptchaService {
 
     /**
      * 发送手机验证码
+     * @param phone 手机号
+     * @param timeoutSec 超时时间
+     * @param type 业务类型, 用来区分不同业务的短信验证码
+     * @return 验证码
      */
     public int sendSmsCaptcha(String phone, long timeoutSec, String type) {
         int captcha = RandomUtil.randomInt(100000, 1000000);
@@ -76,7 +79,7 @@ public class CaptchaService {
     }
 
     /**
-     * 手机发送的验证码是否还有效
+     * 验证手机发送的验证码是否还在有效时间内
      */
     public boolean existsSmsCaptcha(String phone, String type) {
         return redisClient.exists(getSmsCaptchaPrefix(type) + phone);
@@ -92,7 +95,7 @@ public class CaptchaService {
     }
 
     /**
-     * 失效手机验证码
+     * 将手机验证码验证码设置为失效
      */
     public void deleteSmsCaptcha(String phone, String type) {
         redisClient.deleteKey(getSmsCaptchaPrefix(type) + phone);

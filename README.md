@@ -11,14 +11,10 @@
 ## 🙏🙏🙏 求star呀，走过路过留个star吧，非常非常感谢。🙏🙏🙏
 
 ## 🍈项目介绍
-> 目前Bootx-Platform的开发重点是，将核心中的业务代码剥离出子项目，作为单独系统使用，
-保持脚手架核心的精简，同时对不同的业务模块也可以专门优化和适配，使其加易用和强大。
-
-基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
+> 基于Spring Boot框架打造，针对单体式应用进行专门设计，提供整套服务模块，努力为打造全方位企业级开发解决方案，
 致力将开源版打造成超越商业版后台管理框架的项目。
 
 - 单体版本使用Spring Boot相关技术栈
-- vue2使用 [ANTD PRO VUE](https://pro.antdv.com/) 作为脚手架
 - vue3使用 [Vben-Admin](https://vvbin.cn/doc-next/) 作为脚手架
 - 可视化大屏使用 [Go-VIew](https://gitee.com/dromara/go-view) 作为基础框架
 - 移动端使用 [Taro](https://taro.jd.com/)、[NutUI](https://nutui.jd.com/) vue3+TS为技术栈。
@@ -30,19 +26,7 @@
 - bpm-plus：协同办公系统 [Gitee地址](https://gitee.com/bootx/bpm-plus)
 - mybatis-table-modify：数据表结构管理 [Gitee地址](https://gitee.com/bootx/mybatis-table-modify)
 
-## 项目Maven坐标
-> 项目各模块都已经发布到maven中央仓库中，进行二开时可以对不进行更改的模块，使用Maven方式进行引入，方便后续进行版本升级
-
-例子：
-```xml
-    <dependency>
-        <groupId>cn.bootx.platform</groupId>
-        <artifactId>service.iam</artifactId>
-        <version>${latest.version}</version>
-    </dependency>
-```
-
-## 📚文档
+## 📚资料和文档
 
 - 系统演示地址：[管理平台(vue3)](http://v3.platform.bootx.cn/)、[可视化大屏](http://visualization.platform.bootx.cn/)
 - 前端项目地址：[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)、[可视化大屏](https://gitee.com/bootx/bootx-platform-visualization)、[前端项目(vue2只维护不再更新)](https://gitee.com/bootx/bootx-platform-ui)
@@ -50,6 +34,10 @@
 - 日志收集：[PlumeLog](http://139.198.29.219:8891/)
 - 项目文档：[项目文档(GITEE)](https://bootx.gitee.io/)、[项目文档(备用)](https://doc.bootx.cn/)
 - 更新日志：[更新日志](./_doc/ChangeLog.md)
+
+> 功能更新计划: [任务池](./_doc/Task.md)
+>
+> 历史更新记录: [更新日志](./_doc/ChangeLog.md)
 
 ## 🛠️功能亮点
 
@@ -73,11 +61,25 @@
 - 集成Flowable+Bpmn.js工作流全家桶，方便OA相关功能的开发
 - 基于GoView打造低代码可视化大屏平台，快速生成各种数据展板和大屏
 
+
+## 🧭 项目Maven坐标
+> 项目各模块都已经发布到maven中央仓库中，进行二开时可以对不进行更改的模块，使用Maven方式进行引入，方便后续进行版本升级
+
+例子：
+```xml
+    <dependency>
+        <groupId>cn.bootx.platform</groupId>
+        <artifactId>service.iam</artifactId>
+        <version>${latest.version}</version>
+    </dependency>
+```
+
 ## 🥂 Quick Start
 
-Spring Boot后端: [后端启动流程](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
-
-Vue3后端: [Vue3前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备-1)
+- Spring Boot后端: [后端启动流程](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
+- Vue3后端: [Vue3前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备-1)
+- 可视化大屏: [可视化大屏启动流程]()
+- 小程序移动端: [小程序启动流程]()
 
 ## 🥞项目模块结构
 ```lua

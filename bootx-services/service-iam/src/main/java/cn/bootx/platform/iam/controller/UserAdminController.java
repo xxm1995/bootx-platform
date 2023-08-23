@@ -83,6 +83,15 @@ public class UserAdminController {
         return Res.ok();
     }
 
+    @Operation(summary = "批量重置密码")
+    @OperateLog(title = "批量重置密码", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
+    @PostMapping("/restartPasswordBatch")
+    public ResResult<Void> restartPasswordBatch(@NotEmpty(message = "用户不可为空") @RequestBody List<Long> userIds,
+            @NotBlank(message = "新密码不能为空") String newPassword) {
+        userAdminService.restartPasswordBatch(userIds, newPassword);
+        return Res.ok();
+    }
+
     @OperateLog(title = "锁定用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
     @Operation(summary = "锁定用户")
     @PostMapping("/lock")

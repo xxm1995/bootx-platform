@@ -22,11 +22,13 @@ import lombok.experimental.Accessors;
 @TableName("starter_file_data")
 public class JdbcFileData extends MpIdEntity {
 
+    /** base64方式存储 */
     @DbColumn(comment = "base64方式存储")
     @DbMySqlFieldType(MySqlFieldTypeEnum.LONGTEXT)
     private String base64;
 
-    @DbColumn(comment = "base64方式存储")
+    /** 数据方式存储 */
+    @DbColumn(comment = "数据方式存储")
     @DbMySqlFieldType(MySqlFieldTypeEnum.LONGBLOB)
     private byte[] data;
 }

@@ -79,8 +79,15 @@ public class IpToRegionService {
     public IpRegion getRegionByIp(String ip){
         // 判断IP是否合法
         Matcher matcher = PatternPool.IPV4.matcher(ip);
+        Matcher ipV6Matcher =PatternPool.IPV6.matcher(ip);
         if (!matcher.matches()) {
-            log.warn("非法IPv4地址: {}",ip);
+            if (ipV6Matcher.matches()){
+                log.warn("IpV6地址: {}",ip);
+
+            }else {
+                log.warn("非法IPv4地址: {}",ip);
+
+            }
             return null;
         }
 

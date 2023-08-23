@@ -23,12 +23,12 @@ public interface SystemKeyValueService {
     List<KeyValue> gets(List<String> keys);
 
     /**
-     * 设置值
+     * 设置值, 如果key不存在将会创建，key存在则会更新
      */
     void setup(String key, String value);
 
     /**
-     * 设置多个
+     * 保存多个值
      */
     void setupBatch(List<KeyValue> list);
 

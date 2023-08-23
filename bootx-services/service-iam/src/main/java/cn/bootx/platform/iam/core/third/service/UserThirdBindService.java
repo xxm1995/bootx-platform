@@ -76,9 +76,9 @@ public class UserThirdBindService {
      */
     private OpenIdAuthentication getOpenIdAuthentication(String clientCode) {
         return openIdAuthentications.stream()
-            .filter(o -> o.adaptation(clientCode))
-            .findFirst()
-            .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
+                .filter(o -> o.adaptation(clientCode))
+                .findFirst()
+                .orElseThrow(() -> new LoginFailureException("未找到对应的终端认证器"));
     }
 
 }

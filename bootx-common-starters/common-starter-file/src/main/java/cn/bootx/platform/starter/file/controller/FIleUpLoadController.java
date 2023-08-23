@@ -5,7 +5,9 @@ import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
+import cn.bootx.platform.starter.file.dto.UpLoadOptions;
 import cn.bootx.platform.starter.file.dto.UpdateFileDto;
+import cn.bootx.platform.starter.file.entity.UpdateFileInfo;
 import cn.bootx.platform.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,6 +41,7 @@ public class FIleUpLoadController {
         return Res.ok(uploadService.page(pageParam));
     }
 
+
     @IgnoreAuth(ignore = false, login = true)
     @Operation(summary = "上传")
     @PostMapping("/upload")
@@ -48,7 +51,7 @@ public class FIleUpLoadController {
 
     @Operation(summary = "删除")
     @DeleteMapping("/delete")
-    public ResResult<Void> delete(Long id){
+    public ResResult<Void> delete(Long id) {
         uploadService.delete(id);
         return Res.ok();
     }
@@ -82,5 +85,18 @@ public class FIleUpLoadController {
     public ResponseEntity<byte[]> download(@PathVariable Long id) {
         return uploadService.download(id);
     }
+
+    @Operation(summary = "获取临时oss密钥")
+    @GetMapping("/getUpLoadOptions")
+    public ResResult<UpLoadOptions> getTempCredentials() {
+        return Res.ok(uploadService.getTempCredentials());
+    }
+    @Operation(summary = "保存记录")
+    @PostMapping("/saveUploadResult")
+    public ResResult<UpdateFileDto> saveUploadResult(@RequestBody UpdateFileInfo info) {
+        return Res.ok(uploadService.saveUploadResult(info));
+    }
+
+
 
 }

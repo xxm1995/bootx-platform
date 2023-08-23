@@ -158,6 +158,10 @@ bootx:
         corp-secret: ??
         token: ??
         encoding-aes-key: ??
+      # 微信小程序
+      wechat-applet:
+        app-id: ??
+        app-secret: ??
     # 认证
     auth:
       default-password: 123456
@@ -220,6 +224,17 @@ bootx:
         access-secret: password
         # 存储桶 需要至少三位
         bucket: bootx
+      tencent-oss:
+          # 标识
+          secret-id: ''
+          # 密钥
+          secret-key: ''
+          # 地域
+          region: ''
+          # 会话token
+          session-token:
+           # 存储桶名称
+          bucket: bootx
     # 数据权限
     data-perm:
       field-decrypt-key: "UCrtxSCwYZNCIlav"

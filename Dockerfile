@@ -2,14 +2,20 @@
 FROM registry.cn-beijing.aliyuncs.com/xxm1995/java8
 
 # 作者信息
-MAINTAINER xxm1995@outlook.com
+MAINTAINER bootx
 
 # 时区设置
 ENV TZ=Asia/Shanghai
 RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# jvm启动参数, 启动内存256M,最大内存1G,使用G1垃圾回收器, 同时读取外置日志配置
-ENV JAVA_OPTS="-Xms256m -Xmx1G -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom -Dlogging.config=./logback-spring.xml"
+# 启动命令
+ENV JAVA_COMM="-Djava.security.egd=file:/dev/./urandom -Dfile.encoding=UTF-8"
+# 启动选项配置
+ENV JAVA_OPTS=""
+# Agent配置
+ENV JAVA_AGENT=""
+# 参数配置
+ENV JAVA_ARGS=""
 
 # 工作目录
 WORKDIR /
@@ -21,5 +27,5 @@ EXPOSE 9999
 ADD bootx-start/target/bootx-start.jar bootx-start.jar
 
 # 执行启动命令
-CMD java $JAVA_OPTS -jar bootx-start.jar
+CMD java -jar $JAVA_OPTS $JAVA_AGENT $JAVA_COMM bootx-start.jar $JAVA_ARGS
 

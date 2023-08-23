@@ -1,10 +1,13 @@
 package cn.bootx.platform.iam.core.auth.login;
 
+import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.util.RegexUtil;
+import cn.bootx.platform.iam.code.UserStatusCode;
 import cn.bootx.platform.iam.core.user.service.UserAdminService;
 import cn.bootx.platform.iam.core.user.service.UserQueryService;
+import cn.bootx.platform.iam.dto.user.UserInfoDto;
 import cn.bootx.platform.starter.auth.authentication.UsernamePasswordAuthentication;
 import cn.bootx.platform.starter.auth.entity.AuthInfoResult;
 import cn.bootx.platform.starter.auth.entity.AuthLoginType;
@@ -12,9 +15,6 @@ import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
 import cn.bootx.platform.starter.auth.exception.LoginFailureException;
 import cn.bootx.platform.starter.auth.exception.UserNotFoundException;
 import cn.bootx.platform.starter.auth.util.PasswordEncoder;
-import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
-import cn.bootx.platform.iam.code.UserStatusCode;
-import cn.bootx.platform.iam.dto.user.UserInfoDto;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

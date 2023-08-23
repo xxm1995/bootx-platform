@@ -81,9 +81,11 @@ public class UserTiredOperateService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void bindOpenInfo(UserThirdInfo userThirdInfo) {
-        // 详细信息 存在就删除重新添加
+
         userThirdInfoManager.deleteByUserAndClientCode(userThirdInfo.getUserId(), userThirdInfo.getClientCode());
+
         userThirdInfoManager.save(userThirdInfo);
+
     }
 
 }

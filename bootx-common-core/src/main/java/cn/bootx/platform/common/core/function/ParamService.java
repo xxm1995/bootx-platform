@@ -9,7 +9,7 @@ package cn.bootx.platform.common.core.function;
 public interface ParamService {
 
     /**
-     * 获取 参数值
+     * 获取 参数值, 如果未启用, 返回空
      */
     String getValue(String key);
 

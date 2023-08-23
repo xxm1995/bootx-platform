@@ -13,6 +13,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author xxm
  * @since 2021/8/8
@@ -83,5 +85,9 @@ public class SiteMessageController {
         siteMessageService.read(id);
         return Res.ok();
     }
-
+    @Operation(summary = "小程序获取未读的接收消息标题列表")
+    @GetMapping("/listByReceiveNotRead")
+    public ResResult<List<String>> listByReceiveNotRead(SiteMessageInfo query) {
+        return Res.ok(siteMessageService.listByReceiveNotRead(query));
+    }
 }

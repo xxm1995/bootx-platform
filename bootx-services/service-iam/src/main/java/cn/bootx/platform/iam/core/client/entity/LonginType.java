@@ -37,15 +37,12 @@ public class LonginType extends MpBaseEntity implements EntityBaseFunction<Login
     /** 在线时长 分钟 */
     private Long timeout;
 
-    /** 是否需要验证码 */
+    /** 是否需要验证码 优先级高于登录策略配置 */
     private boolean captcha;
 
     /** 是否系统内置 */
     @TableField("`system`")
     private boolean system;
-
-    /** 密码错误几次冻结 -1表示不限制 */
-    private Integer pwdErrNum;
 
     /** 是否可用 */
     private boolean enable;

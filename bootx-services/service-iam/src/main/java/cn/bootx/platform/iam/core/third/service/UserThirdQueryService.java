@@ -64,6 +64,7 @@ public class UserThirdQueryService {
         userThirdBindInfo.setWeChatOpen(getBindInfo(thirdInfoMap, AuthLoginTypeCode.WE_CHAT_OPEN));
         userThirdBindInfo.setWeCom(getBindInfo(thirdInfoMap, AuthLoginTypeCode.WE_COM));
         userThirdBindInfo.setDingTalk(getBindInfo(thirdInfoMap, AuthLoginTypeCode.DING_TALK));
+
         return userThirdBindInfo;
     }
 
@@ -76,6 +77,7 @@ public class UserThirdQueryService {
         if (Objects.nonNull(userThirdInfo)) {
             bindInfo.setBind(true);
             bindInfo.setUsername(userThirdInfo.getUsername());
+            bindInfo.setThirdUserId(userThirdInfo.getThirdUserId());
         }
         return bindInfo;
     }
