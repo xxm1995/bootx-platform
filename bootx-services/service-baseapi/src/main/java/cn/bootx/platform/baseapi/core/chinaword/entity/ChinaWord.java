@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(comment = "敏感词")
+//@DbTable(comment = "敏感词")
 @Accessors(chain = true)
 @TableName(value = "base_china_word",autoResultMap = true)
 public class ChinaWord extends MpDelEntity implements EntityBaseFunction<ChinaWordDto> {

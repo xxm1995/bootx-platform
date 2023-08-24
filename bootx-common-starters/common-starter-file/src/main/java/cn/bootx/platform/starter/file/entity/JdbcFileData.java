@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@DbTable(comment = "上传文件数据")
+//@DbTable(comment = "上传文件数据")
 @TableName("starter_file_data")
 public class JdbcFileData extends MpIdEntity {
 

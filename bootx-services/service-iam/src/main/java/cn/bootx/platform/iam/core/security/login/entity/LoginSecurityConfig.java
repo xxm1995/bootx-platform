@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * @author xxm
  * @since 2023/8/17
  */
-@DbTable(comment = "登录安全策略")
+//@DbTable(comment = "登录安全策略")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)

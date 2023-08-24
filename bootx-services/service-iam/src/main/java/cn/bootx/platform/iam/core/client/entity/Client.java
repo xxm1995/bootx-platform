@@ -1,12 +1,11 @@
 package cn.bootx.platform.iam.core.client.entity;
 
 import cn.bootx.mybatis.table.modify.annotation.DbColumn;
-import cn.bootx.mybatis.table.modify.annotation.DbTable;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
-import cn.bootx.platform.iam.core.client.convert.ClientConvert;
-import cn.bootx.platform.iam.param.client.ClientParam;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.platform.iam.core.client.convert.ClientConvert;
 import cn.bootx.platform.iam.dto.client.ClientDto;
+import cn.bootx.platform.iam.param.client.ClientParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(comment = "认证终端",isAppend = true)
+//@DbTable(comment = "认证终端",isAppend = true)
 @TableName("iam_client")
 @Accessors(chain = true)
 public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto> {

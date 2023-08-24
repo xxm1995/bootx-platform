@@ -9,6 +9,6 @@ services:
       - JAVA_OPTS= -Xms256m -Xmx1G -Dlogging.config=./logback-spring.xml
     volumes:
       # 读取外部化配置文件(根据实际服务器环境做修改), 宿主机目录:容器目录
-      - /data/logs/dax-start:/logs # 日志
-      - /root/dax-pay/application-dev.yml:/application-dev.yml # 配置
-      - /root/dax-pay/logback-spring.xml:/logback-spring.xml # 日志框架
+      - /data/logs/:/logs # 日志
+      - /root/bootx-start/application-dev.yml:/application-dev.yml # 配置
+      - /root/dax-paydax-pay/logback-spring.xml:/logback-spring.xml # 日志框架

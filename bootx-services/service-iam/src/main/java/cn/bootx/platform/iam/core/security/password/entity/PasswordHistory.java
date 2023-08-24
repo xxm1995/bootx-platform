@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(comment =  "密码历史")
+//@DbTable(comment =  "密码历史")
 @Accessors(chain = true)
 @TableName("iam_password_history")
 public class PasswordHistory extends MpCreateEntity {

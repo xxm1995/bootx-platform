@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-@DbTable(comment = "用户反馈信息")
+//@DbTable(comment = "用户反馈信息")
 @TableName("miniapp_feedback_info")
 public class FeedbackInfo extends MpBaseEntity implements EntityBaseFunction<FeedbackInfoDto> {
 
