@@ -18,7 +18,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(title = "声音消息")
+@Schema(title = "声音工作通知消息")
 public class DingVoiceMsg implements DingMsg {
 
     @Schema(description = "媒体文件id")

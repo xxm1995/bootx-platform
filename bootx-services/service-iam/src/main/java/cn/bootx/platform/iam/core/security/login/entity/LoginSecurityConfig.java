@@ -2,7 +2,6 @@ package cn.bootx.platform.iam.core.security.login.entity;
 
 import cn.bootx.mybatis.table.modify.annotation.DbColumn;
 import cn.bootx.mybatis.table.modify.annotation.DbComment;
-import cn.bootx.mybatis.table.modify.annotation.DbTable;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -24,17 +23,6 @@ public class LoginSecurityConfig extends MpBaseEntity {
     /** 关联终端ID */
     @DbComment("关联终端ID")
     private Long clientId;
-
-    /** 最大密码错误数 */
-    @DbComment("最大密码错误数")
-    private Integer  maxPwdErrorCount;
-
-    /** 密码错误锁定时间(秒) */
-    @DbComment("密码错误锁定时间(秒)")
-    private Integer errorLockTime;
-
-    /** 强制修改初始密码 */
-    private  Boolean  requireChangePwd;
 
     /** 修改密码是否需要重新登录 */
     @DbComment("修改密码是否需要重新登录")

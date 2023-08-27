@@ -19,6 +19,17 @@ import lombok.experimental.Accessors;
 @TableName("iam_password_security_config")
 public class PasswordSecurityConfig extends MpBaseEntity {
 
+    /** 最大密码错误数 */
+    @DbComment("最大密码错误数")
+    private Integer  maxPwdErrorCount;
+
+    /** 密码错误锁定时间(秒) */
+    @DbComment("密码错误锁定时间(秒)")
+    private Integer errorLockTime;
+
+    /** 强制修改初始密码 */
+    private  Boolean  requireChangePwd;
+
     /** 用户默认密码 */
     private String defaultPassword;
 
@@ -31,7 +42,7 @@ public class PasswordSecurityConfig extends MpBaseEntity {
     /** 与登录名相同 */
     private Boolean sameAsLoginName;
 
-    /** 不能与多少次近期密码相同 */
+    /** 不能与近期多少次密码相同 */
     private  Integer recentPassword;
 
     /**  */
