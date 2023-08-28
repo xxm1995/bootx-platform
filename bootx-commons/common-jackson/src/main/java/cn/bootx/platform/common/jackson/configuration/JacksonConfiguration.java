@@ -20,8 +20,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 /**
- * jackson 序列化
- *
+ * jackson 序列化自动配置
+ * 要先于 JacksonAutoConfiguration 中 注入 ObjectMapper
+ * 注意: @AutoConfigureBefore 只可以用在自动配置上, 普通配置类不生效
  * @author xxm
  * @since 2020/4/23 22:28
  */

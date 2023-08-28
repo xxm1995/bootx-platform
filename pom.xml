@@ -103,7 +103,7 @@
         <minio.version>8.5.4</minio.version>
         <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
-        <springdoc.version>1.6.15</springdoc.version>
+        <springdoc.version>1.7.0</springdoc.version>
         <redisson.version>3.23.0</redisson.version>
         <knife4j.version>4.2.0</knife4j.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>

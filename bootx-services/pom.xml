@@ -128,11 +128,12 @@
         </dependency>
 
         <!-- knife4j -ui -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-openapi3-ui</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.xiaoymin</groupId>-->
+<!--            <artifactId>knife4j-openapi3-ui</artifactId>-->
+<!--            <version>${knife4j.version}</version>-->
+<!--        </dependency>-->
+
 
         <!-- 自动维护表结构 -->
         <dependency>
