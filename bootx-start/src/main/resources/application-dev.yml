@@ -86,6 +86,10 @@ logging:
 mybatis-table:
   update-type: update
   scan-package: cn.bootx.platform
+
+# Swagger 增强版
+knife4j:
+  enable: true
 # 项目配置
 bootx:
   common:
