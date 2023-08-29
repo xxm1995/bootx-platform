@@ -1,6 +1,6 @@
-package cn.bootx.platform.baseapi.core.sql.dao;
+package cn.bootx.platform.baseapi.core.dataresult.dao;
 
-import cn.bootx.platform.baseapi.core.sql.entity.QuerySql;
+import cn.bootx.platform.baseapi.core.dataresult.entity.QuerySql;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

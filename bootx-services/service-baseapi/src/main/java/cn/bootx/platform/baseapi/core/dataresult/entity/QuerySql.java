@@ -1,7 +1,7 @@
-package cn.bootx.platform.baseapi.core.sql.entity;
+package cn.bootx.platform.baseapi.core.dataresult.entity;
 
-import cn.bootx.platform.baseapi.core.sql.convert.QuerySqlConvert;
-import cn.bootx.platform.baseapi.dto.sql.QuerySqlDto;
+import cn.bootx.platform.baseapi.core.dataresult.convert.QuerySqlConvert;
+import cn.bootx.platform.baseapi.dto.dataresult.QuerySqlDto;
 import cn.bootx.platform.common.core.annotation.BigField;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;

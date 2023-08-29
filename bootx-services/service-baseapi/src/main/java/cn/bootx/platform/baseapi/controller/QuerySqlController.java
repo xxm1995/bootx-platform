@@ -1,6 +1,6 @@
 package cn.bootx.platform.baseapi.controller;
 
-import cn.bootx.platform.baseapi.core.sql.service.QuerySqlService;
+import cn.bootx.platform.baseapi.core.dataresult.service.QuerySqlService;
 import cn.bootx.platform.baseapi.param.sql.QueryFieldParam;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;

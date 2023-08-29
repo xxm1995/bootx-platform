@@ -1,12 +1,11 @@
-package cn.bootx.platform.baseapi.core.sql.service;
+package cn.bootx.platform.baseapi.core.dataresult.service;
 
 import cn.bootx.platform.baseapi.code.QuerySqlCode;
+import cn.bootx.platform.baseapi.core.dataresult.entity.QuerySql;
+import cn.bootx.platform.baseapi.core.dataresult.entity.SqlParam;
 import cn.bootx.platform.baseapi.core.dynamicsource.dao.DynamicDataSourceManager;
 import cn.bootx.platform.baseapi.core.dynamicsource.entity.DynamicDataSource;
 import cn.bootx.platform.baseapi.core.dynamicsource.service.DynamicDataSourceService;
-import cn.bootx.platform.baseapi.core.sql.dao.QuerySqlManager;
-import cn.bootx.platform.baseapi.core.sql.entity.QuerySql;
-import cn.bootx.platform.baseapi.core.sql.entity.SqlParam;
 import cn.bootx.platform.baseapi.param.sql.QueryFieldParam;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
 import cn.bootx.platform.common.core.function.CollectorsFunction;
@@ -44,8 +43,6 @@ public class QuerySqlService {
     private final DynamicRoutingDataSource dynamicRoutingDataSource;
 
     private final DynamicDataSourceManager dynamicDataSourceManager;
-
-    private final QuerySqlManager querySqlManager;
 
     private final DynamicDataSourceService dynamicDataSourceService;
 

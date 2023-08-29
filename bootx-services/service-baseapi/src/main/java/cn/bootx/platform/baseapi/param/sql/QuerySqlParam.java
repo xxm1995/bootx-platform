@@ -1,7 +1,7 @@
 package cn.bootx.platform.baseapi.param.sql;
 
-import cn.bootx.platform.baseapi.core.sql.entity.SqlField;
-import cn.bootx.platform.baseapi.core.sql.entity.SqlParam;
+import cn.bootx.platform.baseapi.core.dataresult.entity.SqlField;
+import cn.bootx.platform.baseapi.core.dataresult.entity.SqlParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
