@@ -1,7 +1,7 @@
-package cn.bootx.platform.baseapi.core.sql.convert;
+package cn.bootx.platform.baseapi.core.dataresult.convert;
 
-import cn.bootx.platform.baseapi.core.sql.entity.QuerySql;
-import cn.bootx.platform.baseapi.dto.sql.QuerySqlDto;
+import cn.bootx.platform.baseapi.core.dataresult.entity.QuerySql;
+import cn.bootx.platform.baseapi.dto.dataresult.QuerySqlDto;
 import cn.bootx.platform.baseapi.param.sql.QuerySqlParam;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

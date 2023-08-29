@@ -1,4 +1,4 @@
-package cn.bootx.platform.baseapi.core.sql.entity;
+package cn.bootx.platform.baseapi.core.dataresult.entity;
 
 import lombok.Getter;
 import lombok.Setter;
