@@ -1,9 +1,10 @@
 package cn.bootx.platform.baseapi.core.dataresult.dao;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,5 +15,11 @@ import java.util.Map;
 @Mapper
 public interface SqlQueryMapper {
 
-    List<Map<String,Object>> query(@Param("sql") String sql);
+    /**
+     * 查询
+     * @param page 分页
+     * @param sql 查询语句
+     */
+    @Select("${sql}")
+    Page<Map<String,Object>> query(Page<?> page, @Param("sql") String sql);
 }
