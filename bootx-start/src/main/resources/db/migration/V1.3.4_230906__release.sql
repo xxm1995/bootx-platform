@@ -6,7 +6,7 @@
  Target Server Type    : MySQL
  File Encoding         : 65001
 
- Date: 08/08/2023 15:09:13
+ Date: 27/08/2023 13:46:57
 */
 
 SET NAMES utf8mb4;
@@ -3013,6 +3013,29 @@ INSERT INTO `base_area` VALUES ('659010', '胡杨河市', '6590');
 INSERT INTO `base_area` VALUES ('659011', '新星市', '6590');
 
 -- ----------------------------
+-- Table structure for base_china_word
+-- ----------------------------
+DROP TABLE IF EXISTS `base_china_word`;
+CREATE TABLE `base_china_word`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `word` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '敏感词',
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '分类',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '描述',
+  `enable` bit(1) NULL DEFAULT NULL COMMENT '是否启用',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建者ID',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修者ID',
+  `last_modified_time` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '乐观锁',
+  `white` bit(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '敏感词' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of base_china_word
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for base_city
 -- ----------------------------
 DROP TABLE IF EXISTS `base_city`;
@@ -3407,7 +3430,9 @@ INSERT INTO `base_dict` VALUES (1561003021674987520, 'SiteMessageReceive', '消�
 INSERT INTO `base_dict` VALUES (1561003189111603200, 'SiteMessageState', '消息发布状态', b'1', '站内信', '站内信消息发布状态', 1399985191002447872, '2022-08-20 22:52:17', 1399985191002447872, '2022-08-20 22:52:17', 0, 0);
 INSERT INTO `base_dict` VALUES (1589527951317389312, 'DataScopePerm', '数据范围权限', b'1', '系统属性', '数据范围权限', 1414143554414059520, '2022-11-07 15:59:30', 1399985191002447872, '2022-12-09 22:09:25', 0, 3);
 INSERT INTO `base_dict` VALUES (1633393287952257024, 'DatabaseType', '数据库类型', b'1', '开发', '数据库类型', 1414143554414059520, '2023-03-08 17:04:41', 1414143554414059520, '2023-03-08 17:04:41', 0, 0);
-INSERT INTO `base_dict` VALUES (1688742690398617600, 'smsChannel', '短信渠道商', b'1', '消息服务', '短信渠道商', 1414143554414059520, '2023-08-08 10:43:27', 1414143554414059520, '2023-08-08 10:43:27', 0, 0);
+INSERT INTO `base_dict` VALUES (1688742690398617600, 'SmsChannel', '短信渠道商', b'1', '消息服务', '短信渠道商', 1414143554414059520, '2023-08-08 10:43:27', 1414143554414059520, '2023-08-12 20:24:03', 0, 1);
+INSERT INTO `base_dict` VALUES (1690338321769918464, 'GeneralTemplateUseType', '通用模板类型', b'1', '系统属性', '通用模板类型', 1414143554414059520, '2023-08-12 20:23:56', 1414143554414059520, '2023-08-12 20:24:22', 0, 1);
+INSERT INTO `base_dict` VALUES (1690338545284378624, 'GeneralTemplateState', '通用模板状态', b'1', '系统属性', '通用模板状态', 1414143554414059520, '2023-08-12 20:24:49', 1414143554414059520, '2023-08-12 20:24:49', 0, 0);
 
 -- ----------------------------
 -- Table structure for base_dict_item
@@ -3495,16 +3520,20 @@ INSERT INTO `base_dict_item` VALUES (1589528423956729856, 1589527951317389312, '
 INSERT INTO `base_dict_item` VALUES (1633403429028536320, 1633393287952257024, 'DatabaseType', 'mysql', 'MySQL', b'1', 1.00, '', 1414143554414059520, '2023-03-08 17:44:59', 1414143554414059520, '2023-03-08 17:44:59', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1633403459470794752, 1633393287952257024, 'DatabaseType', 'oracle', 'Oracle', b'1', 2.00, '', 1414143554414059520, '2023-03-08 17:45:07', 1414143554414059520, '2023-03-08 17:45:07', 0, 0);
 INSERT INTO `base_dict_item` VALUES (1633403498695925760, 1633393287952257024, 'DatabaseType', 'mssql', 'SQLServer', b'1', 3.00, '', 1414143554414059520, '2023-03-08 17:45:16', 1414143554414059520, '2023-03-08 17:45:16', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742732891111424, 1688742690398617600, 'smsChannel', 'alibaba', '阿里云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:43:38', 1414143554414059520, '2023-08-08 10:43:38', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742768479780864, 1688742690398617600, 'smsChannel', 'huawei', '华为云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:43:46', 1414143554414059520, '2023-08-08 10:43:46', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742808027873280, 1688742690398617600, 'smsChannel', 'yunpian', '云片', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:43:55', 1414143554414059520, '2023-08-08 10:43:56', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742840626003968, 1688742690398617600, 'smsChannel', 'tencent', '腾讯云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:03', 1414143554414059520, '2023-08-08 10:44:03', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742872506908672, 1688742690398617600, 'smsChannel', 'uni_sms', '合一短信', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:11', 1414143554414059520, '2023-08-08 10:44:11', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742905553829888, 1688742690398617600, 'smsChannel', 'jd_cloud', '京东云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:19', 1414143554414059520, '2023-08-08 10:44:19', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742954715267072, 1688742690398617600, 'smsChannel', 'cloopen', '容联云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:30', 1414143554414059520, '2023-08-08 10:44:30', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688742990446542848, 1688742690398617600, 'smsChannel', 'emay', '亿美软通', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:39', 1414143554414059520, '2023-08-08 10:44:39', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688743032297308160, 1688742690398617600, 'smsChannel', 'ctyun', '天翼云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:49', 1414143554414059520, '2023-08-08 10:44:49', 0, 0);
-INSERT INTO `base_dict_item` VALUES (1688743065205817344, 1688742690398617600, 'smsChannel', 'netease', '网易云信', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:57', 1414143554414059520, '2023-08-08 10:44:57', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742732891111424, 1688742690398617600, 'SmsChannel', 'alibaba', '阿里云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:43:38', 1414143554414059520, '2023-08-08 10:43:38', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742768479780864, 1688742690398617600, 'SmsChannel', 'huawei', '华为云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:43:46', 1414143554414059520, '2023-08-08 10:43:46', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742808027873280, 1688742690398617600, 'SmsChannel', 'yunpian', '云片', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:43:55', 1414143554414059520, '2023-08-08 10:43:56', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742840626003968, 1688742690398617600, 'SmsChannel', 'tencent', '腾讯云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:03', 1414143554414059520, '2023-08-08 10:44:03', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742872506908672, 1688742690398617600, 'SmsChannel', 'uni_sms', '合一短信', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:11', 1414143554414059520, '2023-08-08 10:44:11', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742905553829888, 1688742690398617600, 'SmsChannel', 'jd_cloud', '京东云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:19', 1414143554414059520, '2023-08-08 10:44:19', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742954715267072, 1688742690398617600, 'SmsChannel', 'cloopen', '容联云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:30', 1414143554414059520, '2023-08-08 10:44:30', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688742990446542848, 1688742690398617600, 'SmsChannel', 'emay', '亿美软通', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:39', 1414143554414059520, '2023-08-08 10:44:39', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688743032297308160, 1688742690398617600, 'SmsChannel', 'ctyun', '天翼云', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:49', 1414143554414059520, '2023-08-08 10:44:49', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1688743065205817344, 1688742690398617600, 'SmsChannel', 'netease', '网易云信', b'1', 0.00, '', 1414143554414059520, '2023-08-08 10:44:57', 1414143554414059520, '2023-08-08 10:44:57', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1690338619024437248, 1690338321769918464, 'GeneralTemplateUseType', 'import', '导入', b'1', 0.00, '', 1414143554414059520, '2023-08-12 20:25:06', 1414143554414059520, '2023-08-12 20:25:06', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1690338653442895872, 1690338321769918464, 'GeneralTemplateUseType', 'export', '导出', b'1', 0.00, '', 1414143554414059520, '2023-08-12 20:25:15', 1414143554414059520, '2023-08-12 20:25:15', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1690338707129987072, 1690338545284378624, 'GeneralTemplateState', 'enable', '启用', b'1', 0.00, '', 1414143554414059520, '2023-08-12 20:25:27', 1414143554414059520, '2023-08-12 20:25:27', 0, 0);
+INSERT INTO `base_dict_item` VALUES (1690338748032839680, 1690338545284378624, 'GeneralTemplateState', 'disable', '停用', b'1', 0.00, '', 1414143554414059520, '2023-08-12 20:25:37', 1414143554414059520, '2023-08-12 20:25:37', 0, 0);
 
 -- ----------------------------
 -- Table structure for base_dynamic_data_source
@@ -3561,6 +3590,33 @@ INSERT INTO `base_dynamic_form` VALUES (1552656018381422592, '测试表单', 'te
 INSERT INTO `base_dynamic_form` VALUES (1552656018381422593, '测试表单1', 'test1', '{\"list\":[{\"type\":\"input\",\"label\":\"申请人\",\"options\":{\"type\":\"text\",\"width\":\"100%\",\"defaultValue\":\"\",\"placeholder\":\"请输入\",\"clearable\":true,\"maxLength\":null,\"addonBefore\":\"\",\"addonAfter\":\"\",\"hidden\":false,\"disabled\":false},\"model\":\"apply_by\",\"key\":\"input_1659059676533\",\"help\":\"测试\",\"rules\":[{\"required\":true,\"message\":\"必填项\"}]},{\"type\":\"input\",\"label\":\"请假天数\",\"options\":{\"type\":\"text\",\"width\":\"100%\",\"defaultValue\":\"\",\"placeholder\":\"请输入\",\"clearable\":false,\"maxLength\":null,\"addonBefore\":\"\",\"addonAfter\":\"\",\"hidden\":false,\"disabled\":false},\"model\":\"leave_days\",\"key\":\"input_1662106166142\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]},{\"type\":\"textarea\",\"label\":\"备注\",\"options\":{\"width\":\"100%\",\"minRows\":4,\"maxRows\":6,\"maxLength\":null,\"defaultValue\":\"\",\"clearable\":true,\"hidden\":false,\"disabled\":false,\"placeholder\":\"请输入\"},\"model\":\"remark\",\"key\":\"textarea_1659020414125\",\"help\":\"\",\"rules\":[{\"required\":true,\"message\":\"必填项\"}]},{\"type\":\"switch\",\"label\":\"开关\",\"options\":{\"defaultValue\":false,\"hidden\":false,\"disabled\":false},\"model\":\"switch_1662108221389\",\"key\":\"switch_1662108221389\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]},{\"type\":\"slider\",\"label\":\"滑动输入条\",\"options\":{\"width\":\"100%\",\"defaultValue\":34,\"disabled\":false,\"hidden\":false,\"min\":0,\"max\":100,\"step\":1,\"showInput\":false},\"model\":\"cc\",\"key\":\"slider_1659020433092\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]},{\"type\":\"table\",\"label\":\"表格布局\",\"trs\":[{\"tds\":[{\"colspan\":1,\"rowspan\":1,\"list\":[]},{\"colspan\":1,\"rowspan\":1,\"list\":[]}]},{\"tds\":[{\"colspan\":1,\"rowspan\":1,\"list\":[{\"type\":\"editor\",\"label\":\"富文本\",\"icon\":\"icon-LC_icon_edit_line_1\",\"list\":[],\"options\":{\"height\":300,\"placeholder\":\"请输入\",\"defaultValue\":\"\",\"chinesization\":true,\"hidden\":false,\"disabled\":false,\"showLabel\":false,\"width\":\"100%\"},\"model\":\"editor_1662106288134\",\"key\":\"editor_1662106288134\",\"help\":\"\",\"rules\":[{\"required\":false,\"message\":\"必填项\"}]}]},{\"colspan\":1,\"rowspan\":1,\"list\":[]}]}],\"options\":{\"width\":\"100%\",\"bordered\":true,\"bright\":false,\"small\":true,\"customStyle\":\"\"},\"key\":\"table_1662106283652\"}],\"config\":{\"layout\":\"vertical\",\"labelCol\":{\"xs\":6,\"sm\":6,\"md\":6,\"lg\":6,\"xl\":6,\"xxl\":6},\"labelWidth\":100,\"labelLayout\":\"Grid\",\"wrapperCol\":{\"xs\":18,\"sm\":18,\"md\":18,\"lg\":18,\"xl\":18,\"xxl\":18},\"hideRequiredMark\":false,\"customStyle\":\"\"}}', '测试动态表单', 1399985191002447872, '2022-07-28 22:03:36', 1414143554414059520, '2022-09-02 16:44:01', 0, 12);
 
 -- ----------------------------
+-- Table structure for base_general_template
+-- ----------------------------
+DROP TABLE IF EXISTS `base_general_template`;
+CREATE TABLE `base_general_template`  (
+  `id` bigint(20) NOT NULL COMMENT '主键',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '模板名称',
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '模板代码',
+  `use_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '使用类型(导入/导出)',
+  `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '模板类型',
+  `file_suffix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '模板后缀名',
+  `state` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '状态',
+  `file_id` bigint(20) NULL DEFAULT NULL COMMENT '文件ID',
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '备注',
+  `creator` bigint(20) NULL DEFAULT NULL COMMENT '创建者ID',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修者ID',
+  `last_modified_time` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
+  `version` int(11) NOT NULL COMMENT '乐观锁',
+  `deleted` bit(1) NOT NULL COMMENT '删除标志',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '通用模板管理' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of base_general_template
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for base_key_value
 -- ----------------------------
 DROP TABLE IF EXISTS `base_key_value`;
@@ -3607,11 +3663,10 @@ CREATE TABLE `base_param`  (
 -- Records of base_param
 -- ----------------------------
 INSERT INTO `base_param` VALUES (1452842684284891136, '测试', 'test.v1', '123', 1, b'1', b'0', NULL, 1399985191002447872, '2021-10-26 11:41:03', 1399985191002447872, '2021-10-26 11:41:03', 0, 0);
-INSERT INTO `base_param` VALUES (1500338438182789120, '结算台聚合支付请求地址', 'CashierAggregateUrl', 'http://127.0.0.1/api/', 1, b'1', b'1', '', 1399985191002447872, '2022-03-06 13:12:13', 1399985191002447872, '2022-05-01 15:03:03', 0, 3);
 INSERT INTO `base_param` VALUES (1520668030248361984, '文件服务器地址', 'FileServerUrl', 'http://127.0.0.1:9999', 1, b'1', b'1', '', 1399985191002447872, '2022-05-01 15:34:46', 1399985191002447872, '2022-05-19 12:53:21', 0, 5);
 INSERT INTO `base_param` VALUES (1529281530059161600, 'websocket服务器地址', 'WebsocketServerUrl', 'ws://127.0.0.1:9999', 1, b'1', b'1', '', 1399985191002447872, '2022-05-25 10:01:44', 1399985191002447872, '2022-05-25 10:01:44', 0, 0);
 INSERT INTO `base_param` VALUES (1545765299880448000, '服务器地址', 'ServerUrl', 'http://127.0.0.1:9999', 1, b'1', b'1', '优先级高于配置文件内进行的配置', 1399985191002447872, '2022-07-09 21:42:21', 1414143554414059520, '2023-08-05 16:40:05', 0, 1);
-INSERT INTO `base_param` VALUES (1547511252795912192, '微信jsapi支付回调服务地址', 'JsapiRedirectUrl', 'http://127.0.0.1/api/', 1, b'1', b'1', '', 1414143554414059520, '2022-07-14 17:20:09', 1414143554414059520, '2022-07-14 17:20:09', 0, 0);
+INSERT INTO `base_param` VALUES (1547511252795912192, '微信jsapi支付回调服务地址', 'JsapiRedirectUrl', 'http://127.0.0.1/api/', 1, b'1', b'1', '用于微信扫码登录使用', 1414143554414059520, '2022-07-14 17:20:09', 1414143554414059520, '2023-08-18 15:49:21', 0, 1);
 
 -- ----------------------------
 -- Table structure for base_province
@@ -3863,7 +3918,7 @@ CREATE TABLE `iam_client`  (
   `last_modifier` bigint(20) NULL DEFAULT NULL COMMENT '最后修者ID',
   `last_modified_time` datetime NULL DEFAULT NULL COMMENT '最后修改时间',
   `version` int(11) NOT NULL COMMENT '乐观锁',
-  `deleted` bit(1) NOT NULL DEFAULT 0 COMMENT '删除标志',
+  `deleted` bit(1) NOT NULL COMMENT '删除标志',
   `default_endow` bit(1) NULL DEFAULT NULL COMMENT '新注册的用户是否默认赋予该终端',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '认证终端' ROW_FORMAT = DYNAMIC;
@@ -4145,7 +4200,7 @@ INSERT INTO `iam_perm_menu` VALUES (1582302180999917568, 'adminv3', 158224992460
 INSERT INTO `iam_perm_menu` VALUES (1582302542955769856, 'adminv3', 1582253011803262976, '用户管理', 'UserList', NULL, b'0', '', b'0', b'0', '/modules/system/user/UserList.vue', NULL, '/system/user/info', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:28:19', 1414143554414059520, '2022-10-18 17:28:19', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1582302764129808384, 'adminv3', 1582253011803262976, '部门管理', 'DeptList', NULL, b'0', '', b'0', b'0', '/modules/system/dept/DeptList.vue', NULL, '/system/user/dept', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:29:11', 1414143554414059520, '2022-10-18 17:32:26', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1582303143110340608, 'adminv3', 1582253152903843840, '数据字典', 'DictList', NULL, b'0', '', b'0', b'0', '/modules/system/dict/DictList.vue', NULL, '/system/config/dict', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:30:42', 1414143554414059520, '2022-10-18 17:30:42', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1582303290070364160, 'adminv3', 1582253152903843840, '定时任务', 'QuartzJobList', NULL, b'0', '', b'0', b'0', '/modules/system/quartz/QuartzJobList.vue', NULL, '/system/config/quartz', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:31:17', 1414143554414059520, '2022-10-18 17:32:12', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1582303290070364160, 'adminv3', 1582253152903843840, '定时任务', 'QuartzJobList', NULL, b'0', '', b'0', b'0', '/modules/baseapi/quartz/QuartzJobList.vue', NULL, '/system/config/quartz', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:31:17', 1414143554414059520, '2023-08-09 15:50:46', 2, 0);
 INSERT INTO `iam_perm_menu` VALUES (1582303447428067328, 'adminv3', 1582253152903843840, '系统参数', 'SystemParamList', NULL, b'0', '', b'0', b'0', '/modules/system/param/SystemParamList.vue', NULL, '/system/config/param', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-18 17:31:54', 1414143554414059520, '2022-10-19 23:14:16', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1582632873244172288, 'adminv3', 1582276341792985088, '文件管理', 'FileUploadList', NULL, b'0', '', b'0', b'0', '/modules/develop/file/FileUploadList.vue', NULL, '/develop/file', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-19 15:20:56', 1414143554414059520, '2022-10-19 15:20:56', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1582633196587261952, 'adminv3', 1582276341792985088, '代码生成', 'CodeGenList', NULL, b'0', '', b'0', b'0', '/modules/develop/codegen/CodeGenList.vue', NULL, '/develop/codegen', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-19 15:22:13', 1414143554414059520, '2022-10-19 15:23:17', 1, 0);
@@ -4156,7 +4211,7 @@ INSERT INTO `iam_perm_menu` VALUES (1583075229563068416, 'adminv3', 158227587542
 INSERT INTO `iam_perm_menu` VALUES (1583076217481043968, 'adminv3', 1583075229563068416, '登录日志', 'LoginLogList', NULL, b'0', '', b'0', b'0', '/modules/monitor/login/LoginLogList.vue', NULL, '/monitor/log/login', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:42:37', 1414143554414059520, '2022-10-20 20:43:36', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1583076424935514112, 'adminv3', 1583075229563068416, '操作日志', 'OperateLogList', NULL, b'0', '', b'0', b'0', '/modules/monitor/operate/OperateLogList.vue', NULL, '/monitor/log/operate', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:43:26', 1414143554414059520, '2022-10-20 20:43:26', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1583076670881112064, 'adminv3', 1583075229563068416, '数据版本日志', 'DataVersionLogList', NULL, b'0', '', b'0', b'0', '/modules/monitor/data/DataVersionLogList.vue', NULL, '/monitor/log/data', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:44:25', 1414143554414059520, '2022-10-20 20:44:25', 0, 0);
-INSERT INTO `iam_perm_menu` VALUES (1583076878956339200, 'adminv3', 1582275875424129024, 'ELK日志', 'ELK', NULL, b'0', '', b'0', b'0', '', NULL, 'http://elk.dev.bootx.cn:5601/app/discover', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:45:15', 1414143554414059520, '2022-11-21 15:04:13', 2, 0);
+INSERT INTO `iam_perm_menu` VALUES (1583076878956339200, 'adminv3', 1582275875424129024, 'ELK日志', 'ELK', NULL, b'0', '', b'1', b'0', '', NULL, 'http://elk.dev.bootx.cn:5601/app/discover', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:45:15', 1414143554414059520, '2023-08-12 19:26:12', 3, 0);
 INSERT INTO `iam_perm_menu` VALUES (1583077015434797056, 'adminv3', 1582275875424129024, 'PlumeLog日志', 'PlumeLog', NULL, b'0', '', b'0', b'0', '', NULL, 'http://127.0.0.1:9999/plumelog/#/', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:45:47', 1414143554414059520, '2022-10-20 20:45:47', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1583077198772019200, 'adminv3', 1582275875424129024, '系统信息', 'SystemInfoMonitor', NULL, b'0', '', b'0', b'0', '/modules/monitor/system/SystemInfoMonitor.vue', NULL, '/monitor/sysinfo', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:46:31', 1414143554414059520, '2022-10-20 20:46:31', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1583077360827342848, 'adminv3', 1582275875424129024, 'Redis监控', 'RedisInfoMonitor', NULL, b'0', '', b'0', b'0', '/modules/monitor/redis/RedisInfoMonitor.vue', NULL, '/monitor/redis', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2022-10-20 20:47:10', 1414143554414059520, '2022-10-20 20:47:10', 0, 0);
@@ -4193,6 +4248,8 @@ INSERT INTO `iam_perm_menu` VALUES (1635274568758435840, 'adminv3', 158227634179
 INSERT INTO `iam_perm_menu` VALUES (1687369862646558720, 'adminv3', 1582275984849326080, '短信管理', 'Sms', NULL, b'0', '', b'0', b'0', 'Layout', NULL, '/notice/sms', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-08-04 15:48:20', 1414143554414059520, '2023-08-04 15:48:32', 1, 0);
 INSERT INTO `iam_perm_menu` VALUES (1687370142234669056, 'adminv3', 1687369862646558720, '短信配置', 'SmsChannelConfigList', NULL, b'0', '', b'0', b'0', '/modules/notice/sms/config/SmsChannelConfigList', NULL, '/notice/sms/config', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-08-04 15:49:26', 1414143554414059520, '2023-08-04 15:49:26', 0, 0);
 INSERT INTO `iam_perm_menu` VALUES (1687370277496778752, 'adminv3', 1687369862646558720, '短信模板', 'SmsTemplateList', NULL, b'0', '', b'0', b'0', '/modules/notice/sms/template/SmsTemplateList', NULL, '/notice/sms/template', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-08-04 15:49:59', 1414143554414059520, '2023-08-04 15:50:38', 1, 0);
+INSERT INTO `iam_perm_menu` VALUES (1689181991598997504, 'adminv3', 1582253152903843840, '敏感词管理', 'ChinaWord', NULL, b'0', '', b'0', b'0', '/modules/baseapi/chianword/ChinaWordList.vue', NULL, '/system/config/chinaword', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-08-09 15:49:05', 1414143554414059520, '2023-08-09 15:49:05', 0, 0);
+INSERT INTO `iam_perm_menu` VALUES (1690324070514782208, 'adminv3', 1582276341792985088, '通用模板', 'GeneralTemplateList', NULL, b'0', '', b'0', b'0', '/modules/develop/template/GeneralTemplateList', NULL, '/develop/template', '', 0, 1, NULL, b'1', b'0', b'0', b'0', NULL, 1414143554414059520, '2023-08-12 19:27:18', 1414143554414059520, '2023-08-12 19:31:26', 3, 0);
 
 -- ----------------------------
 -- Table structure for iam_perm_path
@@ -4345,8 +4402,8 @@ CREATE TABLE `iam_user_expand_info`  (
 -- ----------------------------
 -- Records of iam_user_expand_info
 -- ----------------------------
-INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-10-29 08:44:52', '2022-11-02 09:59:06', b'0', '2022-06-19 21:25:00', 1, '2021-06-02 15:04:15', 0, '2022-11-02 09:59:06', 367, 0);
-INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, '2022-10-31', '1586953599627546624', '2022-11-02 21:32:23', '2022-11-02 21:33:21', b'0', NULL, 1, '2021-07-11 16:44:32', 0, '2022-11-02 21:33:21', 62, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1399985191002447872, 1, '1996-12-01', '1495331905770315776', '2022-11-02 09:59:06', '2023-08-21 13:24:32', b'0', '2022-06-19 21:25:00', 1, '2021-06-02 15:04:15', 0, '2023-08-21 13:24:32', 368, 0);
+INSERT INTO `iam_user_expand_info` VALUES (1414143554414059520, 1, '2022-10-31', '1586953599627546624', '2023-08-21 13:06:47', '2023-08-21 13:23:26', b'0', NULL, 1, '2021-07-11 16:44:32', 0, '2023-08-21 13:23:26', 66, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435894470432456704, 1, NULL, NULL, '2022-09-16 16:48:16', '2022-09-17 17:20:58', b'0', '2022-06-29 00:39:23', 1399985191002447872, '2021-09-09 17:14:54', 0, '2022-09-17 17:20:58', 5, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1435967884114194432, 1, NULL, NULL, NULL, '2022-05-31 15:59:42', b'0', NULL, 1414143554414059520, '2021-09-09 22:06:37', 0, '2022-05-31 15:59:42', 1, 0);
 INSERT INTO `iam_user_expand_info` VALUES (1477990832987361280, 1, NULL, NULL, NULL, NULL, b'0', NULL, 1399985191002447872, '2022-01-03 21:10:49', 1399985191002447872, '2022-01-03 21:10:49', 0, 0);
@@ -4433,6 +4490,7 @@ CREATE TABLE `iam_user_third`  (
 -- ----------------------------
 -- Records of iam_user_third
 -- ----------------------------
+INSERT INTO `iam_user_third` VALUES (1693285779222376448, 1414143554414059520, 'oAAyF68eYHdvi3lc_XGGDpzE7EWM', NULL, NULL, NULL, NULL, NULL, NULL, 1414143554414059520, '2023-08-20 23:36:04', 1414143554414059520, '2023-08-20 23:46:17', 1, 0);
 
 -- ----------------------------
 -- Table structure for iam_user_third_info
@@ -4454,10 +4512,6 @@ CREATE TABLE `iam_user_third_info`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `pk_user_client`(`user_id`, `client_code`) USING BTREE COMMENT '用户id和终端code'
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户三方登录绑定详情' ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of iam_user_third_info
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for notice_mail_config
@@ -4797,9 +4851,6 @@ CREATE TABLE `qrtz_locks`  (
   PRIMARY KEY (`SCHED_NAME`, `LOCK_NAME`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
--- ----------------------------
--- Records of qrtz_locks
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for qrtz_paused_trigger_grps
@@ -5006,9 +5057,6 @@ CREATE TABLE `starter_audit_login_log`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '登陆日志' ROW_FORMAT = DYNAMIC;
 
--- ----------------------------
--- Records of starter_audit_login_log
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for starter_audit_operate_log
@@ -5086,7 +5134,7 @@ DROP TABLE IF EXISTS `starter_file_data`;
 CREATE TABLE `starter_file_data`  (
   `id` bigint(20) NOT NULL COMMENT '主键',
   `base64` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL COMMENT 'base64方式存储',
-  `data` longblob NULL COMMENT 'base64方式存储',
+  `data` longblob NULL COMMENT '数据方式存储',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '上传文件数据' ROW_FORMAT = DYNAMIC;
 
