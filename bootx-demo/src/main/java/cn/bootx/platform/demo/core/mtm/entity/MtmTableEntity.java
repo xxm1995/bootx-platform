@@ -1,8 +1,8 @@
 package cn.bootx.platform.demo.core.mtm.entity;
 
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.mybatis.table.modify.annotation.DbColumn;
-import cn.bootx.mybatis.table.modify.annotation.DbTable;
+import cn.bootx.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.annotation.DbTable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

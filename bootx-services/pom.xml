@@ -127,18 +127,11 @@
             <version>${fastjson.version}</version>
         </dependency>
 
-        <!-- knife4j -ui -->
-<!--        <dependency>-->
-<!--            <groupId>com.github.xiaoymin</groupId>-->
-<!--            <artifactId>knife4j-openapi3-ui</artifactId>-->
-<!--            <version>${knife4j.version}</version>-->
-<!--        </dependency>-->
-
 
         <!-- 自动维护表结构 -->
         <dependency>
             <groupId>cn.bootx</groupId>
-            <artifactId>mybatis-table-modify-mysql-boot-starter</artifactId>
+            <artifactId>table-modify-mysql-boot-starter</artifactId>
             <scope>provided</scope>
         </dependency>
 

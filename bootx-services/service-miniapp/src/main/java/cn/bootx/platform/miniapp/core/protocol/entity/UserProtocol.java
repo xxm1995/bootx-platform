@@ -1,8 +1,8 @@
 package cn.bootx.platform.miniapp.core.protocol.entity;
 
-import cn.bootx.mybatis.table.modify.annotation.DbColumn;
-import cn.bootx.mybatis.table.modify.mybatis.mysq.annotation.DbMySqlFieldType;
-import cn.bootx.mybatis.table.modify.mybatis.mysq.constants.MySqlFieldTypeEnum;
+import cn.bootx.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.mybatis.mysq.annotation.DbMySqlFieldType;
+import cn.bootx.table.modify.mybatis.mysq.constants.MySqlFieldTypeEnum;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.miniapp.core.protocol.convert.UserProtocolConvert;

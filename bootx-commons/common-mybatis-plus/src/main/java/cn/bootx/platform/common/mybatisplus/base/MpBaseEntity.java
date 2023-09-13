@@ -1,6 +1,6 @@
 package cn.bootx.platform.common.mybatisplus.base;
 
-import cn.bootx.mybatis.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.annotation.DbColumn;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Getter;
 import lombok.Setter;

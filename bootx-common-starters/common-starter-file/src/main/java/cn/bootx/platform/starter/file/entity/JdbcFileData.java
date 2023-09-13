@@ -1,9 +1,9 @@
 package cn.bootx.platform.starter.file.entity;
 
-import cn.bootx.mybatis.table.modify.annotation.DbColumn;
-import cn.bootx.mybatis.table.modify.annotation.DbTable;
-import cn.bootx.mybatis.table.modify.mybatis.mysq.annotation.DbMySqlFieldType;
-import cn.bootx.mybatis.table.modify.mybatis.mysq.constants.MySqlFieldTypeEnum;
+import cn.bootx.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.annotation.DbTable;
+import cn.bootx.table.modify.mybatis.mysq.annotation.DbMySqlFieldType;
+import cn.bootx.table.modify.mybatis.mysq.constants.MySqlFieldTypeEnum;
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package cn.bootx.platform.baseapi.core.chinaword.entity;
 
-import cn.bootx.mybatis.table.modify.annotation.DbColumn;
-import cn.bootx.mybatis.table.modify.annotation.DbTable;
+import cn.bootx.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.annotation.DbTable;
 import cn.bootx.platform.baseapi.core.chinaword.convert.ChinaWordConvert;
 import cn.bootx.platform.baseapi.dto.chinaword.ChinaWordDto;
 import cn.bootx.platform.baseapi.param.chinaword.ChinaWordParam;
