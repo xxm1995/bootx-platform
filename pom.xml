@@ -284,7 +284,7 @@
                 <artifactId>common-rabbitmq</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
-            <!-- 自动建表 -->
+            <!-- 自动建表(MySQL) -->
             <dependency>
                 <groupId>cn.bootx</groupId>
                 <artifactId>table-modify-mysql-boot-starter</artifactId>
