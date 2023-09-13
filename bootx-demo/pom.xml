@@ -25,6 +25,7 @@
         <dependency>
             <groupId>cn.bootx</groupId>
             <artifactId>table-modify-mysql-boot-starter</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
