@@ -83,9 +83,10 @@ logging:
     cn.bootx.**: debug
     org.springframework.data.mongodb.core: debug
 # 自动建表配置
-mybatis-table:
+table-modify:
   update-type: update
   scan-package: cn.bootx.platform
+  database-type: mysql
 
 # Swagger 增强版
 knife4j:

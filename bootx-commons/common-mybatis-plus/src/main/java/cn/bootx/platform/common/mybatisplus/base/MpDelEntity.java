@@ -1,6 +1,6 @@
 package cn.bootx.platform.common.mybatisplus.base;
 
-import cn.bootx.mybatis.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.annotation.DbColumn;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.Version;

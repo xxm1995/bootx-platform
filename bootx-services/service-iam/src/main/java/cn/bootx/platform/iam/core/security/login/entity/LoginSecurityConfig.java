@@ -1,7 +1,7 @@
 package cn.bootx.platform.iam.core.security.login.entity;
 
-import cn.bootx.mybatis.table.modify.annotation.DbColumn;
-import cn.bootx.mybatis.table.modify.annotation.DbComment;
+import cn.bootx.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.annotation.DbComment;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

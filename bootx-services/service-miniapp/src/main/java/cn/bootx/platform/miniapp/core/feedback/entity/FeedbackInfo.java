@@ -1,7 +1,7 @@
 package cn.bootx.platform.miniapp.core.feedback.entity;
 
-import cn.bootx.mybatis.table.modify.annotation.DbComment;
-import cn.bootx.mybatis.table.modify.annotation.DbTable;
+import cn.bootx.table.modify.annotation.DbComment;
+import cn.bootx.table.modify.annotation.DbTable;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.miniapp.core.feedback.convert.FeedbackInfoConvert;

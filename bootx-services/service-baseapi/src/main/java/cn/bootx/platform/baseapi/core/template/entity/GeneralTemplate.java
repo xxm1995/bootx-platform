@@ -1,7 +1,7 @@
 package cn.bootx.platform.baseapi.core.template.entity;
 
-import cn.bootx.mybatis.table.modify.annotation.DbComment;
-import cn.bootx.mybatis.table.modify.annotation.DbTable;
+import cn.bootx.table.modify.annotation.DbComment;
+import cn.bootx.table.modify.annotation.DbTable;
 import cn.bootx.platform.baseapi.core.template.convert.GeneralTemplateConvert;
 import cn.bootx.platform.baseapi.dto.template.GeneralTemplateDto;
 import cn.bootx.platform.baseapi.param.template.GeneralTemplateParam;

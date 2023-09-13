@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>cn.bootx</groupId>
-            <artifactId>mybatis-table-modify-mysql-boot-starter</artifactId>
+            <artifactId>table-modify-mysql-boot-starter</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>
