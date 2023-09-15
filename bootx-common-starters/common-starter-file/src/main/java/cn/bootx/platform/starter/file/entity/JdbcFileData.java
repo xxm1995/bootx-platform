@@ -1,10 +1,7 @@
 package cn.bootx.platform.starter.file.entity;
 
-import cn.bootx.table.modify.annotation.DbColumn;
-import cn.bootx.table.modify.annotation.DbTable;
-import cn.bootx.table.modify.mybatis.mysq.annotation.DbMySqlFieldType;
-import cn.bootx.table.modify.mybatis.mysq.constants.MySqlFieldTypeEnum;
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
+import cn.bootx.table.modify.annotation.DbColumn;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,17 +15,14 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
-//@DbTable(comment = "上传文件数据")
 @TableName("starter_file_data")
 public class JdbcFileData extends MpIdEntity {
 
     /** base64方式存储 */
     @DbColumn(comment = "base64方式存储")
-    @DbMySqlFieldType(MySqlFieldTypeEnum.LONGTEXT)
     private String base64;
 
     /** 数据方式存储 */
     @DbColumn(comment = "数据方式存储")
-    @DbMySqlFieldType(MySqlFieldTypeEnum.LONGBLOB)
     private byte[] data;
 }
