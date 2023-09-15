@@ -1,14 +1,13 @@
 package cn.bootx.platform.notice.core.sms.entity;
 
-import cn.bootx.table.modify.annotation.DbColumn;
-import cn.bootx.table.modify.annotation.DbTable;
-import cn.bootx.table.modify.mybatis.mysq.annotation.DbMySqlFieldType;
-import cn.bootx.table.modify.mybatis.mysq.constants.MySqlFieldTypeEnum;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.notice.core.sms.convert.SmsChannelConfigConvert;
 import cn.bootx.platform.notice.dto.sms.SmsChannelConfigDto;
 import cn.bootx.platform.notice.param.sms.SmsChannelConfigParam;
+import cn.bootx.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.mysql.annotation.DbMySqlFieldType;
+import cn.bootx.table.modify.mysql.constants.MySqlFieldTypeEnum;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
