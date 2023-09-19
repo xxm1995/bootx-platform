@@ -57,8 +57,8 @@ public class LoginLogDbService implements LoginLogService {
      * 删除
      */
     @Override
-    public void delete(Long id) {
-        loginLogManager.deleteById(id);
+    public void deleteByDay(Integer deleteDay) {
+
     }
 
 }

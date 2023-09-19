@@ -59,8 +59,7 @@ public class OperateLogDbService implements OperateLogService {
      * 删除
      */
     @Override
-    public void delete(Long id) {
-        operateLogManager.deleteById(id);
+    public void deleteByDay(Integer deleteDay) {
     }
 
 }

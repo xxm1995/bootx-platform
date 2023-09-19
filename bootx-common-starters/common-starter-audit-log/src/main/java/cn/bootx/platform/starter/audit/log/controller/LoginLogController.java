@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +30,7 @@ public class LoginLogController {
 
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<LoginLogDto>> page(@ParameterObject PageParam pageParam,
-            @ParameterObject LoginLogParam loginLogParam) {
+    public ResResult<PageResult<LoginLogDto>> page(@ParameterObject PageParam pageParam, @ParameterObject LoginLogParam loginLogParam) {
         return Res.ok(loginLogService.page(pageParam, loginLogParam));
     }
 
@@ -40,4 +40,10 @@ public class LoginLogController {
         return Res.ok(loginLogService.findById(id));
     }
 
+    @Operation(summary = "清除指定天数之前的日志")
+    @DeleteMapping("/deleteByDay")
+    public ResResult<Void> deleteByDay(Integer deleteDay){
+        loginLogService.deleteByDay(deleteDay);
+        return Res.ok();
+    }
 }

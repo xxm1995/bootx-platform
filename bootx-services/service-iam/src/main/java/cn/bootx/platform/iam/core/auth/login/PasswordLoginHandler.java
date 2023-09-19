@@ -5,7 +5,7 @@ import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.util.RegexUtil;
 import cn.bootx.platform.iam.code.UserStatusCode;
-import cn.bootx.platform.iam.core.user.service.UserAdminService;
+import cn.bootx.platform.iam.core.security.password.service.PasswordLoginFailRecordService;
 import cn.bootx.platform.iam.core.user.service.UserQueryService;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
 import cn.bootx.platform.starter.auth.authentication.UsernamePasswordAuthentication;
@@ -47,9 +47,9 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     // 前端传入的验证码的key
     private final String CAPTCHA_KEY_PARAMETER = "captchaKey";
 
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordLoginFailRecordService passwordLoginFailRecordService;
 
-    private final UserAdminService userAdminService;
+    private final PasswordEncoder passwordEncoder;
 
     private final UserQueryService userQueryService;
 
@@ -87,7 +87,7 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         String saltPassword = passwordEncoder.encode(password);
         // 比对密码未通过
         if (!Objects.equals(saltPassword, userDetail.getPassword())) {
-            this.passwordError(userDetail, context);
+            this.passwordError(userDetail);
         }
         // 管理员跳过各种校验
         if (!userDetail.isAdmin()) {
@@ -138,15 +138,8 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     /**
      * 密码输入错误处理
      */
-    public void passwordError(UserDetail userDetail, LoginAuthContext context) {
-        AuthLoginType authLoginType = context.getAuthLoginType();
-        int errCount = 0;
-        // 密码错误限制
-        if (authLoginType.getPwdErrNum() > -1) {
-
-        }
-        // String errMsg = StrUtil.format("密码不正确, 还有{}次机会",errCount);
-        String errMsg = StrUtil.format("密码不正确");
+    public void passwordError(UserDetail userDetail) {
+        String errMsg = passwordLoginFailRecordService.passwordError(userDetail.getId());
         throw new LoginFailureException(userDetail.getUsername(), errMsg);
     }
 

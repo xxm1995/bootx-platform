@@ -1,8 +1,13 @@
 package cn.bootx.platform.iam.core.security.login.entity;
 
+import cn.bootx.platform.common.core.function.EntityBaseFunction;
+import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.platform.iam.core.security.login.convert.LoginSecurityConfigConvert;
+import cn.bootx.platform.iam.dto.security.LoginSecurityConfigDto;
+import cn.bootx.platform.iam.param.security.LoginSecurityConfigParam;
 import cn.bootx.table.modify.annotation.DbColumn;
 import cn.bootx.table.modify.annotation.DbComment;
-import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,12 +18,12 @@ import lombok.experimental.Accessors;
  * @author xxm
  * @since 2023/8/17
  */
-//@DbTable(comment = "登录安全策略")
+@DbTable(comment = "登录安全策略")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName("iam_login_security_config")
-public class LoginSecurityConfig extends MpBaseEntity {
+public class LoginSecurityConfig extends MpBaseEntity implements EntityBaseFunction<LoginSecurityConfigDto> {
 
     /** 关联终端ID */
     @DbComment("关联终端ID")
@@ -44,4 +49,15 @@ public class LoginSecurityConfig extends MpBaseEntity {
     @DbComment("多终端是否允许同时登录")
     private Boolean  allowMultiTerminalLogin;
 
+
+    /** 创建对象 */
+    public static LoginSecurityConfig init(LoginSecurityConfigParam in) {
+        return LoginSecurityConfigConvert.CONVERT.convert(in);
+    }
+
+    /** 转换成dto */
+    @Override
+    public LoginSecurityConfigDto toDto() {
+        return LoginSecurityConfigConvert.CONVERT.convert(this);
+    }
 }

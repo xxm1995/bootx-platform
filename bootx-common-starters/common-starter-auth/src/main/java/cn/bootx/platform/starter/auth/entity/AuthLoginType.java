@@ -29,6 +29,7 @@ public class AuthLoginType {
     private boolean enable;
 
     /** 密码错误几次冻结 */
+    @Deprecated
     private int pwdErrNum;
 
     /** 是否需要验证码 */

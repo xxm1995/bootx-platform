@@ -8,6 +8,7 @@ import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.iam.code.UserStatusCode;
 import cn.bootx.platform.iam.core.client.dao.ClientManager;
+import cn.bootx.platform.iam.core.security.password.service.PasswordChangeHistoryService;
 import cn.bootx.platform.iam.core.upms.service.UserRoleService;
 import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
@@ -61,6 +62,8 @@ public class UserAdminService {
     private final CaptchaService captchaService;
 
     private final ClientManager clientManager;
+
+    private final PasswordChangeHistoryService passwordChangeHistoryService;
 
     private final ApplicationEventPublisher eventPublisher;
 
@@ -148,7 +151,8 @@ public class UserAdminService {
         userInfoManager.save(userInfo);
         // 扩展信息
         UserExpandInfo userExpandInfo = new UserExpandInfo();
-        userExpandInfo.setInitialPassword(true).setId(userInfo.getId());
+        userExpandInfo.setId(userInfo.getId());
+        passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userExpandInfoManager.save(userExpandInfo);
         eventPublisher.publishEvent(new UserCreateEvent(this, userInfo.toDto()));
     }
@@ -162,6 +166,7 @@ public class UserAdminService {
         // 新密码进行加密
         newPassword = passwordEncoder.encode(newPassword);
         userInfo.setPassword(newPassword);
+        passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userInfoManager.updateById(userInfo);
         eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userInfo.getId()));
     }
@@ -169,11 +174,13 @@ public class UserAdminService {
     /**
      * 批量重置密码
      */
+    @Transactional(rollbackFor = Exception.class)
     public void restartPasswordBatch(List<Long> userIds, String newPassword){
         // 新密码进行加密
         String password = passwordEncoder.encode(newPassword);
         // 批量重置密码
         userInfoManager.restartPasswordBatch(userIds,password);
+        passwordChangeHistoryService.saveBatchChangeHistory(userIds, password);
         eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userIds));
     }
 

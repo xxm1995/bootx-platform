@@ -1,6 +1,7 @@
 package cn.bootx.platform.iam.core.user.service;
 
 import cn.bootx.platform.common.core.exception.BizException;
+import cn.bootx.platform.iam.core.security.password.service.PasswordChangeHistoryService;
 import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
@@ -34,6 +35,8 @@ import java.time.LocalDateTime;
 public class UserInfoService {
 
     private final UserInfoManager userInfoManager;
+
+    private final PasswordChangeHistoryService passwordChangeHistoryService;
 
     private final UserQueryService userQueryService;
 
@@ -111,16 +114,23 @@ public class UserInfoService {
             .orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
             .orElseThrow(UserInfoNotExistsException::new);
+
         // 新密码进行加密
         newPassword = passwordEncoder.encode(newPassword);
 
-        // 判断原有密码是否相同
+        // 判断原密码是否正确
         if (!passwordEncoder.matches(password, userInfo.getPassword())) {
             throw new BizException("旧密码错误");
         }
+        // 判断新密码是否在最近几次使用过
+        if (passwordChangeHistoryService.isRecentlyUsed(userInfo.getId(), newPassword)){
+            throw new BizException("新密码不能与最近使用过的密码相同");
+        }
+
         userInfo.setPassword(newPassword);
         userInfoManager.updateById(userInfo);
         userExpandInfo.setLastChangePasswordTime(LocalDateTime.now());
+        passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userExpandInfoManager.updateById(userExpandInfo);
         eventPublisher.publishEvent(new UserChangePasswordEvent(this,userInfo.getId()));
     }

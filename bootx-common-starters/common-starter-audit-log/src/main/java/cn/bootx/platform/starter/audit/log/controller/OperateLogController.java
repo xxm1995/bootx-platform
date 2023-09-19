@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,4 +43,11 @@ public class OperateLogController {
         return Res.ok(operateLogService.findById(id));
     }
 
+
+    @Operation(summary = "清除指定天数的日志")
+    @DeleteMapping("/deleteByDay")
+    public ResResult<Void> deleteByDay(Integer type){
+        operateLogService.deleteByDay(type);
+        return Res.ok();
+    }
 }

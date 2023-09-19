@@ -69,9 +69,7 @@ public class OperateLogMongoService implements OperateLogService {
             .setTotal(page.getTotalElements());
     }
 
-    @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public void deleteByDay(Integer deleteDay) {
     }
 
 }

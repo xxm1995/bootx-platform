@@ -33,6 +33,6 @@ public interface LoginLogService {
     /**
      * 删除
      */
-    void delete(Long id);
+    void deleteByDay(Integer deleteDay);
 
 }

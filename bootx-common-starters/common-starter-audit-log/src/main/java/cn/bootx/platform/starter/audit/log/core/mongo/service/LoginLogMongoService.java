@@ -65,8 +65,8 @@ public class LoginLogMongoService implements LoginLogService {
     }
 
     @Override
-    public void delete(Long id) {
-        repository.deleteById(id);
+    public void deleteByDay(Integer deleteDay) {
+
     }
 
 }

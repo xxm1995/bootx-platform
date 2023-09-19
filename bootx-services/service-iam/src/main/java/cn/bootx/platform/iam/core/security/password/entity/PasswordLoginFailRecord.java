@@ -2,6 +2,7 @@ package cn.bootx.platform.iam.core.security.password.entity;
 
 import cn.bootx.table.modify.annotation.DbComment;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@DbTable(comment =  "密码登录失败记录")
 @Accessors(chain = true)
 @TableName("iam_password_login_fail_record")
 public class PasswordLoginFailRecord extends MpBaseEntity {
