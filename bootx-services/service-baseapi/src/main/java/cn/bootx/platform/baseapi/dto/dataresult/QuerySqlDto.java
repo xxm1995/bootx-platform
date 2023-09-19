@@ -1,7 +1,5 @@
 package cn.bootx.platform.baseapi.dto.dataresult;
 
-import cn.bootx.platform.baseapi.core.dataresult.entity.SqlField;
-import cn.bootx.platform.baseapi.core.dataresult.entity.SqlParam;
 import cn.bootx.platform.common.core.rest.dto.BaseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -1,11 +1,14 @@
 package cn.bootx.platform.baseapi.core.dataresult.entity;
 
-import cn.bootx.platform.baseapi.core.dataresult.convert.QuerySqlConvert;
+import cn.bootx.platform.baseapi.core.dataresult.convert.DataResultSqlConvert;
 import cn.bootx.platform.baseapi.dto.dataresult.QuerySqlDto;
+import cn.bootx.platform.baseapi.dto.dataresult.SqlField;
+import cn.bootx.platform.baseapi.dto.dataresult.SqlParam;
 import cn.bootx.platform.common.core.annotation.BigField;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.common.mybatisplus.handler.JacksonRawTypeHandler;
+import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -15,16 +18,17 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
- * SQL查询语句
+ * 数据集SQL语句
  *
  * @author xxm
  * @since 2023/3/9
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@DbTable(comment = "数据集SQL语句")
 @Accessors(chain = true)
 @TableName(value = "base_query_sql", autoResultMap = true)
-public class QuerySql extends MpBaseEntity implements EntityBaseFunction<QuerySqlDto> {
+public class DataResultSql extends MpBaseEntity implements EntityBaseFunction<QuerySqlDto> {
 
     /** 数据源ID */
     private Long databaseId;
@@ -54,7 +58,7 @@ public class QuerySql extends MpBaseEntity implements EntityBaseFunction<QuerySq
      */
     @Override
     public QuerySqlDto toDto() {
-        return QuerySqlConvert.CONVERT.convert(this);
+        return DataResultSqlConvert.CONVERT.convert(this);
     }
 
 }

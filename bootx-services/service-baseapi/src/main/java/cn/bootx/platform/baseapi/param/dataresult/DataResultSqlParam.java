@@ -1,7 +1,7 @@
-package cn.bootx.platform.baseapi.param.sql;
+package cn.bootx.platform.baseapi.param.dataresult;
 
-import cn.bootx.platform.baseapi.core.dataresult.entity.SqlField;
-import cn.bootx.platform.baseapi.core.dataresult.entity.SqlParam;
+import cn.bootx.platform.baseapi.dto.dataresult.SqlField;
+import cn.bootx.platform.baseapi.dto.dataresult.SqlParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,8 +16,8 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@Schema(title = "查询语句参数类")
-public class QuerySqlParam {
+@Schema(title = "数据集SQL语句参数")
+public class DataResultSqlParam {
 
     @Schema(description = "主键")
     private Long id;
