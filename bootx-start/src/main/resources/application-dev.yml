@@ -1,9 +1,6 @@
 server:
   port: 9999
 spring:
-#  profiles:
-#    include:
-#      - bootx-dev
   datasource:
     dynamic:
       primary: master
@@ -26,7 +23,7 @@ spring:
   # 如果不使用MQ的话, 可以将项目中 @EnableRabbit 给注释掉, 就不会一直报错了
   rabbitmq:
     # 虚拟主机
-#    virtual-host: bootx-platform
+    virtual-host: bootx-platform
     host: 127.0.0.1
     port: 5672
     username: guest

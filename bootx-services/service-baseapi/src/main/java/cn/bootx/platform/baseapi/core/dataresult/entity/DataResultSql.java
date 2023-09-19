@@ -9,6 +9,8 @@ import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.common.mybatisplus.handler.JacksonRawTypeHandler;
 import cn.bootx.table.modify.annotation.DbTable;
+import cn.bootx.table.modify.mysql.annotation.DbMySqlFieldType;
+import cn.bootx.table.modify.mysql.constants.MySqlFieldTypeEnum;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -27,7 +29,7 @@ import java.util.List;
 @Data
 @DbTable(comment = "数据集SQL语句")
 @Accessors(chain = true)
-@TableName(value = "base_query_sql", autoResultMap = true)
+@TableName(value = "base_data_result_sql", autoResultMap = true)
 public class DataResultSql extends MpBaseEntity implements EntityBaseFunction<QuerySqlDto> {
 
     /** 数据源ID */
@@ -46,11 +48,13 @@ public class DataResultSql extends MpBaseEntity implements EntityBaseFunction<Qu
     /** SQL查询参数 */
     @BigField
     @TableField(typeHandler = JacksonRawTypeHandler.class)
+    @DbMySqlFieldType(MySqlFieldTypeEnum.LONGTEXT)
     private List<SqlParam> params;
 
     /** SQL查询结果字段 */
     @BigField
     @TableField(typeHandler = JacksonRawTypeHandler.class)
+    @DbMySqlFieldType(MySqlFieldTypeEnum.LONGTEXT)
     private List<SqlField> fields;
 
     /**
