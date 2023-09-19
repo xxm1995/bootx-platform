@@ -1,4 +1,4 @@
-package cn.bootx.platform.baseapi.core.dataresult.entity;
+package cn.bootx.platform.baseapi.dto.dataresult;
 
 import lombok.Getter;
 import lombok.Setter;

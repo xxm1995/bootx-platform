@@ -1,17 +1,16 @@
 package cn.bootx.platform.baseapi.core.dataresult.service;
 
 import cn.bootx.platform.baseapi.code.QuerySqlCode;
-import cn.bootx.platform.baseapi.core.dataresult.entity.QuerySql;
-import cn.bootx.platform.baseapi.core.dataresult.entity.SqlParam;
+import cn.bootx.platform.baseapi.core.dataresult.dao.DataResultSqlManager;
+import cn.bootx.platform.baseapi.core.dataresult.entity.DataResultSql;
+import cn.bootx.platform.baseapi.dto.dataresult.SqlParam;
 import cn.bootx.platform.baseapi.core.dynamicsource.dao.DynamicDataSourceManager;
 import cn.bootx.platform.baseapi.core.dynamicsource.entity.DynamicDataSource;
 import cn.bootx.platform.baseapi.core.dynamicsource.service.DynamicDataSourceService;
-import cn.bootx.platform.baseapi.param.sql.QueryFieldParam;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
 import cn.bootx.platform.common.core.function.CollectorsFunction;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.db.Entity;
 import cn.hutool.db.PageResult;
 import cn.hutool.db.handler.EntityHandler;
 import cn.hutool.db.handler.EntityListHandler;
@@ -38,13 +37,15 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class QuerySqlService {
+public class DataResultSqlService {
 
     private final DynamicRoutingDataSource dynamicRoutingDataSource;
 
     private final DynamicDataSourceManager dynamicDataSourceManager;
 
     private final DynamicDataSourceService dynamicDataSourceService;
+
+    private final DataResultSqlManager dataResultSqlManager;
 
     /**
      * 添加查询语句
@@ -63,7 +64,7 @@ public class QuerySqlService {
     /**
      * 分页查询
      */
-    public PageResult<QuerySql> page(){
+    public PageResult<DataResultSql> page(){
         return new PageResult<>();
     }
 
@@ -74,13 +75,13 @@ public class QuerySqlService {
     public Object querySql(Map<String, Object> map) {
         // 获取SQL语句, 将 #{} 和 ${} 元素进行解析和替换
         String sql = "select * from iam_client where system=#{system}";
-        QuerySql querySql = new QuerySql().setDatabaseId(1633376006887067648L).setIsList(true).setSql(sql);
-        SqlAndParam sqlAndParam = this.sqlParamParser(querySql, map);
+        DataResultSql dataResultSql = new DataResultSql().setDatabaseId(1633376006887067648L).setIsList(true).setSql(sql);
+        SqlAndParam sqlAndParam = this.sqlParamParser(dataResultSql, map);
 
         // 对SQL语句进行解析
-        DataSource dataSource = this.getDataSource(querySql.getDatabaseId());
+        DataSource dataSource = this.getDataSource(dataResultSql.getDatabaseId());
         Connection connection = dataSource.getConnection();
-        if (Objects.equals(querySql.getIsList(), true)) {
+        if (Objects.equals(dataResultSql.getIsList(), true)) {
             return SqlExecutor.query(connection, sqlAndParam.sql, new EntityListHandler(),
                     ArrayUtil.toArray(sqlAndParam.param, Object.class));
         }
@@ -93,9 +94,9 @@ public class QuerySqlService {
     /**
      * 解析SQL
      */
-    private SqlAndParam sqlParamParser(QuerySql querySql, Map<String, Object> map) {
-        String sql = querySql.getSql();
-        Map<String, SqlParam> sqlParamMap = Optional.ofNullable(querySql.getParams())
+    private SqlAndParam sqlParamParser(DataResultSql dataResultSql, Map<String, Object> map) {
+        String sql = dataResultSql.getSql();
+        Map<String, SqlParam> sqlParamMap = Optional.ofNullable(dataResultSql.getParams())
             .orElse(new ArrayList<>(0))
             .stream()
             .collect(Collectors.toMap(SqlParam::getName, Function.identity(), CollectorsFunction::retainLatest));
@@ -124,15 +125,15 @@ public class QuerySqlService {
     /**
      * 通过SQL查出结果字段
      */
-    @SneakyThrows
-    public List<String> queryFieldBySql(QueryFieldParam param) {
-        String sql = "select * from iam_client";
-        DataSource dataSource = this.getDataSource(param.getDatabaseId());
-        Connection connection = dataSource.getConnection();
-        Entity query = SqlExecutor.query(connection, sql, new EntityHandler());
-        System.out.println(query);
-        return new ArrayList<>(query.keySet());
-    }
+//    @SneakyThrows
+//    public List<String> queryFieldBySql(SqlQueryParam param) {
+//        String sql = "select * from iam_client";
+//        DataSource dataSource = this.getDataSource(param.getDatabaseId());
+//        Connection connection = dataSource.getConnection();
+//        Entity query = SqlExecutor.query(connection, sql, new EntityHandler());
+//        System.out.println(query);
+//        return new ArrayList<>(query.keySet());
+//    }
 
     /**
      * 获取数据源

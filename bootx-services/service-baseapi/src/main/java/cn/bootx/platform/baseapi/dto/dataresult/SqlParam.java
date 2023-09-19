@@ -1,4 +1,4 @@
-package cn.bootx.platform.baseapi.core.dataresult.entity;
+package cn.bootx.platform.baseapi.dto.dataresult;
 
 import cn.bootx.platform.baseapi.code.QuerySqlCode;
 import lombok.Getter;
