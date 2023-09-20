@@ -4,6 +4,7 @@ import cn.bootx.platform.iam.core.security.password.dao.PasswordChangeHistoryMan
 import cn.bootx.platform.iam.core.security.password.entity.PasswordChangeHistory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public class PasswordChangeHistoryService {
     /**
      * 保存密码更改历史
      */
+    @Async("asyncExecutor")
     public void saveChangeHistory(Long userId,String password){
         PasswordChangeHistory passwordChangeHistory = new PasswordChangeHistory()
                 .setUserId(userId)
@@ -33,6 +35,7 @@ public class PasswordChangeHistoryService {
     /**
      * 批量保存密码更改历史
      */
+    @Async("asyncExecutor")
     public void saveBatchChangeHistory(List<Long> userIds, String password){
         List<PasswordChangeHistory> changeHistories = userIds.stream()
                 .map(userId -> new PasswordChangeHistory()
