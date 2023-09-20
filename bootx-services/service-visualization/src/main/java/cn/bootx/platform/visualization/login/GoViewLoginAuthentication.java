@@ -1,12 +1,8 @@
 package cn.bootx.platform.visualization.login;
 
-import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.platform.iam.core.auth.login.PasswordLoginHandler;
-import cn.bootx.platform.iam.core.user.service.UserAdminService;
-import cn.bootx.platform.iam.core.user.service.UserQueryService;
 import cn.bootx.platform.starter.auth.code.AuthLoginTypeCode;
 import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
-import cn.bootx.platform.starter.auth.util.PasswordEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +14,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class GoViewLoginAuthentication extends PasswordLoginHandler {
 
-    public GoViewLoginAuthentication(PasswordEncoder passwordEncoder, UserAdminService userAdminService,
-            UserQueryService userQueryService, CaptchaService captchaService) {
-        super(passwordEncoder, userAdminService, userQueryService, captchaService);
+    public GoViewLoginAuthentication() {
+        super();
     }
 
     /**

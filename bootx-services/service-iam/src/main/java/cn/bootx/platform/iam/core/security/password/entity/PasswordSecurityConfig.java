@@ -23,8 +23,8 @@ public class PasswordSecurityConfig extends MpBaseEntity{
     @DbComment("最大密码错误数")
     private Integer  maxPwdErrorCount;
 
-    /** 密码错误锁定时间(秒) */
-    @DbComment("密码错误锁定时间(秒)")
+    /** 密码错误锁定时间(分钟) */
+    @DbComment("密码错误锁定时间(分钟)")
     private Integer errorLockTime;
 
     /** 强制修改初始密码 */

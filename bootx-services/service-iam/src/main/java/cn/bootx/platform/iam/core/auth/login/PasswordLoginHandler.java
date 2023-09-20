@@ -16,11 +16,13 @@ import cn.bootx.platform.starter.auth.exception.LoginFailureException;
 import cn.bootx.platform.starter.auth.exception.UserNotFoundException;
 import cn.bootx.platform.starter.auth.util.PasswordEncoder;
 import cn.hutool.core.util.StrUtil;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -47,13 +49,21 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     // 前端传入的验证码的key
     private final String CAPTCHA_KEY_PARAMETER = "captchaKey";
 
-    private final PasswordLoginFailRecordService passwordLoginFailRecordService;
+    @Resource
+    @Getter
+    private PasswordLoginFailRecordService passwordLoginFailRecordService;
 
-    private final PasswordEncoder passwordEncoder;
+    @Resource
+    @Getter
+    private PasswordEncoder passwordEncoder;
 
-    private final UserQueryService userQueryService;
+    @Resource
+    @Getter
+    private UserQueryService userQueryService;
 
-    private final CaptchaService captchaService;
+    @Resource
+    @Getter
+    private CaptchaService captchaService;
 
     /**
      * 认证前置操作, 默认处理验证码
@@ -87,7 +97,11 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         String saltPassword = passwordEncoder.encode(password);
         // 比对密码未通过
         if (!Objects.equals(saltPassword, userDetail.getPassword())) {
-            this.passwordError(userDetail);
+            // 非系统管理员进行错误处理, 包括记录错误次数和账号锁定等操作
+            if (!userDetail.isAdmin()){
+                String errMsg = passwordLoginFailRecordService.passwordError(userDetail.getId());
+                throw new LoginFailureException(userDetail.getUsername(), errMsg);
+            }
         }
         // 管理员跳过各种校验
         if (!userDetail.isAdmin()) {
@@ -98,6 +112,10 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
             if (!Objects.equals(userDetail.getStatus(), UserStatusCode.NORMAL)) {
                 throw new LoginFailureException(username, "账号不是正常状态,无法登陆");
             }
+        }
+        // 非管理员登录成功后清除错误次数等信息
+        if (!userDetail.isAdmin()){
+            passwordLoginFailRecordService.clearFailCount(userDetail.getId());
         }
         return new AuthInfoResult().setId(userDetail.getId()).setUserDetail(userDetail);
     }
@@ -135,13 +153,6 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
         return userInfoDto.toUserDetail();
     }
 
-    /**
-     * 密码输入错误处理
-     */
-    public void passwordError(UserDetail userDetail) {
-        String errMsg = passwordLoginFailRecordService.passwordError(userDetail.getId());
-        throw new LoginFailureException(userDetail.getUsername(), errMsg);
-    }
 
     @Nullable
     protected String obtainPassword(HttpServletRequest request) {

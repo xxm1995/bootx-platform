@@ -9,6 +9,7 @@ import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.iam.code.UserStatusCode;
 import cn.bootx.platform.iam.core.client.dao.ClientManager;
 import cn.bootx.platform.iam.core.security.password.service.PasswordChangeHistoryService;
+import cn.bootx.platform.iam.core.security.password.service.PasswordLoginFailRecordService;
 import cn.bootx.platform.iam.core.upms.service.UserRoleService;
 import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
@@ -59,6 +60,8 @@ public class UserAdminService {
 
     private final UserQueryService userQueryService;
 
+    private final PasswordLoginFailRecordService passwordLoginFailRecordService;
+
     private final CaptchaService captchaService;
 
     private final ClientManager clientManager;
@@ -87,6 +90,7 @@ public class UserAdminService {
      */
     public void lockBatch(List<Long> userIds) {
         userInfoManager.setUpStatusBatch(userIds, UserStatusCode.BAN);
+
         eventPublisher.publishEvent(new UserLockEvent(this, userIds));
     }
 
@@ -95,6 +99,7 @@ public class UserAdminService {
      */
     public void unlock(Long userId) {
         userInfoManager.setUpStatus(userId, UserStatusCode.NORMAL);
+        passwordLoginFailRecordService.clearFailCount(userId);
         eventPublisher.publishEvent(new UserUnlockEvent(this, userId));
     }
 
@@ -103,6 +108,7 @@ public class UserAdminService {
      */
     public void unlockBatch(List<Long> userIds) {
         userInfoManager.setUpStatusBatch(userIds, UserStatusCode.NORMAL);
+        passwordLoginFailRecordService.clearBatchFailCount(userIds);
         eventPublisher.publishEvent(new UserUnlockEvent(this, userIds));
     }
 
@@ -160,6 +166,7 @@ public class UserAdminService {
     /**
      * 重置密码
      */
+    @Transactional(rollbackFor = Exception.class)
     public void restartPassword(Long userId, String newPassword) {
 
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
@@ -167,6 +174,7 @@ public class UserAdminService {
         newPassword = passwordEncoder.encode(newPassword);
         userInfo.setPassword(newPassword);
         passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
+        passwordLoginFailRecordService.clearFailCount(userId);
         userInfoManager.updateById(userInfo);
         eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userInfo.getId()));
     }
@@ -178,8 +186,8 @@ public class UserAdminService {
     public void restartPasswordBatch(List<Long> userIds, String newPassword){
         // 新密码进行加密
         String password = passwordEncoder.encode(newPassword);
-        // 批量重置密码
         userInfoManager.restartPasswordBatch(userIds,password);
+        passwordLoginFailRecordService.clearBatchFailCount(userIds);
         passwordChangeHistoryService.saveBatchChangeHistory(userIds, password);
         eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userIds));
     }
