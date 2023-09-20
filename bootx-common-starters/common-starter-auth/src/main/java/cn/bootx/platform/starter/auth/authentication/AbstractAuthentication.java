@@ -6,6 +6,7 @@ import cn.bootx.platform.starter.auth.entity.AuthClient;
 import cn.bootx.platform.starter.auth.entity.AuthInfoResult;
 import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
 import cn.bootx.platform.starter.auth.exception.LoginFailureException;
+import cn.hutool.extra.spring.SpringUtil;
 
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
@@ -22,6 +23,12 @@ public interface AbstractAuthentication {
      * 获取终端编码
      */
     String getLoginType();
+    /**
+     * 获取终端编码
+     */
+    default UserInfoStatusCheck getUserInfoStatusCheck() {
+        return SpringUtil.getBean(UserInfoStatusCheck.class);
+    }
 
     /**
      * 登录类型是否匹配
@@ -44,6 +51,13 @@ public interface AbstractAuthentication {
     AuthInfoResult attemptAuthentication(LoginAuthContext context);
 
     /**
+     * 对用户信息状态进行校验
+     */
+    default void userInfoStatusCheck(AuthInfoResult authInfoResult, LoginAuthContext context){
+//        getUserInfoStatusCheck().check(authInfoResult, context);
+    }
+
+    /**
      * 认证后处理
      */
     default void authenticationAfter(AuthInfoResult authInfoResult, LoginAuthContext context) {
@@ -61,7 +75,6 @@ public interface AbstractAuthentication {
         // 添加用户信息到上下文中
         UserDetail userDetail = authInfoResult.getUserDetail();
         context.setUserDetail(userDetail);
-
         // 判断是否开启了超级管理员
         AuthProperties authProperties = context.getAuthProperties();
         if (!authProperties.isEnableAdmin() && userDetail.isAdmin()) {
@@ -73,6 +86,8 @@ public interface AbstractAuthentication {
             if (!userDetail.getAppIds().contains(authClient.getId())) {
                 throw new LoginFailureException("该用户不拥有该终端的权限");
             }
+            // 用户信息和状态检查
+            this.userInfoStatusCheck(authInfoResult, context);
         }
         authenticationAfter(authInfoResult, context);
         return authInfoResult;

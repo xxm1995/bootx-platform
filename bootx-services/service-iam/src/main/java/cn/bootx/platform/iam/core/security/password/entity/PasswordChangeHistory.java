@@ -2,7 +2,6 @@ package cn.bootx.platform.iam.core.security.password.entity;
 
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.table.modify.annotation.DbComment;
-import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +14,7 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(comment =  "密码更改历史")
+//@DbTable(comment =  "密码更改历史")
 @Accessors(chain = true)
 @TableName("iam_password_change_history")
 public class PasswordChangeHistory extends MpBaseEntity {

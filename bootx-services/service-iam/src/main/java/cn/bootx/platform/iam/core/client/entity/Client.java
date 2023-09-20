@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-//@DbTable(comment = "认证终端",isAppend = true)
 @TableName("iam_client")
 @Accessors(chain = true)
 public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto> {

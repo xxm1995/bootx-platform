@@ -2,7 +2,7 @@ package cn.bootx.platform.iam.core.security.password.service;
 
 import cn.bootx.platform.iam.core.security.password.dao.PasswordLoginFailRecordManager;
 import cn.bootx.platform.iam.core.security.password.entity.PasswordLoginFailRecord;
-import cn.bootx.platform.iam.core.security.password.entity.PasswordSecurityConfig;
+import cn.bootx.platform.iam.dto.security.PasswordSecurityConfigDto;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +23,14 @@ import java.util.List;
 public class PasswordLoginFailRecordService {
     private final PasswordLoginFailRecordManager passwordLoginFailRecordManager;
 
+    private final PasswordSecurityConfigService passwordSecurityConfigService;
+
     /**
      * 登录失败的错误处理
      */
     public String passwordError(Long userId){
         // 密码安全配置
-        PasswordSecurityConfig passwordSecurityConfig = new PasswordSecurityConfig()
-                .setMaxPwdErrorCount(5)
-                .setErrorLockTime(10*60);
+        PasswordSecurityConfigDto securityConfig = passwordSecurityConfigService.findByDefault();
 
         // 更新错误次数
         PasswordLoginFailRecord loginFailRecord = passwordLoginFailRecordManager.findById(userId)
@@ -39,15 +39,19 @@ public class PasswordLoginFailRecordService {
                         .setUserId(userId));
         loginFailRecord.setFailCount(loginFailRecord.getFailCount()+1)
                 .setFailTime(LocalDateTime.now());
-        passwordLoginFailRecordManager.saveOrUpdate(loginFailRecord);
 
         // 判断是否超过最大错误次数, 进行锁定用户
-        int errCount = passwordSecurityConfig.getMaxPwdErrorCount() - loginFailRecord.getFailCount();
-        if (errCount <= 0){
-            // 锁定用户
+        int errCount = securityConfig.getMaxPwdErrorCount() - loginFailRecord.getFailCount();
+        if (errCount == 0){
+            // 进行用户锁定
             return StrUtil.format("密码错误次数超过{}次, 请{}分钟后再试",
-                    loginFailRecord.getFailCount()-1,passwordSecurityConfig.getMaxPwdErrorCount());
+                    loginFailRecord.getFailCount()-1, securityConfig.getMaxPwdErrorCount());
+        } else if (errCount < 0) {
+          // 继续尝试密码, 不再更新错误次数, 直接返回
+            return StrUtil.format("账号已被锁定, 请稍后再试");
+
         }
+        passwordLoginFailRecordManager.saveOrUpdate(loginFailRecord);
         return StrUtil.format("密码不正确, 还有{}次机会", errCount);
     }
 
