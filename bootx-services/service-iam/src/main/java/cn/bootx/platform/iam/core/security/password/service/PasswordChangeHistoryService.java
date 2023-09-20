@@ -2,12 +2,14 @@ package cn.bootx.platform.iam.core.security.password.service;
 
 import cn.bootx.platform.iam.core.security.password.dao.PasswordChangeHistoryManager;
 import cn.bootx.platform.iam.core.security.password.entity.PasswordChangeHistory;
+import cn.bootx.platform.iam.dto.security.PasswordSecurityConfigDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PasswordChangeHistoryService {
     private final PasswordChangeHistoryManager passwordChangeHistoryManager;
+    private final PasswordSecurityConfigService passwordSecurityConfigService;
 
     /**
      * 保存密码更改历史
@@ -50,8 +53,10 @@ public class PasswordChangeHistoryService {
      * 查看要修改的密码是否重复
      */
     public boolean isRecentlyUsed(Long userId,String password){
-        // TODO 需要读取最近5条密码记录，判断是否重复, 后期更换为系统配置
-
-        return false;
+        PasswordSecurityConfigDto securityConfig = passwordSecurityConfigService.findByDefault();
+        Integer recentPassword = securityConfig.getRecentPassword();
+        List<PasswordChangeHistory> changeHistories = passwordChangeHistoryManager.findCountAllByUser(userId, recentPassword);
+        return changeHistories.stream()
+                .anyMatch(o-> Objects.equals(o.getPassword(), password));
     }
 }

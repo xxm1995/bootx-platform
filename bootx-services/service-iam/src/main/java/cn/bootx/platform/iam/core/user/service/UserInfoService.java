@@ -202,9 +202,14 @@ public class UserInfoService {
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
             .orElseThrow(UserInfoNotExistsException::new);
         userInfo.setPassword(passwordEncoder.encode(password));
+        // 判断新密码是否在最近几次使用过
+        if (passwordChangeHistoryService.isRecentlyUsed(userInfo.getId(), userInfo.getPassword())){
+            throw new BizException("新密码不能与最近使用过的密码相同");
+        }
         userExpandInfo.setLastChangePasswordTime(LocalDateTime.now()).setInitialPassword(false);
         userInfoManager.updateById(userInfo);
         userExpandInfoManager.updateById(userExpandInfo);
+        passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userAssistService.deletePhoneForgetCaptcha(phone);
         eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
     }
@@ -220,9 +225,14 @@ public class UserInfoService {
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
             .orElseThrow(UserInfoNotExistsException::new);
         userInfo.setPassword(passwordEncoder.encode(password));
+        // 判断新密码是否在最近几次使用过
+        if (passwordChangeHistoryService.isRecentlyUsed(userInfo.getId(), userInfo.getPassword())){
+            throw new BizException("新密码不能与最近使用过的密码相同");
+        }
         userExpandInfo.setLastChangePasswordTime(LocalDateTime.now()).setInitialPassword(false);
         userInfoManager.updateById(userInfo);
         userExpandInfoManager.updateById(userExpandInfo);
+        passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userAssistService.deleteEmailForgetCaptcha(email);
         eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
     }

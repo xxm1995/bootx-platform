@@ -79,12 +79,12 @@ logging:
   level:
     cn.bootx.**: debug
     org.springframework.data.mongodb.core: debug
+    org.springframework.jdbc.core: debug
 # 自动建表配置
 table-modify:
   update-type: update
   scan-package: cn.bootx.platform
   database-type: mysql
-
 # Swagger 增强版
 knife4j:
   enable: true

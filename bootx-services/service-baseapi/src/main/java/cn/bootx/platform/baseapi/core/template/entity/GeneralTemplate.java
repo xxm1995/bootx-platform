@@ -21,7 +21,6 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-//@DbTable(comment = "通用模板管理")
 @Accessors(chain = true)
 @TableName("base_general_template")
 public class GeneralTemplate extends MpBaseEntity implements EntityBaseFunction<GeneralTemplateDto> {

@@ -25,7 +25,6 @@ import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-//@DbTable(comment = "短信渠道配置")
 @Accessors(chain = true)
 @TableName("notice_sms_channel_config")
 public class SmsChannelConfig extends MpBaseEntity implements EntityBaseFunction<SmsChannelConfigDto> {
