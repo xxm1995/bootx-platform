@@ -78,7 +78,7 @@ public class UserAdminService {
     }
 
     /**
-     * 锁定用户
+     * 封禁用户
      */
     public void lock(Long userId) {
         userInfoManager.setUpStatus(userId, UserStatusCode.BAN);
@@ -86,7 +86,7 @@ public class UserAdminService {
     }
 
     /**
-     * 批量锁定用户
+     * 批量封禁用户
      */
     public void lockBatch(List<Long> userIds) {
         userInfoManager.setUpStatusBatch(userIds, UserStatusCode.BAN);
@@ -152,11 +152,11 @@ public class UserAdminService {
         UserInfo userInfo = UserInfo.init(userInfoParam);
         userInfo.setAdmin(false)
             .setStatus(UserStatusCode.NORMAL)
-            .setPassword(passwordEncoder.encode(userInfo.getPassword()))
-            .setRegisterTime(LocalDateTime.now());
+            .setPassword(passwordEncoder.encode(userInfo.getPassword()));
         userInfoManager.save(userInfo);
         // 扩展信息
-        UserExpandInfo userExpandInfo = new UserExpandInfo();
+        UserExpandInfo userExpandInfo = new UserExpandInfo()
+                .setRegisterTime(LocalDateTime.now());
         userExpandInfo.setId(userInfo.getId());
         passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userExpandInfoManager.save(userExpandInfo);

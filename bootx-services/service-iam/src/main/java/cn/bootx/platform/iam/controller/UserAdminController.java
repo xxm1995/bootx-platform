@@ -92,16 +92,16 @@ public class UserAdminController {
         return Res.ok();
     }
 
-    @OperateLog(title = "锁定用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
-    @Operation(summary = "锁定用户")
+    @OperateLog(title = "封禁用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
+    @Operation(summary = "封禁用户")
     @PostMapping("/lock")
     public ResResult<Void> lock(Long userId) {
         userAdminService.lock(userId);
         return Res.ok();
     }
 
-    @OperateLog(title = "批量锁定用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
-    @Operation(summary = "批量锁定用户")
+    @OperateLog(title = "批量封禁用户", businessType = OperateLog.BusinessType.UPDATE, saveParam = true)
+    @Operation(summary = "批量封禁用户")
     @PostMapping("/lockBatch")
     public ResResult<Void> lockBatch(@RequestBody @NotEmpty(message = "用户集合不可为空") List<Long> userIds) {
         userAdminService.lockBatch(userIds);

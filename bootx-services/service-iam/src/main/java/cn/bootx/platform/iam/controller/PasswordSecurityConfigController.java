@@ -2,9 +2,11 @@ package cn.bootx.platform.iam.controller;
 
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
+import cn.bootx.platform.iam.core.security.password.service.PasswordChangeHistoryService;
 import cn.bootx.platform.iam.core.security.password.service.PasswordSecurityConfigService;
 import cn.bootx.platform.iam.dto.security.PasswordSecurityConfigDto;
 import cn.bootx.platform.iam.param.security.PasswordSecurityConfigParam;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PasswordSecurityConfigController {
     private final PasswordSecurityConfigService passwordSecurityConfigService;
+    private final PasswordChangeHistoryService passwordChangeHistoryService;
 
     @Operation( summary = "添加")
     @PostMapping(value = "/add")
@@ -37,8 +40,14 @@ public class PasswordSecurityConfigController {
     }
 
     @Operation( summary = "获取配置项")
-    @GetMapping(value = "/findByDefault")
-    public ResResult<PasswordSecurityConfigDto> findByDefault(){
-        return Res.ok(passwordSecurityConfigService.findByDefault());
+    @GetMapping(value = "/getDefault")
+    public ResResult<PasswordSecurityConfigDto> getDefault(){
+        return Res.ok(passwordSecurityConfigService.getDefault());
+    }
+
+    @Operation(summary = "查看要修改的密码是否重复")
+    @GetMapping("/isRecentlyUsed")
+    public ResResult<Boolean> isRecentlyUsed(String password) {
+        return Res.ok(passwordChangeHistoryService.isRecentlyUsed(SecurityUtil.getUserId(),password));
     }
 }

@@ -20,7 +20,7 @@ public class PasswordChangeHistoryManager extends BaseManager<PasswordChangeHist
     /**
      * 查询指定用户最近N条历史
      */
-    public List<PasswordChangeHistory> findCountAllByUser(Long userId, int count){
+    public List<PasswordChangeHistory> findAllByUserAndCount(Long userId, int count){
         Page<PasswordChangeHistory> page = new Page<>(1,count);
         page.setSearchCount(false);
         return lambdaQuery()

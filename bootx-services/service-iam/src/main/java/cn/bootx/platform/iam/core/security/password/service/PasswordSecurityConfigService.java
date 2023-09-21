@@ -50,7 +50,7 @@ public class PasswordSecurityConfigService {
     /**
      * 获取配置项, 如有多个, 则取第一个并删除旧的数据, 如果未配置, 则取系统默认配置
      */
-    public PasswordSecurityConfigDto findByDefault(){
+    public PasswordSecurityConfigDto getDefault(){
         List<PasswordSecurityConfig> configs = passwordSecurityConfigManager.findAll();
         if (configs.size()==1){
             return configs.get(0).toDto();

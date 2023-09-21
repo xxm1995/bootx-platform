@@ -2,7 +2,6 @@ package cn.bootx.platform.iam.core.auth.login;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
-import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.jackson.util.JacksonUtil;
 import cn.bootx.platform.iam.core.third.dao.UserThirdManager;
 import cn.bootx.platform.iam.core.third.entity.UserThird;
@@ -12,26 +11,18 @@ import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
 import cn.bootx.platform.starter.auth.authentication.OpenIdAuthentication;
 import cn.bootx.platform.starter.auth.code.AuthLoginTypeCode;
-import cn.bootx.platform.starter.auth.configuration.AuthProperties;
 import cn.bootx.platform.starter.auth.entity.AuthInfoResult;
 import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
 import cn.bootx.platform.starter.auth.entity.ThirdAuthCode;
 import cn.bootx.platform.starter.auth.exception.LoginFailureException;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.bootx.platform.starter.wechat.core.user.service.WeChatUserService;
-import cn.hutool.http.HttpUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.bean.result.WxMpMassUploadResult;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthUser;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 @Component
@@ -80,11 +71,6 @@ public class WeChatAppletLoginHandler implements OpenIdAuthentication {
                 .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());
-    }
-
-    @Override
-    public void authenticationAfter(AuthInfoResult authInfoResult, LoginAuthContext context) {
-        OpenIdAuthentication.super.authenticationAfter(authInfoResult, context);
     }
 
     @Override

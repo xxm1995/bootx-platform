@@ -20,18 +20,18 @@ public class PasswordSecurityConfigParam {
     private Long id;
 
     @Schema(description = "最大密码错误数")
-    private Integer maxPwdErrorCount;
+    private int maxPwdErrorCount;
     @Schema(description = "密码错误锁定时间(分钟)")
-    private Integer errorLockTime;
+    private int errorLockTime;
     @Schema(description = "强制修改初始密码")
-    private Boolean requireChangePwd;
+    private boolean requireChangePwd;
     @Schema(description = "更新频率")
-    private Integer updateFrequency;
+    private int updateFrequency;
     @Schema(description = "到期提醒(天数)")
-    private Integer expireRemind;
+    private int expireRemind;
     @Schema(description = "与登录名相同")
-    private Boolean sameAsLoginName;
+    private boolean sameAsLoginName;
     @Schema(description = "不能与近期多少次密码相同")
-    private Integer recentPassword;
+    private int recentPassword;
 
 }

@@ -4,7 +4,6 @@ import cn.bootx.platform.baseapi.core.captcha.service.CaptchaService;
 import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.util.RegexUtil;
-import cn.bootx.platform.iam.code.UserStatusCode;
 import cn.bootx.platform.iam.core.security.password.service.PasswordLoginFailRecordService;
 import cn.bootx.platform.iam.core.user.service.UserQueryService;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
@@ -103,28 +102,20 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
                 throw new LoginFailureException(userDetail.getUsername(), errMsg);
             }
         }
-        // 管理员跳过各种校验
-        if (!userDetail.isAdmin()) {
-            // 账号状态
-            if (Objects.equals(userDetail.getStatus(), UserStatusCode.LOCK)) {
-                throw new LoginFailureException(username, "密码多次输入错误，已被冻结");
-            }
-            if (!Objects.equals(userDetail.getStatus(), UserStatusCode.NORMAL)) {
-                throw new LoginFailureException(username, "账号不是正常状态,无法登陆");
-            }
-        }
-        // 非管理员登录成功后清除错误次数等信息
-        if (!userDetail.isAdmin()){
-            passwordLoginFailRecordService.clearFailCount(userDetail.getId());
-        }
         return new AuthInfoResult().setId(userDetail.getId()).setUserDetail(userDetail);
     }
 
     /**
-     * 认证后操作
+     * 认证后操作 将验证码设置为失效
      */
     @Override
     public void authenticationAfter(AuthInfoResult authInfoResult, LoginAuthContext context) {
+        UserDetail userDetail = authInfoResult.getUserDetail();
+        // 非管理员登录成功后清除错误次数等信息
+        if (!userDetail.isAdmin()){
+            passwordLoginFailRecordService.clearFailCount(userDetail.getId());
+        }
+        // 清除验证码
         String captchaKey = this.obtainCaptchaKey(context.getRequest());
         captchaService.deleteImgCaptcha(captchaKey);
     }

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 密码登录失败记录
@@ -16,6 +17,13 @@ import java.util.List;
 @Repository
 public class PasswordLoginFailRecordManager extends BaseManager<PasswordLoginFailRecordMapper,PasswordLoginFailRecord> {
 
+
+    /**
+     * 根据用户id查询
+     */
+    public Optional<PasswordLoginFailRecord> findByUserId(Long userId){
+        return findByField(PasswordLoginFailRecord::getUserId,userId);
+    }
 
     /**
      * 批量清除登录失败次数

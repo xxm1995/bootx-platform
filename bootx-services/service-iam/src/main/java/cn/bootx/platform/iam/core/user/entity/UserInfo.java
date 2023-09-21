@@ -2,11 +2,11 @@ package cn.bootx.platform.iam.core.user.entity;
 
 import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
-import cn.bootx.platform.iam.core.user.convert.UserConvert;
-import cn.bootx.platform.iam.param.user.UserInfoParam;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.iam.code.UserStatusCode;
+import cn.bootx.platform.iam.core.user.convert.UserConvert;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
+import cn.bootx.platform.iam.param.user.UserInfoParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -15,7 +15,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,9 +61,6 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
      * @see UserStatusCode
      */
     private Integer status;
-
-    /** 注册时间 */
-    private LocalDateTime registerTime;
 
     @Override
     public UserInfoDto toDto() {
