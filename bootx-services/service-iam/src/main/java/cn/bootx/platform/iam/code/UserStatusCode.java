@@ -11,7 +11,7 @@ public interface UserStatusCode {
     /** 正常 */
     int NORMAL = 1;
 
-    /** 多次登录失败被锁定 */
+    /** 锁定 多次登录失败 */
     int LOCK = 2;
 
     /** 封禁 */

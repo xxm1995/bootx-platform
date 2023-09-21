@@ -26,31 +26,31 @@ public class PasswordSecurityConfig extends MpBaseEntity implements EntityBaseFu
 
     /** 最大密码错误数 */
     @DbComment("最大密码错误数")
-    private Integer  maxPwdErrorCount;
+    private int  maxPwdErrorCount;
 
     /** 密码错误锁定时间(分钟) */
     @DbComment("密码错误锁定时间(分钟)")
-    private Integer errorLockTime;
+    private int errorLockTime;
 
     /** 强制修改初始密码 */
     @DbComment("强制修改初始密码")
-    private  Boolean  requireChangePwd;
+    private  boolean  requireChangePwd;
 
     /** 更新频率(天数) */
     @DbComment("更新频率")
-    private Integer updateFrequency;
+    private int updateFrequency;
 
     /** 到期提醒(天数) */
     @DbComment("到期提醒(天数)")
-    private Integer expireRemind;
+    private int expireRemind;
 
     /** 与登录名相同 */
     @DbComment("与登录名相同")
-    private Boolean sameAsLoginName;
+    private boolean sameAsLoginName;
 
     /** 不能与近期多少次密码相同 */
     @DbComment("不能与近期多少次密码相同")
-    private  Integer recentPassword;
+    private  int recentPassword;
 
     /** 创建对象 */
     public static PasswordSecurityConfig init(PasswordSecurityConfigParam in) {

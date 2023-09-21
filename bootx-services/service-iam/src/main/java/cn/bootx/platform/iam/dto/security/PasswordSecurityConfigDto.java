@@ -18,19 +18,19 @@ import lombok.experimental.Accessors;
 public class PasswordSecurityConfigDto extends BaseDto {
 
     @Schema(description = "最大密码错误数")
-    private Integer maxPwdErrorCount;
+    private int maxPwdErrorCount;
     @Schema(description = "密码错误锁定时间(分钟)")
-    private Integer errorLockTime;
+    private int errorLockTime;
     @Schema(description = "强制修改初始密码")
-    private Boolean requireChangePwd;
-    @Schema(description = "更新频率")
-    private Integer updateFrequency;
-    @Schema(description = "到期提醒(天数)")
-    private Integer expireRemind;
-    @Schema(description = "与登录名相同")
-    private Boolean sameAsLoginName;
+    private boolean requireChangePwd;
+    @Schema(description = "密码更新频率(天)")
+    private int updateFrequency;
+    @Schema(description = "到期提醒(天)")
+    private int expireRemind;
+    @Schema(description = "允许与登录名相同")
+    private boolean sameAsLoginName;
     @Schema(description = "不能与近期多少次密码相同")
-    private Integer recentPassword;
+    private int recentPassword;
 
     /**
      * 默认配置

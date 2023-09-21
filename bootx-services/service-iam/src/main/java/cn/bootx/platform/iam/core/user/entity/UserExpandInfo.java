@@ -36,6 +36,9 @@ public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<U
     /** 上次登录时间 */
     private LocalDateTime lastLoginTime;
 
+    /** 注册时间 */
+    private LocalDateTime registerTime;
+
     /** 本次登录时间 */
     private LocalDateTime currentLoginTime;
 

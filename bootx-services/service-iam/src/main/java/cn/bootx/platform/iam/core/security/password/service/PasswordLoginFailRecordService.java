@@ -25,15 +25,22 @@ public class PasswordLoginFailRecordService {
 
     private final PasswordSecurityConfigService passwordSecurityConfigService;
 
+
+    /**
+     * 获取 密码登录失败记录
+     */
+    public void get(){
+
+    }
     /**
      * 登录失败的错误处理
      */
     public String passwordError(Long userId){
         // 密码安全配置
-        PasswordSecurityConfigDto securityConfig = passwordSecurityConfigService.findByDefault();
+        PasswordSecurityConfigDto securityConfig = passwordSecurityConfigService.getDefault();
 
         // 更新错误次数
-        PasswordLoginFailRecord loginFailRecord = passwordLoginFailRecordManager.findById(userId)
+        PasswordLoginFailRecord loginFailRecord = passwordLoginFailRecordManager.findByUserId(userId)
                 .orElse(new PasswordLoginFailRecord()
                         .setFailCount(0)
                         .setUserId(userId));
