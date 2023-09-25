@@ -5,6 +5,7 @@ import cn.bootx.platform.iam.core.client.convert.LoginTypeConvert;
 import cn.bootx.platform.iam.param.client.LoginTypeParam;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.iam.dto.client.LoginTypeDto;
+import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -19,6 +20,7 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@DbTable(isAppend = true)
 @TableName("iam_login_type")
 @Accessors(chain = true)
 public class LonginType extends MpBaseEntity implements EntityBaseFunction<LoginTypeDto> {
@@ -36,6 +38,9 @@ public class LonginType extends MpBaseEntity implements EntityBaseFunction<Login
 
     /** 在线时长 分钟 */
     private Long timeout;
+
+    /** 验证码类型 */
+    private String captchaType;
 
     /** 是否需要验证码 优先级高于登录策略配置 */
     private boolean captcha;

@@ -1,12 +1,12 @@
-package cn.bootx.platform.iam.core.security.login.service;
+package cn.bootx.platform.iam.core.security.user.service;
 
 import cn.bootx.platform.common.core.exception.DataNotExistException;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
 import cn.bootx.platform.common.core.util.ResultConvertUtil;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
-import cn.bootx.platform.iam.core.security.login.dao.LoginSecurityConfigManager;
-import cn.bootx.platform.iam.core.security.login.entity.LoginSecurityConfig;
+import cn.bootx.platform.iam.core.security.user.dao.LoginSecurityConfigManager;
+import cn.bootx.platform.iam.core.security.user.entity.LoginSecurityConfig;
 import cn.bootx.platform.iam.dto.security.LoginSecurityConfigDto;
 import cn.bootx.platform.iam.param.security.LoginSecurityConfigParam;
 import cn.hutool.core.bean.BeanUtil;

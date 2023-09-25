@@ -1,6 +1,6 @@
-package cn.bootx.platform.iam.core.security.login.convert;
+package cn.bootx.platform.iam.core.security.user.convert;
 
-import cn.bootx.platform.iam.core.security.login.entity.LoginSecurityConfig;
+import cn.bootx.platform.iam.core.security.user.entity.LoginSecurityConfig;
 import cn.bootx.platform.iam.dto.security.LoginSecurityConfigDto;
 import cn.bootx.platform.iam.param.security.LoginSecurityConfigParam;
 import org.mapstruct.Mapper;

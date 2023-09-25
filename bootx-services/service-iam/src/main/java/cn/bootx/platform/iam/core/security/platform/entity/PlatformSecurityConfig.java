@@ -1,4 +1,4 @@
-package cn.bootx.platform.iam.core.security.platform;
+package cn.bootx.platform.iam.core.security.platform.entity;
 
 import cn.bootx.table.modify.annotation.DbComment;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
@@ -26,4 +26,7 @@ public class PlatformSecurityConfig extends MpBaseEntity {
     @DbComment("全局重放过滤")
     private Boolean globalReplay;
 
+    /** 全局水印 */
+    @DbComment("全局水印")
+    private Boolean watermark;
 }
