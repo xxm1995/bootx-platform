@@ -1,8 +1,8 @@
-package cn.bootx.platform.iam.core.security.login.entity;
+package cn.bootx.platform.iam.core.security.user.entity;
 
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
-import cn.bootx.platform.iam.core.security.login.convert.LoginSecurityConfigConvert;
+import cn.bootx.platform.iam.core.security.user.convert.LoginSecurityConfigConvert;
 import cn.bootx.platform.iam.dto.security.LoginSecurityConfigDto;
 import cn.bootx.platform.iam.param.security.LoginSecurityConfigParam;
 import cn.bootx.table.modify.annotation.DbColumn;
@@ -48,6 +48,7 @@ public class LoginSecurityConfig extends MpBaseEntity implements EntityBaseFunct
     /** 多终端是否允许同时登录 */
     @DbComment("多终端是否允许同时登录")
     private Boolean  allowMultiTerminalLogin;
+
 
 
     /** 创建对象 */

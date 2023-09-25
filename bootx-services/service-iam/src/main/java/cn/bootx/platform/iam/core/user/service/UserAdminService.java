@@ -90,7 +90,6 @@ public class UserAdminService {
      */
     public void lockBatch(List<Long> userIds) {
         userInfoManager.setUpStatusBatch(userIds, UserStatusCode.BAN);
-
         eventPublisher.publishEvent(new UserLockEvent(this, userIds));
     }
 

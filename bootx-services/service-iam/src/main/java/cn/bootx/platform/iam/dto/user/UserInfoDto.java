@@ -52,9 +52,6 @@ public class UserInfoDto extends BaseDto implements Serializable {
     @Schema(description = "终端id列表")
     private List<String> clientIdList = new ArrayList<>();
 
-    @Schema(description = "注册来源")
-    private String source;
-
     @Schema(description = "是否管理员")
     private boolean admin;
 

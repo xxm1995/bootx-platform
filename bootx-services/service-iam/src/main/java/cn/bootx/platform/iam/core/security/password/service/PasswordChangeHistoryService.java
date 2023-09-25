@@ -122,14 +122,14 @@ public class PasswordChangeHistoryService {
             PasswordChangeHistory passwordChangeHistory = changeHistoryList.get(0);
             LocalDateTime createTime = passwordChangeHistory.getCreateTime();
             // 判断距今的时间是否超过密码过期时间
-            int keepPswdDay = (int) LocalDateTimeUtil.between(createTime, LocalDateTime.now(), ChronoUnit.DAYS);
-            int dealDay = securityConfig.getUpdateFrequency() - keepPswdDay;
+            int keepPwdDay = (int) LocalDateTimeUtil.between(createTime, LocalDateTime.now(), ChronoUnit.DAYS);
+            int dealDay = securityConfig.getUpdateFrequency() - keepPwdDay;
             // 判断密码是否已经过期
             if( dealDay <= 0 ){
                 return UserVerifyStateResult.fail("密码已过期，需要进行修改后才可以使用");
             }
             // 判断是否满足密码修改的倒计时提醒
-            if (keepPswdDay < securityConfig.getExpireRemind()){
+            if (keepPwdDay < securityConfig.getExpireRemind()){
                 return UserVerifyStateResult.fail("密码已过期，需要进行修改后才可以使用");
             }
         }

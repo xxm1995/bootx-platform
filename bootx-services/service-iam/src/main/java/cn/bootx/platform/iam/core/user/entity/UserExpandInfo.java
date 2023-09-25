@@ -4,6 +4,8 @@ import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.iam.core.user.convert.UserConvert;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.iam.dto.user.UserExpandInfoDto;
+import cn.bootx.table.modify.annotation.DbColumn;
+import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
+@DbTable(isAppend = true)
 @Accessors(chain = true)
 @TableName("iam_user_expand_info")
 public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<UserExpandInfoDto> {
@@ -37,6 +40,7 @@ public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<U
     private LocalDateTime lastLoginTime;
 
     /** 注册时间 */
+    @DbColumn(comment = "注册时间")
     private LocalDateTime registerTime;
 
     /** 本次登录时间 */

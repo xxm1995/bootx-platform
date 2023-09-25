@@ -39,7 +39,7 @@ public class PasswordSecurityConfigController {
         return Res.ok();
     }
 
-    @Operation( summary = "获取配置项")
+    @Operation( summary = "获取配置")
     @GetMapping(value = "/getDefault")
     public ResResult<PasswordSecurityConfigDto> getDefault(){
         return Res.ok(passwordSecurityConfigService.getDefault());

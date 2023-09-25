@@ -49,9 +49,6 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     /** 关联终端id集合 */
     private String clientIds;
 
-    /** 注册来源 */
-    private String source;
-
     /** 是否管理员 */
     @TableField("`admin`")
     private boolean admin;

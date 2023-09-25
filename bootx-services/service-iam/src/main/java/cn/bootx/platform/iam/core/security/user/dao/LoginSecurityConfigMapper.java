@@ -1,6 +1,6 @@
-package cn.bootx.platform.iam.core.security.login.dao;
+package cn.bootx.platform.iam.core.security.user.dao;
 
-import cn.bootx.platform.iam.core.security.login.entity.LoginSecurityConfig;
+import cn.bootx.platform.iam.core.security.user.entity.LoginSecurityConfig;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
