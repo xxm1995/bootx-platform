@@ -1,12 +1,11 @@
 package cn.bootx.platform.iam.core.client.entity;
 
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
-import cn.bootx.platform.iam.core.client.convert.LoginTypeConvert;
-import cn.bootx.platform.iam.param.client.LoginTypeParam;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.platform.iam.core.client.convert.LoginTypeConvert;
 import cn.bootx.platform.iam.dto.client.LoginTypeDto;
+import cn.bootx.platform.iam.param.client.LoginTypeParam;
 import cn.bootx.table.modify.annotation.DbTable;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -46,8 +45,7 @@ public class LonginType extends MpBaseEntity implements EntityBaseFunction<Login
     private boolean captcha;
 
     /** 是否系统内置 */
-    @TableField("`system`")
-    private boolean system;
+    private boolean internal;
 
     /** 是否可用 */
     private boolean enable;

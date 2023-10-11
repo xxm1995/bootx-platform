@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -34,6 +35,16 @@ public class OperateLogDbManager extends BaseManager<OperateLogDbMapper, Operate
                     operateLogParam.getBusinessType())
             .orderByDesc(OperateLogDb::getOperateTime)
             .page(mpPage);
+    }
+
+    /**
+     * 删除 小于指定日期的日志
+     */
+    public void deleteByOffset(LocalDateTime offset){
+        lambdaUpdate()
+                .le(OperateLogDb::getOperateTime, offset)
+                .remove();
+
     }
 
 }

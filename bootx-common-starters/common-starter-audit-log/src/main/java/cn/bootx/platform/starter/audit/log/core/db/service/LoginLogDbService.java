@@ -1,5 +1,6 @@
 package cn.bootx.platform.starter.audit.log.core.db.service;
 
+import cn.bootx.platform.common.core.util.LocalDateTimeUtil;
 import cn.bootx.platform.starter.audit.log.param.LoginLogParam;
 import cn.bootx.platform.starter.audit.log.service.LoginLogService;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
@@ -14,6 +15,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * 登陆日志
@@ -57,8 +61,9 @@ public class LoginLogDbService implements LoginLogService {
      * 删除
      */
     @Override
-    public void deleteByDay(Integer deleteDay) {
-
+    public void deleteByDay(int deleteDay) {
+        LocalDateTime offset = LocalDateTimeUtil.offset(LocalDateTime.now(), -deleteDay, ChronoUnit.DAYS);
+        loginLogManager.deleteByOffset(offset);
     }
 
 }

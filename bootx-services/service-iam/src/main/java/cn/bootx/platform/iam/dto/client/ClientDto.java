@@ -28,7 +28,7 @@ public class ClientDto extends BaseDto {
     private String name;
 
     @Schema(description = "是否系统内置")
-    private Boolean system;
+    private Boolean internal;
 
     @Schema(description = "是否可用")
     private Boolean enable;

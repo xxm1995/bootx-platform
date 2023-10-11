@@ -1,14 +1,13 @@
 package cn.bootx.platform.iam.core.client.entity;
 
-import cn.bootx.table.modify.annotation.DbColumn;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.iam.core.client.convert.ClientConvert;
 import cn.bootx.platform.iam.dto.client.ClientDto;
 import cn.bootx.platform.iam.param.client.ClientParam;
+import cn.bootx.table.modify.annotation.DbColumn;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,8 +36,7 @@ public class Client extends MpBaseEntity implements EntityBaseFunction<ClientDto
     private String name;
 
     /** 是否系统内置 */
-    @TableField("`system`")
-    private boolean system;
+    private boolean internal;
 
     /** 是否可用 */
     private boolean enable;
