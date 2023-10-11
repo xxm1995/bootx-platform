@@ -1,5 +1,6 @@
 package cn.bootx.platform.starter.audit.log.core.db.service;
 
+import cn.bootx.platform.common.core.util.LocalDateTimeUtil;
 import cn.bootx.platform.starter.audit.log.param.OperateLogParam;
 import cn.bootx.platform.starter.audit.log.service.OperateLogService;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
@@ -15,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 /**
  * 操作日志
@@ -59,7 +63,10 @@ public class OperateLogDbService implements OperateLogService {
      * 删除
      */
     @Override
-    public void deleteByDay(Integer deleteDay) {
+    public void deleteByDay(int deleteDay) {
+        // 计算出来指定天数的日期
+        LocalDateTime offset = LocalDateTimeUtil.offset(LocalDateTime.now(), -deleteDay, ChronoUnit.DAYS);
+        operateLogManager.deleteByOffset(offset);
     }
 
 }

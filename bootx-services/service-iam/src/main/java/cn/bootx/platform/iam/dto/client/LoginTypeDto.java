@@ -31,7 +31,7 @@ public class LoginTypeDto extends BaseDto {
     private String type;
 
     @Schema(description = "是否系统内置")
-    private boolean system;
+    private boolean internal;
 
     @Schema(description = "在线时长 分钟")
     private Long timeout;

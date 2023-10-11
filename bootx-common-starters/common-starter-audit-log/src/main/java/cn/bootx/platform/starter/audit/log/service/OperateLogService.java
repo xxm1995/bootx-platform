@@ -33,6 +33,6 @@ public interface OperateLogService {
     /**
      * 删除
      */
-    void deleteByDay(Integer deleteDay);
+    void deleteByDay(int deleteDay);
 
 }

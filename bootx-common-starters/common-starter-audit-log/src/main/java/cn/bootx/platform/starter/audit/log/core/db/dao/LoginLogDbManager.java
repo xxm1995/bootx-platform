@@ -1,15 +1,17 @@
 package cn.bootx.platform.starter.audit.log.core.db.dao;
 
 import cn.bootx.platform.common.core.rest.param.PageParam;
+import cn.bootx.platform.common.mybatisplus.impl.BaseManager;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.starter.audit.log.core.db.entity.LoginLogDb;
 import cn.bootx.platform.starter.audit.log.param.LoginLogParam;
-import cn.bootx.platform.common.mybatisplus.impl.BaseManager;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
 
 /**
  * 登录日志
@@ -32,4 +34,9 @@ public class LoginLogDbManager extends BaseManager<LoginLogDbMapper, LoginLogDb>
             .page(mpPage);
     }
 
+    public void deleteByOffset(LocalDateTime offset) {
+        lambdaUpdate()
+                .le(LoginLogDb::getLoginTime, offset)
+                .remove();
+    }
 }

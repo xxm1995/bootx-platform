@@ -40,7 +40,7 @@ public class LoginTypeService {
             throw new BizException("终端编码不得重复");
         }
         LonginType longinType = LonginType.init(param);
-        longinType.setSystem(false);
+        longinType.setInternal(false);
         return loginTypeManager.save(longinType).toDto();
     }
 
@@ -52,7 +52,7 @@ public class LoginTypeService {
         if (loginTypeManager.existsByCode(param.getCode(), longinType.getId())) {
             throw new BizException("终端编码不得重复");
         }
-        if (longinType.isSystem()) {
+        if (longinType.isInternal()) {
             longinType.setEnable(true);
         }
         BeanUtil.copyProperties(param, longinType, CopyOptions.create().ignoreNullValue());
@@ -99,7 +99,7 @@ public class LoginTypeService {
      */
     public void delete(Long id) {
         LonginType longinType = loginTypeManager.findById(id).orElseThrow(DataNotExistException::new);
-        if (longinType.isSystem()) {
+        if (longinType.isInternal()) {
             throw new BizException("系统内置终端，不可删除");
         }
         loginTypeManager.deleteById(id);

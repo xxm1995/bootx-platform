@@ -42,7 +42,7 @@ public class LoginLogController {
 
     @Operation(summary = "清除指定天数之前的日志")
     @DeleteMapping("/deleteByDay")
-    public ResResult<Void> deleteByDay(Integer deleteDay){
+    public ResResult<Void> deleteByDay(int deleteDay){
         loginLogService.deleteByDay(deleteDay);
         return Res.ok();
     }

@@ -1,5 +1,6 @@
 package cn.bootx.platform.starter.audit.log.core.mongo.service;
 
+import cn.bootx.platform.common.core.util.LocalDateTimeUtil;
 import cn.bootx.platform.starter.audit.log.param.OperateLogParam;
 import cn.bootx.platform.starter.audit.log.service.OperateLogService;
 import cn.bootx.platform.common.core.code.CommonCode;
@@ -17,6 +18,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -69,7 +72,10 @@ public class OperateLogMongoService implements OperateLogService {
             .setTotal(page.getTotalElements());
     }
 
-    public void deleteByDay(Integer deleteDay) {
+    @Override
+    public void deleteByDay(int deleteDay) {
+        LocalDateTime offset = LocalDateTimeUtil.offset(LocalDateTime.now(), -deleteDay, ChronoUnit.DAYS);
+        repository.deleteByOperateTimeBefore(offset);
     }
 
 }
