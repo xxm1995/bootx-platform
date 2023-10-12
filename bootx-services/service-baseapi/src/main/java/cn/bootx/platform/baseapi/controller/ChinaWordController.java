@@ -98,7 +98,7 @@ public class ChinaWordController {
     @Operation(summary = "获取模板")
     @GetMapping("/getTemplate")
     public ResponseEntity<byte[]> getTemplate() throws IOException {
-        InputStream is = Files.newInputStream(new File("D:/data/洛阳工作量报价.xlsx").toPath());
+        InputStream is = Files.newInputStream(new File("D:/data/xxxx.xlsx").toPath());
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<>(IoUtil.readBytes(is), headers, HttpStatus.OK);
