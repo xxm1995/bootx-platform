@@ -3,8 +3,10 @@ package cn.bootx.platform.baseapi.core.dataresult.dao;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 

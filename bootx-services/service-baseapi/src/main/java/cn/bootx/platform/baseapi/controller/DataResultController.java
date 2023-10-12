@@ -12,6 +12,12 @@ import cn.hutool.db.PageResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -69,6 +75,16 @@ public class DataResultController {
     @PostMapping("/querySql")
     public ResResult<SqlQueryResult> querySql(@RequestBody SqlQueryParam param, PageParam pageParam){
         return Res.ok(sqlQueryService.query(param,pageParam));
+    }
+
+    @SneakyThrows
+    @Operation(summary = "导出SQL查询的结果")
+    @PostMapping("/exportQueryResult")
+    public ResponseEntity<byte[]> exportQueryResult(@RequestBody SqlQueryParam param, @ParameterObject PageParam pageParam){
+        byte[] bytes = sqlQueryService.exportQueryResult(param,pageParam);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
     }
 
 }
