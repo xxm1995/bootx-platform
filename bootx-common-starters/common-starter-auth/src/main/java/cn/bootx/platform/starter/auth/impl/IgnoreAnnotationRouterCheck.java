@@ -51,13 +51,13 @@ public class IgnoreAnnotationRouterCheck implements RouterCheck {
         if (Objects.isNull(ignoreAuth)) {
             return false;
         }
-        // 忽略鉴权
-        if (ignoreAuth.ignore()) {
-            return true;
-        }
         // 只校验登录状态
         if (ignoreAuth.login()) {
             return SecurityUtil.getCurrentUser().isPresent();
+        }
+        // 忽略鉴权
+        if (ignoreAuth.ignore()) {
+            return true;
         }
         return false;
     }
