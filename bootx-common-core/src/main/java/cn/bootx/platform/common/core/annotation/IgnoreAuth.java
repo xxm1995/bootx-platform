@@ -19,7 +19,7 @@ public @interface IgnoreAuth {
     boolean ignore() default true;
 
     /**
-     * 只要登录就忽略权限校验, 在ignore为false时生效
+     * 只要登录就忽略权限校验, login值为true是ignore将不生效
      */
     boolean login() default false;
 

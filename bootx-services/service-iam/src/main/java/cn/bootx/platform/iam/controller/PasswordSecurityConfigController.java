@@ -3,8 +3,10 @@ package cn.bootx.platform.iam.controller;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.iam.core.security.password.service.PasswordChangeHistoryService;
+import cn.bootx.platform.iam.core.security.password.service.PasswordSecurityCheckService;
 import cn.bootx.platform.iam.core.security.password.service.PasswordSecurityConfigService;
 import cn.bootx.platform.iam.dto.security.PasswordSecurityConfigDto;
+import cn.bootx.platform.iam.dto.security.passwordSecurityCheckResult;
 import cn.bootx.platform.iam.param.security.PasswordSecurityConfigParam;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class PasswordSecurityConfigController {
     private final PasswordSecurityConfigService passwordSecurityConfigService;
     private final PasswordChangeHistoryService passwordChangeHistoryService;
+    private final PasswordSecurityCheckService passwordSecurityCheckService;
 
     @Operation( summary = "添加")
     @PostMapping(value = "/add")
@@ -49,5 +52,12 @@ public class PasswordSecurityConfigController {
     @GetMapping("/isRecentlyUsed")
     public ResResult<Boolean> isRecentlyUsed(String password) {
         return Res.ok(passwordChangeHistoryService.isRecentlyUsed(SecurityUtil.getUserId(),password));
+    }
+
+    @Operation(summary = "登录后检查密码相关的情况")
+    @GetMapping("/checkPasswordSecurity")
+    public ResResult<passwordSecurityCheckResult> checkPasswordSecurity(){
+        Long userId = SecurityUtil.getUserId();
+        return Res.ok(passwordSecurityCheckService.checkPasswordSecurity(userId));
     }
 }

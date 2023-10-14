@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
- * Websocket配置
+ * 用户Websocket配置
  *
  * @author xxm
  * @since 2022/3/27
