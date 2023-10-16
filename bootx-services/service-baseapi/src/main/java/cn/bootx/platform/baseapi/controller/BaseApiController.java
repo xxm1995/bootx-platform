@@ -21,14 +21,14 @@ public class BaseApiController {
     @Operation(summary = "回声测试")
     @GetMapping("/echo")
     public String echo(String msg){
-        return msg;
+        return "echo: "+msg;
     }
 
     @IgnoreAuth(login = true)
     @Operation(summary = "回声测试(必须要进行登录)")
     @GetMapping("/auth/echo")
     public String authEcho(String msg){
-        return msg;
+        return "echo:  "+msg;
     }
 
 
