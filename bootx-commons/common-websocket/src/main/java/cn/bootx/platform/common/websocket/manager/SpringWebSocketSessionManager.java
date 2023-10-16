@@ -2,15 +2,19 @@ package cn.bootx.platform.common.websocket.manager;
 
 import cn.hutool.core.collection.ListUtil;
 import com.google.common.collect.Lists;
+import lombok.Getter;
 import org.springframework.web.socket.WebSocketSession;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
- * websocket管理器 (Spring封装的socket)
+ * websocket管理器 (Spring封装的socket) 用于管理用户链接
  *
  * @author xxm
  * @since 2022/5/27
@@ -18,13 +22,16 @@ import java.util.stream.Collectors;
 public class SpringWebSocketSessionManager {
 
     // session缓存
-    protected static final Map<String, WebSocketSession> sessionPool = new ConcurrentHashMap<>();
+    @Getter
+    private static final Map<String, WebSocketSession> sessionPool = new ConcurrentSkipListMap<>();
 
     // sessionId 与 用户标识id 的映射关系 n:1
-    protected static final Map<String, String> sid2uid = new ConcurrentHashMap<>();
+    @Getter
+    private static final Map<String, String> sid2uid = new ConcurrentSkipListMap<>();
 
     // 用户标识id 与 sessionId 的映射关系 1:n
-    protected static final Map<String, List<String>> uid2sid = new ConcurrentHashMap<>();
+    @Getter
+    private static final Map<String, List<String>> uid2sid = new ConcurrentSkipListMap<>();
 
     /**
      * 添加会话session关联

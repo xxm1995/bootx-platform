@@ -1,4 +1,4 @@
-package cn.bootx.platform.common.websocket;
+package cn.bootx.platform.common.websocket.controller;
 
 import cn.bootx.platform.common.websocket.service.WebSocketAdminService;
 import io.swagger.v3.oas.annotations.tags.Tag;
