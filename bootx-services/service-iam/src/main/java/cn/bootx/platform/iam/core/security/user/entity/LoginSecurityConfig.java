@@ -49,8 +49,6 @@ public class LoginSecurityConfig extends MpBaseEntity implements EntityBaseFunct
     @DbComment("多终端是否允许同时登录")
     private Boolean  allowMultiTerminalLogin;
 
-
-
     /** 创建对象 */
     public static LoginSecurityConfig init(LoginSecurityConfigParam in) {
         return LoginSecurityConfigConvert.CONVERT.convert(in);
