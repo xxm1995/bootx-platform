@@ -1,6 +1,7 @@
 package cn.bootx.platform.common.websocket.notice;
 
 import cn.bootx.platform.common.websocket.manager.SpringWebSocketSessionManager;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ import static cn.bootx.platform.common.core.code.CommonCode.USER_ID;
 public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
 
     /** websocket连接管理器 */
+    @Getter
     private static final SpringWebSocketSessionManager wsManager = new SpringWebSocketSessionManager();
 
     /** 记录当前在线连接数 */
