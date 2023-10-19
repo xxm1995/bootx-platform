@@ -1,6 +1,5 @@
 package cn.bootx.platform.iam.core.security.password.service;
 
-import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.exception.DataNotExistException;
 import cn.bootx.platform.iam.core.security.password.dao.PasswordSecurityConfigManager;
 import cn.bootx.platform.iam.core.security.password.entity.PasswordSecurityConfig;
@@ -26,13 +25,21 @@ public class PasswordSecurityConfigService {
     private final PasswordSecurityConfigManager passwordSecurityConfigManager;
 
     /**
+     * 添加or修改
+     */
+    public void addOrUpdate(PasswordSecurityConfigParam param){
+        // 判断库里是否有数据
+        if (passwordSecurityConfigManager.existsAll()){
+            this.update(param);
+        } else {
+            this.add(param);
+        }
+    }
+
+    /**
      * 添加
      */
     public void add(PasswordSecurityConfigParam param){
-        // 判断库里是否有数据
-        if (passwordSecurityConfigManager.existsAll()){
-            throw new BizException("密码安全策略已存在");
-        }
         PasswordSecurityConfig passwordSecurityConfig = PasswordSecurityConfig.init(param);
         passwordSecurityConfigManager.save(passwordSecurityConfig);
     }
@@ -40,7 +47,7 @@ public class PasswordSecurityConfigService {
     /**
      *  修改
      */
-    public void update(PasswordSecurityConfigParam param){
+    private void update(PasswordSecurityConfigParam param){
         PasswordSecurityConfig passwordSecurityConfig = passwordSecurityConfigManager.findById(param.getId())
                 .orElseThrow(() -> new DataNotExistException("密码安全策略不存在"));
         BeanUtil.copyProperties(param, passwordSecurityConfig, CopyOptions.create().ignoreNullValue());

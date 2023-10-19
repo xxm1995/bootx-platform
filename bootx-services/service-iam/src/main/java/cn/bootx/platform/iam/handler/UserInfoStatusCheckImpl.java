@@ -58,7 +58,7 @@ public class UserInfoStatusCheckImpl implements UserInfoStatusCheck {
         }
         // 判断用户是否拥有认证应用的权限
         if (!userDetail.getAppIds().contains(authClient.getId())) {
-            throw new LoginFailureException("该用户不拥有该终端的权限");
+//            throw new LoginFailureException("该用户不拥有该终端的权限");
         }
         //  判断用户是否被禁用
         if (Objects.equals(userDetail.getStatus(), UserStatusCode.BAN)){
