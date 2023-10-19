@@ -13,14 +13,12 @@ import cn.bootx.platform.starter.auth.authentication.OpenIdAuthentication;
 import cn.bootx.platform.starter.auth.code.AuthLoginTypeCode;
 import cn.bootx.platform.starter.auth.entity.AuthInfoResult;
 import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
-import cn.bootx.platform.starter.auth.entity.ThirdAuthCode;
 import cn.bootx.platform.starter.auth.exception.LoginFailureException;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.bootx.platform.starter.wechat.core.user.service.WeChatUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthUser;
 import org.springframework.stereotype.Component;
 
@@ -46,16 +44,6 @@ public class WeChatAppletLoginHandler implements OpenIdAuthentication {
     }
 
     @Override
-    public boolean adaptation(String loginType) {
-        return OpenIdAuthentication.super.adaptation(loginType);
-    }
-
-    @Override
-    public void authenticationBefore(LoginAuthContext context) {
-        OpenIdAuthentication.super.authenticationBefore(context);
-    }
-
-    @Override
     public AuthInfoResult attemptAuthentication(LoginAuthContext context) {
 
         String authCode = context.getRequest().getParameter(AuthLoginTypeCode.WE_CHAT_APPLET);
@@ -71,21 +59,6 @@ public class WeChatAppletLoginHandler implements OpenIdAuthentication {
                 .orElseThrow(() -> new LoginFailureException("用户不存在"));
 
         return new AuthInfoResult().setUserDetail(userInfo.toUserDetail()).setId(userInfo.getId());
-    }
-
-    @Override
-    public AuthInfoResult authentication(LoginAuthContext context) {
-        return OpenIdAuthentication.super.authentication(context);
-    }
-
-    @Override
-    public String getLoginUrl() {
-        return OpenIdAuthentication.super.getLoginUrl();
-    }
-
-    @Override
-    public ThirdAuthCode getAuthCode(AuthCallback callback) {
-        return OpenIdAuthentication.super.getAuthCode(callback);
     }
 
     @Override

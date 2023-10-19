@@ -105,7 +105,7 @@ public class RolePathService {
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
 
         List<PermPathDto> paths;
-        if (userInfo.isAdmin()) {
+        if (userInfo.isAdministrator()) {
             paths = pathService.findAll();
         }
         else {

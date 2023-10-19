@@ -57,31 +57,38 @@ public class UserInfoStatusCheckImpl implements UserInfoStatusCheck {
             return;
         }
         // 判断用户是否拥有认证应用的权限
-        if (!userDetail.getAppIds().contains(authClient.getId())) {
-//            throw new LoginFailureException("该用户不拥有该终端的权限");
+        if (!userDetail.getClientIds().contains(authClient.getId())) {
+            throw new LoginFailureException("该用户不拥有该终端的权限");
         }
         //  判断用户是否被禁用
         if (Objects.equals(userDetail.getStatus(), UserStatusCode.BAN)){
             throw new LoginFailureException("该用户已被禁用");
         }
 
-        // 是否密码错误被锁定
+        // 密码是否因为错误被锁定
         if (Objects.equals(userDetail.getStatus(), UserStatusCode.LOCK)){
-            PasswordSecurityConfigDto securityConfig = securityConfigService.getDefault();
-            PasswordLoginFailRecord loginFailRecord = loginFailRecordManager.findByUserId(userDetail.getId())
-                    .orElse(null);
-            if (Objects.isNull(loginFailRecord)){
-                throw new LoginFailureException("该用户已被锁定，请联系管理员进行解锁");
-            }
-            // 判断锁定时间是否已经结束, 结束了就清空错误次数, 并对用户进行解锁
-            LocalDateTime failOverTime = LocalDateTimeUtil.offset(loginFailRecord.getFailTime(), securityConfig.getErrorLockTime(), ChronoUnit.MINUTES);
-            long seconds = LocalDateTimeUtil.between(LocalDateTime.now(), failOverTime, ChronoUnit.SECONDS);
-            if (seconds>0){
-                loginFailRecordService.clearFailCount(userDetail.getId());
-                userAdminService.unlock(seconds);
-            } else {
-                throw new LoginFailureException(StrUtil.format("该用户已被锁定，请 {} 秒后再试",seconds));
-            }
+            this.checkLock(userDetail);
+        }
+    }
+
+    /**
+     * 密码是否因为错误被锁定, 同时处理锁定结束, 解锁用户
+     */
+    private void checkLock(UserDetail userDetail){
+        PasswordSecurityConfigDto securityConfig = securityConfigService.getDefault();
+        PasswordLoginFailRecord loginFailRecord = loginFailRecordManager.findByUserId(userDetail.getId())
+                .orElse(null);
+        if (Objects.isNull(loginFailRecord)){
+            throw new LoginFailureException("该用户已被锁定，请联系管理员进行解锁");
+        }
+        // 判断锁定时间是否已经结束, 结束了就清空错误次数, 并对用户进行解锁
+        LocalDateTime failOverTime = LocalDateTimeUtil.offset(loginFailRecord.getFailTime(), securityConfig.getErrorLockTime(), ChronoUnit.MINUTES);
+        long seconds = LocalDateTimeUtil.between(LocalDateTime.now(), failOverTime, ChronoUnit.SECONDS);
+        if (seconds>0){
+            loginFailRecordService.clearFailCount(userDetail.getId());
+            userAdminService.unlock(seconds);
+        } else {
+            throw new LoginFailureException(StrUtil.format("该用户已被锁定，请 {} 秒后再试",seconds));
         }
     }
 }

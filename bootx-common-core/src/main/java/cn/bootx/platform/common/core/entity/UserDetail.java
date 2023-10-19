@@ -34,8 +34,8 @@ public class UserDetail {
     @JsonIgnore
     private transient String password;
 
-    /** 拥有权限的应用列表 */
-    private List<Long> appIds;
+    /** 拥有权限的终端列表 */
+    private List<Long> clientIds;
 
     /** 是否管理员 */
     private boolean admin;
@@ -44,6 +44,6 @@ public class UserDetail {
      * 账号状态
      * @see cn.bootx.iam.code.UserStatusCode
      */
-    private Integer status;
+    private String status;
 
 }

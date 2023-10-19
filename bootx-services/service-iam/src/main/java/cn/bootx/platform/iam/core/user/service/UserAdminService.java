@@ -25,7 +25,6 @@ import cn.bootx.platform.iam.param.user.UserRegisterParam;
 import cn.bootx.platform.starter.auth.util.PasswordEncoder;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -77,17 +76,33 @@ public class UserAdminService {
     /**
      * 封禁用户
      */
-    public void lock(Long userId) {
+    public void ban(Long userId) {
         userInfoManager.setUpStatus(userId, UserStatusCode.BAN);
-        eventPublisher.publishEvent(new UserLockEvent(this, userId));
+        eventPublisher.publishEvent(new UserDeactivateEvent(this, UserStatusCode.BAN, userId));
     }
 
     /**
      * 批量封禁用户
      */
-    public void lockBatch(List<Long> userIds) {
+    public void banBatch(List<Long> userIds) {
         userInfoManager.setUpStatusBatch(userIds, UserStatusCode.BAN);
-        eventPublisher.publishEvent(new UserLockEvent(this, userIds));
+        eventPublisher.publishEvent(new UserDeactivateEvent(this, UserStatusCode.BAN, userIds));
+    }
+
+    /**
+     * 锁定用户
+     */
+    public void lock(Long userId) {
+        userInfoManager.setUpStatus(userId, UserStatusCode.LOCK);
+        eventPublisher.publishEvent(new UserDeactivateEvent(this, UserStatusCode.LOCK, userId));
+    }
+
+    /**
+     * 批量锁定用户
+     */
+    public void lockBatch(List<Long> userIds) {
+        userInfoManager.setUpStatusBatch(userIds, UserStatusCode.LOCK);
+        eventPublisher.publishEvent(new UserDeactivateEvent(this, UserStatusCode.LOCK, userIds));
     }
 
     /**
@@ -119,12 +134,11 @@ public class UserAdminService {
         BeanUtil.copyProperties(param, userInfoParam);
         userInfoParam.setName(param.getUsername());
         // 添加默认注册就有权限的终端
-        List<String> clientIds = clientManager.findAllByDefaultEndow(true)
-            .stream()
-            .map(MpIdEntity::getId)
-            .map(String::valueOf)
-            .collect(Collectors.toList());
-        userInfoParam.setClientIdList(clientIds);
+        List<Long> clientIds = clientManager.findAllByDefaultEndow(true)
+                .stream()
+                .map(MpIdEntity::getId)
+                .collect(Collectors.toList());
+        userInfoParam.setClientIds(clientIds);
         this.add(userInfoParam);
     }
 
@@ -144,9 +158,9 @@ public class UserAdminService {
         }
         // 注册时间
         UserInfo userInfo = UserInfo.init(userInfoParam);
-        userInfo.setAdmin(false)
-            .setStatus(UserStatusCode.NORMAL)
-            .setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        userInfo.setAdministrator(false)
+                .setStatus(UserStatusCode.NORMAL)
+                .setPassword(passwordEncoder.encode(userInfo.getPassword()));
         userInfoManager.save(userInfo);
         // 扩展信息
         UserExpandInfo userExpandInfo = new UserExpandInfo()
@@ -189,15 +203,10 @@ public class UserAdminService {
      */
     public void update(UserInfoParam userInfoParam) {
         UserInfo userInfo = userInfoManager.findById(userInfoParam.getId())
-            .orElseThrow(UserInfoNotExistsException::new);
+                .orElseThrow(UserInfoNotExistsException::new);
         userInfoParam.setPassword(null);
         BeanUtil.copyProperties(userInfoParam, userInfo, CopyOptions.create().ignoreNullValue());
-        if (CollUtil.isNotEmpty(userInfoParam.getClientIdList())) {
-            userInfo.setClientIds(String.join(",", userInfoParam.getClientIdList()));
-        }
-        else {
-            userInfo.setClientIds("");
-        }
+        userInfo.setClientIds(userInfoParam.getClientIds());
         UserInfoDto userInfoDto = userInfoManager.updateById(userInfo).toDto();
         eventPublisher.publishEvent(new UserUpdateEvent(this, userInfoDto));
     }
@@ -209,15 +218,15 @@ public class UserAdminService {
         // 用户信息
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
         UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userId)
-            .orElseThrow(UserInfoNotExistsException::new);
+                .orElseThrow(UserInfoNotExistsException::new);
         // 角色信息
         List<RoleDto> rolesByUser = userRoleService.findRolesByUser(userId);
         // 部门组织
         List<DeptDto> deptListByUser = userDeptService.findDeptListByUser(userId);
         return new UserInfoWhole().setUserInfo(userInfo.toDto())
-            .setUserExpandInfo(userExpandInfo.toDto())
-            .setRoles(rolesByUser)
-            .setDeptList(deptListByUser);
+                .setUserExpandInfo(userExpandInfo.toDto())
+                .setRoles(rolesByUser)
+                .setDeptList(deptListByUser);
     }
 
 }

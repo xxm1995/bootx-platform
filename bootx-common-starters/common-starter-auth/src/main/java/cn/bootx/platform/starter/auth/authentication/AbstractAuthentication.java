@@ -50,7 +50,6 @@ public interface AbstractAuthentication {
      * 认证后处理
      */
     default void authenticationAfter(AuthInfoResult authInfoResult, LoginAuthContext context) {
-
     }
 
     /**
@@ -68,5 +67,4 @@ public interface AbstractAuthentication {
         this.authenticationAfter(authInfoResult, context);
         return authInfoResult;
     }
-
 }
