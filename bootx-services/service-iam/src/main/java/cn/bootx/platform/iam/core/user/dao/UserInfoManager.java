@@ -72,14 +72,14 @@ public class UserInfoManager extends BaseManager<UserInfoMapper, UserInfo> {
         return mpPage;
     }
 
-    public void setUpStatus(Long userId, int status) {
+    public void setUpStatus(Long userId, String status) {
         lambdaUpdate().eq(MpIdEntity::getId, userId).set(UserInfo::getStatus, status).update();
     }
 
     /**
      * 批量更新用户状态
      */
-    public void setUpStatusBatch(List<Long> userIds, int status) {
+    public void setUpStatusBatch(List<Long> userIds, String status) {
         lambdaUpdate()
                 .in(MpIdEntity::getId, userIds)
                 .set(UserInfo::getStatus, status)

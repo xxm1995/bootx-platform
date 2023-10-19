@@ -9,12 +9,12 @@ package cn.bootx.platform.iam.code;
 public interface UserStatusCode {
 
     /** 正常 */
-    int NORMAL = 1;
+    String NORMAL = "normal";
 
     /** 锁定 多次登录失败 */
-    int LOCK = 2;
+    String LOCK = "lock";
 
     /** 封禁 */
-    int BAN = 3;
+    String BAN = "ban";
 
 }

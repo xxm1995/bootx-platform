@@ -4,7 +4,6 @@ import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.rest.dto.BaseDto;
 import cn.bootx.platform.iam.code.UserStatusCode;
 import cn.bootx.platform.starter.data.perm.sensitive.SensitiveInfo;
-import cn.hutool.core.collection.CollUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,9 +11,7 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author xxm
@@ -50,31 +47,27 @@ public class UserInfoDto extends BaseDto implements Serializable {
     private String email;
 
     @Schema(description = "终端id列表")
-    private List<String> clientIdList = new ArrayList<>();
+    private List<Long> clientIds;
 
     @Schema(description = "是否管理员")
-    private boolean admin;
+    private boolean administrator;
 
     /**
      * @see UserStatusCode
      */
     @Schema(description = "账号状态")
-    private Integer status;
+    private String status;
 
     @Schema(description = "注册时间")
     private LocalDateTime registerTime;
 
     public UserDetail toUserDetail() {
-        List<Long> clientIds = new ArrayList<>();
-        if (CollUtil.isNotEmpty(this.getClientIdList())) {
-            clientIds = this.getClientIdList().stream().map(Long::valueOf).collect(Collectors.toList());
-        }
         return new UserDetail().setId(this.getId())
             .setPassword(this.password)
             .setUsername(this.getUsername())
             .setName(this.name)
-            .setAdmin(this.admin)
-            .setAppIds(clientIds)
+            .setAdmin(this.administrator)
+            .setClientIds(this.clientIds)
             .setStatus(this.status);
     }
 

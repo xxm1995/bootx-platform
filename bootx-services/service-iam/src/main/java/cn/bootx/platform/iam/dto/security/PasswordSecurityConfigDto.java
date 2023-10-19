@@ -21,6 +21,8 @@ public class PasswordSecurityConfigDto extends BaseDto {
     private int maxPwdErrorCount;
     @Schema(description = "密码错误锁定时间(分钟)")
     private int errorLockTime;
+    @Schema(description = "密码安全级别")
+    private String securityLevel;
     @Schema(description = "强制修改初始密码")
     private boolean requireChangePwd;
     @Schema(description = "密码更新频率(天)")
