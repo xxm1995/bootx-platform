@@ -28,17 +28,10 @@ public class PasswordSecurityConfigController {
     private final PasswordChangeHistoryService passwordChangeHistoryService;
     private final PasswordSecurityCheckService passwordSecurityCheckService;
 
-    @Operation( summary = "添加")
-    @PostMapping(value = "/add")
-    public ResResult<Void> add(@RequestBody PasswordSecurityConfigParam param){
-        passwordSecurityConfigService.add(param);
-        return Res.ok();
-    }
-
-    @Operation( summary = "修改")
-    @PostMapping(value = "/update")
-    public ResResult<Void> update(@RequestBody PasswordSecurityConfigParam param){
-        passwordSecurityConfigService.update(param);
+    @Operation( summary = "新增或添加密码安全配置")
+    @PostMapping(value = "/addOrUpdate")
+    public ResResult<Void> addOrUpdate(@RequestBody PasswordSecurityConfigParam param){
+        passwordSecurityConfigService.addOrUpdate(param);
         return Res.ok();
     }
 

@@ -101,6 +101,7 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
                 String errMsg = passwordLoginFailRecordService.passwordError(userDetail.getId());
                 throw new LoginFailureException(userDetail.getUsername(), errMsg);
             }
+            throw new LoginFailureException(userDetail.getUsername(), "账号或密码不正确");
         }
         return new AuthInfoResult().setId(userDetail.getId()).setUserDetail(userDetail);
     }

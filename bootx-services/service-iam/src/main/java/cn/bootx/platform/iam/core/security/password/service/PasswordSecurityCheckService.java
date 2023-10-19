@@ -28,6 +28,7 @@ import java.util.List;
 public class PasswordSecurityCheckService {
 
     private final PasswordSecurityConfigService configService;
+
     private final PasswordChangeHistoryManager historyManager;
 
     private final UserExpandInfoManager userExpandInfoManager;
@@ -80,16 +81,16 @@ public class PasswordSecurityCheckService {
         if (CollUtil.isNotEmpty(changeHistoryList)){
             PasswordChangeHistory passwordChangeHistory = changeHistoryList.get(0);
             LocalDateTime createTime = passwordChangeHistory.getCreateTime();
-            // 判断距今的时间是否超过密码过期时间
+            // 判断距今的时间是否超过密码过期时间是多少
             int keepPwdDay = (int) LocalDateTimeUtil.between(createTime, LocalDateTime.now(), ChronoUnit.DAYS);
             int dealDay = securityConfig.getUpdateFrequency() - keepPwdDay;
             // 判断密码是否已经过期
-            if( dealDay <= 0 ){
+            if( dealDay >= 0 ){
                return 1;
             }
             // 判断是否满足密码修改的倒计时提醒
-            if (keepPwdDay < securityConfig.getExpireRemind()){
-                return -keepPwdDay;
+            if (dealDay < securityConfig.getExpireRemind()){
+                return -dealDay;
             }
         }
         return 0;

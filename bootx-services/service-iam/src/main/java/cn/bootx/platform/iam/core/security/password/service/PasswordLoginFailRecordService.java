@@ -2,10 +2,14 @@ package cn.bootx.platform.iam.core.security.password.service;
 
 import cn.bootx.platform.iam.core.security.password.dao.PasswordLoginFailRecordManager;
 import cn.bootx.platform.iam.core.security.password.entity.PasswordLoginFailRecord;
+import cn.bootx.platform.iam.core.user.service.UserAdminService;
 import cn.bootx.platform.iam.dto.security.PasswordSecurityConfigDto;
+import cn.bootx.platform.iam.event.user.UserRestartPasswordEvent;
+import cn.bootx.platform.iam.event.user.UserUnlockEvent;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,7 @@ public class PasswordLoginFailRecordService {
 
     private final PasswordSecurityConfigService passwordSecurityConfigService;
 
+    private final UserAdminService userAdminService;
 
     /**
      * 获取 密码登录失败记录
@@ -50,13 +55,13 @@ public class PasswordLoginFailRecordService {
         // 判断是否超过最大错误次数, 进行锁定用户
         int errCount = securityConfig.getMaxPwdErrorCount() - loginFailRecord.getFailCount();
         if (errCount == 0){
-            // 进行用户锁定
-            return StrUtil.format("密码错误次数超过{}次, 请{}分钟后再试",
-                    loginFailRecord.getFailCount()-1, securityConfig.getMaxPwdErrorCount());
+            userAdminService.lock(userId);
+            // 需要将错误次数更新到数据库
+            passwordLoginFailRecordManager.saveOrUpdate(loginFailRecord);
+            return StrUtil.format("账号已被锁定, 请{}分钟后再试", securityConfig.getMaxPwdErrorCount());
         } else if (errCount < 0) {
-          // 继续尝试密码, 不再更新错误次数, 直接返回
-            return StrUtil.format("账号已被锁定, 请稍后再试");
-
+            // 继续尝试密码, 不再更新错误次数, 直接返回
+            return StrUtil.format("账号已被锁定, 请{}分钟后再试", securityConfig.getMaxPwdErrorCount());
         }
         passwordLoginFailRecordManager.saveOrUpdate(loginFailRecord);
         return StrUtil.format("密码不正确, 还有{}次机会", errCount);
@@ -75,6 +80,25 @@ public class PasswordLoginFailRecordService {
                     }
                 });
     }
+
+    /**
+     * 解锁用户,清除登录失败的次数
+     */
+    @EventListener(UserUnlockEvent.class)
+    @Async("taskExecutor")
+    public void clearBatchFailCount(UserUnlockEvent event){
+        this.clearBatchFailCount(event.getUserIds());
+    }
+
+    /**
+     * 重置用户密码, 清除登录失败的次数
+     */
+    @EventListener(UserRestartPasswordEvent.class)
+    @Async("taskExecutor")
+    public void clearBatchFailCount(UserRestartPasswordEvent event){
+        this.clearBatchFailCount(event.getUserIds());
+    }
+
 
     /**
      * 批量清除登录失败的次数
