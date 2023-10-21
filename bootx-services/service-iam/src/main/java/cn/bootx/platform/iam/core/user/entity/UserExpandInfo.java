@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(isAppend = true)
+//@DbTable(isAppend = true)
 @Accessors(chain = true)
 @TableName("iam_user_expand_info")
 public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<UserExpandInfoDto> {

@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(comment = "密码安全策略")
+//@DbTable(comment = "密码安全策略")
 @Accessors(chain = true)
 @TableName("iam_password_security_config")
 public class PasswordSecurityConfig extends MpBaseEntity implements EntityBaseFunction<PasswordSecurityConfigDto> {

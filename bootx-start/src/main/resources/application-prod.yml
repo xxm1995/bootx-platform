@@ -96,4 +96,5 @@ bootx:
         bucket: fs
     # 数据权限
     data-perm:
+      # AES秘钥
       fieldDecryptKey: "UCrtxSCwYZNCIlav"
