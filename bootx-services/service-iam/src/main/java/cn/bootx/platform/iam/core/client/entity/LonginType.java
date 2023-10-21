@@ -19,7 +19,7 @@ import lombok.experimental.Accessors;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(isAppend = true)
+//@DbTable(isAppend = true)
 @TableName("iam_login_type")
 @Accessors(chain = true)
 public class LonginType extends MpBaseEntity implements EntityBaseFunction<LoginTypeDto> {

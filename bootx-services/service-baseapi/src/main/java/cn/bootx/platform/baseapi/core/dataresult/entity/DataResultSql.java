@@ -27,7 +27,7 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@DbTable(comment = "数据集SQL语句")
+//@DbTable(comment = "数据集SQL语句")
 @Accessors(chain = true)
 @TableName(value = "base_data_result_sql", autoResultMap = true)
 public class DataResultSql extends MpBaseEntity implements EntityBaseFunction<QuerySqlDto> {

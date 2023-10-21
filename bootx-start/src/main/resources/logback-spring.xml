@@ -23,7 +23,6 @@
         <plumelogHost>127.0.0.1</plumelogHost>
     </appender>
 
-
     <!-- 开发输出级别 -->
     <root level="INFO">
         <appender-ref ref="console"/>

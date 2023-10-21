@@ -7,7 +7,6 @@ import cn.bootx.platform.iam.dto.security.LoginSecurityConfigDto;
 import cn.bootx.platform.iam.param.security.LoginSecurityConfigParam;
 import cn.bootx.table.modify.annotation.DbColumn;
 import cn.bootx.table.modify.annotation.DbComment;
-import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +17,7 @@ import lombok.experimental.Accessors;
  * @author xxm
  * @since 2023/8/17
  */
-@DbTable(comment = "登录安全策略")
+//@DbTable(comment = "登录安全策略")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
