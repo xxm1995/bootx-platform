@@ -101,7 +101,7 @@
         <sa-token.version>1.36.0</sa-token.version>
         <justauth.version>1.16.5</justauth.version>
         <minio.version>8.5.4</minio.version>
-        <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.4</mybatis-plus.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <springdoc.version>1.7.0</springdoc.version>
         <redisson.version>3.23.0</redisson.version>

@@ -37,6 +37,9 @@ public class UserExpandInfoDto extends BaseDto {
     @Schema(description = "是否初始密码")
     private boolean initialPassword;
 
+    @Schema(description = "密码是否过期")
+    private boolean expirePassword;
+
     @Schema(description = "上次修改密码时间")
     private LocalDateTime lastChangePasswordTime;
 

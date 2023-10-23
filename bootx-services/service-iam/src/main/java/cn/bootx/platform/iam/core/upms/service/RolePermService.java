@@ -4,15 +4,18 @@ import cn.bootx.platform.common.core.annotation.NestedPermission;
 import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.rest.dto.BaseDto;
 import cn.bootx.platform.common.core.util.TreeBuildUtil;
-import cn.bootx.platform.iam.core.permission.service.PermMenuService;
-import cn.bootx.platform.starter.auth.exception.NotLoginException;
-import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.platform.iam.code.PermissionCode;
+import cn.bootx.platform.iam.core.permission.service.PermMenuService;
 import cn.bootx.platform.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.platform.iam.core.upms.entity.RoleMenu;
+import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
+import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.platform.iam.dto.permission.PermMenuDto;
 import cn.bootx.platform.iam.dto.upms.MenuAndResourceDto;
+import cn.bootx.platform.starter.auth.exception.NotLoginException;
+import cn.bootx.platform.starter.auth.exception.UserNotFoundException;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +42,8 @@ import static cn.bootx.platform.iam.code.CachingCode.USER_PERM_CODE;
 @Service
 @RequiredArgsConstructor
 public class RolePermService {
+
+    private final UserExpandInfoManager userExpandInfoManager;
 
     private final RoleMenuManager roleMenuManager;
 
@@ -159,11 +164,17 @@ public class RolePermService {
     }
 
     /**
-     * 查询用户查询拥有的权限信息(直接获取所有终端的权限码)
+     * 查询用户查询拥有的权限信息(直接获取所有终端的权限码),如果当前用户密码是否过期, 过期或者未修改密码, 返回权限为空
      */
     private List<PermMenuDto> findPermissionsByUser(Long userId) {
-        List<PermMenuDto> permissions = new ArrayList<>(0);
+        // 判断当前用户密码是否过期, 过期或者未修改密码, 返回权限为空
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+        if (userExpandInfo.isExpirePassword() || userExpandInfo.isInitialPassword()){
+            return new ArrayList<>(0);
+        }
 
+        List<PermMenuDto> permissions = new ArrayList<>(0);
         List<Long> roleIds = userRoleService.findRoleIdsByUser(userId);
         if (CollUtil.isEmpty(roleIds)) {
             return permissions;

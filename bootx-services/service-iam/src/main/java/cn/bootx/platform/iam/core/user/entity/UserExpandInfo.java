@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-//@DbTable(isAppend = true)
+@DbTable(isAppend = true)
 @Accessors(chain = true)
 @TableName("iam_user_expand_info")
 public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<UserExpandInfoDto> {
@@ -40,7 +40,6 @@ public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<U
     private LocalDateTime lastLoginTime;
 
     /** 注册时间 */
-    @DbColumn(comment = "注册时间")
     private LocalDateTime registerTime;
 
     /** 本次登录时间 */
@@ -48,6 +47,10 @@ public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<U
 
     /** 是否初始密码 */
     private boolean initialPassword;
+
+    /** 密码是否过期 */
+    @DbColumn(comment = "密码是否过期")
+    private boolean expirePassword;
 
     /** 上次修改密码时间 */
     private LocalDateTime lastChangePasswordTime;

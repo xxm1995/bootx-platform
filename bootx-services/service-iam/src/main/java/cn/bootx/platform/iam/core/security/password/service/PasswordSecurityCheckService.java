@@ -47,6 +47,7 @@ public class PasswordSecurityCheckService {
         int state = this.verifyPasswordExpire(userId, securityConfig);
         // 检查密码是否已经过期
         if (state == 0){
+            // 设置为
             return result.setExpirePwd(true);
         }
         // 检查密码是否到了提示过期的时候
@@ -86,7 +87,8 @@ public class PasswordSecurityCheckService {
             int dealDay = securityConfig.getUpdateFrequency() - keepPwdDay;
             // 判断密码是否已经过期
             if( dealDay >= 0 ){
-               return 1;
+                this.userExpirePwd(userId);
+                return 1;
             }
             // 判断是否满足密码修改的倒计时提醒
             if (dealDay < securityConfig.getExpireRemind()){
@@ -94,6 +96,13 @@ public class PasswordSecurityCheckService {
             }
         }
         return 0;
+    }
+
+    /**
+     * 密码过期处理, 更新状态用户状态
+     */
+    public void userExpirePwd(Long userId){
+
     }
 
 }
