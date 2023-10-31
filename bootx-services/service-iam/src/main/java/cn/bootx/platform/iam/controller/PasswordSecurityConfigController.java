@@ -50,7 +50,6 @@ public class PasswordSecurityConfigController {
     @Operation(summary = "登录后检查密码相关的情况")
     @GetMapping("/checkPasswordSecurity")
     public ResResult<passwordSecurityCheckResult> checkPasswordSecurity(){
-        Long userId = SecurityUtil.getUserId();
-        return Res.ok(passwordSecurityCheckService.checkPasswordSecurity(userId));
+        return Res.ok(passwordSecurityCheckService.checkPasswordSecurity());
     }
 }

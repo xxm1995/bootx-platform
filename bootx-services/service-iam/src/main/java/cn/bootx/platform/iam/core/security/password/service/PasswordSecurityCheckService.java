@@ -1,5 +1,6 @@
 package cn.bootx.platform.iam.core.security.password.service;
 
+import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.util.CollUtil;
 import cn.bootx.platform.common.core.util.LocalDateTimeUtil;
 import cn.bootx.platform.iam.core.security.password.dao.PasswordChangeHistoryManager;
@@ -9,6 +10,8 @@ import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.platform.iam.dto.security.PasswordSecurityConfigDto;
 import cn.bootx.platform.iam.dto.security.passwordSecurityCheckResult;
 import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
+import cn.bootx.platform.starter.auth.exception.NotLoginException;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,8 +40,14 @@ public class PasswordSecurityCheckService {
     /**
      * 登录后检查密码相关的情况
      */
-    public passwordSecurityCheckResult checkPasswordSecurity(Long userId){
+    public passwordSecurityCheckResult checkPasswordSecurity(){
         passwordSecurityCheckResult result = new passwordSecurityCheckResult();
+        UserDetail userDetail = SecurityUtil.getCurrentUser()
+                .orElseThrow(NotLoginException::new);
+        if (userDetail.isAdmin()){
+            return result;
+        }
+        Long userId = userDetail.getId();
         PasswordSecurityConfigDto securityConfig = configService.getDefault();
         // 检查是否是默认密码未进行修改
         if (this.isDefaultPassword(userId,securityConfig)){
