@@ -1,6 +1,7 @@
 package cn.bootx.platform.starter.file;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.dromara.x.file.storage.spring.EnableFileStorage;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @ComponentScan
 @ConfigurationPropertiesScan
 @EnableMongoRepositories
+@EnableFileStorage
 @AutoConfiguration
 @MapperScan(annotationClass = Mapper.class)
 public class FileAutoConfiguration {

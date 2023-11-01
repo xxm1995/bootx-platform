@@ -30,11 +30,19 @@
             <artifactId>table-modify-mysql-boot-starter</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- 表更新 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-mybatis-plus</artifactId>
             <optional>true</optional>
         </dependency>
+        <!--文件存储-->
+        <dependency>
+            <groupId>org.dromara.x-file-storage</groupId>
+            <artifactId>x-file-storage-spring</artifactId>
+            <version>${x-file-storage.version}</version>
+        </dependency>
+
         <!-- minio客户端 -->
         <dependency>
             <groupId>io.minio</groupId>
@@ -45,12 +53,12 @@
         <dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>cos_api</artifactId>
-            <version>5.6.155</version>
+            <version>${cos_api.version}</version>
         </dependency>
         <dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>cos-sts_api</artifactId>
-            <version>3.1.0</version>
+            <version>${cos-sts_api.version}</version>
         </dependency>
     </dependencies>
 </project>
