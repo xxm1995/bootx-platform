@@ -6,13 +6,17 @@ import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.recorder.FileRecorder;
 import org.springframework.stereotype.Service;
 
+/**
+ * x.file.storage 文件上传信息储存
+ * @author xxm
+ * @since 2023/11/13
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class FileDetailRecordHandler implements FileRecorder {
     /**
-     * @param fileInfo
-     * @return
+     * 保存文件记录
      */
     @Override
     public boolean save(FileInfo fileInfo) {
@@ -20,8 +24,7 @@ public class FileDetailRecordHandler implements FileRecorder {
     }
 
     /**
-     * @param url
-     * @return
+     * 根据 url 获取文件记录
      */
     @Override
     public FileInfo getByUrl(String url) {
@@ -29,8 +32,7 @@ public class FileDetailRecordHandler implements FileRecorder {
     }
 
     /**
-     * @param url
-     * @return
+     * 根据 url 删除文件记录
      */
     @Override
     public boolean delete(String url) {

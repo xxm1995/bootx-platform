@@ -12,8 +12,6 @@ import cn.bootx.platform.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.dromara.x.file.storage.core.FileInfo;
-import org.dromara.x.file.storage.core.FileStorageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,23 +33,12 @@ import java.io.IOException;
 public class FIleUpLoadController {
 
     private final FileUploadService uploadService;
-    private final FileStorageService fileStorageService;
 
     @IgnoreAuth(ignore = false)
     @Operation(summary = "分页")
     @GetMapping("/page")
     public ResResult<PageResult<UpdateFileDto>> page(PageParam pageParam) {
         return Res.ok(uploadService.page(pageParam));
-    }
-    @PostMapping("/upload")
-    public ResResult<Void> upload(MultipartFile file) {
-        FileInfo fileInfo = fileStorageService.of(file)
-                .setPath("upload/") //保存到相对路径下，为了方便管理，不需要可以不写
-                .setObjectId("0")   //关联对象id，为了方便管理，不需要可以不写
-                .setObjectType("0") //关联对象类型，为了方便管理，不需要可以不写
-                .putAttr("role","admin") //保存一些属性，可以在切面、保存上传记录、自定义存储平台等地方获取使用，不需要可以不写
-                .upload();  //将文件上传到对应地方
-        return Res.ok();
     }
 
     @IgnoreAuth(ignore = false, login = true)
