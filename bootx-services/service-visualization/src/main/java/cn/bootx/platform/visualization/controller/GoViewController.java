@@ -5,7 +5,6 @@ import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.visualization.core.service.ProjectInfoService;
 import cn.bootx.platform.visualization.dto.GoVIewPageResult;
-import cn.bootx.platform.visualization.dto.OssInfo;
 import cn.bootx.platform.visualization.dto.ProjectInfoResult;
 import cn.bootx.platform.visualization.param.ProjectInfoSave;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,13 +29,13 @@ import java.util.List;
 public class GoViewController {
 
     private final ProjectInfoService projectInfoService;
-
-    @IgnoreAuth
-    @Operation(summary = "获取文件oss存储信息")
-    @GetMapping("/getOssInfo")
-    public ResResult<OssInfo> getOssInfo() {
-        return Res.ok(projectInfoService.getOssInfo());
-    }
+//
+//    @IgnoreAuth
+//    @Operation(summary = "获取文件oss存储信息")
+//    @GetMapping("/getOssInfo")
+//    public ResResult<OssInfo> getOssInfo() {
+//        return Res.ok(projectInfoService.getOssInfo());
+//    }
 
     @Operation(summary = "获取项目列表分页 ")
     @GetMapping("/page")

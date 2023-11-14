@@ -20,7 +20,7 @@ public class FileDetailRecordHandler implements FileRecorder {
      */
     @Override
     public boolean save(FileInfo fileInfo) {
-        return false;
+        return true;
     }
 
     /**

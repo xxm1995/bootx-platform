@@ -14,7 +14,6 @@ import cn.bootx.platform.visualization.core.dao.ProjectInfoPublishManager;
 import cn.bootx.platform.visualization.core.entity.ProjectInfo;
 import cn.bootx.platform.visualization.core.entity.ProjectInfoPublish;
 import cn.bootx.platform.visualization.dto.GoVIewPageResult;
-import cn.bootx.platform.visualization.dto.OssInfo;
 import cn.bootx.platform.visualization.dto.ProjectInfoDto;
 import cn.bootx.platform.visualization.dto.ProjectInfoResult;
 import cn.bootx.platform.visualization.param.CreateParam;
@@ -54,13 +53,13 @@ public class ProjectInfoService {
 
     private final ParamService paramService;
 
-    /**
-     * 获取文件上传oss信息
-     */
-    public OssInfo getOssInfo() {
-        String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
-        return new OssInfo().setBucketURL(filePreviewUrlPrefix);
-    }
+//    /**
+//     * 获取文件上传oss信息
+//     */
+//    public OssInfo getOssInfo() {
+//        String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
+//        return new OssInfo().setBucketURL(filePreviewUrlPrefix);
+//    }
 
     /**
      * 创建项目
@@ -257,7 +256,8 @@ public class ProjectInfoService {
                 .setContent(projectInfo.getContent())
                 .setRemarks(projectInfo.getRemark());
         // 转换访问地址
-        String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
+//        String filePreviewUrlPrefix = fileUploadService.getFilePreviewUrlPrefix();
+        String filePreviewUrlPrefix = "fileUploadService.getFilePreviewUrlPrefix()";
         if (Objects.nonNull(projectInfo.getIndexImage())) {
             projectInfoResult.setIndexImage(filePreviewUrlPrefix + projectInfo.getIndexImage());
         }

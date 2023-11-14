@@ -5,13 +5,14 @@ import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
-import cn.bootx.platform.starter.file.dto.UpLoadOptions;
 import cn.bootx.platform.starter.file.dto.UpdateFileDto;
-import cn.bootx.platform.starter.file.entity.UpdateFileInfo;
 import cn.bootx.platform.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.dromara.x.file.storage.core.FileInfo;
+import org.dromara.x.file.storage.core.FileStorageService;
+import org.dromara.x.file.storage.spring.SpringFileStorageProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +35,10 @@ public class FIleUpLoadController {
 
     private final FileUploadService uploadService;
 
+    private final FileStorageService fileStorageService;
+
+    private final SpringFileStorageProperties properties;
+
     @IgnoreAuth(ignore = false)
     @Operation(summary = "分页")
     @GetMapping("/page")
@@ -55,23 +60,30 @@ public class FIleUpLoadController {
         return Res.ok();
     }
 
-    @Operation(summary = "获取文件预览地址")
-    @GetMapping("getFilePreviewUrl")
-    public ResResult<String> getFilePreviewUrl(Long id) {
-        return Res.ok(uploadService.getFilePreviewUrl(id));
+    @Operation(summary = "获取文件")
+    @GetMapping("/getFile")
+    public ResResult<Void> getFile(){
+        FileInfo fileInfoByUrl = fileStorageService.getFileInfoByUrl("");
+        return Res.ok();
     }
 
-    @Operation(summary = "获取文件预览地址前缀")
-    @GetMapping("getFilePreviewUrlPrefix")
-    public ResResult<String> getFilePreviewUrlPrefix() {
-        return Res.ok(uploadService.getFilePreviewUrlPrefix());
-    }
-
-    @Operation(summary = "获取文件下载地址")
-    @GetMapping("getFileDownloadUrl")
-    public ResResult<String> getFileDownloadUrl(Long id) {
-        return Res.ok(uploadService.getFileDownloadUrl(id));
-    }
+//    @Operation(summary = "获取文件预览地址(流量会经过后端)")
+//    @GetMapping("getFilePreviewUrl")
+//    public ResResult<String> getFilePreviewUrl(Long id) {
+//        return Res.ok(uploadService.getFilePreviewUrl(id));
+//    }
+//
+//    @Operation(summary = "获取文件预览地址前缀")
+//    @GetMapping("getFilePreviewUrlPrefix")
+//    public ResResult<String> getFilePreviewUrlPrefix() {
+//        return Res.ok(uploadService.getFilePreviewUrlPrefix());
+//    }
+//
+//    @Operation(summary = "获取文件下载地址(流量会经过后端)")
+//    @GetMapping("getFileDownloadUrl")
+//    public ResResult<String> getFileDownloadUrl(Long id) {
+//        return Res.ok(uploadService.getFileDownloadUrl(id));
+//    }
 
     @Operation(summary = "预览文件")
     @GetMapping("/preview/{id}")
@@ -84,18 +96,5 @@ public class FIleUpLoadController {
     public ResponseEntity<byte[]> download(@PathVariable Long id) {
         return uploadService.download(id);
     }
-
-    @Operation(summary = "获取临时oss密钥")
-    @GetMapping("/getUpLoadOptions")
-    public ResResult<UpLoadOptions> getTempCredentials() {
-        return Res.ok(uploadService.getTempCredentials());
-    }
-    @Operation(summary = "保存记录")
-    @PostMapping("/saveUploadResult")
-    public ResResult<UpdateFileDto> saveUploadResult(@RequestBody UpdateFileInfo info) {
-        return Res.ok(uploadService.saveUploadResult(info));
-    }
-
-
 
 }

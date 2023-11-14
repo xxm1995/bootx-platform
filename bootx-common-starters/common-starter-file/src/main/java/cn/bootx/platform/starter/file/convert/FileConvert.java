@@ -19,6 +19,8 @@ public interface FileConvert {
 
     UpdateFileInfo convert(FileInfo in);
 
+    FileInfo toFileInfo(UpdateFileInfo in);
+
     UpdateFileDto toDto(FileInfo in);
 
 
