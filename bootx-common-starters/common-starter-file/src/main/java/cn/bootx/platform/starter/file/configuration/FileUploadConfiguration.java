@@ -2,11 +2,7 @@ package cn.bootx.platform.starter.file.configuration;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDatabaseFactory;
-import org.springframework.data.mongodb.core.convert.MongoConverter;
-import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 
 /**
  * 文件上传配置
@@ -24,9 +20,9 @@ public class FileUploadConfiguration {
     /**
      * 自定义 GridFsTemplate
      */
-    @Bean
-    public GridFsTemplate gridFsTemplate(MongoDatabaseFactory dbFactory, MongoConverter converter) {
-        return new GridFsTemplate(dbFactory, converter, properties.getMongo().getBucket());
-    }
+//    @Bean
+//    public GridFsTemplate gridFsTemplate(MongoDatabaseFactory dbFactory, MongoConverter converter) {
+//        return new GridFsTemplate(dbFactory, converter, properties.getMongo().getBucket());
+//    }
 
 }

@@ -1,7 +1,7 @@
 package cn.bootx.platform.starter.file.convert;
 
-import cn.bootx.platform.starter.file.dto.UpdateFileDto;
-import cn.bootx.platform.starter.file.entity.UpdateFileInfo;
+import cn.bootx.platform.starter.file.dto.UploadFileDto;
+import cn.bootx.platform.starter.file.entity.UploadFileInfo;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -15,13 +15,13 @@ public interface FileConvert {
 
     FileConvert CONVERT = Mappers.getMapper(FileConvert.class);
 
-    UpdateFileDto convert(UpdateFileInfo in);
+    UploadFileDto convert(UploadFileInfo in);
 
-    UpdateFileInfo convert(FileInfo in);
+    UploadFileInfo convert(FileInfo in);
 
-    FileInfo toFileInfo(UpdateFileInfo in);
+    FileInfo toFileInfo(UploadFileInfo in);
 
-    UpdateFileDto toDto(FileInfo in);
+    UploadFileDto toDto(FileInfo in);
 
 
 }

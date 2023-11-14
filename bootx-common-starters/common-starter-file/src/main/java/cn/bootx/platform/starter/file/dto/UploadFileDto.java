@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
-public class UpdateFileDto {
+public class UploadFileDto {
 
     /** 主键 */
     private Long id;
