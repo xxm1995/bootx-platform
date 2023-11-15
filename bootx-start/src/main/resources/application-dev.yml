@@ -92,6 +92,7 @@ dromara:
     local-plus:
       # 不启用自带的访问映射, 使用自定义的访问实现
       - platform: local # 存储平台标识
+        enableStorage: true
         storage-path: D:/data/files/ # 存储路径
 # Swagger 增强版
 knife4j:
@@ -219,33 +220,7 @@ bootx:
         search-type: cache
     # 文件上传
     file-upload:
-      upload-type: jdbc
-      server-url: http://127.0.0.1:8080
-      local:
-        local-path: /data/file
-      mongo:
-        # 储存桶
-        bucket: fs
-      minio:
-        # 地址
-        endpoint: http://127.0.0.1:9000
-        # 账号
-        access-key: root
-        # 密码
-        access-secret: password
-        # 存储桶 需要至少三位
-        bucket: bootx
-      tencent-oss:
-          # 标识
-          secret-id: ''
-          # 密钥
-          secret-key: ''
-          # 地域
-          region: ''
-          # 会话token
-          session-token:
-           # 存储桶名称
-          bucket: bootx
+      server-url: http://127.0.0.1:9999
     # 数据权限
     data-perm:
       field-decrypt-key: "UCrtxSCwYZNCIlav"

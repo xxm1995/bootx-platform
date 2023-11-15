@@ -9,9 +9,12 @@ import cn.bootx.platform.starter.file.convert.FileConvert;
 import cn.bootx.platform.starter.file.dao.UploadFileManager;
 import cn.bootx.platform.starter.file.dto.UploadFileDto;
 import cn.bootx.platform.starter.file.entity.UploadFileInfo;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
 import org.dromara.x.file.storage.core.UploadPretreatment;
@@ -23,7 +26,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 
 /**
  * 文件上传管理类
@@ -47,6 +52,14 @@ public class FileUploadService {
         return MpUtil.convert2DtoPageResult(uploadFileManager.page(pageParam));
     }
 
+    /**
+     * 获取单条详情
+     */
+    public UploadFileDto findById(Long id){
+        return uploadFileManager.findById(id)
+                .map(UploadFileInfo::toDto)
+               .orElseThrow(DataNotExistException::new);
+    }
 
     /**
      * 文件删除
@@ -58,8 +71,6 @@ public class FileUploadService {
         fileStorageService.delete(FileConvert.CONVERT.toFileInfo(uploadFileInfo));
     }
 
-
-
     /**
      * 文件上传
      * @param file 文件
@@ -68,7 +79,7 @@ public class FileUploadService {
     @Transactional(rollbackFor = Exception.class)
     public UploadFileDto upload(MultipartFile file, String fileName) {
         UploadPretreatment uploadPretreatment = fileStorageService.of(file);
-        if (StrUtil.isBlank(fileName)){
+        if (StrUtil.isNotBlank(fileName)){
             uploadPretreatment.setOriginalFilename(fileName);
         }
         FileInfo upload =uploadPretreatment.upload();
@@ -78,18 +89,30 @@ public class FileUploadService {
     /**
      * 浏览
      */
+    @SneakyThrows
     public void preview(Long id, HttpServletResponse response) {
-        byte[] bytes = fileStorageService.download(String.valueOf(id)).bytes();
+        FileInfo info = fileStorageService.getFileInfoByUrl(String.valueOf(id));
+        byte[] bytes = fileStorageService.download(info).bytes();
+        val is = new ByteArrayInputStream(bytes);
+        // 获取响应输出流
+        ServletOutputStream os = response.getOutputStream();
+        IoUtil.copy(is, os);
+        response.addHeader(HttpHeaders.CONTENT_DISPOSITION, info.getContentType());
+        IoUtil.close(is);
+        IoUtil.close(os);
     }
 
     /**
      * 文件下载
      */
     public ResponseEntity<byte[]> download(Long id) {
-        byte[] bytes = fileStorageService.download(String.valueOf(id)).bytes();
+        FileInfo fileInfo = fileStorageService.getFileInfoByUrl(String.valueOf(id));
+        byte[] bytes = fileStorageService.download(fileInfo).bytes();
         // 设置header信息
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        String fileName = fileInfo.getOriginalFilename() + "." + fileInfo.getExt();
+        headers.setContentDispositionFormData("attachment", fileName);
         return new ResponseEntity<>(bytes,headers,HttpStatus.OK);
     }
 
@@ -120,5 +143,4 @@ public class FileUploadService {
     private String getServerUrl() {
         return fileUploadProperties.getServerUrl();
     }
-
 }

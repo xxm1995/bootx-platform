@@ -10,8 +10,6 @@ import cn.bootx.platform.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.dromara.x.file.storage.core.FileInfo;
-import org.dromara.x.file.storage.core.FileStorageService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,8 +32,6 @@ public class FIleUpLoadController {
 
     private final FileUploadService uploadService;
 
-    private final FileStorageService fileStorageService;
-
     @IgnoreAuth(ignore = false)
     @Operation(summary = "分页")
     @GetMapping("/page")
@@ -43,11 +39,11 @@ public class FIleUpLoadController {
         return Res.ok(uploadService.page(pageParam));
     }
 
-    @IgnoreAuth(ignore = false, login = true)
-    @Operation(summary = "上传")
-    @PostMapping("/upload")
-    public ResResult<UploadFileDto> local(MultipartFile file, String fileName) throws IOException {
-        return Res.ok(uploadService.upload(file, fileName));
+    @IgnoreAuth(ignore = false)
+    @Operation(summary = "获取单条详情")
+    @GetMapping("/findById")
+    public ResResult<UploadFileDto> findById(Long id) {
+        return Res.ok(uploadService.findById(id));
     }
 
     @Operation(summary = "删除")
@@ -57,11 +53,11 @@ public class FIleUpLoadController {
         return Res.ok();
     }
 
-    @Operation(summary = "获取文件")
-    @GetMapping("/getFile")
-    public ResResult<Void> getFile(){
-        FileInfo fileInfoByUrl = fileStorageService.getFileInfoByUrl("");
-        return Res.ok();
+    @IgnoreAuth(ignore = false, login = true)
+    @Operation(summary = "上传")
+    @PostMapping("/upload")
+    public ResResult<UploadFileDto> local(MultipartFile file, String fileName) throws IOException {
+        return Res.ok(uploadService.upload(file, fileName));
     }
 
     @Operation(summary = "获取文件预览地址(流量会经过后端)")
