@@ -4,12 +4,14 @@ import cn.bootx.platform.common.core.exception.DataNotExistException;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
+import cn.bootx.platform.starter.file.UploadFileParam;
 import cn.bootx.platform.starter.file.configuration.FileUploadProperties;
 import cn.bootx.platform.starter.file.convert.FileConvert;
 import cn.bootx.platform.starter.file.dao.UploadFileManager;
 import cn.bootx.platform.starter.file.dto.UploadFileDto;
 import cn.bootx.platform.starter.file.entity.UploadFileInfo;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -29,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.net.URLEncoder;
 
 /**
  * 文件上传管理类
@@ -44,12 +47,11 @@ public class FileUploadService {
     private final FileStorageService fileStorageService;
     private final FileUploadProperties fileUploadProperties;
 
-
     /**
      * 分页
      */
-    public PageResult<UploadFileDto> page(PageParam pageParam) {
-        return MpUtil.convert2DtoPageResult(uploadFileManager.page(pageParam));
+    public PageResult<UploadFileDto> page(PageParam pageParam, UploadFileParam param) {
+        return MpUtil.convert2DtoPageResult(uploadFileManager.page(pageParam,param));
     }
 
     /**
@@ -105,14 +107,15 @@ public class FileUploadService {
     /**
      * 文件下载
      */
+    @SneakyThrows
     public ResponseEntity<byte[]> download(Long id) {
         FileInfo fileInfo = fileStorageService.getFileInfoByUrl(String.valueOf(id));
         byte[] bytes = fileStorageService.download(fileInfo).bytes();
         // 设置header信息
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        String fileName = fileInfo.getOriginalFilename() + "." + fileInfo.getExt();
-        headers.setContentDispositionFormData("attachment", fileName);
+        String fileName = fileInfo.getOriginalFilename();
+        headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, CharsetUtil.UTF_8));
         return new ResponseEntity<>(bytes,headers,HttpStatus.OK);
     }
 

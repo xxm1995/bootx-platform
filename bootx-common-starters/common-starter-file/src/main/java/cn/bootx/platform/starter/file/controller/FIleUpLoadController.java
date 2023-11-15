@@ -5,6 +5,7 @@ import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.rest.param.PageParam;
+import cn.bootx.platform.starter.file.UploadFileParam;
 import cn.bootx.platform.starter.file.dto.UploadFileDto;
 import cn.bootx.platform.starter.file.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,8 +36,8 @@ public class FIleUpLoadController {
     @IgnoreAuth(ignore = false)
     @Operation(summary = "分页")
     @GetMapping("/page")
-    public ResResult<PageResult<UploadFileDto>> page(PageParam pageParam) {
-        return Res.ok(uploadService.page(pageParam));
+    public ResResult<PageResult<UploadFileDto>> page(PageParam pageParam, UploadFileParam param) {
+        return Res.ok(uploadService.page(pageParam,param));
     }
 
     @IgnoreAuth(ignore = false)
