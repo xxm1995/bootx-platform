@@ -28,7 +28,7 @@
 
 ## 📚资料和文档
 
-- 系统演示地址：[管理平台(vue3)](http://v3.platform.bootx.cn/)、[可视化大屏](http://visualization.platform.bootx.cn/)
+- 系统演示地址：[管理平台(vue3)](https://admin.platform.demo.bootx.cn/)、[可视化大屏](https://visualization.platform.demo.bootx.cn/)
 - 前端项目地址：[前端项目(vue3)](https://gitee.com/bootx/bootx-platform-vue3)、[可视化大屏](https://gitee.com/bootx/bootx-platform-visualization)、[前端项目(vue2只维护不再更新)](https://gitee.com/bootx/bootx-platform-ui)
 - 移动端项目地址：[移动端项目(taro+vue3+ts)](https://gitee.com/xucun/bootx-platform-mobile)
 - 日志收集：[PlumeLog](http://139.198.29.219:8891/)
