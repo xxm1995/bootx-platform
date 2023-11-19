@@ -16,15 +16,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class WeChatProperties {
 
     /** AppKey */
-    private String appId;
+    private String appId = "?";
 
     /** AppSecret */
-    private String appSecret;
+    private String appSecret = "?";
 
     /** token */
-    private String token;
+    private String token = "?";
 
     /** 消息加解密密钥 */
-    private String encodingAesKey;
+    private String encodingAesKey = "?";
 
 }

@@ -25,7 +25,8 @@ public class FileDetailRecordHandler implements FileRecorder {
      */
     @Override
     public boolean save(FileInfo fileInfo) {
-        uploadFileManager.save(UploadFileInfo.init(fileInfo));
+        UploadFileInfo save = uploadFileManager.save(UploadFileInfo.init(fileInfo));
+        fileInfo.setId(String.valueOf(save.getId()));
         return true;
     }
 

@@ -123,7 +123,11 @@ public class FileUploadService {
      * 获取文件预览地址
      */
     public String getFilePreviewUrl(Long id) {
-        return this.getServerUrl() + "/file/preview/" + id;
+        if (fileUploadProperties.isServiceProxy()){
+            return this.getServerUrl() + "/file/preview/" + id;
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -137,7 +141,11 @@ public class FileUploadService {
      * 获取文件地址
      */
     public String getFileDownloadUrl(Long id) {
-        return this.getServerUrl() + "/file/download/" + id;
+        if (fileUploadProperties.isServiceProxy()){
+            return this.getServerUrl() + "/file/download/" + id;
+        } else {
+            return "";
+        }
     }
 
     /**

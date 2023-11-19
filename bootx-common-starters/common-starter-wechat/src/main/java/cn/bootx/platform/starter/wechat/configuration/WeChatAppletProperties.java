@@ -16,11 +16,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class WeChatAppletProperties {
 
     /** AppKey */
-    private String appId;
+    private String appId = "?";
 
     /** AppSecret */
-    private String appSecret;
-
-
+    private String appSecret = "?";
 
 }
