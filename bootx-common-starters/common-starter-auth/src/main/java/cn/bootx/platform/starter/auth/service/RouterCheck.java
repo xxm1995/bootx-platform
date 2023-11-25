@@ -1,4 +1,4 @@
-package cn.bootx.platform.starter.auth.authentication;
+package cn.bootx.platform.starter.auth.service;
 
 /**
  * 路由拦截检查

@@ -3,7 +3,9 @@ package cn.bootx.platform.iam.handler;
 import cn.bootx.platform.common.core.annotation.PermCode;
 import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.util.CollUtil;
-import cn.bootx.platform.starter.auth.authentication.RouterCheck;
+import cn.bootx.platform.starter.auth.service.RouterCheck;
+import cn.bootx.platform.starter.auth.entity.UserStatus;
+import cn.bootx.platform.starter.auth.service.UserStatusService;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.bootx.platform.iam.core.upms.service.RolePermService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ import java.util.Optional;
 public class PermCodeRouterCheck implements RouterCheck {
 
     private final RolePermService rolePermService;
+
+    private final UserStatusService userStatusService;
 
     /**
      * 路由检查
@@ -57,6 +61,7 @@ public class PermCodeRouterCheck implements RouterCheck {
      * 权限码鉴权注解处理
      */
     private boolean ignoreAuth(PermCode permCode) {
+        // 没有权限码
         if (Objects.isNull(permCode)) {
             return false;
         }
@@ -64,8 +69,14 @@ public class PermCodeRouterCheck implements RouterCheck {
         if (CollUtil.isEmpty(permCodes)) {
             return false;
         }
+        // 未登录
         Optional<UserDetail> UserDetailOpt = SecurityUtil.getCurrentUser();
         if (!UserDetailOpt.isPresent()) {
+            return false;
+        }
+        // 初始密码或者密码过期
+        UserStatus userStatus = userStatusService.getUserStatus();
+        if (userStatus.isExpirePassword()||userStatus.isInitialPassword()){
             return false;
         }
         List<String> userPermCodes = rolePermService.findEffectPermCodesByUserId(UserDetailOpt.get().getId());

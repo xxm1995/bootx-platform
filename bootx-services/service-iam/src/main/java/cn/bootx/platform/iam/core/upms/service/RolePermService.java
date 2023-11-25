@@ -10,11 +10,11 @@ import cn.bootx.platform.iam.core.permission.service.PermMenuService;
 import cn.bootx.platform.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.platform.iam.core.upms.entity.RoleMenu;
 import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
-import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.platform.iam.dto.permission.PermMenuDto;
 import cn.bootx.platform.iam.dto.upms.MenuAndResourceDto;
+import cn.bootx.platform.starter.auth.entity.UserStatus;
 import cn.bootx.platform.starter.auth.exception.NotLoginException;
-import cn.bootx.platform.starter.auth.exception.UserNotFoundException;
+import cn.bootx.platform.starter.auth.service.UserStatusService;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ import static cn.bootx.platform.iam.code.CachingCode.USER_PERM_CODE;
 @RequiredArgsConstructor
 public class RolePermService {
 
-    private final UserExpandInfoManager userExpandInfoManager;
+    private final UserStatusService userStatusService;
 
     private final RoleMenuManager roleMenuManager;
 
@@ -168,9 +168,8 @@ public class RolePermService {
      */
     private List<PermMenuDto> findPermissionsByUser(Long userId) {
         // 判断当前用户密码是否过期, 过期或者未修改密码, 返回权限为空
-        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
-        if (userExpandInfo.isExpirePassword() || userExpandInfo.isInitialPassword()){
+        UserStatus userStatus = userStatusService.getUserStatus();
+        if (userStatus.isExpirePassword() || userStatus.isInitialPassword()){
             return new ArrayList<>(0);
         }
 

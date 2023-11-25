@@ -1,6 +1,6 @@
 package cn.bootx.platform.iam.handler;
 
-import cn.bootx.platform.starter.auth.authentication.RouterCheck;
+import cn.bootx.platform.starter.auth.service.RouterCheck;
 import cn.bootx.platform.common.spring.util.WebServletUtil;
 import cn.bootx.platform.iam.core.permission.service.PermPathService;
 import lombok.RequiredArgsConstructor;

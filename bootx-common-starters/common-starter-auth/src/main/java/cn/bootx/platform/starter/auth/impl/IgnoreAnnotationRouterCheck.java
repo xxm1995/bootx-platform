@@ -1,7 +1,7 @@
 package cn.bootx.platform.starter.auth.impl;
 
 import cn.bootx.platform.common.core.annotation.IgnoreAuth;
-import cn.bootx.platform.starter.auth.authentication.RouterCheck;
+import cn.bootx.platform.starter.auth.service.RouterCheck;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;

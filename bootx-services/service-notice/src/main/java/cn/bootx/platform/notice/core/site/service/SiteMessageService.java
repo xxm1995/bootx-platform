@@ -222,7 +222,6 @@ public class SiteMessageService {
      */
     public void read(Long messageId) {
         Long userId = SecurityUtil.getUserId();
-        // Long userId = 0L;
         SiteMessageUser siteMessageUser = siteMessageUserManager.findByMessageId(messageId)
                 .orElse(new SiteMessageUser().setReceiveId(userId).setMessageId(messageId));
         siteMessageUser.setHaveRead(true).setReadTime(LocalDateTime.now());

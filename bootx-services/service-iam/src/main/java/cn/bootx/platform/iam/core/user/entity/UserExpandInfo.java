@@ -1,10 +1,9 @@
 package cn.bootx.platform.iam.core.user.entity;
 
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
-import cn.bootx.platform.iam.core.user.convert.UserConvert;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.platform.iam.core.user.convert.UserConvert;
 import cn.bootx.platform.iam.dto.user.UserExpandInfoDto;
-import cn.bootx.table.modify.annotation.DbColumn;
 import cn.bootx.table.modify.annotation.DbTable;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -49,7 +48,6 @@ public class UserExpandInfo extends MpBaseEntity implements EntityBaseFunction<U
     private boolean initialPassword;
 
     /** 密码是否过期 */
-    @DbColumn(comment = "密码是否过期")
     private boolean expirePassword;
 
     /** 上次修改密码时间 */

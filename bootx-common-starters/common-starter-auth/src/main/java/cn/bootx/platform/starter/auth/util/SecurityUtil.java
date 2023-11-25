@@ -78,12 +78,12 @@ public class SecurityUtil {
      * 获取当前用户,无异常, 使用线程缓存来减少redis的访问频率
      */
     private Optional<UserDetail> getCurrentUser0() {
-        Optional<UserDetail> userDetail = Optional.ofNullable(SessionCacheLocal.get());
+        Optional<UserDetail> userDetail = Optional.ofNullable(SessionCacheLocal.getUserInfo());
         if (!userDetail.isPresent()) {
             try {
                 userDetail = Optional.ofNullable(StpUtil.getSession())
                     .map(saSession -> saSession.getModel(CommonCode.USER, UserDetail.class));
-                SessionCacheLocal.put(userDetail.orElse(null));
+                SessionCacheLocal.putUserInfo(userDetail.orElse(null));
             }
             catch (SaTokenException e) {
                 userDetail = Optional.empty();

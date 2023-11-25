@@ -1,7 +1,7 @@
 package cn.bootx.platform.starter.auth.impl;
 
 import cn.bootx.platform.common.core.entity.UserDetail;
-import cn.bootx.platform.starter.auth.authentication.RouterCheck;
+import cn.bootx.platform.starter.auth.service.RouterCheck;
 import cn.bootx.platform.starter.auth.configuration.AuthProperties;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +18,6 @@ import org.springframework.stereotype.Component;
 public class IgnoreAdminUserRouterCheck implements RouterCheck {
 
     private final AuthProperties authProperties;
-
-    @Override
-    public int sortNo() {
-        return 0;
-    }
 
     @Override
     public boolean check(Object handler) {

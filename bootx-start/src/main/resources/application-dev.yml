@@ -191,7 +191,6 @@ bootx:
         - '/css/**'
         - '/error'
         - '/favicon.ico'
-        - '/**'
       # 第三方登录
       third-login:
         ding-talk:

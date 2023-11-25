@@ -1,6 +1,6 @@
 package cn.bootx.platform.starter.auth.handler;
 
-import cn.bootx.platform.starter.auth.authentication.RouterCheck;
+import cn.bootx.platform.starter.auth.service.RouterCheck;
 import cn.bootx.platform.starter.auth.exception.RouterCheckException;
 import cn.bootx.platform.common.spring.util.WebServletUtil;
 import cn.dev33.satoken.fun.SaFunction;

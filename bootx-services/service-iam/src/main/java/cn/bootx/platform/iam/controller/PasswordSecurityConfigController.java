@@ -1,5 +1,6 @@
 package cn.bootx.platform.iam.controller;
 
+import cn.bootx.platform.common.core.annotation.IgnoreAuth;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.iam.core.security.password.service.PasswordChangeHistoryService;
@@ -47,6 +48,7 @@ public class PasswordSecurityConfigController {
         return Res.ok(passwordChangeHistoryService.isRecentlyUsed(SecurityUtil.getUserId(),password));
     }
 
+    @IgnoreAuth
     @Operation(summary = "登录后检查密码相关的情况")
     @GetMapping("/check")
     public ResResult<passwordSecurityCheckResult> check(){

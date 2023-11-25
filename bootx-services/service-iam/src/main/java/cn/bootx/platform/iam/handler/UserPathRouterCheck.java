@@ -1,9 +1,11 @@
 package cn.bootx.platform.iam.handler;
 
 import cn.bootx.platform.common.core.entity.UserDetail;
-import cn.bootx.platform.starter.auth.authentication.RouterCheck;
 import cn.bootx.platform.common.spring.util.WebServletUtil;
 import cn.bootx.platform.iam.core.upms.service.RolePathService;
+import cn.bootx.platform.starter.auth.entity.UserStatus;
+import cn.bootx.platform.starter.auth.service.RouterCheck;
+import cn.bootx.platform.starter.auth.service.UserStatusService;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,8 @@ public class UserPathRouterCheck implements RouterCheck {
 
     private final RolePathService rolePathService;
 
+    private final UserStatusService userStatusService;
+
     private final AntPathMatcher matcher = new AntPathMatcher();
 
     @Override
@@ -38,6 +42,11 @@ public class UserPathRouterCheck implements RouterCheck {
 
         Optional<UserDetail> UserDetailOpt = SecurityUtil.getCurrentUser();
         if (!UserDetailOpt.isPresent()) {
+            return false;
+        }
+        // 初始密码或者密码过期
+        UserStatus userStatus = userStatusService.getUserStatus();
+        if (userStatus.isExpirePassword()||userStatus.isInitialPassword()){
             return false;
         }
         UserDetail userDetail = UserDetailOpt.get();

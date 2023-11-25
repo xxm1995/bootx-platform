@@ -1,5 +1,6 @@
 package cn.bootx.platform.notice.controller;
 
+import cn.bootx.platform.common.core.annotation.IgnoreAuth;
 import cn.bootx.platform.common.core.rest.PageResult;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
@@ -47,12 +48,14 @@ public class SiteMessageController {
         return Res.ok(siteMessageService.findById(id));
     }
 
+    @IgnoreAuth
     @Operation(summary = "获取未读的接收消息条数")
     @GetMapping("/countByReceiveNotRead")
     public ResResult<Integer> countByReceiveNotRead(SiteMessageInfo query) {
         return Res.ok(siteMessageService.countByReceiveNotRead(query));
     }
 
+    @IgnoreAuth
     @Operation(summary = "接收消息分页")
     @GetMapping("/pageByReceive")
     public ResResult<PageResult<SiteMessageInfo>> pageByReceive(PageParam pageParam, SiteMessageInfo query) {
@@ -79,12 +82,15 @@ public class SiteMessageController {
         return Res.ok();
     }
 
+    @IgnoreAuth
     @Operation(summary = "标为已读")
     @PostMapping("/read")
     public ResResult<Void> read(Long id) {
         siteMessageService.read(id);
         return Res.ok();
     }
+
+    @IgnoreAuth
     @Operation(summary = "小程序获取未读的接收消息标题列表")
     @GetMapping("/listByReceiveNotRead")
     public ResResult<List<String>> listByReceiveNotRead(SiteMessageInfo query) {
