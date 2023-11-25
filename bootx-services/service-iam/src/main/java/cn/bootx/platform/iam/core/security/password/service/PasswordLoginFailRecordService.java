@@ -104,7 +104,6 @@ public class PasswordLoginFailRecordService {
     /**
      * 批量清除登录失败的次数
      */
-    @Async("taskExecutor")
     public void clearBatchFailCount(List<Long> userIds){
         passwordLoginFailRecordManager.clearBatchFailCount(userIds);
     }

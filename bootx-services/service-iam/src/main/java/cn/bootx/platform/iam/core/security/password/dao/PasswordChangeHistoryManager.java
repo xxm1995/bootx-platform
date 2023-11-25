@@ -25,6 +25,7 @@ public class PasswordChangeHistoryManager extends BaseManager<PasswordChangeHist
         page.setSearchCount(false);
         return lambdaQuery()
                 .eq(PasswordChangeHistory::getUserId,userId)
+                .orderByDesc(PasswordChangeHistory::getId)
                 .page(page)
                 .getRecords();
     }

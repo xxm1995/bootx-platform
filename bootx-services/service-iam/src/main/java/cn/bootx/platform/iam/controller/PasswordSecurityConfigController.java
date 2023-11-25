@@ -48,8 +48,8 @@ public class PasswordSecurityConfigController {
     }
 
     @Operation(summary = "登录后检查密码相关的情况")
-    @GetMapping("/checkPasswordSecurity")
-    public ResResult<passwordSecurityCheckResult> checkPasswordSecurity(){
-        return Res.ok(passwordSecurityCheckService.checkPasswordSecurity());
+    @GetMapping("/check")
+    public ResResult<passwordSecurityCheckResult> check(){
+        return Res.ok(passwordSecurityCheckService.check());
     }
 }

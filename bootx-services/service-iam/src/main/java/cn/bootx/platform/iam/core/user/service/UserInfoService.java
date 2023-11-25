@@ -10,6 +10,7 @@ import cn.bootx.platform.iam.dto.user.LoginAfterUserInfo;
 import cn.bootx.platform.iam.dto.user.UserBaseInfoDto;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
 import cn.bootx.platform.iam.event.user.UserChangePasswordEvent;
+import cn.bootx.platform.iam.event.user.UserRestartPasswordEvent;
 import cn.bootx.platform.iam.event.user.UserUpdateEvent;
 import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
 import cn.bootx.platform.iam.param.user.UserBaseInfoParam;
@@ -21,8 +22,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
 
 /**
  * 用户
@@ -112,8 +111,6 @@ public class UserInfoService {
     public void updatePassword(String password, String newPassword) {
         UserInfo userInfo = userInfoManager.findById(SecurityUtil.getUserId())
             .orElseThrow(UserInfoNotExistsException::new);
-        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(SecurityUtil.getUserId())
-            .orElseThrow(UserInfoNotExistsException::new);
 
         // 新密码进行加密
         newPassword = passwordEncoder.encode(newPassword);
@@ -129,9 +126,7 @@ public class UserInfoService {
 
         userInfo.setPassword(newPassword);
         userInfoManager.updateById(userInfo);
-        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now());
         passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
-        userExpandInfoManager.updateById(userExpandInfo);
         eventPublisher.publishEvent(new UserChangePasswordEvent(this,userInfo.getId()));
     }
 
@@ -199,19 +194,15 @@ public class UserInfoService {
             throw new BizException("短信验证码不正确");
         }
         UserInfo userInfo = userInfoManager.findByPhone(phone).orElseThrow(UserInfoNotExistsException::new);
-        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
-            .orElseThrow(UserInfoNotExistsException::new);
         userInfo.setPassword(passwordEncoder.encode(password));
         // 判断新密码是否在最近几次使用过
         if (passwordChangeHistoryService.isRecentlyUsed(userInfo.getId(), userInfo.getPassword())){
             throw new BizException("新密码不能与最近使用过的密码相同");
         }
-        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now()).setInitialPassword(false);
         userInfoManager.updateById(userInfo);
-        userExpandInfoManager.updateById(userExpandInfo);
         passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userAssistService.deletePhoneForgetCaptcha(phone);
-        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
+        eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userInfo.getId()));
     }
 
     /**
@@ -222,19 +213,15 @@ public class UserInfoService {
             throw new BizException("短信验证码不正确");
         }
         UserInfo userInfo = userInfoManager.findByEmail(email).orElseThrow(UserInfoNotExistsException::new);
-        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userInfo.getId())
-            .orElseThrow(UserInfoNotExistsException::new);
         userInfo.setPassword(passwordEncoder.encode(password));
         // 判断新密码是否在最近几次使用过
         if (passwordChangeHistoryService.isRecentlyUsed(userInfo.getId(), userInfo.getPassword())){
             throw new BizException("新密码不能与最近使用过的密码相同");
         }
-        userExpandInfo.setLastChangePasswordTime(LocalDateTime.now()).setInitialPassword(false);
         userInfoManager.updateById(userInfo);
-        userExpandInfoManager.updateById(userExpandInfo);
         passwordChangeHistoryService.saveChangeHistory(userInfo.getId(), userInfo.getPassword());
         userAssistService.deleteEmailForgetCaptcha(email);
-        eventPublisher.publishEvent(new UserUpdateEvent(this, userInfo.toDto()));
+        eventPublisher.publishEvent(new UserRestartPasswordEvent(this, userInfo.getId()));
     }
 
     /**

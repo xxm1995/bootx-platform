@@ -7,6 +7,7 @@ import cn.bootx.platform.iam.core.security.password.dao.PasswordChangeHistoryMan
 import cn.bootx.platform.iam.core.security.password.entity.PasswordChangeHistory;
 import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
+import cn.bootx.platform.iam.core.user.service.UserExpandInfoService;
 import cn.bootx.platform.iam.dto.security.PasswordSecurityConfigDto;
 import cn.bootx.platform.iam.dto.security.passwordSecurityCheckResult;
 import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
@@ -36,11 +37,12 @@ public class PasswordSecurityCheckService {
 
     private final UserExpandInfoManager userExpandInfoManager;
 
+    private final UserExpandInfoService userExpandInfoService;
 
     /**
      * 登录后检查密码相关的情况
      */
-    public passwordSecurityCheckResult checkPasswordSecurity(){
+    public passwordSecurityCheckResult check(){
         passwordSecurityCheckResult result = new passwordSecurityCheckResult();
         UserDetail userDetail = SecurityUtil.getCurrentUser()
                 .orElseThrow(NotLoginException::new);
@@ -48,15 +50,16 @@ public class PasswordSecurityCheckService {
             return result;
         }
         Long userId = userDetail.getId();
+        UserExpandInfo userExpandInfo = userExpandInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
+
         PasswordSecurityConfigDto securityConfig = configService.getDefault();
         // 检查是否是默认密码未进行修改
-        if (this.isDefaultPassword(userId,securityConfig)){
+        if (this.isDefaultPassword(userExpandInfo,securityConfig)){
             return result.setDefaultPwd(true);
         }
-        int state = this.verifyPasswordExpire(userId, securityConfig);
-        // 检查密码是否已经过期
+        int state = this.verifyPasswordExpire(userExpandInfo, securityConfig);
+        // 检查密码是否已经过期, 如果过期更新用户过期状态
         if (state == 0){
-            // 设置为
             return result.setExpirePwd(true);
         }
         // 检查密码是否到了提示过期的时候
@@ -71,10 +74,8 @@ public class PasswordSecurityCheckService {
     /**
      * 判断用户初始化密码是否需要修改
      */
-    public boolean isDefaultPassword(Long userId, PasswordSecurityConfigDto securityConfig){
-        UserExpandInfo userInfo = userExpandInfoManager.findById(userId)
-                .orElseThrow(UserInfoNotExistsException::new);
-        return userInfo.isInitialPassword() && securityConfig.isRequireChangePwd();
+    public boolean isDefaultPassword(UserExpandInfo userExpandInfo, PasswordSecurityConfigDto securityConfig){
+        return userExpandInfo.isInitialPassword() && securityConfig.isRequireChangePwd();
     }
 
 
@@ -84,34 +85,37 @@ public class PasswordSecurityCheckService {
      * 0. 密码已经过期
      * -N. 密码还有几天过期, 需要进行提醒
      */
-    public int verifyPasswordExpire(Long userId,PasswordSecurityConfigDto securityConfig){
+    public int verifyPasswordExpire(UserExpandInfo userExpandInfo,PasswordSecurityConfigDto securityConfig){
+        // 已经是密码过期状态
+        if (userExpandInfo.isExpirePassword()){
+            return 0;
+        }
 
         // 判断用户密码是否需要强制进行更改
-        List<PasswordChangeHistory> changeHistoryList = historyManager.findAllByUserAndCount(userId, 1);
+        List<PasswordChangeHistory> changeHistoryList = historyManager.findAllByUserAndCount(userExpandInfo.getId(), 1);
         if (CollUtil.isNotEmpty(changeHistoryList)){
             PasswordChangeHistory passwordChangeHistory = changeHistoryList.get(0);
             LocalDateTime createTime = passwordChangeHistory.getCreateTime();
-            // 判断距今的时间是否超过密码过期时间是多少
+            // 判断上次更改密码的时间距今是多少
             int keepPwdDay = (int) LocalDateTimeUtil.between(createTime, LocalDateTime.now(), ChronoUnit.DAYS);
+
             int dealDay = securityConfig.getUpdateFrequency() - keepPwdDay;
-            // 判断密码是否已经过期
-            if( dealDay >= 0 ){
-                this.userExpirePwd(userId);
-                return 1;
+            // 密码过期
+            if (dealDay < 0){
+                // 更新过期状态
+                userExpandInfoService.userExpirePwd(userExpandInfo.getId());
+                return 0;
             }
             // 判断是否满足密码修改的倒计时提醒
             if (dealDay < securityConfig.getExpireRemind()){
                 return -dealDay;
             }
+            // 密码未过期
+            return 1;
+
         }
-        return 0;
+        return 1;
     }
 
-    /**
-     * 密码过期处理, 更新状态用户状态
-     */
-    public void userExpirePwd(Long userId){
-
-    }
 
 }

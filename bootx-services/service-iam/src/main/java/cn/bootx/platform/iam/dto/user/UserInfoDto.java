@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -58,8 +57,6 @@ public class UserInfoDto extends BaseDto implements Serializable {
     @Schema(description = "账号状态")
     private String status;
 
-    @Schema(description = "注册时间")
-    private LocalDateTime registerTime;
 
     public UserDetail toUserDetail() {
         return new UserDetail().setId(this.getId())

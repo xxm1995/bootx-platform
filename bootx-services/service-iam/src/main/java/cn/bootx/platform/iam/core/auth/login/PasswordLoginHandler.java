@@ -107,7 +107,7 @@ public class PasswordLoginHandler implements UsernamePasswordAuthentication {
     }
 
     /**
-     * 认证后操作 将验证码设置为失效
+     * 认证后操作
      */
     @Override
     public void authenticationAfter(AuthInfoResult authInfoResult, LoginAuthContext context) {
