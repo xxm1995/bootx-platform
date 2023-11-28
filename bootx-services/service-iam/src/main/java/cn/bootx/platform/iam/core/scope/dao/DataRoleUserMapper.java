@@ -1,6 +1,6 @@
 package cn.bootx.platform.iam.core.scope.dao;
 
-import cn.bootx.platform.iam.core.scope.entity.DataScopeDept;
+import cn.bootx.platform.iam.core.scope.entity.DataRoleUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021/12/23
  */
 @Mapper
-public interface DataScopeDeptMapper extends BaseMapper<DataScopeDept> {
+public interface DataRoleUserMapper extends BaseMapper<DataRoleUser> {
 
 }

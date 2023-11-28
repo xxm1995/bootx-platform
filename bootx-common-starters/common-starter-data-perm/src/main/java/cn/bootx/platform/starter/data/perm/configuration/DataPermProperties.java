@@ -1,6 +1,8 @@
 package cn.bootx.platform.starter.data.perm.configuration;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -24,28 +26,32 @@ public class DataPermProperties {
     /** 开启数据权限 */
     private boolean enableDataPerm = true;
 
-    /** 数据权限配置 */
-    private DataPerm dataPerm = new DataPerm();
+    /** 部门关联类型数据权限关联表配置 */
+    private DataPerm deptDataPerm = new DataPerm("iam_user_dept", "user_id", "dept_id");
+
+    /** 角色关联类型数据权限关联表配置 */
+    private DataPerm roleDataPerm = new DataPerm("iam_user_role", "user_id", "role _id");
 
     /** 开启查询字段权限 */
     private boolean enableSelectFieldPerm = true;
 
     /**
-     * 数据权限(通常是用户/部门关联表)
+     * 部门相关数据权限
      */
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class DataPerm {
 
         /** 关联表名 */
-        private String table = "iam_user_dept";
+        private String table;
 
-        /** 查询字段(用户字段名) */
-        private String queryField = "user_id";
+        /** 查询字段(输出字段名, 通常为用户字段, 用于筛选出子查询的结果) */
+        private String queryField;
 
         /** 条件字段(筛选条件字段名) */
-        private String whereField = "dept_id";
-
+        private String whereField;
     }
 
 }

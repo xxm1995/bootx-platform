@@ -170,6 +170,7 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
                 queryExpression = this.selfScope(mainTableName);
                 break;
             }
+            case DEPT_SCOPE_AND_SUB:
             case DEPT_SCOPE: {
                 Expression deptScopeExpression = this.deptScope(dataPermScope.getDeptScopeIds(), mainTableName);
                 // 追加查询自身的数据
@@ -177,16 +178,18 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
                 break;
             }
             case USER_SCOPE: {
+                // 包含自身的数据
                 queryExpression = this.userScope(dataPermScope.getUserScopeIds(), mainTableName);
                 break;
             }
             case DEPT_AND_USER_SCOPE: {
+                // 包含自身的数据
                 queryExpression = this.deptAndUserScope(dataPermScope.getDeptScopeIds(),
                         dataPermScope.getUserScopeIds(), mainTableName);
                 break;
             }
-            case BELONG_DEPT:
-            case BELONG_DEPT_AND_SUB: {
+            case SELF_DEPT:
+            case SELF_DEPT_AND_SUB: {
                 queryExpression = this.deptScope(dataPermScope.getDeptScopeIds(), mainTableName);
                 break;
             }
@@ -234,17 +237,17 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
      * 查询部门范围的数据
      */
     protected Expression deptScope(Set<Long> deptIds, String mainTableName) {
-        DataPermProperties.DataPerm dataPerm = dataPermProperties.getDataPerm();
+        DataPermProperties.DataPerm deptDataPerm = dataPermProperties.getDeptDataPerm();
         // 创建嵌套子查询
         PlainSelect plainSelect = new PlainSelect();
         // 设置查询字段
         SelectExpressionItem selectItem = new SelectExpressionItem();
-        selectItem.setExpression(new Column(dataPerm.getQueryField()));
+        selectItem.setExpression(new Column(deptDataPerm.getQueryField()));
         plainSelect.addSelectItems(selectItem);
         // 过滤重复的子查询结果
         plainSelect.setDistinct(new Distinct());
         // 设置所查询表
-        plainSelect.setFromItem(new Table(dataPerm.getTable()));
+        plainSelect.setFromItem(new Table(deptDataPerm.getTable()));
 
         // 构建查询条件
         List<Expression> deptExpressions = Optional.ofNullable(deptIds)
@@ -253,12 +256,12 @@ public class DataScopeInterceptor extends JsqlParserSupport implements InnerInte
             .map(LongValue::new)
             .collect(Collectors.toList());
         // 构造空查询
-        if (deptExpressions.size() == 0) {
+        if (deptExpressions.isEmpty()) {
             deptExpressions.add(null);
         }
         // 设置查询条件
         plainSelect
-            .setWhere(new InExpression(new Column(dataPerm.getWhereField()), new ExpressionList(deptExpressions)));
+            .setWhere(new InExpression(new Column(deptDataPerm.getWhereField()), new ExpressionList(deptExpressions)));
 
         // 拼接子查询
         SubSelect subSelect = new SubSelect();

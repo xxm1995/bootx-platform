@@ -19,11 +19,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("iam_data_scope_dept")
-public class DataScopeDept extends MpIdEntity {
+@TableName("iam_data_role_dept")
+public class DataRoleDept extends MpIdEntity {
 
     /** 数据范围id */
-    private Long dataScopeId;
+    private Long roleId;
 
     /** 部门id */
     private Long deptId;

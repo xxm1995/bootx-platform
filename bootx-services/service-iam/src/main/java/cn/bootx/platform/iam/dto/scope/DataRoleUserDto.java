@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 @Schema(title = "用户数据范围权限详细信息")
-public class DataScopeUserInfoDto {
+public class DataRoleUserDto {
 
     @Schema(description = "权限关联id")
     private Long id;

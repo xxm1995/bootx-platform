@@ -13,12 +13,12 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 @Schema(title = "部门范围")
-public class DataScopeDeptParam {
+public class DataRoleUserParam {
 
-    @Schema(description = "数据权限id")
-    private Long dataScopeId;
+    @Schema(description = "数据角色id")
+    private Long dataRoleId;
 
-    @Schema(description = "部门id集合")
-    private List<Long> deptIds;
+    @Schema(description = "用户id")
+    private List<Long> userIds;
 
 }

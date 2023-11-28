@@ -1,7 +1,7 @@
 package cn.bootx.platform.iam.core.scope.dao;
 
 import cn.bootx.platform.common.mybatisplus.impl.BaseManager;
-import cn.bootx.platform.iam.core.scope.entity.DataScope;
+import cn.bootx.platform.iam.core.scope.entity.DataRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -13,22 +13,22 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class DataScopeManager extends BaseManager<DataScopeMapper, DataScope> {
+public class DataRoleManager extends BaseManager<DataRoleMapper, DataRole> {
 
     public boolean existsByCode(String code) {
-        return this.existedByField(DataScope::getCode, code);
+        return this.existedByField(DataRole::getCode, code);
     }
 
     public boolean existsByCode(String code, Long id) {
-        return this.existedByField(DataScope::getCode, code, id);
+        return this.existedByField(DataRole::getCode, code, id);
     }
 
     public boolean existsByName(String name) {
-        return this.existedByField(DataScope::getName, name);
+        return this.existedByField(DataRole::getName, name);
     }
 
     public boolean existsByName(String name, Long id) {
-        return this.existedByField(DataScope::getName, name, id);
+        return this.existedByField(DataRole::getName, name, id);
     }
 
 }

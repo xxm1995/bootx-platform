@@ -1,8 +1,8 @@
 package cn.bootx.platform.iam.core.scope.convert;
 
-import cn.bootx.platform.iam.param.scope.DataScopeParam;
-import cn.bootx.platform.iam.core.scope.entity.DataScope;
-import cn.bootx.platform.iam.dto.scope.DataScopeDto;
+import cn.bootx.platform.iam.param.scope.DataRoleParam;
+import cn.bootx.platform.iam.core.scope.entity.DataRole;
+import cn.bootx.platform.iam.dto.scope.DataRoleDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -17,8 +17,8 @@ public interface DataScopeConvert {
 
     DataScopeConvert CONVERT = Mappers.getMapper(DataScopeConvert.class);
 
-    DataScope convert(DataScopeParam in);
+    DataRole convert(DataRoleParam in);
 
-    DataScopeDto convert(DataScope in);
+    DataRoleDto convert(DataRole in);
 
 }

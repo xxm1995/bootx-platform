@@ -2,7 +2,7 @@ package cn.bootx.platform.iam.core.upms.dao;
 
 import cn.bootx.platform.common.mybatisplus.impl.BaseManager;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
-import cn.bootx.platform.iam.core.upms.entity.UserDataScope;
+import cn.bootx.platform.iam.core.upms.entity.UserDataRole;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,30 +18,30 @@ import java.util.Optional;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class UserDataScopeManager extends BaseManager<UserDataScopeMapper, UserDataScope> {
+public class UserDataRoleManager extends BaseManager<UserDataRoleMapper, UserDataRole> {
 
-    public boolean existsByDataScopeId(Long dataScopeId) {
-        return this.existedByField(UserDataScope::getDataScopeId, dataScopeId);
+    public boolean existsByDataRoleId(Long dataRoleId) {
+        return this.existedByField(UserDataRole::getRoleId, dataRoleId);
     }
 
     public void deleteByUser(Long userId) {
-        this.deleteByField(UserDataScope::getUserId, userId);
+        this.deleteByField(UserDataRole::getUserId, userId);
     }
 
     public void deleteByUsers(List<Long> userIds) {
-        this.deleteByFields(UserDataScope::getUserId, userIds);
+        this.deleteByFields(UserDataRole::getUserId, userIds);
     }
 
-    public List<UserDataScope> findAllByUserId(Long userId) {
-        return this.findAllByField(UserDataScope::getUserId, userId);
+    public List<UserDataRole> findAllByUserId(Long userId) {
+        return this.findAllByField(UserDataRole::getUserId, userId);
     }
 
-    public Optional<UserDataScope> findByUserId(Long userId) {
-        return this.findByField(UserDataScope::getUserId, userId);
+    public Optional<UserDataRole> findByUserId(Long userId) {
+        return this.findByField(UserDataRole::getUserId, userId);
     }
 
     @Override
-    public List<UserDataScope> saveAll(List<UserDataScope> dataScopes) {
+    public List<UserDataRole> saveAll(List<UserDataRole> dataScopes) {
         MpUtil.initEntityList(dataScopes, SecurityUtil.getUserIdOrDefaultId());
         MpUtil.executeBatch(dataScopes, baseMapper::saveAll, this.DEFAULT_BATCH_SIZE);
         return dataScopes;

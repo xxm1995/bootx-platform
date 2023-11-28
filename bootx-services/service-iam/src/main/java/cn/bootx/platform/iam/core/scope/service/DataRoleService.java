@@ -7,18 +7,18 @@ import cn.bootx.platform.common.core.rest.param.PageParam;
 import cn.bootx.platform.common.core.util.CollUtil;
 import cn.bootx.platform.common.core.util.ResultConvertUtil;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
-import cn.bootx.platform.iam.param.scope.DataScopeDeptParam;
-import cn.bootx.platform.iam.param.scope.DataScopeParam;
+import cn.bootx.platform.iam.core.scope.entity.DataRole;
+import cn.bootx.platform.iam.dto.scope.DataRoleDto;
+import cn.bootx.platform.iam.param.scope.DataRoleParam;
+import cn.bootx.platform.iam.param.scope.DataRoleDeptParam;
 import cn.bootx.platform.starter.data.perm.code.DataScopeEnum;
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.platform.iam.core.dept.event.DeptDeleteEvent;
-import cn.bootx.platform.iam.core.scope.dao.DataScopeDeptManager;
-import cn.bootx.platform.iam.core.scope.dao.DataScopeManager;
-import cn.bootx.platform.iam.core.scope.dao.DataScopeUserManager;
-import cn.bootx.platform.iam.core.scope.entity.DataScope;
-import cn.bootx.platform.iam.core.scope.entity.DataScopeDept;
-import cn.bootx.platform.iam.core.upms.dao.UserDataScopeManager;
-import cn.bootx.platform.iam.dto.scope.DataScopeDto;
+import cn.bootx.platform.iam.core.scope.dao.DataRoleDeptManager;
+import cn.bootx.platform.iam.core.scope.dao.DataRoleManager;
+import cn.bootx.platform.iam.core.scope.dao.DataRoleUserManager;
+import cn.bootx.platform.iam.core.scope.entity.DataRoleDept;
+import cn.bootx.platform.iam.core.upms.dao.UserDataRoleManager;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
@@ -43,34 +43,34 @@ import static cn.bootx.platform.iam.code.CachingCode.USER_DATA_SCOPE;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DataScopeService {
+public class DataRoleService {
 
-    private final DataScopeManager dataScopeManager;
+    private final DataRoleManager dataRoleManager;
 
-    private final DataScopeUserManager dataScopeUserManager;
+    private final DataRoleUserManager dataRoleUserManager;
 
-    private final DataScopeDeptManager dataScopeDeptManager;
+    private final DataRoleDeptManager dataRoleDeptManager;
 
-    private final UserDataScopeManager userDataScopeManager;
+    private final UserDataRoleManager userDataRoleManager;
 
     /**
      * 添加数据范围权限
      */
     @Transactional(rollbackFor = Exception.class)
-    public void add(DataScopeParam param) {
-        DataScope dataScope = DataScope.init(param);
-        dataScopeManager.save(dataScope);
+    public void add(DataRoleParam param) {
+        DataRole dataRole = DataRole.init(param);
+        dataRoleManager.save(dataRole);
     }
 
     /**
      * 修改
      */
     @Transactional(rollbackFor = Exception.class)
-    public void update(DataScopeParam param) {
-        DataScope dataScope = dataScopeManager.findById(param.getId()).orElseThrow(() -> new BizException("数据不存在"));
-        BeanUtil.copyProperties(param, dataScope, CopyOptions.create().ignoreNullValue());
-        dataScope.setType(null);
-        dataScopeManager.updateById(dataScope);
+    public void update(DataRoleParam param) {
+        DataRole dataRole = dataRoleManager.findById(param.getId()).orElseThrow(() -> new BizException("数据不存在"));
+        BeanUtil.copyProperties(param, dataRole, CopyOptions.create().ignoreNullValue());
+        dataRole.setType(null);
+        dataRoleManager.updateById(dataRole);
     }
 
     /**
@@ -78,15 +78,15 @@ public class DataScopeService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        if (!dataScopeManager.existedById(id)) {
+        if (!dataRoleManager.existedById(id)) {
             throw new BizException("数据不存在");
         }
-        if (userDataScopeManager.existsByDataScopeId(id)) {
+        if (userDataRoleManager.existsByDataRoleId(id)) {
             throw new BizException("该权限已经有用户在使用，无法删除");
         }
-        dataScopeManager.deleteById(id);
-        dataScopeUserManager.deleteByDataScopeId(id);
-        dataScopeDeptManager.deleteByDataScopeId(id);
+        dataRoleManager.deleteById(id);
+        dataRoleUserManager.deleteByDataRoleId(id);
+        dataRoleDeptManager.deleteByDataRoleId(id);
     }
 
     /**
@@ -94,31 +94,31 @@ public class DataScopeService {
      */
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = { USER_DATA_SCOPE }, allEntries = true)
-    public void saveDeptAssign(DataScopeDeptParam param) {
-        DataScope dataScope = dataScopeManager.findById(param.getDataScopeId()).orElseThrow(DataNotExistException::new);
+    public void saveDeptAssign(DataRoleDeptParam param) {
+        DataRole dataRole = dataRoleManager.findById(param.getDataRoleId()).orElseThrow(DataNotExistException::new);
         val scope = CollUtil.newArrayList(DataScopeEnum.DEPT_SCOPE.getCode(),
                 DataScopeEnum.DEPT_AND_USER_SCOPE.getCode());
-        if (!scope.contains(dataScope.getType())) {
+        if (!scope.contains(dataRole.getType())) {
             throw new BizException("非法操作");
         }
 
         // 先删后增
-        List<DataScopeDept> dateScopedDeptList = dataScopeDeptManager.findByDateScopeId(param.getDataScopeId());
-        List<Long> deptIdsByDb = dateScopedDeptList.stream().map(DataScopeDept::getDeptId).collect(Collectors.toList());
+        List<DataRoleDept> dateScopedDeptList = dataRoleDeptManager.findByDateRoleId(param.getDataRoleId());
+        List<Long> deptIdsByDb = dateScopedDeptList.stream().map(DataRoleDept::getDeptId).collect(Collectors.toList());
 
         // 要删除的
         List<Long> deptIds = param.getDeptIds();
         List<Long> deleteIds = dateScopedDeptList.stream()
-            .filter(dataScopeDept -> !deptIds.contains(dataScopeDept.getDeptId()))
+            .filter(dataRoleDept -> !deptIds.contains(dataRoleDept.getDeptId()))
             .map(MpIdEntity::getId)
             .collect(Collectors.toList());
         // 要增加的
-        List<DataScopeDept> dataScopeDepths = deptIds.stream()
+        List<DataRoleDept> dataRoleDepths = deptIds.stream()
             .filter(id -> !deptIdsByDb.contains(id))
-            .map(deptId -> new DataScopeDept(param.getDataScopeId(), deptId))
+            .map(deptId -> new DataRoleDept(param.getDataRoleId(), deptId))
             .collect(Collectors.toList());
-        dataScopeDeptManager.deleteByIds(deleteIds);
-        dataScopeDeptManager.saveAll(dataScopeDepths);
+        dataRoleDeptManager.deleteByIds(deleteIds);
+        dataRoleDeptManager.saveAll(dataRoleDepths);
     }
 
     /**
@@ -126,16 +126,16 @@ public class DataScopeService {
      */
     @EventListener
     public void DeptDeleteEventListener(DeptDeleteEvent event) {
-        dataScopeDeptManager.deleteByDeptIds(event.getDeptIds());
+        dataRoleDeptManager.deleteByDeptIds(event.getDeptIds());
     }
 
     /**
      * 获取关联的部门id集合
      */
     public List<Long> findDeptIds(Long id) {
-        return dataScopeDeptManager.findByDateScopeId(id)
+        return dataRoleDeptManager.findByDateRoleId(id)
             .stream()
-            .map(DataScopeDept::getDeptId)
+            .map(DataRoleDept::getDeptId)
             .collect(Collectors.toList());
     }
 
@@ -143,49 +143,49 @@ public class DataScopeService {
      * 判断权限编码是否存在
      */
     public boolean existsByCode(String code) {
-        return dataScopeManager.existsByCode(code);
+        return dataRoleManager.existsByCode(code);
     }
 
     /**
      * 判断权限编码是否存在
      */
     public boolean existsByCode(String code, Long id) {
-        return dataScopeManager.existsByCode(code, id);
+        return dataRoleManager.existsByCode(code, id);
     }
 
     /**
      * name是否存在
      */
     public boolean existsByName(String name) {
-        return dataScopeManager.existsByName(name);
+        return dataRoleManager.existsByName(name);
     }
 
     /**
      * name是否存在
      */
     public boolean existsByName(String name, Long id) {
-        return dataScopeManager.existsByName(name, id);
+        return dataRoleManager.existsByName(name, id);
     }
 
     /**
      * 获取单条
      */
-    public DataScopeDto findById(Long id) {
-        return dataScopeManager.findById(id).map(DataScope::toDto).orElseThrow(() -> new BizException("数据不存在"));
+    public DataRoleDto findById(Long id) {
+        return dataRoleManager.findById(id).map(DataRole::toDto).orElseThrow(() -> new BizException("数据不存在"));
     }
 
     /**
      * 分页
      */
-    public PageResult<DataScopeDto> page(PageParam pageParam, DataScopeParam param) {
-        return MpUtil.convert2DtoPageResult(dataScopeManager.page(MpUtil.getMpPage(pageParam, DataScope.class)));
+    public PageResult<DataRoleDto> page(PageParam pageParam, DataRoleParam param) {
+        return MpUtil.convert2DtoPageResult(dataRoleManager.page(MpUtil.getMpPage(pageParam, DataRole.class)));
     }
 
     /**
      * 列表查询
      */
-    public List<DataScopeDto> findAll() {
-        return ResultConvertUtil.dtoListConvert(dataScopeManager.findAll());
+    public List<DataRoleDto> findAll() {
+        return ResultConvertUtil.dtoListConvert(dataRoleManager.findAll());
     }
 
 }

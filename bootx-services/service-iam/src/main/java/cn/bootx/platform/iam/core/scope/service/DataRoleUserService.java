@@ -2,27 +2,29 @@ package cn.bootx.platform.iam.core.scope.service;
 
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.core.function.CollectorsFunction;
-import cn.bootx.platform.starter.data.perm.code.DataScopeEnum;
-import cn.bootx.platform.iam.core.scope.dao.DataScopeManager;
-import cn.bootx.platform.iam.core.scope.dao.DataScopeUserManager;
-import cn.bootx.platform.iam.core.scope.entity.DataScope;
-import cn.bootx.platform.iam.core.scope.entity.DataScopeUser;
+import cn.bootx.platform.common.core.util.CollUtil;
+import cn.bootx.platform.iam.core.scope.dao.DataRoleManager;
+import cn.bootx.platform.iam.core.scope.dao.DataRoleUserManager;
+import cn.bootx.platform.iam.core.scope.entity.DataRole;
+import cn.bootx.platform.iam.core.scope.entity.DataRoleUser;
 import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
-import cn.bootx.platform.iam.dto.scope.DataScopeUserInfoDto;
+import cn.bootx.platform.iam.dto.scope.DataRoleUserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static cn.bootx.platform.iam.code.CachingCode.USER_DATA_SCOPE;
+import static cn.bootx.platform.starter.data.perm.code.DataScopeEnum.DEPT_AND_USER_SCOPE;
+import static cn.bootx.platform.starter.data.perm.code.DataScopeEnum.USER_SCOPE;
 
 /**
  * 数据范围权限限定用户级别
@@ -33,31 +35,31 @@ import static cn.bootx.platform.iam.code.CachingCode.USER_DATA_SCOPE;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DataScopeUserService {
+public class DataRoleUserService {
 
-    private final DataScopeManager dataScopeManager;
+    private final DataRoleManager dataRoleManager;
 
-    private final DataScopeUserManager dataScopeUserManager;
+    private final DataRoleUserManager dataRoleUserManager;
 
     private final UserInfoManager userInfoManager;
 
     /**
      * 关联用户列表
      */
-    public List<DataScopeUserInfoDto> findUsersByDataScopeId(Long dataScopeId) {
-        Map<Long, DataScopeUser> dataScopeUserMap = dataScopeUserManager.findByDateScopeId(dataScopeId)
+    public List<DataRoleUserDto> findUsersByDataRoleId(Long dataRoleId) {
+        Map<Long, DataRoleUser> dataScopeUserMap = dataRoleUserManager.findByDateRoleId(dataRoleId)
             .stream()
-            .collect(Collectors.toMap(DataScopeUser::getUserId, Function.identity(), CollectorsFunction::retainLatest));
+            .collect(Collectors.toMap(DataRoleUser::getUserId, Function.identity(), CollectorsFunction::retainLatest));
         // 查询出用户id
         List<Long> userIds = dataScopeUserMap.values()
             .stream()
-            .map(DataScopeUser::getUserId)
+            .map(DataRoleUser::getUserId)
             .collect(Collectors.toList());
         // 查询出用户
         List<UserInfo> userInfos = userInfoManager.findAllByIds(userIds);
 
         return userInfos.stream()
-            .map(userInfo -> new DataScopeUserInfoDto().setId(dataScopeUserMap.get(userInfo.getId()).getId())
+            .map(userInfo -> new DataRoleUserDto().setId(dataScopeUserMap.get(userInfo.getId()).getId())
                 .setUserId(userInfo.getId())
                 .setUsername(userInfo.getUsername())
                 .setName(userInfo.getName()))
@@ -69,22 +71,24 @@ public class DataScopeUserService {
      */
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = { USER_DATA_SCOPE }, allEntries = true)
-    public void saveUserAssign(Long dataScopeId, List<Long> userIds) {
-        DataScope dataScope = dataScopeManager.findById(dataScopeId).orElseThrow(() -> new BizException("数据不存在"));
-        if (!Objects.equals(dataScope.getType(), DataScopeEnum.USER_SCOPE.getCode())
-                && Objects.equals(dataScope.getType(), DataScopeEnum.DEPT_AND_USER_SCOPE.getCode())) {
+    public void saveUserAssign(Long dataRoleId, List<Long> userIds) {
+        DataRole dataRole = dataRoleManager.findById(dataRoleId).orElseThrow(() -> new BizException("数据不存在"));
+
+        val scope = CollUtil.newArrayList(USER_SCOPE.getCode(),
+                DEPT_AND_USER_SCOPE.getCode());
+        if (!scope.contains(dataRole.getType())) {
             throw new BizException("非法操作");
         }
-        List<Long> dataScopeUserIds = dataScopeUserManager.findByDateScopeId(dataScopeId)
+        List<Long> dataScopeUserIds = dataRoleUserManager.findByDateRoleId(dataRoleId)
             .stream()
-            .map(DataScopeUser::getUserId)
+            .map(DataRoleUser::getUserId)
             .collect(Collectors.toList());
 
-        List<DataScopeUser> dataScopeUsers = userIds.stream()
+        List<DataRoleUser> dataScopeUsers = userIds.stream()
             .filter(userId -> !dataScopeUserIds.contains(userId))
-            .map(userId -> new DataScopeUser(dataScopeId, userId))
+            .map(userId -> new DataRoleUser(dataRoleId, userId))
             .collect(Collectors.toList());
-        dataScopeUserManager.saveAll(dataScopeUsers);
+        dataRoleUserManager.saveAll(dataScopeUsers);
     }
 
     /**
@@ -92,7 +96,7 @@ public class DataScopeUserService {
      */
     @CacheEvict(value = { USER_DATA_SCOPE }, allEntries = true)
     public void deleteBatch(List<Long> ids) {
-        dataScopeUserManager.deleteByIds(ids);
+        dataRoleUserManager.deleteByIds(ids);
     }
 
 }
