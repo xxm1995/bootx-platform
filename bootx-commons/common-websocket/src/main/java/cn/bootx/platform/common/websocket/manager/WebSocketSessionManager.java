@@ -9,7 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 /**
- * websocket管理器 (java原生)
+ * websocket管理器 (java原生, 进攻演示, 通常使用 SpringWebSocketSessionManager )
  *
  * @author xxm
  * @since 2022/5/27

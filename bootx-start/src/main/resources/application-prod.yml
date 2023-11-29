@@ -59,6 +59,9 @@ spring:
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
+knife4j:
+  enable: true
+  production: true
 # 项目配置
 bootx:
   common:

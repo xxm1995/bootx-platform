@@ -61,7 +61,7 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
         // 不处理接收的消息, 通常只会接收到心跳请求
-        // log.debug("心跳请求");
+//         log.debug("心跳请求");
     }
 
     /**
@@ -77,7 +77,7 @@ public class UserNoticeWebSocketHandler extends TextWebSocketHandler {
      */
     public void sendMessageByUser(String message, Long userId) {
         try {
-            List<WebSocketSession> sessions = wsManager.getSessionsById(String.valueOf(userId));
+            List<WebSocketSession> sessions = wsManager.getSessionsByUserId(String.valueOf(userId));
 
             for (WebSocketSession session : sessions) {
                 session.sendMessage(new TextMessage(message));

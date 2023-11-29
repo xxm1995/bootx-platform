@@ -125,11 +125,12 @@ bootx:
         "[认证与权限]":
           - cn.bootx.platform.starter.auth
           - cn.bootx.platform.starter.data.perm
-        "[其他starter组件]":
+        "[其他组件]":
           - cn.bootx.platform.starter.audit.log
           - cn.bootx.platform.starter.file
           - cn.bootx.platform.starter.quartz
           - cn.bootx.platform.starter.monitor
+          - cn.bootx.platform.common.websocket
     # 缓存
     cache:
       # 默认超时时间 30分钟

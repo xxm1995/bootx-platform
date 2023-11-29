@@ -19,19 +19,17 @@ import java.util.stream.Collectors;
  * @author xxm
  * @since 2022/5/27
  */
+@Getter
 public class SpringWebSocketSessionManager {
 
     // session缓存
-    @Getter
-    private static final Map<String, WebSocketSession> sessionPool = new ConcurrentSkipListMap<>();
+    private final Map<String, WebSocketSession> sessionPool = new ConcurrentSkipListMap<>();
 
     // sessionId 与 用户标识id 的映射关系 n:1
-    @Getter
-    private static final Map<String, String> sid2uid = new ConcurrentSkipListMap<>();
+    private final Map<String, String> sid2uid = new ConcurrentSkipListMap<>();
 
     // 用户标识id 与 sessionId 的映射关系 1:n
-    @Getter
-    private static final Map<String, List<String>> uid2sid = new ConcurrentSkipListMap<>();
+    private final Map<String, List<String>> uid2sid = new ConcurrentSkipListMap<>();
 
     /**
      * 添加会话session关联
@@ -69,10 +67,10 @@ public class SpringWebSocketSessionManager {
     }
 
     /**
-     * 根据id获取关联的session列表
+     * 根据userId获取关联的session列表
      */
-    public List<WebSocketSession> getSessionsById(String id) {
-        List<String> sessionIds = Optional.ofNullable(uid2sid.get(id)).orElse(Lists.newArrayList());
+    public List<WebSocketSession> getSessionsByUserId(String userId) {
+        List<String> sessionIds = Optional.ofNullable(uid2sid.get(userId)).orElse(Lists.newArrayList());
         return sessionIds.stream().map(sessionPool::get).collect(Collectors.toList());
     }
 
