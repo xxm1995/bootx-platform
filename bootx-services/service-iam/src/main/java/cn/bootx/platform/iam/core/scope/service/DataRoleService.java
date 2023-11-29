@@ -69,7 +69,6 @@ public class DataRoleService {
     public void update(DataRoleParam param) {
         DataRole dataRole = dataRoleManager.findById(param.getId()).orElseThrow(() -> new BizException("数据不存在"));
         BeanUtil.copyProperties(param, dataRole, CopyOptions.create().ignoreNullValue());
-        dataRole.setType(null);
         dataRoleManager.updateById(dataRole);
     }
 
