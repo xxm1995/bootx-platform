@@ -6,6 +6,7 @@ import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.common.mybatisplus.handler.LongListTypeHandler;
 import cn.bootx.platform.iam.code.UserStatusCode;
 import cn.bootx.platform.iam.core.user.convert.UserConvert;
+import cn.bootx.platform.iam.dto.online.OnlineUserInfoDto;
 import cn.bootx.platform.iam.dto.user.UserInfoDto;
 import cn.bootx.platform.iam.param.user.UserInfoParam;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -59,6 +60,10 @@ public class UserInfo extends MpBaseEntity implements EntityBaseFunction<UserInf
     @Override
     public UserInfoDto toDto() {
         return UserConvert.CONVERT.convert(this);
+    }
+
+    public OnlineUserInfoDto toOnline(){
+        return UserConvert.CONVERT.toOnline(this);
     }
 
     public static UserInfo init(UserInfoParam param) {

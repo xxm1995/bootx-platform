@@ -1,5 +1,6 @@
 package cn.bootx.platform.iam.core.user.convert;
 
+import cn.bootx.platform.iam.dto.online.OnlineUserInfoDto;
 import cn.bootx.platform.iam.param.user.UserInfoParam;
 import cn.bootx.platform.iam.core.user.entity.UserExpandInfo;
 import cn.bootx.platform.iam.core.user.entity.UserInfo;
@@ -18,5 +19,7 @@ public interface UserConvert {
     UserInfoDto convert(UserInfo in);
 
     UserExpandInfoDto convert(UserExpandInfo in);
+
+    OnlineUserInfoDto toOnline(UserInfo in);
 
 }

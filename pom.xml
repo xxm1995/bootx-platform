@@ -99,7 +99,7 @@
         <xxl-job.version>2.4.0</xxl-job.version>
         <IJPay.version>2.9.7</IJPay.version>
         <sa-token.version>1.36.0</sa-token.version>
-        <justauth.version>1.16.5</justauth.version>
+        <justauth.version>1.16.6</justauth.version>
         <minio.version>8.5.4</minio.version>
         <cos_api.version>5.6.155</cos_api.version>
         <cos-sts_api.version>3.1.0</cos-sts_api.version>

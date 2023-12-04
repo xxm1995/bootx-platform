@@ -24,9 +24,6 @@ public class UserInfoDto extends BaseDto implements Serializable {
 
     private static final long serialVersionUID = 5881350477107722635L;
 
-    @Schema(description = "用户id")
-    private Long id;
-
     @Schema(description = "名称")
     private String name;
 
