@@ -38,6 +38,17 @@ public class RoleMenuManager extends BaseManager<RoleMenuMapper, RoleMenu> {
 
     }
 
+    /**
+     * 根据角色id、客户端code、权限id进行删除
+     */
+    public void deleteByPermIds(Long roleId, String clientCode,List<Long> permissionIds) {
+        lambdaUpdate()
+                .eq(RoleMenu::getRoleId, roleId)
+                .eq(RoleMenu::getClientCode,clientCode)
+                .in(RoleMenu::getPermissionId,permissionIds);
+    }
+
+
     @Override
     public List<RoleMenu> saveAll(List<RoleMenu> list) {
         list.forEach(roleMenu -> roleMenu.setId(IdUtil.getSnowflakeNextId()));

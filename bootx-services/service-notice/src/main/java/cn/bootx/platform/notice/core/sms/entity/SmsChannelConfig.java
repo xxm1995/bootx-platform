@@ -8,7 +8,6 @@ import cn.bootx.platform.notice.param.sms.SmsChannelConfigParam;
 import cn.bootx.table.modify.annotation.DbColumn;
 import cn.bootx.table.modify.mysql.annotation.DbMySqlFieldType;
 import cn.bootx.table.modify.mysql.constants.MySqlFieldTypeEnum;
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -16,7 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.dromara.sms4j.provider.enumerate.SupplierType;
 
-import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
+import static com.baomidou.mybatisplus.annotation.FieldStrategy.NEVER;
 
 /**
  * 短信渠道配置
@@ -34,7 +33,7 @@ public class SmsChannelConfig extends MpBaseEntity implements EntityBaseFunction
      * @see SupplierType#name()
      */
     @DbColumn(comment = "渠道类型编码")
-    @TableField(updateStrategy = FieldStrategy.NEVER)
+    @TableField(updateStrategy = NEVER)
     private String code;
 
     /**
@@ -62,11 +61,11 @@ public class SmsChannelConfig extends MpBaseEntity implements EntityBaseFunction
     /** 配置字符串 */
     @DbMySqlFieldType(MySqlFieldTypeEnum.TEXT)
     @DbColumn(comment = "配置字符串")
-    @TableField(updateStrategy = IGNORED)
+    @TableField(updateStrategy = NEVER)
     private String config;
 
     /** 图片 */
-    @TableField(updateStrategy = IGNORED)
+    @TableField(updateStrategy = NEVER)
     @DbColumn(comment = "图片")
     private Long image;
 

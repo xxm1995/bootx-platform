@@ -1,18 +1,18 @@
 package cn.bootx.platform.iam.core.permission.entity;
 
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
-import cn.bootx.platform.iam.core.permission.convert.PermConvert;
-import cn.bootx.platform.iam.param.permission.PermMenuParam;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.iam.code.PermissionCode;
+import cn.bootx.platform.iam.core.permission.convert.PermConvert;
 import cn.bootx.platform.iam.dto.permission.PermMenuDto;
+import cn.bootx.platform.iam.param.permission.PermMenuParam;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
+import static com.baomidou.mybatisplus.annotation.FieldStrategy.NEVER;
 
 /**
  * 权限配置
@@ -27,7 +27,7 @@ import static com.baomidou.mybatisplus.annotation.FieldStrategy.IGNORED;
 public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMenuDto> {
 
     /** 父id */
-    @TableField(updateStrategy = IGNORED)
+    @TableField(updateStrategy = NEVER)
     private Long parentId;
 
     /** 关联终端code */

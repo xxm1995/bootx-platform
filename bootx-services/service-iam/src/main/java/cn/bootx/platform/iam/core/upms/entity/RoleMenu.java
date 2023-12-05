@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 /**
- * 角色权限关联关系
+ * 角色菜单(包含权限码)关联关系
  *
  * @author xxm
  * @since 2021/8/3
@@ -31,7 +31,7 @@ public class RoleMenu extends MpIdEntity {
     private String clientCode;
 
     /**
-     * 菜单权限id
+     * 菜单或权限码id
      */
     private Long permissionId;
 

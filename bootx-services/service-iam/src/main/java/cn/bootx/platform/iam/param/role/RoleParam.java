@@ -22,6 +22,9 @@ public class RoleParam {
     @Schema(description = "角色名称")
     private String name;
 
+    @Schema(description = "父级Id")
+    private Long pid;
+
     @Schema(description = "描述")
     private String remark;
 

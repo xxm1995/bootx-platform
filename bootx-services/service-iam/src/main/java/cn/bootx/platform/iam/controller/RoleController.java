@@ -43,6 +43,12 @@ public class RoleController {
         return Res.ok();
     }
 
+    @Operation(summary = "角色树")
+    @GetMapping("/tree")
+    public ResResult<List<RoleDto>> tree(){
+        return Res.ok(roleService.tree());
+    }
+
     @Operation(summary = "修改角色（返回角色对象）")
     @PostMapping(value = "/update")
     public ResResult<RoleDto> update(@RequestBody RoleParam roleParam) {

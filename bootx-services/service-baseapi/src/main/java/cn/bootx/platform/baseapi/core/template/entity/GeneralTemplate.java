@@ -1,12 +1,11 @@
 package cn.bootx.platform.baseapi.core.template.entity;
 
-import cn.bootx.table.modify.annotation.DbComment;
-import cn.bootx.table.modify.annotation.DbTable;
 import cn.bootx.platform.baseapi.core.template.convert.GeneralTemplateConvert;
 import cn.bootx.platform.baseapi.dto.template.GeneralTemplateDto;
 import cn.bootx.platform.baseapi.param.template.GeneralTemplateParam;
 import cn.bootx.platform.common.core.function.EntityBaseFunction;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.table.modify.annotation.DbComment;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -57,7 +56,7 @@ public class GeneralTemplate extends MpBaseEntity implements EntityBaseFunction<
 
     /** 文件ID */
     @DbComment("文件ID")
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private Long fileId;
 
     /** 备注 */

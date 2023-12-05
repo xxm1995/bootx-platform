@@ -4,13 +4,13 @@ import cn.bootx.platform.common.core.annotation.NestedPermission;
 import cn.bootx.platform.common.core.entity.UserDetail;
 import cn.bootx.platform.common.core.rest.dto.BaseDto;
 import cn.bootx.platform.common.core.util.TreeBuildUtil;
-import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.platform.iam.code.PermissionCode;
 import cn.bootx.platform.iam.core.permission.service.PermMenuService;
+import cn.bootx.platform.iam.core.role.service.RoleService;
 import cn.bootx.platform.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.platform.iam.core.upms.entity.RoleMenu;
-import cn.bootx.platform.iam.core.user.dao.UserExpandInfoManager;
 import cn.bootx.platform.iam.dto.permission.PermMenuDto;
+import cn.bootx.platform.iam.dto.role.RoleDto;
 import cn.bootx.platform.iam.dto.upms.MenuAndResourceDto;
 import cn.bootx.platform.starter.auth.entity.UserStatus;
 import cn.bootx.platform.starter.auth.exception.NotLoginException;
@@ -45,6 +45,8 @@ public class RolePermService {
 
     private final UserStatusService userStatusService;
 
+    private final RoleService roleService;
+
     private final RoleMenuManager roleMenuManager;
 
     private final UserRoleService userRoleService;
@@ -53,26 +55,72 @@ public class RolePermService {
 
     /**
      * 保存角色菜单授权
+     * 如果删除角色关门的权限关系, 将会级联删除子孙角色的权限关系
+     * 新增角色权限关系, 会根据 updateAddChildren 来决定是否级联新增子孙角色的权限关系
      */
     @CacheEvict(value = { USER_PERM_CODE }, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public void save(Long roleId, String clientCode, List<Long> permissionIds) {
+    public void save(Long roleId, String clientCode, List<Long> permissionIds, boolean updateAddChildren) {
         // 先删后增
         List<RoleMenu> RoleMenus = roleMenuManager.findAllByRoleAndClientCode(roleId, clientCode);
         List<Long> roleMenuIds = RoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
-        // 需要删除的
-        List<Long> deleteIds = RoleMenus.stream()
-            .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
-            .map(MpIdEntity::getId)
-            .collect(Collectors.toList());
+        // 需要删除的菜单管理
+        List<RoleMenu> deleteRoleMenus = RoleMenus.stream()
+                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
+                .collect(Collectors.toList());
+        // 需要删除的权限ID
+        List<Long> deleteIds = deleteRoleMenus.stream().map(RoleMenu::getId).collect(Collectors.toList());
 
-        List<RoleMenu> roleMenus = permissionIds.stream()
-            .filter(id -> !roleMenuIds.contains(id))
-            .map(permissionId -> new RoleMenu(roleId, clientCode, permissionId))
-            .collect(Collectors.toList());
+        // 需要新增的角色权限关系
+        List<RoleMenu> addRoleMenus = permissionIds.stream()
+                .filter(id -> !roleMenuIds.contains(id))
+                .map(permissionId -> new RoleMenu(roleId, clientCode, permissionId))
+                .collect(Collectors.toList());
         roleMenuManager.deleteByIds(deleteIds);
-        roleMenuManager.saveAll(roleMenus);
+        roleMenuManager.saveAll(addRoleMenus);
+        // 级联更新子孙角色
+        if (updateAddChildren) {
+            // 新增的进行追加
+            List<Long> addRoleIds = addRoleMenus.stream()
+                    .map(RoleMenu::getRoleId)
+                    .collect(Collectors.toList());
+            this.updateChildren(roleId, clientCode, addRoleIds, roleMenuIds);
+        } else {
+            // 新增的不进行追加
+            this.updateChildren(roleId, clientCode, null, roleMenuIds);
+        }
     }
+
+    /**
+     * 更新子孙角色关联关系
+     */
+    private void updateChildren(Long roleId, String clientCode, List<Long> addPermIds, List<Long> deletePermIds){
+        // 下属的子孙角色
+        List<RoleDto> children = roleService.findChildren(roleId);
+
+        // 新增
+        if (CollUtil.isNotEmpty(addPermIds)&&CollUtil.isNotEmpty(children)){
+
+            List<RoleMenu> addRoleMenus = new ArrayList<>();
+            for (Long addPermId : addPermIds) {
+                for (RoleDto childrenRole : children) {
+                    addRoleMenus.add(new RoleMenu(childrenRole.getId(), clientCode, addPermId));
+                }
+            }
+            roleMenuManager.saveAll(addRoleMenus);
+        }
+        // 删除
+        if (CollUtil.isNotEmpty(deletePermIds)&&CollUtil.isNotEmpty(children)) {
+            // 子孙角色
+            List<Long> childrenIds = children.stream()
+                    .map(BaseDto::getId)
+                    .collect(Collectors.toList());
+            for (Long childrenId : childrenIds) {
+                roleMenuManager.deleteByPermIds(childrenId,clientCode,deletePermIds);
+            }
+        }
+    }
+
 
     /**
      * 根据角色查询对应的权限id
@@ -88,8 +136,8 @@ public class RolePermService {
     public List<PermMenuDto> findMenuTree(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
         List<PermMenuDto> permissionsByNotButton = permissions.stream()
-            .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-            .collect(Collectors.toList());
+                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+                .collect(Collectors.toList());
         return this.recursiveBuildTree(permissionsByNotButton);
     }
 
@@ -106,9 +154,9 @@ public class RolePermService {
     public List<Long> findMenuIds(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
         return permissions.stream()
-            .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-            .map(PermMenuDto::getId)
-            .collect(Collectors.toList());
+                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+                .map(PermMenuDto::getId)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -117,13 +165,13 @@ public class RolePermService {
     public MenuAndResourceDto getPermissions(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
         List<String> resourcePerms = permissions.stream()
-            .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-            .filter(PermMenuDto::isEffect)
-            .map(PermMenuDto::getPermCode)
-            .collect(Collectors.toList());
+                .filter(o -> Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+                .filter(PermMenuDto::isEffect)
+                .map(PermMenuDto::getPermCode)
+                .collect(Collectors.toList());
         List<PermMenuDto> menus = permissions.stream()
-            .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
-            .collect(Collectors.toList());
+                .filter(o -> !Objects.equals(PermissionCode.MENU_TYPE_RESOURCE, o.getMenuType()))
+                .collect(Collectors.toList());
         return new MenuAndResourceDto().setResourcePerms(resourcePerms).setMenus(this.recursiveBuildTree(menus));
     }
 
@@ -141,9 +189,9 @@ public class RolePermService {
         else {
             // 非管理员获取自身拥有的权限
             permissions = this.findPermissionsByUser(userDetail.getId())
-                .stream()
-                .filter(o -> Objects.equals(clientCode, o.getClientCode()))
-                .collect(Collectors.toList());
+                    .stream()
+                    .filter(o -> Objects.equals(clientCode, o.getClientCode()))
+                    .collect(Collectors.toList());
         }
         return permissions;
     }
@@ -157,10 +205,10 @@ public class RolePermService {
         // 获取关联的的权限码
         List<PermMenuDto> permissions = this.findPermissionsByUser(userId);
         return permissions.stream()
-            .filter(o -> Objects.equals(o.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
-            .filter(PermMenuDto::isEffect)
-            .map(PermMenuDto::getPermCode)
-            .collect(Collectors.toList());
+                .filter(o -> Objects.equals(o.getMenuType(), PermissionCode.MENU_TYPE_RESOURCE))
+                .filter(PermMenuDto::isEffect)
+                .map(PermMenuDto::getPermCode)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -180,9 +228,9 @@ public class RolePermService {
         }
         List<RoleMenu> roleMenus = roleMenuManager.findAllByRoles(roleIds);
         List<Long> permissionIds = roleMenus.stream()
-            .map(RoleMenu::getPermissionId)
-            .distinct()
-            .collect(Collectors.toList());
+                .map(RoleMenu::getPermissionId)
+                .distinct()
+                .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(permissionIds)) {
             permissions = permMenuService.findByIds(permissionIds);
         }
@@ -199,5 +247,4 @@ public class RolePermService {
                 PermMenuDto::setChildren, Comparator.comparingDouble(PermMenuDto::getSortNo));
 
     }
-
 }

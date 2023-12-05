@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author xxm
@@ -25,10 +26,16 @@ public class RoleDto extends BaseDto implements Serializable {
     @Schema(description = "角色名称")
     private String name;
 
-    @Schema(description = "是否系统内置 Y 内置 N 不是  内置 不能修改")
+    @Schema(description = "是否系统内置")
     private boolean internal;
+
+    @Schema(description = "父级Id")
+    private Long pid;
 
     @Schema(description = "描述")
     private String remark;
+
+    @Schema(description = "子节点")
+    private List<RoleDto> children;
 
 }

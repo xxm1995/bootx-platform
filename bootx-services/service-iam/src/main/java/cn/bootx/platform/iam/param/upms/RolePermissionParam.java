@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-@Schema(title = "角色权限(菜单/)")
+@Schema(title = "角色权限(菜单/权限码)")
 public class RolePermissionParam implements Serializable {
 
     private static final long serialVersionUID = 4344723093613370279L;
@@ -25,14 +25,12 @@ public class RolePermissionParam implements Serializable {
     private Long roleId;
 
     @Schema(description = "终端code")
-    @NotBlank(message = "终端不可为空", groups = { PermMenu.class })
+    @NotBlank(message = "终端不可为空")
     private String clientCode;
 
     @Schema(description = "权限id")
     private List<Long> permissionIds;
 
-    public interface PermMenu {
-
-    }
-
+    @Schema(description = "新增时是否更新子节点")
+    private boolean updateChildren;
 }

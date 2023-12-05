@@ -40,7 +40,7 @@ public class SystemParameter extends MpBaseEntity implements EntityBaseFunction<
     private Boolean enable;
 
     /** 内置参数 */
-    @TableField(updateStrategy = FieldStrategy.IGNORED)
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private boolean internal;
 
     /** 备注 */

@@ -64,4 +64,7 @@ public class RoleManager extends BaseManager<RoleMapper, Role> {
             .page(mpPage);
     }
 
+    public boolean existsByPid(Long roleId) {
+        return lambdaQuery().eq(Role::getPid, roleId).exists();
+    }
 }

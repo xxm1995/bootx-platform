@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 import static cn.bootx.platform.iam.code.CachingCode.USER_PERM_CODE;
 
 /**
- * 权限
+ * 菜单权限
  *
  * @author xxm
  * @since 2021/8/3
@@ -54,6 +54,7 @@ public class PermMenuService {
         if (PermissionCode.MENU_TYPE_TOP.equals(param.getMenuType())) {
             param.setParentId(null);
         }
+        // 增加判断是否循环依赖情况
         PermMenu permission = PermMenu.init(param);
         return permMenuManager.save(permission).toDto();
     }

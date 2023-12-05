@@ -52,6 +52,9 @@ public interface IamErrorCode {
     /** 角色已经被使用 */
     int ROLE_ALREADY_USED = 21027;
 
+    /** 含有下级角色 */
+    int ROLE_HAS_CHILD = 21028;
+
     /** 权限操作错误 */
     int PERMISSION_DB_ERROR = 21028;
 
