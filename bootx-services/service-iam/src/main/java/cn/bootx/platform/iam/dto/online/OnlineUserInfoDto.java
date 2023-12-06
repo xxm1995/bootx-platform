@@ -24,10 +24,6 @@ public class OnlineUserInfoDto extends BaseDto {
     @Schema(description = "账号")
     private String username;
 
-    @Schema(description = "密码")
-    @SensitiveInfo(SensitiveInfo.SensitiveType.PASSWORD)
-    private String password;
-
     @Schema(description = "手机号")
     @SensitiveInfo(SensitiveInfo.SensitiveType.MOBILE_PHONE)
     private String phone;
@@ -35,4 +31,7 @@ public class OnlineUserInfoDto extends BaseDto {
     @Schema(description = "邮箱")
     @SensitiveInfo(SensitiveInfo.SensitiveType.EMAIL)
     private String email;
+
+    @Schema(description = "状态")
+    private String status;
 }

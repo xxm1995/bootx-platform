@@ -39,4 +39,16 @@ public class OnlineUserController {
     public ResResult<List<OnlineUserSessionDto>> getSessionByUserId(String userId){
         return Res.ok(onlineUserService.getSessionByUserId(userId));
     }
+
+    @Operation(summary = "登录用户分页")
+    @GetMapping("/pageByLogin")
+    public ResResult<Void> pageByLogin(PageParam pageParam){
+        return Res.ok();
+    }
+
+    @Operation(summary = "踢出用户")
+    @GetMapping("/kickOut")
+    public ResResult<Void> kickOut(String userId){
+        return Res.ok();
+    }
 }
