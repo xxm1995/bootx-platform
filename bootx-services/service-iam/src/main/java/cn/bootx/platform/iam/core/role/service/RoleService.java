@@ -160,7 +160,7 @@ public class RoleService {
             List<RoleDto> roleDtoList = TreeBuildUtil.unfold(tree, RoleDto::getChildren);
             // 找到对应角色的分支树, 然后通过二次平铺树, 获取所有的子孙角色
             List<RoleDto> collect = roleDtoList.stream()
-                    .filter(roleDto -> roleIds.contains(roleDto.getId()))
+                    .filter(roleDto -> roleIds.contains(roleDto.getPid()))
                     .collect(Collectors.toList());
             // 二次平铺树
             return TreeBuildUtil.unfold(collect, RoleDto::getChildren);

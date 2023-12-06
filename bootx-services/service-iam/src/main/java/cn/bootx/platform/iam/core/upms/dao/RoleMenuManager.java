@@ -32,6 +32,10 @@ public class RoleMenuManager extends BaseManager<RoleMenuMapper, RoleMenu> {
     public List<RoleMenu> findAllByRoles(List<Long> roleIds) {
         return findAllByFields(RoleMenu::getRoleId, roleIds);
     }
+    public List<RoleMenu> findAllByRole(Long roleId) {
+        return findAllByField(RoleMenu::getRoleId, roleId);
+    }
+
 
     public List<RoleMenu> findAllByRoleAndClientCode(Long roleId, String clientCode) {
         return lambdaQuery().eq(RoleMenu::getRoleId, roleId).eq(RoleMenu::getClientCode, clientCode).list();
@@ -45,7 +49,8 @@ public class RoleMenuManager extends BaseManager<RoleMenuMapper, RoleMenu> {
         lambdaUpdate()
                 .eq(RoleMenu::getRoleId, roleId)
                 .eq(RoleMenu::getClientCode,clientCode)
-                .in(RoleMenu::getPermissionId,permissionIds);
+                .in(RoleMenu::getPermissionId,permissionIds)
+                .remove();
     }
 
 

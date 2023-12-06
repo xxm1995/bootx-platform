@@ -6,12 +6,15 @@ import cn.bootx.platform.common.core.rest.dto.BaseDto;
 import cn.bootx.platform.common.core.util.TreeBuildUtil;
 import cn.bootx.platform.iam.code.PermissionCode;
 import cn.bootx.platform.iam.core.permission.service.PermMenuService;
+import cn.bootx.platform.iam.core.role.dao.RoleManager;
+import cn.bootx.platform.iam.core.role.entity.Role;
 import cn.bootx.platform.iam.core.role.service.RoleService;
 import cn.bootx.platform.iam.core.upms.dao.RoleMenuManager;
 import cn.bootx.platform.iam.core.upms.entity.RoleMenu;
 import cn.bootx.platform.iam.dto.permission.PermMenuDto;
 import cn.bootx.platform.iam.dto.role.RoleDto;
 import cn.bootx.platform.iam.dto.upms.MenuAndResourceDto;
+import cn.bootx.platform.iam.exception.role.RoleNotExistedException;
 import cn.bootx.platform.starter.auth.entity.UserStatus;
 import cn.bootx.platform.starter.auth.exception.NotLoginException;
 import cn.bootx.platform.starter.auth.service.UserStatusService;
@@ -47,6 +50,8 @@ public class RolePermService {
 
     private final RoleService roleService;
 
+    private final RoleManager roleManager;
+
     private final RoleMenuManager roleMenuManager;
 
     private final UserRoleService userRoleService;
@@ -56,7 +61,7 @@ public class RolePermService {
     /**
      * 保存角色菜单授权
      * 如果删除角色关门的权限关系, 将会级联删除子孙角色的权限关系
-     * 新增角色权限关系, 会根据 updateAddChildren 来决定是否级联新增子孙角色的权限关系
+     * 新增角色权限关系, 会根据 updateAddChildren状态 来决定是否级联新增子孙角色的权限关系
      */
     @CacheEvict(value = { USER_PERM_CODE }, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
@@ -68,26 +73,29 @@ public class RolePermService {
         List<RoleMenu> deleteRoleMenus = RoleMenus.stream()
                 .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
                 .collect(Collectors.toList());
-        // 需要删除的权限ID
-        List<Long> deleteIds = deleteRoleMenus.stream().map(RoleMenu::getId).collect(Collectors.toList());
+        // 需要删除的关联ID
+        List<Long> deleteRoleMenuIds = deleteRoleMenus.stream().map(RoleMenu::getId).collect(Collectors.toList());
+        roleMenuManager.deleteByIds(deleteRoleMenuIds);
 
         // 需要新增的角色权限关系
         List<RoleMenu> addRoleMenus = permissionIds.stream()
                 .filter(id -> !roleMenuIds.contains(id))
                 .map(permissionId -> new RoleMenu(roleId, clientCode, permissionId))
                 .collect(Collectors.toList());
-        roleMenuManager.deleteByIds(deleteIds);
         roleMenuManager.saveAll(addRoleMenus);
+
+        // 需要删除的权限ID
+        List<Long> deletePermIds = deleteRoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
         // 级联更新子孙角色
         if (updateAddChildren) {
             // 新增的进行追加
-            List<Long> addRoleIds = addRoleMenus.stream()
-                    .map(RoleMenu::getRoleId)
+            List<Long> addPermIds = addRoleMenus.stream()
+                    .map(RoleMenu::getPermissionId)
                     .collect(Collectors.toList());
-            this.updateChildren(roleId, clientCode, addRoleIds, roleMenuIds);
+            this.updateChildren(roleId, clientCode, addPermIds, deletePermIds);
         } else {
             // 新增的不进行追加
-            this.updateChildren(roleId, clientCode, null, roleMenuIds);
+            this.updateChildren(roleId, clientCode, null, deletePermIds);
         }
     }
 
@@ -95,12 +103,13 @@ public class RolePermService {
      * 更新子孙角色关联关系
      */
     private void updateChildren(Long roleId, String clientCode, List<Long> addPermIds, List<Long> deletePermIds){
-        // 下属的子孙角色
+        if (CollUtil.isNotEmpty(addPermIds) && CollUtil.isNotEmpty(deletePermIds)){
+            return;
+        }
+        // 当前角色的子孙角色
         List<RoleDto> children = roleService.findChildren(roleId);
-
         // 新增
-        if (CollUtil.isNotEmpty(addPermIds)&&CollUtil.isNotEmpty(children)){
-
+        if (CollUtil.isNotEmpty(addPermIds) && CollUtil.isNotEmpty(children)){
             List<RoleMenu> addRoleMenus = new ArrayList<>();
             for (Long addPermId : addPermIds) {
                 for (RoleDto childrenRole : children) {
@@ -110,7 +119,7 @@ public class RolePermService {
             roleMenuManager.saveAll(addRoleMenus);
         }
         // 删除
-        if (CollUtil.isNotEmpty(deletePermIds)&&CollUtil.isNotEmpty(children)) {
+        if (CollUtil.isNotEmpty(deletePermIds) && CollUtil.isNotEmpty(children)) {
             // 子孙角色
             List<Long> childrenIds = children.stream()
                     .map(BaseDto::getId)
@@ -120,7 +129,6 @@ public class RolePermService {
             }
         }
     }
-
 
     /**
      * 根据角色查询对应的权限id
@@ -144,8 +152,24 @@ public class RolePermService {
     /**
      * 获取权限树, 包含菜单和资源权限(权限码)
      */
-    public List<PermMenuDto> findAllTree(String clientCode) {
-        return this.recursiveBuildTree(this.findPermissions(clientCode));
+    public List<PermMenuDto> findAllTree(String clientCode,Long roleId) {
+        List<PermMenuDto> permissions = this.findPermissions(clientCode);
+        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
+        // 管理员直接不限制
+        if (userDetail.isAdmin()){
+            return this.recursiveBuildTree(permissions);
+        }
+        // 只能查询到当前角色的父级角色已经分配下来的的权限
+        Role role = roleManager.findById(roleId)
+                .orElseThrow(RoleNotExistedException::new);
+        List<Long> permissionIds = roleMenuManager.findAllByRole(role.getPid())
+                .stream()
+                .map(RoleMenu::getPermissionId)
+                .collect(Collectors.toList());
+        permissions = permissions.stream()
+                .filter(o->permissionIds.contains(o.getId()))
+                .collect(Collectors.toList());
+        return this.recursiveBuildTree(permissions);
     }
 
     /**
@@ -178,7 +202,7 @@ public class RolePermService {
     /**
      * 获取权限信息列表
      */
-    private List<PermMenuDto> findPermissions(String clientCode) {
+    private List<PermMenuDto>  findPermissions(String clientCode) {
         UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
         List<PermMenuDto> permissions;
 
