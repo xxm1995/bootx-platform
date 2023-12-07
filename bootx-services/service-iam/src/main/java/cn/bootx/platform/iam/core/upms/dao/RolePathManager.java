@@ -51,4 +51,13 @@ public class RolePathManager extends BaseManager<RolePathMapper, RolePath> {
         return rolePaths;
     }
 
+    /**
+     * 根据角色id 权限ids 删除关联关系
+     */
+    public void deleteByPermIds(Long roleId, List<Long> permissionIds) {
+        lambdaUpdate()
+                .eq(RolePath::getRoleId, roleId)
+                .in(RolePath::getPermissionId,permissionIds)
+                .remove();
+    }
 }

@@ -1,15 +1,20 @@
 package cn.bootx.platform.iam.core.upms.service;
 
 import cn.bootx.platform.common.core.annotation.CountTime;
+import cn.bootx.platform.common.core.rest.dto.BaseDto;
 import cn.bootx.platform.iam.core.permission.service.PermPathService;
-import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
-import cn.bootx.platform.iam.core.user.entity.UserInfo;
-import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
-import cn.bootx.platform.starter.auth.util.SecurityUtil;
-import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
+import cn.bootx.platform.iam.core.role.dao.RoleManager;
+import cn.bootx.platform.iam.core.role.entity.Role;
+import cn.bootx.platform.iam.core.role.service.RoleService;
 import cn.bootx.platform.iam.core.upms.dao.RolePathManager;
 import cn.bootx.platform.iam.core.upms.entity.RolePath;
+import cn.bootx.platform.iam.core.user.dao.UserInfoManager;
+import cn.bootx.platform.iam.core.user.entity.UserInfo;
 import cn.bootx.platform.iam.dto.permission.PermPathDto;
+import cn.bootx.platform.iam.dto.role.RoleDto;
+import cn.bootx.platform.iam.exception.role.RoleNotExistedException;
+import cn.bootx.platform.iam.exception.user.UserInfoNotExistsException;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +46,10 @@ public class RolePathService {
 
     private final PermPathService pathService;
 
+    private final RoleService roleService;
+
+    private final RoleManager roleManager;
+
     private final UserInfoManager userInfoManager;
 
     private final UserRoleService userRoleService;
@@ -51,22 +60,79 @@ public class RolePathService {
     @Transactional(rollbackFor = Exception.class)
     @CacheEvict(value = { USER_PATH }, allEntries = true)
     @CountTime
-    public void addRolePath(Long roleId, List<Long> permissionIds) {
+    public void addRolePath(Long roleId, List<Long> permissionIds,boolean updateAddChildren) {
         // 先删后增
         List<RolePath> rolePaths = rolePathManager.findAllByRole(roleId);
         List<Long> rolePathIds = rolePaths.stream().map(RolePath::getPermissionId).collect(Collectors.toList());
-        // 需要删除的
-        List<Long> deleteIds = rolePaths.stream()
-            .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
-            .map(MpIdEntity::getId)
-            .collect(Collectors.toList());
-
-        List<RolePath> rolePermissions = permissionIds.stream()
-            .filter(id -> !rolePathIds.contains(id))
-            .map(permissionId -> new RolePath(roleId, permissionId))
-            .collect(Collectors.toList());
+        // 需要删除的请求权限
+        List<RolePath> deleteRolePaths = rolePaths.stream()
+                .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
+                .collect(Collectors.toList());
+        // 需要删除的关联ID
+        List<Long> deleteIds = deleteRolePaths.stream().map(RolePath::getId).collect(Collectors.toList());
         rolePathManager.deleteByIds(deleteIds);
-        rolePathManager.saveAll(rolePermissions);
+
+        // 需要新增的权限关系
+        List<RolePath> addRolePath = permissionIds.stream()
+                .filter(id -> !rolePathIds.contains(id))
+                .map(permissionId -> new RolePath(roleId, permissionId))
+                .collect(Collectors.toList());
+        // 新增时验证是否超过了父级角色所拥有的权限
+        Role role = roleManager.findById(roleId).orElseThrow(RoleNotExistedException::new);
+        if (Objects.nonNull(role.getPid())){
+            List<Long> collect = rolePathManager.findAllByRole(role.getPid())
+                    .stream()
+                    .map(RolePath::getPermissionId)
+                    .collect(Collectors.toList());
+            addRolePath = addRolePath.stream()
+                    .filter(o->collect.contains(o.getPermissionId()))
+                    .collect(Collectors.toList());
+        }
+        rolePathManager.saveAll(addRolePath);
+
+        // 级联更新子孙角色
+        List<Long> deletePermIds = deleteRolePaths.stream().map(RolePath::getPermissionId).collect(Collectors.toList());
+        if (updateAddChildren) {
+            // 新增的进行追加
+            List<Long> addPermIds = addRolePath.stream()
+                    .map(RolePath::getPermissionId)
+                    .collect(Collectors.toList());
+            this.updateChildren(roleId, addPermIds, deletePermIds);
+        } else {
+            // 新增的不进行追加
+            this.updateChildren(roleId, null, deletePermIds);
+        }
+    }
+
+    /**
+     * 更新子孙角色关联关系
+     */
+    private void updateChildren(Long roleId, List<Long> addPermIds, List<Long> deletePermIds) {
+        if (CollUtil.isNotEmpty(addPermIds) && CollUtil.isNotEmpty(deletePermIds)){
+            return;
+        }
+        // 当前角色的子孙角色
+        List<RoleDto> children = roleService.findChildren(roleId);
+        // 新增
+        if (CollUtil.isNotEmpty(addPermIds) && CollUtil.isNotEmpty(children)){
+            List<RolePath> addRolePaths = new ArrayList<>();
+            for (Long addPermId : addPermIds) {
+                for (RoleDto childrenRole : children) {
+                    addRolePaths.add(new RolePath(childrenRole.getId(), addPermId));
+                }
+            }
+            rolePathManager.saveAll(addRolePaths);
+        }
+        // 删除
+        if (CollUtil.isNotEmpty(deletePermIds) && CollUtil.isNotEmpty(children)) {
+            // 子孙角色
+            List<Long> childrenIds = children.stream()
+                    .map(BaseDto::getId)
+                    .collect(Collectors.toList());
+            for (Long childrenId : childrenIds) {
+                rolePathManager.deleteByPermIds(childrenId,deletePermIds);
+            }
+        }
     }
 
     /**
@@ -91,11 +157,11 @@ public class RolePathService {
     @Cacheable(value = USER_PATH, key = "#method+':'+#userId")
     public List<String> findSimplePathsByUser(String method, Long userId) {
         return SpringUtil.getBean(this.getClass())
-            .findPathsByUser(userId)
-            .stream()
-            .filter(permPathDto -> Objects.equals(method, permPathDto.getRequestType()))
-            .map(PermPathDto::getPath)
-            .collect(Collectors.toList());
+                .findPathsByUser(userId)
+                .stream()
+                .filter(permPathDto -> Objects.equals(method, permPathDto.getRequestType()))
+                .map(PermPathDto::getPath)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -126,9 +192,9 @@ public class RolePathService {
         }
         List<RolePath> rolePaths = rolePathManager.findAllByRoles(roleIds);
         List<Long> permissionIds = rolePaths.stream()
-            .map(RolePath::getPermissionId)
-            .distinct()
-            .collect(Collectors.toList());
+                .map(RolePath::getPermissionId)
+                .distinct()
+                .collect(Collectors.toList());
         if (CollUtil.isNotEmpty(permissionIds)) {
             permissions = pathService.findByIds(permissionIds);
         }

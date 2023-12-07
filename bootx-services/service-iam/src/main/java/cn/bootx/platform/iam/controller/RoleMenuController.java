@@ -31,8 +31,8 @@ public class RoleMenuController {
     @Operation(summary = "保存请求权限关系")
     @PostMapping("/save")
     public ResResult<Boolean> save(@RequestBody RolePermissionParam param) {
-        ValidationUtil.validateParam(param);
-        rolePermService.save(param.getRoleId(), param.getClientCode(), param.getPermissionIds(),param.isUpdateChildren());
+        ValidationUtil.validateParam(param, RolePermissionParam.PermMenu.class);
+        rolePermService.saveRoleMenu(param.getRoleId(), param.getClientCode(), param.getPermissionIds(),param.isUpdateChildren());
         return Res.ok(true);
     }
 

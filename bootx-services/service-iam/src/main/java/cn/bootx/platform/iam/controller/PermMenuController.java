@@ -45,16 +45,16 @@ public class PermMenuController {
         return Res.ok(rolePermissionService.findMenuTree(clientCode));
     }
 
-    @Operation(summary = "获取全部树")
-    @GetMapping("/allTree")
-    public ResResult<List<PermMenuDto>> allTree(String clientCode,Long roleId) {
-        return Res.ok(rolePermissionService.findAllTree(clientCode,roleId));
-    }
-
     @Operation(summary = "资源(权限码)列表")
     @GetMapping("/resourceList")
     public ResResult<List<PermMenuDto>> resourceList(Long menuId) {
         return Res.ok(permissionService.findResourceByMenuId(menuId));
+    }
+
+    @Operation(summary = "获取菜单和权限码树")
+    @GetMapping("/menuAndPermCodeTree")
+    public ResResult<List<PermMenuDto>> menuAndPermCodeTree(String clientCode) {
+        return Res.ok(rolePermissionService.findMenuAndPermCodeTree(clientCode));
     }
 
     @Operation(summary = "根据id查询")
@@ -80,6 +80,12 @@ public class PermMenuController {
     @GetMapping("/existsByPermCodeNotId")
     public ResResult<Boolean> existsByPermCode(String permCode, Long id) {
         return Res.ok(permissionService.existsByPermCode(permCode, id));
+    }
+
+    @Operation(summary = "获取当前用户角色下可见的菜单树(分配时用)")
+    @GetMapping("/findTreeByRole")
+    public ResResult<List<PermMenuDto>> findTreeByRole(String clientCode, Long roleId) {
+        return Res.ok(rolePermissionService.findTreeByRole(clientCode,roleId));
     }
 
 }

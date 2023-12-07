@@ -59,17 +59,16 @@ public class RolePermService {
     private final PermMenuService permMenuService;
 
     /**
-     * 保存角色菜单授权
+     * 保存角色菜单(权限码)授权
      * 如果删除角色关门的权限关系, 将会级联删除子孙角色的权限关系
      * 新增角色权限关系, 会根据 updateAddChildren状态 来决定是否级联新增子孙角色的权限关系
      */
     @CacheEvict(value = { USER_PERM_CODE }, allEntries = true)
     @Transactional(rollbackFor = Exception.class)
-    public void save(Long roleId, String clientCode, List<Long> permissionIds, boolean updateAddChildren) {
-        // 先删后增
+    public void saveRoleMenu(Long roleId, String clientCode, List<Long> permissionIds, boolean updateAddChildren) {
         List<RoleMenu> RoleMenus = roleMenuManager.findAllByRoleAndClientCode(roleId, clientCode);
         List<Long> roleMenuIds = RoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
-        // 需要删除的菜单管理
+        // 需要删除的菜单
         List<RoleMenu> deleteRoleMenus = RoleMenus.stream()
                 .filter(rolePath -> !permissionIds.contains(rolePath.getPermissionId()))
                 .collect(Collectors.toList());
@@ -82,11 +81,22 @@ public class RolePermService {
                 .filter(id -> !roleMenuIds.contains(id))
                 .map(permissionId -> new RoleMenu(roleId, clientCode, permissionId))
                 .collect(Collectors.toList());
+        // 新增时验证是否超过了父级角色所拥有的权限
+        Role role = roleManager.findById(roleId)
+                .orElseThrow(RoleNotExistedException::new);
+        if (Objects.nonNull(role.getPid())){
+            List<Long> collect = roleMenuManager.findAllByRoleAndClientCode(role.getPid(), clientCode)
+                    .stream()
+                    .map(RoleMenu::getPermissionId)
+                    .collect(Collectors.toList());
+            addRoleMenus = addRoleMenus.stream()
+                    .filter(o->collect.contains(o.getPermissionId()))
+                    .collect(Collectors.toList());
+        }
         roleMenuManager.saveAll(addRoleMenus);
 
-        // 需要删除的权限ID
-        List<Long> deletePermIds = deleteRoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
         // 级联更新子孙角色
+        List<Long> deletePermIds = deleteRoleMenus.stream().map(RoleMenu::getPermissionId).collect(Collectors.toList());
         if (updateAddChildren) {
             // 新增的进行追加
             List<Long> addPermIds = addRoleMenus.stream()
@@ -100,7 +110,7 @@ public class RolePermService {
     }
 
     /**
-     * 更新子孙角色关联关系
+     * 级联更新子孙角色关联关系
      */
     private void updateChildren(Long roleId, String clientCode, List<Long> addPermIds, List<Long> deletePermIds){
         if (CollUtil.isNotEmpty(addPermIds) && CollUtil.isNotEmpty(deletePermIds)){
@@ -131,7 +141,7 @@ public class RolePermService {
     }
 
     /**
-     * 根据角色查询对应的权限id
+     * 查询当前角色已经选择的权限id
      */
     public List<Long> findPermissionIdsByRole(Long roleId, String clientCode) {
         List<RoleMenu> rolePermissions = roleMenuManager.findAllByRoleAndClientCode(roleId, clientCode);
@@ -140,6 +150,8 @@ public class RolePermService {
 
     /**
      * 获取菜单权限树, 不包含资源权限(权限码)
+     * 1. 用户为管理员, 返回所有菜单
+     * 2. 如果用户为非管理员, 则返回当前用户角色下可见的菜单
      */
     public List<PermMenuDto> findMenuTree(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
@@ -150,15 +162,20 @@ public class RolePermService {
     }
 
     /**
-     * 获取权限树, 包含菜单和资源权限(权限码)
+     * 获取菜单和权限码树
+     * 1. 用户为管理员, 返回所有菜单和资源权限(权限码)
+     * 2. 如果用户为非管理员, 则返回当前用户角色下可见的菜单和资源权限(权限码)
      */
-    public List<PermMenuDto> findAllTree(String clientCode,Long roleId) {
+    public List<PermMenuDto> findMenuAndPermCodeTree(String clientCode){
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
-        UserDetail userDetail = SecurityUtil.getCurrentUser().orElseThrow(NotLoginException::new);
-        // 管理员直接不限制
-        if (userDetail.isAdmin()){
-            return this.recursiveBuildTree(permissions);
-        }
+        return this.recursiveBuildTree(permissions);
+    }
+
+    /**
+     * 获取当前用户角色下可见的菜单树, 包含菜单和资源权限(权限码)
+     */
+    public List<PermMenuDto> findTreeByRole(String clientCode, Long roleId) {
+        List<PermMenuDto> permissions = this.findPermissions(clientCode);
         // 只能查询到当前角色的父级角色已经分配下来的的权限
         Role role = roleManager.findById(roleId)
                 .orElseThrow(RoleNotExistedException::new);
@@ -209,8 +226,7 @@ public class RolePermService {
         // 系统管理员，获取全部的权限
         if (userDetail.isAdmin()) {
             permissions = permMenuService.findAllByClientCode(clientCode);
-        }
-        else {
+        } else {
             // 非管理员获取自身拥有的权限
             permissions = this.findPermissionsByUser(userDetail.getId())
                     .stream()
@@ -236,7 +252,8 @@ public class RolePermService {
     }
 
     /**
-     * 查询用户查询拥有的权限信息(直接获取所有终端的权限码),如果当前用户密码是否过期, 过期或者未修改密码, 返回权限为空
+     * 查询用户查询拥有的权限信息(直接获取所有终端的权限码),
+     * 如果当前用户密码是否过期, 过期或者未修改密码, 返回权限为空
      */
     private List<PermMenuDto> findPermissionsByUser(Long userId) {
         // 判断当前用户密码是否过期, 过期或者未修改密码, 返回权限为空

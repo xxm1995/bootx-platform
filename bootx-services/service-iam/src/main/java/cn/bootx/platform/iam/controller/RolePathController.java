@@ -29,7 +29,7 @@ public class RolePathController {
     @PostMapping("/save")
     public ResResult<Void> save(@RequestBody RolePermissionParam param) {
         ValidationUtil.validateParam(param);
-        rolePathService.addRolePath(param.getRoleId(), param.getPermissionIds());
+        rolePathService.addRolePath(param.getRoleId(), param.getPermissionIds(),param.isUpdateChildren());
         return Res.ok();
     }
 
