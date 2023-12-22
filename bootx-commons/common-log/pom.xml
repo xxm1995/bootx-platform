@@ -27,7 +27,7 @@
         <!-- plumelog -->
         <dependency>
             <groupId>com.plumelog</groupId>
-            <artifactId>plumelog-lite-spring-boot-starter</artifactId>
+            <artifactId>plumelog-lite</artifactId>
             <version>${plumelog.version}</version>
             <scope>provided</scope>
         </dependency>

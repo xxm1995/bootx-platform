@@ -34,8 +34,10 @@ public class LogTraceHeaderHolderFilter extends OncePerRequestFilter {
         try {
             String traceId = RandomUtil.randomString(12);
             // 添加普通日志和 plumelog 日志的 TraceId
-            TraceId.logTraceID.set(traceId);
             MDC.put(CommonCode.TRACE_ID, traceId);
+            try {
+                TraceId.logTraceID.set(traceId);
+            } catch (Exception ignored) {}
             chain.doFilter(request, response);
         }
         finally {
