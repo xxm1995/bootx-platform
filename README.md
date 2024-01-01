@@ -131,8 +131,7 @@ bootx-platform
 
 QQ扫码加入QQ交流群
 <p>
-
-<img src="https://oscimg.oschina.net/oscnet/up-ac1a8f8221203de2b5cbc6a461a26199b95.jpg" width = "330" height = "500"/>
+<img src="_doc/images/qq_qun.jpg" width = "330" height = "500"/>
 </p>
 
 ## 🍻 鸣谢
