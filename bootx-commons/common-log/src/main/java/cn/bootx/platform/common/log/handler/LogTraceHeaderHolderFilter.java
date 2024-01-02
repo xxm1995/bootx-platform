@@ -37,7 +37,7 @@ public class LogTraceHeaderHolderFilter extends OncePerRequestFilter {
             MDC.put(CommonCode.TRACE_ID, traceId);
             try {
                 TraceId.logTraceID.set(traceId);
-            } catch (Exception ignored) {}
+            } catch (NoClassDefFoundError ignored) {}
             chain.doFilter(request, response);
         }
         finally {
