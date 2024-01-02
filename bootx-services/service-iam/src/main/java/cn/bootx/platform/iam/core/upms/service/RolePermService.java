@@ -173,19 +173,23 @@ public class RolePermService {
 
     /**
      * 获取当前用户角色下可见的菜单树, 包含菜单和资源权限(权限码)
+     * 如果是顶级角色, 查询到的是当前角色拥有的权限
+     * 如果是子角色, 查询到父级角色分配的权限，范围不会超过父级角色拥有的权限
      */
     public List<PermMenuDto> findTreeByRole(String clientCode, Long roleId) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);
-        // 只能查询到当前角色的父级角色已经分配下来的的权限
         Role role = roleManager.findById(roleId)
                 .orElseThrow(RoleNotExistedException::new);
-        List<Long> permissionIds = roleMenuManager.findAllByRole(role.getPid())
-                .stream()
-                .map(RoleMenu::getPermissionId)
-                .collect(Collectors.toList());
-        permissions = permissions.stream()
-                .filter(o->permissionIds.contains(o.getId()))
-                .collect(Collectors.toList());
+        // 如果有有父级角色, 进行过滤筛选, 防止越权
+        if (Objects.nonNull(role.getPid())){
+            List<Long> permissionIds = roleMenuManager.findAllByRole(role.getPid())
+                    .stream()
+                    .map(RoleMenu::getPermissionId)
+                    .collect(Collectors.toList());
+            permissions = permissions.stream()
+                    .filter(o->permissionIds.contains(o.getId()))
+                    .collect(Collectors.toList());
+        }
         return this.recursiveBuildTree(permissions);
     }
 
