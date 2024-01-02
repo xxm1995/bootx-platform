@@ -29,14 +29,14 @@ public class RolePathController {
     @PostMapping("/save")
     public ResResult<Void> save(@RequestBody RolePermissionParam param) {
         ValidationUtil.validateParam(param);
-        rolePathService.addRolePath(param.getRoleId(), param.getPermissionIds(),param.isUpdateChildren());
+        rolePathService.addRolePath(param.getRoleId(), param.getPermissionIds(), param.isUpdateChildren());
         return Res.ok();
     }
 
-    @Operation(summary = "根据用户id获取角色授权(请求权限列表)")
-    @GetMapping("/findPathsByUser")
-    public ResResult<List<PermPathDto>> findPathsByUser() {
-        return Res.ok(rolePathService.findPathsByUser());
+    @Operation(summary = "获取当前用户角色下可见的请求权限列表(分配时用)")
+    @GetMapping("/findPathsByRole")
+    public ResResult<List<PermPathDto>> findPathsByRole(Long roleId) {
+        return Res.ok(rolePathService.findPathsByRole(roleId));
     }
 
     @Operation(summary = "根据角色id获取关联权限id")

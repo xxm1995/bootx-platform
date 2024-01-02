@@ -24,7 +24,7 @@ import java.util.List;
  * @since 2020/5/11 9:36
  */
 @Validated
-@Tag(name = "请求权限资源")
+@Tag(name = "请求权限管理")
 @RestController
 @RequestMapping("/perm/path")
 @RequiredArgsConstructor

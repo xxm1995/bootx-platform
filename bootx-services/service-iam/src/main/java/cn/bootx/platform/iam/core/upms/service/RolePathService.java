@@ -169,7 +169,6 @@ public class RolePathService {
      */
     public List<PermPathDto> findPathsByUser(Long userId) {
         UserInfo userInfo = userInfoManager.findById(userId).orElseThrow(UserInfoNotExistsException::new);
-
         List<PermPathDto> paths;
         if (userInfo.isAdministrator()) {
             paths = pathService.findAll();
@@ -201,4 +200,25 @@ public class RolePathService {
         return permissions;
     }
 
+    /**
+     * 获取当前用户角色下可见的请求权限
+     * 如果是顶级角色, 查询到的是当前角色拥有的权限
+     * 如果是子角色, 查询到父级角色分配的权限，范围不会超过父级角色拥有的权限
+     */
+    public List<PermPathDto> findPathsByRole(Long roleId) {
+        List<PermPathDto> permPaths = pathService.findAll();
+        Role role = roleManager.findById(roleId)
+                .orElseThrow(RoleNotExistedException::new);
+        // 如果有有父级角色, 进行过滤筛选, 防止越权
+        if (Objects.nonNull(role.getPid())){
+            List<Long> permissionIds = rolePathManager.findAllByRole(role.getPid())
+                    .stream()
+                    .map(RolePath::getPermissionId)
+                    .collect(Collectors.toList());
+            permPaths = permPaths.stream()
+                    .filter(o->permissionIds.contains(o.getId()))
+                    .collect(Collectors.toList());
+        }
+        return permPaths;
+    }
 }

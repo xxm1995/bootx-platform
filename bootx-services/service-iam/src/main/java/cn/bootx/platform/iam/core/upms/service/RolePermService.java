@@ -205,7 +205,7 @@ public class RolePermService {
     }
 
     /**
-     * 获取菜单和资源权限(权限码)
+     * 获取菜单和资源权限(权限码) 根据用户进行筛选
      */
     public MenuAndResourceDto getPermissions(String clientCode) {
         List<PermMenuDto> permissions = this.findPermissions(clientCode);

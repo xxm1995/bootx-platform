@@ -5,6 +5,7 @@ import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.core.util.ValidationUtil;
 import cn.bootx.platform.iam.core.upms.service.RolePermService;
+import cn.bootx.platform.iam.dto.permission.PermMenuDto;
 import cn.bootx.platform.iam.dto.upms.MenuAndResourceDto;
 import cn.bootx.platform.iam.param.upms.RolePermissionParam;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,14 +43,21 @@ public class RoleMenuController {
         return Res.ok(rolePermService.findMenuIds(clientCode));
     }
 
-    @Operation(summary = "根据角色id获取关联权限id集合(包含资源和菜单)")
+    @Operation(summary = "获取当前角色下关联权限id集合(包含权限码和菜单)")
     @GetMapping("/findPermissionIdsByRole")
     public ResResult<List<Long>> findPermissionIdsByRole(Long roleId, String clientCode) {
         return Res.ok(rolePermService.findPermissionIdsByRole(roleId, clientCode));
     }
 
+
+    @Operation(summary = "获取当前角色下可见的菜单和权限码树(分配时用)")
+    @GetMapping("/findTreeByRole")
+    public ResResult<List<PermMenuDto>> findTreeByRole(Long roleId, String clientCode) {
+        return Res.ok(rolePermService.findTreeByRole(clientCode,roleId));
+    }
+
     @IgnoreAuth
-    @Operation(summary = "获取菜单和资源权限")
+    @Operation(summary = "获取菜单和权限码(根据用户进行筛选)")
     @GetMapping("/getPermissions")
     public ResResult<MenuAndResourceDto> getPermissions(String clientCode) {
         return Res.ok(rolePermService.getPermissions(clientCode));

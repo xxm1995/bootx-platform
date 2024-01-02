@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * 菜单和权限码
  * @author xxm
  * @since 2020/5/11 9:36
  */
-@Tag(name = "菜单权限资源")
+@Tag(name = "菜单和权限码")
 @RestController
 @RequestMapping("/perm/menu")
 @RequiredArgsConstructor
@@ -81,11 +82,4 @@ public class PermMenuController {
     public ResResult<Boolean> existsByPermCode(String permCode, Long id) {
         return Res.ok(permissionService.existsByPermCode(permCode, id));
     }
-
-    @Operation(summary = "获取当前用户角色下可见的菜单树(分配时用)")
-    @GetMapping("/findTreeByRole")
-    public ResResult<List<PermMenuDto>> findTreeByRole(String clientCode, Long roleId) {
-        return Res.ok(rolePermissionService.findTreeByRole(clientCode,roleId));
-    }
-
 }
