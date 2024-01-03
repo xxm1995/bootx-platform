@@ -15,8 +15,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * java8 时间序列化
- *
+ * java8 时间序列化 受MySQL限制, 无法存储毫秒值. 所以值处理到秒级别
+ * 目标:
+ * 写入时间支持传入秒和毫秒两种格式的时间, 存储时支持支持毫秒
+ * 读取时间时携带毫秒信息
  * @author xxm
  * @since 2020/4/14 13:33
  */
