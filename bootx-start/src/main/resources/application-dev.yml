@@ -86,14 +86,19 @@ table-modify:
   scan-package: cn.bootx.platform
   database-type: mysql
 dromara:
-  x-file-storage: #文件存储配置,
-    default-platform: local #默认使用的存储平台
-    thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】
+  #文件存储配置,
+  x-file-storage:
+    #默认使用的存储平台
+    default-platform: local
+    #缩略图后缀，例如【.min.jpg】【.png】
+    thumbnail-suffix: ".min.jpg"
     local-plus:
       # 不启用自带的访问映射, 使用自定义的访问实现
-      - platform: local # 存储平台标识
+      # 存储平台标识
+      - platform: local
         enableStorage: true
-        storage-path: D:/data/files/ # 存储路径
+        # 文件存储路径
+        storage-path: D:/data/files/
 # Swagger 增强版
 knife4j:
   enable: true
