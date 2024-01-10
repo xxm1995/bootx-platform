@@ -15,6 +15,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.dromara.sms4j.provider.enumerate.SupplierType;
 
+import static com.baomidou.mybatisplus.annotation.FieldStrategy.ALWAYS;
 import static com.baomidou.mybatisplus.annotation.FieldStrategy.NEVER;
 
 /**
@@ -61,11 +62,11 @@ public class SmsChannelConfig extends MpBaseEntity implements EntityBaseFunction
     /** 配置字符串 */
     @DbMySqlFieldType(MySqlFieldTypeEnum.TEXT)
     @DbColumn(comment = "配置字符串")
-    @TableField(updateStrategy = NEVER)
+    @TableField(updateStrategy = ALWAYS)
     private String config;
 
     /** 图片 */
-    @TableField(updateStrategy = NEVER)
+    @TableField(updateStrategy = ALWAYS)
     @DbColumn(comment = "图片")
     private Long image;
 

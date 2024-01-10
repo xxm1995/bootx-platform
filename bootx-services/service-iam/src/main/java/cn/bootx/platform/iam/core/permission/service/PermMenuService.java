@@ -73,6 +73,8 @@ public class PermMenuService {
         if (PermissionCode.MENU_TYPE_TOP.equals(permMenu.getMenuType())) {
             permMenu.setParentId(null);
         }
+        // TODO 检查上级菜单是否出现了循环依赖
+
         return permMenuManager.updateById(permMenu).toDto();
     }
 

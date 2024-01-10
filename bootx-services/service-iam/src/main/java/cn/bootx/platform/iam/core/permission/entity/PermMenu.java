@@ -12,8 +12,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import static com.baomidou.mybatisplus.annotation.FieldStrategy.NEVER;
-
 /**
  * 权限配置
  *
@@ -27,7 +25,7 @@ import static com.baomidou.mybatisplus.annotation.FieldStrategy.NEVER;
 public class PermMenu extends MpBaseEntity implements EntityBaseFunction<PermMenuDto> {
 
     /** 父id */
-    @TableField(updateStrategy = NEVER)
+//    @TableField(updateStrategy = NEVER)
     private Long parentId;
 
     /** 关联终端code */
