@@ -20,6 +20,7 @@ import cn.bootx.platform.starter.auth.exception.NotLoginException;
 import cn.bootx.platform.starter.auth.service.UserStatusService;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -28,7 +29,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -289,7 +289,17 @@ public class RolePermService {
      */
     private List<PermMenuDto> recursiveBuildTree(List<PermMenuDto> permissions) {
         return TreeBuildUtil.build(permissions, null, BaseDto::getId, PermMenuDto::getParentId,
-                PermMenuDto::setChildren, Comparator.comparingDouble(PermMenuDto::getSortNo));
+                PermMenuDto::setChildren, (o1, o2) -> {
+                    // 先比较排序码
+                    if (ObjectUtil.isAllNotEmpty(o1.getSortNo(),o2.getSortNo())) {
+                        int compare = o1.getSortNo().compareTo(o2.getSortNo());
+                        if (compare != 0) {
+                            return compare;
+                        }
+                    }
+                    // 后比较主键id
+                    return o1.getId().compareTo(o2.getId());
+                });
 
     }
 }

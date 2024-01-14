@@ -54,6 +54,9 @@ public @interface QueryParam {
         /** 等于 */
         EQ,
 
+        /** 范围查询 */
+        BETWEEN,
+
         /** 模糊匹配 */
         LIKE,
 
@@ -65,6 +68,7 @@ public @interface QueryParam {
 
         /** 是否为空, 只作用在布尔类型上, true 代表 is null, false 代表 not null */
         IS_NULL;
+
 
     }
 

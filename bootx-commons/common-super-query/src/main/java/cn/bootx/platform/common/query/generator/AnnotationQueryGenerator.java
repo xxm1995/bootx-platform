@@ -142,6 +142,10 @@ public class AnnotationQueryGenerator {
             case LE:
                 wrapper.le(columnName, paramValue);
                 break;
+            case BETWEEN:{
+                // 范围查询
+
+            }
             case LIKE:
                 wrapper.like(columnName, paramValue);
                 break;
@@ -171,7 +175,6 @@ public class AnnotationQueryGenerator {
     /**
      * 获取查询参数注解 获取顺序: QueryParams 查询参数字段 > Entity 数据库实体字段 > QueryParams 查询类 > Entity
      * 数据库实体类
-     * @return
      */
     private Optional<QueryParam> getQueryParamAnnotation(PropertyDescriptor paramDescriptor, Class<?> paramClass,
             PropertyDescriptor entityDescriptor, Class<?> entityClass) {
