@@ -13,14 +13,13 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 public @interface QueryParam {
-
     /**
      * 匹配条件类型
      */
     CompareTypeEnum type() default CompareTypeEnum.EQ;
 
     /**
-     * 是否忽略
+     * 生成查询条件时是否忽略
      */
     boolean ignore() default false;
 
@@ -53,8 +52,7 @@ public @interface QueryParam {
 
         /** 等于 */
         EQ,
-
-        /** 范围查询 */
+        /** 范围查询, 需要放在对象上, */
         BETWEEN,
 
         /** 模糊匹配 */
@@ -67,9 +65,10 @@ public @interface QueryParam {
         LIKE_RIGHT,
 
         /** 是否为空, 只作用在布尔类型上, true 代表 is null, false 代表 not null */
-        IS_NULL;
+        IS_NULL,
 
-
+        /** 排序 */
+        SORT;
     }
 
     /**

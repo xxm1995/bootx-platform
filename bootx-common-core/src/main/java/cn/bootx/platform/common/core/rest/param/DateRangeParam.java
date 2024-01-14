@@ -51,12 +51,41 @@ public class DateRangeParam {
         return endTime("yyyy-MM-dd HH:mm:ss");
     }
 
-
     /**
-     * 获取结束时间
+     * 获取结束日期
      */
     public String endTime(String format){
-        return LocalDateTimeUtil.format(getEndTime().plusDays(1).atStartOfDay(),"yyyy-MM-dd HH:mm:ss");
+        return LocalDateTimeUtil.format(getEndTime().plusDays(1).atStartOfDay(),"format");
+    }
+
+
+    /**
+     * 获取开始日期
+     */
+    public String startDate(){
+       return startDate("yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * 获取开始日期
+     */
+    public String startDate(String format){
+        return LocalDateTimeUtil.format(getStartTime(),format);
+    }
+
+
+    /**
+     * 获取开始日期
+     */
+    public String endDate(){
+        return startDate("yyyy-MM-dd HH:mm:ss");
+    }
+
+    /**
+     * 获取结束日期
+     */
+    public String endDate(String format){
+        return LocalDateTimeUtil.format(getEndTime(),format);
     }
 
 }

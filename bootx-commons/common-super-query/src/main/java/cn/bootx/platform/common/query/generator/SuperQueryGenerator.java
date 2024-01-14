@@ -3,7 +3,7 @@ package cn.bootx.platform.common.query.generator;
 import cn.bootx.platform.common.core.exception.BizException;
 import cn.bootx.platform.common.query.code.CompareTypeEnum;
 import cn.bootx.platform.common.query.entity.QueryBetweenParam;
-import cn.bootx.platform.common.query.entity.QueryOrder;
+import cn.bootx.platform.common.core.rest.param.QueryOrder;
 import cn.bootx.platform.common.query.entity.QueryParam;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;

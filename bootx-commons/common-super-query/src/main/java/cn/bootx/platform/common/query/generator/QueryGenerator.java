@@ -1,6 +1,6 @@
 package cn.bootx.platform.common.query.generator;
 
-import cn.bootx.platform.common.query.entity.QueryOrder;
+import cn.bootx.platform.common.core.rest.param.QueryOrder;
 import cn.bootx.platform.common.query.entity.QueryParams;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 

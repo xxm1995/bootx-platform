@@ -1,5 +1,6 @@
 package cn.bootx.platform.common.query.entity;
 
+import cn.bootx.platform.common.core.rest.param.QueryOrder;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;

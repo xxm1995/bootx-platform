@@ -2,8 +2,10 @@ package cn.bootx.platform.common.query.generator;
 
 import cn.bootx.platform.common.core.annotation.QueryParam;
 import cn.bootx.platform.common.core.function.CollectorsFunction;
+import cn.bootx.platform.common.core.function.QueryBetween;
+import cn.bootx.platform.common.core.rest.param.QueryOrder;
+import cn.bootx.platform.common.core.util.ClassUtils;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
-import cn.bootx.platform.common.query.entity.QueryOrder;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
@@ -83,7 +85,7 @@ public class AnnotationQueryGenerator {
      * @param <T> 泛型
      * @return 查询器
      */
-    <T> QueryWrapper<T> generator(Object queryParams, QueryOrder...queryOrder) {
+    <T> QueryWrapper<T> generator(Object queryParams, QueryOrder...queryOrders) {
         QueryWrapper<T> wrapper = new QueryWrapper<>();
 
         if (Objects.isNull(queryParams)) {
@@ -115,8 +117,13 @@ public class AnnotationQueryGenerator {
         }
 
         // 处理排序条件
-        initQueryOrder(wrapper,Objects.isNull(queryOrder)?null: Lists.newArrayList(queryOrder));
-
+        if (queryOrders.length > 0){
+            initQueryOrder(wrapper,Lists.newArrayList(queryOrders));
+        } else if (queryParams instanceof QueryOrder){
+            // 如果没有显式传入排序参数, 则判断查询参数是否继承了QueryOrder对象, 如果继承了, 则使用该对象的排序条件
+            QueryOrder order = (QueryOrder) queryParams;
+            initQueryOrder(wrapper, Collections.singletonList(order));
+        }
         return wrapper;
     }
 
@@ -143,8 +150,13 @@ public class AnnotationQueryGenerator {
                 wrapper.le(columnName, paramValue);
                 break;
             case BETWEEN:{
-                // 范围查询
-
+                if (paramValue instanceof QueryBetween) {
+                    QueryBetween queryBetween = (QueryBetween) paramValue;
+                    wrapper.between(columnName, queryBetween.getStart(), queryBetween.getEnd());
+                } else {
+                    throw new IllegalArgumentException("Between查询条件值必须是实现QueryBetween接口");
+                }
+                break;
             }
             case LIKE:
                 wrapper.like(columnName, paramValue);
@@ -157,7 +169,7 @@ public class AnnotationQueryGenerator {
                 break;
             case IS_NULL:
                 if (paramValue instanceof Boolean) {
-                    if (((Boolean) paramValue).booleanValue()) {
+                    if ((Boolean) paramValue) {
                         wrapper.isNull(columnName);
                     }
                     else {
@@ -180,7 +192,7 @@ public class AnnotationQueryGenerator {
             PropertyDescriptor entityDescriptor, Class<?> entityClass) {
 
         // 参数字段
-        Field paramField = ClassUtil.getDeclaredField(paramClass, paramDescriptor.getName());
+        Field paramField = ClassUtils.getField(paramClass, paramDescriptor.getName());
         if (AnnotationUtil.hasAnnotation(paramField, QueryParam.class)) {
             return Optional.ofNullable(AnnotationUtil.getAnnotation(paramField, QueryParam.class));
         }
@@ -190,6 +202,7 @@ public class AnnotationQueryGenerator {
                 return Optional.ofNullable(AnnotationUtil.getAnnotation(entityField, QueryParam.class));
             }
         }
+        // 参数类
         if (AnnotationUtil.hasAnnotation(paramClass, QueryParam.class)) {
             return Optional.ofNullable(AnnotationUtil.getAnnotation(paramClass, QueryParam.class));
         }
@@ -238,10 +251,10 @@ public class AnnotationQueryGenerator {
         }
         for (QueryOrder queryOrder : queryOrders) {
             if (queryOrder.isUnderLine()) {
-                queryWrapper.orderBy(true, queryOrder.isAsc(), StrUtil.toUnderlineCase(queryOrder.getSortField()));
+                queryWrapper.orderBy(StrUtil.isNotBlank(queryOrder.getSortField()), queryOrder.isAsc(), StrUtil.toUnderlineCase(queryOrder.getSortField()));
             }
             else {
-                queryWrapper.orderBy(true, queryOrder.isAsc(), queryOrder.getSortField());
+                queryWrapper.orderBy(StrUtil.isNotBlank(queryOrder.getSortField()), queryOrder.isAsc(), queryOrder.getSortField());
             }
         }
     }
