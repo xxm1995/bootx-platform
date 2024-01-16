@@ -1,15 +1,15 @@
 package cn.bootx.platform.starter.auth.entity;
 
-import cn.bootx.platform.starter.auth.configuration.AuthProperties;
 import cn.bootx.platform.common.core.entity.UserDetail;
+import cn.bootx.platform.starter.auth.configuration.AuthProperties;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
-import javax.annotation.Nullable;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
+import jakarta.annotation.Nullable;
 
 /**
  * 认证上下文

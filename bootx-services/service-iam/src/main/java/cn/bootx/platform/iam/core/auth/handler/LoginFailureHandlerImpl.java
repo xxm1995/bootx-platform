@@ -1,21 +1,21 @@
 package cn.bootx.platform.iam.core.auth.handler;
 
 import cn.bootx.platform.common.core.code.WebHeaderCode;
+import cn.bootx.platform.common.spring.util.WebServletUtil;
+import cn.bootx.platform.starter.audit.log.ip2region.IpToRegionService;
 import cn.bootx.platform.starter.audit.log.param.LoginLogParam;
 import cn.bootx.platform.starter.audit.log.service.LoginLogService;
 import cn.bootx.platform.starter.auth.exception.LoginFailureException;
 import cn.bootx.platform.starter.auth.handler.LoginFailureHandler;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
-import cn.bootx.platform.common.spring.util.WebServletUtil;
-import cn.bootx.platform.starter.audit.log.ip2region.IpToRegionService;
-import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.extra.servlet.JakartaServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -40,7 +40,7 @@ public class LoginFailureHandlerImpl implements LoginFailureHandler {
         // ip信息
         String ip = "未知";
         String location = "未知";
-        Optional<String> ipOpt = Optional.ofNullable(WebServletUtil.getRequest()).map(ServletUtil::getClientIP);
+        Optional<String> ipOpt = Optional.ofNullable(WebServletUtil.getRequest()).map(JakartaServletUtil::getClientIP);
         if (ipOpt.isPresent()){
             ip = ipOpt.get();
             location = ipToRegionService.getRegionStrByIp(ip);

@@ -2,12 +2,12 @@ package cn.bootx.platform.common.headerholder;
 
 import cn.bootx.platform.common.headerholder.local.HolderContextHolder;
 import cn.bootx.platform.common.core.code.WebHeaderCode;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**

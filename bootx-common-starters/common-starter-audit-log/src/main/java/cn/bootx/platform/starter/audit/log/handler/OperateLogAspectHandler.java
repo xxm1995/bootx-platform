@@ -1,21 +1,21 @@
 package cn.bootx.platform.starter.audit.log.handler;
 
-import cn.bootx.platform.common.headerholder.HeaderHolder;
-import cn.bootx.platform.starter.audit.log.service.OperateLogService;
 import cn.bootx.platform.common.core.annotation.OperateLog;
 import cn.bootx.platform.common.core.annotation.OperateLogs;
 import cn.bootx.platform.common.core.code.ServletCode;
 import cn.bootx.platform.common.core.entity.UserDetail;
+import cn.bootx.platform.common.headerholder.HeaderHolder;
 import cn.bootx.platform.common.jackson.util.JacksonUtil;
 import cn.bootx.platform.common.spring.util.AopUtil;
 import cn.bootx.platform.common.spring.util.WebServletUtil;
 import cn.bootx.platform.starter.audit.log.ip2region.IpToRegionService;
 import cn.bootx.platform.starter.audit.log.param.OperateLogParam;
+import cn.bootx.platform.starter.audit.log.service.OperateLogService;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.DesensitizedUtil;
-import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.extra.servlet.JakartaServletUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -80,7 +80,7 @@ public class OperateLogAspectHandler {
         // ip信息
         String ip = "未知";
         String location = "未知";
-        Optional<String> ipOpt = Optional.ofNullable(WebServletUtil.getRequest()).map(ServletUtil::getClientIP);
+        Optional<String> ipOpt = Optional.ofNullable(WebServletUtil.getRequest()).map(JakartaServletUtil::getClientIP);
         if (ipOpt.isPresent()){
             ip = ipOpt.get();
             location = ipToRegionService.getRegionStrByIp(ip);

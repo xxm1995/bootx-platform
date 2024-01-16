@@ -7,10 +7,10 @@ import cn.bootx.platform.starter.auth.exception.NotLoginException;
 import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.DesensitizedUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import org.springframework.lang.Nullable;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**

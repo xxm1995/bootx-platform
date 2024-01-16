@@ -4,7 +4,7 @@ import cn.bootx.platform.starter.auth.entity.AuthInfoResult;
 import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
 import cn.hutool.extra.spring.SpringUtil;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**

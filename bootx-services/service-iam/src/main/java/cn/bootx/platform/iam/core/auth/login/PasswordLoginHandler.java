@@ -15,15 +15,15 @@ import cn.bootx.platform.starter.auth.exception.LoginFailureException;
 import cn.bootx.platform.starter.auth.exception.UserNotFoundException;
 import cn.bootx.platform.starter.auth.util.PasswordEncoder;
 import cn.hutool.core.util.StrUtil;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 /**

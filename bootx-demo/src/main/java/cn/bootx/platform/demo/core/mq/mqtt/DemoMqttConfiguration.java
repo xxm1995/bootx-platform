@@ -6,7 +6,7 @@
 // import org.eclipse.paho.client.mqttv3.MqttException;
 // import org.springframework.context.annotation.Configuration;
 //
-// import javax.annotation.PostConstruct;
+// import jakarta.annotation.PostConstruct;
 //
 /// **
 // *

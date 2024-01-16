@@ -1,31 +1,31 @@
 package cn.bootx.platform.starter.auth.endpoint;
 
+import cn.bootx.platform.common.core.code.CommonCode;
+import cn.bootx.platform.common.core.entity.UserDetail;
+import cn.bootx.platform.common.core.util.CollUtil;
 import cn.bootx.platform.starter.auth.authentication.AbstractAuthentication;
 import cn.bootx.platform.starter.auth.authentication.GetAuthClientService;
 import cn.bootx.platform.starter.auth.authentication.GetAuthLoginTypeService;
 import cn.bootx.platform.starter.auth.configuration.AuthProperties;
-import cn.bootx.platform.starter.auth.exception.ClientNotEnableException;
-import cn.bootx.platform.starter.auth.exception.LoginFailureException;
-import cn.bootx.platform.common.core.code.CommonCode;
-import cn.bootx.platform.common.core.entity.UserDetail;
-import cn.bootx.platform.common.core.util.CollUtil;
 import cn.bootx.platform.starter.auth.entity.AuthClient;
 import cn.bootx.platform.starter.auth.entity.AuthInfoResult;
 import cn.bootx.platform.starter.auth.entity.AuthLoginType;
 import cn.bootx.platform.starter.auth.entity.LoginAuthContext;
+import cn.bootx.platform.starter.auth.exception.ClientNotEnableException;
+import cn.bootx.platform.starter.auth.exception.LoginFailureException;
 import cn.bootx.platform.starter.auth.handler.LoginFailureHandler;
 import cn.bootx.platform.starter.auth.handler.LoginSuccessHandler;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**

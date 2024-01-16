@@ -61,7 +61,7 @@
 - `guava` Google 出的 Guava 是Java 核心增强的库,应用非常广泛。
 - `hutool` 国产工具类
 - `hibernate-validator` 属性校验
-- `javax.servlet-api`
+- `jakarta.servlet-api`
 - `swagger-annotations` `swagger3` 注解依赖
 - `springdoc-openapi-common` `swagger3` 的实现`springdoc`框架，引入这个包是为了引入相关依赖
 - `slf4j-api` 日志

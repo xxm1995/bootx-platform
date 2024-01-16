@@ -19,16 +19,16 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.mail.BodyPart;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import javax.mail.util.ByteArrayDataSource;
+import jakarta.activation.DataHandler;
+import jakarta.activation.DataSource;
+import jakarta.mail.BodyPart;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
+import jakarta.mail.util.ByteArrayDataSource;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
 
@@ -231,7 +231,7 @@ public class EmailNoticeSenderImpl implements EmailNoticeSender {
             props.setProperty("mail.smtp.starttls.enable", "true");
             props.setProperty("mail.smtp.auth", "true");
             props.setProperty("mail.smtp.socketFactory.port", mailConfig.getPort() + "");
-            props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            props.setProperty("mail.smtp.socketFactory.class", "jakarta.net.ssl.SSLSocketFactory");
             props.setProperty("mail.smtp.socketFactory.fallback", "false");
         }
         mailSender.setJavaMailProperties(props);

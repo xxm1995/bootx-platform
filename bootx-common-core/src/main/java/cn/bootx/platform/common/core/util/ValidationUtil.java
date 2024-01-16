@@ -1,12 +1,12 @@
 package cn.bootx.platform.common.core.util;
 
 import cn.bootx.platform.common.core.exception.ValidationFailedException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import lombok.experimental.UtilityClass;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 /**

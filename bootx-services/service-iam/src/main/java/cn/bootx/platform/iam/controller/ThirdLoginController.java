@@ -1,10 +1,11 @@
 package cn.bootx.platform.iam.controller;
 
 import cn.bootx.platform.common.core.annotation.IgnoreAuth;
-import cn.bootx.platform.starter.auth.entity.ThirdAuthCode;
 import cn.bootx.platform.iam.core.auth.service.ThirdLoginService;
+import cn.bootx.platform.starter.auth.entity.ThirdAuthCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthCallback;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
