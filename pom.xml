@@ -283,6 +283,12 @@
                 <artifactId>common-sequence</artifactId>
                 <version>${bootx-platform.version}</version>
             </dependency>
+            <!-- 查询构造器 -->
+            <dependency>
+                <groupId>cn.bootx.platform</groupId>
+                <artifactId>common-super-query</artifactId>
+                <version>${bootx-platform.version}</version>
+            </dependency>
             <!-- 幂等处理器-->
             <dependency>
                 <groupId>cn.bootx.platform</groupId>
