@@ -27,6 +27,7 @@
     <root level="INFO">
         <appender-ref ref="console"/>
         <appender-ref ref="fileInfoLog"/>
-        <appender-ref ref="elk"/>
+<!--        <appender-ref ref="elk"/>-->
+<!--        <appender-ref ref="plumelog"/>-->
     </root>
 </configuration>

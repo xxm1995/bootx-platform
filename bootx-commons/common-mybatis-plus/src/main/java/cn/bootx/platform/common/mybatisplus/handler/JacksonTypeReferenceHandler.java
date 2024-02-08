@@ -11,7 +11,7 @@ import org.apache.ibatis.type.MappedTypes;
 /**
  * JSON字段类型转换抽象处理器, 需要进行继承实现, 可以在不在JSON字符串中记录数据类型，就可以对一些特殊类型进行反序列化
  * 例如: 集合类型List<T>, 泛型对象ResResult<T> 等
- * 通过 getTypeReference 接口, 将要进行反序列的对象传入
+ * 通过 getTypeReference 接口方法, 将要进行反序列的对象传入
  *
  * @author xxm
  * @since 2024/1/3

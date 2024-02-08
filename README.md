@@ -44,9 +44,6 @@
 低代码可视化平台，基于`GoView`开发，可以通过托拉拽来生成常用的大屏，可以适用于需要快速开发各种数据看板的场景。
 ![](https://oscimg.oschina.net/oscnet/up-43cd6c0ac952c938863db303d0c2e644827.png)
 
-集成最新版本的Flowable 6.8 工作流，并基于Bpmn.js定制流程设计器，相较于自带modeler更贴近业务和易用，通过关联动态表单可通过托拉拽实现业务审批流的业务
-![](https://oscimg.oschina.net/oscnet/up-22b8de0f4951ee6165e2ae604ad77b0af44.png)
-
 支持支付宝、微信、聚合支付、现金支付、储值卡支付、钱包，对各种支付方式抽象成策略类，通过模板模式进行串通，方便扩展新的支付方式或业务
 
 ![](https://oscimg.oschina.net/oscnet/up-9f0044b76071d5a7f598ceab591c5fedb02.png)
@@ -58,9 +55,7 @@
 - 支持通过微信、钉钉、企业微信等第三方开放平台进行扫码登录
 - 支持站内信、微信、钉钉、企业微信、微信公众号的消息推送
 - 支持微信自定义菜单、素材、消息模板等资源的管理
-- 集成Flowable+Bpmn.js工作流全家桶，方便OA相关功能的开发
 - 基于GoView打造低代码可视化大屏平台，快速生成各种数据展板和大屏
-
 
 ## 🧭 项目Maven坐标
 > 项目各模块都已经发布到maven中央仓库中，进行二开时可以对不进行更改的模块，使用Maven方式进行引入，方便后续进行版本升级
@@ -77,7 +72,7 @@
 ## 🥂 Quick Start
 
 - Spring Boot后端: [后端启动流程](https://bootx.gitee.io/doc/overview/config/项目启动.html#后端启动)
-- Vue3后端: [Vue3前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备-1)
+- 后端: [Vu前端启动流程](https://bootx.gitee.io/doc/overview/config/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8.html#环境准备-1)
 - 可视化大屏: [可视化大屏启动流程]()
 - 小程序移动端: [小程序启动流程]()
 
@@ -137,7 +132,7 @@ QQ扫码加入QQ交流群
 ## 🍻 鸣谢
 感谢 JetBrains 提供的免费开源 License：
 
-[![JetBrains](https://oscimg.oschina.net/oscnet/up-4aab9fa8bc769295b48c888d93e71320d93.png)](https://www.jetbrains.com/?from=bootx)
+[![JetBrains](_doc/images/jetbrains.png)](https://www.jetbrains.com/?from=bootx)
 
 感谢其他提供灵感和思路的开源项目
 
