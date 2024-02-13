@@ -6,9 +6,8 @@ import cn.bootx.platform.common.core.annotation.OperateLog;
 import cn.bootx.platform.common.core.rest.Res;
 import cn.bootx.platform.common.core.rest.ResResult;
 import cn.bootx.platform.common.sequence.func.Sequence;
-import cn.bootx.platform.common.sequence.impl.DefaultRangeSequence;
-import cn.bootx.platform.common.sequence.range.SeqRangeConfig;
 import cn.bootx.platform.common.sequence.range.SeqRangeManager;
+import cn.bootx.platform.common.sequence.util.SequenceUtil;
 import cn.bootx.platform.common.spring.exception.RetryableException;
 import cn.bootx.platform.common.websocket.entity.WsRes;
 import cn.bootx.platform.common.websocket.entity.WsResult;
@@ -67,16 +66,15 @@ public class TestController {
     @Operation(summary = "序列生成器")
     @GetMapping("/sequence")
     public ResResult<String> sequence() {
-        long cs = sequence.next("cs");
+        long cs = sequence.next();
         return Res.ok(String.valueOf(cs));
     }
 
     @Operation(summary = "序列生成器自定义")
     @GetMapping("/sequenceZdy")
-    public ResResult<Long> sequenceZdy() {
-        SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(5).setRangeStart(0).setRangeStep(5);
-        DefaultRangeSequence defaultRangeSequence = new DefaultRangeSequence(seqRangeManager, seqRangeConfig);
-        return Res.ok(defaultRangeSequence.next("aa"));
+    public ResResult<Long> sequenceZdy(String name) {
+        Sequence sequence = SequenceUtil.create(name);
+        return Res.ok(sequence.next());
     }
 
     @Operation(summary = "校验测试")

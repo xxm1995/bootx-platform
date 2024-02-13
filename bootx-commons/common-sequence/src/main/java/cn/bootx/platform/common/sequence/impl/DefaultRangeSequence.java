@@ -44,10 +44,15 @@ public class DefaultRangeSequence implements Sequence {
     private final SeqRangeConfig seqRangeConfig;
 
     /**
+     * 需要获取区间的业务名称
+     */
+    private final String name;
+
+    /**
      * 获取下一个值
      */
     @Override
-    public long next(String name) throws SeqException {
+    public long next() throws SeqException {
         // 当前区间不存在，重新获取一个区间
         if (null == currentRange) {
             lock.lock();

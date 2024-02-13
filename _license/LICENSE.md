@@ -47,3 +47,9 @@ https://github.com/adoin
 
 DFA算法实现的敏感词过滤工具，支持Skip参数控制敏感词干扰噪音，支持白名单跳过白名单词汇，支持在线添加和删除敏感词，管理敏感词库:
 https://gitee.com/humingzhang/wordfilter
+
+vue3-vant4-mobile Vant4脚手架:
+https://github.com/xiangshu233/vue3-vant4-mobile
+
+分布式序列号生成组件:
+https://gitee.com/xuan698400/xsequence

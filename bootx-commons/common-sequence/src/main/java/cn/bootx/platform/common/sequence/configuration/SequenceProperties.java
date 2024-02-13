@@ -15,15 +15,21 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("bootx.common.sequence")
 public class SequenceProperties {
 
+
     /**
      * 存储类型 默认为数据库
      */
     private Type type = Type.JDBC;
 
     /**
-     * 序列生成器默认前缀
+     * 序列生成器默认前缀(Redis有效)
      */
     private String keyPrefix = "bootx:sequence:";
+
+    /**
+     * 默认序列生成器名称
+     */
+    private String name = "default";
 
     /**
      * 序列生成器默认步长
@@ -38,7 +44,7 @@ public class SequenceProperties {
     /**
      * 序列生成器默认区间起始位置
      */
-    private long rangeStart = 0;
+    private int rangeStart = 0;
 
     /**
      * 存储类型

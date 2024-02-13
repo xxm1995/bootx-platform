@@ -25,11 +25,11 @@ public class SequenceConfiguration {
 
     @Bean
     @Primary
-    public Sequence sequence(SeqRangeManager seqRangeManager) {
+    public Sequence defaultSequence(SeqRangeManager seqRangeManager) {
         SeqRangeConfig seqRangeConfig = new SeqRangeConfig().setStep(sequenceProperties.getStep())
             .setRangeStart(sequenceProperties.getRangeStart())
             .setRangeStep(sequenceProperties.getRangeStep());
-        return new DefaultRangeSequence(seqRangeManager, seqRangeConfig);
+        return new DefaultRangeSequence(seqRangeManager, seqRangeConfig,sequenceProperties.getName());
     }
 
 }

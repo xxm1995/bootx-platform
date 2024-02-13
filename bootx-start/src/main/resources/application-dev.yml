@@ -120,7 +120,7 @@ bootx:
         "[基础API]": cn.bootx.platform.baseapi
         "[身份识别和管理]": cn.bootx.platform.iam
         "[消息服务]": cn.bootx.platform.notice
-        "[演示模块]": cn.bootx.demo
+        "[演示模块]": cn.bootx.platform.demo
         "[可视化大屏]": cn.bootx.platform.visualization
         "[微信小程序]": cn.bootx.platform.miniapp
         "[第三方对接]":
@@ -148,6 +148,9 @@ bootx:
     # 序列生成器
     sequence:
       type: jdbc
+      range-start: 1
+      range-step: 1
+      step: 1
     # 异常
     exception:
       # 显示详细异常
