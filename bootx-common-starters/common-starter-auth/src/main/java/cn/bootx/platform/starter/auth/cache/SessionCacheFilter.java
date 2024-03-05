@@ -29,7 +29,6 @@ public class SessionCacheFilter extends OncePerRequestFilter {
             throws IOException, ServletException {
         try {
             chain.doFilter(request, response);
-            // 会在请求中被缓存
         }
         finally {
             SessionCacheLocal.clear();

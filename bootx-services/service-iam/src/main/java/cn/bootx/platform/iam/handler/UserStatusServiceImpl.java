@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+/**
+ * 用户状态获取实现类
+ * @author xxm
+ * @since 2023/11/25
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
