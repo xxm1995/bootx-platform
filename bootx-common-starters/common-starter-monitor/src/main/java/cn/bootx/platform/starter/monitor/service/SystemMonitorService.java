@@ -138,15 +138,20 @@ public class SystemMonitorService {
             if (f.getTotalSpace() == 0) {
                 continue;
             }
-            SysDiskInfo sysDiskInfo = new SysDiskInfo();
-            sysDiskInfo.setName(fsv.getSystemDisplayName(f));
-            sysDiskInfo.setTotalSpace(FileUtil.readableFileSize((f.getTotalSpace())));
-            sysDiskInfo.setFreeSpace(FileUtil.readableFileSize(f.getFreeSpace()));
-            long used = f.getTotalSpace() - f.getFreeSpace();
-            sysDiskInfo.setUsedSpace(FileUtil.readableFileSize(used));
-            double restPpt = used * 100.0 / f.getTotalSpace();
-            String usedRate = new DecimalFormat("#.00").format(restPpt) + "%";
-            sysDiskInfo.setUsedRate(usedRate);
+            SysDiskInfo sysDiskInfo = null;
+            try {
+                sysDiskInfo = new SysDiskInfo();
+                sysDiskInfo.setName(fsv.getSystemDisplayName(f));
+                sysDiskInfo.setTotalSpace(FileUtil.readableFileSize((f.getTotalSpace())));
+                sysDiskInfo.setFreeSpace(FileUtil.readableFileSize(f.getFreeSpace()));
+                long used = f.getTotalSpace() - f.getFreeSpace();
+                sysDiskInfo.setUsedSpace(FileUtil.readableFileSize(used));
+                double restPpt = used * 100.0 / f.getTotalSpace();
+                String usedRate = new DecimalFormat("#.00").format(restPpt) + "%";
+                sysDiskInfo.setUsedRate(usedRate);
+            } catch (Exception e) {
+                log.warn("获取磁盘信息失败", e);
+            }
             list.add(sysDiskInfo);
         }
         return list;
