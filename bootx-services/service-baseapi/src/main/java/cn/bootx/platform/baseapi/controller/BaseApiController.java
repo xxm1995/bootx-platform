@@ -31,7 +31,4 @@ public class BaseApiController {
         return "echo:  "+msg;
     }
 
-
-
-
 }
