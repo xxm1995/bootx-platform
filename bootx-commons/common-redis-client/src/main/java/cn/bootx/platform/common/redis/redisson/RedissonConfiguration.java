@@ -9,11 +9,13 @@ import org.redisson.config.Config;
 import org.redisson.config.SingleServerConfig;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * Redisson 自动配置
@@ -22,14 +24,10 @@ import org.springframework.context.annotation.Configuration;
  * @since 2022/12/19
  */
 @Configuration
-@ConditionalOnBean(name = "org.redisson.Redisson")
+@ConditionalOnClass(name = "org.redisson.Redisson")
 @AutoConfigureAfter(RedisAutoConfiguration.class)
 @AllArgsConstructor
 public class RedissonConfiguration {
-
-    private final RedisProperties redisProperties;
-
-    private final String REDIS_PREFIX = "redis://";
 
     /**
      * 配置一个临时的对象到spring容器中，不使用
@@ -39,43 +37,6 @@ public class RedissonConfiguration {
     public RedissonClient redissonClient() {
         return new RedissonClientTemporary();
 
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public RedissonClient redisson() {
-        // 单机/集群
-        Config config = new Config();
-        RedisProperties.Cluster cluster = redisProperties.getCluster();
-        if (cluster == null || CollUtil.isEmpty(cluster.getNodes())) {
-            initSingleConfig(config.useSingleServer());
-        }
-        else {
-            initClusterConfig(config.useClusterServers());
-        }
-
-        return Redisson.create(config);
-    }
-
-    /**
-     * 单节点模式
-     */
-    private void initSingleConfig(SingleServerConfig singleServerConfig) {
-        singleServerConfig.setAddress(REDIS_PREFIX + redisProperties.getHost() + ":" + redisProperties.getPort())
-            .setDatabase(redisProperties.getDatabase())
-            .setPassword(redisProperties.getPassword());
-    }
-
-    /**
-     * 集群模式
-     */
-    private void initClusterConfig(ClusterServersConfig clusterServersConfig) {
-        String[] nodes = redisProperties.getCluster()
-            .getNodes()
-            .stream()
-            .map(node -> REDIS_PREFIX + node)
-            .toArray(String[]::new);
-        clusterServersConfig.setPassword(redisProperties.getPassword()).addNodeAddress(nodes);
     }
 
 }

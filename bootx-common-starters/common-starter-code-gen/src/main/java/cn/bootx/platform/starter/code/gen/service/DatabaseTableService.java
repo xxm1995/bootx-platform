@@ -34,7 +34,6 @@ import java.util.List;
 public class DatabaseTableService {
 
     private final DatabaseTableMapper databaseTableMapper;
-    private final DataSource bigScreen;
 
     /**
      * 查询全部

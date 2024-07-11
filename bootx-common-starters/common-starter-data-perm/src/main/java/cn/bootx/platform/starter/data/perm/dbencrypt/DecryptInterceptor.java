@@ -79,9 +79,7 @@ public class DecryptInterceptor implements Interceptor {
         if (fieldValue instanceof String) {
             AES aes = SecureUtil.aes(dataPermProperties.getFieldDecryptKey().getBytes(StandardCharsets.UTF_8));
             return new String(aes.decrypt(Base64.decode((String) fieldValue)), StandardCharsets.UTF_8);
-        }
-
-        else {
+        } else {
             return fieldValue;
         }
     }

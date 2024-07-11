@@ -11,6 +11,7 @@ import org.redisson.config.SingleServerConfig;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Component;
  * @since 2022/11/30
  */
 @Component
-@ConditionalOnBean(name = "org.redisson.Redisson")
+@ConditionalOnClass(name = "org.redisson.Redisson")
 @RequiredArgsConstructor
 public class RedissonLoadListener implements ApplicationListener<ApplicationReadyEvent> {
 
@@ -51,13 +52,10 @@ public class RedissonLoadListener implements ApplicationListener<ApplicationRead
 
         String redissonClientName = StrUtil.lowerFirst(RedissonClient.class.getSimpleName());
 
-        // 创建一个Redisson对象, 替换掉原有的对象
+        // 创建一个Redisson对象, 替换掉原有的对象, 并且不进行初始化, 在使用时进行延迟初始化
         BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) configurableApplicationContext;
         beanDefinitionRegistry.removeBeanDefinition(redissonClientName);
         beanDefinitionRegistry.registerBeanDefinition(redissonClientName, beanDefinitionBuilder.getBeanDefinition());
-
-        // 这里相当于初始化加载使用
-        configurableApplicationContext.getBean(redissonClientName);
     }
 
     /**
