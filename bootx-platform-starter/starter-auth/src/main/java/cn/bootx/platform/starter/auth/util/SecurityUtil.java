@@ -1,6 +1,5 @@
 package cn.bootx.platform.starter.auth.util;
 
-import cn.bootx.platform.common.jackson.util.JacksonUtil;
 import cn.bootx.platform.core.code.CommonCode;
 import cn.bootx.platform.core.entity.UserDetail;
 import cn.bootx.platform.starter.auth.cache.SessionCacheLocal;
@@ -9,9 +8,9 @@ import cn.dev33.satoken.exception.SaTokenException;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.DesensitizedUtil;
-import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 
 import java.util.Objects;
@@ -23,6 +22,7 @@ import java.util.Optional;
  * @author xxm
  * @since 2021/8/2
  */
+@Slf4j
 @UtilityClass
 public class SecurityUtil {
 
@@ -86,15 +86,14 @@ public class SecurityUtil {
                 // 会话不为空. 获取用户信息不为空. 放入缓存
                 SaSession saSession = StpUtil.getSession();
                 if (Objects.nonNull(saSession)){
-                    String json = saSession.getModel(CommonCode.USER, String.class);
-                    if (StrUtil.isNotBlank(json)){
-                        SessionCacheLocal.putUserInfo(JacksonUtil.toBean(json, UserDetail.class));
-                    }
+                    UserDetail user = saSession.getModel(CommonCode.USER, UserDetail.class);
+                    SessionCacheLocal.putUserInfo(user);
+                    userDetail = Optional.of(user);
                 }
-                SessionCacheLocal.putUserInfo(null);
             }
             catch (SaTokenException e) {
                 userDetail = Optional.empty();
+                log.warn("获取当前用户失败: {}", e.getMessage());
             }
         }
         return userDetail;

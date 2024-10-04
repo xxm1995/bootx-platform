@@ -8,14 +8,15 @@ import cn.bootx.platform.core.annotation.OperateLog;
 import cn.bootx.platform.core.annotation.OperateLogs;
 import cn.bootx.platform.core.code.ServletCode;
 import cn.bootx.platform.core.entity.UserDetail;
-import cn.bootx.platform.starter.audit.log.service.ip2region.IpToRegionService;
 import cn.bootx.platform.starter.audit.log.param.OperateLogParam;
+import cn.bootx.platform.starter.audit.log.service.ip2region.IpToRegionService;
 import cn.bootx.platform.starter.audit.log.service.log.OperateLogService;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -23,6 +24,7 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -58,7 +60,7 @@ public class OperateLogAspectHandler {
      */
     @AfterReturning(pointcut = "logPointCut()", returning = "o")
     public void doAfterReturning(JoinPoint joinPoint, Object o) {
-        handleLog(joinPoint, null, o);
+        SpringUtil.getBean(this.getClass()).handleLog(joinPoint, null, o);
     }
 
     /**
@@ -66,13 +68,14 @@ public class OperateLogAspectHandler {
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Exception e) {
-        handleLog(joinPoint, e, null);
+        SpringUtil.getBean(this.getClass()).handleLog(joinPoint, e, null);
     }
 
     /**
      * 操作log处理
      */
-    protected void handleLog(JoinPoint joinPoint, Exception e, Object o) {
+    @Async
+    public void handleLog(JoinPoint joinPoint, Exception e, Object o) {
         List<OperateLog> logs = getMethodAnnotation(joinPoint);
         if (CollUtil.isEmpty(logs)) {
             return;
@@ -93,7 +96,7 @@ public class OperateLogAspectHandler {
         for (OperateLog log : logs) {
             OperateLogParam operateLog = new OperateLogParam().setTitle(log.title())
                     .setOperateId(currentUser.map(UserDetail::getId).orElse(DesensitizedUtil.userId()))
-                    .setUsername(currentUser.map(UserDetail::getAccount).orElse("未知"))
+                    .setAccount(currentUser.map(UserDetail::getAccount).orElse("未知"))
                     .setBusinessType(log.businessType().name().toLowerCase(Locale.ROOT))
                     .setOperateUrl(HeaderHolder.getHeader(ServletCode.REQUEST_URI))
                     .setMethod(className + "#" + methodName)
@@ -118,7 +121,6 @@ public class OperateLogAspectHandler {
             if (log.saverReturn()) {
                 operateLog.setOperateReturn(JacksonUtil.toJson(o));
             }
-
             operateLogService.add(operateLog);
         }
     }

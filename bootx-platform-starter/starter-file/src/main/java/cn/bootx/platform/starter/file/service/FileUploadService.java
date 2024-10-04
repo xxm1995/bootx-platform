@@ -8,20 +8,20 @@ import cn.bootx.platform.starter.file.configuration.FileUploadProperties;
 import cn.bootx.platform.starter.file.convert.FileConvert;
 import cn.bootx.platform.starter.file.dao.UploadFileManager;
 import cn.bootx.platform.starter.file.entity.UploadFileInfo;
-import cn.bootx.platform.starter.file.param.UploadFileParam;
+import cn.bootx.platform.starter.file.param.UploadFileQuery;
 import cn.bootx.platform.starter.file.result.UploadFileResult;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.dromara.x.file.storage.core.FileInfo;
 import org.dromara.x.file.storage.core.FileStorageService;
-import org.dromara.x.file.storage.core.UploadPretreatment;
+import org.dromara.x.file.storage.core.upload.UploadPretreatment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,6 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 /**
  * 文件上传管理类
@@ -50,7 +52,7 @@ public class FileUploadService {
     /**
      * 分页
      */
-    public PageResult<UploadFileResult> page(PageParam pageParam, UploadFileParam param) {
+    public PageResult<UploadFileResult> page(PageParam pageParam, UploadFileQuery param) {
         return MpUtil.toPageResult(uploadFileManager.page(pageParam,param));
     }
 
@@ -59,6 +61,15 @@ public class FileUploadService {
      */
     public UploadFileResult findById(Long id){
         return uploadFileManager.findById(id)
+                .map(UploadFileInfo::toResult)
+               .orElseThrow(DataNotExistException::new);
+    }
+
+    /**
+     * 根据URL获取单条详情
+     */
+    public UploadFileResult findById(String url){
+        return uploadFileManager.findByUrl(url)
                 .map(UploadFileInfo::toResult)
                .orElseThrow(DataNotExistException::new);
     }
@@ -84,12 +95,15 @@ public class FileUploadService {
         if (StrUtil.isNotBlank(fileName)){
             uploadPretreatment.setOriginalFilename(fileName);
         }
-        FileInfo upload =uploadPretreatment.upload();
+        // 按年月日进行分目录
+        uploadPretreatment.setPath(LocalDateTimeUtil.format(LocalDateTime.now(), "yyyy/MM/dd/"));
+
+        FileInfo upload = uploadPretreatment.upload();
         return FileConvert.CONVERT.toDto(upload);
     }
 
     /**
-     * 浏览
+     * 文件预览
      */
     @SneakyThrows
     public void preview(Long id, HttpServletResponse response) {
@@ -99,7 +113,7 @@ public class FileUploadService {
             return;
         }
         byte[] bytes = fileStorageService.download(info).bytes();
-        val is = new ByteArrayInputStream(bytes);
+        var is = new ByteArrayInputStream(bytes);
         // 获取响应输出流
         ServletOutputStream os = response.getOutputStream();
         IoUtil.copy(is, os);
@@ -119,43 +133,21 @@ public class FileUploadService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         String fileName = fileInfo.getOriginalFilename();
-        headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, CharsetUtil.UTF_8));
+        headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, StandardCharsets.UTF_8));
         return new ResponseEntity<>(bytes,headers,HttpStatus.OK);
     }
 
     /**
-     * 获取文件预览地址
+     * 文件访问转发地址(当前后端服务地址或被代理后的地址), 流量会经过后端服务的转发
      */
-    public String getFilePreviewUrl(Long id) {
-        if (fileUploadProperties.isServiceProxy()){
-            return this.getServerUrl() + "/file/preview/" + id;
-        } else {
-            return "";
-        }
+    public String getServerFilePreviewUrlPrefix() {
+        return this.getForwardServerUrl() + "/file/preview/";
     }
 
     /**
-     * 获取文件预览地址前缀
+     * 文件访问转发地址(当前后端服务地址或被代理后的地址), 流量会经过后端服务的转发
      */
-    public String getFilePreviewUrlPrefix() {
-        return this.getServerUrl() + "/file/preview/";
-    }
-
-    /**
-     * 获取文件地址
-     */
-    public String getFileDownloadUrl(Long id) {
-        if (fileUploadProperties.isServiceProxy()){
-            return this.getServerUrl() + "/file/download/" + id;
-        } else {
-            return "";
-        }
-    }
-
-    /**
-     * 服务地址
-     */
-    private String getServerUrl() {
-        return fileUploadProperties.getServerUrl();
+    private String getForwardServerUrl() {
+        return fileUploadProperties.getForwardServerUrl();
     }
 }

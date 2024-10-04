@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.bootx.platform</groupId>
         <artifactId>bootx-platform-service</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.0.beta1</version>
     </parent>
 
     <artifactId>service-baseapi</artifactId>
@@ -18,12 +18,6 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-mybatis-plus</artifactId>
             <version>${bootx-platform.version}</version>
-        </dependency>
-        <!-- 数据库驱动 -->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
         </dependency>
         <!-- 异常处理器 -->
         <dependency>
@@ -43,10 +37,28 @@
             <artifactId>common-spring</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+        <!-- Redis配置-->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+        <!-- Spring 缓存配置 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-cache</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
         <!-- hutool 缓存 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-cache</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!-- hutool 请求工具类 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-http</artifactId>
             <version>${hutool.version}</version>
         </dependency>
         <!-- 安全认证 -->
@@ -66,6 +78,12 @@
             <groupId>cn.bootx.platform</groupId>
             <artifactId>starter-file</artifactId>
             <version>${bootx-platform.version}</version>
+        </dependency>
+        <!-- 表格工具 -->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>${easypoi.version}</version>
         </dependency>
     </dependencies>
 </project>

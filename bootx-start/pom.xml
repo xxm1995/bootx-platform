@@ -5,16 +5,11 @@
     <parent>
         <groupId>cn.bootx.platform</groupId>
         <artifactId>bootx-platform</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.0.beta1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>bootx-start</artifactId>
     <packaging>jar</packaging>
-
-    <properties>
-        <!-- 不发布到maven仓库中 -->
-        <maven.install.skip>true</maven.install.skip>
-    </properties>
 
     <dependencies>
         <!-- lombok -->
@@ -39,7 +34,7 @@
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>service-iam</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>3.0.0.beta1</version>
         </dependency>
 
     </dependencies>

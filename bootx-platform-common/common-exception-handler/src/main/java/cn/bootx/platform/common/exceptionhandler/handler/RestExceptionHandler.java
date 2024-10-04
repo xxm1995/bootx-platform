@@ -2,7 +2,10 @@ package cn.bootx.platform.common.exceptionhandler.handler;
 
 import cn.bootx.platform.core.code.CommonCode;
 import cn.bootx.platform.core.code.CommonErrorCode;
+import cn.bootx.platform.core.exception.BizErrorException;
 import cn.bootx.platform.core.exception.BizException;
+import cn.bootx.platform.core.exception.BizInfoException;
+import cn.bootx.platform.core.exception.BizWarnException;
 import cn.bootx.platform.core.rest.Res;
 import cn.bootx.platform.core.rest.result.Result;
 import jakarta.validation.ConstraintViolation;
@@ -13,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +36,33 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class RestExceptionHandler {
 
     private final ExceptionHandlerProperties properties;
+
+    /**
+     * 普通业务异常, 不需要进行堆栈跟踪
+     */
+    @ExceptionHandler(BizInfoException.class)
+    public Result<Void> handleBizInfoException(BizInfoException ex) {
+        log.info(ex.getMessage());
+        return Res.response(ex.getCode(), ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
+    }
+
+    /**
+     * 警告业务异常, 如果量多需要关注
+     */
+    @ExceptionHandler(BizWarnException.class)
+    public Result<Void> handleBizWarnException(BizWarnException ex) {
+        log.warn(ex.getMessage(), ex);
+        return Res.response(ex.getCode(), ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
+    }
+
+    /**
+     * 致命警告业务异常, 需要进行立即进入排查
+     */
+    @ExceptionHandler(BizErrorException.class)
+    public Result<Void> handleBizErrorException(BizErrorException ex) {
+        log.error(ex.getMessage(), ex);
+        return Res.response(ex.getCode(), ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
+    }
 
     /**
      * 业务异常
@@ -69,7 +100,7 @@ public class RestExceptionHandler {
         if (methods != null) {
             sb.append(String.join("、", methods));
         }
-        log.error(sb.toString(), e);
+        log.info(sb.toString(), e);
         return Res.error(sb.toString());
     }
 
@@ -109,13 +140,21 @@ public class RestExceptionHandler {
         log.info(ex.getMessage(), ex);
         return Res.response(CommonErrorCode.PARSE_PARAMETERS_ERROR, ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
     }
+    /**
+     * 处理 HttpMessageConversionException
+     */
+    @ExceptionHandler(BindException.class)
+    public Result<Void> handleBindException(BindException ex) {
+        log.info("参数绑定失败 ", ex);
+        return Res.response(CommonErrorCode.PARSE_PARAMETERS_ERROR, ex.getMessage(), MDC.get(CommonCode.TRACE_ID));
+    }
 
     /**
      * 空指针异常
      */
     @ExceptionHandler(NullPointerException.class)
     public Result<Void> handleNullPointerException(NullPointerException ex) {
-        log.error("空指针 ", ex);
+        log.warn("空指针 ", ex);
         return Res.response(CommonErrorCode.SYSTEM_ERROR, "数据错误", MDC.get(CommonCode.TRACE_ID));
     }
 

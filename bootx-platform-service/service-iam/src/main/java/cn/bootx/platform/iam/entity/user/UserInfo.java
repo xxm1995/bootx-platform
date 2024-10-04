@@ -3,7 +3,7 @@ package cn.bootx.platform.iam.entity.user;
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import cn.bootx.platform.common.mybatisplus.function.ToResult;
 import cn.bootx.platform.core.entity.UserDetail;
-import cn.bootx.platform.iam.code.UserStatusCode;
+import cn.bootx.platform.iam.code.UserStatusEnum;
 import cn.bootx.platform.iam.convert.user.UserConvert;
 import cn.bootx.platform.iam.param.user.UserInfoParam;
 import cn.bootx.platform.iam.result.user.UserInfoResult;
@@ -30,6 +30,7 @@ public class UserInfo extends MpBaseEntity implements ToResult<UserInfoResult> {
     private String name;
 
     /** 账号 */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private String account;
 
     /** 密码 */
@@ -41,13 +42,13 @@ public class UserInfo extends MpBaseEntity implements ToResult<UserInfoResult> {
     /** 邮箱 */
     private String email;
 
-    /** 是否管理员 */
+    /** 是否管理员, 管理员用户不在列表中显示 */
     @TableField(updateStrategy = FieldStrategy.NEVER)
     private boolean administrator;
 
     /**
      * 账号状态
-     * @see UserStatusCode
+     * @see UserStatusEnum
      */
     private String status;
 

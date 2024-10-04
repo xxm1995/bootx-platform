@@ -1,5 +1,6 @@
 package cn.bootx.platform.iam.service.upms;
 
+import cn.bootx.platform.core.exception.ValidationFailedException;
 import cn.bootx.platform.core.util.TreeBuildUtil;
 import cn.bootx.platform.iam.dao.permission.PermMenuManager;
 import cn.bootx.platform.iam.dao.role.RoleManager;
@@ -13,9 +14,12 @@ import cn.bootx.platform.iam.result.permission.PermMenuResult;
 import cn.bootx.platform.iam.result.role.RoleResult;
 import cn.bootx.platform.iam.service.role.RoleQueryService;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,21 +42,31 @@ public class RoleMenuService {
 
     private final RoleManager roleManager;
 
+    private final UserRoleService userRoleService;
+
     private final RoleMenuManager roleMenuManager;
 
     private final RoleQueryService roleQueryService;
 
     private final PermMenuManager permMenuManager;
 
-
     /**
      * 保存角色菜单授权
      * 如果删除角色关门的菜单关系, 将会级联删除子孙角色的菜单关系
      * 新增角色菜单关系, 会根据 updateAddChildren状态 来决定是否级联新增子孙角色的菜单关系
+     * 如果当前用户没有拥有该角色父级的分配关系, 不允许进行编辑
      */
+    @CacheEvict(value = "cache:permMenu", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void saveAssign(PermMenuAssignParam param) {
         Long roleId = param.getRoleId();
+        Role role = roleManager.findById(roleId)
+                .orElseThrow(RoleNotExistedException::new);
+        // 判断是否有上级角色的权限
+        if (!userRoleService.checkUserRole(role.getPid())){
+            throw new ValidationFailedException("你没有权限操作该角色");
+        }
+
         String clientCode = param.getClientCode();
         List<Long> menuIds = param.getMenuIds();
         // 已经保存的角色菜单关系
@@ -72,8 +86,6 @@ public class RoleMenuService {
                 .map(menuId -> new RoleMenu(roleId, clientCode, menuId))
                 .collect(Collectors.toList());
         // 新增时验证是否超过了父级角色所拥有的菜单
-        Role role = roleManager.findById(roleId)
-                .orElseThrow(RoleNotExistedException::new);
         if (Objects.nonNull(role.getPid())){
             List<Long> collect = roleMenuManager.findAllByRoleAndClient(role.getPid(), clientCode)
                     .stream()
@@ -143,17 +155,21 @@ public class RoleMenuService {
 
     /**
      * 获取当前用户角色下可见的菜单信息(即上级菜单被分配的权限), 并转换成树返回, 分配时使用
-     * 如果是顶级角色, 可以查看所有的菜单
-     * 如果是子角色, 查询分配给自身的菜单
+     * 如果是顶级角色且为超级管理员, 可以查看所有的菜单
+     * 如果是子角色, 查询父角色关联的菜单
+     * 如果是子角色且用户不拥有子角色的上级角色, 返回空
      */
     public List<PermMenuResult> treeByRoleAssign(Long roleId, String clientCode) {
-        Role role = roleManager.findById(roleId)
-                .orElseThrow(RoleNotExistedException::new);
+        Role role = roleManager.findById(roleId).orElseThrow(RoleNotExistedException::new);
+        // 判断是否有上级角色的权限, 没有权限返回空
+        if (!userRoleService.checkUserRole(role.getPid())){
+            return new ArrayList<>(0);
+        }
         // 如果有有上级级角色, 查询可以被分配的菜单(上级角色已经分配的菜单), 没有返回当前终端所有的菜单
         List<PermMenu> menus;
         if (Objects.nonNull(role.getPid())){
-            // 查询当前角色父角色被分配的菜单
-            menus = this.findAllByRoleAndClient(role.getPid(), clientCode);
+                // 查询当前角色父角色被分配的菜单
+                menus = SpringUtil.getBean(this.getClass()).findAllByRoleAndClient(role.getPid(), clientCode);
         } else {
             menus = permMenuManager.findAllByClient(clientCode);
 
@@ -172,16 +188,19 @@ public class RoleMenuService {
      * 根据角色和请求方式进行查询出请求菜单 需要进行缓存,
      * 构造用户菜单时, 会合并多个角色的菜单, 然后再转换为菜单树
      */
+    @Cacheable(value = "cache:permMenu", key = "#clientCode+':'+#roleId")
     public List<PermMenu> findAllByRoleAndClient(Long roleId, String clientCode) {
-        MPJLambdaWrapper<PermMenu> wrapper = new MPJLambdaWrapper<PermMenu>()
+        MPJLambdaWrapper<Role> wrapper = new MPJLambdaWrapper<Role>()
                 .selectAll(PermMenu.class)
-                // 角色菜单关联
-                .innerJoin(RoleMenu.class, RoleMenu::getRoleId, Role::getId,
-                        on-> on.eq(RoleMenu::getClientCode, clientCode)
-                                .eq(RoleMenu::getRoleId, Role::getId))
+                // 菜单关联
+                .innerJoin(RoleMenu.class,RoleMenu::getRoleId, Role::getId)
+                .innerJoin(PermMenu.class, PermMenu::getId, RoleMenu::getMenuId)
+                // 角色关联
                 .eq(Role::getId, roleId)
+                .eq(RoleMenu::getClientCode, clientCode)
+                .eq(RoleMenu::getRoleId, Role::getId)
                 .orderByAsc(PermMenu::getId);
-        return permMenuManager.selectJoinList(PermMenu.class, wrapper);
+        return roleManager.selectJoinList(PermMenu.class, wrapper);
     }
 
     /**

@@ -1,13 +1,18 @@
 package cn.bootx.platform.iam.service.upms;
 
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
+import cn.bootx.platform.core.entity.UserDetail;
 import cn.bootx.platform.core.exception.BizException;
+import cn.bootx.platform.core.exception.ValidationFailedException;
 import cn.bootx.platform.iam.dao.role.RoleManager;
 import cn.bootx.platform.iam.dao.upms.UserRoleManager;
 import cn.bootx.platform.iam.dao.user.UserInfoManager;
+import cn.bootx.platform.iam.entity.role.Role;
 import cn.bootx.platform.iam.entity.upms.UserRole;
 import cn.bootx.platform.iam.entity.user.UserInfo;
 import cn.bootx.platform.iam.result.role.RoleResult;
+import cn.bootx.platform.starter.auth.util.SecurityUtil;
+import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -39,6 +45,12 @@ public class UserRoleService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void saveAssign(Long userId, List<Long> roleIds) {
+        // 判断是否越权
+        List<Long> roleIdsByUser = this.findRoleIdsByUser();
+        if (!CollUtil.containsAll(roleIdsByUser, roleIds)){
+            throw new ValidationFailedException("角色分配超出了可分配的范围");
+        }
+
         // 先删除用户拥有的角色
         userRoleManager.deleteByUser(userId);
         // 然后给用户添加角色
@@ -51,6 +63,10 @@ public class UserRoleService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void saveAssignBatch(List<Long> userIds, List<Long> roleIds) {
+        List<Long> roleIdsByUser = this.findRoleIdsByUser();
+        if (!CollUtil.containsAll(roleIdsByUser, roleIds)){
+            throw new ValidationFailedException("角色分配超出了可分配的范围");
+        }
         List<UserInfo> userInfos = userInfoManager.findAllByIds(userIds);
         if (userInfos.size() != userIds.size()) {
             throw new BizException("用户数据有问题");
@@ -90,4 +106,34 @@ public class UserRoleService {
             .toList();
     }
 
+    /**
+     * 查询用户关联的角色, 超级管理员返回全部
+     */
+    private List<Long> findRoleIdsByUser() {
+        UserDetail user = SecurityUtil.getUser();
+        if (user.isAdmin()){
+            return roleManager.findAll().stream().map(Role::getId).toList();
+        } else {
+            return findRoleIdsByUser(user.getId());
+        }
+    }
+
+    /**
+     * 判断当前登录用户和指定角色是否为符合下列条件
+     * 1. 为超级管理员
+     * 2. 拥有当前角色
+     * 3. id为空, 说明是顶级角色, 只有超级管理员可以操作
+     */
+    public boolean checkUserRole(Long roleId){
+        // 为超级管理员
+        UserDetail user = SecurityUtil.getUser();
+        if (user.isAdmin()){
+            return true;
+        }
+        if (Objects.isNull(roleId)){
+            return false;
+        }
+        // 是否分配了该角色
+        return userRoleManager.existsByUserRole(user.getId(), roleId);
+    }
 }

@@ -13,7 +13,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,7 +77,7 @@ public class SystemParamService {
      * 根据键名获取键值
      */
     public String findByKey(String key) {
-        val param = systemParamManager.findByKey(key).orElseThrow(DataNotExistException::new);
+        var param = systemParamManager.findByKey(key).orElseThrow(DataNotExistException::new);
         if (Objects.equals(param.getEnable(), false)) {
             throw new BizException("该参数已停用");
         }

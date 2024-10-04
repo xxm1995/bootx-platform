@@ -25,18 +25,54 @@ public class UserQueryService {
     /**
      * 账号是否存在
      */
-    public boolean existsUsername(String username) {
-        if (StrUtil.isBlank(username)) {
-            return false;
-        }
-        return userInfoManager.existsByUsername(username.trim());
+    public boolean existsAccount(String account) {
+        return userInfoManager.existsByAccount(account.trim());
     }
 
     /**
      * 账号是否存在
      */
-    public boolean existsUsername(String username, Long id) {
-        return userInfoManager.existsByUsername(username.trim(), id);
+    public boolean existsAccount(String account, Long id) {
+        return userInfoManager.existsByAccount(account.trim(), id);
+    }
+    /**
+     * 邮箱是否存在
+     */
+    public boolean existsEmail(String email) {
+        if (StrUtil.isBlank(email)){
+            return false;
+        }
+        return userInfoManager.existsByEmail(email.trim());
+    }
+
+    /**
+     * 邮箱是否存在
+     */
+    public boolean existsEmail(String email, Long id) {
+        if (StrUtil.isBlank(email)){
+            return false;
+        }
+        return userInfoManager.existsByEmail(email.trim(), id);
+    }
+
+    /**
+     * 手机是否存在
+     */
+    public boolean existsPhone(String phone) {
+        if (StrUtil.isBlank(phone)){
+            return false;
+        }
+        return userInfoManager.existsByPhone(phone);
+    }
+
+    /**
+     * 手机是否存在
+     */
+    public boolean existsPhone(String phone, Long id) {
+        if (StrUtil.isBlank(phone)){
+            return false;
+        }
+        return userInfoManager.existsByPhone(phone.trim(), id);
     }
 
 
@@ -47,11 +83,12 @@ public class UserQueryService {
         return userInfoManager.findById(id).map(UserInfo::toResult).orElseThrow(UserNotFoundException::new);
     }
 
+
     /**
      * 根据账号查询用户
      */
     public UserInfoResult findByAccount(String account) {
-        return userInfoManager.findByUsername(account).map(UserInfo::toResult).orElseThrow(UserNotFoundException::new);
+        return userInfoManager.findByAccount(account).map(UserInfo::toResult).orElseThrow(UserNotFoundException::new);
     }
 
 

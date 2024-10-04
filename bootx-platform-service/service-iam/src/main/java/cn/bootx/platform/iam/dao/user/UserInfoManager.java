@@ -2,12 +2,13 @@ package cn.bootx.platform.iam.dao.user;
 
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
 import cn.bootx.platform.common.mybatisplus.impl.BaseManager;
+import cn.bootx.platform.common.mybatisplus.query.generator.QueryGenerator;
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.core.rest.param.PageParam;
 import cn.bootx.platform.iam.entity.user.UserInfo;
-import cn.bootx.platform.iam.param.user.UserInfoParam;
+import cn.bootx.platform.iam.param.user.UserInfoQuery;
 import cn.bootx.platform.starter.auth.util.SecurityUtil;
-import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -26,12 +27,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserInfoManager extends BaseManager<UserInfoMapper, UserInfo> {
 
-    public boolean existsByUsername(String username) {
-        return existedByField(UserInfo::getAccount, username);
+    public boolean existsByAccount(String account) {
+        return existedByField(UserInfo::getAccount, account);
     }
 
-    public boolean existsByUsername(String username, Long id) {
-        return existedByField(UserInfo::getAccount, username, id);
+    public boolean existsByAccount(String account, Long id) {
+        return existedByField(UserInfo::getAccount, account, id);
     }
 
     public boolean existsByEmail(String email) {
@@ -50,8 +51,8 @@ public class UserInfoManager extends BaseManager<UserInfoMapper, UserInfo> {
         return existedByField(UserInfo::getPhone, phone, id);
     }
 
-    public Optional<UserInfo> findByUsername(String username) {
-        return findByField(UserInfo::getAccount, username);
+    public Optional<UserInfo> findByAccount(String account) {
+        return findByField(UserInfo::getAccount, account);
     }
 
     public Optional<UserInfo> findByEmail(String email) {
@@ -62,13 +63,14 @@ public class UserInfoManager extends BaseManager<UserInfoMapper, UserInfo> {
         return findByField(UserInfo::getPhone, phone);
     }
 
-    public Page<UserInfo> page(PageParam pageParam, UserInfoParam param) {
-
+    /**
+     * 管理员用户不显示
+     */
+    public Page<UserInfo> page(PageParam pageParam, UserInfoQuery query) {
         Page<UserInfo> mpPage = MpUtil.getMpPage(pageParam);
-        lambdaQuery().like(StrUtil.isNotBlank(param.getAccount()), UserInfo::getAccount, param.getAccount())
-            .like(StrUtil.isNotBlank(param.getName()), UserInfo::getName, param.getName())
-            .page(mpPage);
-        return mpPage;
+        QueryWrapper<UserInfo> generator = QueryGenerator.generator(query);
+        generator.eq(MpUtil.getColumnName(UserInfo::isAdministrator), false);
+        return this.page(mpPage, generator);
     }
 
     public void setUpStatus(Long userId, String status) {

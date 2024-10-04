@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.bootx.platform</groupId>
         <artifactId>bootx-platform-common</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.0.beta1</version>
     </parent>
 
     <artifactId>common-mybatis-plus</artifactId>
@@ -41,6 +41,18 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
             <version>${caffeine.version}</version>
+        </dependency>
+        <!-- 翻译组件 -->
+        <dependency>
+            <groupId>com.fhs-opensource</groupId>
+            <artifactId>easy-trans-spring-boot-starter</artifactId>
+            <version>${easytrans.version}</version>
+        </dependency>
+        <!-- 翻译组件 MP扩展 -->
+        <dependency>
+            <groupId>com.fhs-opensource</groupId>
+            <artifactId>easy-trans-mybatis-plus-extend</artifactId>
+            <version>${easytrans.version}</version>
         </dependency>
     </dependencies>
 

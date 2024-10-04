@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.bootx.platform</groupId>
         <artifactId>bootx-platform</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.0.beta1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -20,7 +20,9 @@
         <module>common-spring</module>
         <module>common-exception-handler</module>
         <module>common-config</module>
-        <module>header-holder</module>
+        <module>common-header-holder</module>
+        <module>common-redis</module>
+        <module>common-cache</module>
     </modules>
 
     <dependencies>

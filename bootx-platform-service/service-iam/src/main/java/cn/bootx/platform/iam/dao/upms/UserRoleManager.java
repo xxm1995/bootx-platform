@@ -23,6 +23,13 @@ public class UserRoleManager extends BaseManager<UserRoleMapper, UserRole> {
         return existedByField(UserRole::getRoleId, roleId);
     }
 
+    public boolean existsByUserRole(Long userId, Long roleId) {
+        return lambdaQuery()
+                .eq(UserRole::getUserId,userId)
+                .eq(UserRole::getRoleId, roleId)
+                .exists();
+    }
+
     public void deleteByUser(Long userId) {
         deleteByField(UserRole::getUserId, userId);
     }
@@ -42,14 +49,5 @@ public class UserRoleManager extends BaseManager<UserRoleMapper, UserRole> {
     public List<UserRole> findAllByRoles(List<Long> roleIds) {
         return findAllByFields(UserRole::getRoleId, roleIds);
     }
-
-    /**
-     * 批量保存
-     */
-//    public List<UserRole> saveAll(List<UserRole> userRoles) {
-//        MpUtil.initEntityList(userRoles, SecurityUtil.getUserIdOrDefaultId());
-//        MpUtil.executeBatch(userRoles, baseMapper::saveAll, this.DEFAULT_BATCH_SIZE);
-//        return userRoles;
-//    }
 
 }

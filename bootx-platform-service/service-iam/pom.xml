@@ -6,32 +6,26 @@
     <parent>
         <groupId>cn.bootx.platform</groupId>
         <artifactId>bootx-platform-service</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.0.beta1</version>
     </parent>
 
     <artifactId>service-iam</artifactId>
     <description>身份识别与访问管理</description>
 
     <dependencies>
-        <!-- 系统基础服务 -->
-        <dependency>
-            <groupId>cn.bootx.platform</groupId>
-            <artifactId>service-baseapi</artifactId>
-            <version>${bootx-platform.version}</version>
-        </dependency>
+
         <!-- 认证 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>starter-auth</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
-        <!-- hutool 请求工具类 -->
+        <!-- 系统基础服务 -->
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-http</artifactId>
-            <version>${hutool.version}</version>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>service-baseapi</artifactId>
+            <version>${bootx-platform.version}</version>
         </dependency>
-
     </dependencies>
 
 </project>

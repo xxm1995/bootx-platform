@@ -6,7 +6,7 @@
     <parent>
         <groupId>cn.bootx.platform</groupId>
         <artifactId>bootx-platform-starter</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.0.beta1</version>
     </parent>
 
     <artifactId>starter-file</artifactId>
@@ -24,10 +24,18 @@
             <artifactId>x-file-storage-spring</artifactId>
             <version>${x-file-storage.version}</version>
         </dependency>
+        <!-- 数据库 -->
         <dependency>
             <groupId>cn.bootx.platform</groupId>
             <artifactId>common-mybatis-plus</artifactId>
             <version>${bootx-platform.version}</version>
         </dependency>
+        <!-- 认证 -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>starter-auth</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

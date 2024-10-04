@@ -1,6 +1,7 @@
 package cn.bootx.platform.iam.service.permission;
 
 import cn.bootx.platform.core.exception.BizException;
+import cn.bootx.platform.core.exception.BizInfoException;
 import cn.bootx.platform.core.exception.DataNotExistException;
 import cn.bootx.platform.core.util.TreeBuildUtil;
 import cn.bootx.platform.iam.dao.permission.PermCodeManager;
@@ -14,6 +15,7 @@ import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.collection.CollUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,8 +41,17 @@ public class PermCodeService {
     @Transactional(rollbackFor = Exception.class)
     public void add(PermCodeParam param) {
         PermCode permCode = PermCode.init(param);
+
         // 如果是权限码, 判断是否存在
         if (param.isLeaf()) {
+            // 判断上级是否是目录
+            if (Objects.nonNull(param.getPid())){
+                PermCode code = permCodeManager.findById(param.getPid()).orElseThrow(() -> new DataNotExistException("上级权限码目录不存在"));
+                if (code.isLeaf()){
+                    throw new BizInfoException("上级节点不是目录");
+                }
+            }
+            // 权限码是否存在
             if (permCodeManager.existedByField(PermCode::getCode, param.getCode())){
                 throw new BizException("权限码已存在");
             }
@@ -53,25 +64,27 @@ public class PermCodeService {
     /**
      * 更新
      */
+    @CacheEvict(value = "cache:permCode", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void update(PermCodeParam param) {
         PermCode permCode = permCodeManager.findById(param.getId()).orElseThrow(() -> new BizException("权限码信息不存在"));
         if (permCode.isLeaf()){
+            // 判断上级是否是目录
+            if (Objects.nonNull(param.getPid())){
+                PermCode code = permCodeManager.findById(param.getPid()).orElseThrow(() -> new DataNotExistException("上级权限码目录不存在"));
+                if (code.isLeaf()){
+                    throw new BizInfoException("上级节点不是目录");
+                }
+            }
+            // 权限码是否存在
             if (permCodeManager.existedByField(PermCode::getCode, param.getCode(), param.getId())){
                 throw new BizException("权限码已存在");
             }
         } else {
             permCode.setCode(null);
         }
-        String oldCode = permCode.getCode();
-        String newCode = param.getCode();
         BeanUtil.copyProperties(param, permCode, CopyOptions.create().ignoreNullValue());
         permCodeManager.updateById(permCode);
-
-        // 如果编码值变了进行级联更新角色关联关系
-        if (Objects.equals(oldCode,newCode)){
-            roleCodeManager.updateCodes(oldCode,newCode);
-        }
     }
 
     /**
@@ -94,16 +107,17 @@ public class PermCodeService {
     /**
      * 删除
      */
+    @CacheEvict(value = "cache:permCode", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
         PermCode permCode = permCodeManager.findById(id).orElseThrow(() -> new BizException("权限码信息不存在"));
         // 有子权限码不可以删除
-        if (permCode.isLeaf()){
+        if (!permCode.isLeaf()){
             if (permCodeManager.existedByField(PermCode::getPid, id)) {
                 throw new BizException("目录下有权限码数据不允许删除");
             }
         }
-        roleCodeManager.deleteByField(RoleCode::getCode, permCode.getCode());
+        roleCodeManager.deleteByField(RoleCode::getCodeId, permCode.getId());
         permCodeManager.deleteById(id);
     }
 
@@ -156,6 +170,7 @@ public class PermCodeService {
                 .stream()
                 .filter(this::isOrHasLeaf)
                 .toList();
+        // 重新生成树
         return TreeBuildUtil.build(codeResultList, null, PermCodeResult::getId, PermCodeResult::getPid, PermCodeResult::setChildren);
     }
 

@@ -2,7 +2,7 @@ package cn.bootx.platform.iam.result.user;
 
 import cn.bootx.platform.common.jackson.sensitive.SensitiveInfo;
 import cn.bootx.platform.core.entity.UserDetail;
-import cn.bootx.platform.iam.code.UserStatusCode;
+import cn.bootx.platform.iam.code.UserStatusEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -30,18 +30,16 @@ public class UserInfoResult {
     private String password;
 
     @Schema(description = "手机号")
-    @SensitiveInfo(SensitiveInfo.SensitiveType.MOBILE_PHONE)
     private String phone;
 
     @Schema(description = "邮箱")
-    @SensitiveInfo(SensitiveInfo.SensitiveType.EMAIL)
     private String email;
 
     @Schema(description = "是否管理员")
     private boolean administrator;
 
     /**
-     * @see UserStatusCode
+     * @see UserStatusEnum
      */
     @Schema(description = "账号状态")
     private String status;

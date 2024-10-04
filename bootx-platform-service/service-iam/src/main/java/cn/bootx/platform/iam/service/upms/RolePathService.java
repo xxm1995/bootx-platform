@@ -1,6 +1,7 @@
 package cn.bootx.platform.iam.service.upms;
 
 import cn.bootx.platform.common.mybatisplus.base.MpIdEntity;
+import cn.bootx.platform.core.exception.ValidationFailedException;
 import cn.bootx.platform.core.util.TreeBuildUtil;
 import cn.bootx.platform.iam.dao.permission.PermPathManager;
 import cn.bootx.platform.iam.dao.role.RoleManager;
@@ -18,6 +19,8 @@ import cn.hutool.core.collection.CollUtil;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,12 +50,22 @@ public class RolePathService {
 
     private final RoleQueryService roleQueryService;
 
+    private final UserRoleService userRoleService;
+
     /**
      * 保存角色路径授权
      */
+    @CacheEvict(value = "cache:permPath", allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public void saveAssign(PermPathAssignParam param) {
         Long roleId = param.getRoleId();
+        Role role = roleManager.findById(roleId).orElseThrow(RoleNotExistedException::new);
+
+        // 判断是否有上级角色的权限
+        if (!userRoleService.checkUserRole(role.getPid())){
+            throw new ValidationFailedException("你没有权限操作该角色");
+        }
+
         String clientCode = param.getClientCode();
         List<Long> pathIds = param.getPathIds();
 
@@ -69,7 +82,7 @@ public class RolePathService {
         rolePathManager.deleteByIds(deleteIds);
 
         // 需要新增的权限关系
-        List<RolePath> addRolePath = this.saveAddAssign(param, rolePathIds);
+        List<RolePath> addRolePath = this.saveAddAssign(param, rolePathIds, role);
 
 
         // 需要进行级联删除的权限码
@@ -91,11 +104,13 @@ public class RolePathService {
 
     /**
      * 保存并返回需要新增的权限关系
-     * @param param 分配参数
+     *
+     * @param param       分配参数
      * @param rolePathIds 已经保存的关联信息
+     * @param role        角色
      * @return 添加的权限关系
      */
-    private List<RolePath> saveAddAssign(PermPathAssignParam param, List<Long> rolePathIds){
+    private List<RolePath> saveAddAssign(PermPathAssignParam param, List<Long> rolePathIds, Role role){
 
         Long roleId = param.getRoleId();
         String clientCode = param.getClientCode();
@@ -107,7 +122,6 @@ public class RolePathService {
                 .map(permissionId -> new RolePath(roleId, param.getClientCode(), permissionId))
                 .collect(Collectors.toList());
         // 验证是否超过了父级角色所拥有的权限, 如果超过进行过滤
-        Role role = roleManager.findById(roleId).orElseThrow(RoleNotExistedException::new);
         if (Objects.nonNull(role.getPid())){
             List<Long> collect = rolePathManager.findAllByRoleAndClient(role.getPid(), clientCode)
                     .stream()
@@ -176,19 +190,24 @@ public class RolePathService {
     /**
      * 获取当前用户角色下可见的请求权限信息(即上级菜单被分配的权限), 并转换成树返回, 分配时使用
      * 如果是顶级角色, 可以查看所有的权限
-     * 如果是子角色, 查询分配给自身的权限
+     * 如果是子角色, 查询父角色关联的权限
+     * 如果是子角色且用户不拥有子角色的上级角色, 返回空
      */
     public List<SimplePermPathResult> treeByRoleAssign(Long roleId, String clientCode) {
+        Role role = roleManager.findById(roleId).orElseThrow(RoleNotExistedException::new);
+        // 判断是否有上级角色的权限, 没有权限返回空
+        if (!userRoleService.checkUserRole(role.getPid())){
+            return new ArrayList<>(0);
+        }
         // 查询该终端全部的请求权限
         List<PermPath> allPermPaths = permPathManager.findAllByClient(clientCode);
         // 只保留叶子节点的数据, 如果是顶级角色, 直接可以使用, 不是的话需要进行过滤
         List<PermPath> permPaths = allPermPaths.stream()
                 .filter(PermPath::isLeaf)
                 .toList();
-        Role role = roleManager.findById(roleId).orElseThrow(RoleNotExistedException::new);
         // 如果有有上级角色, 只可以显示分配给自身的权限
         if (Objects.nonNull(role.getPid())){
-            List<Long> pathIds = rolePathManager.findAllByRoleAndClient(role.getId(),clientCode)
+            List<Long> pathIds = rolePathManager.findAllByRoleAndClient(role.getPid(),clientCode)
                     .stream()
                     .map(RolePath::getPathId)
                     .toList();
@@ -241,6 +260,7 @@ public class RolePathService {
                 .map(PermPath::getParentCode)
                 .distinct()
                 .map(pathCatalogMap::get)
+                .filter(Objects::nonNull)
                 .toList();
 
         // 获取模块
@@ -248,12 +268,14 @@ public class RolePathService {
                 .map(PermPath::getParentCode)
                 .distinct()
                 .map(pathCatalogMap::get)
+                .filter(Objects::nonNull)
                 .toList();
         // 进行合并并转为树状结构
         permPaths = new ArrayList<>(permPaths);
         permPaths.addAll(groupList);
         permPaths.addAll(moduleList);
         List<PermPathResult> list = permPaths.stream()
+                .filter(Objects::nonNull)
                 .map(PermPath::toResult)
                 .toList();
         return TreeBuildUtil.build(list, null, PermPathResult::getCode, PermPathResult::getParentCode, PermPathResult::setChildren);
@@ -265,15 +287,16 @@ public class RolePathService {
     /**
      * 根据角色和请求方式进行查询出请求路径 需要进行缓存
      */
+    @Cacheable(value = "cache:permPath", key = "#method+':'+#clientCode+':'+#roleId")
     public List<String> findPathsByRoleAndMethod(Long roleId, String method, String clientCode) {
         MPJLambdaWrapper<Role> wrapper = new MPJLambdaWrapper<Role>()
                 .select(PermPath::getPath)//查询user表全部字段
                 // 关联角色请求权限
-                .innerJoin(RolePath.class, RolePath::getRoleId, Role::getId, on-> on.eq(RolePath::getId, clientCode))
-                // 关请求权限
+                .innerJoin(RolePath.class, RolePath::getRoleId, Role::getId)
+                // 关联请求权限
                 .innerJoin(PermPath.class, PermPath::getId, RolePath::getPathId)
                 .eq(Role::getId, roleId)
-
+                .eq(RolePath::getClientCode, clientCode)
                 .eq(PermPath::getMethod,method.toUpperCase());
 
         return roleManager.selectJoinList(String.class, wrapper);

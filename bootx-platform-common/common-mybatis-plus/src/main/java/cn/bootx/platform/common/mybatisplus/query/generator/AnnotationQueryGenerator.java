@@ -13,7 +13,6 @@ import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.experimental.UtilityClass;
-import lombok.val;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -59,7 +58,7 @@ public class AnnotationQueryGenerator {
             if (!StrUtil.isBlankIfStr(paramValue)) {
                 PropertyDescriptor clazzDescriptor = entityClassPropMap.get(paramProp.getName());
                 // 获取查询注解 clazz 类上 < clazz 字段 < queryParams 类上 < clazz 字段
-                val annotation = getQueryParamAnnotation(paramProp, queryParams.getClass(), clazzDescriptor, clazz);
+                var annotation = getQueryParamAnnotation(paramProp, queryParams.getClass(), clazzDescriptor, clazz);
                 // 是否忽略本字段
                 if (annotation.map(QueryParam::ignore).orElse(false)) {
                     continue;
@@ -100,7 +99,7 @@ public class AnnotationQueryGenerator {
             Object paramValue = BeanUtil.getProperty(queryParams, paramProp.getName());
             if (!StrUtil.isBlankIfStr(paramValue)) {
                 // 获取查询注解 clazz 类上 < clazz 字段 < queryParams 类上 < clazz 字段
-                val annotation = getQueryParamAnnotation(paramProp, queryParams.getClass(), null, null);
+                var annotation = getQueryParamAnnotation(paramProp, queryParams.getClass(), null, null);
                 // 是否忽略本字段
                 if (annotation.map(QueryParam::ignore).orElse(false)) {
                     continue;
@@ -134,48 +133,32 @@ public class AnnotationQueryGenerator {
     private <T> void compareTypeSwitch(QueryParam.CompareTypeEnum compareType, QueryWrapper<T> wrapper, String columnName,
                                        Object paramValue) {
         switch (compareType) {
-            case GT:
-                wrapper.gt(columnName, paramValue);
-                break;
-            case GE:
-                wrapper.ge(columnName, paramValue);
-                break;
-            case LT:
-                wrapper.lt(columnName, paramValue);
-                break;
-            case LE:
-                wrapper.le(columnName, paramValue);
-                break;
-            case BETWEEN:{
+            case GT -> wrapper.gt(columnName, paramValue);
+            case GE -> wrapper.ge(columnName, paramValue);
+            case LT -> wrapper.lt(columnName, paramValue);
+            case LE -> wrapper.le(columnName, paramValue);
+            case BETWEEN -> {
                 if (paramValue instanceof QueryBetween queryBetween) {
                     wrapper.between(columnName, queryBetween.getStart(), queryBetween.getEnd());
                 } else {
                     throw new IllegalArgumentException("Between查询条件值必须是实现QueryBetween接口");
                 }
-                break;
             }
-            case LIKE:
-                wrapper.like(columnName, paramValue);
-                break;
-            case LIKE_LEFT:
-                wrapper.likeLeft(columnName, paramValue);
-                break;
-            case LIKE_RIGHT:
-                wrapper.likeRight(columnName, paramValue);
-                break;
-            case IS_NULL:
+            case LIKE -> wrapper.like(columnName, paramValue);
+            case LIKE_LEFT -> wrapper.likeLeft(columnName, paramValue);
+            case LIKE_RIGHT -> wrapper.likeRight(columnName, paramValue);
+            case IS_NULL -> {
                 if (paramValue instanceof Boolean) {
                     if ((Boolean) paramValue) {
                         wrapper.isNull(columnName);
-                    }
-                    else {
+                    } else {
                         wrapper.isNotNull(columnName);
                     }
                 }
-                break;
-            case EQ:
-            default:
-                wrapper.eq(columnName, paramValue);
+            }
+            case SORT -> {
+            }
+            default -> wrapper.eq(columnName, paramValue);
         }
 
     }
@@ -214,7 +197,7 @@ public class AnnotationQueryGenerator {
     private String getDatabaseFieldName(PropertyDescriptor paramDescriptor, Class<?> paramClass,
             PropertyDescriptor entityDescriptor, Class<?> entityClass, QueryParam.NamingCaseEnum namingCase) {
         // 读取注解， 判断有没有自定义字段名, 有自定义字段名直接返回
-        val queryParam = getQueryParamAnnotation(paramDescriptor, paramClass, entityDescriptor, entityClass);
+        var queryParam = getQueryParamAnnotation(paramDescriptor, paramClass, entityDescriptor, entityClass);
         if (queryParam.map(QueryParam::fieldName).isPresent()) {
             String fieldName = queryParam.map(QueryParam::fieldName).get();
             if (StrUtil.isNotBlank(fieldName)){

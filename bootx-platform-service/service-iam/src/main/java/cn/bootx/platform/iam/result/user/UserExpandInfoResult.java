@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * 用户扩展信息
+ * 用户扩展信息 whole
  * @author xxm
  * @since 2022/1/8
  */
@@ -21,7 +21,7 @@ public class UserExpandInfoResult {
     private Long id;
 
     @Schema(description = "性别")
-    private Integer sex;
+    private String sex;
 
     @Schema(description = "头像")
     private String avatar;
