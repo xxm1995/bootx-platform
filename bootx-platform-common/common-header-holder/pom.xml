@@ -6,10 +6,10 @@
     <parent>
         <groupId>cn.bootx.platform</groupId>
         <artifactId>bootx-platform-common</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>3.0.0.beta1</version>
     </parent>
 
-    <artifactId>header-holder</artifactId>
+    <artifactId>common-header-holder</artifactId>
     <description>请求头工具</description>
 
 <dependencies>
