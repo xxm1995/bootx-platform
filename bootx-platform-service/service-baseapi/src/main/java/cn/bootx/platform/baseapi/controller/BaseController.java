@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +44,7 @@ public class BaseController {
     @IgnoreAuth
     @Operation(summary = "读取文件文本内容")
     @PostMapping("/readText")
-    public Result<String> readText(MultipartFile file){
+    public Result<String> readText(@RequestPart MultipartFile file){
         return Res.ok(new String(file.getBytes(), StandardCharsets.UTF_8));
     }
 
@@ -51,7 +52,7 @@ public class BaseController {
     @IgnoreAuth
     @Operation(summary = "将文件转换成base64")
     @PostMapping("/readBase64")
-    public Result<String> readBase64(MultipartFile file){
+    public Result<String> readBase64(@RequestPart MultipartFile file){
         return Res.ok(Base64.encode(file.getBytes()));
     }
 
