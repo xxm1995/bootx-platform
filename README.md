@@ -8,7 +8,6 @@
  <img src="https://img.shields.io/badge/license-Apache%20License%202.0-green.svg"/>
 </p>
 
-## 🙏🙏🙏 求star呀，走过路过留个star吧，非常非常感谢。🙏🙏🙏
 
 ## 🍈项目介绍
 - 后端使用Spring Boot 3.x + Jdk21 + Postgresql技术栈
