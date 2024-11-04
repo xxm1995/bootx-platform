@@ -28,7 +28,7 @@
         </rollingPolicy>
         <encoder>
             <charset>UTF-8</charset>
-            <pattern>%date{yyyy-MM-dd HH:mm:ssS'Z} | %-5level[%X{traceId:-}] %thread - %logger{36}| %msg%n</pattern>
+            <pattern>%date{yyyy-MM-dd HH:mm:ssS} | %-5level[%X{traceId:-}] %thread - %logger{36}| %msg%n</pattern>
         </encoder>
     </appender>
 
