@@ -1,4 +1,4 @@
-package cn.bootx.platform.start;
+package cn.bootx.platform.server;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;

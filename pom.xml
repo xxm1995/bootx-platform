@@ -22,6 +22,7 @@
         <module>bootx-platform-common</module>
         <module>bootx-platform-starter</module>
         <module>bootx-platform-service</module>
+        <module>bootx-platform-server</module>
     </modules>
 
     <properties>
