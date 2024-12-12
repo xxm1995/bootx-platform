@@ -1,6 +1,6 @@
 package cn.bootx.platform.iam.dao.config;
 
-import cn.bootx.platform.iam.entity.config.PasswordChangeHistory;
+import cn.bootx.platform.iam.entity.security.PasswordChangeHistory;
 import com.github.yulichang.base.MPJBaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

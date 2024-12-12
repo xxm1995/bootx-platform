@@ -1,6 +1,6 @@
 package cn.bootx.platform.iam.dao.config;
 
-import cn.bootx.platform.iam.entity.config.PasswordLoginFailRecord;
+import cn.bootx.platform.iam.entity.security.PasswordLoginFailRecord;
 import com.github.yulichang.base.MPJBaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

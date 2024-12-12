@@ -2,7 +2,7 @@ package cn.bootx.platform.iam.handler;
 
 import cn.bootx.platform.core.entity.UserDetail;
 import cn.bootx.platform.iam.code.UserStatusEnum;
-import cn.bootx.platform.iam.service.service.UserAdminService;
+import cn.bootx.platform.iam.service.user.UserAdminService;
 import cn.bootx.platform.starter.auth.authentication.UserInfoStatusCheck;
 import cn.bootx.platform.starter.auth.configuration.AuthProperties;
 import cn.bootx.platform.starter.auth.entity.AuthClient;

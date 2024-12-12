@@ -1,10 +1,12 @@
-package cn.bootx.platform.iam.entity.config;
+package cn.bootx.platform.iam.entity.security;
 
 import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 
 /**
  * 密码登录失败记录
@@ -16,4 +18,11 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("iam_password_login_fail_record")
 public class PasswordLoginFailRecord extends MpBaseEntity {
+
+    /** 用户id */
+    private Long userId;
+    /** 登录失败次数 */
+    private Integer failCount;
+    /** 登录失败时间 */
+    private LocalDateTime failTime;
 }

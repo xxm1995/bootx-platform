@@ -1,4 +1,4 @@
-package cn.bootx.platform.iam.service.service;
+package cn.bootx.platform.iam.service.user;
 
 import cn.bootx.platform.core.exception.BizException;
 import cn.bootx.platform.iam.dao.user.UserExpandInfoManager;
@@ -29,8 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserInfoService {
 
     private final UserInfoManager userInfoManager;
-
-    private final UserQueryService userQueryService;
 
 
     private final UserExpandInfoManager userExpandInfoManager;

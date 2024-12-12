@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -128,6 +129,7 @@ public class ChinaWordService {
     /**
      * 初始化数据
      */
+    @Async
     @EventListener(WebServerInitializedEvent.class)
     public void initData(){
         List<ChinaWord> chinaWords = chinaWordManager.findAllByEnable(true);

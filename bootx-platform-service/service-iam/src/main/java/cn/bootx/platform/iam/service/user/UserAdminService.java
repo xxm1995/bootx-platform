@@ -1,4 +1,4 @@
-package cn.bootx.platform.iam.service.service;
+package cn.bootx.platform.iam.service.user;
 
 import cn.bootx.platform.common.mybatisplus.util.MpUtil;
 import cn.bootx.platform.core.exception.BizException;

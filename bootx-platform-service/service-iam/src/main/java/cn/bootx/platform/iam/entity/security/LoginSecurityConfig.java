@@ -1,0 +1,53 @@
+package cn.bootx.platform.iam.entity.security;
+
+
+import cn.bootx.platform.common.mybatisplus.base.MpBaseEntity;
+import cn.bootx.platform.common.mybatisplus.function.ToResult;
+import cn.bootx.platform.iam.convert.security.LoginSecurityConfigConvert;
+import cn.bootx.platform.iam.param.security.LoginSecurityConfigParam;
+import cn.bootx.platform.iam.result.security.LoginSecurityConfigResult;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * 登录安全策略
+ * @author xxm
+ * @since 2023/8/17
+ */
+@EqualsAndHashCode(callSuper = true)
+@Data
+@Accessors(chain = true)
+@TableName("iam_login_security_config")
+public class LoginSecurityConfig extends MpBaseEntity implements ToResult<LoginSecurityConfigResult> {
+
+    /** 关联终端ID */
+    private Long clientId;
+
+    /** 修改密码是否需要重新登录 */
+    private Boolean  requireLoginChangePwd;
+
+    /** 默认启用验证码 */
+    private Boolean captchaEnable;
+
+    /** 出现验证码的错误次数 0 表示不启用 */
+    private Integer maxCaptchaErrorCount;
+
+    /** 同端是否允许同时登录 */
+    private  Boolean  allowMultiLogin;
+
+    /** 多终端是否允许同时登录 */
+    private Boolean  allowMultiTerminalLogin;
+
+    /** 创建对象 */
+    public static LoginSecurityConfig init(LoginSecurityConfigParam in) {
+        return LoginSecurityConfigConvert.CONVERT.convert(in);
+    }
+
+    /** 转换成dto */
+    @Override
+    public LoginSecurityConfigResult toResult() {
+        return LoginSecurityConfigConvert.CONVERT.convert(this);
+    }
+}
