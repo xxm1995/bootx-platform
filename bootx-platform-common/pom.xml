@@ -24,6 +24,7 @@
         <module>common-redis</module>
         <module>common-cache</module>
         <module>common-log</module>
+        <module>common-dingtalk</module>
     </modules>
 
     <dependencies>
