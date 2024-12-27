@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.bootx.platform</groupId>
+        <artifactId>bootx-platform-common</artifactId>
+        <version>3.0.0.beta1</version>
+    </parent>
+
+    <artifactId>common-monitor</artifactId>
+    <description>系统信息监控</description>
+
+    <dependencies>
+        <!-- web-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- 系统信息读取 -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>${oshi.version}</version>
+        </dependency>
+        <!-- 工具包 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-system</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>cn.bootx.platform</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>${bootx-platform.version}</version>
+        </dependency>
+    </dependencies>
+
+
+</project>
