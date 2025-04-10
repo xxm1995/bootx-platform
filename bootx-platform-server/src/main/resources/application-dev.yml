@@ -63,4 +63,3 @@ bootx-platform:
         - '/css/**'
         - '/error'
         - '/favicon.ico'
-        - '/**'
